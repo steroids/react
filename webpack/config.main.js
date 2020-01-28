@@ -258,10 +258,10 @@ module.exports = (config, entry) => {
             }),
 
             // Index html
-            fs.existsSync(config.sourcePath + '/index.html') && new HtmlWebpackPlugin({
+            new HtmlWebpackPlugin({
                 favicon: fs.existsSync(`${config.sourcePath}/favicon.ico`) ? `${config.sourcePath}/favicon.ico` : null,
                 inject: true,
-                template: config.sourcePath + '/index.html',
+                template: fs.existsSync(config.sourcePath + '/index.html') ? config.sourcePath + '/index.html' : __dirname + '/index.html',
                 filename: `${config.staticPath}${config.baseUrl}index.html`
             }),
 

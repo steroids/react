@@ -1,0 +1,6 @@
+### PaginationSize 
+
+
+```js
+<PaginationSize/>
+```

@@ -1,0 +1,10 @@
+/backend
+/docs
+/tests
+/vendor
+/.idea
+/.gitattributes
+/.npmignore
+/stories
+/composer.json
+/composer.lock

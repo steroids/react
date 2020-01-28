@@ -1,0 +1,6 @@
+### Pagination 
+
+
+```js
+<Pagination/>
+```

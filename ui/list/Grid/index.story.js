@@ -3,8 +3,8 @@ import {storiesOf} from '@storybook/react';
 import {withInfo} from '@storybook/addon-info';
 
 import Grid from './Grid';
-import DateField from "../../form/DateField/DateField";
-import InputField from "../../form/InputField/InputField";
+import DateField from '../../form/DateField/DateField';
+import InputField from '../../form/InputField/InputField';
 
 import README from './README.md'
 import {withReadme} from 'storybook-readme';

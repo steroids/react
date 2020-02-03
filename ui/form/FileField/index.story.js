@@ -1,8 +1,8 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {withInfo} from '@storybook/addon-info';
-import {withReadme} from "storybook-readme";
-import {object, boolean, text, select} from "@storybook/addon-knobs/react";
+import {withReadme} from 'storybook-readme';
+import {object, boolean, text, select} from '@storybook/addon-knobs/react';
 
 import FileField from './FileField';
 import README from './README.md'

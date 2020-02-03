@@ -1,0 +1,138 @@
+import * as React from 'react';
+import {Route, Switch, StaticRouter} from 'react-router';
+import {HashRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {ConnectedRouter} from 'connected-react-router';
+import _get from 'lodash-es/get';
+import {components} from '../../../hoc';
+import navigationHoc, {treeToList} from '../navigationHoc';
+import fetchHoc from '../fetchHoc';
+import {getCurrentItemParam} from '../../../reducers/navigation';
+import {SsrProviderContext} from './SsrProvider';
+
+interface IRouterProps {
+    wrapperView?: any;
+    wrapperProps?: any;
+    routes?:
+        | any
+        | {
+        path?: string,
+        component?: any
+    }[];
+    pathname?: string;
+    pageId?: string;
+    autoScrollTop?: boolean;
+    history?: any;
+    store?: any;
+    basename?: any;
+}
+
+type RouterState = {
+    routes?: any,
+    map?: any
+};
+@navigationHoc()
+@connect(state => ({
+    pathname: _get(state, 'router.location.pathname'),
+    pageId: getCurrentItemParam(state, 'id')
+}))
+@components('store')
+export default class Router extends React.PureComponent<IRouterProps,
+    RouterState> {
+    static defaultProps = {
+        autoScrollTop: true
+    };
+
+    constructor(props) {
+        super(props);
+        this._renderItem = this._renderItem.bind(this);
+        this.state = {
+            routes: treeToList(this.props.routes)
+        };
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (this.props.routes !== nextProps.routes) {
+            this.setState({routes: nextProps.routes});
+        }
+        // Fix end slash on switch to base route
+        if (
+            window.history &&
+            nextProps.pathname === '/' &&
+            location.pathname.match(/\/$/)
+        ) {
+            window.history.replaceState({}, "", this.props.store.history.basename);
+        }
+        if (
+            this.props.autoScrollTop &&
+            this.props.pageId &&
+            nextProps.pageId &&
+            this.props.pageId !== nextProps.pageId
+        ) {
+            window.scrollTo(0, 0);
+        }
+    }
+
+    render() {
+        // TODO double render!!..
+        if (process.env.IS_SSR) {
+            return (
+                <SsrProviderContext.Consumer>
+                  {context => (
+                      <StaticRouter
+                          location={this.props.store.history.location}
+                          context={context.staticContext}
+                      >
+                        {this.renderContent()}
+                      </StaticRouter>
+                  )}
+                </SsrProviderContext.Consumer>
+            );
+        } else if (location.protocol === 'file:') {
+            return (
+                <HashRouter>
+                    {this.renderContent()}
+                </HashRouter>
+            );
+        } else {
+            return (
+                <ConnectedRouter history={this.props.store.history}>
+                    {this.renderContent()}
+                </ConnectedRouter>
+            );
+        }
+    }
+
+    renderContent() {
+        const WrapperComponent = this.props.wrapperView;
+        const routes = (
+            <Switch>
+                {this.state.routes.map((route, index) => (
+                    <Route
+                        key={index}
+                        render={props => this._renderItem(route, props)}
+                        {...route}
+                        component={null}
+                    />
+                ))}
+                {this.props.children}
+            </Switch>
+        );
+        if (WrapperComponent) {
+            return (
+                <WrapperComponent {...this.props.wrapperProps}>
+                    {routes}
+                </WrapperComponent>
+            );
+        }
+        return routes;
+    }
+
+    _renderItem(route, props) {
+        let Component = route.component;
+        if (route.fetch) {
+            Component = fetchHoc(route.fetch)(Component);
+        }
+        return <Component {...props} {...route.componentProps} />;
+    }
+}

@@ -4,7 +4,7 @@ import { withInfo } from '@storybook/addon-info';
 import { withReadme } from 'storybook-readme';
 import {text, boolean, select, array} from '@storybook/addon-knobs/react';
 
-import InputField from "./InputField";
+import InputField from './InputField';
 import README from './README.md'
 
 const types = {

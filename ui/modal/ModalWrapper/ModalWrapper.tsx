@@ -2,21 +2,22 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {closeModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
 interface IModalWrapperProps {
+}
+
+interface IModalWrapperPrivateProps extends IConnectHocOutput {
     opened?: {
         modal?: any,
         props?: any
     }[];
-    dispatch?: any;
-    map?: any;
 }
 
 @connect(state => ({
     opened: getOpened(state)
 }))
-export default class ModalWrapper extends React.PureComponent<IModalWrapperProps,
-    {}> {
+export default class ModalWrapper extends React.PureComponent<IModalWrapperProps & IModalWrapperPrivateProps> {
     render() {
         return <span>{this.props.opened.map(item => this.renderModal(item))}</span>;
     }

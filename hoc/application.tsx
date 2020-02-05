@@ -6,10 +6,22 @@ import HttpComponent from '../components/HttpComponent';
 import LocaleComponent from '../components/LocaleComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
-import {ComponentsContext} from './components';
+import {IComponentsHocOutput} from './components';
 
-export default (config): any => WrappedComponent =>
-    class ApplicationHoc extends React.PureComponent {
+export interface IApplicationHocInput {
+}
+
+export interface IApplicationHocOutput {
+}
+
+export interface IApplicationHocConfig {
+    onInit?: (...args: any) => any,
+}
+
+export const ComponentsContext = React.createContext({} as IComponentsHocOutput);
+
+export default (config: IApplicationHocConfig): any => WrappedComponent =>
+    class ApplicationHoc extends React.PureComponent<IApplicationHocInput> {
 
         _components: any;
 
@@ -39,11 +51,10 @@ export default (config): any => WrappedComponent =>
                                 components: this._components,
                             }}
                         >
-                            <WrappedComponent {...this.props} />
+                            <WrappedComponent {...this.props as IApplicationHocOutput} />
                         </ComponentsContext.Provider>
                     </Provider>
                 );
             }
         }
     }
-

@@ -4,7 +4,8 @@ import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
 import _isString from 'lodash-es/isString';
 import {components} from '../../../hoc';
-import {FormContext} from '../../form/Form/Form';
+import {FormContext} from '../../../hoc/form';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IFormatProps {
     attribute?: string;
@@ -15,8 +16,13 @@ interface IFormatProps {
     ui?: any;
 }
 
+interface IFormatPrivateProps extends IComponentsHocOutput {
+
+}
+
 @components('ui')
-export default class Format extends React.Component<IFormatProps, {}> {
+export default class Format extends React.Component<IFormatProps & IFormatPrivateProps> {
+
     static WrappedComponent: any;
 
     static getFormatterPropsFromModel(model, attribute) {
@@ -56,4 +62,5 @@ export default class Format extends React.Component<IFormatProps, {}> {
         }
         return _get(this.props.item, this.props.attribute) || null;
     }
+
 }

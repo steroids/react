@@ -2,12 +2,12 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
-import {getCurrentRoute} from '../../reducers/navigation';
-import {isInitialized} from '../../reducers/navigation';
-import {initRoutes, initParams} from '../../actions/navigation';
-import {IConnectProps} from '../../components/StoreComponent';
+import {getCurrentRoute} from '../../../reducers/navigation';
+import {isInitialized} from '../../../reducers/navigation';
+import {initRoutes, initParams} from '../../../actions/navigation';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface INavigationHocProps extends IConnectProps {
+interface INavigationHocPrivateProps extends IConnectHocOutput {
   /*
       isInitialized: PropTypes.bool
    */
@@ -74,7 +74,7 @@ export const treeToList = (item, isRoot = true) => {
 };
 export default (routes = null): any => WrappedComponent =>
     connect(stateMap)(
-        class NavigationHoc extends React.PureComponent<INavigationHocProps> {
+        class NavigationHoc extends React.PureComponent<INavigationHocPrivateProps> {
             static WrappedComponent = WrappedComponent;
 
             UNSAFE_componentWillMount() {

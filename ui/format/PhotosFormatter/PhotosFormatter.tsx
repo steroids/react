@@ -1,12 +1,10 @@
 import * as React from 'react';
 import Gallery from 'react-grid-gallery';
-import _get from 'lodash-es/get';
-import viewHoc from '../viewHoc';
+import {formatter} from '../../../hoc';
+import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 
-interface IPhotosFormatterProps {
-    attribute?: string;
-    item?: any;
-    photos?: {
+interface IMoneyFormatterProps extends IFormatterHocInput {
+    value?: {
         uid?: number,
         src?: string,
         thumbnail?: string,
@@ -17,17 +15,20 @@ interface IPhotosFormatterProps {
     videoRowHeight?: number;
 }
 
-@viewHoc()
-export default class PhotosFormatter extends React.Component<IPhotosFormatterProps,
-    {}> {
+interface IMoneyFormatterPrivateProps extends IFormatterHocOutput {
+
+}
+
+@formatter()
+export default class PhotosFormatter extends React.Component<IMoneyFormatterProps & IMoneyFormatterPrivateProps> {
+
     static defaultProps = {
         photoRowHeight: 120
     };
 
     render() {
-        const photos =
-            this.props.photos || _get(this.props.item, this.props.attribute) || [];
-        if (photos.length === 0) {
+        const photos = this.props.value;
+        if (!photos || photos.length === 0) {
             return null;
         }
         return (
@@ -41,4 +42,5 @@ export default class PhotosFormatter extends React.Component<IPhotosFormatterPro
             />
         );
     }
+
 }

@@ -7,7 +7,7 @@ interface IFieldLayoutProps {
     required?: boolean;
     layout?: ('default' | 'inline' | 'horizontal') | string | boolean;
     layoutProps?: any;
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | string;
     errors?: string | string[];
     layoutClassName?: string;
     layoutView?: any;

@@ -1,26 +1,25 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {
-    navigationAddConfigs,
-    navigationRemoveConfigs,
-    getConfigId
-} from '../../actions/navigation';
-import {getCurrentRoute} from '../../reducers/navigation';
-import {IConnectProps} from '../../components/StoreComponent';
+import {navigationAddConfigs, navigationRemoveConfigs, getConfigId} from '../actions/navigation';
+import {getCurrentRoute} from '../reducers/navigation';
+import {IConnectHocOutput} from './connect';
 
-interface IFetchHocProps extends IConnectProps {
-    /*
-      navigationData: PropTypes.object,
-      route: PropTypes.shape({
-          params: PropTypes.object
-      })
-     */
-    navigationData?: any,
-    route?: any,
+interface IFetchHocInput {
+    navigationData?: object,
+    route?: {
+        params?: object,
+    },
+}
+
+interface IFetchHocOutput {
+}
+
+interface IFetchHocPrivateProps extends IConnectHocOutput {
+
 }
 
 interface IFetchHocState {
-    overwritedProps?: any,
+    overwriteProps?: any,
 }
 
 interface IFetchHocOptions {
@@ -33,13 +32,14 @@ const stateMap = state => ({
 });
 export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedComponent =>
     connect(stateMap)(
-        class FetchHoc extends React.PureComponent<IFetchHocProps, IFetchHocState> {
+        class FetchHoc extends React.PureComponent<IFetchHocInput & IFetchHocPrivateProps, IFetchHocState> {
+
             static WrappedComponent = WrappedComponent;
 
             constructor(props) {
                 super(props);
                 this.state = {
-                    overwritedProps: null
+                    overwriteProps: null
                 };
                 this._onUpdate = this._onUpdate.bind(this);
             }
@@ -49,7 +49,7 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                     navigationAddConfigs(
                         configsFunc({
                             ...this.props,
-                            ...this.state.overwritedProps,
+                            ...this.state.overwriteProps,
                             params: this.props.route.params
                         })
                     )
@@ -61,7 +61,7 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                     navigationRemoveConfigs(
                         configsFunc({
                             ...this.props,
-                            ...this.state.overwritedProps,
+                            ...this.state.overwriteProps,
                             params: this.props.route.params
                         })
                     )
@@ -72,14 +72,14 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                 const prevConfigs = [].concat(
                     configsFunc({
                         ...prevProps,
-                        ...prevState.overwritedProps,
+                        ...prevState.overwriteProps,
                         params: prevProps.route.params
                     })
                 );
                 const nextConfigs = [].concat(
                     configsFunc({
                         ...this.props,
-                        ...this.state.overwritedProps,
+                        ...this.state.overwriteProps,
                         params: this.props.route.params
                     })
                 );
@@ -103,7 +103,7 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                 const configs = [].concat(
                     configsFunc({
                         ...this.props,
-                        ...this.state.overwritedProps,
+                        ...this.state.overwriteProps,
                         params: this.props.route.params
                     })
                 );
@@ -125,18 +125,21 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                     // TODO Loader
                     return null;
                 }
+
+                const outputProps = {
+                    ...this.props,
+                    ...this.state.overwriteProps,
+                    ...dataProps,
+                    updateApiConfig: this._onUpdate,
+                } as IFetchHocOutput;
+
                 return (
-                    <WrappedComponent
-                        {...this.props}
-                        {...this.state.overwritedProps}
-                        {...dataProps}
-                        updateApiConfig={this._onUpdate}
-                    />
+                    <WrappedComponent {...outputProps}/>
                 );
             }
 
-            _onUpdate(overwritedProps) {
-                this.setState({overwritedProps});
+            _onUpdate(overwriteProps) {
+                this.setState({overwriteProps});
             }
         }
     )

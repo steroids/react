@@ -3,9 +3,16 @@ import axios from 'axios';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {components} from '../hoc';
+import {IComponentsHocInput} from './components';
 
-interface IHttpHocProps {
-    isInitialized?: boolean,
+export interface IHttpHocInput {
+}
+
+export interface IHttpHocOutput {
+    fetch: (params: object) => Promise<any> | any,
+}
+
+interface IHttpHocPrivateProps extends IComponentsHocInput {
 }
 
 interface IHttpHocState {
@@ -14,7 +21,7 @@ interface IHttpHocState {
 
 export default (requestFunc): any => WrappedComponent =>
     components()(
-        class HttpHoc extends React.PureComponent<IHttpHocProps, IHttpHocState> {
+        class HttpHoc extends React.PureComponent<IHttpHocInput & IHttpHocPrivateProps, IHttpHocState> {
             static WrappedComponent = WrappedComponent;
 
             _isRendered = false;
@@ -47,11 +54,14 @@ export default (requestFunc): any => WrappedComponent =>
             }
 
             render() {
+                const outputProps = {
+                    fetch: this._fetch,
+                } as IHttpHocOutput;
                 return (
                     <WrappedComponent
                         {...this.props}
                         {...this.state.data}
-                        fetch={this._fetch}
+                        {...outputProps}
                     />
                 );
             }

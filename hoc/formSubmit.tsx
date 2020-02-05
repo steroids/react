@@ -3,27 +3,34 @@ import {SubmissionError} from 'redux-form';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
-import {components} from '../../hoc';
-import AutoSaveHelper from './Form/AutoSaveHelper';
-import validate from './validate';
-import {IComponentsContext} from '../../hoc/components';
+import components from './components';
+import AutoSaveHelper from '../ui/form/Form/AutoSaveHelper';
+import {IComponentsHocOutput} from './components';
+import validate from "../ui/form/validate";
 
-interface IFormSubmitHocProps extends IComponentsContext {
+export interface IFormSubmitHocInput {
+    action?: any,
     actionMethod?: string,
-    formRegisteredFields?: any,
-    onBeforeSubmit?: any,
+    autoSave?: any,
     validators?: any,
+    onBeforeSubmit?: any,
     onSubmit?: any,
     onAfterSubmit?: any,
     onComplete?: any,
-    action?: any,
-    autoSave?: any,
+}
+
+export interface IFormSubmitHocOutput {
+
+}
+
+interface IFormSubmitHocPrivateProps extends IComponentsHocOutput {
+    formRegisteredFields?: any,
     formId?: string,
 }
 
 export default (): any => WrappedComponent =>
     components('http', 'clientStorage')(
-        class FormSubmitHoc extends React.PureComponent<IFormSubmitHocProps> {
+        class FormSubmitHoc extends React.PureComponent<IFormSubmitHocInput & IFormSubmitHocPrivateProps> {
             static WrappedComponent = WrappedComponent;
             /**
              * Proxy real name, prop types and default props for storybook

@@ -8,6 +8,8 @@ import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
 import _get from 'lodash-es/get';
 import Format from '../../format/Format';
+import {IConnectHocOutput} from '../../../hoc/connect';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IDetailColumn {
   label?: string | boolean | JSX.Element,
@@ -19,18 +21,14 @@ interface IDetailColumn {
 }
 
 interface IDetailProps {
-    primaryKey?: string;
     item?: any;
     model?: string | ((...args: any[]) => any) | any;
     view?: any;
     attributes?: (string | IDetailColumn)[];
-    listId?: any;
-    label?: any;
-    formatters?: any;
-    getView?: any;
-    ui?: any;
-    filter?: any;
-    map?: any;
+}
+
+interface IDetailPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
 }
 
 @connect((state, props) => ({
@@ -39,13 +37,12 @@ interface IDetailProps {
         : props.model
 }))
 @components('ui')
-export default class Detail extends React.PureComponent<IDetailProps, {}> {
+export default class Detail extends React.PureComponent<IDetailProps & IDetailPrivateProps> {
     render() {
         const attributes = this.props.attributes
             .map(column => (_isString(column) ? {attribute: column} : column))
             .filter((column:IDetailColumn) => column.visible !== false);
-        const DetailView =
-            this.props.view || this.props.ui.getView('list.DetailView');
+        const DetailView = this.props.view || this.props.ui.getView('list.DetailView');
         return (
             <DetailView
                 {...this.props}
@@ -87,8 +84,6 @@ export default class Detail extends React.PureComponent<IDetailProps, {}> {
                 <ValueView
                     {...attribute}
                     {...attribute.valueProps}
-                    listId={this.props.listId}
-                    primaryKey={this.props.primaryKey}
                     item={this.props.item}
                 />
             );

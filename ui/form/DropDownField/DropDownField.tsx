@@ -1,44 +1,16 @@
 import * as React from 'react';
 import enhanceWithClickOutside from 'react-click-outside';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
-import dataProviderHoc from '../dataProviderHoc';
+import {components, field} from '../../../hoc';
+import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from '../../../hoc/dataProvider';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDropDownFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    placeholder?: string;
-    isInvalid?: boolean;
+interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInput {
     searchPlaceholder?: string;
-    disabled?: boolean;
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
     showReset?: boolean;
-    multiple?: boolean;
-    items?: {
-        id?: number | string | boolean,
-        label?: string
-    }[];
-    selectedItems?: {
-        id?: number | string | boolean,
-        label?: string
-    }[];
-    hoveredItem?: {
-        id?: number | string | boolean,
-        label?: string
-    };
-    autoComplete?: boolean;
-    autoCompleteMinLength?: number;
-    autoCompleteDelay?: number;
     isOpened?: boolean;
     isLoading?: boolean;
     onOpen?: (...args: any[]) => any;
@@ -51,13 +23,16 @@ interface IDropDownFieldProps {
     ui?: any;
 }
 
-@fieldHoc({
+interface IDropDownFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {
+}
+
+@field({
     componentId: 'form.DropDownField'
 })
-@dataProviderHoc()
+@dataProvider()
 @enhanceWithClickOutside
 @components('ui')
-export default class DropDownField extends React.PureComponent<IDropDownFieldProps,
+export default class DropDownField extends React.PureComponent<IDropDownFieldProps & IDropDownFieldPrivateProps,
     {}> {
     static defaultProps = {
         disabled: false,

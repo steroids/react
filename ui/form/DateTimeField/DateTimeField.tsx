@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import _isEqual from 'lodash-es/isEqual';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, field} from '../../../hoc';
 import DateField from '../DateField';
 import InputField from '../InputField';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDateTimeFieldProps {
+interface IDateTimeFieldProps extends IFieldHocInput {
     label?: string | boolean;
     hint?: string;
     attribute?: string;
@@ -16,7 +17,7 @@ interface IDateTimeFieldProps {
         onChange?: (...args: any[]) => any
     };
     required?: boolean;
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | string;
     disabled?: boolean;
     displayDateFormat?: string;
     valueDateFormat?: string;
@@ -31,15 +32,18 @@ interface IDateTimeFieldProps {
     ui?: any;
 }
 
+interface IDateTimeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+}
+
 type DateTimeFieldState = {
     time?: any,
     date?: any
 };
-@fieldHoc({
+@field({
     componentId: 'form.DateTimeField'
 })
 @components('ui')
-export default class DateTimeField extends React.PureComponent<IDateTimeFieldProps, DateTimeFieldState> {
+export default class DateTimeField extends React.PureComponent<IDateTimeFieldProps & IDateTimeFieldPrivateProps, DateTimeFieldState> {
     static defaultProps = {
         disabled: false,
         required: false,

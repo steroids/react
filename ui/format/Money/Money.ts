@@ -1,20 +1,26 @@
 import * as React from 'react';
 import _round from 'lodash-es/round';
+import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {formatter} from '../../../hoc';
 
-interface IMoneyProps {
-    amount?: number | string;
+interface IMoneyFormatterProps extends IFormatterHocInput {
     currency?: string;
     scale?: number;
 }
 
-export default class Money extends React.Component<IMoneyProps, {}> {
+interface IMoneyFormatterPrivateProps extends IFormatterHocOutput {
+
+}
+
+@formatter()
+export default class Money extends React.Component<IMoneyFormatterProps & IMoneyFormatterPrivateProps> {
     static defaultProps = {
         scale: 2
     };
 
     render() {
         return Money.getAsString(
-            this.props.amount,
+            this.props.value,
             this.props.currency,
             this.props.scale
         );

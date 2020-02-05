@@ -9,7 +9,7 @@ import File from 'fileup-core/lib/models/File';
 import QueueCollection from 'fileup-core/lib/models/QueueCollection';
 import buildURL from 'axios/lib/helpers/buildURL';
 
-interface IFileHocProps {
+export interface IFileHocInput {
     /*
       multiple: PropTypes.bool,
       uploader: PropTypes.object,
@@ -30,6 +30,11 @@ interface IFileHocProps {
         })
       )
      */
+    input: {
+        name?: string,
+        value?: any,
+        onChange?: (...args: any[]) => any
+    },
     multiple?: boolean;
     uploader?: any;
     backendUrl?: any;
@@ -38,11 +43,24 @@ interface IFileHocProps {
     imagesProcessor?: any;
     imagesExactSize?: any;
     initialFiles?: any;
-    input?: any;
+}
+
+export interface IFileHocOutput {
+    /*
+
+        uploader={this._uploader}
+        files={[].concat(this._uploader.queue.getFiles())}
+        onBrowse={this._onBrowse}
+        onRemove={this._onRemove}
+     */
+    uploader?: any;
+    files?: any[];
+    onBrowse?: any;
+    onRemove?: any;
 }
 
 export default (): any => WrappedComponent =>
-    class FileHoc extends React.PureComponent<IFileHocProps> {
+    class FileHoc extends React.PureComponent<IFileHocInput> {
         _uploader: any;
         forceUpdate: any;
         static WrappedComponent = WrappedComponent;

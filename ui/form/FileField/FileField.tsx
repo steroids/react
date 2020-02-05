@@ -2,50 +2,31 @@ import * as React from 'react';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
 import File from 'fileup-core/lib/models/File';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
-import fileHoc from '../fileHoc';
+import {components, field, file} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IFileFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    size?: 'sm' | 'md' | 'lg';
+interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
+    showRemove: boolean,
     buttonComponent?: React.ReactNode;
     buttonProps?: any;
-    backendUrl?: string;
-    showRemove?: boolean;
-    imagesOnly?: boolean;
-    multiple?: boolean;
-    imagesProcessor?: string;
-    imagesExactSize?: number[];
-    mimeTypes?: string[];
-    files?: any[];
-    disabled?: boolean;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
     itemView?: any;
     itemProps?: any;
-    onBrowse?: (...args: any[]) => any;
-    onRemove?: (...args: any[]) => any;
-    map?: any;
-    getView?: any;
-    ui?: any;
 }
 
-@fieldHoc({
+interface IFileFieldPrivateProps extends IFieldHocOutput, IFileHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.FileField'
 })
-@fileHoc()
+@file()
 @components('ui')
-export default class FileField extends React.PureComponent<IFileFieldProps,
+export default class FileField extends React.PureComponent<IFileFieldProps & IFileFieldPrivateProps,
     {}> {
     static defaultProps = {
         disabled: false,

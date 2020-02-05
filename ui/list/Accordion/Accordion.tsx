@@ -1,11 +1,10 @@
 import * as React from 'react';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
-import listHoc from '../listHoc';
+import {components, list} from '../../../hoc';
+import {IListHocInput, IListHocOutput} from '../../../hoc/list';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IAccordionProps {
-    primaryKey?: string;
-    items?: any[];
+interface IAccordionProps extends IListHocInput {
     itemView: any;
     itemProps?: any;
     headerView: any;
@@ -15,18 +14,20 @@ interface IAccordionProps {
     openFirst?: boolean;
     openedId?: number | string;
     onToggle?: (...args: any[]) => any;
-    getView?: any;
-    ui?: any;
-    map?: any;
 }
 
-type AccordionState = {
+interface IAccordionPrivateProps extends IListHocOutput, IComponentsHocOutput {
+
+}
+
+interface AccordionState {
     openedId?: any
-};
-@listHoc()
+}
+
+@list()
 @components('ui')
-export default class Accordion extends React.PureComponent<IAccordionProps,
-    AccordionState> {
+export default class Accordion extends React.PureComponent<IAccordionProps & IAccordionPrivateProps, AccordionState> {
+
     static defaultProps = {
         openFirst: true
     };
@@ -114,4 +115,5 @@ export default class Accordion extends React.PureComponent<IAccordionProps,
         }
         this.setState({openedId});
     }
+
 }

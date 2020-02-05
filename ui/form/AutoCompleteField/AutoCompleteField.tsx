@@ -1,46 +1,20 @@
 import * as React from 'react';
 import enhanceWithClickOutside from 'react-click-outside';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
-import dataProviderHoc from '../dataProviderHoc';
+import {components, field} from '../../../hoc';
 import {props} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from "../../../hoc/field";
+import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../../../hoc/dataProvider";
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IAutoCompleteFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
+interface IAutoCompleteFieldProps extends IFieldHocInput, IDataProviderHocInput {
     placeholder?: string;
-    isInvalid?: boolean;
-    searchPlaceholder?: string;
-    disabled?: boolean;
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
-    className?: string;
-    view?: any;
     showReset?: boolean;
-    multiple?: boolean;
-    items?: {
-        id?: number | string | boolean,
-        label?: string
-    }[];
-    selectedItems?: {
-        id?: number | string | boolean,
-        label?: string
-    }[];
-    hoveredItem?: {
-        id?: number | string | boolean,
-        label?: string
-    };
-    autoComplete?: boolean;
-    autoCompleteMinLength?: number;
-    autoCompleteDelay?: number;
+    view?: any;
+}
+
+interface IAutoCompleteFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {
     isOpened?: boolean;
     onOpen?: (...args: any[]) => any;
     onClose?: (...args: any[]) => any;
@@ -49,22 +23,27 @@ interface IAutoCompleteFieldProps {
     onItemMouseOver?: (...args: any[]) => any;
     onBlur?: any;
     onFocus?: any;
-    length?: any;
-    map?: any;
-    getView?: any;
-    ui?: any;
+    selectedItems?: {
+        id?: number | string | boolean,
+        label?: string
+    }[];
+    hoveredItem?: {
+        id?: number | string | boolean,
+        label?: string
+    };
 }
 
-@fieldHoc({
+@field({
     componentId: 'form.AutoCompleteField'
 })
 @props({
-    autoComplete: true
+    autoComplete: true,
+    multiple: false,
 })
-@dataProviderHoc()
+@dataProvider()
 @enhanceWithClickOutside
 @components('ui')
-export default class AutoCompleteField extends React.PureComponent<IAutoCompleteFieldProps,
+export default class AutoCompleteField extends React.PureComponent<IAutoCompleteFieldProps & IAutoCompleteFieldPrivateProps,
     {}> {
     static defaultProps = {
         disabled: false,
@@ -72,7 +51,6 @@ export default class AutoCompleteField extends React.PureComponent<IAutoComplete
         className: "",
         autoComplete: false,
         showReset: false,
-        multiple: false
     };
 
     constructor(props) {

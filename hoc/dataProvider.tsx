@@ -12,72 +12,58 @@ import _includes from 'lodash-es/includes';
 import _uniqBy from 'lodash-es/uniqBy';
 import _isInteger from 'lodash-es/isInteger';
 import _orderBy from 'lodash-es/orderBy';
-import {components} from '../../hoc';
-import {getEnumLabels} from '../../reducers/fields';
-import {IFieldProps} from './Field/Field';
-import {IComponentsContext} from '../../hoc/components';
-import {IConnectProps} from '../../components/StoreComponent';
 
-interface IDataProviderHocProps extends IFieldProps, IComponentsContext, IConnectProps {
-    /*
-        multiple: PropTypes.bool,
-        items: PropTypes.oneOfType([
-            PropTypes.arrayOf(
-                PropTypes.oneOfType([
-                    PropTypes.string,
-                    PropTypes.number,
-                    PropTypes.shape({
-                        id: PropTypes.oneOfType([
-                            PropTypes.number,
-                            PropTypes.string,
-                            PropTypes.bool
-                        ]),
-                        label: PropTypes.oneOfType([PropTypes.string, PropTypes.any])
-                    })
-                ])
-            ),
-            PropTypes.string,
-            PropTypes.func
-        ]),
-        dataProvider: PropTypes.shape({
-            action: PropTypes.string,
-            params: PropTypes.object,
-            onSearch: PropTypes.func
-        }),
-        autoComplete: PropTypes.bool,
-        autoCompleteMinLength: PropTypes.number,
-        autoCompleteDelay: PropTypes.number,
-        autoFetch: PropTypes.bool,
-        selectFirst: PropTypes.bool,
-        onSelect: PropTypes.func
-     */
-    multiple?: any;
-    items?: any;
-    dataProvider?: any;
-    autoComplete?: any;
-    autoCompleteMinLength?: any;
-    autoCompleteDelay?: any;
+import {getEnumLabels} from '../reducers/fields';
+import {IFieldProps} from '../ui/form/Field/Field';
+import components, {IComponentsHocOutput} from './components';
+import {IFieldHocInput} from "./field";
+import Enum from "../base/Enum";
+import {IConnectHocOutput} from './connect';
+
+export interface IDataProviderHocInput {
+    input: {
+        name?: string,
+        value?: any,
+        onChange?: (...args: any[]) => any
+    },
+    multiple?: boolean;
+    items?: string
+        | ({ new(): Enum })
+        | (string | number | { id: string | number | boolean, label: string | any })[],
+    dataProvider?: {
+        action: string,
+        params: object,
+        onSearch: (...args: any) => any,
+    };
+    autoComplete?: boolean;
+    autoCompleteMinLength?: number;
+    autoCompleteDelay?: number;
     autoFetch?: any;
     selectFirst?: any;
     onSelect?: any;
-    input?: any;
-    modelClass?: any;
+}
+
+export interface IDataProviderHocOutput {
+    items?: {
+        id?: number | string | boolean,
+        label?: string
+    }[];
+    selectedItems?: any,
+    hoveredItem?: any,
+    isOpened?: boolean,
+    isLoading?: boolean,
+    onOpen?: any,
+    onClose?: any,
+    onSearch?: any,
+    onItemClick?: any,
+    onItemMouseOver?: any,
+}
+
+interface IDataProviderHocPrivateProps extends IConnectHocOutput, IFieldProps, IFieldHocInput, IComponentsHocOutput {
+    formId: string,
 }
 
 interface IDataProviderHocState {
-    /*
-        query: "",
-        isOpened: false,
-        isFocused: false,
-        isLoading: false,
-        hoveredItem: null,
-        selectedItems: this._findSelectedItems(
-            sourceItems,
-            this.props.input.value
-        ),
-        sourceItems,
-        items: sourceItems
-     */
     query: string,
     isOpened: boolean,
     isFocused: boolean,
@@ -96,7 +82,7 @@ const stateMap = (state, props) => ({
 export default (): any => WrappedComponent =>
     connect(stateMap)(
         components('http')(
-            class DataProviderHoc extends React.PureComponent<IDataProviderHocProps, IDataProviderHocState> {
+            class DataProviderHoc extends React.PureComponent<IDataProviderHocInput & IDataProviderHocPrivateProps, IDataProviderHocState> {
 
                 _delayTimer: any;
 
@@ -431,7 +417,7 @@ export default (): any => WrappedComponent =>
                         this.props.http.post.bind(this.props.http);
                     const result = searchHandler(this.props.dataProvider.action, {
                         query,
-                        model: this.props.modelClass,
+                        model: this.props.model,
                         attribute: this.props.attribute,
                         ...this.props.dataProvider.params
                     });

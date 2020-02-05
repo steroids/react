@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface ITreeProps {
     id?: string;
@@ -16,19 +17,19 @@ interface ITreeProps {
     autoOpenLevels?: number;
     onItemClick?: (...args: any[]) => any;
     autoSave?: boolean;
-    set?: any;
-    clientStorage?: any;
-    get?: any;
-    getView?: any;
-    ui?: any;
 }
 
-type TreeState = {
+interface ITreePrivateProps extends IComponentsHocOutput {
+
+}
+
+interface TreeState {
     opened?: any,
     selectedUniqId?: any,
-};
+}
+
 @components('ui', 'clientStorage')
-export default class Tree extends React.PureComponent<ITreeProps, TreeState> {
+export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateProps, TreeState> {
     static STORAGE_KEY_PREFIX = 'tree_';
     static defaultProps = {
         itemsKey: 'items',

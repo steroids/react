@@ -10,28 +10,20 @@ import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
 import _mergeWith from 'lodash-es/mergeWith';
 import * as queryString from 'query-string';
-import {
-    init,
-    lazyFetch,
-    fetch,
-    setSort,
-    destroy,
-    setLayoutName,
-    initSSR
-} from '../../actions/list';
-import {getList} from '../../reducers/list';
-import Empty from './Empty';
-import Pagination from './Pagination';
-import PaginationSize from './PaginationSize';
-import Form from '../form/Form';
-import Nav from '../nav/Nav';
-import {getMeta} from '../../reducers/fields';
-import {components} from '../../hoc';
-import SyncAddressBarHelper from '../../ui/form/Form/SyncAddressBarHelper';
-import {IComponentsContext} from '../../hoc/components';
-import {IConnectProps} from '../../components/StoreComponent';
 
-interface IListHocProps extends IComponentsContext, IConnectProps {
+import {init, lazyFetch, fetch, setSort, destroy, setLayoutName, initSSR} from '../actions/list';
+import {getList} from '../reducers/list';
+import Empty from '../ui/list/Empty';
+import Pagination from '../ui/list/Pagination';
+import PaginationSize from '../ui/list/PaginationSize';
+import Form from '../ui/form/Form';
+import Nav from '../ui/nav/Nav';
+import {getMeta} from '../reducers/fields';
+import components, {IComponentsHocOutput} from './components';
+import {IConnectHocOutput} from './connect';
+import SyncAddressBarHelper from '../ui/form/Form/SyncAddressBarHelper';
+
+export interface IListHocInput {
     /*
     listId: PropTypes.string.isRequired,
     primaryKey: PropTypes.string,
@@ -161,6 +153,14 @@ interface IListHocProps extends IComponentsContext, IConnectProps {
     locationSearch?: any,
 }
 
+export interface IListHocOutput {
+
+}
+
+export interface IListHocPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
+}
+
 const stateMap = (state, props) => {
     const formId = getFormId(props);
     if (formId && !formValuesSelectors[formId]) {
@@ -191,8 +191,6 @@ const stateMap = (state, props) => {
         model,
         searchForm,
         list,
-        //checkedIds: getCheckedIds(state, props.listId),
-        //isCheckedAll: isCheckedAll(state, props.listId),
         formValues: (formId && formValuesSelectors[formId](state)) || null,
         locationSearch: _get(state, 'router.location.search', "")
     };
@@ -201,11 +199,14 @@ const stateMap = (state, props) => {
 let formValuesSelectors = {};
 export const getFormId = props =>
     _get(props, 'searchForm.formId', props.listId);
+
 export default (): any => WrappedComponent =>
     connect()(
         components('store')(
-            class ListHoc extends React.PureComponent<IListHocProps> {
+            class ListHoc extends React.PureComponent<IListHocInput & IListHocPrivateProps> {
+
                 static WrappedComponent = WrappedComponent;
+
                 static defaultProps = {
                     ...WrappedComponent.defaultProps,
                     actionMethod: 'post',

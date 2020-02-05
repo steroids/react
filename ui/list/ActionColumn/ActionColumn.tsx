@@ -4,6 +4,7 @@ import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
 import _upperFirst from 'lodash-es/upperFirst';
 import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IActionColumnProps {
     primaryKey?: string;
@@ -14,9 +15,13 @@ interface IActionColumnProps {
     view?: any;
 }
 
+interface IActionColumnPrivateProps extends IComponentsHocOutput {
+
+}
+
 @components('ui')
-export default class ActionColumn extends React.PureComponent<IActionColumnProps,
-    {}> {
+export default class ActionColumn extends React.PureComponent<IActionColumnProps & IActionColumnPrivateProps> {
+
     render() {
         const id = _get(this.props.item, this.props.primaryKey);
         const actions = _isFunction(this.props.actions)
@@ -40,8 +45,7 @@ export default class ActionColumn extends React.PureComponent<IActionColumnProps
                 confirm: __('Удалить запись?')
             }
         };
-        const ActionColumnView =
-            this.props.view || this.props.ui.getView('list.ActionColumnView');
+        const ActionColumnView = this.props.view || this.props.ui.getView('list.ActionColumnView');
         return (
             <ActionColumnView
                 {...this.props}
@@ -58,4 +62,5 @@ export default class ActionColumn extends React.PureComponent<IActionColumnProps
             />
         );
     }
+
 }

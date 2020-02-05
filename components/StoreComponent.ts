@@ -12,15 +12,9 @@ import _isPlainObject from 'lodash-es/isPlainObject';
 // @ts-ignore
 import reducers from 'reducers';
 
-export type Dispatch = (any) => any;
-
 interface IStoreComponentConfig {
     initialState: any,
     history: any,
-}
-
-export interface IConnectProps {
-    dispatch: Dispatch,
 }
 
 export default class StoreComponent {

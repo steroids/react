@@ -2,15 +2,14 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import _isObject from 'lodash/isObject';
 import {setWidth, setMedia} from '../actions/screen';
-import {Dispatch} from '../components/StoreComponent';
+import {IConnectHocOutput} from './connect';
 
-interface IScreenWatcherHocProps {
-    dispatch: Dispatch,
+interface IScreenWatcherHocPrivateProps extends IConnectHocOutput {
 }
 
 export default (media): any => WrappedComponent =>
     connect()(
-        class ScreenWatcherHoc extends React.PureComponent<IScreenWatcherHocProps> {
+        class ScreenWatcherHoc extends React.PureComponent<IScreenWatcherHocPrivateProps> {
             static WrappedComponent = WrappedComponent;
             /**
              * Proxy real name, prop types and default props for storybook

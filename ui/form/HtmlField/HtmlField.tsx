@@ -3,40 +3,33 @@ import _merge from 'lodash-es/merge';
 import File from 'fileup-core/lib/models/File';
 import XhrUploader from 'fileup-core/lib/uploaders/XhrUploader';
 import _get from 'lodash/get';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, field} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IHtmlFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    disabled?: boolean;
+interface IHtmlFieldProps extends IFieldHocInput {
     editorProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     uploadUrl?: string;
     uploadImagesProcessor?: string;
     view?: any;
-    getView?: any;
-    ui?: any;
 }
 
-@fieldHoc({
+interface IHtmlFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.HtmlField'
 })
 @components('ui')
-export default class HtmlField extends React.PureComponent<IHtmlFieldProps,
-    {}> {
+export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHtmlFieldPrivateProps> {
+
     static defaultProps = {
         disabled: false,
         className: ""
     };
+
     static defaultEditorConfig = {
         modules: {
             toolbar: [

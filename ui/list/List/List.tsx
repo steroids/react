@@ -1,9 +1,10 @@
 import * as React from 'react';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
-import listHoc from '../listHoc';
+import {components, list} from '../../../hoc';
+import {IListHocInput, IListHocOutput} from '../../../hoc/list';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IListProps {
+interface IListProps extends IListHocInput {
     primaryKey?: string;
     items?: any[];
     itemView: any;
@@ -14,9 +15,13 @@ interface IListProps {
     ui?: any;
 }
 
-@listHoc()
+interface IListPrivateProps extends IListHocOutput, IComponentsHocOutput {
+
+}
+
+@list()
 @components('ui')
-export default class List extends React.PureComponent<IListProps, {}> {
+export default class List extends React.PureComponent<IListProps & IListPrivateProps> {
     constructor(props) {
         super(props);
         this.renderItem = this.renderItem.bind(this);

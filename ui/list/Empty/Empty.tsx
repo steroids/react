@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IEmptyProps {
     text?: string;
@@ -9,11 +10,16 @@ interface IEmptyProps {
     ui?: any;
 }
 
+interface IEmptyPrivateProps extends IComponentsHocOutput {
+
+}
+
 @components('ui')
-export default class Empty extends React.PureComponent<IEmptyProps, {}> {
+export default class Empty extends React.PureComponent<IEmptyProps & IEmptyPrivateProps> {
     render() {
-        const EmptyView =
-            this.props.view || this.props.ui.getView('list.EmptyView');
-        return <EmptyView {...this.props} />;
+        const EmptyView = this.props.view || this.props.ui.getView('list.EmptyView');
+        return (
+            <EmptyView {...this.props} />
+        );
     }
 }

@@ -4,17 +4,19 @@ import _get from 'lodash/get';
 import {components} from '../../../hoc';
 import {toggleAll, toggleItem} from '../../../actions/list';
 import {isChecked, isCheckedAll} from '../../../reducers/list';
+import {IConnectHocOutput} from '../../../hoc/connect';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface ICheckboxColumnProps {
-    primaryKey?: string;
-    item?: any;
     fieldProps?: any;
-    isChecked?: boolean;
-    listId?: any;
-    dispatch?: any;
-    getView?: any;
-    ui?: any;
     view?: any;
+}
+
+interface ICheckboxColumnPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+    listId?: any;
+    item?: any;
+    primaryKey?: string;
+    isChecked?: boolean;
 }
 
 @connect((state, props) => ({
@@ -23,8 +25,8 @@ interface ICheckboxColumnProps {
         : isCheckedAll(state, props.listId)
 }))
 @components('ui')
-export default class CheckboxColumn extends React.PureComponent<ICheckboxColumnProps,
-    {}> {
+export default class CheckboxColumn extends React.PureComponent<ICheckboxColumnProps & ICheckboxColumnPrivateProps> {
+
     constructor(props) {
         super(props);
         this._onChange = this._onChange.bind(this);
@@ -64,4 +66,5 @@ export default class CheckboxColumn extends React.PureComponent<ICheckboxColumnP
             this.props.dispatch(toggleAll(this.props.listId));
         }
     }
+
 }

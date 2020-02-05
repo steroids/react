@@ -2,14 +2,13 @@ import * as React from 'react';
 import {findDOMNode} from 'react-dom';
 import * as moment from 'moment';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, field} from '../../../hoc';
 import InputField from '../InputField';
 import DateField from '../DateField';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IRangeFieldProps {
-    label?: string | boolean;
-    hint?: string;
+interface IRangeFieldProps extends IFieldHocInput {
     attributeFrom?: string;
     attributeTo?: string;
     inputFrom?: {
@@ -22,30 +21,27 @@ interface IRangeFieldProps {
         value?: any,
         onChange?: (...args: any[]) => any
     };
-    required?: boolean;
     type?: 'input' | 'date';
     fieldComponent?: any;
-    size?: 'sm' | 'md' | 'lg';
     placeholderFrom?: string;
     placeholderTo?: string;
-    disabled?: boolean;
     fromProps?: any;
     toProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
     isInvalid?: boolean;
-    getView?: any;
-    ui?: any;
 }
 
-@fieldHoc({
+interface IRangeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.RangeField',
     attributes: ['from', 'to']
 })
 @components('ui')
-export default class RangeField extends React.PureComponent<IRangeFieldProps,
-    {}> {
+export default class RangeField extends React.PureComponent<IRangeFieldProps & IRangeFieldPrivateProps> {
     _timer: any;
     refTo: any;
     static defaultProps = {

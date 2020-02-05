@@ -5,13 +5,14 @@ import {push} from 'connected-react-router';
 import {components} from '../../../hoc';
 import FieldLayout from '../FieldLayout';
 import {getNavUrl} from '../../../reducers/navigation';
-import {FormContext, IFormContext} from '../Form/Form';
-import {IComponentsContext} from '../../../hoc/components';
+import {FormContext, IFormContext} from '../../../hoc/form';
+import {IComponentsHocOutput} from '../../../hoc/components';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface IButtonProps extends IComponentsContext {
+export interface IButtonProps {
     label?: string | any;
     type?: 'button' | 'submit';
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | string;
     color?:
         | 'primary'
         | 'secondary'
@@ -40,6 +41,10 @@ interface IButtonProps extends IComponentsContext {
     layoutProps?: any;
 }
 
+interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
+}
+
 type ButtonState = {
     isLoading?: boolean
 };
@@ -53,8 +58,7 @@ type ButtonState = {
         : props.to
 }))
 @components('ui')
-export default class Button extends React.PureComponent<IButtonProps,
-    ButtonState> {
+export default class Button extends React.PureComponent<IButtonProps & IButtonPrivateProps, ButtonState> {
     _isMounted: any;
     context: boolean;
     static defaultProps = {

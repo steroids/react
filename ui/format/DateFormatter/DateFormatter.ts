@@ -1,28 +1,36 @@
 import * as React from 'react';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
+import {components, formatter} from '../../../hoc';
+import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IDateFormatterProps {
     attribute?: string;
     item?: any;
     value?: string;
-    format?: string;
-    moment?: any;
-    locale?: any;
 }
 
+interface IDateFormatterProps extends IFormatterHocInput {
+    format?: string;
+}
+
+interface IDateFormatterPrivateProps extends IFormatterHocOutput, IComponentsHocOutput {
+
+}
+
+@formatter()
 @components('locale')
-export default class DateFormatter extends React.Component<IDateFormatterProps> {
+export default class DateFormatter extends React.Component<IDateFormatterProps & IDateFormatterPrivateProps> {
+
     static defaultProps = {
         format: 'LL'
     };
 
     render() {
-        const value =
-            this.props.value || _get(this.props.item, this.props.attribute);
-        if (!value) {
+        if (!this.props.value) {
             return null;
         }
-        return this.props.locale.moment(value).format(this.props.format);
+        return this.props.locale.moment(this.props.value).format(this.props.format);
     }
+
 }

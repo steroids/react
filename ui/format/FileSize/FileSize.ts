@@ -1,11 +1,18 @@
 import * as React from 'react';
+import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {formatter} from '../../../hoc';
 
-interface IFileSizeProps {
-    bytes?: number;
+interface IFileSizeFormatterProps extends IFormatterHocInput {
     showZero?: boolean;
 }
 
-export default class FileSize extends React.Component<IFileSizeProps, {}> {
+interface IFileSizeFormatterPrivateProps extends IFormatterHocOutput {
+
+}
+
+@formatter()
+export default class FileSize extends React.Component<IFileSizeFormatterProps & IFileSizeFormatterPrivateProps> {
+
     static asHumanFileSize(bytes, showZero) {
         if (!bytes) {
             return showZero ? '0' : "";
@@ -33,6 +40,7 @@ export default class FileSize extends React.Component<IFileSizeProps, {}> {
     }
 
     render() {
-        return FileSize.asHumanFileSize(this.props.bytes, this.props.showZero);
+        return FileSize.asHumanFileSize(this.props.value, this.props.showZero);
     }
+
 }

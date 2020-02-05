@@ -46,7 +46,7 @@ export default class LocaleComponent {
         }
     }
 
-    moment(date, format) {
+    moment(date, format = undefined) {
         if (
             this.backendTimeZone &&
             date &&

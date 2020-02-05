@@ -1,34 +1,35 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
+import {components, formatter} from '../../../hoc';
+import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDateTimeFormatterProps {
-    attribute?: string;
-    item?: any;
-    value?: string;
+interface IDateTimeFormatterProps extends IFormatterHocInput {
     format?: string;
     timeZone?: string | boolean;
-    language?: any;
-    locale?: any;
 }
 
+interface IDateTimeFormatterPrivateProps extends IFormatterHocOutput, IComponentsHocOutput {
+
+}
+
+@formatter()
 @components('locale')
-export default class DateTimeFormatter extends React.Component<IDateTimeFormatterProps> {
+export default class DateTimeFormatter extends React.Component<IDateTimeFormatterProps & IDateTimeFormatterPrivateProps> {
+
     static defaultProps = {
         format: 'LLL'
     };
 
     render() {
-        const value =
-            this.props.value || _get(this.props.item, this.props.attribute);
-        if (!value) {
+        if (!this.props.value) {
             return null;
         }
         const date =
             this.props.timeZone === false
-                ? moment(value).locale(this.props.locale.language)
-                : this.props.locale.moment(value);
+                ? moment(this.props.value).locale(this.props.locale.language)
+                : this.props.locale.moment(this.props.value);
         return date.format(this.props.format);
     }
+
 }

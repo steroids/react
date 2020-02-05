@@ -4,6 +4,7 @@ import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface INavProps {
     layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list';
@@ -22,19 +23,18 @@ interface INavProps {
     className?: string;
     view?: any;
     onChange?: (...args: any[]) => any;
-    find?: any;
-    filter?: any;
-    map?: any;
-    getView?: any;
-    ui?: any;
 }
 
-type NavState = {
+interface INavPrivateProps extends IComponentsHocOutput {
+}
+
+interface NavState {
     activeTab?: any,
     filter?: any
-};
+}
+
 @components('ui')
-export default class Nav extends React.PureComponent<INavProps, NavState> {
+export default class Nav extends React.PureComponent<INavProps & INavPrivateProps, NavState> {
     static defaultProps = {
         layout: 'button'
     };

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, field} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ICheckboxFieldProps {
+interface ICheckboxFieldProps extends IFieldHocInput {
     label?: string | boolean | any;
     hint?: string;
     attribute?: string;
@@ -24,15 +25,18 @@ interface ICheckboxFieldProps {
     dispatch?: any;
 }
 
-@fieldHoc({
+interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.CheckboxField',
     layoutProps: {
         label: false
     }
 })
 @components('ui')
-export default class CheckboxField extends React.PureComponent<ICheckboxFieldProps,
-    {}> {
+export default class CheckboxField extends React.PureComponent<ICheckboxFieldProps & ICheckboxFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

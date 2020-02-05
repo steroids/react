@@ -7,6 +7,8 @@ import {
     closeNotification
 } from '../../../actions/notifications';
 import {getNotifications} from '../../../reducers/notifications';
+import {IConnectHocOutput} from '../../../hoc/connect';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface INotificationsProps {
     initialFlashes?: any;
@@ -27,18 +29,18 @@ interface INotificationsProps {
     className?: string;
     view?: any;
     itemView?: any;
-    dispatch?: any;
-    map?: any;
-    getView?: any;
-    ui?: any;
+}
+
+interface INotificationsPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
 }
 
 @connect(state => ({
     notifications: getNotifications(state)
 }))
 @components('ui')
-export default class Notifications extends React.PureComponent<INotificationsProps,
-    {}> {
+export default class Notifications extends React.PureComponent<INotificationsProps & INotificationsPrivateProps> {
+
     componentDidMount() {
         if (this.props.initialFlashes) {
             this.props.dispatch(setFlashes(this.props.initialFlashes));
@@ -78,4 +80,5 @@ export default class Notifications extends React.PureComponent<INotificationsPro
     _onClose(notificationId) {
         this.props.dispatch(closeNotification(notificationId));
     }
+
 }

@@ -1,38 +1,28 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, field} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface INumberFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    size?: 'sm' | 'md' | 'lg';
+interface INumberFieldProps extends IFieldHocInput {
     min?: number;
     max?: number;
     step?: string | number;
     placeholder?: string;
     isInvalid?: boolean;
-    disabled?: boolean;
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
-    getView?: any;
-    ui?: any;
 }
 
-@fieldHoc({
+interface INumberFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.NumberField'
 })
 @components('ui')
-export default class NumberField extends React.PureComponent<INumberFieldProps,
-    {}> {
+export default class NumberField extends React.PureComponent<INumberFieldProps & INumberFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

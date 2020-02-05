@@ -1,43 +1,26 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
-import dataProviderHoc from '../dataProviderHoc';
+import {components, field} from '../../../hoc';
+import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../../../hoc/dataProvider";
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IRadioListFieldProps {
-    label?: string | boolean | any;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
+interface IRadioListFieldProps extends IFieldHocInput, IDataProviderHocInput {
     isInvalid?: boolean;
-    disabled?: boolean;
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
-    items?: {
-        id?: number | string | boolean,
-        label?: string | any
-    }[];
-    onItemClick?: any;
-    map?: any;
-    getView?: any;
-    ui?: any;
-    selectedItems?: any;
-    hoveredItem?: any;
 }
 
-@fieldHoc({
+interface IRadioListFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.RadioListField'
 })
-@dataProviderHoc()
+@dataProvider()
 @components('ui')
-export default class RadioListField extends React.PureComponent<IRadioListFieldProps,
-    {}> {
+export default class RadioListField extends React.PureComponent<IRadioListFieldProps & IRadioListFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

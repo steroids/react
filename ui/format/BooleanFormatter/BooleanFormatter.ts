@@ -1,13 +1,17 @@
 import * as React from 'react';
-import viewHoc from '../viewHoc';
+import {formatter} from '../../../hoc';
+import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 
-interface IBooleanFormatterProps {
+interface IBooleanFormatterProps extends IFormatterHocInput {
     value?: string | number | boolean;
 }
 
-@viewHoc()
-export default class BooleanFormatter extends React.Component<IBooleanFormatterProps,
-    {}> {
+interface IBooleanFormatterPrivateProps extends IFormatterHocOutput {
+
+}
+
+@formatter()
+export default class BooleanFormatter extends React.Component<IBooleanFormatterProps & IBooleanFormatterPrivateProps> {
     render() {
         return this.props.value ? __('Да') : __('Нет');
     }

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import MomentLocaleUtils from 'react-day-picker/moment';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
-import {IComponentsContext} from '../../../hoc/components';
+import {components, field} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
-interface IDateFieldProps extends IComponentsContext {
+interface IDateFieldProps extends IFieldHocInput {
     label?: string | boolean;
     hint?: string;
     attribute?: string;
@@ -15,7 +15,7 @@ interface IDateFieldProps extends IComponentsContext {
         onChange?: (...args: any[]) => any
     };
     required?: boolean;
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | string;
     disabled?: boolean;
     pickerProps?: any;
     onChange?: (...args: any[]) => any;
@@ -29,11 +29,15 @@ interface IDateFieldProps extends IComponentsContext {
     placeholder?: any;
 }
 
-@fieldHoc({
+interface IDateFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.DateField'
 })
 @components('ui', 'locale')
-export default class DateField extends React.PureComponent<IDateFieldProps> {
+export default class DateField extends React.PureComponent<IDateFieldProps & IDateFieldPrivateProps> {
 
     static WrappedComponent: any;
 

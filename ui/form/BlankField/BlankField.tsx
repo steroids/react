@@ -1,7 +1,8 @@
 import * as React from 'react';
-import fieldHoc from '../fieldHoc';
+import {field} from "../../../hoc";
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
-interface IBlankFieldProps {
+interface IBlankFieldProps extends IFieldHocInput {
     label?: string | boolean;
     hint?: string;
     attribute?: string;
@@ -10,11 +11,14 @@ interface IBlankFieldProps {
     view?: any;
 }
 
-@fieldHoc({
+interface IBlankFieldPrivateProps extends IFieldHocOutput {
+
+}
+
+@field({
     componentId: 'form.BlankField'
 })
-export default class BlankField extends React.PureComponent<IBlankFieldProps,
-    {}> {
+export default class BlankField extends React.PureComponent<IBlankFieldProps & IBlankFieldPrivateProps> {
     render() {
         return <span>{this.props.text || this.props.children}</span>;
     }

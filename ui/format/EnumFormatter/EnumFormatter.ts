@@ -5,26 +5,25 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {getEnumLabels} from '../../../reducers/fields';
-import viewHoc from '../viewHoc';
+import {formatter} from '../../../hoc';
+import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface IEnumFormatterProps {
-    value?: string;
-    items?:
-        | {
-        id?: number | string,
-        label?: string
-    }[]
-        | ((...args: any[]) => any);
+interface IEnumFormatterProps extends IFormatterHocInput {
+    items?: string | {id: number | string, label: string}[] | {getLabel: () => string | any};
 }
 
-@viewHoc()
+interface IEnumFormatterPrivateProps extends IFormatterHocOutput, IConnectHocOutput {
+
+}
+
+@formatter()
 @connect((state, props) => ({
     items: _isString(props.items)
         ? getEnumLabels(state, props.items)
         : props.items
 }))
-export default class EnumFormatter extends React.Component<IEnumFormatterProps,
-    {}> {
+export default class EnumFormatter extends React.Component<IEnumFormatterProps & IEnumFormatterPrivateProps> {
     /**
      * @param {array|function} items
      * @param {string|number} id

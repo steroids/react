@@ -1,28 +1,13 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
-import dataProviderHoc from '../dataProviderHoc';
+import {components, field} from '../../../hoc';
+import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../../../hoc/dataProvider";
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ICheckboxListFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    isInvalid?: boolean;
-    disabled?: boolean;
+interface ICheckboxListFieldProps extends IFieldHocInput, IDataProviderHocInput {
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
-    items?: {
-        id?: number | string | boolean,
-        label?: string
-    }[];
     onItemClick?: any;
     map?: any;
     getView?: any;
@@ -31,13 +16,16 @@ interface ICheckboxListFieldProps {
     hoveredItem?: any;
 }
 
-@fieldHoc({
+interface ICheckboxListFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.CheckboxListField'
 })
-@dataProviderHoc()
+@dataProvider()
 @components('ui')
-export default class CheckboxListField extends React.PureComponent<ICheckboxListFieldProps,
-    {}> {
+export default class CheckboxListField extends React.PureComponent<ICheckboxListFieldProps & ICheckboxListFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

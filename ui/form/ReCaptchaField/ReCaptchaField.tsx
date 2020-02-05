@@ -1,9 +1,9 @@
 import * as React from 'react';
-import fieldHoc from '../fieldHoc';
-import {components} from '../../../hoc';
-import {IComponentsContext} from '../../../hoc/components';
+import {components, field} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
-interface IReCaptchaFieldProps extends IComponentsContext{
+interface IReCaptchaFieldProps extends IFieldHocInput {
     metaItem?: any;
     input?: {
         name?: string,
@@ -16,12 +16,15 @@ interface IReCaptchaFieldProps extends IComponentsContext{
     view?: any;
 }
 
-@fieldHoc({
+interface IReCaptchaFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.ReCaptchaField'
 })
 @components('resource', 'ui')
-export default class ReCaptchaField extends React.PureComponent<IReCaptchaFieldProps,
-    {}> {
+export default class ReCaptchaField extends React.PureComponent<IReCaptchaFieldProps & IReCaptchaFieldPrivateProps> {
     render() {
         const {input, ...props} = this.props;
         const ReCaptchaFieldView =

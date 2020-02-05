@@ -1,40 +1,30 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, field} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IPasswordFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    size?: 'sm' | 'md' | 'lg';
+interface IPasswordFieldProps extends IFieldHocInput {
     security?: boolean;
     placeholder?: string;
-    disabled?: boolean;
     isInvalid?: boolean;
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
-    value?: any;
-    getView?: any;
-    ui?: any;
+}
+
+interface IPasswordFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
 }
 
 type PasswordFieldState = {
     type?: string
 };
-@fieldHoc({
+
+@field({
     componentId: 'form.PasswordField'
 })
 @components('ui')
-export default class PasswordField extends React.PureComponent<IPasswordFieldProps,
-    PasswordFieldState> {
+export default class PasswordField extends React.PureComponent<IPasswordFieldProps & IPasswordFieldPrivateProps, PasswordFieldState> {
     static defaultProps = {
         disabled: false,
         security: false,
@@ -75,7 +65,7 @@ export default class PasswordField extends React.PureComponent<IPasswordFieldPro
     constructor(props) {
         super(props);
         this.state = {
-            type: 'password'
+            type: 'password',
         };
     }
 

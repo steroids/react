@@ -2,42 +2,48 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import _get from 'lodash-es/get';
 import _isFunction from 'lodash-es/isFunction';
-import {getCurrentItem} from '../reducers/navigation';
-import {
-    getData,
-    getInitializeCounter,
-    getUser,
-    isInitialized
-} from '../reducers/auth';
-import {init, setData, setUser} from '../actions/auth';
 import _isObject from 'lodash-es/isObject';
 import _upperFirst from 'lodash-es/upperFirst';
 import _merge from 'lodash-es/merge';
+
+import {getCurrentItem} from '../reducers/navigation';
+import {getData, getInitializeCounter, getUser, isInitialized} from '../reducers/auth';
+import {init, setData, setUser} from '../actions/auth';
 import {setMeta} from '../actions/fields';
 import {components} from '../hoc';
 import {goToPage} from '../actions/navigation';
-import {IComponentsContext} from './components';
-import {IConnectProps} from '../components/StoreComponent';
+import {IComponentsHocOutput} from './components';
+import {IConnectHocOutput} from './connect';
 
-interface ILayoutHocProps extends IConnectProps{
-    /*
-      page: PropTypes.shape({
-          id: PropTypes.string,
-          roles: PropTypes.arrayOf(PropTypes.string)
-      }),
-      user: PropTypes.shape({
-          role: PropTypes.string
-      }),
-      data: PropTypes.object,
-      initializeCounter: PropTypes.number
-     */
-    page?: any,
-    user?: any,
-    data?: any,
+export const STATUS_LOADING = 'loading';
+export const STATUS_NOT_FOUND = 'not_found';
+export const STATUS_RENDER_ERROR = 'render_error';
+export const STATUS_HTTP_ERROR = 'render_error';
+export const STATUS_ACCESS_DENIED = 'access_denied';
+export const STATUS_OK = 'ok';
+
+export interface ILayoutHocInput {
+    page?: {
+        id: string,
+        roles: string[],
+    },
+    user?: {
+        role: string,
+    },
+    data?: object,
     initializeCounter?: number,
-    components: IComponentsContext,
+    components: IComponentsHocOutput,
     isInitialized?: boolean,
     redirectPageId?: any,
+}
+
+export interface ILayoutHocOutput {
+    status: string,
+    renderError: string,
+}
+
+interface ILayoutHocPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
 }
 
 interface ILayoutHocState {
@@ -53,17 +59,11 @@ const stateMap = state => ({
     initializeCounter: getInitializeCounter(state),
     redirectPageId: state.auth.redirectPageId
 });
-export const STATUS_LOADING = 'loading';
-export const STATUS_NOT_FOUND = 'not_found';
-export const STATUS_RENDER_ERROR = 'render_error';
-export const STATUS_HTTP_ERROR = 'render_error';
-export const STATUS_ACCESS_DENIED = 'access_denied';
-export const STATUS_OK = 'ok';
 
 export default (initAction): any => WrappedComponent =>
     connect(stateMap)(
         components()(
-            class LayoutHoc extends React.PureComponent<ILayoutHocProps, ILayoutHocState> {
+            class LayoutHoc extends React.PureComponent<ILayoutHocInput & ILayoutHocPrivateProps, ILayoutHocState> {
                 static WrappedComponent = WrappedComponent;
                 /**
                  * Proxy real name, prop types and default props
@@ -169,12 +169,17 @@ export default (initAction): any => WrappedComponent =>
                             }
                         }
                     }
+
+                    const outputProps = {
+                        status,
+                        renderError: this.state.renderError,
+                        ...this.props.data,
+                    } as ILayoutHocOutput;
+
                     return (
                         <WrappedComponent
                             {...this.props}
-                            {...this.props.data}
-                            status={status}
-                            renderError={this.state.renderError}
+                            {...outputProps}
                         />
                     );
                 }

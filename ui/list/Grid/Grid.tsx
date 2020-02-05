@@ -4,10 +4,11 @@ import _upperFirst from 'lodash-es/upperFirst';
 import _isString from 'lodash-es/isString';
 import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
-import {components} from '../../../hoc';
-import listHoc from '../listHoc';
+import {components, list} from '../../../hoc';
 import ActionColumn from '../ActionColumn';
 import Format from '../../format/Format';
+import {IListHocInput, IListHocOutput} from '../../../hoc/list';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IGridColumn {
     attribute?: string,
@@ -26,32 +27,24 @@ interface IGridColumn {
     valueProps?: any
 }
 
-interface IGridProps {
-    primaryKey?: string;
+interface IGridProps extends IListHocInput {
     view?: any;
-    columns: (
-        | string
-        | IGridColumn
-        )[];
+    columns: (string | IGridColumn)[];
     actions?: any[] | ((...args: any[]) => any);
     model?: any;
-    listId?: any;
     label?: any;
     fields?: any;
     searchForm?: any;
-    formatters?: any;
-    getView?: any;
-    ui?: any;
     itemsIndexing?: any;
-    filter?: any;
-    map?: any;
-    scope?: any;
+}
+
+interface IGridPrivateProps extends IListHocOutput, IComponentsHocOutput {
     list?: any;
 }
 
-@listHoc()
+@list()
 @components('ui')
-export default class Grid extends React.PureComponent<IGridProps, {}> {
+export default class Grid extends React.PureComponent<IGridProps & IGridPrivateProps> {
     constructor(props) {
         super(props);
         this.renderValue = this.renderValue.bind(this);

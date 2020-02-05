@@ -4,6 +4,8 @@ import {change} from 'redux-form';
 import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
 import {setPage} from '../../../actions/list';
+import {IConnectHocOutput} from '../../../hoc/connect';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IPaginationProps {
     listId?: string;
@@ -17,18 +19,19 @@ interface IPaginationProps {
     className?: string;
     view?: any;
     pageParam?: string;
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | string;
     syncWithAddressBar?: boolean;
     page?: any;
-    dispatch?: any;
-    getView?: any;
-    ui?: any;
+}
+
+interface IPaginationPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
 }
 
 @connect()
 @components('ui')
-export default class Pagination extends React.PureComponent<IPaginationProps,
-    {}> {
+export default class Pagination extends React.PureComponent<IPaginationProps & IPaginationPrivateProps> {
+
     static defaultProps = {
         aroundCount: 3,
         size: 'md'
@@ -112,4 +115,5 @@ export default class Pagination extends React.PureComponent<IPaginationProps,
     _onSelectNext() {
         this._onSelect(this.props.list.page + 1);
     }
+
 }

@@ -1,39 +1,29 @@
 import * as React from 'react';
 import {submit} from 'redux-form';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, connect, field} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface ITextFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    size?: 'sm' | 'md' | 'lg';
+interface ITextFieldProps extends IFieldHocInput {
     placeholder?: string;
     isInvalid?: boolean;
-    disabled?: boolean;
     submitOnEnter?: boolean;
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
-    formId?: any;
-    dispatch?: any;
-    getView?: any;
-    ui?: any;
 }
 
-@fieldHoc({
+interface ITextFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.TextField'
 })
+@connect()
 @components('ui')
-export default class TextField extends React.PureComponent<ITextFieldProps,
-    {}> {
+export default class TextField extends React.PureComponent<ITextFieldProps & ITextFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

@@ -1,35 +1,25 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import fieldHoc from '../fieldHoc';
+import {components, field} from '../../../hoc';
+import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ISliderFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    size?: 'sm' | 'md' | 'lg';
-    disabled?: boolean;
+interface ISliderFieldProps extends IFieldHocInput {
     sliderProps?: any;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
     min?: number;
     max?: number;
-    getView?: any;
-    ui?: any;
 }
 
-@fieldHoc({
+interface ISliderFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.SliderField'
 })
 @components('ui')
-export default class SliderField extends React.PureComponent<ISliderFieldProps,
-    {}> {
+export default class SliderField extends React.PureComponent<ISliderFieldProps & ISliderFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

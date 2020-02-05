@@ -1,67 +1,22 @@
 import * as React from 'react';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
-import {
-    reduxForm,
-    getFormValues,
-    isInvalid,
-    initialize,
-    destroy
-} from 'redux-form';
+import {reduxForm, getFormValues, isInvalid, initialize} from 'redux-form';
 import _isEqual from 'lodash-es/isEqual';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _get from 'lodash-es/get';
 import * as queryString from 'query-string';
-import {components} from '../../../hoc';
+import components, {IComponentsHocOutput} from '../../../hoc/components';
+import formSubmit, {IFormSubmitHocInput, IFormSubmitHocOutput} from '../../../hoc/formSubmit';
+import {FormContext} from '../../../hoc/form';
 import AutoSaveHelper from './AutoSaveHelper';
 import SyncAddressBarHelper from './SyncAddressBarHelper';
 import Field from '../Field';
 import Button from '../Button';
-import formSubmitHoc from '../formSubmitHoc';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
-export interface IFormContext {
-    /*
-        formId: PropTypes.string,
-        prefix: PropTypes.string,
-        model: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.func,
-            PropTypes.object
-        ]),
-        layout: PropTypes.oneOfType([
-            PropTypes.oneOf(['default', 'inline', 'horizontal']),
-            PropTypes.string,
-            PropTypes.bool
-        ]),
-        layoutProps: PropTypes.object,
-        size: PropTypes.oneOf(['sm', 'md', 'lg'])
-     */
-    formId?: string;
-    model?: any;
-    prefix?: string | boolean;
-    layout?: any;
-    layoutProps?: any;
-    size?: 'sm' | 'md' | 'lg';
-}
-
-export const FormContext = React.createContext<IFormContext>({
-    size: 'md',
-});
-
-let valuesSelector = null;
-let invalidSelector = null;
-const filterValues = (values = {}) => {
-    let obj = {...values};
-    Object.keys(obj).forEach(key => {
-        if (!obj[key] || (_isArray(obj[key]) && !obj[key].length)) {
-            delete obj[key];
-        }
-    });
-    return obj;
-};
-
-interface IFormProps {
+interface IFormProps extends IFormSubmitHocInput {
     formId: string;
     prefix?: string;
     model?: string | ((...args: any[]) => any) | any;
@@ -69,7 +24,7 @@ interface IFormProps {
     actionMethod?: string;
     layout?: ('default' | 'inline' | 'horizontal') | string | boolean;
     layoutProps?: any;
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'sm' | 'md' | 'lg' | string;
     onSubmit?: (...args: any[]) => any;
     validators?: any[];
     onBeforeSubmit?: (...args: any[]) => any;
@@ -80,9 +35,6 @@ interface IFormProps {
     initialValues?: any | any[];
     className?: string;
     view?: any;
-    formValues?: any | any[];
-    isInvalid?: boolean;
-    formRegisteredFields?: any;
     fields?: (
         | string
         | {
@@ -97,15 +49,27 @@ interface IFormProps {
     restoreCustomizer?: (...args: any[]) => any;
     useHash?: boolean;
     autoFocus?: boolean;
-    locationSearch?: string;
-    map?: any;
-    handleSubmit?: any;
-    getView?: any;
-    ui?: any;
-    store?: any;
-    clientStorage?: any;
-    dispatch?: any;
 }
+
+interface IFormPrivateProps extends IConnectHocOutput, IFormSubmitHocOutput, IComponentsHocOutput {
+    formValues?: any | any[];
+    locationSearch?: string;
+    isInvalid?: boolean;
+    formRegisteredFields?: any;
+    handleSubmit?: any;
+}
+
+let valuesSelector = null;
+let invalidSelector = null;
+const filterValues = (values = {}) => {
+    let obj = {...values};
+    Object.keys(obj).forEach(key => {
+        if (!obj[key] || (_isArray(obj[key]) && !obj[key].length)) {
+            delete obj[key];
+        }
+    });
+    return obj;
+};
 
 @connect((state, props) => {
     valuesSelector = getFormValues(props.formId);
@@ -115,13 +79,13 @@ interface IFormProps {
         formValues: valuesSelector(state),
         isInvalid: invalidSelector(state),
         formRegisteredFields: _get(state, `form.${props.formId}.registeredFields`),
-        locationSearch: _get(state, 'router.location.search', "")
+        locationSearch: _get(state, 'router.location.search', '')
     };
 })
-@formSubmitHoc()
+@formSubmit()
 @reduxForm()
 @components('ui', 'store', 'clientStorage')
-export default class Form extends React.PureComponent<IFormProps, {}> {
+export default class Form extends React.PureComponent<IFormProps & IFormPrivateProps> {
 
     componentDidMount() {
         // Restore values from query, when autoSave flag is set
@@ -150,9 +114,7 @@ export default class Form extends React.PureComponent<IFormProps, {}> {
             );
         }
         if (this.props.autoFocus) {
-            const inputEl = findDOMNode(this).querySelector(
-                'input:not([type=hidden])'
-            );
+            const inputEl = findDOMNode(this).querySelector('input:not([type=hidden])');
             setTimeout(() => {
                 if (inputEl && inputEl.focus) {
                     inputEl.focus();

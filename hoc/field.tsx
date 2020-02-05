@@ -1,30 +1,67 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {
-    Field,
-    FieldArray,
-    formValueSelector,
-    getFormSubmitErrors,
-    change
-} from 'redux-form';
+import {Field, FieldArray, formValueSelector, getFormSubmitErrors, change} from 'redux-form';
 import _get from 'lodash-es/get';
 import _upperFirst from 'lodash-es/upperFirst';
-import {components} from '../../hoc';
-import FieldLayout from './FieldLayout';
-import {getFieldProps, getMeta} from '../../reducers/fields';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
-import {FormContext} from './Form/Form';
-import {IComponentsContext} from '../../hoc/components';
-import formIdHoc from './formIdHoc';
+
+import {connect} from './index';
+import {getFieldProps, getMeta} from '../reducers/fields';
+import components, {IComponentsHocOutput} from './components';
+import form, {IFormHocOutput} from './form';
+import {IFieldProps} from '../ui/form/Field/Field';
+
+export interface IFieldHocInput {
+    prefix?: string | boolean;
+    size?: 'sm' | 'md' | 'lg' | string;
+    label?: string | boolean;
+    attribute?: string;
+    model?: string | ((...args: any[]) => any) | any;
+    hint?: string;
+    required?: boolean;
+    disabled?: boolean;
+    layout?: any;
+    layoutProps?: any;
+    onChange?: (...args: any[]) => any;
+    className?: string;
+    //layoutClassName?: string;
+    //view?: any;
+    errors?: any;
+}
+
+export interface IFieldHocOutput extends IFormHocOutput {
+    input: {
+        name?: string,
+        value?: any,
+        onChange?: (...args: any[]) => any
+    },
+    fieldId: string,
+}
+
+export interface IFieldHocConfig {
+    appendPrefix: boolean,
+    componentId: string,
+    attributes: string[],
+    layoutProps: any,
+    list: boolean,
+}
+
+interface IFieldHocPrivateProps extends IComponentsHocOutput {
+    formId?: any;
+    fieldPropsFromRedux?: any;
+    formErrors?: any;
+    dispatch?: any;
+}
 
 const defaultConfig = {
-    componentId: "",
-    attributes: [""],
+    appendPrefix: true,
+    componentId: '',
+    attributes: [''],
     layoutProps: null,
-    list: false
-};
+    list: false,
+} as IFieldHocConfig;
+
 const valueSelectors = {};
 const errorSelectors = {};
 let ID_COUNTER = 1;
@@ -57,24 +94,6 @@ export const getFieldPropsFromModel = (model, attribute) => {
     return null;
 };
 
-interface IFieldHocProps extends IComponentsContext {
-    attribute?: string;
-    fieldProps?: any;
-    formErrors?: any;
-    _wrappedComponent?: any;
-    props?: any;
-    formId?: any;
-    size?: string;
-    dispatch?: any;
-    errors?: any;
-    forEach?: any;
-    attributes?: any;
-    model?: any;
-    layout?: any;
-    prefix?: any;
-    layoutProps?: any;
-}
-
 export default (customConfig): any => WrappedComponent => {
     const config = {
         ...defaultConfig,
@@ -82,7 +101,9 @@ export default (customConfig): any => WrappedComponent => {
         ...customConfig,
     };
 
-    return formIdHoc()(
+    return form({
+        appendPrefix: config.appendPrefix,
+    })(
         connect((state, props) => {
             if (!props.formId) {
                 return {};
@@ -114,11 +135,11 @@ export default (customConfig): any => WrappedComponent => {
                 ...values,
                 model,
                 formErrors: errorSelector(state),
-                fieldProps: getFieldProps(state, getFieldId(props, config))
+                fieldPropsFromRedux: getFieldProps(state, getFieldId(props, config))
             };
         })(
             components('ui')(
-                class FieldHoc extends React.PureComponent<IFieldHocProps> {
+                class FieldHoc extends React.PureComponent<IFieldHocInput & IFieldHocPrivateProps> {
 
                     _fieldId: any;
 
@@ -129,7 +150,7 @@ export default (customConfig): any => WrappedComponent => {
                             config.attributes.forEach(attribute => {
                                 if (!this.props['attribute' + _upperFirst(attribute)]) {
                                     throw new Error(
-                                        `Please set attribute name '${attribute}' for component '${this.props._wrappedComponent.name}' in form '${this.props.formId}'`
+                                        `Please set attribute name '${attribute}' for component '${WrappedComponent.name}' in form '${this.props.formId}'`
                                     );
                                 }
                             });
@@ -150,46 +171,24 @@ export default (customConfig): any => WrappedComponent => {
                     }
 
                     render() {
-                        return (
-                            <FormContext.Consumer>
-                                {context => this.renderContent(context)}
-                            </FormContext.Consumer>
-                        )
-                    }
-
-                    renderContent(context) {
-                        let props = {
-                            formId: context.formId,
-                            model: context.model,
-                            prefix: context.prefix,
-                            size: context.size || 'md',
-                            ...this.props,
-                            layout: this.props.layout || this.props.layout === false
-                                ? this.props.layout
-                                : context.layout,
-                            layoutProps: {
-                                ...context.layoutProps,
-                                ...this.props.layoutProps,
-                            }
-                        };
+                        const FieldLayout = require('../ui/form/FieldLayout').default;
+                        const outputProps = {
+                            ...this.props.ui.getFieldProps(config.componentId),
+                            ...getFieldPropsFromModel(this.props.model, this.props.attribute),
+                            ...this.props.fieldPropsFromRedux,
+                        } as IFieldHocOutput;
 
                         const inputProps = {};
                         if (!config.list) {
                             config.attributes.forEach(attribute => {
                                 inputProps[`input${_upperFirst(attribute)}`] = {
-                                    name: getName(props, attribute),
+                                    name: getName(this.props, attribute),
                                     value: this._getValue(attribute),
                                     onChange: value => this._setValue(attribute, value)
                                 };
                             });
                         }
-                        // Append custom field props from redux state and UiComponent
-                        props = {
-                            ...this.props.ui.getFieldProps(config.componentId),
-                            ...getFieldPropsFromModel(this.props.model, this.props.attribute),
-                            ...props.fieldProps,
-                            ...props
-                        };
+
                         // Get errors
                         let errors = this.props.errors;
                         Object.keys(inputProps).map(key => {
@@ -200,38 +199,42 @@ export default (customConfig): any => WrappedComponent => {
                             }
                         });
                         const isInvalid = errors && errors.length > 0;
+
                         // TODO implement values in state for list (instead of redux-form FieldArray)
+
                         return (
                             <FieldLayout
-                                {...props}
+                                {...this.props}
+                                {...outputProps}
                                 {...config.layoutProps}
                                 errors={isInvalid ? errors : null}
                                 isInvalid={isInvalid}
                             >
-                                {!config.list &&
-                                props.formId &&
+                                {!config.list && this.props.formId &&
                                 config.attributes.map(attribute => (
                                     <Field
-                                        key={props.formId + attribute}
-                                        name={getName(props, attribute)}
+                                        key={this.props.formId + attribute}
+                                        name={getName(this.props, attribute)}
                                         component='input'
                                         type='hidden'
                                     />
                                 ))}
                                 {(config.list && (
                                     <FieldArray
-                                        {...props}
-                                        name={getName(props, "")}
+                                        {...this.props}
+                                        {...outputProps}
+                                        name={getName(this.props, "")}
                                         component={WrappedComponent}
-                                        formId={props.formId}
+                                        formId={this.props.formId}
                                         fieldId={this._fieldId}
                                     />
                                 )) || (
                                     <WrappedComponent
-                                        {...props}
+                                        {...this.props}
+                                        {...outputProps}
                                         {...inputProps}
                                         isInvalid={isInvalid}
-                                        formId={props.formId}
+                                        formId={this.props.formId}
                                         fieldId={this._fieldId}
                                     />
                                 )}

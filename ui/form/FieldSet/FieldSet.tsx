@@ -1,16 +1,10 @@
 import * as React from 'react';
-import {FormContext} from '../Form/Form';
+import {FormContext, IFormContext} from '../../../hoc/form';
 
-interface IFieldSetProps {
-    formId?: string,
-    model?: string | ((...args: any[]) => any) | any;
-    prefix?: string;
-    layout?: ('default' | 'inline' | 'horizontal') | string | boolean;
-    layoutProps?: any;
-    size?: 'sm' | 'md' | 'lg';
+interface IFieldSetProps extends IFormContext {
 }
 
-export default class FieldSet extends React.PureComponent<IFieldSetProps, {}> {
+export default class FieldSet extends React.PureComponent<IFieldSetProps> {
     render() {
         return (
             <FormContext.Consumer>

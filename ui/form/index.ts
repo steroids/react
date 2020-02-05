@@ -12,7 +12,6 @@ import FieldList from './FieldList';
 import FieldSet from './FieldSet';
 import FileField from './FileField';
 import Form from './Form';
-import GeetestField from './GeetestField';
 import HtmlField from './HtmlField';
 import InputField from './InputField';
 import NumberField from './NumberField';
@@ -39,7 +38,6 @@ export {
     FieldSet,
     FileField,
     Form,
-    GeetestField,
     HtmlField,
     InputField,
     NumberField,

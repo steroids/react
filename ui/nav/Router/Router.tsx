@@ -5,10 +5,12 @@ import {connect} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
-import navigationHoc, {treeToList} from '../navigationHoc';
-import fetchHoc from '../fetchHoc';
+import navigationHoc, {treeToList} from './navigationHoc';
+import fetch from '../../../hoc/fetch';
 import {getCurrentItemParam} from '../../../reducers/navigation';
 import {SsrProviderContext} from './SsrProvider';
+import {IConnectHocOutput} from '../../../hoc/connect';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IRouterProps {
     wrapperView?: any;
@@ -25,6 +27,10 @@ interface IRouterProps {
     history?: any;
     store?: any;
     basename?: any;
+}
+
+interface IRouterPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
 }
 
 type RouterState = {
@@ -131,7 +137,7 @@ export default class Router extends React.PureComponent<IRouterProps,
     _renderItem(route, props) {
         let Component = route.component;
         if (route.fetch) {
-            Component = fetchHoc(route.fetch)(Component);
+            Component = fetch(route.fetch)(Component);
         }
         return <Component {...props} {...route.componentProps} />;
     }

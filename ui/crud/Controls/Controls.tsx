@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IControlsProps {
     items?: {
@@ -20,8 +21,12 @@ interface IControlsProps {
     view?: any;
 }
 
+interface IControlsPrivateProps extends IComponentsHocOutput {
+
+}
+
 @components('ui')
-export default class Controls extends React.PureComponent<IControlsProps, {}> {
+export default class Controls extends React.PureComponent<IControlsProps & IControlsPrivateProps> {
     render() {
         const defaultItems = {
             index: {

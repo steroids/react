@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-export interface IComponentsContext {
-    components?: object,
+import {ComponentsContext} from './application';
+
+interface IComponents {
     clientStorage?: any,
     html?: any,
     http?: any,
@@ -11,14 +12,19 @@ export interface IComponentsContext {
     resource?: any,
 }
 
-interface IComponentHocProps {
-    components?: any,
+export interface IComponentsHocInput {
 }
 
-export const ComponentsContext = React.createContext({} as IComponentsContext);
+export interface IComponentsHocOutput extends IComponents {
+    components?: IComponents,
+}
+
+interface IComponentHocPrivateProps {
+    components?: IComponents,
+}
 
 export default (...names): any => WrappedComponent =>
-    class ComponentHoc extends React.PureComponent<IComponentHocProps> {
+    class ComponentHoc extends React.PureComponent<IComponentsHocInput & IComponentHocPrivateProps> {
 
         static WrappedComponent = WrappedComponent;
 

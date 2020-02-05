@@ -8,11 +8,12 @@ import {refresh} from '../../../actions/list';
 import Grid from '../../list/Grid';
 import Form from '../../form/Form';
 import {showNotification} from '../../../actions/notifications';
-import {IComponentsContext} from '../../../hoc/components';
+import {IComponentsHocOutput} from '../../../hoc/components';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
 const getCrudId = props => props.crudId || props.baseRouteId;
 
-interface ICrudProps extends IComponentsContext {
+interface ICrudProps {
     editMode?: 'page' | 'modal';
     crudId?: string;
     baseRouteId?: string;
@@ -41,11 +42,15 @@ interface ICrudProps extends IComponentsContext {
     ui?: any;
 }
 
+interface ICrudPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+
+}
+
 @connect(state => ({
     route: getCurrentRoute(state)
 }))
 @components('http', 'ui')
-export default class Crud extends React.PureComponent<ICrudProps, {}> {
+export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateProps> {
     static defaultProps = {
         primaryKey: 'id'
     };

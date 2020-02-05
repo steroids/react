@@ -3,19 +3,16 @@ import {connect} from 'react-redux';
 import {arrayPush} from 'redux-form';
 import {findDOMNode} from 'react-dom';
 import _isString from 'lodash-es/isString';
-import {components} from '../../../hoc';
+import {components, field} from '../../../hoc';
+import {getFieldPropsFromModel, IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import Field from '../Field';
-import fieldHoc, {getFieldPropsFromModel} from '../fieldHoc';
 import tableNavigationHandler from './tableNavigationHandler';
 import {getMeta} from '../../../reducers/fields';
-import formIdHoc from '../formIdHoc';
-import {FormContext} from '../Form/Form';
-import {IFieldProps} from '../Field/Field';
+import {FormContext} from '../../../hoc/form';
+import {IConnectHocOutput} from '../../../hoc/connect';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IFieldListProps extends IFieldProps {
-    label?: string | boolean;
-    hint?: string;
-    attribute?: string;
+interface IFieldListProps extends IFieldHocInput {
     items?: {
         label?: string | boolean | JSX.Element,
         hint?: string | boolean | JSX.Element,
@@ -25,7 +22,7 @@ interface IFieldListProps extends IFieldProps {
         model?: string | ((...args: any[]) => any) | any,
         component?: any,
         required?: boolean,
-        size?: 'sm' | 'md' | 'lg',
+        size?: 'sm' | 'md' | 'lg' | string,
         placeholder?: string,
         disabled?: boolean,
         onChange?: (...args: any[]) => any,
@@ -34,35 +31,24 @@ interface IFieldListProps extends IFieldProps {
         view?: any
     }[];
     fields?: any;
-    required?: boolean;
-    disabled?: boolean;
-    size?: 'sm' | 'md' | 'lg';
     initialRowsCount?: number;
     showAdd?: boolean;
     showRemove?: boolean;
-    onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
     viewProps?: any;
     itemView?: any;
     itemViewProps?: any;
     enableKeyboardNavigation?: boolean;
-    remove?: any;
-    push?: any;
-    map?: any;
-    getView?: any;
-    ui?: any;
-    formId?: any;
-    dispatch?: any;
-    length?: any;
 }
 
-@fieldHoc({
+interface IFieldListPrivateProps extends IFieldHocOutput, IConnectHocOutput, IComponentsHocOutput {
+
+}
+
+@field({
     componentId: 'form.FieldList',
-    list: true
-})
-@formIdHoc({
-    appendPrefix: true
+    list: true,
 })
 @connect((state, props) => {
     let model = props.model;
@@ -70,11 +56,11 @@ interface IFieldListProps extends IFieldProps {
         model = getMeta(state, model) || null;
     }
     return {
-        model
+        model,
     };
 })
 @components('ui')
-export default class FieldList extends React.PureComponent<IFieldListProps> {
+export default class FieldList extends React.PureComponent<IFieldListProps & IFieldListPrivateProps> {
 
     constructor(props) {
         super(props);

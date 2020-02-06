@@ -31,12 +31,12 @@ export interface IFieldHocInput {
 }
 
 export interface IFieldHocOutput extends IFormHocOutput {
-    input: {
+    input?: {
         name?: string,
         value?: any,
         onChange?: (...args: any[]) => any
     },
-    fieldId: string,
+    fieldId?: string,
 }
 
 export interface IFieldHocConfig {

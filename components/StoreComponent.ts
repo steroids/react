@@ -47,7 +47,7 @@ export default class StoreComponent {
                 : {}),
             ...config.initialState
         };
-        const createHistory = process.env.IS_SSR
+        const createHistory = process.env.IS_SSR || typeof location === 'undefined'
             ? createMemoryHistory
             : location.protocol === 'file:'
                 ? createHashHistory

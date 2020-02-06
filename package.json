@@ -1,16 +1,16 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.0.0-beta",
+  "version": "2.0.0-beta.1",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kozhindev/steroids-react"
+    "url": "https://github.com/steroids/react"
   },
   "license": "MIT",
-  "homepage": "https://github.com/kozhindev/steroids-react",
+  "homepage": "https://github.com/steroids/react",
   "bugs": {
-    "url": "https://github.com/kozhindev/steroids-react/issues"
+    "url": "https://github.com/steroids/react/issues"
   },
   "dependencies": {
     "@babel/core": "7.6.4",

@@ -5,14 +5,22 @@ import _isFunction from 'lodash-es/isFunction';
 import _upperFirst from 'lodash-es/upperFirst';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IButtonProps} from '../../form/Button/Button';
 
-interface IActionColumnProps {
+interface IActionColumnItem extends IButtonProps {
+    rule?: 'view' | 'update' | 'delete' | string,
+    visible?: boolean,
+}
+
+export interface IActionColumnProps {
     primaryKey?: string;
     actions?: any;
     item?: any;
-    getView?: any;
-    ui?: any;
     view?: any;
+}
+
+export interface IActionColumnViewProps {
+    items: IActionColumnItem[],
 }
 
 interface IActionColumnPrivateProps extends IComponentsHocOutput {

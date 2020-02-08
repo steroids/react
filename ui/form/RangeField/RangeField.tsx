@@ -8,7 +8,7 @@ import DateField from '../DateField';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IRangeFieldProps extends IFieldHocInput {
+export interface IRangeFieldProps extends IFieldHocInput {
     attributeFrom?: string;
     attributeTo?: string;
     inputFrom?: {
@@ -30,6 +30,11 @@ interface IRangeFieldProps extends IFieldHocInput {
     className?: string;
     view?: any;
     isInvalid?: boolean;
+}
+
+export interface IRangeFieldViewProps extends IFieldHocOutput {
+    fromField: any,
+    toField: any,
 }
 
 interface IRangeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

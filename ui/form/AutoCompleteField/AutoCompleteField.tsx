@@ -14,6 +14,32 @@ interface IAutoCompleteFieldProps extends IFieldHocInput, IDataProviderHocInput 
     view?: any;
 }
 
+export interface IAutoCompleteFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
+    placeholder?: string;
+    showReset?: boolean;
+    inputProps: {
+        type: string,
+        name: string,
+        onChange: (e: Event) => void,
+        onFocus: (e: Event) => void,
+        onBlur: (e: Event) => void,
+        value: string | number,
+    },
+    items: {
+        id: number | string | boolean,
+        label?: string,
+        isSelected: boolean,
+        isHovered: boolean,
+    }[];
+    selectedItems?: {
+        id: number | string | boolean,
+        label?: string
+    }[];
+    isOpened: boolean,
+    onItemClick: (item: {id: number | string | boolean}) => void,
+    onItemMouseOver: (item: {id: number | string | boolean}) => void,
+}
+
 interface IAutoCompleteFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {
     isOpened?: boolean;
     onOpen?: (...args: any[]) => any;

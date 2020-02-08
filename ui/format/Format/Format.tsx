@@ -7,7 +7,7 @@ import {components} from '../../../hoc';
 import {FormContext} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IFormatProps {
+export interface IFormatProps {
     attribute?: string;
     model?: string | ((...args: any[]) => any) | any;
     item?: any;

@@ -9,8 +9,9 @@ import ActionColumn from '../ActionColumn';
 import Format from '../../format/Format';
 import {IListHocInput, IListHocOutput} from '../../../hoc/list';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IDetailColumn} from '../Detail/Detail';
 
-interface IGridColumn {
+export interface IGridColumn {
     attribute?: string,
     format?:
         | string
@@ -27,7 +28,7 @@ interface IGridColumn {
     valueProps?: any
 }
 
-interface IGridProps extends IListHocInput {
+export interface IGridProps extends IListHocInput {
     view?: any;
     columns: (string | IGridColumn)[];
     actions?: any[] | ((...args: any[]) => any);
@@ -36,6 +37,13 @@ interface IGridProps extends IListHocInput {
     fields?: any;
     searchForm?: any;
     itemsIndexing?: any;
+}
+
+export interface IGridViewProps extends IListHocOutput {
+    renderValue: (item: object, column: IDetailColumn) => any,
+    columns: (IGridColumn & {
+        label: any,
+    })[]
 }
 
 interface IGridPrivateProps extends IListHocOutput, IComponentsHocOutput {

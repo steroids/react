@@ -1,24 +1,30 @@
 import * as React from 'react';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IButtonProps} from '../../form/Button/Button';
 
-interface IControlsProps {
-    items?: {
-        id?: string,
-        label?: string | any,
-        url?: string,
-        onClick?: (...args: any[]) => any,
-        className?: string,
-        view?: any,
-        visible?: boolean,
-        content?: React.ReactNode | JSX.Element,
-        contentProps?: any,
-        position?: 'left' | 'right'
-    }[];
-    map?: any;
-    getView?: any;
-    ui?: any;
+export interface IControlItem extends IButtonProps {
+    id?: string,
+    visible?: boolean,
+    content?: React.ReactNode | JSX.Element,
+    contentProps?: any,
+    position?: 'left' | 'right'
+}
+
+export interface IControlsProps {
+    items?: IControlItem[];
     view?: any;
+}
+
+export interface IControlsViewProps extends IControlsProps {
+    items: (IControlItem & {
+        icon?: string,
+        label?: string | any,
+        confirm?: string,
+        color?: ColorName,
+        outline?: boolean,
+        position?: 'right' | 'left'
+    })[]
 }
 
 interface IControlsPrivateProps extends IComponentsHocOutput {

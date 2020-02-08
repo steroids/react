@@ -3,13 +3,28 @@ import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IPasswordFieldProps extends IFieldHocInput {
+export interface IPasswordFieldProps extends IFieldHocInput {
     security?: boolean;
     placeholder?: string;
     isInvalid?: boolean;
     inputProps?: any;
     className?: string;
     view?: any;
+}
+
+export interface IPasswordFieldViewProps {
+    inputProps: {
+        type: string,
+        name: string,
+        onChange: (e: Event) => void,
+        value: string | number,
+        placeholder: string,
+        disabled: string,
+    },
+    security?: boolean,
+    securityLevel?: 'success' | 'warning' | 'danger',
+    onShowPassword: () => void,
+    onHidePassword: () => void,
 }
 
 interface IPasswordFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

@@ -1,10 +1,10 @@
-import _isString from 'lodash/isString';
-import _isInteger from 'lodash/isInteger';
-import _set from 'lodash/set';
-import _get from 'lodash/get';
-import _isEmpty from 'lodash/isEmpty';
-import _size from 'lodash/size';
-import _isFunction from 'lodash/isFunction';
+import _isString from 'lodash-es/isString';
+import _isInteger from 'lodash-es/isInteger';
+import _set from 'lodash-es/set';
+import _get from 'lodash-es/get';
+import _isEmpty from 'lodash-es/isEmpty';
+import _size from 'lodash-es/size';
+import _isFunction from 'lodash-es/isFunction';
 import * as moment from 'moment';
 import {SubmissionError} from 'redux-form';
 

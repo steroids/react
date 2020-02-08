@@ -14,7 +14,7 @@ import _isInteger from 'lodash-es/isInteger';
 import _orderBy from 'lodash-es/orderBy';
 
 import {getEnumLabels} from '../reducers/fields';
-import {IFieldProps} from '../ui/form/Field/Field';
+import {IFieldHocOutput} from './field';
 import components, {IComponentsHocOutput} from './components';
 import {IFieldHocInput} from "./field";
 import Enum from "../base/Enum";
@@ -45,8 +45,8 @@ export interface IDataProviderHocInput {
 
 export interface IDataProviderHocOutput {
     items?: {
-        id?: number | string | boolean,
-        label?: string
+        id: number | string | boolean,
+        label?: string,
     }[];
     selectedItems?: any,
     hoveredItem?: any,
@@ -59,7 +59,7 @@ export interface IDataProviderHocOutput {
     onItemMouseOver?: any,
 }
 
-interface IDataProviderHocPrivateProps extends IConnectHocOutput, IFieldProps, IFieldHocInput, IComponentsHocOutput {
+interface IDataProviderHocPrivateProps extends IConnectHocOutput, IFieldHocOutput, IFieldHocInput, IComponentsHocOutput {
     formId: string,
 }
 

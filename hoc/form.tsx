@@ -3,7 +3,7 @@ import * as React from 'react';
 export interface IFormHocInput {
     prefix?: string | boolean;
     size?: 'sm' | 'md' | 'lg' | string;
-    label?: string | boolean;
+    label?: string | boolean | any;
     attribute?: string;
     model?: string | ((...args: any[]) => any) | any;
     hint?: string;

@@ -2,9 +2,13 @@ import * as React from 'react';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IModalProps {
+export interface IModalProps {
     onClose?: (...args: any[]) => any;
     view?: any;
+}
+
+export interface IModalViewProps {
+    onClose?: (...args: any[]) => any;
 }
 
 interface IModalPrivateProps extends IComponentsHocOutput {

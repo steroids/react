@@ -5,12 +5,16 @@ import {getBreadcrumbs} from '../../../reducers/navigation';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IBreadcrumbsProps {
+export interface IBreadcrumbsProps {
     items?: any[];
     params?: string;
     pageId?: string;
     pageTitle?: string;
     view?: any;
+}
+
+export interface IBreadcrumbsViewProps extends IBreadcrumbsProps{
+
 }
 
 interface IBreadcrumbsPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

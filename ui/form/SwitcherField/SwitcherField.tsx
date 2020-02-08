@@ -4,10 +4,20 @@ import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../..
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ISwitcherFieldProps extends IFieldHocInput, IDataProviderHocInput {
+export interface ISwitcherFieldProps extends IFieldHocInput, IDataProviderHocInput {
     className?: string;
     view?: any;
     buttonProps?: any;
+}
+
+export interface ISwitcherFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
+    items: {
+        id: number | string | boolean,
+        label?: string,
+        isSelected: boolean,
+        isHovered: boolean,
+    }[];
+    onItemClick: (item: {id: number | string | boolean}) => void,
 }
 
 interface ISwitcherFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {

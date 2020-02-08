@@ -4,7 +4,7 @@ import {components, list} from '../../../hoc';
 import {IListHocInput, IListHocOutput} from '../../../hoc/list';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IAccordionProps extends IListHocInput {
+export interface IAccordionProps extends IListHocInput {
     itemView: any;
     itemProps?: any;
     headerView: any;
@@ -14,6 +14,31 @@ interface IAccordionProps extends IListHocInput {
     openFirst?: boolean;
     openedId?: number | string;
     onToggle?: (...args: any[]) => any;
+}
+
+export interface IAccordionViewProps extends IListHocOutput {
+    renderHeader: (item: object, index: number) => void,
+    renderItem: (item: object, index: number) => void,
+    openedId: PrimaryKey,
+    onToggle: (item: object) => void,
+    items: {
+        id: PrimaryKey,
+        isOpened: boolean,
+    }[]
+}
+
+export interface IAccordionHeaderViewProps extends IListHocOutput {
+    id: PrimaryKey,
+    item: object,
+    index: number,
+    isOpened: boolean,
+}
+
+export interface IAccordionItemViewProps extends IListHocOutput {
+    id: PrimaryKey,
+    item: object,
+    index: number,
+    isOpened: boolean,
 }
 
 interface IAccordionPrivateProps extends IListHocOutput, IComponentsHocOutput {

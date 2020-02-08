@@ -13,15 +13,9 @@ import * as queryString from 'query-string';
 
 import {init, lazyFetch, fetch, setSort, destroy, setLayoutName, initSSR} from '../actions/list';
 import {getList} from '../reducers/list';
-import Empty from '../ui/list/Empty';
-import Pagination from '../ui/list/Pagination';
-import PaginationSize from '../ui/list/PaginationSize';
-import Form from '../ui/form/Form';
-import Nav from '../ui/nav/Nav';
 import {getMeta} from '../reducers/fields';
 import components, {IComponentsHocOutput} from './components';
 import {IConnectHocOutput} from './connect';
-import SyncAddressBarHelper from '../ui/form/Form/SyncAddressBarHelper';
 
 export interface IListHocInput {
     /*
@@ -247,6 +241,7 @@ export default (): any => WrappedComponent =>
                                 this.props.defaultPage
                             )
                         );
+                        const SyncAddressBarHelper = require('../ui/form/Form/SyncAddressBarHelper').default;
                         SyncAddressBarHelper.restore(
                             this.props.store,
                             this.props.listId,
@@ -300,6 +295,7 @@ export default (): any => WrappedComponent =>
                             })
                         );
                         if (this.props.syncWithAddressBar) {
+                            const SyncAddressBarHelper = require('../ui/form/Form/SyncAddressBarHelper').default;
                             SyncAddressBarHelper.save(
                                 this.props.store,
                                 {
@@ -376,6 +372,7 @@ export default (): any => WrappedComponent =>
                     if (!this.props.list.items || this.props.list.items.length > 0) {
                         return null;
                     }
+                    const Empty = require('../ui/list/Empty').default;
                     return (
                         <Empty
                             text={this.props.emptyText}
@@ -396,6 +393,7 @@ export default (): any => WrappedComponent =>
                     ) {
                         return null;
                     }
+                    const Pagination = require('../ui/list/Pagination').default;
                     return (
                         <Pagination
                             {...this.props}
@@ -422,6 +420,7 @@ export default (): any => WrappedComponent =>
                     if (!this.props.list.items || this.props.list.items.length === 0) {
                         return null;
                     }
+                    const PaginationSize = require('../ui/list/PaginationSize').default;
                     return (
                         <div>
                             <PaginationSize
@@ -441,7 +440,7 @@ export default (): any => WrappedComponent =>
                     if (!this.props.layoutNames) {
                         return null;
                     }
-                    const NavComponent = this.props.layoutNamesView || Nav;
+                    const NavComponent = this.props.layoutNamesView || require('../ui/nav/Nav').default;
                     return (
                         <NavComponent
                             {...this.props.layoutNamesProps}
@@ -467,6 +466,9 @@ export default (): any => WrappedComponent =>
                     ) {
                         return null;
                     }
+
+                    const Form = require('../ui/form/Form').default;
+
                     return (
                         <Form
                             submitLabel={__('Найти')}

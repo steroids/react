@@ -11,7 +11,7 @@ import Format from '../../format/Format';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDetailColumn {
+export interface IDetailColumn {
   label?: string | boolean | JSX.Element,
   hint?: string | boolean | JSX.Element,
   attribute?: string,
@@ -20,11 +20,18 @@ interface IDetailColumn {
   valueProps?: any
 }
 
-interface IDetailProps {
+export interface IDetailProps {
     item?: any;
     model?: string | ((...args: any[]) => any) | any;
     view?: any;
     attributes?: (string | IDetailColumn)[];
+}
+
+export interface IDetailViewProps {
+    items: (IDetailColumn & {
+        label: any,
+        value: any,
+    })[],
 }
 
 interface IDetailPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

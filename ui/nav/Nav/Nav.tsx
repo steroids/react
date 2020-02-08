@@ -6,23 +6,32 @@ import _isObject from 'lodash-es/isObject';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface INavProps {
+export interface INavItem {
+    id?: string,
+    label?: string | any,
+    url?: string,
+    onClick?: (...args: any[]) => any,
+    className?: string,
+    view?: any,
+    visible?: boolean,
+    content?: any,
+    contentProps?: any
+}
+
+export interface INavProps {
     layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list';
-    items?: {
-        id?: string,
-        label?: string | any,
-        url?: string,
-        onClick?: (...args: any[]) => any,
-        className?: string,
-        view?: any,
-        visible?: boolean,
-        content?: any,
-        contentProps?: any
-    }[];
+    items?: INavItem[];
     activeTab?: number | string;
     className?: string;
     view?: any;
     onChange?: (...args: any[]) => any;
+}
+
+export interface INavViewProps {
+    onClick: (item: object, index: number) => void,
+    items: (INavItem & {
+        isActive: boolean,
+    })[]
 }
 
 interface INavPrivateProps extends IComponentsHocOutput {
@@ -61,7 +70,7 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
             icon: 'nav.NavIconView',
             link: 'nav.NavLinkView',
             tabs: 'nav.NavTabsView',
-            navbar: 'nav.NavBarView',
+            navbar: 'nav.NavBarLayoutView',
             list: 'nav.NavListView'
         };
         const NavView =

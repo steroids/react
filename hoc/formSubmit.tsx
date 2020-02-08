@@ -4,7 +4,6 @@ import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
 import components from './components';
-import AutoSaveHelper from '../ui/form/Form/AutoSaveHelper';
 import {IComponentsHocOutput} from './components';
 import validate from "../ui/form/validate";
 
@@ -94,6 +93,8 @@ export default (): any => WrappedComponent =>
                             this.props.onComplete(values, data, response);
                         }
                         if (this.props.autoSave) {
+
+                            const AutoSaveHelper = require('../ui/form/Form/AutoSaveHelper').default;
                             AutoSaveHelper.remove(this.props.clientStorage, this.props.formId);
                         }
                     });

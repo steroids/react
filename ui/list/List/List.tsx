@@ -4,15 +4,22 @@ import {components, list} from '../../../hoc';
 import {IListHocInput, IListHocOutput} from '../../../hoc/list';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IListProps extends IListHocInput {
+export interface IListProps extends IListHocInput {
     primaryKey?: string;
     items?: any[];
     itemView: any;
     itemProps?: any;
     view?: any;
-    map?: any;
-    getView?: any;
-    ui?: any;
+}
+
+export interface IListViewProps extends IListHocOutput {
+    content: any,
+}
+
+export interface IListItemViewProps extends IListHocOutput {
+    id: PrimaryKey,
+    item: object,
+    index: number,
 }
 
 interface IListPrivateProps extends IListHocOutput, IComponentsHocOutput {

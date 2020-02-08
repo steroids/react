@@ -2,8 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import {components} from '../hoc';
-import {IComponentsHocInput} from './components';
+import components, {IComponentsHocInput} from './components';
 
 export interface IHttpHocInput {
 }

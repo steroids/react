@@ -12,17 +12,10 @@ import {IConnectHocOutput} from '../../../hoc/connect';
 export interface IButtonProps {
     label?: string | any;
     type?: 'button' | 'submit';
-    size?: 'sm' | 'md' | 'lg' | string;
-    color?:
-        | 'primary'
-        | 'secondary'
-        | 'success'
-        | 'danger'
-        | 'warning'
-        | 'info'
-        | 'light'
-        | 'dark';
+    size?: Size;
+    color?: ColorName;
     link?: boolean;
+    icon?: string;
     isLoading?: boolean;
     outline?: boolean;
     url?: string;
@@ -30,19 +23,29 @@ export interface IButtonProps {
     confirm?: string;
     onClick?: (...args: any[]) => any;
     disabled?: boolean;
-    submitting?: boolean;
     block?: boolean;
     className?: string;
     view?: any;
     toRoute?: string;
     toRouteParams?: any;
-    dispatch?: any;
     layout?: any;
     layoutProps?: any;
 }
 
-interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+export interface IButtonViewProps extends IButtonProps {
+    isLoading: boolean,
+    url?: string,
+    formId: string,
+    layout?: string,
+    layoutProps?: object,
+    size?: string,
+    disabled?: boolean,
+    onClick?: (e: Event) => void,
 
+}
+
+interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+    submitting?: boolean;
 }
 
 type ButtonState = {

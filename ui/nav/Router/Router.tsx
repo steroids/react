@@ -12,7 +12,7 @@ import {SsrProviderContext} from './SsrProvider';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IRouterProps {
+export interface IRouterProps {
     wrapperView?: any;
     wrapperProps?: any;
     routes?:

@@ -3,8 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import IntlMessageFormat from 'intl-messageformat';
 import {renderToString} from 'react-dom/server';
-import _merge from 'lodash/merge';
-import _set from 'lodash/set';
+import _merge from 'lodash-es/merge';
+import _set from 'lodash-es/set';
 
 import SsrProvider from '../../ui/nav/Router/SsrProvider';
 import utils from '../utils';

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Gallery from 'react-grid-gallery';
+//import Gallery from 'react-grid-gallery';
 import {formatter} from '../../../hoc';
 import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 
-interface IMoneyFormatterProps extends IFormatterHocInput {
+export interface IMoneyFormatterProps extends IFormatterHocInput {
     value?: {
         uid?: number,
         src?: string,
@@ -27,20 +27,21 @@ export default class PhotosFormatter extends React.Component<IMoneyFormatterProp
     };
 
     render() {
-        const photos = this.props.value;
-        if (!photos || photos.length === 0) {
-            return null;
-        }
-        return (
-            <Gallery
-                images={photos}
-                margin={3}
-                rowHeight={this.props.photoRowHeight}
-                backdropClosesModal={true}
-                enableImageSelection={false}
-                imageCountSeparator={__(' из ')}
-            />
-        );
+        // TODO react-grid-gallery library now is not supported! We need implement our gallery with blackjack and hokers 8<)
+        //const photos = this.props.value;
+        // if (!photos || photos.length === 0) {
+        return null;
+        // }
+        // return (
+        //     <Gallery
+        //         images={photos}
+        //         margin={3}
+        //         rowHeight={this.props.photoRowHeight}
+        //         backdropClosesModal={true}
+        //         enableImageSelection={false}
+        //         imageCountSeparator={__(' из ')}
+        //     />
+        // );
     }
 
 }

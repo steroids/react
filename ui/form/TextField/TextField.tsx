@@ -5,13 +5,24 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface ITextFieldProps extends IFieldHocInput {
+export interface ITextFieldProps extends IFieldHocInput {
     placeholder?: string;
     isInvalid?: boolean;
     submitOnEnter?: boolean;
     inputProps?: any;
     className?: string;
     view?: any;
+}
+
+export interface ITextFieldViewProps extends IFieldHocOutput {
+    inputProps: {
+        name: string,
+        onChange: (e: Event) => void,
+        onKeyUp: (e: Event) => void,
+        value: string | number,
+        placeholder: string,
+        disabled: string,
+    },
 }
 
 interface ITextFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput, IComponentsHocOutput {
@@ -65,6 +76,7 @@ export default class TextField extends React.PureComponent<ITextFieldProps & ITe
             !e.shiftKey
         ) {
             e.preventDefault();
+
             // TODO This is not worked in redux... =(
             this.props.dispatch(submit(this.props.formId));
         }

@@ -3,7 +3,7 @@ import _round from 'lodash-es/round';
 import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 import {formatter} from '../../../hoc';
 
-interface IMoneyFormatterProps extends IFormatterHocInput {
+export interface IMoneyFormatterProps extends IFormatterHocInput {
     currency?: string;
     scale?: number;
 }

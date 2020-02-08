@@ -3,12 +3,23 @@ import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ISliderFieldProps extends IFieldHocInput {
+export interface ISliderFieldProps extends IFieldHocInput {
     sliderProps?: any;
     className?: string;
     view?: any;
     min?: number;
     max?: number;
+}
+
+export interface ISliderFieldViewProps extends IFieldHocOutput {
+    slider: {
+        min: number,
+        max: number,
+        defaultValue: number,
+        value: number,
+        onChange: (value: any) => void,
+        onAfterChange: (value: any) => void,
+    }
 }
 
 interface ISliderFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

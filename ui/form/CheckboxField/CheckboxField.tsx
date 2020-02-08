@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {components, field} from '../../../hoc';
+import {components, connect, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface ICheckboxFieldProps extends IFieldHocInput {
+export interface ICheckboxFieldProps extends IFieldHocInput {
     label?: string | boolean | any;
     hint?: string;
     attribute?: string;
@@ -19,13 +20,19 @@ interface ICheckboxFieldProps extends IFieldHocInput {
     onChange?: (...args: any[]) => any;
     className?: string;
     view?: any;
-    getView?: any;
-    ui?: any;
-    value?: any;
-    dispatch?: any;
 }
 
-interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldHocOutput {
+    inputProps: {
+        name: string,
+        type: string,
+        checked: boolean,
+        onChange: (e: Event) => void,
+        disabled: boolean,
+    }
+}
+
+interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput, IComponentsHocOutput {
 
 }
 
@@ -35,6 +42,7 @@ interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutp
         label: false
     }
 })
+@connect()
 @components('ui')
 export default class CheckboxField extends React.PureComponent<ICheckboxFieldProps & ICheckboxFieldPrivateProps> {
     static defaultProps = {

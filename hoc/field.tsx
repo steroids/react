@@ -6,16 +6,15 @@ import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
 
-import {connect} from './index';
 import {getFieldProps, getMeta} from '../reducers/fields';
+import connect from './connect';
 import components, {IComponentsHocOutput} from './components';
 import form, {IFormHocOutput} from './form';
-import {IFieldProps} from '../ui/form/Field/Field';
 
 export interface IFieldHocInput {
     prefix?: string | boolean;
     size?: 'sm' | 'md' | 'lg' | string;
-    label?: string | boolean;
+    label?: string | boolean | any;
     attribute?: string;
     model?: string | ((...args: any[]) => any) | any;
     hint?: string;

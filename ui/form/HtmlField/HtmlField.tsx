@@ -2,17 +2,21 @@ import * as React from 'react';
 import _merge from 'lodash-es/merge';
 import File from 'fileup-core/lib/models/File';
 import XhrUploader from 'fileup-core/lib/uploaders/XhrUploader';
-import _get from 'lodash/get';
+import _get from 'lodash-es/get';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IHtmlFieldProps extends IFieldHocInput {
+export interface IHtmlFieldProps extends IFieldHocInput {
     editorProps?: any;
     className?: string;
     uploadUrl?: string;
     uploadImagesProcessor?: string;
     view?: any;
+}
+
+export interface IHtmlFieldViewProps extends IFieldHocOutput {
+    editorProps?: any,
 }
 
 interface IHtmlFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

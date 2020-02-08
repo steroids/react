@@ -10,9 +10,8 @@ import {getCurrentItem} from '../reducers/navigation';
 import {getData, getInitializeCounter, getUser, isInitialized} from '../reducers/auth';
 import {init, setData, setUser} from '../actions/auth';
 import {setMeta} from '../actions/fields';
-import {components} from '../hoc';
 import {goToPage} from '../actions/navigation';
-import {IComponentsHocOutput} from './components';
+import components, {IComponentsHocOutput} from './components';
 import {IConnectHocOutput} from './connect';
 
 export const STATUS_LOADING = 'loading';

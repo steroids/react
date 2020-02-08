@@ -16,7 +16,7 @@ import Field from '../Field';
 import Button from '../Button';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface IFormProps extends IFormSubmitHocInput {
+export interface IFormProps extends IFormSubmitHocInput {
     formId: string;
     prefix?: string;
     model?: string | ((...args: any[]) => any) | any;
@@ -24,7 +24,7 @@ interface IFormProps extends IFormSubmitHocInput {
     actionMethod?: string;
     layout?: ('default' | 'inline' | 'horizontal') | string | boolean;
     layoutProps?: any;
-    size?: 'sm' | 'md' | 'lg' | string;
+    size?: Size;
     onSubmit?: (...args: any[]) => any;
     validators?: any[];
     onBeforeSubmit?: (...args: any[]) => any;
@@ -49,6 +49,10 @@ interface IFormProps extends IFormSubmitHocInput {
     restoreCustomizer?: (...args: any[]) => any;
     useHash?: boolean;
     autoFocus?: boolean;
+}
+
+export interface IFormViewProps {
+    onSubmit: any,
 }
 
 interface IFormPrivateProps extends IConnectHocOutput, IFormSubmitHocOutput, IComponentsHocOutput {

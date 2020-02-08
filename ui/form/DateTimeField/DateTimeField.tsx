@@ -7,8 +7,8 @@ import InputField from '../InputField';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDateTimeFieldProps extends IFieldHocInput {
-    label?: string | boolean;
+export interface IDateTimeFieldProps extends IFieldHocInput {
+    label?: string | boolean | any;
     hint?: string;
     attribute?: string;
     input?: {
@@ -17,7 +17,7 @@ interface IDateTimeFieldProps extends IFieldHocInput {
         onChange?: (...args: any[]) => any
     };
     required?: boolean;
-    size?: 'sm' | 'md' | 'lg' | string;
+    size?: Size;
     disabled?: boolean;
     displayDateFormat?: string;
     valueDateFormat?: string;
@@ -28,8 +28,11 @@ interface IDateTimeFieldProps extends IFieldHocInput {
     className?: string;
     view?: any;
     isInvalid?: boolean;
-    getView?: any;
-    ui?: any;
+}
+
+export interface IDateTimeFieldViewProps extends IFieldHocOutput {
+    dateField: any,
+    timeField: any,
 }
 
 interface IDateTimeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

@@ -4,12 +4,6 @@ import {components, formatter} from '../../../hoc';
 import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDateFormatterProps {
-    attribute?: string;
-    item?: any;
-    value?: string;
-}
-
 interface IDateFormatterProps extends IFormatterHocInput {
     format?: string;
 }

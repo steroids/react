@@ -10,6 +10,7 @@ const defaultConfig = {
 export interface IFormatterHocInput {
     item?: object,
     attribute?: string, // or attributeFrom, attributeTo, attribute*
+    value?: any, // or valueFrom, valueTo, value*
 }
 
 export interface IFormatterHocOutput {
@@ -38,7 +39,7 @@ export default (config = {}): any => WrappedComponent =>
             _config.attributes.forEach(attribute => {
                 const valueKey = 'value' + _upperFirst(attribute);
                 const attributeKey = 'attribute' + _upperFirst(attribute);
-                valueProps[valueKey] = _get(this.props, attributeKey) || _get(this.props.item, this.props[attributeKey]);
+                valueProps[valueKey] = _get(this.props, valueKey) || _get(this.props.item, this.props[attributeKey]);
             });
             return (
                 <WrappedComponent

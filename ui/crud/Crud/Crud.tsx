@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import _get from 'lodash/get';
+import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
 import {getCurrentRoute} from '../../../reducers/navigation';
 import {goToPage} from '../../../actions/navigation';
@@ -10,15 +10,19 @@ import Form from '../../form/Form';
 import {showNotification} from '../../../actions/notifications';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
+import {IControlItem} from '../Controls/Controls';
+import {IFormViewProps} from '../../form/Form/Form';
+import {IGridViewProps} from '../../list/Grid/Grid';
+import {IDetailViewProps} from '../../list/Detail/Detail';
 
 const getCrudId = props => props.crudId || props.baseRouteId;
 
-interface ICrudProps {
+export interface ICrudProps {
     editMode?: 'page' | 'modal';
     crudId?: string;
     baseRouteId?: string;
     restUrl?: string;
-    controls?: any[];
+    controls?: IControlItem[];
     route?: {
         id?: string,
         isExact?: boolean,
@@ -33,13 +37,21 @@ interface ICrudProps {
     formView?: any;
     detailView?: any;
     actions?: any;
-    dispatch?: any;
-    id?: any;
-    params?: any;
     item?: any;
     primaryKey?: any;
-    getView?: any;
-    ui?: any;
+}
+
+export interface ICrudViewProps extends ICrudProps {
+    controls: IControlItem[],
+}
+
+export interface ICrudGridViewProps extends IGridViewProps {
+}
+
+export interface ICrudFormViewProps extends IFormViewProps {
+}
+
+export interface ICrudDetailViewProps extends IDetailViewProps {
 }
 
 interface ICrudPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -65,17 +77,17 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
             index: {
                 visible: true,
                 toRoute: this.props.baseRouteId
-            },
+            } as IControlItem,
             view: {
                 visible: false
-            } as any,
+            } as IControlItem,
             create: {
                 visible: true,
                 toRoute: this.props.baseRouteId + '_create'
-            },
+            } as IControlItem,
             update: {
                 visible: false
-            } as any,
+            } as IControlItem,
             delete: {
                 visible: false,
                 position: 'right',
@@ -85,7 +97,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                     );
                     this.props.dispatch(goToPage(this.props.baseRouteId));
                 }
-            }
+            } as IControlItem
         };
         // Append default controls
         const controls = [].concat(this.props.controls || []);

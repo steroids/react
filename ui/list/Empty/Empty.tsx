@@ -2,12 +2,14 @@ import * as React from 'react';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IEmptyProps {
+export interface IEmptyProps {
     text?: string;
     className?: string;
     view?: any;
-    getView?: any;
-    ui?: any;
+}
+
+export interface IEmptyViewProps {
+
 }
 
 interface IEmptyPrivateProps extends IComponentsHocOutput {

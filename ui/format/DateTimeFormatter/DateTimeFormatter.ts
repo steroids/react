@@ -4,7 +4,7 @@ import {components, formatter} from '../../../hoc';
 import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDateTimeFormatterProps extends IFormatterHocInput {
+export interface IDateTimeFormatterProps extends IFormatterHocInput {
     format?: string;
     timeZone?: string | boolean;
 }

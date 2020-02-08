@@ -1,18 +1,25 @@
 import * as React from 'react';
 import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IFieldLayoutProps {
-    label?: string | boolean;
+export interface IFieldLayoutProps {
+    label?: string | boolean | any;
     hint?: string | boolean;
     required?: boolean;
     layout?: ('default' | 'inline' | 'horizontal') | string | boolean;
     layoutProps?: any;
-    size?: 'sm' | 'md' | 'lg' | string;
+    size?: Size;
     errors?: string | string[];
     layoutClassName?: string;
     layoutView?: any;
-    getView?: any;
-    ui?: any;
+}
+
+export interface IFieldLayoutViewProps {
+    layoutProps?: any;
+}
+
+interface IFieldLayoutPrivateProps extends IComponentsHocOutput {
+
 }
 
 const defaultProps = {
@@ -25,7 +32,7 @@ const defaultProps = {
 };
 
 @components('ui')
-export default class FieldLayout extends React.PureComponent<IFieldLayoutProps> {
+export default class FieldLayout extends React.PureComponent<IFieldLayoutProps & IFieldLayoutPrivateProps> {
     static defaultProps = defaultProps;
 
     render() {

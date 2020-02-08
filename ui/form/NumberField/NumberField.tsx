@@ -3,7 +3,7 @@ import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface INumberFieldProps extends IFieldHocInput {
+export interface INumberFieldProps extends IFieldHocInput {
     min?: number;
     max?: number;
     step?: string | number;
@@ -12,6 +12,20 @@ interface INumberFieldProps extends IFieldHocInput {
     inputProps?: any;
     className?: string;
     view?: any;
+}
+
+export interface INumberFieldViewProps extends IFieldHocOutput {
+    inputProps: {
+        type: string,
+        name: string,
+        onChange: (e: Event) => void,
+        value: string | number,
+        placeholder: string,
+        disabled: string,
+        min: string | number,
+        max: string | number,
+        step: string | number,
+    },
 }
 
 interface INumberFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

@@ -7,7 +7,7 @@ import {setPage} from '../../../actions/list';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IPaginationProps {
+export interface IPaginationProps {
     listId?: string;
     loadMore?: boolean;
     aroundCount?: number;
@@ -19,9 +19,21 @@ interface IPaginationProps {
     className?: string;
     view?: any;
     pageParam?: string;
-    size?: 'sm' | 'md' | 'lg' | string;
+    size?: Size;
     syncWithAddressBar?: boolean;
     page?: any;
+}
+
+export interface IPaginationViewProps {
+    page: number,
+    totalPages: number,
+    pages: {
+        page?: number,
+        label: string,
+        isActive: boolean,
+    }[],
+    onSelect: (page: number) => void,
+    onSelectNext: () => void,
 }
 
 interface IPaginationPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

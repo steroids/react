@@ -5,22 +5,33 @@ import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from '../..
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInput {
+export interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInput {
     searchPlaceholder?: string;
     inputProps?: any;
     className?: string;
     view?: any;
     showReset?: boolean;
-    isOpened?: boolean;
-    isLoading?: boolean;
-    onOpen?: (...args: any[]) => any;
-    onClose?: (...args: any[]) => any;
-    onSearch?: (...args: any[]) => any;
-    onItemClick?: (...args: any[]) => any;
-    onItemMouseOver?: (...args: any[]) => any;
-    map?: any;
-    getView?: any;
-    ui?: any;
+}
+
+export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
+    items: {
+        id: number | string | boolean,
+        label?: string,
+        isSelected: boolean,
+        isHovered: boolean,
+    }[];
+    selectedItems?: {
+        id: number | string | boolean,
+        label?: string
+    }[];
+    isOpened?: boolean,
+    isLoading?: boolean,
+    showReset?: boolean,
+    onOpen: () => void,
+    onReset: () => void,
+    onItemClick: (item: {id: number | string | boolean}) => void,
+    onItemMouseOver: (item: {id: number | string | boolean}) => void,
+
 }
 
 interface IDropDownFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {

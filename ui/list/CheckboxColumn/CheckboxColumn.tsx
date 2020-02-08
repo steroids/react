@@ -1,15 +1,26 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import _get from 'lodash/get';
+import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
 import {toggleAll, toggleItem} from '../../../actions/list';
 import {isChecked, isCheckedAll} from '../../../reducers/list';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ICheckboxColumnProps {
+export interface ICheckboxColumnProps {
     fieldProps?: any;
     view?: any;
+}
+
+export interface ICheckboxColumnViewProps {
+    fieldProps: {
+        fieldId: string,
+    },
+    input: {
+        name: string,
+        value: any,
+        onChange: any,
+    },
 }
 
 interface ICheckboxColumnPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

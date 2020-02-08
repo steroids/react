@@ -1,9 +1,11 @@
 import * as React from 'react';
 import Button from '../../form/Button';
-import {IButtonProps} from '../../form/Button/Button';
+import {IButtonProps, IButtonViewProps} from '../../form/Button/Button';
 
-interface ILinkProps extends IButtonProps {
+export interface ILinkProps extends IButtonProps {
+}
 
+export interface ILinkViewProps extends IButtonViewProps {
 }
 
 export default class Link extends React.PureComponent<ILinkProps> {

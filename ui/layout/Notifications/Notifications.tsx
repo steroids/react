@@ -10,25 +10,28 @@ import {getNotifications} from '../../../reducers/notifications';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface INotificationsProps {
+interface INotificationItem {
+    id?: number,
+    level?: ColorName,
+    message?: string,
+    isClosing?: boolean
+}
+
+export interface INotificationsProps {
     initialFlashes?: any;
-    notifications?: {
-        id?: number,
-        level?:
-            | 'primary'
-            | 'secondary'
-            | 'success'
-            | 'danger'
-            | 'warning'
-            | 'info'
-            | 'light'
-            | 'dark',
-        message?: string,
-        isClosing?: boolean
-    }[];
+    notifications?: INotificationItem[];
     className?: string;
     view?: any;
     itemView?: any;
+}
+
+export interface INotificationsViewProps {
+    notifications?: INotificationItem[];
+}
+
+export interface INotificationsItemViewProps extends INotificationItem {
+    onClosing: (notificationId: number) => void,
+    onClose: (notificationId: number) => void,
 }
 
 interface INotificationsPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

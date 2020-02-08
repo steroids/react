@@ -4,7 +4,7 @@ import {closeModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface IModalWrapperProps {
+export interface IModalWrapperProps {
 }
 
 interface IModalWrapperPrivateProps extends IConnectHocOutput {

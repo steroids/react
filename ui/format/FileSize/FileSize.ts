@@ -2,7 +2,7 @@ import * as React from 'react';
 import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 import {formatter} from '../../../hoc';
 
-interface IFileSizeFormatterProps extends IFormatterHocInput {
+export interface IFileSizeFormatterProps extends IFormatterHocInput {
     showZero?: boolean;
 }
 

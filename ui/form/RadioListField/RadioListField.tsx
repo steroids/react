@@ -4,11 +4,26 @@ import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../..
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IRadioListFieldProps extends IFieldHocInput, IDataProviderHocInput {
+export interface IRadioListFieldProps extends IFieldHocInput, IDataProviderHocInput {
     isInvalid?: boolean;
     inputProps?: any;
     className?: string;
     view?: any;
+}
+
+export interface IRadioListFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
+    inputProps: {
+        type: string,
+        name: string,
+        disabled: string,
+    },
+    items: {
+        id: number | string | boolean,
+        label?: string,
+        isSelected: boolean,
+        isHovered: boolean,
+    }[];
+    onItemClick: (item: {id: number | string | boolean}) => void,
 }
 
 interface IRadioListFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {
@@ -45,8 +60,7 @@ export default class RadioListField extends React.PureComponent<IRadioListFieldP
                     isSelected: !!this.props.selectedItems.find(
                         selectedItem => selectedItem.id === item.id
                     ),
-                    isHovered:
-                        this.props.hoveredItem && this.props.hoveredItem.id === item.id
+                    isHovered: this.props.hoveredItem && this.props.hoveredItem.id === item.id
                 }))}
                 onItemClick={this.props.onItemClick}
             />

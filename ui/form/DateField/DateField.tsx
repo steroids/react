@@ -5,8 +5,8 @@ import {components, field} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
-interface IDateFieldProps extends IFieldHocInput {
-    label?: string | boolean;
+export interface IDateFieldProps extends IFieldHocInput {
+    label?: string | boolean | any;
     hint?: string;
     attribute?: string;
     input?: {
@@ -15,7 +15,7 @@ interface IDateFieldProps extends IFieldHocInput {
         onChange?: (...args: any[]) => any
     };
     required?: boolean;
-    size?: 'sm' | 'md' | 'lg' | string;
+    size?: Size;
     disabled?: boolean;
     pickerProps?: any;
     onChange?: (...args: any[]) => any;
@@ -24,9 +24,25 @@ interface IDateFieldProps extends IFieldHocInput {
     className?: string;
     view?: any;
     isInvalid?: boolean;
-    getView?: any;
-    ui?: any;
     placeholder?: any;
+}
+
+export interface IDateFieldViewProps extends IFieldHocOutput {
+    pickerProps: {
+        name: string,
+        placeholder?: string,
+        value?: string,
+        parseDate: (date: string) => Date | undefined,
+        formatDate: (date: string) => Date | undefined,
+        onDayChange: (day: string) => void,
+        dayPickerProps: {
+            locale: string,
+            localeUtils: any,
+        },
+        inputProps: {
+            disabled: boolean,
+        },
+    }
 }
 
 interface IDateFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

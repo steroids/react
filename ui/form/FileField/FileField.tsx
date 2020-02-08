@@ -7,7 +7,7 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
+export interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
     showRemove: boolean,
     buttonComponent?: React.ReactNode;
     buttonProps?: any;
@@ -15,6 +15,36 @@ interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
     view?: any;
     itemView?: any;
     itemProps?: any;
+}
+
+export interface IFileFieldViewProps extends IFieldHocOutput, IFileHocOutput {
+    buttonComponent?: React.ReactNode;
+    buttonProps: {
+        label?: string | any,
+        size?: boolean,
+        disabled?: boolean,
+        onClick?: (e: Event) => void,
+    },
+    itemView?: React.ReactNode;
+    items: {
+        uid?: string,
+        fileId?: number | string,
+        title?: string,
+        size?: number | string,
+        disabled?: boolean,
+        showRemove?: boolean,
+        onRemove?: () => void,
+        error?: string,
+        image?: {
+            url: string,
+            width: string,
+            height: string,
+        },
+        progress?: {
+            bytesUploaded: number,
+            percent: number,
+        },
+    }[]
 }
 
 interface IFileFieldPrivateProps extends IFieldHocOutput, IFileHocOutput, IComponentsHocOutput {

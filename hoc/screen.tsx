@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import _isObject from 'lodash/isObject';
+import _isObject from 'lodash-es/isObject';
 import {setWidth, setMedia} from '../actions/screen';
 import {IConnectHocOutput} from './connect';
 

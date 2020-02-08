@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {FormContext, IFormContext} from '../../../hoc/form';
 
-interface IFieldSetProps extends IFormContext {
+export interface IFieldSetProps extends IFormContext {
 }
 
 export default class FieldSet extends React.PureComponent<IFieldSetProps> {

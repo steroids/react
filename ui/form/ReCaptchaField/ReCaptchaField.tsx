@@ -3,7 +3,7 @@ import {components, field} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
-interface IReCaptchaFieldProps extends IFieldHocInput {
+export interface IReCaptchaFieldProps extends IFieldHocInput {
     metaItem?: any;
     input?: {
         name?: string,
@@ -11,9 +11,11 @@ interface IReCaptchaFieldProps extends IFieldHocInput {
         onChange?: (...args: any[]) => any
     };
     props?: any;
-    getView?: any;
-    ui?: any;
     view?: any;
+}
+
+export interface IReCaptchaFieldViewProps extends IFieldHocOutput {
+    reCaptchaProps: any,
 }
 
 interface IReCaptchaFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {

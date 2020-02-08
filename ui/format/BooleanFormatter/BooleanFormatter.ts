@@ -2,7 +2,7 @@ import * as React from 'react';
 import {formatter} from '../../../hoc';
 import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 
-interface IBooleanFormatterProps extends IFormatterHocInput {
+export interface IBooleanFormatterProps extends IFormatterHocInput {
     value?: string | number | boolean;
 }
 

@@ -12,24 +12,26 @@ import {FormContext} from '../../../hoc/form';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IFieldListProps extends IFieldHocInput {
-    items?: {
-        label?: string | boolean | JSX.Element,
-        hint?: string | boolean | JSX.Element,
-        attribute?: string,
-        prefix?: string | boolean,
-        visible?: boolean,
-        model?: string | ((...args: any[]) => any) | any,
-        component?: any,
-        required?: boolean,
-        size?: 'sm' | 'md' | 'lg' | string,
-        placeholder?: string,
-        disabled?: boolean,
-        onChange?: (...args: any[]) => any,
-        className?: string,
-        headerClassName?: string,
-        view?: any
-    }[];
+interface IFieldListItem {
+    label?: string | boolean | JSX.Element,
+    hint?: string | boolean | JSX.Element,
+    attribute?: string,
+    prefix?: string | boolean,
+    visible?: boolean,
+    model?: string | ((...args: any[]) => any) | any,
+    component?: any,
+    required?: boolean,
+    size?: Size,
+    placeholder?: string,
+    disabled?: boolean,
+    onChange?: (...args: any[]) => any,
+    className?: string,
+    headerClassName?: string,
+    view?: any
+}
+
+export interface IFieldListProps extends IFieldHocInput {
+    items?: IFieldListItem[];
     fields?: any;
     initialRowsCount?: number;
     showAdd?: boolean;
@@ -40,6 +42,26 @@ interface IFieldListProps extends IFieldHocInput {
     itemView?: any;
     itemViewProps?: any;
     enableKeyboardNavigation?: boolean;
+}
+
+export interface IFieldListViewProps extends IFieldHocOutput {
+    items?: (IFieldListItem & {
+        disabled?: boolean,
+        size?: boolean,
+    })[];
+    renderField?: (field: object, prefix: string) => any,
+    onAdd?: () => void,
+}
+
+export interface IFieldListItemViewProps extends IFieldHocOutput {
+    items?: (IFieldListItem & {
+        disabled?: boolean,
+        size?: boolean,
+    })[];
+    renderField?: (field: object, prefix: string) => any,
+    onRemove?: (rowIndex: number) => void,
+    prefix: string,
+    rowIndex: number,
 }
 
 interface IFieldListPrivateProps extends IFieldHocOutput, IConnectHocOutput, IComponentsHocOutput {

@@ -3,7 +3,7 @@ import {field} from "../../../hoc";
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
 interface IBlankFieldProps extends IFieldHocInput {
-    label?: string | boolean;
+    label?: string | boolean | any;
     hint?: string;
     attribute?: string;
     text?: string | React.ReactNode;
@@ -11,7 +11,7 @@ interface IBlankFieldProps extends IFieldHocInput {
     view?: any;
 }
 
-interface IBlankFieldPrivateProps extends IFieldHocOutput {
+interface IBlankFieldPrivateProps extends IBlankFieldProps, IFieldHocOutput {
 
 }
 

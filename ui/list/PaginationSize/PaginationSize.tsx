@@ -6,7 +6,7 @@ import {setPageSize} from '../../../actions/list';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IPaginationSizeProps {
+export interface IPaginationSizeProps {
     listId?: string;
     sizes?: number[];
     list?: {
@@ -14,7 +14,16 @@ interface IPaginationSizeProps {
     };
     className?: string;
     view?: any;
-    size?: 'sm' | 'md' | 'lg' | string;
+    size?: Size;
+}
+
+export interface IPaginationSizeViewProps {
+    sizes: {
+        size: number,
+        label: string | number,
+        isActive: boolean,
+    }[],
+    onSelect: (size: number) => void,
 }
 
 interface IPaginationSizePrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -27,7 +36,7 @@ export default class PaginationSize extends React.PureComponent<IPaginationSizeP
 
     static defaultProps = {
         sizes: [30, 50, 100],
-        className: "",
+        className: '',
         size: 'sm'
     };
 

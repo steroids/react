@@ -2,7 +2,14 @@ import * as React from 'react';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ITreeProps {
+export interface ITreeItem {
+    id?: string | number,
+    label?: string | any,
+    items?: any[],
+    visible?: boolean
+}
+
+export interface ITreeProps {
     id?: string;
     items?: {
         id?: string | number,
@@ -17,6 +24,18 @@ interface ITreeProps {
     autoOpenLevels?: number;
     onItemClick?: (...args: any[]) => any;
     autoSave?: boolean;
+}
+
+export interface ITreeViewProps extends ITreeProps {
+    items: (ITreeItem & {
+        uniqId: string,
+        index: number,
+        level: number,
+        isOpened: boolean,
+        isSelected: boolean,
+        hasItems: boolean,
+        onClick: (e: Event) => void,
+    })[],
 }
 
 interface ITreePrivateProps extends IComponentsHocOutput {

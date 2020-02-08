@@ -12,6 +12,9 @@
   "bugs": {
     "url": "https://github.com/steroids/react/issues"
   },
+  "scripts": {
+    "docs": "typedoc --ignoreCompilerErrors --json typedoc.json ."
+  },
   "dependencies": {
     "@babel/core": "7.6.4",
     "@babel/register": "^7.5.5",

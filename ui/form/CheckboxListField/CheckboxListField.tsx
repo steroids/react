@@ -4,16 +4,28 @@ import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../..
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface ICheckboxListFieldProps extends IFieldHocInput, IDataProviderHocInput {
+export interface ICheckboxListFieldProps extends IFieldHocInput, IDataProviderHocInput {
     inputProps?: any;
     className?: string;
     view?: any;
     onItemClick?: any;
-    map?: any;
-    getView?: any;
-    ui?: any;
     selectedItems?: any;
     hoveredItem?: any;
+}
+
+export interface ICheckboxListFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
+    inputProps: {
+        name: string,
+        type: string,
+        disabled?: boolean,
+    },
+    items: {
+        id: number | string | boolean,
+        label?: string,
+        isSelected: boolean,
+        isHovered: boolean,
+    }[];
+    onItemClick: (item: {id: number | string | boolean}) => void,
 }
 
 interface ICheckboxListFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {

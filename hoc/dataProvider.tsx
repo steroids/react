@@ -21,7 +21,7 @@ import Enum from "../base/Enum";
 import {IConnectHocOutput} from './connect';
 
 export interface IDataProviderHocInput {
-    input: {
+    input?: {
         name?: string,
         value?: any,
         onChange?: (...args: any[]) => any

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Provider} from 'react-redux';
+import _merge from 'lodash-es/merge';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import HttpComponent from '../components/HttpComponent';
@@ -15,10 +16,37 @@ export interface IApplicationHocOutput {
 }
 
 export interface IApplicationHocConfig {
+    components?: {
+        [key: string]: {
+            className: any,
+            [key: string]: any,
+        },
+    }
     onInit?: (...args: any) => any,
 }
 
 export const ComponentsContext = React.createContext({} as IComponentsHocOutput);
+
+const defaultComponents = {
+    clientStorage: {
+        className: ClientStorageComponent,
+    },
+    html: {
+        className: HtmlComponent,
+    },
+    http: {
+        className: HttpComponent,
+    },
+    locale: {
+        className: LocaleComponent,
+    },
+    store: {
+        className: StoreComponent,
+    },
+    ui: {
+        className: UiComponent,
+    },
+};
 
 export default (config: IApplicationHocConfig): any => WrappedComponent =>
     class ApplicationHoc extends React.PureComponent<IApplicationHocInput> {
@@ -29,14 +57,16 @@ export default (config: IApplicationHocConfig): any => WrappedComponent =>
 
         constructor(props) {
             super(props);
+
             // Create components
             this._components = {};
-            this._components.clientStorage = new ClientStorageComponent(this._components);
-            this._components.html = new HtmlComponent(this._components);
-            this._components.http = new HttpComponent(this._components);
-            this._components.locale = new LocaleComponent(this._components);
-            this._components.store = new StoreComponent(this._components);
-            this._components.ui = new UiComponent(this._components);
+            const componentsConfig = _merge({}, defaultComponents, config.components);
+            Object.keys(componentsConfig).forEach(name => {
+                const {className, ...componentConfig} = componentsConfig[name];
+                this._components[name] = new className(this._components, componentConfig);
+            });
+
+            // Init callback
             if (config.onInit) {
                 config.onInit(this._components);
             }

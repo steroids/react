@@ -181,7 +181,7 @@ export const getNavUrl = (state, pageId, params = {}) => {
     return navItem ? navItem.url : "";
 };
 export const getRoute = (state, pageId) => {
-    const root = state.navigation.routesTree;
+    const root = state.navigation && state.navigation.routesTree;
     if (!root) {
         return null;
     }

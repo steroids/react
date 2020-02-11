@@ -24,11 +24,12 @@ export default class StoreComponent {
     history: any;
     store: any;
 
-    constructor(components, lazyInit = false) {
+    constructor(components, config, lazyInit = false) {
         this._components = components;
         this.history = null;
         this.store = null;
         this._asyncReducers = {};
+
         if (!lazyInit) {
             this.initStore();
         }

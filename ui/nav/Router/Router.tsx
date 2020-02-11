@@ -6,21 +6,24 @@ import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
 import navigationHoc, {treeToList} from './navigationHoc';
-import fetch from '../../../hoc/fetch';
 import {getCurrentItemParam} from '../../../reducers/navigation';
 import {SsrProviderContext} from './SsrProvider';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
+export interface IRouteItem {
+    id?: string,
+    path?: string,
+    exact?: boolean,
+    component?: any,
+    roles?: string[],
+    items?: IRouteItem[] | {[key: string]: IRouteItem};
+}
+
 export interface IRouterProps {
     wrapperView?: any;
     wrapperProps?: any;
-    routes?:
-        | any
-        | {
-        path?: string,
-        component?: any
-    }[];
+    routes?: IRouteItem[] | {[key: string]: IRouteItem};
     pathname?: string;
     pageId?: string;
     autoScrollTop?: boolean;
@@ -43,8 +46,7 @@ type RouterState = {
     pageId: getCurrentItemParam(state, 'id')
 }))
 @components('store')
-export default class Router extends React.PureComponent<IRouterProps,
-    RouterState> {
+export default class Router extends React.PureComponent<IRouterProps & IRouterPrivateProps, RouterState> {
     static defaultProps = {
         autoScrollTop: true
     };
@@ -136,9 +138,6 @@ export default class Router extends React.PureComponent<IRouterProps,
 
     _renderItem(route, props) {
         let Component = route.component;
-        if (route.fetch) {
-            Component = fetch(route.fetch)(Component);
-        }
         return <Component {...props} {...route.componentProps} />;
     }
 }

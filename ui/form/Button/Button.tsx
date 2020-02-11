@@ -63,7 +63,7 @@ type ButtonState = {
 @components('ui')
 export default class Button extends React.PureComponent<IButtonProps & IButtonPrivateProps, ButtonState> {
     _isMounted: any;
-    context: boolean;
+
     static defaultProps = {
         type: 'button',
         color: 'primary',
@@ -71,7 +71,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
         disabled: false,
         submitting: false,
         block: false,
-        className: ""
+        className: '',
     };
 
     constructor(props) {

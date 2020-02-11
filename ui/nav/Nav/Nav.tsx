@@ -3,8 +3,10 @@ import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import {components} from '../../../hoc';
+import _isString from 'lodash-es/isString';
+import {components, connect} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {getNavItems} from '../../../reducers/navigation';
 
 export interface INavItem {
     id?: string,
@@ -20,7 +22,7 @@ export interface INavItem {
 
 export interface INavProps {
     layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list';
-    items?: INavItem[];
+    items?: string | INavItem[];
     activeTab?: number | string;
     className?: string;
     view?: any;
@@ -42,6 +44,13 @@ interface NavState {
     filter?: any
 }
 
+@connect(
+    (state, props) => ({
+        items: _isString(props.items)
+            ? getNavItems(props.items)
+            : props.items,
+    })
+)
 @components('ui')
 export default class Nav extends React.PureComponent<INavProps & INavPrivateProps, NavState> {
     static defaultProps = {
@@ -70,24 +79,24 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
             icon: 'nav.NavIconView',
             link: 'nav.NavLinkView',
             tabs: 'nav.NavTabsView',
-            navbar: 'nav.NavBarLayoutView',
+            navbar: 'nav.NavBarView',
             list: 'nav.NavListView'
         };
-        const NavView =
-            this.props.view ||
-            this.props.ui.getView(defaultViewMap[this.props.layout]);
+        const NavView = this.props.view || this.props.ui.getView(defaultViewMap[this.props.layout]);
+        const items = this.props.items as INavItem[];
         return (
             <NavView
                 {...this.props}
                 onClick={this._onClick}
-                items={this.props.items
+                items={items
                     .map((item, index) => ({
                         ...item,
                         isActive: _has(item, 'id')
                             ? this.state.activeTab === item.id
                             : this.state.activeTab === index
                     }))
-                    .filter(item => item.visible !== false)}
+                    .filter(item => item.visible !== false)
+                }
             >
                 {this.renderContent()}
             </NavView>
@@ -95,7 +104,8 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
     }
 
     renderContent() {
-        const activeItem = this.props.items.find((item, index) => {
+        const items = this.props.items as INavItem[];
+        const activeItem = items.find((item, index) => {
             return this.state.activeTab === (_has(item, 'id') ? item.id : index);
         });
         if (!activeItem || !activeItem.content) {

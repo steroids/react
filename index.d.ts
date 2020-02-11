@@ -3,6 +3,11 @@ declare module '*.json' {
     export default value;
 }
 
+declare module '*.svg' {
+    const content: string;
+    export default content;
+}
+
 declare function __(str: string, params?: any): string;
 
 declare type ColorName = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | string;

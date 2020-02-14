@@ -25,6 +25,7 @@ export interface IButtonProps {
     disabled?: boolean;
     block?: boolean;
     className?: string;
+    style?: any;
     view?: any;
     toRoute?: string;
     toRouteParams?: any;
@@ -41,7 +42,6 @@ export interface IButtonViewProps extends IButtonProps {
     size?: string,
     disabled?: boolean,
     onClick?: (e: Event) => void,
-
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -101,7 +101,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
 
     renderContent(context: IFormContext) {
         const ButtonView = this.props.view || this.props.ui.getView('form.ButtonView');
-        const disabled = this.props.submitting || this.props.disabled || this.props.isLoading;
+        const disabled = this.props.submitting || this.props.disabled || this.state.isLoading;
         const layout = this.props.layout || context.layout;
         const layoutProps = {
             ...context.layoutProps,
@@ -119,7 +119,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                 formId={context.formId}
                 layout={context.layout}
                 layoutProps={layoutProps}
-                size={context.size || this.props.size}
+                size={this.props.size || context.size}
                 disabled={disabled}
                 onClick={!disabled ? this._onClick : undefined}
             >

@@ -13,6 +13,7 @@ export interface IInputFieldProps extends IFieldHocInput {
     isInvalid?: boolean;
     inputProps?: any;
     className?: string;
+    style?: any
     view?: any;
 }
 

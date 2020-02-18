@@ -26,6 +26,7 @@ export interface IButtonProps {
     block?: boolean;
     className?: string;
     style?: any;
+    textColor?: any;
     view?: any;
     toRoute?: string;
     toRouteParams?: any;
@@ -42,6 +43,7 @@ export interface IButtonViewProps extends IButtonProps {
     size?: string,
     disabled?: boolean,
     onClick?: (e: Event) => void,
+    submitting: boolean
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

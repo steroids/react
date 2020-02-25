@@ -8,7 +8,7 @@ export default class Enum {
     }
 
     static getLabel(id) {
-        return this.getLabels()[id] || "";
+        return this.getLabels()[id] || '';
     }
 
     static getCssClasses() {
@@ -16,7 +16,7 @@ export default class Enum {
     }
 
     static getCssClass(id) {
-        return this.getCssClasses()[id] || "";
+        return this.getCssClasses()[id] || '';
     }
 
     static getDropdownItems() {

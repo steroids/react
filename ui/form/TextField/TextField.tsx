@@ -38,8 +38,8 @@ export default class TextField extends React.PureComponent<ITextFieldProps & ITe
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
-        placeholder: "",
+        className: '',
+        placeholder: '',
         submitOnEnter: false,
         errors: []
     };
@@ -57,7 +57,7 @@ export default class TextField extends React.PureComponent<ITextFieldProps & ITe
                 {...this.props}
                 inputProps={{
                     name: this.props.input.name,
-                    value: this.props.input.value || "",
+                    value: this.props.input.value || '',
                     onChange: e => this.props.input.onChange(e.target.value),
                     onKeyUp: this._onKeyUp,
                     placeholder: this.props.placeholder,

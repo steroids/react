@@ -33,7 +33,7 @@ export default class SwitcherField extends React.PureComponent<ISwitcherFieldPro
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         errors: []
     };
 

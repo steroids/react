@@ -9,26 +9,145 @@ import {FormContext, IFormContext} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
+/**
+ * Button
+ * Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику onClick),
+ * смена страницы в рамках роутинга (goToPage), переход по внешней ссылке (url) или отправки формы (submit form)
+ */
 export interface IButtonProps {
+    /**
+     * Название поля
+     * @example Save
+     */
     label?: string | any;
+
+    /**
+     * HTML Тип
+     * @example submit
+     */
     type?: 'button' | 'submit';
+
+    /**
+     * Размер
+     * @example sm
+     */
     size?: Size;
+
+    /**
+     * Цвет состояния
+     * @example success
+     */
     color?: ColorName;
+
+    /**
+     * Отображать как ссылку?
+     * @example true
+     */
     link?: boolean;
-    icon?: string;
+
+    /**
+     * Иконка
+     */
+    icon?: any;
+
+    /**
+     * Отображать индикатор загрузки?
+     * @example true
+     */
     isLoading?: boolean;
+
+    /**
+     * Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным
+     * @example true
+     */
     outline?: boolean;
+
+    /**
+     * HTML аттрибут `target`, доступен только для ссылок
+     * @example _blank
+     */
+    target?: string;
+
+    /**
+     * Ссылка на внешнюю страницу, используется совместно с свойством `link`
+     * @example https://ya.ru
+     */
     url?: string;
+
+    /**
+     * Ссылка (`path`) на страницу в рамках роутера SPA приложения, будет вызвано действие `push`
+     * @example /profile/51
+     */
     to?: string;
+
+    /**
+     * При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное
+     * окно с текстом подтверждения - `window.confirm('Ваш текст')`.
+     * @example Удалить запись #512?
+     */
     confirm?: string;
-    onClick?: (...args: any[]) => any;
+
+    /**
+     * Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка автоматически
+     * будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
+     * @param e => fetch(...)
+     */
+    onClick?: (e: Event) => Promise<any> | void;
+
+    /**
+     * Переводит кнопку в состояние "не активна"
+     * @example true
+     */
     disabled?: boolean;
+
+    /**
+     * Включает стиль `block`, делая размер кнопки на 100% ширины блока
+     * @example true
+     */
     block?: boolean;
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
+    style?: object;
+
+    /**
+     * Дополнительные CSS классы
+     * @example my-block
+     */
     className?: string;
-    view?: any;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
+    view?: React.ComponentType;
+
+    /**
+     * ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров
+     * используйте свойство `toRouteParams`
+     * @example profile
+     */
     toRoute?: string;
-    toRouteParams?: any;
-    layout?: any;
+
+    /**
+     * Параметры роута, на который необходимо перейти, см. свойство `toRoute`.
+     * @example {userId: 52}
+     */
+    toRouteParams?: object;
+
+    /**
+     * Выбор макета для распложения кнопки в форме. Если кнопка находится внутри `<Form>...</Form>`, то `layout` будет
+     * взят из контекста формы и автоматически применен при отораженн. Для его отключения укажите `false`.
+     * @example horizontal
+     */
+    layout?: FormLayout;
+
+    /**
+     * Дополнительные свойства, необходимые для макета формы. См. также свойство `layout`.
+     * @example {}
+     */
     layoutProps?: any;
 }
 
@@ -41,7 +160,6 @@ export interface IButtonViewProps extends IButtonProps {
     size?: string,
     disabled?: boolean,
     onClick?: (e: Event) => void,
-
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -78,13 +196,19 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
         super(props);
         this._isMounted = false;
         this.state = {
-            isLoading: false
+            isLoading: this.props.isLoading,
         };
         this._onClick = this._onClick.bind(this);
     }
 
     componentDidMount() {
         this._isMounted = true;
+    }
+
+    componentDidUpdate(prevProps: Readonly<IButtonProps & IButtonPrivateProps>) {
+        if (prevProps.isLoading !== this.props.isLoading) {
+            this.setState({isLoading: this.props.isLoading});
+        }
     }
 
     componentWillUnmount() {
@@ -101,7 +225,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
 
     renderContent(context: IFormContext) {
         const ButtonView = this.props.view || this.props.ui.getView('form.ButtonView');
-        const disabled = this.props.submitting || this.props.disabled || this.props.isLoading;
+        const disabled = this.props.submitting || this.props.disabled || this.state.isLoading;
         const layout = this.props.layout || context.layout;
         const layoutProps = {
             ...context.layoutProps,
@@ -119,7 +243,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                 formId={context.formId}
                 layout={context.layout}
                 layoutProps={layoutProps}
-                size={context.size || this.props.size}
+                size={this.props.size || context.size}
                 disabled={disabled}
                 onClick={!disabled ? this._onClick : undefined}
             >
@@ -149,7 +273,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
             e.preventDefault();
             return;
         }
-        if (this.props.to || this.props.to === "") {
+        if (this.props.to || this.props.to === '') {
             this._onLinkClick(e, this.props.to);
         }
         if (this.props.onClick) {

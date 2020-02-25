@@ -10,7 +10,9 @@ export interface IPaginationSizeProps {
     listId?: string;
     sizes?: number[];
     list?: {
+        page?: number
         pageSize?: number
+        total?: number
     };
     className?: string;
     view?: any;

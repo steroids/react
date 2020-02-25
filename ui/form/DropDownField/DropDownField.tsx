@@ -48,7 +48,7 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         autoComplete: false,
         showReset: false,
         multiple: false

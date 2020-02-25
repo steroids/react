@@ -60,7 +60,7 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         displayFormat: 'DD.MM.YYYY',
         valueFormat: 'YYYY-MM-DD'
     };

@@ -16,3 +16,4 @@ declare type PrimaryKey = number | string;
 
 declare type Size = 'sm' | 'md' | 'lg' | string;
 
+declare type FormLayout = 'default' | 'horizontal' | 'inline' | string;

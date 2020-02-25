@@ -155,7 +155,7 @@ export default (): any => WrappedComponent =>
                     this._delayTimer = null;
                     const sourceItems = DataProviderHoc.normalizeItems(this.props.items);
                     this.state = {
-                        query: "",
+                        query: '',
                         isOpened: false,
                         isFocused: false,
                         isLoading: false,
@@ -176,7 +176,7 @@ export default (): any => WrappedComponent =>
                     }
                     // Check to auto fetch items first page
                     if (this.props.autoFetch && this.props.dataProvider) {
-                        this._searchDataProvider("", true);
+                        this._searchDataProvider('', true);
                     }
                     // Async load selected labels from backend
                     // TODO
@@ -230,7 +230,7 @@ export default (): any => WrappedComponent =>
                         (!this.props.autoFetch ||
                             this.props.dataProvider !== nextProps.dataProvider)
                     ) {
-                        this._searchDataProvider("");
+                        this._searchDataProvider('');
                     }
                 }
 
@@ -301,7 +301,7 @@ export default (): any => WrappedComponent =>
                  * @private
                  */
                 _onSearch(query) {
-                    query = query || "";
+                    query = query || '';
                     this.setState({query});
                     if (this.props.dataProvider) {
                         if (this._delayTimer) {
@@ -337,16 +337,16 @@ export default (): any => WrappedComponent =>
                         (str.match(/^[^A-ZА-Я]+/) || []).concat(
                             str.match(/[A-ZА-Я][^A-ZА-Я]*/g) || []
                         );
-                    const queryCharacters = query.split("");
+                    const queryCharacters = query.split('');
                     // Match
                     let items = this.state.sourceItems.filter(item => {
                         const id = item.id;
-                        const words = toWords(item.label || "");
+                        const words = toWords(item.label || '');
                         if (words.length === 0 || !id) {
                             return false;
                         }
                         let word = null;
-                        let highlighted = [["", false]];
+                        let highlighted = [['', false]];
                         let index = 0;
                         let wordIndex = 0;
                         let wordChar = null;
@@ -355,13 +355,13 @@ export default (): any => WrappedComponent =>
                             const char = queryCharacters[index];
                             if (!char) {
                                 highlighted.push([
-                                    word.substr(wordCharIndex) + words.slice(wordIndex + 1).join(""),
+                                    word.substr(wordCharIndex) + words.slice(wordIndex + 1).join(''),
                                     false
                                 ]);
                                 break;
                             }
                             word = words[wordIndex];
-                            wordChar = (word && word.split("")[wordCharIndex]) || "";
+                            wordChar = (word && word.split('')[wordCharIndex]) || '';
                             if (!word) {
                                 highlighted = [];
                                 break;
@@ -376,7 +376,7 @@ export default (): any => WrappedComponent =>
                                 highlighted[highlighted.length - 1][1] = true;
                             } else {
                                 highlighted.push([word.substr(wordCharIndex), false]);
-                                highlighted.push(["", false]);
+                                highlighted.push(['', false]);
                                 wordIndex++;
                                 wordCharIndex = 0;
                             }
@@ -408,7 +408,7 @@ export default (): any => WrappedComponent =>
                  * @param {boolean} isAutoFetch
                  * @private
                  */
-                _searchDataProvider(query = "", isAutoFetch = false) {
+                _searchDataProvider(query = '', isAutoFetch = false) {
                     if (!isAutoFetch && query.length < this.props.autoCompleteMinLength) {
                         return;
                     }

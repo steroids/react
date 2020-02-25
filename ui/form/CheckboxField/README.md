@@ -1,6 +1,0 @@
-### CheckboxField
-
-
-```js
-<CheckboxField/>
-```

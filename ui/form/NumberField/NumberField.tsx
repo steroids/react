@@ -40,8 +40,8 @@ export default class NumberField extends React.PureComponent<INumberFieldProps &
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
-        placeholder: "",
+        className: '',
+        placeholder: '',
         min: null,
         max: null,
         step: null,
@@ -58,7 +58,7 @@ export default class NumberField extends React.PureComponent<INumberFieldProps &
                 {...this.props}
                 inputProps={{
                     name: this.props.input.name,
-                    value: this.props.input.value || "",
+                    value: this.props.input.value || '',
                     onChange: e => this.props.input.onChange(e.target.value),
                     type: 'number',
                     min: this.props.min,

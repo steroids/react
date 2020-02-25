@@ -41,7 +41,7 @@ export default class CheckboxListField extends React.PureComponent<ICheckboxList
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         multiple: true
     };
 

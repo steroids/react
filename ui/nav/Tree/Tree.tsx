@@ -95,7 +95,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
         };
     }
 
-    _getItems(items, parentId = "", level = 0) {
+    _getItems(items, parentId = '', level = 0) {
         let result = [];
         (items || []).forEach((item, index) => {
             const uniqId = this._resolveId(item, index, parentId);
@@ -120,7 +120,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
         return result;
     }
 
-    _autoOpen(items, parentId = "", level = 1) {
+    _autoOpen(items, parentId = '', level = 1) {
         let opened = {};
         (items || []).forEach((item, index) => {
             const uniqId = this._resolveId(item, index, parentId);
@@ -144,7 +144,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
         return opened;
     }
 
-    _findChildById(items, itemId, parentId = "", level = 1) {
+    _findChildById(items, itemId, parentId = '', level = 1) {
         let finedItem = null;
         (items || []).forEach((item, index) => {
             const uniqId = this._resolveId(item, index, parentId);
@@ -168,7 +168,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
     }
 
     _resolveId(item, index, parentId) {
-        return (parentId ? parentId + '.' : "") + String(item.id || index);
+        return (parentId ? parentId + '.' : '') + String(item.id || index);
     }
 
     _onItemClick(e, uniqId, item) {

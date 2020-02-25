@@ -39,7 +39,7 @@ export default class RadioListField extends React.PureComponent<IRadioListFieldP
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         errors: []
     };
 

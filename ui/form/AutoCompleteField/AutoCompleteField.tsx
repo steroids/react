@@ -74,7 +74,7 @@ export default class AutoCompleteField extends React.PureComponent<IAutoComplete
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         autoComplete: false,
         showReset: false,
     };
@@ -109,7 +109,7 @@ export default class AutoCompleteField extends React.PureComponent<IAutoComplete
                     onChange: this._onChange,
                     onFocus: this._onFocus,
                     onBlur: this._onBlur,
-                    value: this.props.input.value || ""
+                    value: this.props.input.value || ''
                 }}
                 items={this.props.items.map(item => ({
                     ...item,

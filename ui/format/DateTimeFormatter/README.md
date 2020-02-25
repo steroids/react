@@ -1,6 +1,0 @@
-### DateTimeFormatter 
-
-
-```js
-<DateTimeFormatter/>
-```

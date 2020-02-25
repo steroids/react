@@ -1,6 +1,0 @@
-### Button 
-
-
-```js
-<Button/>
-```

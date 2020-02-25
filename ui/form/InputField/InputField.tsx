@@ -5,7 +5,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
-    | 'text' | 'time' | 'url' | 'week';
+    | 'text' | 'time' | 'url' | 'week' | string;
 
 export interface IInputFieldProps extends IFieldHocInput {
     type?: IElementInputType;
@@ -43,8 +43,8 @@ export default class InputField extends React.PureComponent<IInputFieldProps & I
         type: 'text',
         disabled: false,
         required: false,
-        className: "",
-        placeholder: "",
+        className: '',
+        placeholder: '',
         errors: []
     };
 
@@ -61,7 +61,7 @@ export default class InputField extends React.PureComponent<IInputFieldProps & I
                 inputProps={{
                     type: this.props.type,
                     name: this.props.input.name,
-                    value: this.props.input.value || "",
+                    value: this.props.input.value || '',
                     onChange: e => this.props.input.onChange(e.target.value),
                     placeholder: this.props.placeholder,
                     disabled: this.props.disabled,

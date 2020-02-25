@@ -51,23 +51,25 @@ interface IFileFieldPrivateProps extends IFieldHocOutput, IFileHocOutput, ICompo
 
 }
 
+const defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    showRemove: true,
+    buttonProps: {
+        color: 'secondary',
+        outline: true
+    }
+};
+
 @field({
     componentId: 'form.FileField'
 })
 @file()
 @components('ui')
-export default class FileField extends React.PureComponent<IFileFieldProps & IFileFieldPrivateProps,
-    {}> {
-    static defaultProps = {
-        disabled: false,
-        required: false,
-        className: "",
-        showRemove: true,
-        buttonProps: {
-            color: 'secondary',
-            outline: true
-        }
-    };
+export default class FileField extends React.PureComponent<IFileFieldProps & IFileFieldPrivateProps> {
+
+    static defaultProps = defaultProps;
 
     render() {
         const FileFieldView =
@@ -89,7 +91,7 @@ export default class FileField extends React.PureComponent<IFileFieldProps & IFi
                     size: this.props.size,
                     disabled: this.props.disabled,
                     onClick: this.props.onBrowse,
-                    ...FileField.defaultProps.buttonProps,
+                    ...defaultProps.buttonProps,
                     ...this.props.buttonProps
                 }}
                 itemView={FileFieldItemView}

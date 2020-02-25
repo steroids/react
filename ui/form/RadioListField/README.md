@@ -1,6 +1,0 @@
-### RadioListField 
-
-
-```js
-<RadioListField/>
-```

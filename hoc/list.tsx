@@ -186,7 +186,7 @@ const stateMap = (state, props) => {
         searchForm,
         list,
         formValues: (formId && formValuesSelectors[formId](state)) || null,
-        locationSearch: _get(state, 'router.location.search', "")
+        locationSearch: _get(state, 'router.location.search', '')
     };
 };
 

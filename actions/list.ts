@@ -29,7 +29,7 @@ const defaultFetchHandler = list => (dispatch, getState, { http }) => {
 };
 const createList = (listId, props) => (dispatch, getState, { clientStorage }) =>
   dispatch({
-    action: props.action || props.action === "" ? props.action : null,
+    action: props.action || props.action === '' ? props.action : null,
     actionMethod: props.actionMethod || 'post',
     onFetch: props.onFetch,
     scope: props.scope,
@@ -60,7 +60,7 @@ export const initSSR = (listId, props) => (dispatch, getState) => {
     ...createList(listId, props),
     ...stateList
   };
-  if ((!list.action && list.action !== "") || list.items) {
+  if ((!list.action && list.action !== '') || list.items) {
     if (!stateList) {
       return dispatch({
         ...list,
@@ -83,7 +83,7 @@ export const fetch = (listId, params = {}) => (dispatch, getState) => {
     ..._get(getState(), ['list', 'lists', listId]),
     ...params
   };
-  if (!list.action && list.action !== "") {
+  if (!list.action && list.action !== '') {
     return;
   }
   const onFetch = list.onFetch || defaultFetchHandler;

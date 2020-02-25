@@ -189,7 +189,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                 initialValues={this.props.item}
                 action={
                     this.props.restUrl +
-                    (this.props.route.params.id ? '/' + this.props.route.params.id : "")
+                    (this.props.route.params.id ? '/' + this.props.route.params.id : '')
                 }
                 autoFocus
                 onComplete={() => {

@@ -4,7 +4,7 @@ export default class GoogleProvider {
 
     constructor(components) {
         this._components = components;
-        this.clientId = "";
+        this.clientId = '';
     }
 
     async init() {

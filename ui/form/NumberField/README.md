@@ -1,6 +1,0 @@
-### NumberField 
-
-
-```js
-<NumberField/>
-```

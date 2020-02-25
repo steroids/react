@@ -3,7 +3,7 @@ export default class AutoSaveHelper {
   static STORAGE_KEY_PREFIX = 'Form';
   static restore(clientStorage, formId, initialValues) {
     const values =
-      clientStorage.get(`${AutoSaveHelper.STORAGE_KEY_PREFIX}_${formId}`) || "";
+      clientStorage.get(`${AutoSaveHelper.STORAGE_KEY_PREFIX}_${formId}`) || '';
     if (_isString(values) && values.substr(0, 1) === '{') {
       return {
         ...JSON.parse(values),

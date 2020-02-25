@@ -222,7 +222,7 @@ export default (customConfig): any => WrappedComponent => {
                                     <FieldArray
                                         {...this.props}
                                         {...outputProps}
-                                        name={getName(this.props, "")}
+                                        name={getName(this.props, '')}
                                         component={WrappedComponent}
                                         formId={this.props.formId}
                                         fieldId={this._fieldId}

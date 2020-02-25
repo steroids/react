@@ -28,7 +28,7 @@ const defaultProps = {
         cols: [3, 6]
     },
     required: false,
-    className: ""
+    className: ''
 };
 
 @components('ui')

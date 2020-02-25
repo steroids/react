@@ -1,0 +1,5823 @@
+{
+    "interfaces": {
+        "IApplicationHocConfig": {
+            "name": "IApplicationHocConfig",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "components",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onInit",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IApplicationHocInput": {
+            "name": "IApplicationHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IApplicationHocOutput": {
+            "name": "IApplicationHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IBemHocInput": {
+            "name": "IBemHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IBemHocOutput": {
+            "name": "IBemHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "bem",
+                    "description": "",
+                    "required": false,
+                    "type": "{block: null, element: null} | any",
+                    "example": ""
+                },
+                {
+                    "name": "components",
+                    "description": "",
+                    "required": false,
+                    "type": "IComponentsHocOutput",
+                    "example": ""
+                }
+            ]
+        },
+        "IBemHocPrivateProps": {
+            "name": "IBemHocPrivateProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "components",
+                    "description": "",
+                    "required": true,
+                    "type": "IComponentsHocOutput",
+                    "example": ""
+                }
+            ]
+        },
+        "IComponentsHocInput": {
+            "name": "IComponentsHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IComponentsHocOutput": {
+            "name": "IComponentsHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IComponents"
+            ],
+            "items": [
+                {
+                    "name": "clientStorage",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "components",
+                    "description": "",
+                    "required": false,
+                    "type": "IComponents",
+                    "example": ""
+                },
+                {
+                    "name": "html",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "http",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "locale",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "resource",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "store",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "ui",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IConnectHocInput": {
+            "name": "IConnectHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IConnectHocOutput": {
+            "name": "IConnectHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "dispatch",
+                    "description": "",
+                    "required": false,
+                    "type": "Dispatch",
+                    "example": ""
+                }
+            ]
+        },
+        "IDataProviderHocInput": {
+            "name": "IDataProviderHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "autoComplete",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "autoCompleteDelay",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "autoCompleteMinLength",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "autoFetch",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "dataProvider",
+                    "description": "",
+                    "required": false,
+                    "type": "{action: string, onSearch: {}, params: object}",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {constructor: null} | string | number | {id: string | number | boolean, label: string | any}[]",
+                    "example": ""
+                },
+                {
+                    "name": "multiple",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "onSelect",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "selectFirst",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IDataProviderHocOutput": {
+            "name": "IDataProviderHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "hoveredItem",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isLoading",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "isOpened",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "{id: number | string | boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onClose",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onItemMouseOver",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onOpen",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onSearch",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "selectedItems",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldHocConfig": {
+            "name": "IFieldHocConfig",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "appendPrefix",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "attributes",
+                    "description": "",
+                    "required": true,
+                    "type": "string[]",
+                    "example": ""
+                },
+                {
+                    "name": "componentId",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "list",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldHocInput": {
+            "name": "IFieldHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "errors",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {} | any",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "prefix",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "\"sm\" | \"md\" | \"lg\" | string",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldHocOutput": {
+            "name": "IFieldHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "fieldId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                }
+            ]
+        },
+        "IFileHocInput": {
+            "name": "IFileHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "backendUrl",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "imagesExactSize",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "imagesOnly",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "imagesProcessor",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "initialFiles",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "mimeTypes",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "multiple",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "uploader",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFileHocOutput": {
+            "name": "IFileHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "files",
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": ""
+                },
+                {
+                    "name": "onBrowse",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onRemove",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "uploader",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormContext": {
+            "name": "IFormContext",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "formId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "prefix",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "\"sm\" | \"md\" | \"lg\" | string",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormHocInput": {
+            "name": "IFormHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "component",
+                    "description": "",
+                    "required": false,
+                    "type": "string | React.ComponentType | Element",
+                    "example": ""
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {} | any",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "prefix",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "\"sm\" | \"md\" | \"lg\" | string",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormHocOutput": {
+            "name": "IFormHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IFormHocInput",
+                "IFormContext"
+            ],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "component",
+                    "description": "",
+                    "required": false,
+                    "type": "string | React.ComponentType | Element",
+                    "example": ""
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "formId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {} | any",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "prefix",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "\"sm\" | \"md\" | \"lg\" | string",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormSubmitHocInput": {
+            "name": "IFormSubmitHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "action",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "actionMethod",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "autoSave",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onAfterSubmit",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onBeforeSubmit",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onComplete",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onSubmit",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "validators",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormSubmitHocOutput": {
+            "name": "IFormSubmitHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IFormatterHocInput": {
+            "name": "IFormatterHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormatterHocOutput": {
+            "name": "IFormatterHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IHttpHocInput": {
+            "name": "IHttpHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IHttpHocOutput": {
+            "name": "IHttpHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "fetch",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "ILayoutHocInput": {
+            "name": "ILayoutHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "components",
+                    "description": "",
+                    "required": true,
+                    "type": "IComponentsHocOutput",
+                    "example": ""
+                },
+                {
+                    "name": "data",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "initializeCounter",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "isInitialized",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "page",
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, roles: string[]}",
+                    "example": ""
+                },
+                {
+                    "name": "redirectPageId",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "user",
+                    "description": "",
+                    "required": false,
+                    "type": "{role: string}",
+                    "example": ""
+                }
+            ]
+        },
+        "ILayoutHocOutput": {
+            "name": "ILayoutHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "renderError",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "status",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                }
+            ]
+        },
+        "IListHocInput": {
+            "name": "IListHocInput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "action",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "actionMethod",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "defaultPage",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "defaultPageSize",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "defaultSort",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "emptyProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "emptyText",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "emptyView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemsIndexing",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutNames",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutNamesProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutNamesView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "list",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "listId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "loadMore",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "locationSearch",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onFetch",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "paginationProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "paginationSizeProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "paginationSizeView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "paginationView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "query",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "restoreCustomizer",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "reverse",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "scope",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "searchForm",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "selectedLayoutName",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "syncWithAddressBar",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "total",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IListHocOutput": {
+            "name": "IListHocOutput",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IListHocPrivateProps": {
+            "name": "IListHocPrivateProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IConnectHocOutput"
+            ],
+            "items": [
+                {
+                    "name": "dispatch",
+                    "description": "",
+                    "required": false,
+                    "type": "Dispatch",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlItem": {
+            "name": "IControlItem",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "content",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode | Element",
+                    "example": ""
+                },
+                {
+                    "name": "contentProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "position",
+                    "description": "",
+                    "required": false,
+                    "type": "\"left\" | \"right\"",
+                    "example": ""
+                },
+                {
+                    "name": "visible",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlsProps": {
+            "name": "IControlsProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlsViewProps": {
+            "name": "IControlsViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IControlsProps"
+            ],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "IControlItem & {color: ColorName, confirm: string, icon: string, label: string | any, outline: boolean, position: \"right\" | \"left\"}[]",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ICrudDetailViewProps": {
+            "name": "ICrudDetailViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "ICrudFormViewProps": {
+            "name": "ICrudFormViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "ICrudGridViewProps": {
+            "name": "ICrudGridViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "ICrudProps": {
+            "name": "ICrudProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "actions",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "baseRouteId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "controls",
+                    "description": "",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": ""
+                },
+                {
+                    "name": "crudId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "detailView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "editMode",
+                    "description": "",
+                    "required": false,
+                    "type": "\"page\" | \"modal\"",
+                    "example": ""
+                },
+                {
+                    "name": "form",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "formView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "grid",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "gridView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "restUrl",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "route",
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, isExact: boolean, params: any, path: string, url: string}",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ICrudViewProps": {
+            "name": "ICrudViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "ICrudProps"
+            ],
+            "items": [
+                {
+                    "name": "actions",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "baseRouteId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "controls",
+                    "description": "",
+                    "required": true,
+                    "type": "IControlItem[]",
+                    "example": ""
+                },
+                {
+                    "name": "crudId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "detailView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "editMode",
+                    "description": "",
+                    "required": false,
+                    "type": "\"page\" | \"modal\"",
+                    "example": ""
+                },
+                {
+                    "name": "form",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "formView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "grid",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "gridView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "restUrl",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "route",
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, isExact: boolean, params: any, path: string, url: string}",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IAutoCompleteFieldViewProps": {
+            "name": "IAutoCompleteFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{name: string, onBlur: {}, onChange: {}, onFocus: {}, type: string, value: string | number}",
+                    "example": ""
+                },
+                {
+                    "name": "isOpened",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{id: number | string | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onItemMouseOver",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "selectedItems",
+                    "description": "",
+                    "required": false,
+                    "type": "{id: number | string | boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "showReset",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IButtonProps": {
+            "name": "IButtonProps",
+            "description": "Button\nКнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику onClick),\nсмена страницы в рамках роутинга (goToPage), переход по внешней ссылке (url) или отправки формы (submit form)",
+            "extends": [],
+            "items": [
+                {
+                    "name": "block",
+                    "description": "Включает стиль `block`, делая размер кнопки на 100% ширины блока",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "className",
+                    "description": "Дополнительные CSS классы",
+                    "required": false,
+                    "type": "string",
+                    "example": "my-block\n"
+                },
+                {
+                    "name": "color",
+                    "description": "Цвет состояния",
+                    "required": false,
+                    "type": "ColorName",
+                    "example": "success\n"
+                },
+                {
+                    "name": "confirm",
+                    "description": "При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное\nокно с текстом подтверждения - `window.confirm('Ваш текст')`.",
+                    "required": false,
+                    "type": "string",
+                    "example": "Удалить запись #512?\n"
+                },
+                {
+                    "name": "disabled",
+                    "description": "Переводит кнопку в состояние \"не активна\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "icon",
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isLoading",
+                    "description": "Отображать индикатор загрузки?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "label",
+                    "description": "Название поля",
+                    "required": false,
+                    "type": "string | any",
+                    "example": "Save\n"
+                },
+                {
+                    "name": "layout",
+                    "description": "Выбор макета для распложения кнопки в форме. Если кнопка находится внутри `<Form>...</Form>`, то `layout` будет\nвзят из контекста формы и автоматически применен при отораженн. Для его отключения укажите `false`.",
+                    "required": false,
+                    "type": "FormLayout",
+                    "example": "horizontal\n"
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "Дополнительные свойства, необходимые для макета формы. См. также свойство `layout`.",
+                    "required": false,
+                    "type": "any",
+                    "example": "{}\n"
+                },
+                {
+                    "name": "link",
+                    "description": "Отображать как ссылку?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "onClick",
+                    "description": "Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка автоматически\nбудет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "outline",
+                    "description": "Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "size",
+                    "description": "Размер",
+                    "required": false,
+                    "type": "Size",
+                    "example": "sm\n"
+                },
+                {
+                    "name": "style",
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "object",
+                    "example": "{width: '45%'}\n"
+                },
+                {
+                    "name": "target",
+                    "description": "HTML аттрибут `target`, доступен только для ссылок",
+                    "required": false,
+                    "type": "string",
+                    "example": "_blank\n"
+                },
+                {
+                    "name": "to",
+                    "description": "Ссылка (`path`) на страницу в рамках роутера SPA приложения, будет вызвано действие `push`",
+                    "required": false,
+                    "type": "string",
+                    "example": "/profile/51\n"
+                },
+                {
+                    "name": "toRoute",
+                    "description": "ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров\nиспользуйте свойство `toRouteParams`",
+                    "required": false,
+                    "type": "string",
+                    "example": "profile\n"
+                },
+                {
+                    "name": "toRouteParams",
+                    "description": "Параметры роута, на который необходимо перейти, см. свойство `toRoute`.",
+                    "required": false,
+                    "type": "object",
+                    "example": "{userId: 52}\n"
+                },
+                {
+                    "name": "type",
+                    "description": "HTML Тип",
+                    "required": false,
+                    "type": "\"button\" | \"submit\"",
+                    "example": "submit\n"
+                },
+                {
+                    "name": "url",
+                    "description": "Ссылка на внешнюю страницу, используется совместно с свойством `link`",
+                    "required": false,
+                    "type": "string",
+                    "example": "https://ya.ru\n"
+                },
+                {
+                    "name": "view",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "required": false,
+                    "type": "React.ComponentType",
+                    "example": "MyCustomView\n"
+                }
+            ]
+        },
+        "IButtonViewProps": {
+            "name": "IButtonViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IButtonProps"
+            ],
+            "items": [
+                {
+                    "name": "block",
+                    "description": "Включает стиль `block`, делая размер кнопки на 100% ширины блока",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "className",
+                    "description": "Дополнительные CSS классы",
+                    "required": false,
+                    "type": "string",
+                    "example": "my-block\n"
+                },
+                {
+                    "name": "color",
+                    "description": "Цвет состояния",
+                    "required": false,
+                    "type": "ColorName",
+                    "example": "success\n"
+                },
+                {
+                    "name": "confirm",
+                    "description": "При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное\nокно с текстом подтверждения - `window.confirm('Ваш текст')`.",
+                    "required": false,
+                    "type": "string",
+                    "example": "Удалить запись #512?\n"
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "formId",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "icon",
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isLoading",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "Название поля",
+                    "required": false,
+                    "type": "string | any",
+                    "example": "Save\n"
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "link",
+                    "description": "Отображать как ссылку?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "onClick",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "outline",
+                    "description": "Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true\n"
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "style",
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "object",
+                    "example": "{width: '45%'}\n"
+                },
+                {
+                    "name": "target",
+                    "description": "HTML аттрибут `target`, доступен только для ссылок",
+                    "required": false,
+                    "type": "string",
+                    "example": "_blank\n"
+                },
+                {
+                    "name": "to",
+                    "description": "Ссылка (`path`) на страницу в рамках роутера SPA приложения, будет вызвано действие `push`",
+                    "required": false,
+                    "type": "string",
+                    "example": "/profile/51\n"
+                },
+                {
+                    "name": "toRoute",
+                    "description": "ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров\nиспользуйте свойство `toRouteParams`",
+                    "required": false,
+                    "type": "string",
+                    "example": "profile\n"
+                },
+                {
+                    "name": "toRouteParams",
+                    "description": "Параметры роута, на который необходимо перейти, см. свойство `toRoute`.",
+                    "required": false,
+                    "type": "object",
+                    "example": "{userId: 52}\n"
+                },
+                {
+                    "name": "type",
+                    "description": "HTML Тип",
+                    "required": false,
+                    "type": "\"button\" | \"submit\"",
+                    "example": "submit\n"
+                },
+                {
+                    "name": "url",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "required": false,
+                    "type": "React.ComponentType",
+                    "example": "MyCustomView\n"
+                }
+            ]
+        },
+        "ICheckboxFieldProps": {
+            "name": "ICheckboxFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ICheckboxFieldViewProps": {
+            "name": "ICheckboxFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "ICheckboxFieldProps"
+            ],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{checked: boolean, disabled: boolean, name: string, onChange: {}, type: string}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ICheckboxListFieldProps": {
+            "name": "ICheckboxListFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "hoveredItem",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "selectedItems",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ICheckboxListFieldViewProps": {
+            "name": "ICheckboxListFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: boolean, name: string, type: string}",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{id: number | string | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IDateFieldProps": {
+            "name": "IDateFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "displayFormat",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "pickerProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                },
+                {
+                    "name": "valueFormat",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IDateFieldViewProps": {
+            "name": "IDateFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "pickerProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{dayPickerProps: {locale: string, localeUtils: any}, formatDate: {}, inputProps: {disabled: boolean}, name: string, onDayChange: {}, parseDate: {}, placeholder: string, value: string}",
+                    "example": ""
+                }
+            ]
+        },
+        "IDateTimeFieldProps": {
+            "name": "IDateTimeFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "dateProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "displayDateFormat",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                },
+                {
+                    "name": "timeFormat",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "timeProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "valueDateFormat",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IDateTimeFieldViewProps": {
+            "name": "IDateTimeFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "dateField",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "timeField",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IDropDownFieldProps": {
+            "name": "IDropDownFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "searchPlaceholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "showReset",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IDropDownFieldViewProps": {
+            "name": "IDropDownFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "isLoading",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "isOpened",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{id: number | string | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onItemMouseOver",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onOpen",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onReset",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "selectedItems",
+                    "description": "",
+                    "required": false,
+                    "type": "{id: number | string | boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "showReset",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldPrivateProps": {
+            "name": "IFieldPrivateProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IConnectHocOutput"
+            ],
+            "items": [
+                {
+                    "name": "dispatch",
+                    "description": "",
+                    "required": false,
+                    "type": "Dispatch",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldProps": {
+            "name": "IFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IFieldLayoutProps": {
+            "name": "IFieldLayoutProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "errors",
+                    "description": "",
+                    "required": false,
+                    "type": "string | string[]",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "\"default\" | \"inline\" | \"horizontal\" | string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "layoutClassName",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "layoutView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldLayoutViewProps": {
+            "name": "IFieldLayoutViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldListItemViewProps": {
+            "name": "IFieldListItemViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "IFieldListItem & {disabled: boolean, size: boolean}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onRemove",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "prefix",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "renderField",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "rowIndex",
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldListProps": {
+            "name": "IFieldListProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "enableKeyboardNavigation",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "fields",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "initialRowsCount",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemViewProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "IFieldListItem[]",
+                    "example": ""
+                },
+                {
+                    "name": "showAdd",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "showRemove",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "viewProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldListViewProps": {
+            "name": "IFieldListViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "IFieldListItem & {disabled: boolean, size: boolean}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onAdd",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "renderField",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IFieldSetProps": {
+            "name": "IFieldSetProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IFileFieldProps": {
+            "name": "IFileFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "buttonComponent",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "buttonProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "itemProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "showRemove",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFileFieldViewProps": {
+            "name": "IFileFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "buttonComponent",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "buttonProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: boolean, label: string | any, onClick: {}, size: boolean}",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: boolean, error: string, fileId: number | string, image: {height: string, url: string, width: string}, onRemove: {}, progress: {bytesUploaded: number, percent: number}, showRemove: boolean, size: number | string, title: string, uid: string}[]",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormProps": {
+            "name": "IFormProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "action",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "actionMethod",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "autoFocus",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "autoSave",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "fields",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {component: string | {}, hint: string, label: string, required: boolean}[]",
+                    "example": ""
+                },
+                {
+                    "name": "formId",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "initialValues",
+                    "description": "",
+                    "required": false,
+                    "type": "any | any[]",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "\"default\" | \"inline\" | \"horizontal\" | string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "layoutProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {} | any",
+                    "example": ""
+                },
+                {
+                    "name": "onAfterSubmit",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onBeforeSubmit",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onComplete",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onSubmit",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "prefix",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "restoreCustomizer",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                },
+                {
+                    "name": "submitLabel",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "syncWithAddressBar",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "useHash",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "validators",
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormViewProps": {
+            "name": "IFormViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "onSubmit",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IHtmlFieldProps": {
+            "name": "IHtmlFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "editorProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "uploadImagesProcessor",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "uploadUrl",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IHtmlFieldViewProps": {
+            "name": "IHtmlFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "editorProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IInputFieldProps": {
+            "name": "IInputFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "required": false,
+                    "type": "IElementInputType",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IInputFieldViewProps": {
+            "name": "IInputFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "example": ""
+                }
+            ]
+        },
+        "INumberFieldProps": {
+            "name": "INumberFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "step",
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "INumberFieldViewProps": {
+            "name": "INumberFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: string, max: string | number, min: string | number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: string | number}",
+                    "example": ""
+                }
+            ]
+        },
+        "IPasswordFieldProps": {
+            "name": "IPasswordFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "security",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IPasswordFieldViewProps": {
+            "name": "IPasswordFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "example": ""
+                },
+                {
+                    "name": "onHidePassword",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onShowPassword",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "security",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "securityLevel",
+                    "description": "",
+                    "required": false,
+                    "type": "\"success\" | \"warning\" | \"danger\"",
+                    "example": ""
+                }
+            ]
+        },
+        "IRadioListFieldProps": {
+            "name": "IRadioListFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IRadioListFieldViewProps": {
+            "name": "IRadioListFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: string, name: string, type: string}",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{id: number | string | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IRangeFieldProps": {
+            "name": "IRangeFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attributeFrom",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "attributeTo",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "fieldComponent",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "fromProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "inputFrom",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "inputTo",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "placeholderFrom",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "placeholderTo",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "toProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "required": false,
+                    "type": "\"input\" | \"date\" | string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IRangeFieldViewProps": {
+            "name": "IRangeFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "fromField",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "toField",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IReCaptchaFieldProps": {
+            "name": "IReCaptchaFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": ""
+                },
+                {
+                    "name": "metaItem",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "props",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IReCaptchaFieldViewProps": {
+            "name": "IReCaptchaFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "reCaptchaProps",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ISliderFieldProps": {
+            "name": "ISliderFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "max",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "min",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "sliderProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ISliderFieldViewProps": {
+            "name": "ISliderFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "slider",
+                    "description": "",
+                    "required": true,
+                    "type": "{defaultValue: number, max: number, min: number, onAfterChange: {}, onChange: {}, value: number}",
+                    "example": ""
+                }
+            ]
+        },
+        "ISwitcherFieldProps": {
+            "name": "ISwitcherFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "buttonProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ISwitcherFieldViewProps": {
+            "name": "ISwitcherFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{id: number | string | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "ITextFieldProps": {
+            "name": "ITextFieldProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "submitOnEnter",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ITextFieldViewProps": {
+            "name": "ITextFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: string, name: string, onChange: {}, onKeyUp: {}, placeholder: string, value: string | number}",
+                    "example": ""
+                }
+            ]
+        },
+        "IBooleanFormatterProps": {
+            "name": "IBooleanFormatterProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "required": false,
+                    "type": "string | number | boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IDateTimeFormatterProps": {
+            "name": "IDateTimeFormatterProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "format",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "timeZone",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IEnumFormatterProps": {
+            "name": "IEnumFormatterProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {id: number | string, label: string}[] | {getLabel: {}}",
+                    "example": ""
+                }
+            ]
+        },
+        "IFileSizeFormatterProps": {
+            "name": "IFileSizeFormatterProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "showZero",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IFormatProps": {
+            "name": "IFormatProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "component",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {}",
+                    "example": ""
+                },
+                {
+                    "name": "getFormatter",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {} | any",
+                    "example": ""
+                },
+                {
+                    "name": "ui",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IMoneyFormatterProps": {
+            "name": "IMoneyFormatterProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "photoRowHeight",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "required": false,
+                    "type": "{src: string, thumbnail: string, thumbnailHeight: number, thumbnailWidth: number, uid: number}[]",
+                    "example": ""
+                },
+                {
+                    "name": "videoRowHeight",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                }
+            ]
+        },
+        "IHeaderProps": {
+            "name": "IHeaderProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "logo",
+                    "description": "",
+                    "required": false,
+                    "type": "{className: string, linkProps: object, logoUrl: string | any, title: string}",
+                    "example": ""
+                },
+                {
+                    "name": "nav",
+                    "description": "",
+                    "required": false,
+                    "type": "INavProps",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IHeaderViewProps": {
+            "name": "IHeaderViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IHeaderProps"
+            ],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "logo",
+                    "description": "",
+                    "required": false,
+                    "type": "{className: string, linkProps: object, logoUrl: string | any, title: string}",
+                    "example": ""
+                },
+                {
+                    "name": "nav",
+                    "description": "",
+                    "required": false,
+                    "type": "INavProps",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ILoaderProps": {
+            "name": "ILoaderProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "INotificationsItemViewProps": {
+            "name": "INotificationsItemViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "INotificationItem"
+            ],
+            "items": [
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "isClosing",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "level",
+                    "description": "",
+                    "required": false,
+                    "type": "ColorName",
+                    "example": ""
+                },
+                {
+                    "name": "message",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "onClose",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onClosing",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "INotificationsProps": {
+            "name": "INotificationsProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "initialFlashes",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "notifications",
+                    "description": "",
+                    "required": false,
+                    "type": "INotificationItem[]",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "INotificationsViewProps": {
+            "name": "INotificationsViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "notifications",
+                    "description": "",
+                    "required": false,
+                    "type": "INotificationItem[]",
+                    "example": ""
+                }
+            ]
+        },
+        "IAccordionHeaderViewProps": {
+            "name": "IAccordionHeaderViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": true,
+                    "type": "PrimaryKey",
+                    "example": ""
+                },
+                {
+                    "name": "index",
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "isOpened",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": true,
+                    "type": "object",
+                    "example": ""
+                }
+            ]
+        },
+        "IAccordionItemViewProps": {
+            "name": "IAccordionItemViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": true,
+                    "type": "PrimaryKey",
+                    "example": ""
+                },
+                {
+                    "name": "index",
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "isOpened",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": true,
+                    "type": "object",
+                    "example": ""
+                }
+            ]
+        },
+        "IAccordionProps": {
+            "name": "IAccordionProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "headerLabelAttribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "headerProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "headerView",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onToggle",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "openFirst",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "openedId",
+                    "description": "",
+                    "required": false,
+                    "type": "number | string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IAccordionViewProps": {
+            "name": "IAccordionViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{id: PrimaryKey, isOpened: boolean}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onToggle",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "openedId",
+                    "description": "",
+                    "required": true,
+                    "type": "PrimaryKey",
+                    "example": ""
+                },
+                {
+                    "name": "renderHeader",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "renderItem",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IActionColumnProps": {
+            "name": "IActionColumnProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "actions",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IActionColumnViewProps": {
+            "name": "IActionColumnViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "IActionColumnItem[]",
+                    "example": ""
+                }
+            ]
+        },
+        "ICheckboxColumnProps": {
+            "name": "ICheckboxColumnProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "fieldProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ICheckboxColumnViewProps": {
+            "name": "ICheckboxColumnViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "fieldProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{fieldId: string}",
+                    "example": ""
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "required": true,
+                    "type": "{name: string, onChange: any, value: any}",
+                    "example": ""
+                }
+            ]
+        },
+        "IDetailColumn": {
+            "name": "IDetailColumn",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | Element",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean | Element",
+                    "example": ""
+                },
+                {
+                    "name": "valueProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "valueView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "visible",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IDetailProps": {
+            "name": "IDetailProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attributes",
+                    "description": "",
+                    "required": false,
+                    "type": "string | IDetailColumn[]",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {} | any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IDetailViewProps": {
+            "name": "IDetailViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "IDetailColumn & {label: any, value: any}[]",
+                    "example": ""
+                }
+            ]
+        },
+        "IEmptyProps": {
+            "name": "IEmptyProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "text",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IEmptyViewProps": {
+            "name": "IEmptyViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IGridColumn": {
+            "name": "IGridColumn",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "format",
+                    "description": "",
+                    "required": false,
+                    "type": "string | {component: string | {}}",
+                    "example": ""
+                },
+                {
+                    "name": "headerClassName",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "headerProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "headerView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "valueProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "valueView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "visible",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IGridProps": {
+            "name": "IGridProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "actions",
+                    "description": "",
+                    "required": false,
+                    "type": "any[] | {}",
+                    "example": ""
+                },
+                {
+                    "name": "columns",
+                    "description": "",
+                    "required": true,
+                    "type": "string | IGridColumn[]",
+                    "example": ""
+                },
+                {
+                    "name": "fields",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemsIndexing",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "searchForm",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IGridViewProps": {
+            "name": "IGridViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "columns",
+                    "description": "",
+                    "required": true,
+                    "type": "IGridColumn & {label: any}[]",
+                    "example": ""
+                },
+                {
+                    "name": "renderValue",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IListItemViewProps": {
+            "name": "IListItemViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": true,
+                    "type": "PrimaryKey",
+                    "example": ""
+                },
+                {
+                    "name": "index",
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": true,
+                    "type": "object",
+                    "example": ""
+                }
+            ]
+        },
+        "IListProps": {
+            "name": "IListProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "itemProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IListViewProps": {
+            "name": "IListViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "content",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IPaginationProps": {
+            "name": "IPaginationProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "aroundCount",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "list",
+                    "description": "",
+                    "required": false,
+                    "type": "{page: number, pageSize: number, total: number}",
+                    "example": ""
+                },
+                {
+                    "name": "listId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "loadMore",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "page",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "pageParam",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                },
+                {
+                    "name": "syncWithAddressBar",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IPaginationViewProps": {
+            "name": "IPaginationViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "onSelect",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onSelectNext",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "page",
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "pages",
+                    "description": "",
+                    "required": true,
+                    "type": "{isActive: boolean, label: string, page: number}[]",
+                    "example": ""
+                },
+                {
+                    "name": "totalPages",
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": ""
+                }
+            ]
+        },
+        "IPaginationSizeProps": {
+            "name": "IPaginationSizeProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "list",
+                    "description": "",
+                    "required": false,
+                    "type": "{page: number, pageSize: number, total: number}",
+                    "example": ""
+                },
+                {
+                    "name": "listId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                },
+                {
+                    "name": "sizes",
+                    "description": "",
+                    "required": false,
+                    "type": "number[]",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IPaginationSizeViewProps": {
+            "name": "IPaginationSizeViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "onSelect",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "sizes",
+                    "description": "",
+                    "required": true,
+                    "type": "{isActive: boolean, label: string | number, size: number}[]",
+                    "example": ""
+                }
+            ]
+        },
+        "IModalProps": {
+            "name": "IModalProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "onClose",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "title",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IModalViewProps": {
+            "name": "IModalViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "onClose",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IModalWrapperProps": {
+            "name": "IModalWrapperProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IBreadcrumbsProps": {
+            "name": "IBreadcrumbsProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": ""
+                },
+                {
+                    "name": "pageId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "pageTitle",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "params",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IBreadcrumbsViewProps": {
+            "name": "IBreadcrumbsViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IBreadcrumbsProps"
+            ],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": ""
+                },
+                {
+                    "name": "pageId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "pageTitle",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "params",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ILinkProps": {
+            "name": "ILinkProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "ILinkViewProps": {
+            "name": "ILinkViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "INavItem": {
+            "name": "INavItem",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "content",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "contentProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": false,
+                    "type": "number | string",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | any",
+                    "example": ""
+                },
+                {
+                    "name": "onClick",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "url",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "visible",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "INavProps": {
+            "name": "INavProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "activeTab",
+                    "description": "",
+                    "required": false,
+                    "type": "number | string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "string | INavItem[]",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "\"button\" | \"icon\" | \"link\" | \"tabs\" | \"navbar\" | \"list\" | string",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "INavViewProps": {
+            "name": "INavViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "INavItem & {isActive: boolean}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onClick",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
+        "IRouteItem": {
+            "name": "IRouteItem",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "component",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "exact",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "IRouteItem[] | {}",
+                    "example": ""
+                },
+                {
+                    "name": "path",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "roles",
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": ""
+                }
+            ]
+        },
+        "IRouterProps": {
+            "name": "IRouterProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "autoScrollTop",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "basename",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "history",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "pageId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "pathname",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "routes",
+                    "description": "",
+                    "required": false,
+                    "type": "IRouteItem[] | {}",
+                    "example": ""
+                },
+                {
+                    "name": "store",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "wrapperProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "wrapperView",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ITreeItem": {
+            "name": "ITreeItem",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string | any",
+                    "example": ""
+                },
+                {
+                    "name": "visible",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "ITreeProps": {
+            "name": "ITreeProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "autoOpenLevels",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "autoSave",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string | number, items: any[], label: string | any, visible: boolean}[]",
+                    "example": ""
+                },
+                {
+                    "name": "itemsKey",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "selectedItemId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ITreeViewProps": {
+            "name": "ITreeViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "ITreeProps"
+            ],
+            "items": [
+                {
+                    "name": "autoOpenLevels",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "autoSave",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "id",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "ITreeItem & {hasItems: boolean, index: number, isOpened: boolean, isSelected: boolean, level: number, onClick: {}, uniqId: string}[]",
+                    "example": ""
+                },
+                {
+                    "name": "itemsKey",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "onItemClick",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "selectedItemId",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        }
+    },
+    "demos": {
+        "form": {
+            "Button": {
+                "block": {
+                    "order": 3,
+                    "col": 4,
+                    "title": "Block",
+                    "description": ""
+                },
+                "colors": {
+                    "order": 1,
+                    "col": 8,
+                    "title": "Colors",
+                    "description": ""
+                },
+                "disabled": {
+                    "order": 4,
+                    "col": 4,
+                    "title": "Disabled",
+                    "description": ""
+                },
+                "link": {
+                    "order": 5,
+                    "col": 4,
+                    "title": "Link",
+                    "description": ""
+                },
+                "sizes": {
+                    "order": 2,
+                    "col": 4,
+                    "title": "Sizes",
+                    "description": ""
+                }
+            }
+        }
+    }
+}

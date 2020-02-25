@@ -146,6 +146,8 @@ export interface IButtonProps {
      * @example horizontal
      */
     layout?: FormLayout;
+
+    textColor?: any;
 }
 
 export interface IButtonViewProps extends IButtonProps {
@@ -156,6 +158,7 @@ export interface IButtonViewProps extends IButtonProps {
     size?: string,
     disabled?: boolean,
     onClick?: (e: Event) => void,
+    submitting: boolean,
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

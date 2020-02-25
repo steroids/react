@@ -8,11 +8,6 @@ export interface ICheckboxFieldProps extends IFieldHocInput {
     label?: string | boolean | any;
     hint?: string;
     attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
     required?: boolean;
     isInvalid?: boolean;
     disabled?: boolean;
@@ -38,7 +33,7 @@ interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput,
 
 @field({
     componentId: 'form.CheckboxField',
-    layoutProps: {
+    layout: {
         label: false
     }
 })

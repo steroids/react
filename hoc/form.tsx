@@ -9,8 +9,7 @@ export interface IFormHocInput {
     hint?: string;
     required?: boolean;
     disabled?: boolean;
-    layout?: any;
-    layoutProps?: any;
+    layout?: FormLayout;
     component?: string | React.ComponentType | JSX.Element;
     onChange?: (...args: any[]) => any;
     className?: string;
@@ -42,16 +41,23 @@ export interface IFormContext {
             PropTypes.string,
             PropTypes.bool
         ]),
-        layoutProps: PropTypes.object,
         size: PropTypes.oneOf(['sm', 'md', 'lg'])
      */
     formId?: string;
     model?: any;
     prefix?: string | boolean;
-    layout?: any;
-    layoutProps?: any;
+    layout?: FormLayout;
     size?: 'sm' | 'md' | 'lg' | string;
 }
+
+export const mergeLayoutProp = (layout1, layout2) => {
+    return typeof layout1 === 'object' || typeof layout2 === 'object'
+        ? {
+            ...(typeof layout1 === 'object' ? layout1 : {layout: layout1}),
+            ...(typeof layout2 === 'object' ? layout2 : {layout: layout2}),
+        }
+        : (layout2 || layout2 === false ? layout2 : layout1)
+};
 
 export const FormContext = React.createContext<IFormContext>({
     size: 'md',
@@ -68,13 +74,7 @@ export default (config = {} as IFormHocConfig): any => WrappedComponent =>
                         const outputProps = {
                             ...context,
                             ...this.props,
-                            layout: this.props.layout || this.props.layout === false
-                                ? this.props.layout
-                                : context.layout,
-                            layoutProps: {
-                                ...context.layoutProps,
-                                ...this.props.layoutProps,
-                            },
+                            layout: mergeLayoutProp(context.layout, this.props.layout),
                             prefix: config.appendPrefix
                                 ? String(context.prefix || '') + String(this.props.prefix || '')
                                 : this.props.prefix || context.prefix,

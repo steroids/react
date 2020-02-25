@@ -22,8 +22,7 @@ export interface IFormProps extends IFormSubmitHocInput {
     model?: string | ((...args: any[]) => any) | any;
     action?: string;
     actionMethod?: string;
-    layout?: ('default' | 'inline' | 'horizontal') | string | boolean;
-    layoutProps?: any;
+    layout?: FormLayout;
     size?: Size;
     onSubmit?: (...args: any[]) => any;
     validators?: any[];
@@ -169,12 +168,12 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
                     model: this.props.model,
                     prefix: this.props.prefix,
                     layout: this.props.layout,
-                    layoutProps: this.props.layoutProps,
                     size: this.props.size,
                 }}
             >
                 <FormView
                     {...this.props}
+                    layout={typeof this.props.layout === 'object' ? this.props.layout : {layout: this.props.layout}}
                     onSubmit={this.props.handleSubmit(this.props.onSubmit)}
                 >
                     {this.props.children}

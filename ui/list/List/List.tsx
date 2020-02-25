@@ -5,21 +5,25 @@ import {IListHocInput, IListHocOutput} from '../../../hoc/list';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IListProps extends IListHocInput {
-    primaryKey?: string;
-    items?: any[];
-    itemView: any;
-    itemProps?: any;
-    view?: any;
+    itemView?: React.ComponentType;
+    itemProps?: object;
+    view?: React.ComponentType;
+    className?: string;
 }
 
-export interface IListViewProps extends IListHocOutput {
+export interface IListViewProps extends IListProps, IListHocOutput {
     content: any,
 }
 
-export interface IListItemViewProps extends IListHocOutput {
+export interface IListItemViewProps extends IListProps, IListHocOutput {
     id: PrimaryKey,
-    item: object,
+    item: {
+        id?: PrimaryKey,
+        title?: string | any,
+        label?: string | any,
+    },
     index: number,
+    className?: string;
 }
 
 interface IListPrivateProps extends IListHocOutput, IComponentsHocOutput {
@@ -45,16 +49,22 @@ export default class List extends React.PureComponent<IListProps & IListPrivateP
     }
 
     renderItem(item, index) {
-        const ItemView = this.props.itemView;
+        const ItemView = this.props.itemView || this.props.ui.getView('list.ListItemView');
         const id = _get(item, this.props.primaryKey);
+        const itemProps = {
+            ...this.props,
+            ...this.props.itemProps,
+            id,
+            item,
+            index,
+        } as IListItemViewProps;
+
         return (
             <ItemView
                 {...this.props}
                 {...this.props.itemProps}
+                {...itemProps}
                 key={id || index}
-                id={id}
-                item={item}
-                index={index}
             />
         );
     }

@@ -30,11 +30,7 @@ export interface IFileHocInput {
         })
       )
      */
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    },
+    input?: FormInputType,
     multiple?: boolean;
     uploader?: any;
     backendUrl?: any;

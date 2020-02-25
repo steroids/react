@@ -4,6 +4,7 @@ import {change} from 'redux-form';
 import _remove from 'lodash-es/remove';
 import _some from 'lodash-es/some';
 import _has from 'lodash-es/has';
+import _get from 'lodash-es/get';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _isFunction from 'lodash-es/isFunction';
@@ -21,11 +22,7 @@ import Enum from "../base/Enum";
 import {IConnectHocOutput} from './connect';
 
 export interface IDataProviderHocInput {
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    },
+    input?: FormInputType,
     multiple?: boolean;
     items?: string
         | ({ new(): Enum })
@@ -35,9 +32,11 @@ export interface IDataProviderHocInput {
         params: object,
         onSearch: (...args: any) => any,
     };
-    autoComplete?: boolean;
-    autoCompleteMinLength?: number;
-    autoCompleteDelay?: number;
+    autoComplete?: boolean | {
+        enable?: boolean,
+        minLength?: number,
+        delay?: number,
+    };
     autoFetch?: any;
     selectFirst?: any;
     onSelect?: any;
@@ -74,6 +73,14 @@ interface IDataProviderHocState {
     items: any,
 }
 
+const defaultProps = {
+    autoComplete: {
+        enable: false,
+        minLength: 2,
+        delay: 100,
+    },
+};
+
 const stateMap = (state, props) => ({
     items: _isString(props.items)
         ? getEnumLabels(state, props.items)
@@ -92,11 +99,7 @@ export default (): any => WrappedComponent =>
                  */
                 static displayName = WrappedComponent.displayName || WrappedComponent.name;
 
-                static defaultProps = {
-                    ...WrappedComponent.defaultProps,
-                    autoCompleteMinLength: 2,
-                    autoCompleteDelay: 100
-                };
+                static defaultProps = defaultProps;
 
                 /**
                  * Normalize items for save to state. Support enum class or normal items list.
@@ -281,7 +284,7 @@ export default (): any => WrappedComponent =>
                     this.setState({
                         isOpened: !this.state.isOpened,
                         items: this.state.sourceItems,
-                        hoveredItem: null
+                        hoveredItem: null,
                     });
                 }
 
@@ -291,7 +294,7 @@ export default (): any => WrappedComponent =>
                  */
                 _onClose() {
                     this.setState({
-                        isOpened: false
+                        isOpened: false,
                     });
                 }
 
@@ -307,13 +310,13 @@ export default (): any => WrappedComponent =>
                         if (this._delayTimer) {
                             clearTimeout(this._delayTimer);
                         }
+
                         // Min length query logic
-                        if (query.length >= this.props.autoCompleteMinLength) {
+                        const minLength = _get(this.props, 'autoComplete.minLength') || defaultProps.autoComplete.minLength;
+                        const delay = _get(this.props, 'autoComplete.delay') || defaultProps.autoComplete.delay;
+                        if (query.length >= minLength) {
                             // Search with delay
-                            this._delayTimer = setTimeout(
-                                () => this._searchDataProvider(query),
-                                this.props.autoCompleteDelay
-                            );
+                            this._delayTimer = setTimeout(() => this._searchDataProvider(query), delay);
                         }
                     } else {
                         // Client-side search on static items
@@ -409,7 +412,8 @@ export default (): any => WrappedComponent =>
                  * @private
                  */
                 _searchDataProvider(query = '', isAutoFetch = false) {
-                    if (!isAutoFetch && query.length < this.props.autoCompleteMinLength) {
+                    const minLength = _get(this.props, 'autoComplete.minLength') || defaultProps.autoComplete.minLength;
+                    if (!isAutoFetch && query.length < minLength) {
                         return;
                     }
                     const searchHandler =

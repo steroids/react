@@ -148,7 +148,6 @@ export default class FieldList extends React.PureComponent<IFieldListProps & IFi
                     model: this.props.model,
                     prefix: this.props.prefix,
                     layout: this.props.layout,
-                    layoutProps: this.props.layoutProps,
                     size: this.props.size,
                 }}
             >

@@ -1,11 +1,12 @@
 import * as React from 'react';
+import _isObject from 'lodash-es/isObject';
 import {connect} from 'react-redux';
 import {isSubmitting} from 'redux-form';
 import {push} from 'connected-react-router';
 import {components} from '../../../hoc';
 import FieldLayout from '../FieldLayout';
 import {getNavUrl} from '../../../reducers/navigation';
-import {FormContext, IFormContext} from '../../../hoc/form';
+import {FormContext, IFormContext, mergeLayoutProp} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
@@ -140,15 +141,11 @@ export interface IButtonProps {
     /**
      * Выбор макета для распложения кнопки в форме. Если кнопка находится внутри `<Form>...</Form>`, то `layout` будет
      * взят из контекста формы и автоматически применен при отораженн. Для его отключения укажите `false`.
+     * Данное свойство так же может принимать объект, если нужно прокинуть дополнительные свойства в шаблон макета.
+     * Пример: `{layout: 'horizontal', cols: [2,6]}`
      * @example horizontal
      */
     layout?: FormLayout;
-
-    /**
-     * Дополнительные свойства, необходимые для макета формы. См. также свойство `layout`.
-     * @example {}
-     */
-    layoutProps?: any;
 }
 
 export interface IButtonViewProps extends IButtonProps {
@@ -156,7 +153,6 @@ export interface IButtonViewProps extends IButtonProps {
     url?: string,
     formId: string,
     layout?: string,
-    layoutProps?: object,
     size?: string,
     disabled?: boolean,
     onClick?: (e: Event) => void,
@@ -226,11 +222,8 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
     renderContent(context: IFormContext) {
         const ButtonView = this.props.view || this.props.ui.getView('form.ButtonView');
         const disabled = this.props.submitting || this.props.disabled || this.state.isLoading;
-        const layout = this.props.layout || context.layout;
-        const layoutProps = {
-            ...context.layoutProps,
-            ...this.props.layoutProps,
-        };
+        const layout = mergeLayoutProp(context.layout, this.props.layout);
+
         const button = (
             <ButtonView
                 {...this.props}
@@ -241,8 +234,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                         : this.props.url || this.props.to
                 }
                 formId={context.formId}
-                layout={context.layout}
-                layoutProps={layoutProps}
+                layout={layout}
                 size={this.props.size || context.size}
                 disabled={disabled}
                 onClick={!disabled ? this._onClick : undefined}
@@ -257,7 +249,6 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                     {...this.props}
                     label={null}
                     layout={layout}
-                    layoutProps={layoutProps}
                     size={this.props.size}
                 >
                     {button}

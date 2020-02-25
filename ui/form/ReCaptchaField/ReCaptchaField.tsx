@@ -5,11 +5,6 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
 export interface IReCaptchaFieldProps extends IFieldHocInput {
     metaItem?: any;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
     props?: any;
     view?: any;
 }

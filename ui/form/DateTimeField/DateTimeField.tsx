@@ -11,11 +11,6 @@ export interface IDateTimeFieldProps extends IFieldHocInput {
     label?: string | boolean | any;
     hint?: string;
     attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
     required?: boolean;
     size?: Size;
     disabled?: boolean;

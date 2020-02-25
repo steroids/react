@@ -125,7 +125,7 @@ export interface IListHocInput {
     query?: any,
     items?: any,
     total?: any,
-    reverse?: any,
+    reverse?: boolean,
     itemsIndexing?: any,
     syncWithAddressBar?: any,
     restoreCustomizer?: any,
@@ -137,7 +137,9 @@ export interface IListHocInput {
     paginationView?: any,
     paginationProps?: any,
     paginationSizeView?: any,
-    paginationSizeProps?: any,
+    paginationSizeProps?: {
+        sizes?: number[];
+    },
     layoutProps?: any,
     selectedLayoutName?: any,
     layoutNames?: any,
@@ -148,7 +150,19 @@ export interface IListHocInput {
 }
 
 export interface IListHocOutput {
-
+    /*
+        searchForm={searchForm}
+        items={items}
+        fetch={this._onFetch}
+        sort={this._onSort}
+     */
+    isLoading?: boolean,
+    empty?: React.ReactNode,
+    layoutNames?: React.ReactNode | any,
+    selectedLayoutName?: any,
+    pagination?: React.ReactNode,
+    paginationSize?: React.ReactNode,
+    outsideSearchForm?: React.ReactNode,
 }
 
 export interface IListHocPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -195,7 +209,7 @@ export const getFormId = props =>
     _get(props, 'searchForm.formId', props.listId);
 
 export default (): any => WrappedComponent =>
-    connect()(
+    connect(stateMap)(
         components('store')(
             class ListHoc extends React.PureComponent<IListHocInput & IListHocPrivateProps> {
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FormContext, IFormContext} from '../../../hoc/form';
+import {FormContext, IFormContext, mergeLayoutProp} from '../../../hoc/form';
 
 export interface IFieldSetProps extends IFormContext {
 }
@@ -16,11 +16,7 @@ export default class FieldSet extends React.PureComponent<IFieldSetProps> {
                             prefix: [context.prefix, this.props.prefix]
                                 .filter(Boolean)
                                 .join('.'),
-                            layout: this.props.layout || context.layout,
-                            layoutProps: {
-                                ...context.layoutProps,
-                                ...this.props.layoutProps
-                            },
+                            layout: mergeLayoutProp(context.layout, this.props.layout),
                             size: this.props.size || context.size
                         }}
                     >

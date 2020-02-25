@@ -7,8 +7,8 @@ export interface IBemHocInput {
 
 export interface IBemHocOutput {
     bem?: {
-        element(...classes:string[]): string;
-        block(...classes:string[]): string;
+        element(...classes: any[]): string;
+        block(...classes: any[]): string;
     } | any,
     components?: IComponentsHocOutput,
 }

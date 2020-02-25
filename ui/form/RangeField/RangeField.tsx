@@ -11,16 +11,8 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 export interface IRangeFieldProps extends IFieldHocInput {
     attributeFrom?: string;
     attributeTo?: string;
-    inputFrom?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    inputTo?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
+    inputFrom?: FormInputType;
+    inputTo?: FormInputType;
     type?: 'input' | 'date' | string;
     fieldComponent?: any;
     placeholderFrom?: string;

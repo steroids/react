@@ -16,4 +16,17 @@ declare type PrimaryKey = number | string;
 
 declare type Size = 'sm' | 'md' | 'lg' | string;
 
-declare type FormLayout = 'default' | 'horizontal' | 'inline' | string;
+declare type FormLayoutName = 'default' | 'horizontal' | 'inline' | string;
+declare type FormLayout = FormLayoutName | boolean | {
+    layout: FormLayoutName | boolean,
+    className: string,
+    label: boolean,
+    cols: number[],
+    [key: string]: any,
+};
+
+declare type FormInputType = {
+    name?: string,
+    value?: any,
+    onChange?: (...args: any[]) => any,
+};

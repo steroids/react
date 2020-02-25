@@ -20,8 +20,7 @@ export interface IFieldHocInput {
     hint?: string;
     required?: boolean;
     disabled?: boolean;
-    layout?: any;
-    layoutProps?: any;
+    layout?: FormLayout;
     onChange?: (...args: any[]) => any;
     className?: string;
     //layoutClassName?: string;
@@ -30,11 +29,7 @@ export interface IFieldHocInput {
 }
 
 export interface IFieldHocOutput extends IFormHocOutput {
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    },
+    input?: FormInputType,
     fieldId?: string,
 }
 
@@ -42,7 +37,7 @@ export interface IFieldHocConfig {
     appendPrefix: boolean,
     componentId: string,
     attributes: string[],
-    layoutProps: any,
+    layout: FormLayout,
     list: boolean,
 }
 
@@ -57,7 +52,7 @@ const defaultConfig = {
     appendPrefix: true,
     componentId: '',
     attributes: [''],
-    layoutProps: null,
+    layout: null,
     list: false,
 } as IFieldHocConfig;
 
@@ -205,7 +200,7 @@ export default (customConfig): any => WrappedComponent => {
                             <FieldLayout
                                 {...this.props}
                                 {...outputProps}
-                                {...config.layoutProps}
+                                {...(typeof config.layout === 'object' ? config.layout : {layout: config.layout})}
                                 errors={isInvalid ? errors : null}
                                 isInvalid={isInvalid}
                             >

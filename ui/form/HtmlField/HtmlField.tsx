@@ -9,10 +9,10 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IHtmlFieldProps extends IFieldHocInput {
     editorProps?: any;
-    className?: string;
+    className?: CssClassName;
     uploadUrl?: string;
     uploadImagesProcessor?: string;
-    view?: any;
+    view?: CustomView;
 }
 
 export interface IHtmlFieldViewProps extends IFieldHocOutput {

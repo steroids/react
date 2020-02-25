@@ -59,7 +59,6 @@ const docs = {
 json.children.forEach(file => {
     (file.children || []).forEach(item => {
         if (item.kindString === 'Interface' && item.flags && item.flags.isExported === true) {
-            if (item.name === 'INumberFieldProps') console.log(item);
             docs.interfaces[item.name] = {
                 name: item.name,
                 description: !item.comment || typeof item.comment === 'string'

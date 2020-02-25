@@ -185,21 +185,7 @@
                     "name": "autoComplete",
                     "description": "",
                     "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
-                    "name": "autoCompleteDelay",
-                    "description": "",
-                    "required": false,
-                    "type": "number",
-                    "example": ""
-                },
-                {
-                    "name": "autoCompleteMinLength",
-                    "description": "",
-                    "required": false,
-                    "type": "number",
+                    "type": "boolean | {delay: number, enable: boolean, minLength: number}",
                     "example": ""
                 },
                 {
@@ -220,7 +206,7 @@
                     "name": "input",
                     "description": "",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "FormInputType",
                     "example": ""
                 },
                 {
@@ -359,10 +345,10 @@
                     "example": ""
                 },
                 {
-                    "name": "layoutProps",
+                    "name": "layout",
                     "description": "",
                     "required": true,
-                    "type": "any",
+                    "type": "FormLayout",
                     "example": ""
                 },
                 {
@@ -426,14 +412,7 @@
                     "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "layoutProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "FormLayout",
                     "example": ""
                 },
                 {
@@ -490,7 +469,7 @@
                     "name": "input",
                     "description": "",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "FormInputType",
                     "example": ""
                 }
             ]
@@ -540,7 +519,7 @@
                     "name": "input",
                     "description": "",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "FormInputType",
                     "example": ""
                 },
                 {
@@ -619,14 +598,7 @@
                     "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "layoutProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "FormLayout",
                     "example": ""
                 },
                 {
@@ -704,14 +676,7 @@
                     "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "layoutProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "FormLayout",
                     "example": ""
                 },
                 {
@@ -813,14 +778,7 @@
                     "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "layoutProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "FormLayout",
                     "example": ""
                 },
                 {
@@ -1240,7 +1198,7 @@
                     "name": "paginationSizeProps",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "{sizes: number[]}",
                     "example": ""
                 },
                 {
@@ -1282,7 +1240,7 @@
                     "name": "reverse",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": ""
                 },
                 {
@@ -1327,7 +1285,57 @@
             "description": "",
             "descriptionTags": [],
             "extends": [],
-            "items": []
+            "items": [
+                {
+                    "name": "empty",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "isLoading",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "layoutNames",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode | any",
+                    "example": ""
+                },
+                {
+                    "name": "outsideSearchForm",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "pagination",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "paginationSize",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "selectedLayoutName",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
         },
         "IListHocPrivateProps": {
             "name": "IListHocPrivateProps",
@@ -1738,13 +1746,6 @@
                     "required": false,
                     "type": "{id: number | string | boolean, label: string}[]",
                     "example": ""
-                },
-                {
-                    "name": "showReset",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
                 }
             ]
         },
@@ -1811,17 +1812,10 @@
                 },
                 {
                     "name": "layout",
-                    "description": "Выбор макета для распложения кнопки в форме. Если кнопка находится внутри `<Form>...</Form>`, то `layout` будет\nвзят из контекста формы и автоматически применен при отораженн. Для его отключения укажите `false`.",
+                    "description": "Выбор макета для распложения кнопки в форме. Если кнопка находится внутри `<Form>...</Form>`, то `layout` будет\nвзят из контекста формы и автоматически применен при отораженн. Для его отключения укажите `false`.\nДанное свойство так же может принимать объект, если нужно прокинуть дополнительные свойства в шаблон макета.\nПример: `{layout: 'horizontal', cols: [2,6]}`",
                     "required": false,
                     "type": "FormLayout",
                     "example": "horizontal\n"
-                },
-                {
-                    "name": "layoutProps",
-                    "description": "Дополнительные свойства, необходимые для макета формы. См. также свойство `layout`.",
-                    "required": false,
-                    "type": "any",
-                    "example": "{}\n"
                 },
                 {
                     "name": "link",
@@ -1864,6 +1858,13 @@
                     "required": false,
                     "type": "string",
                     "example": "_blank\n"
+                },
+                {
+                    "name": "textColor",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
                 },
                 {
                     "name": "to",
@@ -1988,13 +1989,6 @@
                     "example": ""
                 },
                 {
-                    "name": "layoutProps",
-                    "description": "",
-                    "required": false,
-                    "type": "object",
-                    "example": ""
-                },
-                {
                     "name": "link",
                     "description": "Отображать как ссылку?",
                     "required": false,
@@ -2030,11 +2024,25 @@
                     "example": "{width: '45%'}\n"
                 },
                 {
+                    "name": "submitting",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
                     "name": "target",
                     "description": "HTML аттрибут `target`, доступен только для ссылок",
                     "required": false,
                     "type": "string",
                     "example": "_blank\n"
+                },
+                {
+                    "name": "textColor",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
                 },
                 {
                     "name": "to",
@@ -2372,13 +2380,6 @@
                     "example": ""
                 },
                 {
-                    "name": "input",
-                    "description": "",
-                    "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
-                    "example": ""
-                },
-                {
                     "name": "isInvalid",
                     "description": "",
                     "required": false,
@@ -2504,13 +2505,6 @@
                     "description": "",
                     "required": false,
                     "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "input",
-                    "description": "",
-                    "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
                     "example": ""
                 },
                 {
@@ -2769,7 +2763,7 @@
                     "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "\"default\" | \"inline\" | \"horizontal\" | string | boolean",
+                    "type": "FormLayout",
                     "example": ""
                 },
                 {
@@ -2777,13 +2771,6 @@
                     "description": "",
                     "required": false,
                     "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "layoutProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
                     "example": ""
                 },
                 {
@@ -2816,10 +2803,10 @@
             "extends": [],
             "items": [
                 {
-                    "name": "layoutProps",
+                    "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "{className: string, cols: number[], label: boolean, layout: FormLayoutName | boolean}",
                     "example": ""
                 }
             ]
@@ -3147,14 +3134,7 @@
                     "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "\"default\" | \"inline\" | \"horizontal\" | string | boolean",
-                    "example": ""
-                },
-                {
-                    "name": "layoutProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "FormLayout",
                     "example": ""
                 },
                 {
@@ -3344,17 +3324,10 @@
                 },
                 {
                     "name": "inputProps",
-                    "description": "",
+                    "description": "Свойства для элемента <input />",
                     "required": false,
                     "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
+                    "example": "{onKeyDown: ...}\n"
                 },
                 {
                     "name": "placeholder",
@@ -3362,6 +3335,13 @@
                     "required": false,
                     "type": "string",
                     "example": "Your text...\n"
+                },
+                {
+                    "name": "style",
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "any",
+                    "example": "{width: '45%'}\n"
                 },
                 {
                     "name": "type",
@@ -3674,14 +3654,14 @@
                     "name": "inputFrom",
                     "description": "",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "FormInputType",
                     "example": ""
                 },
                 {
                     "name": "inputTo",
                     "description": "",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "FormInputType",
                     "example": ""
                 },
                 {
@@ -3756,13 +3736,6 @@
             "descriptionTags": [],
             "extends": [],
             "items": [
-                {
-                    "name": "input",
-                    "description": "",
-                    "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
-                    "example": ""
-                },
                 {
                     "name": "metaItem",
                     "description": "",
@@ -4906,8 +4879,17 @@
             "name": "IListItemViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListProps"
+            ],
             "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
                 {
                     "name": "id",
                     "description": "",
@@ -4926,7 +4908,28 @@
                     "name": "item",
                     "description": "",
                     "required": true,
+                    "type": "{id: PrimaryKey, label: string | any, title: string | any}",
+                    "example": ""
+                },
+                {
+                    "name": "itemProps",
+                    "description": "",
+                    "required": false,
                     "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ComponentType",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ComponentType",
                     "example": ""
                 }
             ]
@@ -4938,38 +4941,31 @@
             "extends": [],
             "items": [
                 {
-                    "name": "itemProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "itemView",
-                    "description": "",
-                    "required": true,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "items",
-                    "description": "",
-                    "required": false,
-                    "type": "any[]",
-                    "example": ""
-                },
-                {
-                    "name": "primaryKey",
+                    "name": "className",
                     "description": "",
                     "required": false,
                     "type": "string",
                     "example": ""
                 },
                 {
+                    "name": "itemProps",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ComponentType",
+                    "example": ""
+                },
+                {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "React.ComponentType",
                     "example": ""
                 }
             ]
@@ -4978,13 +4974,43 @@
             "name": "IListViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListProps"
+            ],
             "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
                 {
                     "name": "content",
                     "description": "",
                     "required": true,
                     "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemProps",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "itemView",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ComponentType",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ComponentType",
                     "example": ""
                 }
             ]
@@ -5963,6 +5989,34 @@
                     "order": 5,
                     "col": 8,
                     "title": "Sizes",
+                    "description": ""
+                }
+            }
+        },
+        "list": {
+            "List": {
+                "basic": {
+                    "order": 1,
+                    "col": 4,
+                    "title": "Basic",
+                    "description": ""
+                },
+                "pagination-more": {
+                    "order": 3,
+                    "col": 4,
+                    "title": "Pagination with load more",
+                    "description": ""
+                },
+                "pagination-pages": {
+                    "order": 2,
+                    "col": 4,
+                    "title": "Pagination with page numbers",
+                    "description": ""
+                },
+                "pagination-size": {
+                    "order": 4,
+                    "col": 4,
+                    "title": "Pagination size",
                     "description": ""
                 }
             }

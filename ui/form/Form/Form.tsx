@@ -32,8 +32,8 @@ export interface IFormProps extends IFormSubmitHocInput {
     onComplete?: (...args: any[]) => any;
     autoSave?: boolean;
     initialValues?: any | any[];
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
     fields?: (
         | string
         | {
@@ -45,8 +45,8 @@ export interface IFormProps extends IFormSubmitHocInput {
         )[];
     submitLabel?: string;
     syncWithAddressBar?: boolean;
-    restoreCustomizer?: (...args: any[]) => any;
-    useHash?: boolean;
+    restoreCustomizer?: (...args: any[]) => any; // TODO Refactor it!
+    useHash?: boolean; // TODO Refactor it!
     autoFocus?: boolean;
 }
 

@@ -9,11 +9,11 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
     showRemove: boolean,
-    buttonComponent?: React.ReactNode;
+    buttonComponent?: React.ReactNode; // TODO May be buttonView ?
     buttonProps?: any;
-    className?: string;
-    view?: any;
-    itemView?: any;
+    className?: CssClassName;
+    view?: CustomView;
+    itemView?: CustomView;
     itemProps?: any;
 }
 

@@ -8,21 +8,13 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IDateTimeFieldProps extends IFieldHocInput {
-    label?: string | boolean | any;
-    hint?: string;
-    attribute?: string;
-    required?: boolean;
-    size?: Size;
-    disabled?: boolean;
     displayDateFormat?: string;
     valueDateFormat?: string;
     timeFormat?: string;
     dateProps?: any;
     timeProps?: any;
-    onChange?: (...args: any[]) => any;
-    className?: string;
-    view?: any;
-    isInvalid?: boolean;
+    className?: CssClassName;
+    view?: CustomView;
 }
 
 export interface IDateTimeFieldViewProps extends IFieldHocOutput {

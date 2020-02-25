@@ -7,11 +7,10 @@ import {IConnectHocOutput} from '../../../hoc/connect';
 
 export interface ITextFieldProps extends IFieldHocInput {
     placeholder?: string;
-    isInvalid?: boolean;
     submitOnEnter?: boolean;
     inputProps?: any;
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
 }
 
 export interface ITextFieldViewProps extends IFieldHocOutput {

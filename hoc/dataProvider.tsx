@@ -46,7 +46,7 @@ export interface IDataProviderHocOutput {
     items?: {
         id: number | string | boolean,
         label?: string,
-    }[];
+    }[] | any; // TODO any
     selectedItems?: any,
     hoveredItem?: any,
     isOpened?: boolean,

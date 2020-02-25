@@ -5,8 +5,8 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface ISwitcherFieldProps extends IFieldHocInput, IDataProviderHocInput {
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
     buttonProps?: any;
 }
 

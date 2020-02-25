@@ -19,9 +19,8 @@ export interface IRangeFieldProps extends IFieldHocInput {
     placeholderTo?: string;
     fromProps?: any;
     toProps?: any;
-    className?: string;
-    view?: any;
-    isInvalid?: boolean;
+    className?: CssClassName;
+    view?: CustomView;
 }
 
 export interface IRangeFieldViewProps extends IFieldHocOutput {

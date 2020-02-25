@@ -8,8 +8,8 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 export interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInput {
     searchPlaceholder?: string;
     inputProps?: any;
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
     showReset?: boolean;
 }
 

@@ -12,25 +12,45 @@ import components, {IComponentsHocOutput} from './components';
 import form, {IFormHocOutput} from './form';
 
 export interface IFieldHocInput {
+
     prefix?: string | boolean;
-    size?: 'sm' | 'md' | 'lg' | string;
+
+    size?: Size;
+
+    /**
+     * Название поля либо отмена отображение поля (false)
+     * @example Visible
+     */
     label?: string | boolean | any;
+
+    /**
+     * Аттрибут (название) поля в форме
+     * @example isVisible
+     */
     attribute?: string;
     model?: string | ((...args: any[]) => any) | any;
     hint?: string;
+
+    /**
+     * Обязательное ли поле? Если true, то к названию будет добавлен модификатор 'required' - красная звездочка (по умолчанию)
+     * @example true
+     */
     required?: boolean;
+
+    /**
+     * Переводит элемент в состояние "не активен"
+     * @example true
+     */
     disabled?: boolean;
     layout?: FormLayout;
     onChange?: (...args: any[]) => any;
-    className?: string;
-    //layoutClassName?: string;
-    //view?: any;
     errors?: any;
 }
 
 export interface IFieldHocOutput extends IFormHocOutput {
     input?: FormInputType,
     fieldId?: string,
+    isInvalid?: boolean,
 }
 
 export interface IFieldHocConfig {

@@ -6,19 +6,11 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
 export interface IDateFieldProps extends IFieldHocInput {
-    label?: string | boolean | any;
-    hint?: string;
-    attribute?: string;
-    required?: boolean;
-    size?: Size;
-    disabled?: boolean;
     pickerProps?: any;
-    onChange?: (...args: any[]) => any;
     displayFormat?: string;
     valueFormat?: string;
-    className?: string;
-    view?: any;
-    isInvalid?: boolean;
+    className?: CssClassName;
+    view?: CustomView;
     placeholder?: any;
 }
 

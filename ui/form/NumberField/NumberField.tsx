@@ -2,13 +2,14 @@ import * as React from 'react';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IInputFieldProps} from '../InputField/InputField';
 
 
 /**
  * NumberField
  * Числовое поле ввода
  */
-export interface INumberFieldProps extends IFieldHocInput {
+export interface INumberFieldProps extends IInputFieldProps, IFieldHocInput {
     /**
      * Минимальное значение
      * @example 1
@@ -26,31 +27,6 @@ export interface INumberFieldProps extends IFieldHocInput {
      * @example 5
      */
     step?: string | number;
-
-    /**
-     * Placeholder подсказка
-     * @example Your number...
-     */
-    placeholder?: string;
-
-    /**
-     * Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)
-     * @example true
-     */
-    isInvalid?: boolean;
-    inputProps?: any;
-
-    /**
-     * Дополнительные CSS классы
-     * @example my-block
-     */
-    className?: string;
-
-    /**
-     * Переопределение view React компонента для кастомизациии отображения
-     * @example MyCustomView
-     */
-    view?: any;
 }
 
 export interface INumberFieldViewProps extends IFieldHocOutput {

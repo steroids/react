@@ -12,22 +12,13 @@ import {FormContext} from '../../../hoc/form';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IFieldListItem {
-    label?: string | boolean | JSX.Element,
-    hint?: string | boolean | JSX.Element,
-    attribute?: string,
-    prefix?: string | boolean,
+interface IFieldListItem extends IFieldHocInput {
     visible?: boolean,
-    model?: string | ((...args: any[]) => any) | any,
     component?: any,
-    required?: boolean,
-    size?: Size,
     placeholder?: string,
-    disabled?: boolean,
-    onChange?: (...args: any[]) => any,
-    className?: string,
-    headerClassName?: string,
-    view?: any
+    className?: CssClassName,
+    headerClassName?: CssClassName,
+    view?: CustomView
 }
 
 export interface IFieldListProps extends IFieldHocInput {

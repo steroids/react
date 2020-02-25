@@ -7,7 +7,6 @@ type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-lo
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
     | 'text' | 'time' | 'url' | 'week' | string;
 
-
 /**
  * InputField
  * Поле ввода текста
@@ -26,10 +25,9 @@ export interface IInputFieldProps extends IFieldHocInput {
     placeholder?: string;
 
     /**
-     * Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)
-     * @example true
+     * Свойства для элемента <input />
+     * @example {onKeyDown: ...}
      */
-    isInvalid?: boolean;
     inputProps?: any;
 
     /**
@@ -44,6 +42,10 @@ export interface IInputFieldProps extends IFieldHocInput {
      */
     view?: any;
 
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
     style?: any
 }
 

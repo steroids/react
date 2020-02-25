@@ -10,8 +10,7 @@ export interface IFieldLayoutProps {
     layout?: FormLayout;
     size?: Size;
     errors?: string | string[];
-    layoutClassName?: string;
-    layoutView?: any;
+    layoutView?: CustomView;
 }
 
 export interface IFieldLayoutViewProps {

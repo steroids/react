@@ -5,8 +5,8 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface ISliderFieldProps extends IFieldHocInput {
     sliderProps?: any;
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
     min?: number;
     max?: number;
 }

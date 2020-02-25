@@ -30,3 +30,15 @@ declare type FormInputType = {
     value?: any,
     onChange?: (...args: any[]) => any,
 };
+
+/**
+ * Дополнительные CSS классы
+ * @example my-block
+ */
+declare type CssClassName = string;
+
+/**
+ * Переопределение view React компонента для кастомизациии отображения
+ * @example MyCustomView
+ */
+declare type CustomView = React.ReactNode;

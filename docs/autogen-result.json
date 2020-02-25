@@ -2082,30 +2082,29 @@
         },
         "ICheckboxFieldProps": {
             "name": "ICheckboxFieldProps",
-            "description": "",
-            "descriptionTags": [],
+            "description": "CheckboxField\nОдиночный чекбокс. Используется в формах для отметки булевого значения.",
             "extends": [],
             "items": [
                 {
                     "name": "attribute",
-                    "description": "",
+                    "description": "Аттрибут (название) поля в форме",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "isVisible\n"
                 },
                 {
                     "name": "className",
-                    "description": "",
+                    "description": "Дополнительные CSS классы",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "my-block\n"
                 },
                 {
                     "name": "disabled",
-                    "description": "",
+                    "description": "Переводит чекбокс в состояние \"не активен\"",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "hint",
@@ -2130,17 +2129,17 @@
                 },
                 {
                     "name": "isInvalid",
-                    "description": "",
+                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "label",
-                    "description": "",
+                    "description": "Название поля либо отмена отображение поля (false)",
                     "required": false,
                     "type": "string | boolean | any",
-                    "example": ""
+                    "example": "Visible\n"
                 },
                 {
                     "name": "onChange",
@@ -2151,17 +2150,17 @@
                 },
                 {
                     "name": "required",
-                    "description": "",
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен модификатор 'required' - красная звезвочка (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "view",
-                    "description": "",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -2175,24 +2174,24 @@
             "items": [
                 {
                     "name": "attribute",
-                    "description": "",
+                    "description": "Аттрибут (название) поля в форме",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "isVisible\n"
                 },
                 {
                     "name": "className",
-                    "description": "",
+                    "description": "Дополнительные CSS классы",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "my-block\n"
                 },
                 {
                     "name": "disabled",
-                    "description": "",
+                    "description": "Переводит чекбокс в состояние \"не активен\"",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "hint",
@@ -2217,17 +2216,17 @@
                 },
                 {
                     "name": "isInvalid",
-                    "description": "",
+                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "label",
-                    "description": "",
+                    "description": "Название поля либо отмена отображение поля (false)",
                     "required": false,
                     "type": "string | boolean | any",
-                    "example": ""
+                    "example": "Visible\n"
                 },
                 {
                     "name": "onChange",
@@ -2238,17 +2237,17 @@
                 },
                 {
                     "name": "required",
-                    "description": "",
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен модификатор 'required' - красная звезвочка (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "view",
-                    "description": "",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -3333,16 +3332,15 @@
         },
         "IInputFieldProps": {
             "name": "IInputFieldProps",
-            "description": "",
-            "descriptionTags": [],
+            "description": "InputField\nПоле ввода текста",
             "extends": [],
             "items": [
                 {
                     "name": "className",
-                    "description": "",
+                    "description": "Дополнительные CSS классы",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "my-block\n"
                 },
                 {
                     "name": "inputProps",
@@ -3353,31 +3351,31 @@
                 },
                 {
                     "name": "isInvalid",
-                    "description": "",
+                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "placeholder",
-                    "description": "",
+                    "description": "Placeholder подсказка",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "Your text...\n"
                 },
                 {
                     "name": "type",
-                    "description": "",
+                    "description": "HTML Тип",
                     "required": false,
                     "type": "IElementInputType",
-                    "example": ""
+                    "example": "email\n"
                 },
                 {
                     "name": "view",
-                    "description": "",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -3398,16 +3396,15 @@
         },
         "INumberFieldProps": {
             "name": "INumberFieldProps",
-            "description": "",
-            "descriptionTags": [],
+            "description": "NumberField\nЧисловое поле ввода",
             "extends": [],
             "items": [
                 {
                     "name": "className",
-                    "description": "",
+                    "description": "Дополнительные CSS классы",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "my-block\n"
                 },
                 {
                     "name": "inputProps",
@@ -3418,45 +3415,45 @@
                 },
                 {
                     "name": "isInvalid",
-                    "description": "",
+                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "max",
-                    "description": "",
+                    "description": "Максимальное значение",
                     "required": false,
                     "type": "number",
-                    "example": ""
+                    "example": "100\n"
                 },
                 {
                     "name": "min",
-                    "description": "",
+                    "description": "Минимальное значение",
                     "required": false,
                     "type": "number",
-                    "example": ""
+                    "example": "1\n"
                 },
                 {
                     "name": "placeholder",
-                    "description": "",
+                    "description": "Placeholder подсказка",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "Your number...\n"
                 },
                 {
                     "name": "step",
-                    "description": "",
+                    "description": "Шаг увеличения/уменьшения значения",
                     "required": false,
                     "type": "string | number",
-                    "example": ""
+                    "example": "5\n"
                 },
                 {
                     "name": "view",
-                    "description": "",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -3477,16 +3474,15 @@
         },
         "IPasswordFieldProps": {
             "name": "IPasswordFieldProps",
-            "description": "",
-            "descriptionTags": [],
+            "description": "PasswordField\nПоле ввода пароля",
             "extends": [],
             "items": [
                 {
                     "name": "className",
-                    "description": "",
+                    "description": "Дополнительные CSS классы",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "my-block\n"
                 },
                 {
                     "name": "inputProps",
@@ -3497,31 +3493,31 @@
                 },
                 {
                     "name": "isInvalid",
-                    "description": "",
+                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "placeholder",
-                    "description": "",
+                    "description": "Placeholder подсказка",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "Your password...\n"
                 },
                 {
                     "name": "security",
-                    "description": "",
+                    "description": "Если true, то отображается шкала сложности пароля и иконка 'отображения' пароля",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "view",
-                    "description": "",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -5814,6 +5810,158 @@
                 "sizes": {
                     "order": 2,
                     "col": 4,
+                    "title": "Sizes",
+                    "description": ""
+                }
+            },
+            "CheckboxField": {
+                "basic": {
+                    "order": 1,
+                    "col": 3,
+                    "title": "Basic",
+                    "description": ""
+                },
+                "disabled": {
+                    "order": 2,
+                    "col": 3,
+                    "title": "Disabled",
+                    "description": ""
+                },
+                "errors": {
+                    "order": 4,
+                    "col": 3,
+                    "title": "Errors",
+                    "description": ""
+                },
+                "required": {
+                    "order": 3,
+                    "col": 3,
+                    "title": "Required",
+                    "description": ""
+                }
+            },
+            "InputField": {
+                "basic": {
+                    "order": 1,
+                    "col": 3,
+                    "title": "Basic",
+                    "description": ""
+                },
+                "disabled": {
+                    "order": 2,
+                    "col": 3,
+                    "title": "Disabled",
+                    "description": ""
+                },
+                "errors": {
+                    "order": 7,
+                    "col": 4,
+                    "title": "Errors",
+                    "description": ""
+                },
+                "placeholder": {
+                    "order": 4,
+                    "col": 3,
+                    "title": "Placeholder",
+                    "description": ""
+                },
+                "required": {
+                    "order": 3,
+                    "col": 3,
+                    "title": "Required",
+                    "description": ""
+                },
+                "sizes": {
+                    "order": 6,
+                    "col": 8,
+                    "title": "Sizes",
+                    "description": ""
+                },
+                "types": {
+                    "order": 5,
+                    "col": 12,
+                    "title": "Types",
+                    "description": ""
+                }
+            },
+            "NumberField": {
+                "basic": {
+                    "order": 1,
+                    "col": 3,
+                    "title": "Basic",
+                    "description": ""
+                },
+                "disabled": {
+                    "order": 2,
+                    "col": 3,
+                    "title": "Disabled",
+                    "description": ""
+                },
+                "errors": {
+                    "order": 6,
+                    "col": 4,
+                    "title": "Errors",
+                    "description": ""
+                },
+                "placeholder": {
+                    "order": 4,
+                    "col": 3,
+                    "title": "Placeholder",
+                    "description": ""
+                },
+                "required": {
+                    "order": 3,
+                    "col": 3,
+                    "title": "Required",
+                    "description": ""
+                },
+                "sizes": {
+                    "order": 5,
+                    "col": 8,
+                    "title": "Sizes",
+                    "description": ""
+                }
+            },
+            "PasswordField": {
+                "basic": {
+                    "order": 1,
+                    "col": 3,
+                    "title": "Basic",
+                    "description": ""
+                },
+                "disabled": {
+                    "order": 2,
+                    "col": 3,
+                    "title": "Disabled",
+                    "description": ""
+                },
+                "errors": {
+                    "order": 6,
+                    "col": 4,
+                    "title": "Errors",
+                    "description": ""
+                },
+                "placeholder": {
+                    "order": 4,
+                    "col": 3,
+                    "title": "Placeholder",
+                    "description": ""
+                },
+                "required": {
+                    "order": 3,
+                    "col": 3,
+                    "title": "Required",
+                    "description": ""
+                },
+                "security": {
+                    "order": 7,
+                    "col": 3,
+                    "title": "Security",
+                    "description": ""
+                },
+                "sizes": {
+                    "order": 5,
+                    "col": 8,
                     "title": "Sizes",
                     "description": ""
                 }

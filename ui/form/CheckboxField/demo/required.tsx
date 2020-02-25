@@ -1,17 +1,18 @@
 import * as React from 'react';
 
-import PasswordField from '../PasswordField';
+import CheckboxField from '../CheckboxField';
+
 
 /**
- * Basic
- * @order 1
+ * Required
+ * @order 3
  * @col 3
  */
 export default class extends React.PureComponent {
     render() {
         return (
             <>
-                <PasswordField label='Password'/>
+                <CheckboxField label='Required' required/>
             </>
         );
     }

@@ -3,12 +3,42 @@ import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
+
+/**
+ * PasswordField
+ * Поле ввода пароля
+ */
 export interface IPasswordFieldProps extends IFieldHocInput {
+
+    /**
+     * Если true, то отображается шкала сложности пароля и иконка 'отображения' пароля
+     * @example true
+     */
     security?: boolean;
+
+    /**
+     * Placeholder подсказка
+     * @example Your password...
+     */
     placeholder?: string;
+
+    /**
+     * Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)
+     * @example true
+     */
     isInvalid?: boolean;
     inputProps?: any;
+
+    /**
+     * Дополнительные CSS классы
+     * @example my-block
+     */
     className?: string;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: any;
 }
 

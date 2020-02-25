@@ -1,17 +1,18 @@
 import * as React from 'react';
 
-import PasswordField from '../PasswordField';
+import NumberField from '../NumberField';
+
 
 /**
- * Basic
- * @order 1
+ * Required
+ * @order 3
  * @col 3
  */
 export default class extends React.PureComponent {
     render() {
         return (
             <>
-                <PasswordField label='Password'/>
+                <NumberField label='Required' required/>
             </>
         );
     }

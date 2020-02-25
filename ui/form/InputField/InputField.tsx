@@ -7,12 +7,41 @@ type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-lo
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
     | 'text' | 'time' | 'url' | 'week' | string;
 
+
+/**
+ * InputField
+ * Поле ввода текста
+ */
 export interface IInputFieldProps extends IFieldHocInput {
+    /**
+     * HTML Тип
+     * @example email
+     */
     type?: IElementInputType;
+
+    /**
+     * Placeholder подсказка
+     * @example Your text...
+     */
     placeholder?: string;
+
+    /**
+     * Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)
+     * @example true
+     */
     isInvalid?: boolean;
     inputProps?: any;
+
+    /**
+     * Дополнительные CSS классы
+     * @example my-block
+     */
     className?: string;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: any;
 }
 

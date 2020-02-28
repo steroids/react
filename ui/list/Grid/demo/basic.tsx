@@ -49,7 +49,6 @@ export default class extends React.PureComponent {
                         <Grid
                             listId='ListStoryLoadMore'
                             total={100}
-                            defaultPageSize={10}
                             items={items}
                             columns={[
                                 {
@@ -66,7 +65,12 @@ export default class extends React.PureComponent {
                                 },
                             ]}
                             searchForm={searchForm}
-                            loadMore
+                            pagination={{
+                                loadMore: true,
+                            }}
+                            paginationSize={{
+                                defaultValue: 10,
+                            }}
                         />
                     </div>
                     <div className='col'>
@@ -76,7 +80,6 @@ export default class extends React.PureComponent {
                         <Grid
                             listId='ListStoryPagination'
                             total={100}
-                            defaultPageSize={10}
                             items={items}
                             columns={[
                                 {
@@ -94,39 +97,14 @@ export default class extends React.PureComponent {
                                 },
                             ]}
                             searchForm={searchForm}
-                            paginationSizeView={true}
-                            paginationView={true}
-                            loadMore={false}
-                        />
-                    </div>
-                    <div className='col'>
-                        <h6>
-                            Reverse
-                        </h6>
-                        <Grid
-                            listId='ListStoryReverse'
-                            total={100}
-                            defaultPageSize={10}
-                            items={items}
-                            columns={[
-                                {
-                                    label: 'Name',
-                                    attribute: 'name',
-                                },
-                                {
-                                    label: __('Second name'),
-                                    attribute: 'secondName',
-                                },
-                                {
-                                    label: 'Work',
-                                    attribute: 'work',
-                                },
-                            ]}
-                            searchForm={searchForm}
-                            paginationSizeView={true}
-                            paginationView={true}
-                            loadMore={false}
-                            reverse
+                            paginationSize={{
+                                enable: true,
+                                defaultValue: 10,
+                            }}
+                            pagination={{
+                                enable: true,
+                                loadMore: false,
+                            }}
                         />
                     </div>
                 </div>
@@ -138,7 +116,6 @@ export default class extends React.PureComponent {
                         <Grid
                             listId='ListStoryReverse'
                             total={100}
-                            defaultPageSize={10}
                             items={items}
                             columns={[
                                 {
@@ -155,6 +132,10 @@ export default class extends React.PureComponent {
                                     visible: false,
                                 },
                             ]}
+                            paginationSize={{
+                                enable: true,
+                                defaultValue: 10,
+                            }}
                             searchForm={searchForm}
                         />
                     </div>

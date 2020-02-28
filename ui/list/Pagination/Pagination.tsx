@@ -6,25 +6,23 @@ import {components} from '../../../hoc';
 import {setPage} from '../../../actions/list';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {ListControlPosition} from '../../../hoc/list';
+import {IButtonProps} from '../../form/Button/Button';
 
 export interface IPaginationProps {
-    listId?: string;
-    loadMore?: boolean;
+    enable?: boolean,
+    attribute?: string,
+    defaultValue?: number | null,
     aroundCount?: number;
-    list?: {
-        page?: number,
-        pageSize?: number,
-        total?: number
-    };
+    loadMore?: boolean,
     className?: string;
-    view?: any;
-    pageParam?: string;
+    position?: ListControlPosition,
+    buttonProps?: IButtonProps,
     size?: Size;
-    syncWithAddressBar?: boolean;
-    page?: any;
+    view?: CustomView,
 }
 
-export interface IPaginationViewProps {
+export interface IPaginationViewProps extends IPaginationProps {
     page: number,
     totalPages: number,
     pages: {
@@ -37,7 +35,14 @@ export interface IPaginationViewProps {
 }
 
 interface IPaginationPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
-
+    listId?: string;
+    list?: {
+        page?: number,
+        pageSize?: number,
+        total?: number
+    };
+    syncWithAddressBar?: boolean;
+    page?: any;
 }
 
 @connect()
@@ -110,10 +115,10 @@ export default class Pagination extends React.PureComponent<IPaginationProps & I
 
     _onSelect(page) {
         if (page) {
-            if (this.props.pageParam) {
+            if (this.props.attribute) {
                 // TODO
                 location.href =
-                    location.pathname + '?' + this.props.pageParam + '=' + page;
+                    location.pathname + '?' + this.props.attribute + '=' + page;
             } else if (this.props.syncWithAddressBar) {
                 this.props.dispatch(change(this.props.listId, 'page', page));
             } else {

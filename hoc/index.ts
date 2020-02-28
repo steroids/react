@@ -12,6 +12,7 @@ import formSubmit from './formSubmit';
 import http from './http';
 import layout from './layout';
 import list from './list';
+import normalize from './normalize';
 import props from './props';
 import screen from './screen';
 
@@ -30,6 +31,7 @@ export {
     http,
     layout,
     list,
+    normalize,
     props,
     screen,
 };

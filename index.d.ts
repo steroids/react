@@ -42,3 +42,5 @@ declare type CssClassName = string;
  * @example MyCustomView
  */
 declare type CustomView = React.ReactNode;
+
+declare type HttpMethod = 'get' | 'post' | 'put' | 'delete' | string;

@@ -3,9 +3,10 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IEmptyProps {
-    text?: string;
+    enable?: boolean,
+    text?: string | React.ReactNode;
     className?: string;
-    view?: any;
+    view?: CustomView,
 }
 
 export interface IEmptyViewProps {

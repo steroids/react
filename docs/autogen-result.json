@@ -270,7 +270,7 @@
                     "name": "items",
                     "description": "",
                     "required": false,
-                    "type": "{id: number | string | boolean, label: string}[]",
+                    "type": "{id: number | string | boolean, label: string}[] | any",
                     "example": ""
                 },
                 {
@@ -368,24 +368,17 @@
             "items": [
                 {
                     "name": "attribute",
-                    "description": "",
+                    "description": "Аттрибут (название) поля в форме",
                     "required": false,
                     "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "className",
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
+                    "example": "isVisible\n"
                 },
                 {
                     "name": "disabled",
-                    "description": "",
+                    "description": "Переводит элемент в состояние \"не активен\"",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "errors",
@@ -403,10 +396,10 @@
                 },
                 {
                     "name": "label",
-                    "description": "",
+                    "description": "Название поля либо отмена отображение поля (false)",
                     "required": false,
                     "type": "string | boolean | any",
-                    "example": ""
+                    "example": "Visible\n"
                 },
                 {
                     "name": "layout",
@@ -438,16 +431,16 @@
                 },
                 {
                     "name": "required",
-                    "description": "",
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен модификатор 'required' - красная звездочка (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "size",
                     "description": "",
                     "required": false,
-                    "type": "\"sm\" | \"md\" | \"lg\" | string",
+                    "type": "Size",
                     "example": ""
                 }
             ]
@@ -456,7 +449,9 @@
             "name": "IFieldHocOutput",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormHocOutput"
+            ],
             "items": [
                 {
                     "name": "fieldId",
@@ -470,6 +465,13 @@
                     "description": "",
                     "required": false,
                     "type": "FormInputType",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
                     "example": ""
                 }
             ]
@@ -1058,49 +1060,14 @@
                     "name": "actionMethod",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "HttpMethod",
                     "example": ""
                 },
                 {
-                    "name": "defaultPage",
+                    "name": "empty",
                     "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "defaultPageSize",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "defaultSort",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "emptyProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "emptyText",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "emptyView",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "boolean | string | IEmptyProps",
                     "example": ""
                 },
                 {
@@ -1118,24 +1085,10 @@
                     "example": ""
                 },
                 {
-                    "name": "layoutNames",
+                    "name": "layout",
                     "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "layoutNamesProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "layoutNamesView",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "boolean | ILayoutProps",
                     "example": ""
                 },
                 {
@@ -1146,24 +1099,10 @@
                     "example": ""
                 },
                 {
-                    "name": "list",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
                     "name": "listId",
                     "description": "",
                     "required": false,
                     "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "loadMore",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
                     "example": ""
                 },
                 {
@@ -1188,31 +1127,17 @@
                     "example": ""
                 },
                 {
-                    "name": "paginationProps",
+                    "name": "pagination",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean | IPaginationProps",
                     "example": ""
                 },
                 {
-                    "name": "paginationSizeProps",
+                    "name": "paginationSize",
                     "description": "",
                     "required": false,
-                    "type": "{sizes: number[]}",
-                    "example": ""
-                },
-                {
-                    "name": "paginationSizeView",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "paginationView",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "boolean | IPaginationSizeProps",
                     "example": ""
                 },
                 {
@@ -1237,13 +1162,6 @@
                     "example": ""
                 },
                 {
-                    "name": "reverse",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
                     "name": "scope",
                     "description": "",
                     "required": false,
@@ -1254,14 +1172,14 @@
                     "name": "searchForm",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "Omit & {formId: string}",
                     "example": ""
                 },
                 {
-                    "name": "selectedLayoutName",
+                    "name": "sort",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean | ISortProps",
                     "example": ""
                 },
                 {
@@ -1287,7 +1205,7 @@
             "extends": [],
             "items": [
                 {
-                    "name": "empty",
+                    "name": "emptyNode",
                     "description": "",
                     "required": false,
                     "type": "React.ReactNode",
@@ -1301,38 +1219,59 @@
                     "example": ""
                 },
                 {
-                    "name": "layoutNames",
-                    "description": "",
-                    "required": false,
-                    "type": "React.ReactNode | any",
-                    "example": ""
-                },
-                {
-                    "name": "outsideSearchForm",
+                    "name": "layoutNode",
                     "description": "",
                     "required": false,
                     "type": "React.ReactNode",
                     "example": ""
                 },
                 {
-                    "name": "pagination",
+                    "name": "layoutPosition",
+                    "description": "",
+                    "required": false,
+                    "type": "ListControlPosition",
+                    "example": ""
+                },
+                {
+                    "name": "layoutSelected",
+                    "description": "",
+                    "required": false,
+                    "type": "PrimaryKey",
+                    "example": ""
+                },
+                {
+                    "name": "outsideSearchFormNode",
                     "description": "",
                     "required": false,
                     "type": "React.ReactNode",
                     "example": ""
                 },
                 {
-                    "name": "paginationSize",
+                    "name": "paginationNode",
                     "description": "",
                     "required": false,
                     "type": "React.ReactNode",
                     "example": ""
                 },
                 {
-                    "name": "selectedLayoutName",
+                    "name": "paginationPosition",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "ListControlPosition",
+                    "example": ""
+                },
+                {
+                    "name": "paginationSizeNode",
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "paginationSizePosition",
+                    "description": "",
+                    "required": false,
+                    "type": "ListControlPosition",
                     "example": ""
                 }
             ]
@@ -1342,14 +1281,86 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IConnectHocOutput"
+                "IConnectHocOutput",
+                "IComponentsHocOutput"
             ],
             "items": [
+                {
+                    "name": "_empty",
+                    "description": "",
+                    "required": false,
+                    "type": "IEmptyProps",
+                    "example": ""
+                },
+                {
+                    "name": "_layout",
+                    "description": "",
+                    "required": false,
+                    "type": "ILayoutProps",
+                    "example": ""
+                },
+                {
+                    "name": "_pagination",
+                    "description": "",
+                    "required": false,
+                    "type": "IPaginationProps",
+                    "example": ""
+                },
+                {
+                    "name": "_paginationSize",
+                    "description": "",
+                    "required": false,
+                    "type": "IPaginationSizeProps",
+                    "example": ""
+                },
+                {
+                    "name": "_sort",
+                    "description": "",
+                    "required": false,
+                    "type": "ISortProps",
+                    "example": ""
+                },
                 {
                     "name": "dispatch",
                     "description": "",
                     "required": false,
                     "type": "Dispatch",
+                    "example": ""
+                },
+                {
+                    "name": "list",
+                    "description": "",
+                    "required": false,
+                    "type": "{isFetched: boolean, isLoading: boolean, items: Array, layoutName: string, meta: object, page: number, pageSize: number, query: object, sort: string | string[], total: number}",
+                    "example": ""
+                }
+            ]
+        },
+        "INormalizeHocConfig": {
+            "name": "INormalizeHocConfig",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "fromKey",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "normalizer",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "toKey",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
                     "example": ""
                 }
             ]
@@ -1358,7 +1369,9 @@
             "name": "IControlItem",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IButtonProps"
+            ],
             "items": [
                 {
                     "name": "content",
@@ -1447,21 +1460,27 @@
             "name": "ICrudDetailViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IDetailViewProps"
+            ],
             "items": []
         },
         "ICrudFormViewProps": {
             "name": "ICrudFormViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormViewProps"
+            ],
             "items": []
         },
         "ICrudGridViewProps": {
             "name": "ICrudGridViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IGridViewProps"
+            ],
             "items": []
         },
         "ICrudProps": {
@@ -1696,7 +1715,10 @@
             "name": "IAutoCompleteFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput",
+                "IDataProviderHocOutput"
+            ],
             "items": [
                 {
                     "name": "inputProps",
@@ -2091,84 +2113,30 @@
         "ICheckboxFieldProps": {
             "name": "ICheckboxFieldProps",
             "description": "CheckboxField\nОдиночный чекбокс. Используется в формах для отметки булевого значения.",
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
                 {
-                    "name": "attribute",
-                    "description": "Аттрибут (название) поля в форме",
-                    "required": false,
-                    "type": "string",
-                    "example": "isVisible\n"
-                },
-                {
                     "name": "className",
-                    "description": "Дополнительные CSS классы",
-                    "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
-                },
-                {
-                    "name": "disabled",
-                    "description": "Переводит чекбокс в состояние \"не активен\"",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
-                },
-                {
-                    "name": "hint",
                     "description": "",
                     "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "input",
-                    "description": "",
-                    "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
                     "name": "inputProps",
-                    "description": "",
+                    "description": "Свойства для элемента <input />",
                     "required": false,
                     "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
-                },
-                {
-                    "name": "label",
-                    "description": "Название поля либо отмена отображение поля (false)",
-                    "required": false,
-                    "type": "string | boolean | any",
-                    "example": "Visible\n"
-                },
-                {
-                    "name": "onChange",
-                    "description": "",
-                    "required": false,
-                    "type": "{}",
-                    "example": ""
-                },
-                {
-                    "name": "required",
-                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен модификатор 'required' - красная звезвочка (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
+                    "example": "{onKeyDown: ...}\n"
                 },
                 {
                     "name": "view",
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": "MyCustomView\n"
+                    "type": "CustomView",
+                    "example": ""
                 }
             ]
         },
@@ -2177,42 +2145,15 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "ICheckboxFieldProps"
+                "ICheckboxFieldProps",
+                "IFieldHocOutput"
             ],
             "items": [
                 {
-                    "name": "attribute",
-                    "description": "Аттрибут (название) поля в форме",
-                    "required": false,
-                    "type": "string",
-                    "example": "isVisible\n"
-                },
-                {
                     "name": "className",
-                    "description": "Дополнительные CSS классы",
-                    "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
-                },
-                {
-                    "name": "disabled",
-                    "description": "Переводит чекбокс в состояние \"не активен\"",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
-                },
-                {
-                    "name": "hint",
                     "description": "",
                     "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "input",
-                    "description": "",
-                    "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -2223,39 +2164,11 @@
                     "example": ""
                 },
                 {
-                    "name": "isInvalid",
-                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
-                },
-                {
-                    "name": "label",
-                    "description": "Название поля либо отмена отображение поля (false)",
-                    "required": false,
-                    "type": "string | boolean | any",
-                    "example": "Visible\n"
-                },
-                {
-                    "name": "onChange",
+                    "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "{}",
+                    "type": "CustomView",
                     "example": ""
-                },
-                {
-                    "name": "required",
-                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен модификатор 'required' - красная звезвочка (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
-                },
-                {
-                    "name": "view",
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
-                    "required": false,
-                    "type": "any",
-                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -2263,48 +2176,30 @@
             "name": "ICheckboxListFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput",
+                "IDataProviderHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "hoveredItem",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
                     "name": "inputProps",
-                    "description": "",
+                    "description": "Свойства для элемента <input />",
                     "required": false,
                     "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "onItemClick",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "selectedItems",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
+                    "example": "{onKeyDown: ...}\n"
                 },
                 {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -2313,7 +2208,10 @@
             "name": "ICheckboxListFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput",
+                "IDataProviderHocOutput"
+            ],
             "items": [
                 {
                     "name": "inputProps",
@@ -2342,27 +2240,15 @@
             "name": "IDateFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
-                {
-                    "name": "attribute",
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
-                },
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "disabled",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -2370,34 +2256,6 @@
                     "description": "",
                     "required": false,
                     "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "hint",
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
-                    "name": "label",
-                    "description": "",
-                    "required": false,
-                    "type": "string | boolean | any",
-                    "example": ""
-                },
-                {
-                    "name": "onChange",
-                    "description": "",
-                    "required": false,
-                    "type": "{}",
                     "example": ""
                 },
                 {
@@ -2415,20 +2273,6 @@
                     "example": ""
                 },
                 {
-                    "name": "required",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
-                    "name": "size",
-                    "description": "",
-                    "required": false,
-                    "type": "Size",
-                    "example": ""
-                },
-                {
                     "name": "valueFormat",
                     "description": "",
                     "required": false,
@@ -2439,7 +2283,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -2448,7 +2292,9 @@
             "name": "IDateFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "pickerProps",
@@ -2463,20 +2309,15 @@
             "name": "IDateTimeFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
-                {
-                    "name": "attribute",
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
-                },
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -2487,59 +2328,10 @@
                     "example": ""
                 },
                 {
-                    "name": "disabled",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
                     "name": "displayDateFormat",
                     "description": "",
                     "required": false,
                     "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "hint",
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
-                    "name": "label",
-                    "description": "",
-                    "required": false,
-                    "type": "string | boolean | any",
-                    "example": ""
-                },
-                {
-                    "name": "onChange",
-                    "description": "",
-                    "required": false,
-                    "type": "{}",
-                    "example": ""
-                },
-                {
-                    "name": "required",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
-                    "name": "size",
-                    "description": "",
-                    "required": false,
-                    "type": "Size",
                     "example": ""
                 },
                 {
@@ -2567,7 +2359,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -2576,7 +2368,9 @@
             "name": "IDateTimeFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "dateField",
@@ -2598,13 +2392,16 @@
             "name": "IDropDownFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput",
+                "IDataProviderHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -2632,7 +2429,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -2641,7 +2438,10 @@
             "name": "IDropDownFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput",
+                "IDataProviderHocOutput"
+            ],
             "items": [
                 {
                     "name": "isLoading",
@@ -2713,7 +2513,9 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IConnectHocOutput"
+                "IFormHocOutput",
+                "IConnectHocOutput",
+                "IComponentsHocOutput"
             ],
             "items": [
                 {
@@ -2767,17 +2569,10 @@
                     "example": ""
                 },
                 {
-                    "name": "layoutClassName",
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
                     "name": "layoutView",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 },
                 {
@@ -2815,7 +2610,9 @@
             "name": "IFieldListItemViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "items",
@@ -2858,7 +2655,9 @@
             "name": "IFieldListProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
@@ -2943,7 +2742,9 @@
             "name": "IFieldListViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "items",
@@ -2972,14 +2773,19 @@
             "name": "IFieldSetProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormContext"
+            ],
             "items": []
         },
         "IFileFieldProps": {
             "name": "IFileFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput",
+                "IFileHocInput"
+            ],
             "items": [
                 {
                     "name": "buttonComponent",
@@ -2999,7 +2805,7 @@
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3013,7 +2819,7 @@
                     "name": "itemView",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 },
                 {
@@ -3027,7 +2833,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3036,7 +2842,10 @@
             "name": "IFileFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput",
+                "IFileHocOutput"
+            ],
             "items": [
                 {
                     "name": "buttonComponent",
@@ -3072,7 +2881,9 @@
             "name": "IFormProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormSubmitHocInput"
+            ],
             "items": [
                 {
                     "name": "action",
@@ -3106,14 +2917,14 @@
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
                     "name": "fields",
                     "description": "",
                     "required": false,
-                    "type": "string | {component: string | {}, hint: string, label: string, required: boolean}[]",
+                    "type": "string | {component: string | React.ReactNode, hint: string, label: string, required: boolean}[]",
                     "example": ""
                 },
                 {
@@ -3232,7 +3043,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3256,13 +3067,15 @@
             "name": "IHtmlFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3290,7 +3103,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3299,7 +3112,9 @@
             "name": "IHtmlFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "editorProps",
@@ -3313,7 +3128,9 @@
         "IInputFieldProps": {
             "name": "IInputFieldProps",
             "description": "InputField\nПоле ввода текста",
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
@@ -3363,7 +3180,9 @@
             "name": "IInputFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "inputProps",
@@ -3377,29 +3196,11 @@
         "INumberFieldProps": {
             "name": "INumberFieldProps",
             "description": "NumberField\nЧисловое поле ввода",
-            "extends": [],
+            "extends": [
+                "IInputFieldProps",
+                "IFieldHocInput"
+            ],
             "items": [
-                {
-                    "name": "className",
-                    "description": "Дополнительные CSS классы",
-                    "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
-                },
-                {
-                    "name": "inputProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
-                },
                 {
                     "name": "max",
                     "description": "Максимальное значение",
@@ -3415,25 +3216,11 @@
                     "example": "1\n"
                 },
                 {
-                    "name": "placeholder",
-                    "description": "Placeholder подсказка",
-                    "required": false,
-                    "type": "string",
-                    "example": "Your number...\n"
-                },
-                {
                     "name": "step",
                     "description": "Шаг увеличения/уменьшения значения",
                     "required": false,
                     "type": "string | number",
                     "example": "5\n"
-                },
-                {
-                    "name": "view",
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
-                    "required": false,
-                    "type": "any",
-                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -3441,7 +3228,9 @@
             "name": "INumberFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "inputProps",
@@ -3455,49 +3244,17 @@
         "IPasswordFieldProps": {
             "name": "IPasswordFieldProps",
             "description": "PasswordField\nПоле ввода пароля",
-            "extends": [],
+            "extends": [
+                "IInputFieldProps",
+                "IFieldHocInput"
+            ],
             "items": [
-                {
-                    "name": "className",
-                    "description": "Дополнительные CSS классы",
-                    "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
-                },
-                {
-                    "name": "inputProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "Есть ли ошибка в поле? Если true, то добавляется класс 'is-invalid' - выделение красным цветом (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true\n"
-                },
-                {
-                    "name": "placeholder",
-                    "description": "Placeholder подсказка",
-                    "required": false,
-                    "type": "string",
-                    "example": "Your password...\n"
-                },
                 {
                     "name": "security",
                     "description": "Если true, то отображается шкала сложности пароля и иконка 'отображения' пароля",
                     "required": false,
                     "type": "boolean",
                     "example": "true\n"
-                },
-                {
-                    "name": "view",
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
-                    "required": false,
-                    "type": "any",
-                    "example": "MyCustomView\n"
                 }
             ]
         },
@@ -3548,13 +3305,16 @@
             "name": "IRadioListFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput",
+                "IDataProviderHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3565,17 +3325,10 @@
                     "example": ""
                 },
                 {
-                    "name": "isInvalid",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3584,7 +3337,10 @@
             "name": "IRadioListFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput",
+                "IDataProviderHocOutput"
+            ],
             "items": [
                 {
                     "name": "inputProps",
@@ -3613,7 +3369,9 @@
             "name": "IRangeFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
                 {
                     "name": "attributeFrom",
@@ -3633,7 +3391,7 @@
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3662,13 +3420,6 @@
                     "description": "",
                     "required": false,
                     "type": "FormInputType",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
                     "example": ""
                 },
                 {
@@ -3703,7 +3454,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3712,7 +3463,9 @@
             "name": "IRangeFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "fromField",
@@ -3734,27 +3487,15 @@
             "name": "IReCaptchaFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
-                {
-                    "name": "metaItem",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "props",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
                 {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3763,7 +3504,9 @@
             "name": "IReCaptchaFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "reCaptchaProps",
@@ -3778,13 +3521,15 @@
             "name": "ISliderFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3812,7 +3557,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3821,7 +3566,9 @@
             "name": "ISliderFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "slider",
@@ -3836,7 +3583,10 @@
             "name": "ISwitcherFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput",
+                "IDataProviderHocInput"
+            ],
             "items": [
                 {
                     "name": "buttonProps",
@@ -3849,14 +3599,14 @@
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3865,7 +3615,10 @@
             "name": "ISwitcherFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput",
+                "IDataProviderHocOutput"
+            ],
             "items": [
                 {
                     "name": "items",
@@ -3887,13 +3640,15 @@
             "name": "ITextFieldProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3901,13 +3656,6 @@
                     "description": "",
                     "required": false,
                     "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "isInvalid",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
                     "example": ""
                 },
                 {
@@ -3928,7 +3676,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -3937,7 +3685,9 @@
             "name": "ITextFieldViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
             "items": [
                 {
                     "name": "inputProps",
@@ -3952,7 +3702,9 @@
             "name": "IBooleanFormatterProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormatterHocInput"
+            ],
             "items": [
                 {
                     "name": "value",
@@ -3967,7 +3719,9 @@
             "name": "IDateTimeFormatterProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormatterHocInput"
+            ],
             "items": [
                 {
                     "name": "format",
@@ -3989,7 +3743,9 @@
             "name": "IEnumFormatterProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormatterHocInput"
+            ],
             "items": [
                 {
                     "name": "items",
@@ -4004,7 +3760,9 @@
             "name": "IFileSizeFormatterProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormatterHocInput"
+            ],
             "items": [
                 {
                     "name": "showZero",
@@ -4069,7 +3827,9 @@
             "name": "IMoneyFormatterProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IFormatterHocInput"
+            ],
             "items": [
                 {
                     "name": "photoRowHeight",
@@ -4135,7 +3895,8 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IHeaderProps"
+                "IHeaderProps",
+                "IBemHocOutput"
             ],
             "items": [
                 {
@@ -4297,7 +4058,9 @@
             "name": "IAccordionHeaderViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListHocOutput"
+            ],
             "items": [
                 {
                     "name": "id",
@@ -4333,7 +4096,9 @@
             "name": "IAccordionItemViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListHocOutput"
+            ],
             "items": [
                 {
                     "name": "id",
@@ -4369,7 +4134,9 @@
             "name": "IAccordionProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListHocInput"
+            ],
             "items": [
                 {
                     "name": "headerLabelAttribute",
@@ -4440,7 +4207,9 @@
             "name": "IAccordionViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListHocOutput"
+            ],
             "items": [
                 {
                     "name": "items",
@@ -4689,17 +4458,24 @@
                     "example": ""
                 },
                 {
+                    "name": "enable",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
                     "name": "text",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "string | React.ReactNode",
                     "example": ""
                 },
                 {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -4793,7 +4569,9 @@
             "name": "IGridProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListHocInput"
+            ],
             "items": [
                 {
                     "name": "actions",
@@ -4857,7 +4635,9 @@
             "name": "IGridViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListHocOutput"
+            ],
             "items": [
                 {
                     "name": "columns",
@@ -4880,11 +4660,19 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IListProps"
+                "IListProps",
+                "IListHocOutput"
             ],
             "items": [
                 {
                     "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "contentClassName",
                     "description": "",
                     "required": false,
                     "type": "string",
@@ -4926,6 +4714,13 @@
                     "example": ""
                 },
                 {
+                    "name": "layoutSelected",
+                    "description": "",
+                    "required": false,
+                    "type": "PrimaryKey",
+                    "example": ""
+                },
+                {
                     "name": "view",
                     "description": "",
                     "required": false,
@@ -4938,10 +4733,19 @@
             "name": "IListProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IListHocInput"
+            ],
             "items": [
                 {
                     "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "contentClassName",
                     "description": "",
                     "required": false,
                     "type": "string",
@@ -4975,7 +4779,8 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IListProps"
+                "IListProps",
+                "IListHocOutput"
             ],
             "items": [
                 {
@@ -4990,6 +4795,13 @@
                     "description": "",
                     "required": true,
                     "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "contentClassName",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
                     "example": ""
                 },
                 {
@@ -5029,6 +4841,20 @@
                     "example": ""
                 },
                 {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "buttonProps",
+                    "description": "",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": ""
+                },
+                {
                     "name": "className",
                     "description": "",
                     "required": false,
@@ -5036,17 +4862,17 @@
                     "example": ""
                 },
                 {
-                    "name": "list",
+                    "name": "defaultValue",
                     "description": "",
                     "required": false,
-                    "type": "{page: number, pageSize: number, total: number}",
+                    "type": "number | null",
                     "example": ""
                 },
                 {
-                    "name": "listId",
+                    "name": "enable",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "boolean",
                     "example": ""
                 },
                 {
@@ -5057,17 +4883,10 @@
                     "example": ""
                 },
                 {
-                    "name": "page",
+                    "name": "position",
                     "description": "",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "pageParam",
-                    "description": "",
-                    "required": false,
-                    "type": "string",
+                    "type": "ListControlPosition",
                     "example": ""
                 },
                 {
@@ -5078,17 +4897,10 @@
                     "example": ""
                 },
                 {
-                    "name": "syncWithAddressBar",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -5097,8 +4909,59 @@
             "name": "IPaginationViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IPaginationProps"
+            ],
             "items": [
+                {
+                    "name": "aroundCount",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "buttonProps",
+                    "description": "",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "defaultValue",
+                    "description": "",
+                    "required": false,
+                    "type": "number | null",
+                    "example": ""
+                },
+                {
+                    "name": "enable",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "loadMore",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
                 {
                     "name": "onSelect",
                     "description": "",
@@ -5128,10 +4991,31 @@
                     "example": ""
                 },
                 {
+                    "name": "position",
+                    "description": "",
+                    "required": false,
+                    "type": "ListControlPosition",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                },
+                {
                     "name": "totalPages",
                     "description": "",
                     "required": true,
                     "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -5143,6 +5027,13 @@
             "extends": [],
             "items": [
                 {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
                     "name": "className",
                     "description": "",
                     "required": false,
@@ -5150,17 +5041,24 @@
                     "example": ""
                 },
                 {
-                    "name": "list",
+                    "name": "defaultValue",
                     "description": "",
                     "required": false,
-                    "type": "{page: number, pageSize: number, total: number}",
+                    "type": "number | null",
                     "example": ""
                 },
                 {
-                    "name": "listId",
+                    "name": "enable",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "position",
+                    "description": "",
+                    "required": false,
+                    "type": "ListControlPosition",
                     "example": ""
                 },
                 {
@@ -5181,7 +5079,7 @@
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -5190,8 +5088,45 @@
             "name": "IPaginationSizeViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IPaginationSizeProps"
+            ],
             "items": [
+                {
+                    "name": "attribute",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "defaultValue",
+                    "description": "",
+                    "required": false,
+                    "type": "number | null",
+                    "example": ""
+                },
+                {
+                    "name": "enable",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "",
+                    "required": true,
+                    "type": "{isActive: boolean, label: string | number, size: number}[]",
+                    "example": ""
+                },
                 {
                     "name": "onSelect",
                     "description": "",
@@ -5200,10 +5135,31 @@
                     "example": ""
                 },
                 {
+                    "name": "position",
+                    "description": "",
+                    "required": false,
+                    "type": "ListControlPosition",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": ""
+                },
+                {
                     "name": "sizes",
                     "description": "",
-                    "required": true,
-                    "type": "{isActive: boolean, label: string | number, size: number}[]",
+                    "required": false,
+                    "type": "number[]",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -5351,14 +5307,18 @@
             "name": "ILinkProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IButtonProps"
+            ],
             "items": []
         },
         "ILinkViewProps": {
             "name": "ILinkViewProps",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IButtonViewProps"
+            ],
             "items": []
         },
         "INavItem": {
@@ -5808,6 +5768,14 @@
     },
     "demos": {
         "form": {
+            "AutoCompleteField": {
+                "basic": {
+                    "order": 1,
+                    "col": 6,
+                    "title": "Basic",
+                    "description": ""
+                }
+            },
             "Button": {
                 "block": {
                     "order": 3,
@@ -6001,22 +5969,28 @@
                     "title": "Basic",
                     "description": ""
                 },
-                "pagination-more": {
+                "empty": {
+                    "order": 5,
+                    "col": 4,
+                    "title": "Empty view with custom text when no items",
+                    "description": ""
+                },
+                "pagination-layout": {
+                    "order": 4,
+                    "col": 4,
+                    "title": "Pagination with layout switcher",
+                    "description": ""
+                },
+                "pagination-more-size": {
                     "order": 3,
                     "col": 4,
-                    "title": "Pagination with load more",
+                    "title": "Pagination with load more and show sizes switcher",
                     "description": ""
                 },
                 "pagination-pages": {
                     "order": 2,
                     "col": 4,
-                    "title": "Pagination with page numbers",
-                    "description": ""
-                },
-                "pagination-size": {
-                    "order": 4,
-                    "col": 4,
-                    "title": "Pagination size",
+                    "title": "Pagination with page numbers and custom position (show both: top and bottom)",
                     "description": ""
                 }
             }

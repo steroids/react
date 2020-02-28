@@ -1,4 +1,5 @@
 import _get from 'lodash-es/get';
+import {IListHocInput, IListHocPrivateProps} from '../hoc/list';
 
 export const LIST_INIT = 'LIST_INIT';
 export const LIST_BEFORE_FETCH = 'LIST_BEFORE_FETCH';
@@ -28,23 +29,23 @@ const defaultFetchHandler = list => (dispatch, getState, {http}) => {
             .then(response => response.data)
     );
 };
-const createList = (listId, props, clientStorage) => ({
+const createList = (listId, props: IListHocInput & IListHocPrivateProps, clientStorage) => ({
     action: props.action || props.action === '' ? props.action : null,
     actionMethod: props.actionMethod || 'post',
     onFetch: props.onFetch,
     scope: props.scope,
-    page: props.defaultPage,
-    pageSize: props.defaultPageSize,
-    sort: props.defaultSort || null,
+    page: props._pagination.defaultValue,
+    pageSize: props._paginationSize.defaultValue,
+    sort: props._sort.defaultValue || null,
     total: props.total || null,
     query: props.query || null,
     items: props.items || null,
-    loadMore: props.loadMore,
+    loadMore: props._pagination.loadMore,
     primaryKey: props.primaryKey,
     layoutName:
         clientStorage.get(STORAGE_LAYOUT_KEY_PREFIX + listId) ||
-        props.selectedLayoutName ||
-        _get(props, 'layoutNames.0.id') ||
+        // TODO props.selectedLayoutName ||
+        _get(props, 'layout.items.0.id') ||
         null,
     listId,
     type: LIST_INIT

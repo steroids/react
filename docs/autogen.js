@@ -15,7 +15,12 @@ const {inputFiles} = app.bootstrap({
 
 const src = app.expandInputFiles(inputFiles);
 const project = app.convert(src);
-const json = project ? app.serializer.projectToObject(project, {}) : null;
+const filesMap = {};
+project.files.forEach(file => {
+    filesMap[file.fileName] = file.fullFileName;
+})
+
+const json = project ? app.serializer.projectToObject(project) : null;
 if (!json || app.logger.hasErrors()) {
     return;
 }
@@ -59,6 +64,13 @@ const docs = {
 json.children.forEach(file => {
     (file.children || []).forEach(item => {
         if (item.kindString === 'Interface' && item.flags && item.flags.isExported === true) {
+            let extendsList = [];
+            if (filesMap[item.sources[0].fileName]) {
+                const source = fs.readFileSync(filesMap[item.sources[0].fileName]);
+                const extendsMatch = String(source).match(new RegExp(`interface\\s+${item.name}\\s+extends([^{]+)`));
+                extendsList = extendsMatch ? extendsMatch[1].split(',').map(name => name.trim()) : [];
+            }
+
             docs.interfaces[item.name] = {
                 name: item.name,
                 description: !item.comment || typeof item.comment === 'string'
@@ -67,9 +79,7 @@ json.children.forEach(file => {
                 descriptionTags: typeof item.comment === 'object'
                     ? item.comment.tags
                     : [],
-                extends: (item.extendedTypes || [])
-                    .filter(ext => ext.type === 'reference')
-                    .map(ext => ext.name),
+                extends: extendsList,
                 items: (item.children || [])
                     .filter(property => property.kindString === 'Property')
                     .map(property => ({

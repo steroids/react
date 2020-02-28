@@ -4,7 +4,6 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IInputFieldProps} from '../InputField/InputField';
 
-
 /**
  * NumberField
  * Числовое поле ввода

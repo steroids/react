@@ -40,7 +40,7 @@ export interface IFormProps extends IFormSubmitHocInput {
         label?: string,
         hint?: string,
         required?: boolean,
-        component?: string | ((...args: any[]) => any)
+        component?: string | React.ReactNode
     }
         )[];
     submitLabel?: string;

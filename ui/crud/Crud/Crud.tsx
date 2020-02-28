@@ -169,11 +169,11 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                 listId={getCrudId(this.props)}
                 action={restUrl}
                 actionMethod='get'
-                defaultPageSize={50}
-                paginationSizeView={false}
-                loadMore={false}
+                paginationSize={false}
+                pagination={{
+                    loadMore: false,
+                }}
                 primaryKey={this.props.primaryKey}
-                emptyText={__('Нет записей')}
                 columns={[this.props.primaryKey]}
                 {...this.props.grid}
                 actions={this._actionsHandler}

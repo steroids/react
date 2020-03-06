@@ -2,6 +2,7 @@ import * as React from 'react';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {ReactNode} from "react";
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
@@ -13,11 +14,19 @@ export interface IInputFieldProps extends IFieldHocInput {
     isInvalid?: boolean;
     inputProps?: any;
     className?: string;
-    style?: any
+    style?: any;
     view?: any;
+    prefixElement?: number | ReactNode;
+    suffixElement?: number | ReactNode;
+    [key: string]: any;
 }
 
 export interface IInputFieldViewProps extends IFieldHocOutput {
+    style?: any,
+    isInvalid?: boolean,
+    errors?: any,
+    placeholder?: string,
+    type?: string,
     inputProps: {
         type: string,
         name: string,

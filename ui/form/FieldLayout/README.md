@@ -1,6 +1,0 @@
-### FieldLayout 
-
-
-```js
-<FieldLayout/>
-```

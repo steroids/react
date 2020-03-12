@@ -4,6 +4,7 @@ import {change} from 'redux-form';
 import _remove from 'lodash-es/remove';
 import _some from 'lodash-es/some';
 import _has from 'lodash-es/has';
+import _get from 'lodash-es/get';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _isFunction from 'lodash-es/isFunction';
@@ -21,11 +22,7 @@ import Enum from "../base/Enum";
 import {IConnectHocOutput} from './connect';
 
 export interface IDataProviderHocInput {
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    },
+    input?: FormInputType,
     multiple?: boolean;
     items?: string
         | ({ new(): Enum })
@@ -35,9 +32,11 @@ export interface IDataProviderHocInput {
         params: object,
         onSearch: (...args: any) => any,
     };
-    autoComplete?: boolean;
-    autoCompleteMinLength?: number;
-    autoCompleteDelay?: number;
+    autoComplete?: boolean | {
+        enable?: boolean,
+        minLength?: number,
+        delay?: number,
+    };
     autoFetch?: any;
     selectFirst?: any;
     onSelect?: any;
@@ -47,7 +46,7 @@ export interface IDataProviderHocOutput {
     items?: {
         id: number | string | boolean,
         label?: string,
-    }[];
+    }[] | any; // TODO any
     selectedItems?: any,
     hoveredItem?: any,
     isOpened?: boolean,
@@ -74,6 +73,14 @@ interface IDataProviderHocState {
     items: any,
 }
 
+const defaultProps = {
+    autoComplete: {
+        enable: false,
+        minLength: 2,
+        delay: 100,
+    },
+};
+
 const stateMap = (state, props) => ({
     items: _isString(props.items)
         ? getEnumLabels(state, props.items)
@@ -92,11 +99,7 @@ export default (): any => WrappedComponent =>
                  */
                 static displayName = WrappedComponent.displayName || WrappedComponent.name;
 
-                static defaultProps = {
-                    ...WrappedComponent.defaultProps,
-                    autoCompleteMinLength: 2,
-                    autoCompleteDelay: 100
-                };
+                static defaultProps = defaultProps;
 
                 /**
                  * Normalize items for save to state. Support enum class or normal items list.
@@ -155,7 +158,7 @@ export default (): any => WrappedComponent =>
                     this._delayTimer = null;
                     const sourceItems = DataProviderHoc.normalizeItems(this.props.items);
                     this.state = {
-                        query: "",
+                        query: '',
                         isOpened: false,
                         isFocused: false,
                         isLoading: false,
@@ -176,7 +179,7 @@ export default (): any => WrappedComponent =>
                     }
                     // Check to auto fetch items first page
                     if (this.props.autoFetch && this.props.dataProvider) {
-                        this._searchDataProvider("", true);
+                        this._searchDataProvider('', true);
                     }
                     // Async load selected labels from backend
                     // TODO
@@ -230,7 +233,7 @@ export default (): any => WrappedComponent =>
                         (!this.props.autoFetch ||
                             this.props.dataProvider !== nextProps.dataProvider)
                     ) {
-                        this._searchDataProvider("");
+                        this._searchDataProvider('');
                     }
                 }
 
@@ -281,7 +284,7 @@ export default (): any => WrappedComponent =>
                     this.setState({
                         isOpened: !this.state.isOpened,
                         items: this.state.sourceItems,
-                        hoveredItem: null
+                        hoveredItem: null,
                     });
                 }
 
@@ -291,7 +294,7 @@ export default (): any => WrappedComponent =>
                  */
                 _onClose() {
                     this.setState({
-                        isOpened: false
+                        isOpened: false,
                     });
                 }
 
@@ -301,19 +304,19 @@ export default (): any => WrappedComponent =>
                  * @private
                  */
                 _onSearch(query) {
-                    query = query || "";
+                    query = query || '';
                     this.setState({query});
                     if (this.props.dataProvider) {
                         if (this._delayTimer) {
                             clearTimeout(this._delayTimer);
                         }
+
                         // Min length query logic
-                        if (query.length >= this.props.autoCompleteMinLength) {
+                        const minLength = _get(this.props, 'autoComplete.minLength') || defaultProps.autoComplete.minLength;
+                        const delay = _get(this.props, 'autoComplete.delay') || defaultProps.autoComplete.delay;
+                        if (query.length >= minLength) {
                             // Search with delay
-                            this._delayTimer = setTimeout(
-                                () => this._searchDataProvider(query),
-                                this.props.autoCompleteDelay
-                            );
+                            this._delayTimer = setTimeout(() => this._searchDataProvider(query), delay);
                         }
                     } else {
                         // Client-side search on static items
@@ -337,16 +340,16 @@ export default (): any => WrappedComponent =>
                         (str.match(/^[^A-ZА-Я]+/) || []).concat(
                             str.match(/[A-ZА-Я][^A-ZА-Я]*/g) || []
                         );
-                    const queryCharacters = query.split("");
+                    const queryCharacters = query.split('');
                     // Match
                     let items = this.state.sourceItems.filter(item => {
                         const id = item.id;
-                        const words = toWords(item.label || "");
+                        const words = toWords(item.label || '');
                         if (words.length === 0 || !id) {
                             return false;
                         }
                         let word = null;
-                        let highlighted = [["", false]];
+                        let highlighted = [['', false]];
                         let index = 0;
                         let wordIndex = 0;
                         let wordChar = null;
@@ -355,13 +358,13 @@ export default (): any => WrappedComponent =>
                             const char = queryCharacters[index];
                             if (!char) {
                                 highlighted.push([
-                                    word.substr(wordCharIndex) + words.slice(wordIndex + 1).join(""),
+                                    word.substr(wordCharIndex) + words.slice(wordIndex + 1).join(''),
                                     false
                                 ]);
                                 break;
                             }
                             word = words[wordIndex];
-                            wordChar = (word && word.split("")[wordCharIndex]) || "";
+                            wordChar = (word && word.split('')[wordCharIndex]) || '';
                             if (!word) {
                                 highlighted = [];
                                 break;
@@ -376,7 +379,7 @@ export default (): any => WrappedComponent =>
                                 highlighted[highlighted.length - 1][1] = true;
                             } else {
                                 highlighted.push([word.substr(wordCharIndex), false]);
-                                highlighted.push(["", false]);
+                                highlighted.push(['', false]);
                                 wordIndex++;
                                 wordCharIndex = 0;
                             }
@@ -408,8 +411,9 @@ export default (): any => WrappedComponent =>
                  * @param {boolean} isAutoFetch
                  * @private
                  */
-                _searchDataProvider(query = "", isAutoFetch = false) {
-                    if (!isAutoFetch && query.length < this.props.autoCompleteMinLength) {
+                _searchDataProvider(query = '', isAutoFetch = false) {
+                    const minLength = _get(this.props, 'autoComplete.minLength') || defaultProps.autoComplete.minLength;
+                    if (!isAutoFetch && query.length < minLength) {
                         return;
                     }
                     const searchHandler =

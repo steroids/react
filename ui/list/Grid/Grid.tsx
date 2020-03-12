@@ -106,7 +106,7 @@ export default class Grid extends React.PureComponent<IGridProps & IGridPrivateP
                 />
             );
         }
-        if (column.label || column.label === "") {
+        if (column.label || column.label === '') {
             return column.label;
         }
         const autoLabel = _upperFirst(column.attribute);

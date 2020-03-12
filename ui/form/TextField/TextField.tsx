@@ -7,11 +7,10 @@ import {IConnectHocOutput} from '../../../hoc/connect';
 
 export interface ITextFieldProps extends IFieldHocInput {
     placeholder?: string;
-    isInvalid?: boolean;
     submitOnEnter?: boolean;
     inputProps?: any;
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
 }
 
 export interface ITextFieldViewProps extends IFieldHocOutput {
@@ -38,8 +37,8 @@ export default class TextField extends React.PureComponent<ITextFieldProps & ITe
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
-        placeholder: "",
+        className: '',
+        placeholder: '',
         submitOnEnter: false,
         errors: []
     };
@@ -57,7 +56,7 @@ export default class TextField extends React.PureComponent<ITextFieldProps & ITe
                 {...this.props}
                 inputProps={{
                     name: this.props.input.name,
-                    value: this.props.input.value || "",
+                    value: this.props.input.value || '',
                     onChange: e => this.props.input.onChange(e.target.value),
                     onKeyUp: this._onKeyUp,
                     placeholder: this.props.placeholder,

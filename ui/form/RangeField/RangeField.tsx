@@ -11,25 +11,16 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 export interface IRangeFieldProps extends IFieldHocInput {
     attributeFrom?: string;
     attributeTo?: string;
-    inputFrom?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    inputTo?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    type?: 'input' | 'date';
+    inputFrom?: FormInputType;
+    inputTo?: FormInputType;
+    type?: 'input' | 'date' | string;
     fieldComponent?: any;
     placeholderFrom?: string;
     placeholderTo?: string;
     fromProps?: any;
     toProps?: any;
-    className?: string;
-    view?: any;
-    isInvalid?: boolean;
+    className?: CssClassName;
+    view?: CustomView;
 }
 
 export interface IRangeFieldViewProps extends IFieldHocOutput {
@@ -40,6 +31,11 @@ export interface IRangeFieldViewProps extends IFieldHocOutput {
 interface IRangeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
 
 }
+
+const fieldsMap = {
+    input: InputField,
+    date: DateField
+};
 
 @field({
     componentId: 'form.RangeField',
@@ -53,19 +49,15 @@ export default class RangeField extends React.PureComponent<IRangeFieldProps & I
         type: 'input',
         disabled: false,
         required: false,
-        className: "",
-        placeholderFrom: "",
-        placeholderTo: "",
+        className: '',
+        placeholderFrom: '',
+        placeholderTo: '',
         errors: []
-    };
-    static fieldsMap = {
-        input: InputField,
-        date: DateField
     };
 
     constructor(props) {
         super(props);
-        this.refTo = null;
+        this.refTo = React.createRef();
         this._timer = null;
     }
 
@@ -93,7 +85,7 @@ export default class RangeField extends React.PureComponent<IRangeFieldProps & I
         const RangeFieldView =
             this.props.view || this.props.ui.getView('form.RangeFieldView');
         const FieldComponent =
-            this.props.fieldComponent || RangeField.fieldsMap[this.props.type];
+            this.props.fieldComponent || fieldsMap[this.props.type];
         const FieldComponentInternal = FieldComponent.WrappedComponent;
         let fieldProps = {
             disabled: this.props.disabled,
@@ -106,12 +98,12 @@ export default class RangeField extends React.PureComponent<IRangeFieldProps & I
                 const valueFromFormat = _get(
                     this.props.fromProps,
                     'valueFormat',
-                    FieldComponentInternal.defaultProps.valueFormat
+                    'YYYY-MM-DD'
                 );
                 const valueToFormat = _get(
                     this.props.toProps,
                     'valueFormat',
-                    FieldComponentInternal.defaultProps.valueFormat
+                    'YYYY-MM-DD'
                 );
                 const from = this.props.inputFrom.value
                     ? moment(this.props.inputFrom.value, valueFromFormat).toDate()
@@ -165,7 +157,7 @@ export default class RangeField extends React.PureComponent<IRangeFieldProps & I
                 }
                 toField={
                     <FieldComponentInternal
-                        ref={el => (this.refTo = el)}
+                        ref={this.refTo}
                         input={this.props.inputTo}
                         placeholder={this.props.placeholderTo}
                         {...fieldProps}

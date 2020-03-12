@@ -9,7 +9,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {getNavItems} from '../../../reducers/navigation';
 
 export interface INavItem {
-    id?: string,
+    id?: number | string,
     label?: string | any,
     url?: string,
     onClick?: (...args: any[]) => any,
@@ -21,7 +21,7 @@ export interface INavItem {
 }
 
 export interface INavProps {
-    layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list';
+    layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list' | string;
     items?: string | INavItem[];
     activeTab?: number | string;
     className?: string;
@@ -47,7 +47,7 @@ interface NavState {
 @connect(
     (state, props) => ({
         items: _isString(props.items)
-            ? getNavItems(props.items)
+            ? getNavItems(state, props.items)
             : props.items,
     })
 )

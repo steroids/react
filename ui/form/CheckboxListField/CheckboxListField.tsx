@@ -5,12 +5,16 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface ICheckboxListFieldProps extends IFieldHocInput, IDataProviderHocInput {
+
+    /**
+     * Свойства для элемента <input />
+     * @example {onKeyDown: ...}
+     */
     inputProps?: any;
-    className?: string;
-    view?: any;
-    onItemClick?: any;
-    selectedItems?: any;
-    hoveredItem?: any;
+
+    className?: CssClassName;
+
+    view?: CustomView;
 }
 
 export interface ICheckboxListFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
@@ -41,7 +45,7 @@ export default class CheckboxListField extends React.PureComponent<ICheckboxList
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         multiple: true
     };
 

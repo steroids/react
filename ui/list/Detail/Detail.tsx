@@ -63,7 +63,7 @@ export default class Detail extends React.PureComponent<IDetailProps & IDetailPr
     }
 
     renderLabel(attribute) {
-        if (attribute.label || attribute.label === "") {
+        if (attribute.label || attribute.label === '') {
             return attribute.label;
         }
         const autoLabel = _upperFirst(attribute.attribute);

@@ -6,8 +6,11 @@ export interface IBemHocInput {
 }
 
 export interface IBemHocOutput {
-    bem: any,
-    components: IComponentsHocOutput,
+    bem?: {
+        element(...classes: any[]): string;
+        block(...classes: any[]): string;
+    } | any,
+    components?: IComponentsHocOutput,
 }
 
 export interface IBemHocPrivateProps {

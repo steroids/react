@@ -1,6 +1,0 @@
-### InputField 
-
-
-```js
-<InputField/>
-```

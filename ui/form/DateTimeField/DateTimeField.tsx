@@ -8,26 +8,13 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IDateTimeFieldProps extends IFieldHocInput {
-    label?: string | boolean | any;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    size?: Size;
-    disabled?: boolean;
     displayDateFormat?: string;
     valueDateFormat?: string;
     timeFormat?: string;
     dateProps?: any;
     timeProps?: any;
-    onChange?: (...args: any[]) => any;
-    className?: string;
-    view?: any;
-    isInvalid?: boolean;
+    className?: CssClassName;
+    view?: CustomView;
 }
 
 export interface IDateTimeFieldViewProps extends IFieldHocOutput {
@@ -50,7 +37,7 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         displayDateFormat: 'DD.MM.YYYY',
         valueDateFormat: 'YYYY-MM-DD',
         timeFormat: 'HH:mm'
@@ -84,7 +71,7 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                         displayFormat={this.props.displayDateFormat}
                         valueFormat={this.props.valueDateFormat}
                         input={{
-                            name: "",
+                            name: '',
                             value: this.state.date,
                             onChange: value => this._onChange({date: value})
                         }}
@@ -98,7 +85,7 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                         required={this.props.required}
                         disabled={this.props.disabled}
                         input={{
-                            name: "",
+                            name: '',
                             value: this.state.time,
                             onChange: value => this._onChange({time: value})
                         }}

@@ -9,10 +9,10 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IHtmlFieldProps extends IFieldHocInput {
     editorProps?: any;
-    className?: string;
+    className?: CssClassName;
     uploadUrl?: string;
     uploadImagesProcessor?: string;
-    view?: any;
+    view?: CustomView;
 }
 
 export interface IHtmlFieldViewProps extends IFieldHocOutput {
@@ -31,7 +31,7 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
 
     static defaultProps = {
         disabled: false,
-        className: ""
+        className: ''
     };
 
     static defaultEditorConfig = {
@@ -82,7 +82,7 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
                                             index: 0,
                                             native: nativeFile,
                                             path: nativeFile.name,
-                                            type: nativeFile.type || "",
+                                            type: nativeFile.type || '',
                                             bytesTotal: nativeFile.fileSize || nativeFile.size || 0
                                         });
                                         const uploader = new XhrUploader({
@@ -91,7 +91,7 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
                                                 (this.props.uploadImagesProcessor
                                                     ? '?imagesProcessor=' +
                                                     this.props.uploadImagesProcessor
-                                                    : ""),
+                                                    : ''),
                                             file
                                         });
                                         file.setUploader(uploader);
@@ -114,7 +114,7 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
                     },
                     this.props.editorProps,
                     {
-                        value: this.props.input.value || "",
+                        value: this.props.input.value || '',
                         onChange: value => this.props.input.onChange(value)
                     }
                 )}

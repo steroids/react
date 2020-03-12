@@ -1,6 +1,0 @@
-### FileField 
-
-
-```js
-<FileField/>
-```

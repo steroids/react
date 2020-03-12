@@ -55,7 +55,7 @@ const checkActiveRecursive = (pathname, item) => {
 const buildNavItem = (state, item, params) => {
     const pathname =
         location.protocol === 'file:'
-            ? location.hash.replace(/^#/, "")
+            ? location.hash.replace(/^#/, '')
             : _get(state, 'router.location.pathname');
     let url = item.path;
     let pathKeys = [];
@@ -63,9 +63,7 @@ const buildNavItem = (state, item, params) => {
         pathKeys = pathToRegexp
             .parse(item.path)
             .slice(1)
-            // @ts-ignore
-            // TODO
-            .map(p => p.name);
+            .map((p: any) => p.name);
         url = pathToRegexp.compile(item.path)({
             ...state.navigation.params,
             ...params
@@ -88,7 +86,8 @@ const buildNavItem = (state, item, params) => {
         id: item.id,
         title: item.title,
         label: item.label,
-        url: url,
+        url,
+        to: url,
         icon: item.icon || null,
         isVisible: item.isVisible,
         isActive: checkActiveRecursive(pathname, item)
@@ -178,7 +177,7 @@ export const getNavItem = (state, pageId, params = {}) => {
 };
 export const getNavUrl = (state, pageId, params = {}) => {
     const navItem = getNavItem(state, pageId, params);
-    return navItem ? navItem.url : "";
+    return navItem ? navItem.url : '';
 };
 export const getRoute = (state, pageId) => {
     const root = state.navigation && state.navigation.routesTree;
@@ -205,7 +204,7 @@ export const getCurrentRoute = state => {
     }
     const pathname =
         location.protocol === 'file:'
-            ? location.hash.replace(/^#/, "")
+            ? location.hash.replace(/^#/, '')
             : _get(state, 'router.location.pathname');
     if (pathname === null) {
         return null;

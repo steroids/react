@@ -15,7 +15,7 @@ export default class FileSize extends React.Component<IFileSizeFormatterProps & 
 
     static asHumanFileSize(bytes, showZero) {
         if (!bytes) {
-            return showZero ? '0' : "";
+            return showZero ? '0' : '';
         }
         const thresh = 1000;
         if (Math.abs(bytes) < thresh) {

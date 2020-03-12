@@ -2,16 +2,30 @@ import * as React from 'react';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IInputFieldProps} from '../InputField/InputField';
 
-export interface INumberFieldProps extends IFieldHocInput {
+/**
+ * NumberField
+ * Числовое поле ввода
+ */
+export interface INumberFieldProps extends IInputFieldProps, IFieldHocInput {
+    /**
+     * Минимальное значение
+     * @example 1
+     */
     min?: number;
+
+    /**
+     * Максимальное значение
+     * @example 100
+     */
     max?: number;
+
+    /**
+     * Шаг увеличения/уменьшения значения
+     * @example 5
+     */
     step?: string | number;
-    placeholder?: string;
-    isInvalid?: boolean;
-    inputProps?: any;
-    className?: string;
-    view?: any;
 }
 
 export interface INumberFieldViewProps extends IFieldHocOutput {
@@ -40,8 +54,8 @@ export default class NumberField extends React.PureComponent<INumberFieldProps &
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
-        placeholder: "",
+        className: '',
+        placeholder: '',
         min: null,
         max: null,
         step: null,
@@ -58,7 +72,7 @@ export default class NumberField extends React.PureComponent<INumberFieldProps &
                 {...this.props}
                 inputProps={{
                     name: this.props.input.name,
-                    value: this.props.input.value || "",
+                    value: this.props.input.value || '',
                     onChange: e => this.props.input.onChange(e.target.value),
                     type: 'number',
                     min: this.props.min,

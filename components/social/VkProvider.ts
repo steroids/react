@@ -7,7 +7,7 @@ export default class VkProvider {
 
     constructor(components) {
         this._components = components;
-        this.clientId = "";
+        this.clientId = '';
         this.redirectUrl = this._components.http.getUrl(
             '/api/v1/auth/social/proxy'
         );

@@ -5,8 +5,8 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface ISliderFieldProps extends IFieldHocInput {
     sliderProps?: any;
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
     min?: number;
     max?: number;
 }
@@ -34,14 +34,14 @@ export default class SliderField extends React.PureComponent<ISliderFieldProps &
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         errors: [],
         min: 0,
         max: 100
     };
 
     static normalizeValue(value) {
-        return parseInt(String(value).replace(/[0-9]g/, "")) || 0;
+        return parseInt(String(value).replace(/[0-9]g/, '')) || 0;
     }
 
     constructor(props) {

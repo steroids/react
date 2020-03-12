@@ -1,6 +1,0 @@
-### PaginationSize 
-
-
-```js
-<PaginationSize/>
-```

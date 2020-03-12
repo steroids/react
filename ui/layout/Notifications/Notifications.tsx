@@ -18,7 +18,9 @@ interface INotificationItem {
 }
 
 export interface INotificationsProps {
-    initialFlashes?: any;
+    initialFlashes?: {
+        [key: string]: string | any,
+    };
     notifications?: INotificationItem[];
     className?: string;
     view?: any;

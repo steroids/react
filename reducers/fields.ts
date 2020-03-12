@@ -5,7 +5,7 @@ const initialState = {
     props: {},
     meta: null
 };
-const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, "");
+const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, '');
 export default (state = initialState, action) => {
     switch (action.type) {
         case FIELDS_SET_META:

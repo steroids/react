@@ -69,7 +69,7 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
             nextProps.pathname === '/' &&
             location.pathname.match(/\/$/)
         ) {
-            window.history.replaceState({}, "", this.props.store.history.basename);
+            window.history.replaceState({}, '', this.props.store.history.basename);
         }
         if (
             this.props.autoScrollTop &&

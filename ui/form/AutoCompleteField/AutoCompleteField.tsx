@@ -6,17 +6,17 @@ import {props} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from "../../../hoc/field";
 import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../../../hoc/dataProvider";
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IInputFieldProps} from '../InputField/InputField';
 
-interface IAutoCompleteFieldProps extends IFieldHocInput, IDataProviderHocInput {
-    placeholder?: string;
-    inputProps?: any;
-    showReset?: boolean;
-    view?: any;
+/**
+ * AutoComplete
+ * Поле ввода текста с подсказками (auto-complete)
+ */
+interface IAutoCompleteFieldProps extends IInputFieldProps, IFieldHocInput, IDataProviderHocInput {
 }
 
 export interface IAutoCompleteFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
     placeholder?: string;
-    showReset?: boolean;
     inputProps: {
         type: string,
         name: string,
@@ -69,14 +69,12 @@ interface IAutoCompleteFieldPrivateProps extends IFieldHocOutput, IDataProviderH
 @dataProvider()
 @enhanceWithClickOutside
 @components('ui')
-export default class AutoCompleteField extends React.PureComponent<IAutoCompleteFieldProps & IAutoCompleteFieldPrivateProps,
-    {}> {
+export default class AutoCompleteField extends React.PureComponent<IAutoCompleteFieldProps & IAutoCompleteFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         autoComplete: false,
-        showReset: false,
     };
 
     constructor(props) {
@@ -109,7 +107,7 @@ export default class AutoCompleteField extends React.PureComponent<IAutoComplete
                     onChange: this._onChange,
                     onFocus: this._onFocus,
                     onBlur: this._onBlur,
-                    value: this.props.input.value || ""
+                    value: this.props.input.value || ''
                 }}
                 items={this.props.items.map(item => ({
                     ...item,

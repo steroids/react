@@ -1,6 +1,0 @@
-### PasswordField 
-
-
-```js
-<PasswordField/>
-```

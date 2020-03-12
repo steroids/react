@@ -5,7 +5,7 @@ export default class FacebookProvider {
 
     constructor(components) {
         this._components = components;
-        this.clientId = "";
+        this.clientId = '';
         this.language =
             this._components.locale.language +
             '_' +
@@ -47,7 +47,7 @@ export default class FacebookProvider {
                 {
                     scope: 'public_profile,email',
                     return_scopes: false,
-                    auth_type: ""
+                    auth_type: ''
                 }
             );
         });

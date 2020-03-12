@@ -5,20 +5,21 @@ import {components} from '../../../hoc';
 import {setPageSize} from '../../../actions/list';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {ListControlPosition} from '../../../hoc/list';
 
 export interface IPaginationSizeProps {
-    listId?: string;
+    enable?: boolean,
+    attribute?: string,
+    defaultValue?: number | null,
     sizes?: number[];
-    list?: {
-        pageSize?: number
-    };
+    position?: ListControlPosition,
     className?: string;
-    view?: any;
     size?: Size;
+    view?: CustomView,
 }
 
-export interface IPaginationSizeViewProps {
-    sizes: {
+export interface IPaginationSizeViewProps extends IPaginationSizeProps {
+    items: {
         size: number,
         label: string | number,
         isActive: boolean,
@@ -27,18 +28,17 @@ export interface IPaginationSizeViewProps {
 }
 
 interface IPaginationSizePrivateProps extends IConnectHocOutput, IComponentsHocOutput {
-
+    listId?: string;
+    list?: {
+        page?: number
+        pageSize?: number
+        total?: number
+    };
 }
 
 @connect()
 @components('ui')
 export default class PaginationSize extends React.PureComponent<IPaginationSizeProps & IPaginationSizePrivateProps> {
-
-    static defaultProps = {
-        sizes: [30, 50, 100],
-        className: '',
-        size: 'sm'
-    };
 
     constructor(props) {
         super(props);
@@ -51,7 +51,7 @@ export default class PaginationSize extends React.PureComponent<IPaginationSizeP
         return (
             <PaginationSizeView
                 {...this.props}
-                sizes={this.props.sizes.map(size => ({
+                items={this.props.sizes.map(size => ({
                     size,
                     label: size,
                     isActive: _get(this.props, 'list.pageSize') === size

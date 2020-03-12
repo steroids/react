@@ -1,6 +1,0 @@
-### RangeField 
-
-
-```js
-<RangeField/>
-```

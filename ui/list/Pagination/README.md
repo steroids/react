@@ -1,6 +1,0 @@
-### Pagination 
-
-
-```js
-<Pagination/>
-```

@@ -1,6 +1,0 @@
-### DateTimeField 
-
-
-```js
-<DateTimeField/>
-```

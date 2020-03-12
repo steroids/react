@@ -6,24 +6,11 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
 export interface IDateFieldProps extends IFieldHocInput {
-    label?: string | boolean | any;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    size?: Size;
-    disabled?: boolean;
     pickerProps?: any;
-    onChange?: (...args: any[]) => any;
     displayFormat?: string;
     valueFormat?: string;
-    className?: string;
-    view?: any;
-    isInvalid?: boolean;
+    className?: CssClassName;
+    view?: CustomView;
     placeholder?: any;
 }
 
@@ -60,7 +47,7 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         displayFormat: 'DD.MM.YYYY',
         valueFormat: 'YYYY-MM-DD'
     };

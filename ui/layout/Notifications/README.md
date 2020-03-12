@@ -1,6 +1,0 @@
-### Notifications 
-
-
-```js
-<Notifications/>
-```

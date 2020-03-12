@@ -3,6 +3,7 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IModalProps {
+    title?: string,
     onClose?: (...args: any[]) => any;
     view?: any;
 }

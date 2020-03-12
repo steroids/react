@@ -5,10 +5,9 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IRadioListFieldProps extends IFieldHocInput, IDataProviderHocInput {
-    isInvalid?: boolean;
     inputProps?: any;
-    className?: string;
-    view?: any;
+    className?: CssClassName;
+    view?: CustomView;
 }
 
 export interface IRadioListFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
@@ -39,7 +38,7 @@ export default class RadioListField extends React.PureComponent<IRadioListFieldP
     static defaultProps = {
         disabled: false,
         required: false,
-        className: "",
+        className: '',
         errors: []
     };
 

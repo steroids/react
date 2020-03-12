@@ -6,7 +6,7 @@ export default class Vk {
 
     constructor(components) {
         this._components = components;
-        this.clientId = "";
+        this.clientId = '';
     }
 
     async init() {

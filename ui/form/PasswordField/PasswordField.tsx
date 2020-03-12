@@ -2,14 +2,20 @@ import * as React from 'react';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IInputFieldProps} from '../InputField/InputField';
 
-export interface IPasswordFieldProps extends IFieldHocInput {
+
+/**
+ * PasswordField
+ * Поле ввода пароля
+ */
+export interface IPasswordFieldProps extends IInputFieldProps, IFieldHocInput {
+
+    /**
+     * Если true, то отображается шкала сложности пароля и иконка 'отображения' пароля
+     * @example true
+     */
     security?: boolean;
-    placeholder?: string;
-    isInvalid?: boolean;
-    inputProps?: any;
-    className?: string;
-    view?: any;
 }
 
 export interface IPasswordFieldViewProps {
@@ -31,8 +37,37 @@ interface IPasswordFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutp
 
 }
 
-type PasswordFieldState = {
+interface PasswordFieldState {
     type?: string
+}
+
+
+export const checkPassword = password => {
+    if (!password) {
+        return null;
+    }
+    const symbols = {
+        lowerLetters: 'qwertyuiopasdfghjklzxcvbnm',
+        upperLetters: 'QWERTYUIOPLKJHGFDSAZXCVBNM',
+        digits: '0123456789',
+        special: '!@#$%^&*()_-+=|/.,:;[]{}'
+    };
+    let rating = 0;
+    Object.keys(symbols).map(key => {
+        for (let i = 0; i < password.length; i++) {
+            if (symbols[key].indexOf(password[i]) !== -1) {
+                rating++;
+                break;
+            }
+        }
+    });
+    if (password.length > 8 && rating >= 4) {
+        return 'success';
+    }
+    if (password.length >= 6 && rating >= 2) {
+        return 'warning';
+    }
+    return 'danger';
 };
 
 @field({
@@ -44,38 +79,10 @@ export default class PasswordField extends React.PureComponent<IPasswordFieldPro
         disabled: false,
         security: false,
         required: false,
-        className: "",
-        placeholder: "",
+        className: '',
+        placeholder: '',
         errors: []
     };
-
-    static checkPassword(password) {
-        if (!password) {
-            return null;
-        }
-        const symbols = {
-            lowerLetters: 'qwertyuiopasdfghjklzxcvbnm',
-            upperLetters: 'QWERTYUIOPLKJHGFDSAZXCVBNM',
-            digits: '0123456789',
-            special: '!@#$%^&*()_-+=|/.,:;[]{}'
-        };
-        let rating = 0;
-        Object.keys(symbols).map(key => {
-            for (let i = 0; i < password.length; i++) {
-                if (symbols[key].indexOf(password[i]) !== -1) {
-                    rating++;
-                    break;
-                }
-            }
-        });
-        if (password.length > 8 && rating >= 4) {
-            return 'success';
-        }
-        if (password.length >= 6 && rating >= 2) {
-            return 'warning';
-        }
-        return 'danger';
-    }
 
     constructor(props) {
         super(props);
@@ -94,7 +101,7 @@ export default class PasswordField extends React.PureComponent<IPasswordFieldPro
                 {...this.props}
                 inputProps={{
                     name: this.props.input.name,
-                    value: this.props.input.value || "",
+                    value: this.props.input.value || '',
                     onChange: e => this.props.input.onChange(e.target.value),
                     type: this.state.type,
                     placeholder: this.props.placeholder,
@@ -104,7 +111,7 @@ export default class PasswordField extends React.PureComponent<IPasswordFieldPro
                 security={this.props.security}
                 securityLevel={
                     this.props.security
-                        ? PasswordField.checkPassword(this.props.input.value)
+                        ? checkPassword(this.props.input.value)
                         : null
                 }
                 onShowPassword={() => this.setState({type: 'text'})}

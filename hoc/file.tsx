@@ -7,7 +7,7 @@ import _difference from 'lodash-es/difference';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
 import QueueCollection from 'fileup-core/lib/models/QueueCollection';
-import buildURL from 'axios/lib/helpers/buildURL';
+import * as buildURL from 'axios/lib/helpers/buildURL';
 
 export interface IFileHocInput {
     /*
@@ -30,11 +30,7 @@ export interface IFileHocInput {
         })
       )
      */
-    input: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    },
+    input?: FormInputType,
     multiple?: boolean;
     uploader?: any;
     backendUrl?: any;
@@ -59,6 +55,21 @@ export interface IFileHocOutput {
     onRemove?: any;
 }
 
+const imagesMimeTypes = [
+    'image/gif',
+    'image/jpeg',
+    'image/pjpeg',
+    'image/png'
+];
+
+export const generateBackendUrl = props => {
+    return buildURL(props.backendUrl, {
+        mimeTypes: props.imagesOnly ? imagesMimeTypes : props.mimeTypes,
+        imagesProcessor: props.imagesProcessor,
+        imagesExactSize: props.imagesExactSize
+    });
+};
+
 export default (): any => WrappedComponent =>
     class FileHoc extends React.PureComponent<IFileHocInput> {
         _uploader: any;
@@ -75,20 +86,6 @@ export default (): any => WrappedComponent =>
             ...WrappedComponent.defaultProps,
             multiple: false
         };
-        static imagesMimeTypes = [
-            'image/gif',
-            'image/jpeg',
-            'image/pjpeg',
-            'image/png'
-        ];
-
-        static generateBackendUrl(props) {
-            return buildURL(props.backendUrl, {
-                mimeTypes: props.imagesOnly ? FileHoc.imagesMimeTypes : props.mimeTypes,
-                imagesProcessor: props.imagesProcessor,
-                imagesExactSize: props.imagesExactSize
-            });
-        }
 
         constructor(props) {
             super(props);
@@ -99,7 +96,7 @@ export default (): any => WrappedComponent =>
             this._onRemove = this._onRemove.bind(this);
             this._uploader = new FileUp({
                 dropArea: {},
-                backendUrl: FileHoc.generateBackendUrl(this.props),
+                backendUrl: generateBackendUrl(this.props),
                 ...this.props.uploader,
                 form: {
                     ...(this.props.uploader && this.props.uploader.form),
@@ -176,7 +173,7 @@ export default (): any => WrappedComponent =>
             if (
                 !_isEqual(_pick(this.props, urlPropKeys), _pick(nextProps, urlPropKeys))
             ) {
-                this._uploader.backendUrl = FileHoc.generateBackendUrl(nextProps);
+                this._uploader.backendUrl = generateBackendUrl(nextProps);
             }
             // Check multiple flag update
             if (this.props.multiple !== nextProps.multiple) {

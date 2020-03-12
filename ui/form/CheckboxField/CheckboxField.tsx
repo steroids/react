@@ -4,22 +4,21 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
+/**
+ * CheckboxField
+ * Одиночный чекбокс. Используется в формах для отметки булевого значения.
+ */
 export interface ICheckboxFieldProps extends IFieldHocInput {
-    label?: string | boolean | any;
-    hint?: string;
-    attribute?: string;
-    input?: {
-        name?: string,
-        value?: any,
-        onChange?: (...args: any[]) => any
-    };
-    required?: boolean;
-    isInvalid?: boolean;
-    disabled?: boolean;
+
+    /**
+     * Свойства для элемента <input />
+     * @example {onKeyDown: ...}
+     */
     inputProps?: any;
-    onChange?: (...args: any[]) => any;
-    className?: string;
-    view?: any;
+
+    className?: CssClassName;
+
+    view?: CustomView;
 }
 
 export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldHocOutput {
@@ -48,7 +47,7 @@ export default class CheckboxField extends React.PureComponent<ICheckboxFieldPro
     static defaultProps = {
         disabled: false,
         required: false,
-        className: ""
+        className: ''
     };
 
     componentDidMount() {

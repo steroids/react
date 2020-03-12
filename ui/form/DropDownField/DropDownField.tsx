@@ -40,8 +40,8 @@ interface IDropDownFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOu
 @field({
     componentId: 'form.DropDownField'
 })
-@dataProvider()
-@enhanceWithClickOutside
+// TODO @dataProvider()
+// TODO @enhanceWithClickOutside
 @components('ui')
 export default class DropDownField extends React.PureComponent<IDropDownFieldProps & IDropDownFieldPrivateProps,
     {}> {
@@ -56,7 +56,6 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
 
     constructor(props) {
         super(props);
-        this._onSearch = this._onSearch.bind(this);
         this._onReset = this._onReset.bind(this);
     }
 
@@ -75,7 +74,7 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
                     placeholder:
                         this.props.searchPlaceholder ||
                         __('Начните вводить символы для поиска...'),
-                    onChange: this._onSearch,
+                    onChange: (value) => this.props.onSearch(value),
                     tabIndex: -1
                 }}
                 items={this.props.items.map(item => ({
@@ -96,10 +95,6 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
                 onItemMouseOver={this.props.onItemMouseOver}
             />
         );
-    }
-
-    _onSearch(e) {
-        this.props.onSearch(e.target.value);
     }
 
     _onReset() {

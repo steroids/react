@@ -72,7 +72,7 @@ export interface IInputFieldViewProps extends IFieldHocOutput {
     inputProps: {
         type: string,
         name: string,
-        onChange: (e: Event) => void,
+        onChange: (value: string) => void,
         value: string | number,
         placeholder: string,
         disabled: string,

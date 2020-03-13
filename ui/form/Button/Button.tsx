@@ -151,14 +151,14 @@ export interface IButtonProps {
 }
 
 export interface IButtonViewProps extends IButtonProps {
-    isLoading: boolean,
+    isLoading?: boolean,
     url?: string,
-    formId: string,
+    formId?: string,
     layout?: string,
     size?: string,
     disabled?: boolean,
     onClick?: (e: Event) => void,
-    submitting: boolean,
+    submitting?: boolean,
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

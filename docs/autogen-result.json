@@ -3154,11 +3154,25 @@
                     "example": "Your text...\n"
                 },
                 {
+                    "name": "prefixElement",
+                    "description": "Изображение или React-нода, которая будет отрендерена слева от поля.",
+                    "required": false,
+                    "type": "number | ReactNode",
+                    "example": "require('icon.png') | <component/>\n"
+                },
+                {
                     "name": "style",
                     "description": "Объект CSS стилей",
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}\n"
+                },
+                {
+                    "name": "suffixElement",
+                    "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
+                    "required": false,
+                    "type": "number | ReactNode",
+                    "example": "require('icon.png') | <component/>\n"
                 },
                 {
                     "name": "type",
@@ -3185,10 +3199,45 @@
             ],
             "items": [
                 {
+                    "name": "errors",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "inputProps",
                     "description": "",
                     "required": true,
                     "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "style",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
                     "example": ""
                 }
             ]

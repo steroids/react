@@ -238,11 +238,11 @@ export default (): any => WrappedComponent =>
                 }
 
                 componentDidMount() {
-                    window.addEventListener('keydown', this._onKeyDown);
+                    process.env.PLATFORM === 'web' && window.addEventListener('keydown', this._onKeyDown);
                 }
 
                 componentWillUnmount() {
-                    window.removeEventListener('keydown', this._onKeyDown);
+                    process.env.PLATFORM === 'web' && window.removeEventListener('keydown', this._onKeyDown);
                 }
 
                 render() {

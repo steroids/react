@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as moment from 'moment';
+import moment from 'moment';
 import _isEqual from 'lodash-es/isEqual';
 import {components, field} from '../../../hoc';
 import DateField from '../DateField';
-import InputField from '../InputField';
+import TimeField from "../TimeField";
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
@@ -13,6 +13,7 @@ export interface IDateTimeFieldProps extends IFieldHocInput {
     timeFormat?: string;
     dateProps?: any;
     timeProps?: any;
+    style?: any;
     className?: CssClassName;
     view?: CustomView;
 }
@@ -20,6 +21,7 @@ export interface IDateTimeFieldProps extends IFieldHocInput {
 export interface IDateTimeFieldViewProps extends IFieldHocOutput {
     dateField: any,
     timeField: any,
+    style?: any
 }
 
 interface IDateTimeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
@@ -49,6 +51,7 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
+        console.log("DATETIME UPDATED");
         const newState = this._parseToState(nextProps);
         if (!_isEqual(this.state, newState)) {
             this.setState(newState);
@@ -57,8 +60,9 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
 
     render() {
         const DateFieldInternal = DateField.WrappedComponent;
-        const InputFieldInternal = InputField.WrappedComponent;
+        const TimeFieldInternal = TimeField.WrappedComponent;
         const DateTimeFieldView = this.props.view || this.props.ui.getView('form.DateTimeFieldView');
+
         return (
             <DateTimeFieldView
                 {...this.props}
@@ -70,20 +74,21 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                         disabled={this.props.disabled}
                         displayFormat={this.props.displayDateFormat}
                         valueFormat={this.props.valueDateFormat}
+                        onChange={value => this._onChange({date: value})}
                         input={{
                             name: '',
                             value: this.state.date,
-                            onChange: value => this._onChange({date: value})
                         }}
                         {...this.props.dateProps}
                     />
                 }
                 timeField={
-                    <InputFieldInternal
+                    <TimeFieldInternal
                         isInvalid={this.props.isInvalid}
                         size={this.props.size}
                         required={this.props.required}
                         disabled={this.props.disabled}
+                        timeFormat={this.props.timeFormat}
                         input={{
                             name: '',
                             value: this.state.time,

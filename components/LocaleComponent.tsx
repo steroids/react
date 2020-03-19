@@ -1,6 +1,6 @@
 import * as React from 'react';
 import IntlMessageFormat from 'intl-messageformat';
-import * as moment from 'moment';
+import moment from 'moment';
 import _isObject from 'lodash-es/isObject';
 import 'moment/locale/it';
 import 'moment/locale/ru';

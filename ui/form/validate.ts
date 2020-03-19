@@ -5,7 +5,7 @@ import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
 import _size from 'lodash-es/size';
 import _isFunction from 'lodash-es/isFunction';
-import * as moment from 'moment';
+import moment from 'moment';
 import {SubmissionError} from 'redux-form';
 
 const validate = function (data, rules) {

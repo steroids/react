@@ -32,7 +32,7 @@ export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderH
     searchInputProps: {
         type: string,
         name: string,
-        onChange: (e: Event) => void,
+        onChange: (value: string) => void,
         value: string | number,
         placeholder: string,
         disabled: string,

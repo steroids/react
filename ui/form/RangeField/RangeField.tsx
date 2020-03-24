@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {findDOMNode} from 'react-dom';
-import * as moment from 'moment';
+import moment from 'moment';
 import _get from 'lodash-es/get';
 import {components, field} from '../../../hoc';
 import InputField from '../InputField';

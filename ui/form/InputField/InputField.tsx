@@ -2,6 +2,7 @@ import * as React from 'react';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {ReactNode} from "react";
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
@@ -46,14 +47,32 @@ export interface IInputFieldProps extends IFieldHocInput {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any
+    style?: any;
+
+    /**
+     * Изображение или React-нода, которая будет отрендерена слева от поля.
+     * @example require('icon.png') | <component/>
+     */
+    prefixElement?: number | ReactNode;
+
+    /**
+     * Изображение или React-нода, которая будет отрендерена справа от поля.
+     * @example require('icon.png') | <component/>
+     */
+    suffixElement?: number | ReactNode;
+    [key: string]: any;
 }
 
 export interface IInputFieldViewProps extends IFieldHocOutput {
+    style?: any,
+    isInvalid?: boolean,
+    errors?: any,
+    placeholder?: string,
+    type?: string,
     inputProps: {
         type: string,
         name: string,
-        onChange: (e: Event) => void,
+        onChange: (value: string) => void,
         value: string | number,
         placeholder: string,
         disabled: string,

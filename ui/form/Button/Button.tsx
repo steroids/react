@@ -160,13 +160,13 @@ export interface IButtonProps extends IThemeHocInput {
 
 export interface IButtonViewProps extends IButtonProps {
     _badge?: IButtonBadge,
-    isLoading: boolean,
+    isLoading?: boolean,
     url?: string,
-    formId: string,
+    formId?: string,
     layout?: string,
     disabled?: boolean,
     onClick?: any,
-    submitting: boolean,
+    submitting?: boolean,
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

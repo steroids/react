@@ -2021,7 +2021,7 @@
                 {
                     "name": "formId",
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": ""
                 },
@@ -2035,7 +2035,7 @@
                 {
                     "name": "isLoading",
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "boolean",
                     "example": ""
                 },
@@ -2091,7 +2091,7 @@
                 {
                     "name": "submitting",
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "boolean",
                     "example": ""
                 },
@@ -2321,6 +2321,13 @@
                     "example": ""
                 },
                 {
+                    "name": "style",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "valueFormat",
                     "description": "",
                     "required": false,
@@ -2346,10 +2353,45 @@
             ],
             "items": [
                 {
+                    "name": "formatDate",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "name",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "parseDate",
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
                     "name": "pickerProps",
                     "description": "",
                     "required": true,
-                    "type": "{dayPickerProps: {locale: string, localeUtils: any}, formatDate: {}, inputProps: {disabled: boolean}, name: string, onDayChange: {}, parseDate: {}, placeholder: string, value: string}",
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
                     "example": ""
                 }
             ]
@@ -2453,7 +2495,7 @@
                     "name": "className",
                     "description": "",
                     "required": false,
-                    "type": "CssClassName",
+                    "type": "string",
                     "example": ""
                 },
                 {
@@ -2478,10 +2520,17 @@
                     "example": ""
                 },
                 {
+                    "name": "style",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "view",
                     "description": "",
                     "required": false,
-                    "type": "CustomView",
+                    "type": "any",
                     "example": ""
                 }
             ]
@@ -2518,6 +2567,13 @@
                     "example": ""
                 },
                 {
+                    "name": "multiple",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
                     "name": "onItemClick",
                     "description": "",
                     "required": true,
@@ -2546,6 +2602,20 @@
                     "example": ""
                 },
                 {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "searchInputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "example": ""
+                },
+                {
                     "name": "selectedItems",
                     "description": "",
                     "required": false,
@@ -2557,6 +2627,13 @@
                     "description": "",
                     "required": false,
                     "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "style",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
                     "example": ""
                 }
             ]
@@ -3222,11 +3299,25 @@
                     "example": "Your text...\n"
                 },
                 {
+                    "name": "prefixElement",
+                    "description": "Изображение или React-нода, которая будет отрендерена слева от поля.",
+                    "required": false,
+                    "type": "number | ReactNode",
+                    "example": "require('icon.png') | <component/>\n"
+                },
+                {
                     "name": "style",
                     "description": "Объект CSS стилей",
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}\n"
+                },
+                {
+                    "name": "suffixElement",
+                    "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
+                    "required": false,
+                    "type": "number | ReactNode",
+                    "example": "require('icon.png') | <component/>\n"
                 },
                 {
                     "name": "type",
@@ -3254,10 +3345,45 @@
             ],
             "items": [
                 {
+                    "name": "errors",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "inputProps",
                     "description": "",
                     "required": true,
                     "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "style",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
                     "example": ""
                 }
             ]
@@ -3779,6 +3905,95 @@
                     "description": "",
                     "required": true,
                     "type": "{disabled: string, name: string, onChange: {}, onKeyUp: {}, placeholder: string, value: string | number}",
+                    "example": ""
+                }
+            ]
+        },
+        "ITimeFieldProps": {
+            "name": "ITimeFieldProps",
+            "description": "InputField\nПоле ввода текста",
+            "extends": [
+                "IFieldHocInput"
+            ],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "Дополнительные CSS классы",
+                    "required": false,
+                    "type": "string",
+                    "example": "my-block\n"
+                },
+                {
+                    "name": "inputProps",
+                    "description": "Свойства для элемента <input />",
+                    "required": false,
+                    "type": "any",
+                    "example": "{onKeyDown: ...}\n"
+                },
+                {
+                    "name": "placeholder",
+                    "description": "Placeholder подсказка",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text...\n"
+                },
+                {
+                    "name": "style",
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "any",
+                    "example": "{width: '45%'}\n"
+                },
+                {
+                    "name": "view",
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "required": false,
+                    "type": "any",
+                    "example": "MyCustomView\n"
+                }
+            ]
+        },
+        "ITimeFieldViewProps": {
+            "name": "ITimeFieldViewProps",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
+            "items": [
+                {
+                    "name": "errors",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "inputProps",
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "placeholder",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "style",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
                     "example": ""
                 }
             ]

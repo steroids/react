@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as moment from 'moment';
+import moment from 'moment';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import {components, field} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -12,29 +12,19 @@ export interface IDateFieldProps extends IFieldHocInput {
     className?: CssClassName;
     view?: CustomView;
     placeholder?: any;
+    style?: any;
 }
 
 export interface IDateFieldViewProps extends IFieldHocOutput {
-    pickerProps: {
-        name: string,
-        placeholder?: string,
-        value?: string,
-        parseDate: (date: string) => Date | undefined,
-        formatDate: (date: string) => Date | undefined,
-        onDayChange: (day: string) => void,
-        dayPickerProps: {
-            locale: string,
-            localeUtils: any,
-        },
-        inputProps: {
-            disabled: boolean,
-        },
-    }
+    name: string,
+    placeholder?: string,
+    parseDate: (date: string | Date) => Date | undefined,
+    formatDate: (date: string | Date) => string,
+    onChange: (day: string | Date) => void,
+    pickerProps: any
 }
 
-interface IDateFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
-
-}
+interface IDateFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {}
 
 @field({
     componentId: 'form.DateField'
@@ -62,40 +52,33 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
         // TODO Add months switcher http://react-day-picker.js.org/examples/elements-year-navigation
         const DateFieldView =
             this.props.view || this.props.ui.getView('form.DateFieldView');
+
         return (
             <DateFieldView
                 {...this.props}
-                pickerProps={{
-                    name: this.props.input.name,
-                    placeholder: this.props.placeholder || this.props.displayFormat,
-                    value: this._parseDate(this.props.input.value),
-                    parseDate: this._parseDate,
-                    formatDate: this._formatDate,
-                    onDayChange: day => {
-                        if (day) {
-                            this.props.input.onChange(
-                                moment(day).format(this.props.valueFormat)
-                            );
-                        }
-                    },
-                    dayPickerProps: {
-                        locale: this.props.locale.language,
-                        localeUtils: MomentLocaleUtils,
-                        ...(this.props.pickerProps && this.props.pickerProps.dayPickerProps)
-                    },
-                    inputProps: {
-                        disabled: this.props.disabled,
-                        ...(this.props.pickerProps && this.props.pickerProps.inputProps)
-                    },
-                    ...this.props.pickerProps
+                name={this.props.input.name}
+                placeholder={this.props.placeholder || this.props.displayFormat}
+                value={this._parseDate(this.props.input.value)}
+                parseDate={this._parseDate}
+                formatDate={this._formatDate}
+                disabled={this.props.disabled}
+                onChange={value => {
+                    if (value) {
+                        this.props.input.onChange(
+                            moment(value).format(this.props.valueFormat)
+                        );
+                    }
                 }}
+                locale={this.props.locale}
+                localeUtils={MomentLocaleUtils}
+                pickerProps={this.props.pickerProps}
             />
         );
     }
 
     /**
      * Convert date from string to Date object
-     * @param {string} date
+     * @param {string | Date} date
      * @returns {Date|undefined}
      * @private
      */
@@ -104,7 +87,7 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
             format => {
                 return (
                     date &&
-                    date.length === format.length &&
+                    (date instanceof String ? date.length === format.length : true) &&
                     moment(date, format).isValid()
                 );
             }
@@ -114,11 +97,15 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
 
     /**
      * Convert Date to display format
-     * @param {string} date
+     * @param {string | Date} date
      * @returns {string}
      * @private
      */
     _formatDate(date) {
+        if (!date) {
+            return date;
+        }
+
         return moment(date).format(this.props.displayFormat);
     }
 }

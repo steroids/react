@@ -4,16 +4,19 @@ import {components, field} from '../../../hoc';
 import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from '../../../hoc/dataProvider';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {conditional} from 'conditional-decorator';
 
 export interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInput {
     searchPlaceholder?: string;
     inputProps?: any;
-    className?: CssClassName;
-    view?: CustomView;
+    className?: string;
+    style?: any,
+    view?: any;
     showReset?: boolean;
 }
 
 export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
+    style?: any,
     items: {
         id: number | string | boolean,
         label?: string,
@@ -24,6 +27,16 @@ export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderH
         id: number | string | boolean,
         label?: string
     }[];
+    multiple: boolean,
+    placeholder: string,
+    searchInputProps: {
+        type: string,
+        name: string,
+        onChange: (value: string) => void,
+        value: string | number,
+        placeholder: string,
+        disabled: string,
+    },
     isOpened?: boolean,
     isLoading?: boolean,
     showReset?: boolean,
@@ -31,17 +44,15 @@ export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderH
     onReset: () => void,
     onItemClick: (item: {id: number | string | boolean}) => void,
     onItemMouseOver: (item: {id: number | string | boolean}) => void,
-
 }
 
-interface IDropDownFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {
-}
+interface IDropDownFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {}
 
 @field({
     componentId: 'form.DropDownField'
 })
 @dataProvider()
-@enhanceWithClickOutside
+@conditional(process.env.PLATFORM === 'web', enhanceWithClickOutside)
 @components('ui')
 export default class DropDownField extends React.PureComponent<IDropDownFieldProps & IDropDownFieldPrivateProps,
     {}> {
@@ -49,13 +60,13 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
         disabled: false,
         required: false,
         className: '',
+        autoComplete: false,
         showReset: false,
         multiple: false
     };
 
     constructor(props) {
         super(props);
-        this._onSearch = this._onSearch.bind(this);
         this._onReset = this._onReset.bind(this);
     }
 
@@ -64,8 +75,8 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
     }
 
     render() {
-        const DropDownFieldView =
-            this.props.view || this.props.ui.getView('form.DropDownFieldView');
+        const DropDownFieldView = this.props.view || this.props.ui.getView('form.DropDownFieldView');
+
         return (
             <DropDownFieldView
                 {...this.props}
@@ -74,7 +85,7 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
                     placeholder:
                         this.props.searchPlaceholder ||
                         __('Начните вводить символы для поиска...'),
-                    onChange: this._onSearch,
+                    onChange: value => this.props.onSearch(value),
                     tabIndex: -1
                 }}
                 items={this.props.items.map(item => ({
@@ -93,12 +104,9 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
                 onReset={this._onReset}
                 onItemClick={this.props.onItemClick}
                 onItemMouseOver={this.props.onItemMouseOver}
+                onClose={this.props.onClose}
             />
         );
-    }
-
-    _onSearch(e) {
-        this.props.onSearch(e.target ? e.target.value : e.nativeEvent.text);
     }
 
     _onReset() {

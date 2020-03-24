@@ -22,6 +22,7 @@ import ReCaptchaField from './ReCaptchaField';
 import SliderField from './SliderField';
 import SwitcherField from './SwitcherField';
 import TextField from './TextField';
+import TimeField from './TimeField';
 
 export {
     AutoCompleteField,
@@ -47,5 +48,6 @@ export {
     ReCaptchaField,
     SliderField,
     SwitcherField,
-    TextField
+    TextField,
+    TimeField
 };

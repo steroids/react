@@ -2,6 +2,6 @@
   "compilerOptions": {
     "jsx": "react",
     "experimentalDecorators": true,
-    "esModuleInterop": false
+    "esModuleInterop": true
   }
 }

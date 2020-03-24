@@ -4,11 +4,19 @@ import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
-import {components, connect} from '../../../hoc';
+import {components, connect, theme} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
-import {getNavItems} from '../../../reducers/navigation';
+import {
+    buildUrl,
+    getActiveRouteIds,
+    getRouteChildren,
+    getRouterParams,
+    IRoute
+} from '../../../reducers/router';
+import {IThemeHocInput, IThemeHocOutput} from '../../../hoc/theme';
+import {IButtonProps} from '../../form/Button/Button';
 
-export interface INavItem {
+export interface INavItem extends IButtonProps {
     id?: number | string,
     label?: string | any,
     url?: string,
@@ -20,9 +28,10 @@ export interface INavItem {
     contentProps?: any
 }
 
-export interface INavProps {
+export interface INavProps extends IThemeHocInput {
     layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list' | string;
     items?: string | INavItem[];
+    routes?: IRoute[],
     activeTab?: number | string;
     className?: string;
     view?: any;
@@ -36,7 +45,9 @@ export interface INavViewProps {
     })[]
 }
 
-interface INavPrivateProps extends IComponentsHocOutput {
+interface INavPrivateProps extends IComponentsHocOutput, IThemeHocOutput {
+    activeRouteIds?: string[],
+    routerParams?: object,
 }
 
 interface NavState {
@@ -46,11 +57,12 @@ interface NavState {
 
 @connect(
     (state, props) => ({
-        items: _isString(props.items)
-            ? getNavItems(state, props.items)
-            : props.items,
+        routes: _isString(props.items) ? getRouteChildren(state, props.items) : null,
+        activeRouteIds: getActiveRouteIds(state),
+        routerParams: getRouterParams(state),
     })
 )
+@theme()
 @components('ui')
 export default class Nav extends React.PureComponent<INavProps & INavPrivateProps, NavState> {
     static defaultProps = {
@@ -83,19 +95,26 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
             list: 'nav.NavListView'
         };
         const NavView = this.props.view || this.props.ui.getView(defaultViewMap[this.props.layout]);
-        const items = this.props.items as INavItem[];
+        const items = Array.isArray(this.props.items)
+            ? this.props.items.map((item, index) => ({
+                ...item,
+                active: this.state.activeTab === (_has(item, 'id') ? item.id : index),
+            }))
+            : (this.props.routes
+                ? this.props.routes.map(route => ({
+                    id: route.id,
+                    label: route.label,
+                    to: buildUrl(route.redirectTo || route.path, this.props.routerParams),
+                    visible: route.isNavVisible,
+                    active: (this.props.activeRouteIds || []).includes(route.id),
+                })) as INavItem[]
+                : []
+            );
         return (
             <NavView
                 {...this.props}
                 onClick={this._onClick}
-                items={items
-                    .map((item, index) => ({
-                        ...item,
-                        isActive: _has(item, 'id')
-                            ? this.state.activeTab === item.id
-                            : this.state.activeTab === index
-                    }))
-                    .filter(item => item.visible !== false)
+                items={items.filter(item => item.visible !== false)
                 }
             >
                 {this.renderContent()}
@@ -104,7 +123,7 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
     }
 
     renderContent() {
-        const items = this.props.items as INavItem[];
+        const items = Array.isArray(this.props.items) ? this.props.items : [];
         const activeItem = items.find((item, index) => {
             return this.state.activeTab === (_has(item, 'id') ? item.id : index);
         });

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Button from '../../../form/Button';
-import ModalWrapper from '../../ModalWrapper';
+import ModalPortal from '../../ModalPortal';
 import {openModal} from '../../../../actions/modal';
 import {connect} from '../../../../hoc';
 import {IConnectHocOutput} from '../../../../hoc/connect';
@@ -27,7 +27,7 @@ export default class ModalDemo extends React.PureComponent<IConnectHocOutput> {
     render() {
         return (
             <>
-                <ModalWrapper/>
+                <ModalPortal/>
                 <Button
                     label='Open modal'
                     onClick={() => this.props.dispatch(

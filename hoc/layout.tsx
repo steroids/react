@@ -6,13 +6,14 @@ import _isObject from 'lodash-es/isObject';
 import _upperFirst from 'lodash-es/upperFirst';
 import _merge from 'lodash-es/merge';
 
-import {getCurrentItem} from '../reducers/navigation';
+import {getRoute, IRoute} from '../reducers/router';
 import {getData, getInitializeCounter, getUser, isInitialized} from '../reducers/auth';
 import {init, setData, setUser} from '../actions/auth';
 import {setMeta} from '../actions/fields';
-import {goToPage} from '../actions/navigation';
+import {goToRoute} from '../actions/router';
 import components, {IComponentsHocOutput} from './components';
 import {IConnectHocOutput} from './connect';
+import HttpComponent from '../components/HttpComponent';
 
 export const STATUS_LOADING = 'loading';
 export const STATUS_NOT_FOUND = 'not_found';
@@ -22,10 +23,7 @@ export const STATUS_ACCESS_DENIED = 'access_denied';
 export const STATUS_OK = 'ok';
 
 export interface ILayoutHocInput {
-    page?: {
-        id: string,
-        roles: string[],
-    },
+    route?: IRoute,
     user?: {
         role: string,
     },
@@ -37,6 +35,7 @@ export interface ILayoutHocInput {
 }
 
 export interface ILayoutHocOutput {
+    http?: any,
     status: string,
     renderError: string,
 }
@@ -51,7 +50,7 @@ interface ILayoutHocState {
 }
 
 const stateMap = state => ({
-    page: getCurrentItem(state),
+    route: getRoute(state),
     user: getUser(state),
     data: getData(state),
     isInitialized: isInitialized(state),
@@ -61,7 +60,7 @@ const stateMap = state => ({
 
 export default (initAction): any => WrappedComponent =>
     connect(stateMap)(
-        components()(
+        components('http')(
             class LayoutHoc extends React.PureComponent<ILayoutHocInput & ILayoutHocPrivateProps, ILayoutHocState> {
                 static WrappedComponent = WrappedComponent;
                 /**
@@ -96,7 +95,7 @@ export default (initAction): any => WrappedComponent =>
                         _isFunction(initAction) &&
                         this.props.initializeCounter > prevProps.initializeCounter
                     ) {
-                        initAction(this.props)
+                        initAction(this.props, this.props.dispatch)
                             .then(data => {
                                 // Configure components
                                 if (_isObject(data.config)) {
@@ -128,7 +127,7 @@ export default (initAction): any => WrappedComponent =>
                                         data.meta && setMeta(data.meta),
                                         // User auth
                                         setData(data),
-                                        this.props.redirectPageId && goToPage(this.props.redirectPageId)
+                                        this.props.redirectPageId && goToRoute(this.props.redirectPageId)
                                     ].filter(Boolean)
                                 );
                             })
@@ -149,10 +148,10 @@ export default (initAction): any => WrappedComponent =>
                         status = STATUS_RENDER_ERROR;
                     } else if (this.state.httpError) {
                         status = STATUS_HTTP_ERROR;
-                    } else if (!this.props.page) {
+                    } else if (!this.props.route) {
                         status = STATUS_NOT_FOUND;
                     } else {
-                        const pageRoles = _get(this.props, 'page.roles') || [];
+                        const pageRoles = _get(this.props, 'route.roles') || [];
                         const userRole = _get(this.props, 'user.role') || null;
                         if (!pageRoles.includes(userRole)) {
                             status = STATUS_ACCESS_DENIED;
@@ -162,8 +161,8 @@ export default (initAction): any => WrappedComponent =>
                                     pageRoles,
                                     'User role:',
                                     userRole,
-                                    'Page:',
-                                    this.props.page
+                                    'Route:',
+                                    this.props.route
                                 ); // eslint-disable-line no-console
                             }
                         }

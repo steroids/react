@@ -10,12 +10,11 @@ import {getFieldProps, getMeta} from '../reducers/fields';
 import connect from './connect';
 import components, {IComponentsHocOutput} from './components';
 import form, {IFormHocOutput} from './form';
+import theme, {IThemeHocInput, IThemeHocOutput} from './theme';
 
-export interface IFieldHocInput {
+export interface IFieldHocInput extends IThemeHocInput {
 
     prefix?: string | boolean;
-
-    size?: Size;
 
     /**
      * Название поля либо отмена отображение поля (false)
@@ -45,9 +44,10 @@ export interface IFieldHocInput {
     layout?: FormLayout;
     onChange?: (...args: any[]) => any;
     errors?: any;
+    date?: any;
 }
 
-export interface IFieldHocOutput extends IFormHocOutput {
+export interface IFieldHocOutput extends IFormHocOutput, IThemeHocOutput {
     input?: FormInputType,
     fieldId?: string,
     isInvalid?: boolean,
@@ -152,131 +152,132 @@ export default (customConfig): any => WrappedComponent => {
                 fieldPropsFromRedux: getFieldProps(state, getFieldId(props, config))
             };
         })(
-            components('ui')(
-                class FieldHoc extends React.PureComponent<IFieldHocInput & IFieldHocPrivateProps> {
+            theme()(
+                components('ui')(
+                    class FieldHoc extends React.PureComponent<IFieldHocInput & IFieldHocPrivateProps> {
 
-                    _fieldId: any;
+                        _fieldId: any;
 
-                    constructor(props) {
-                        super(props);
-                        // Check attributes is set
-                        if (this.props.formId) {
-                            config.attributes.forEach(attribute => {
-                                if (!this.props['attribute' + _upperFirst(attribute)]) {
-                                    throw new Error(
-                                        `Please set attribute name '${attribute}' for component '${WrappedComponent.name}' in form '${this.props.formId}'`
+                        constructor(props) {
+                            super(props);
+                            // Check attributes is set
+                            if (this.props.formId) {
+                                config.attributes.forEach(attribute => {
+                                    if (!this.props['attribute' + _upperFirst(attribute)]) {
+                                        throw new Error(
+                                            `Please set attribute name '${attribute}' for component '${WrappedComponent.name}' in form '${this.props.formId}'`
+                                        );
+                                    }
+                                });
+                            }
+                            if (!this.props.formId) {
+                                const state = {};
+                                config.attributes.forEach(attribute => {
+                                    state['value' + attribute] = _get(
+                                        this.props,
+                                        ['input', 'value', attribute].filter(Boolean)
                                     );
+                                });
+                                this.state = state;
+                                this._fieldId = generateUniqueId();
+                            } else {
+                                this._fieldId = getFieldId(this.props, config);
+                            }
+                        }
+
+                        render() {
+                            const FieldLayout = require('../ui/form/FieldLayout').default;
+                            const outputProps = {
+                                ...this.props.ui.getFieldProps(config.componentId),
+                                ...getFieldPropsFromModel(this.props.model, this.props.attribute),
+                                ...this.props.fieldPropsFromRedux,
+                            } as IFieldHocOutput;
+
+                            const inputProps = {};
+                            if (!config.list) {
+                                config.attributes.forEach(attribute => {
+                                    inputProps[`input${_upperFirst(attribute)}`] = {
+                                        name: getName(this.props, attribute),
+                                        value: this._getValue(attribute),
+                                        onChange: value => this._setValue(attribute, value)
+                                    };
+                                });
+                            }
+
+                            // Get errors
+                            let errors = this.props.errors;
+                            Object.keys(inputProps).map(key => {
+                                const name = inputProps[key].name;
+                                const error = _get(this.props.formErrors, name);
+                                if (error) {
+                                    errors = (errors || []).concat(error);
                                 }
                             });
-                        }
-                        if (!this.props.formId) {
-                            const state = {};
-                            config.attributes.forEach(attribute => {
-                                state['value' + attribute] = _get(
-                                    this.props,
-                                    ['input', 'value', attribute].filter(Boolean)
-                                );
-                            });
-                            this.state = state;
-                            this._fieldId = generateUniqueId();
-                        } else {
-                            this._fieldId = getFieldId(this.props, config);
-                        }
-                    }
+                            const isInvalid = errors && errors.length > 0;
 
-                    render() {
-                        const FieldLayout = require('../ui/form/FieldLayout').default;
-                        const outputProps = {
-                            ...this.props.ui.getFieldProps(config.componentId),
-                            ...getFieldPropsFromModel(this.props.model, this.props.attribute),
-                            ...this.props.fieldPropsFromRedux,
-                        } as IFieldHocOutput;
+                            // TODO implement values in state for list (instead of redux-form FieldArray)
 
-                        const inputProps = {};
-                        if (!config.list) {
-                            config.attributes.forEach(attribute => {
-                                inputProps[`input${_upperFirst(attribute)}`] = {
-                                    name: getName(this.props, attribute),
-                                    value: this._getValue(attribute),
-                                    onChange: value => this._setValue(attribute, value)
-                                };
-                            });
-                        }
-
-                        // Get errors
-                        let errors = this.props.errors;
-                        Object.keys(inputProps).map(key => {
-                            const name = inputProps[key].name;
-                            const error = _get(this.props.formErrors, name);
-                            if (error) {
-                                errors = (errors || []).concat(error);
-                            }
-                        });
-                        const isInvalid = errors && errors.length > 0;
-
-                        // TODO implement values in state for list (instead of redux-form FieldArray)
-
-                        return (
-                            <FieldLayout
-                                {...this.props}
-                                {...outputProps}
-                                {...(typeof config.layout === 'object' ? config.layout : {layout: config.layout})}
-                                errors={isInvalid ? errors : null}
-                                isInvalid={isInvalid}
-                            >
-                                {!config.list && this.props.formId &&
-                                config.attributes.map(attribute => (
-                                    <Field
-                                        key={this.props.formId + attribute}
-                                        name={getName(this.props, attribute)}
-                                        component='input'
-                                        type='hidden'
-                                    />
-                                ))}
-                                {(config.list && (
-                                    <FieldArray
-                                        {...this.props}
-                                        {...outputProps}
-                                        name={getName(this.props, '')}
-                                        component={WrappedComponent}
-                                        formId={this.props.formId}
-                                        fieldId={this._fieldId}
-                                    />
-                                )) || (
-                                    <WrappedComponent
-                                        {...this.props}
-                                        {...outputProps}
-                                        {...inputProps}
-                                        isInvalid={isInvalid}
-                                        formId={this.props.formId}
-                                        fieldId={this._fieldId}
-                                    />
-                                )}
-                            </FieldLayout>
-                        );
-                    }
-
-                    _getValue(attribute) {
-                        if (this.props.formId) {
-                            return _get(this.props, 'value' + _upperFirst(attribute));
-                        } else {
-                            return this.state['value' + attribute];
-                        }
-                    }
-
-                    _setValue(attribute, value) {
-                        if (this.props.formId) {
-                            this.props.dispatch(
-                                change(this.props.formId, getName(this.props, attribute), value)
+                            return (
+                                <FieldLayout
+                                    {...this.props}
+                                    {...outputProps}
+                                    {...(typeof config.layout === 'object' ? config.layout : {layout: config.layout})}
+                                    errors={isInvalid ? errors : null}
+                                    isInvalid={isInvalid}
+                                >
+                                    {!config.list && this.props.formId && config.attributes.map(attribute => (
+                                        <Field
+                                            key={this.props.formId + attribute}
+                                            name={getName(this.props, attribute)}
+                                            component='input'
+                                            type='hidden'
+                                        />
+                                    ))}
+                                    {(config.list && (
+                                        <FieldArray
+                                            {...this.props}
+                                            {...outputProps}
+                                            name={getName(this.props, '')}
+                                            component={WrappedComponent}
+                                            formId={this.props.formId}
+                                            fieldId={this._fieldId}
+                                        />
+                                    )) || (
+                                        <WrappedComponent
+                                            {...this.props}
+                                            {...outputProps}
+                                            {...inputProps}
+                                            isInvalid={isInvalid}
+                                            formId={this.props.formId}
+                                            fieldId={this._fieldId}
+                                        />
+                                    )}
+                                </FieldLayout>
                             );
-                        } else {
-                            this.setState({
-                                ['value' + attribute]: value
-                            });
                         }
-                    }
 
-                }
+                        _getValue(attribute) {
+                            if (this.props.formId) {
+                                return _get(this.props, 'value' + _upperFirst(attribute));
+                            } else {
+                                return this.state['value' + attribute];
+                            }
+                        }
+
+                        _setValue(attribute, value) {
+                            if (this.props.formId) {
+                                this.props.dispatch(
+                                    change(this.props.formId, getName(this.props, attribute), value)
+                                );
+                            } else {
+                                this.setState({
+                                    ['value' + attribute]: value
+                                });
+                            }
+                        }
+
+                    }
+                )
             )
         )
     )

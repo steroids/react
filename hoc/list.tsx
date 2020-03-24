@@ -56,9 +56,6 @@ export interface IListHocInput {
     ]),
      */
     listId?: string,
-    primaryKey?: string,
-    action?: string,
-    actionMethod?: HttpMethod,
     pagination?: boolean | IPaginationProps,
     paginationSize?: boolean | IPaginationSizeProps,
     sort?: boolean | ISortProps,
@@ -67,7 +64,11 @@ export interface IListHocInput {
     searchForm?: Omit<IFormProps, 'formId'> & {
         formId?: string,
     },
+    autoDestroy?: boolean,
 
+    primaryKey?: string,
+    action?: string,
+    actionMethod?: HttpMethod,
     scope?: any,
     onFetch?: any,
     query?: any,
@@ -138,7 +139,37 @@ export interface IListHocPrivateProps extends IConnectHocOutput, IComponentsHocO
 
 const defaultProps = {
     actionMethod: 'get',
-    primaryKey: 'id'
+    primaryKey: 'id',
+    autoDestroy: true,
+    pagination: {
+        enable: true,
+        attribute: 'page',
+        defaultValue: 1,
+        loadMore: false,
+        position: 'bottom',
+    },
+    paginationSize: {
+        enable: false,
+        attribute: 'pageSize',
+        sizes: [30, 50, 100],
+        defaultValue: 50,
+        position: 'top',
+    },
+    sort: {
+        enable: false,
+        attribute: 'sort',
+        defaultValue: null,
+    },
+    layout: {
+        enable: false,
+        attribute: 'layout',
+        defaultValue: null,
+        position: 'top',
+    },
+    empty: {
+        enable: false,
+        text: 'Записи не найдены',
+    }
 };
 
 const stateMap = (state, props) => {
@@ -184,11 +215,7 @@ const normalizeMap = [
         fromKey: 'pagination',
         toKey: '_pagination',
         normalizer: pagination => ({
-            enable: true,
-            attribute: 'page',
-            defaultValue: 1,
-            loadMore: false,
-            position: 'bottom',
+            ...defaultProps.pagination,
             ...(_isBoolean(pagination) ? {enable: pagination} : pagination),
         }),
     },
@@ -196,11 +223,9 @@ const normalizeMap = [
         fromKey: 'paginationSize',
         toKey: '_paginationSize',
         normalizer: paginationSize => ({
+            ...defaultProps.paginationSize,
             enable: !!paginationSize,
-            attribute: 'pageSize',
             defaultValue: _get(paginationSize, 'numbers.0') || 50,
-            sizes: [30, 50, 100],
-            position: 'top',
             ...(_isBoolean(paginationSize) ? {enable: paginationSize} : paginationSize),
         }),
     },
@@ -208,9 +233,8 @@ const normalizeMap = [
         fromKey: 'sort',
         toKey: '_sort',
         normalizer: sort => ({
+            ...defaultProps.sort,
             enable: !!sort,
-            attribute: 'sort',
-            defaultValue: null,
             ...(_isBoolean(sort) ? {enable: sort} : sort),
         }),
     },
@@ -218,10 +242,8 @@ const normalizeMap = [
         fromKey: 'layout',
         toKey: '_layout',
         normalizer: layout => ({
+            ...defaultProps.layout,
             enable: !!layout,
-            attribute: 'layout',
-            defaultValue: null,
-            position: 'top',
             ...(_isBoolean(layout) ? {enable: layout} : layout),
         }),
     },
@@ -229,6 +251,7 @@ const normalizeMap = [
         fromKey: 'empty',
         toKey: '_empty',
         normalizer: empty => ({
+            ...defaultProps.empty,
             enable: !!empty,
             text: __('Записи не найдены'),
             ...(_isBoolean(empty) ? {enable: empty} : (_isBoolean(empty) ? {text: empty} : empty)),
@@ -324,7 +347,9 @@ export default (): any => WrappedComponent =>
                             !_isEqual(prevQuery, nextQuery) ||
                             (!this.props.list && nextProps.list)
                         ) {
-                            const page = Number(_get(nextQuery, 'page', this.props._pagination.defaultValue));
+                            const page = this.props._pagination.enable === true
+                                ? Number(_get(nextQuery, 'page', this.props._pagination.defaultValue))
+                                : undefined;
                             this.props.dispatch(
                                 lazyFetch(this.props.listId, {
                                     page,
@@ -350,7 +375,9 @@ export default (): any => WrappedComponent =>
                     }
 
                     componentWillUnmount() {
-                        this.props.dispatch(destroy(this.props.listId));
+                        if (this.props.autoDestroy) {
+                            this.props.dispatch(destroy(this.props.listId));
+                        }
                     }
 
                     render() {

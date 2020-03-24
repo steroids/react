@@ -1,17 +1,19 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
+import {components, theme} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IBemHocOutput} from '../../../hoc/bem';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {INavProps} from '../../nav/Nav/Nav';
+import {IThemeHocInput} from '../../../hoc/theme';
 
-export interface IHeaderProps {
+export interface IHeaderProps extends IThemeHocInput {
     className?: string;
     view?: any;
     logo?: {
         title: string,
         linkProps?: object,
         logoUrl?: string | any,
+        logoSvg?: string | any,
         className?: string,
     };
     nav?: INavProps;
@@ -24,6 +26,7 @@ interface IHeaderPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
 
 }
 
+@theme()
 @components('ui')
 export default class Header extends React.PureComponent<IHeaderProps & IHeaderPrivateProps> {
 

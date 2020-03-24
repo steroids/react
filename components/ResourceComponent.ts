@@ -6,14 +6,16 @@ export default class ResourceComponent {
     _components: any;
     googleApiKey: string;
     googleCaptchaSiteKey: string;
+    language: string;
     static RESOURCE_GOOGLE_MAP_API = '//maps.googleapis.com/maps/api/js';
     static RESOURCE_YANDEX_MAP_API = 'https://api-maps.yandex.ru/2.1/';
     static RESOURCE_TWITTER_WIDGET = 'https://platform.twitter.com/widgets.js';
     static RESOURCE_GEETEST_API = '//static.geetest.com/static/tools/gt.js';
 
-    constructor(components) {
-        this.googleApiKey = '';
-        this.googleCaptchaSiteKey = '';
+    constructor(components, config) {
+        this.googleApiKey = config.googleApiKey || '';
+        this.googleCaptchaSiteKey = config.googleCaptchaSiteKey || '';
+        this.language = config.language || '';
         this._callbacks = {};
         this._components = components;
     }
@@ -30,7 +32,7 @@ export default class ResourceComponent {
             {
                 libraries: 'places',
                 key: this.googleApiKey,
-                language: locale.language
+                language: this.language || locale.language,
             },
             // @ts-ignore
             () => window.google.maps
@@ -49,7 +51,7 @@ export default class ResourceComponent {
         return this.loadScript(
             ResourceComponent.RESOURCE_YANDEX_MAP_API,
             {
-                lang: locale.language
+                lang: this.language || locale.language
             },
             // @ts-ignore
             () => new Promise(resolve => window.ymaps.ready(() => resolve(window.ymaps)))

@@ -59,6 +59,16 @@ interface IFieldListPrivateProps extends IFieldHocOutput, IConnectHocOutput, ICo
 
 }
 
+const defaultProps = {
+    disabled: false,
+    required: false,
+    showAdd: true,
+    showRemove: true,
+    className: '',
+    initialRowsCount: 1,
+    enableKeyboardNavigation: true,
+};
+
 @field({
     componentId: 'form.FieldList',
     list: true,
@@ -74,6 +84,8 @@ interface IFieldListPrivateProps extends IFieldHocOutput, IConnectHocOutput, ICo
 })
 @components('ui')
 export default class FieldList extends React.PureComponent<IFieldListProps & IFieldListPrivateProps> {
+
+    static defaultProps = defaultProps;
 
     constructor(props) {
         super(props);
@@ -139,7 +151,6 @@ export default class FieldList extends React.PureComponent<IFieldListProps & IFi
                     model: this.props.model,
                     prefix: this.props.prefix,
                     layout: this.props.layout,
-                    size: this.props.size,
                 }}
             >
                 <FieldListView

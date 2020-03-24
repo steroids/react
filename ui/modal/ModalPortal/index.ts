@@ -1,2 +1,2 @@
 import ModalPortal from './ModalPortal';
-export { ModalPortal };
+export default ModalPortal;

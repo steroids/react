@@ -8,7 +8,6 @@ export interface IFieldLayoutProps {
     hint?: string | boolean;
     required?: boolean;
     layout?: FormLayout;
-    size?: Size;
     errors?: string | string[];
     layoutView?: CustomView;
 }

@@ -14,6 +14,7 @@ export interface IFormatProps {
     component?: string | ((...args: any[]) => any);
     getFormatter?: any;
     ui?: any;
+    emptyText?: any;
 }
 
 interface IFormatPrivateProps extends IComponentsHocOutput {
@@ -60,7 +61,7 @@ export default class Format extends React.Component<IFormatProps & IFormatPrivat
         if (ComponentField) {
             return <ComponentField {...props} />;
         }
-        return _get(this.props.item, this.props.attribute) || null;
+        return _get(this.props.item, this.props.attribute) || this.props.emptyText || null;
     }
 
 }

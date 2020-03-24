@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {components} from '../../../hoc';
-import {getBreadcrumbs} from '../../../reducers/navigation';
+import {getRouteBreadcrumbs} from '../../../reducers/router';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
@@ -21,7 +21,7 @@ interface IBreadcrumbsPrivateProps extends IConnectHocOutput, IComponentsHocOutp
 }
 
 @connect((state, props) => ({
-    items: props.items || getBreadcrumbs(state, props.pageId, props.params)
+    items: props.items || getRouteBreadcrumbs(state, props.pageId) // TODO router breadcrumbs
 }))
 @components('ui')
 export default class Breadcrumbs extends React.PureComponent<IBreadcrumbsProps & IBreadcrumbsPrivateProps> {

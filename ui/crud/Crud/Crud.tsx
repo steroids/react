@@ -2,8 +2,8 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
-import {getCurrentRoute} from '../../../reducers/navigation';
-import {goToPage} from '../../../actions/navigation';
+import {getRoute, getRouteParam} from '../../../reducers/router';
+import {goToRoute} from '../../../actions/router';
 import {refresh} from '../../../actions/list';
 import Grid from '../../list/Grid';
 import Form from '../../form/Form';
@@ -23,13 +23,6 @@ export interface ICrudProps {
     baseRouteId?: string;
     restUrl?: string;
     controls?: IControlItem[];
-    route?: {
-        id?: string,
-        isExact?: boolean,
-        params?: any,
-        path?: string,
-        url?: string
-    };
     grid?: any;
     form?: any;
     view?: any;
@@ -55,11 +48,11 @@ export interface ICrudDetailViewProps extends IDetailViewProps {
 }
 
 interface ICrudPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
-
+    itemId: PrimaryKey,
 }
 
 @connect(state => ({
-    route: getCurrentRoute(state)
+    itemId: getRouteParam(state, 'id')
 }))
 @components('http', 'ui')
 export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateProps> {
@@ -93,9 +86,9 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                 position: 'right',
                 onClick: async () => {
                     await this.props.http.delete(
-                        `${this.props.restUrl}/${this.props.route.params.id}`
+                        `${this.props.restUrl}/${this.props.itemId}`
                     );
-                    this.props.dispatch(goToPage(this.props.baseRouteId));
+                    this.props.dispatch(goToRoute(this.props.baseRouteId));
                 }
             } as IControlItem
         };
@@ -109,7 +102,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
         });
         // Resolve content
         let content = null;
-        switch (this.props.route.id) {
+        switch (this.props.itemId) {
             case this.props.baseRouteId:
                 content = this.renderGrid();
                 defaultControls.index.visible = false;
@@ -126,7 +119,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                     visible: !!this.props.detailView,
                     toRoute: this.props.baseRouteId + '_view',
                     toRouteParams: {
-                        id: this.props.route.params.id
+                        id: this.props.itemId
                     }
                 };
                 break;
@@ -138,7 +131,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                     visible: true,
                     toRoute: this.props.baseRouteId + '_update',
                     toRouteParams: {
-                        id: this.props.route.params.id
+                        id: this.props.itemId
                     }
                 };
                 break;
@@ -189,7 +182,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                 initialValues={this.props.item}
                 action={
                     this.props.restUrl +
-                    (this.props.route.params.id ? '/' + this.props.route.params.id : '')
+                    (this.props.itemId ? '/' + this.props.itemId : '')
                 }
                 autoFocus
                 onComplete={() => {

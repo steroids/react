@@ -65,7 +65,6 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                 dateField={
                     <DateFieldInternal
                         isInvalid={this.props.isInvalid}
-                        size={this.props.size}
                         required={this.props.required}
                         disabled={this.props.disabled}
                         displayFormat={this.props.displayDateFormat}
@@ -81,7 +80,6 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                 timeField={
                     <InputFieldInternal
                         isInvalid={this.props.isInvalid}
-                        size={this.props.size}
                         required={this.props.required}
                         disabled={this.props.disabled}
                         input={{

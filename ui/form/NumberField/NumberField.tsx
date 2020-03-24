@@ -73,7 +73,7 @@ export default class NumberField extends React.PureComponent<INumberFieldProps &
                 inputProps={{
                     name: this.props.input.name,
                     value: this.props.input.value || '',
-                    onChange: e => this.props.input.onChange(e.target.value),
+                    onChange: e => this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
                     type: 'number',
                     min: this.props.min,
                     max: this.props.max,

@@ -4,7 +4,7 @@ import List from '../List';
 
 /**
  * Empty view with custom text when no items
- * @order 5
+ * @order 3
  * @col 4
  */
 export default class extends React.PureComponent {

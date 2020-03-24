@@ -1,40 +1,79 @@
 import _get from 'lodash-es/get';
-import _values from 'lodash-es/values';
-import {OPEN_MODAL, CLOSE_MODAL} from '../actions/modal';
+import {MODAL_OPEN, MODAL_CLOSE, MODAL_MARK_CLOSING} from '../actions/modal';
+
+export const MODAL_DEFAULT_GROUP = 'modal';
 
 const initialState = {
     opened: {}
 };
+
 export default (state = initialState, action) => {
     switch (action.type) {
-        case OPEN_MODAL:
-            return {
-                opened: {
-                    ...state.opened,
-                    [action.id]: {
+        case MODAL_OPEN:
+            return (() => {
+                const group = action.group || MODAL_DEFAULT_GROUP;
+                const items = _get(state, ['opened', group]) || [];
+                const index = items.findIndex(item => item.id === action.id);
+                if (index !== -1) {
+                    items[index].props = {
+                        ...items[index].props,
+                        ...action.props,
+                    };
+                } else {
+                    items.push({
                         id: action.id,
                         modal: action.modal,
-                        props: {
-                            ..._get(state, `opened.${action.id}.props`),
-                            ...action.props
-                        }
-                    }
+                        props: action.props,
+                        isClosing: false,
+                    });
                 }
-            };
-        case CLOSE_MODAL:
-            if (action.id) {
-                const opened = state.opened;
-                delete opened[action.id];
+
                 return {
-                    opened
+                    opened: {
+                        ...state.opened,
+                        [group]: [].concat(items),
+                    }
                 };
-            } else {
+            })();
+
+        case MODAL_MARK_CLOSING:
+            return (() => {
+                const group = action.group || MODAL_DEFAULT_GROUP;
+                const items = _get(state, ['opened', group]) || [];
+                const index = items.findIndex(item => item.id === action.id);
+                if (index !== -1) {
+                    items[index] = {
+                        ...items[index],
+                        isClosing: true,
+                    };
+                }
                 return {
-                    opened: {}
+                    opened: {
+                        ...state.opened,
+                        [group]: [].concat(items),
+                    }
                 };
-            }
+            })();
+
+        case MODAL_CLOSE:
+            return (() => {
+                const group = action.group || MODAL_DEFAULT_GROUP;
+                const items = _get(state, ['opened', group]) || [];
+                const index = items.findIndex(item => item.id === action.id);
+                if (index !== -1) {
+                    items.splice(index, 1);
+                }
+                return {
+                    opened: {
+                        ...state.opened,
+                        [group]: [].concat(items),
+                    }
+                };
+            })();
+
         default:
             return state;
     }
 };
-export const getOpened = state => _values(state.modal.opened);
+
+export const getOpened = (state, group = MODAL_DEFAULT_GROUP) => _get(state, ['modal', 'opened', group]) || [];

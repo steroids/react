@@ -2,7 +2,6 @@ import * as React from 'react';
 
 export interface IFormHocInput {
     prefix?: string | boolean;
-    size?: 'sm' | 'md' | 'lg' | string;
     label?: string | boolean | any;
     attribute?: string;
     model?: string | ((...args: any[]) => any) | any;
@@ -41,13 +40,11 @@ export interface IFormContext {
             PropTypes.string,
             PropTypes.bool
         ]),
-        size: PropTypes.oneOf(['sm', 'md', 'lg'])
      */
     formId?: string;
     model?: any;
     prefix?: string | boolean;
     layout?: FormLayout;
-    size?: 'sm' | 'md' | 'lg' | string;
 }
 
 export const mergeLayoutProp = (layout1, layout2) => {
@@ -59,9 +56,7 @@ export const mergeLayoutProp = (layout1, layout2) => {
         : (layout2 || layout2 === false ? layout2 : layout1)
 };
 
-export const FormContext = React.createContext<IFormContext>({
-    size: 'md',
-});
+export const FormContext = React.createContext<IFormContext>({});
 
 export default (config = {} as IFormHocConfig): any => WrappedComponent =>
     class FormHoc extends React.PureComponent<IFormHocPrivateProps & IFormHocInput> {

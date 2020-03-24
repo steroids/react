@@ -1,4 +1,4 @@
-import { goToPage } from './navigation';
+import { goToRoute } from './router';
 export const AUTH_INIT = 'AUTH_INIT';
 export const AUTH_INIT_USER = 'AUTH_INIT_USER';
 export const AUTH_SET_DATA = 'AUTH_SET_DATA';
@@ -40,5 +40,5 @@ export const setData = data => ({
 });
 export const logout = () => (dispatch, getState, { http }) => {
   http.setAccessToken(null);
-  return dispatch([setUser(null), goToPage('root')]);
+  return dispatch([setUser(null), goToRoute('root')]);
 };

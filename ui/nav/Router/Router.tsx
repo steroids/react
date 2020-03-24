@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {Route, Switch, StaticRouter} from 'react-router';
+import {Route, Switch, Redirect, StaticRouter} from 'react-router';
 import {HashRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
 import navigationHoc, {treeToList} from './navigationHoc';
-import {getCurrentItemParam} from '../../../reducers/navigation';
+import {getRouteId} from '../../../reducers/router';
 import {SsrProviderContext} from './SsrProvider';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -25,7 +25,7 @@ export interface IRouterProps {
     wrapperProps?: any;
     routes?: IRouteItem[] | {[key: string]: IRouteItem};
     pathname?: string;
-    pageId?: string;
+    routeId?: string;
     autoScrollTop?: boolean;
     history?: any;
     store?: any;
@@ -43,7 +43,7 @@ type RouterState = {
 @navigationHoc()
 @connect(state => ({
     pathname: _get(state, 'router.location.pathname'),
-    pageId: getCurrentItemParam(state, 'id')
+    routeId: getRouteId(state)
 }))
 @components('store')
 export default class Router extends React.PureComponent<IRouterProps & IRouterPrivateProps, RouterState> {
@@ -55,7 +55,7 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
         super(props);
         this._renderItem = this._renderItem.bind(this);
         this.state = {
-            routes: treeToList(this.props.routes)
+            routes: treeToList(this.props.routes),
         };
     }
 
@@ -73,9 +73,9 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
         }
         if (
             this.props.autoScrollTop &&
-            this.props.pageId &&
-            nextProps.pageId &&
-            this.props.pageId !== nextProps.pageId
+            this.props.routeId &&
+            nextProps.routeId &&
+            this.props.routeId !== nextProps.routeId
         ) {
             window.scrollTo(0, 0);
         }
@@ -137,7 +137,22 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
     }
 
     _renderItem(route, props) {
-        let Component = route.component;
-        return <Component {...props} {...route.componentProps} />;
+        if (route.redirectTo) {
+            return (
+                <Redirect
+                    {...props}
+                    to={route.redirectTo}
+                    {...route.componentProps}
+                />
+            );
+        }
+
+        const Component = route.component;
+        return (
+            <Component
+                {...props}
+                {...route.componentProps}
+            />
+        );
     }
 }

@@ -8,15 +8,38 @@ declare module '*.svg' {
     export default content;
 }
 
-declare function __(str: string, params?: any): string;
+/**
+ * Метод для локализации фраз и предложений
+ * @example {__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}
+ * @param {string} phrase
+ * @param {object} params
+ * @private
+ */
+declare function __(phrase: string, params?: any): string;
 
+/**
+ * Название цвета, соответствующее ему состоянию
+ */
 declare type ColorName = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | string;
 
+/**
+ * Уникальный ключ. ID, UUID или другое
+ */
 declare type PrimaryKey = number | string;
 
+/**
+ * Размер элемента
+ */
 declare type Size = 'sm' | 'md' | 'lg' | string;
 
+/**
+ * Макет формы или ее части, влияющий на расположение полей
+ */
 declare type FormLayoutName = 'default' | 'horizontal' | 'inline' | string;
+
+/**
+ * Свойства для настройки макета формы
+ */
 declare type FormLayout = FormLayoutName | boolean | {
     layout: FormLayoutName | boolean,
     className: string,
@@ -25,6 +48,9 @@ declare type FormLayout = FormLayoutName | boolean | {
     [key: string]: any,
 };
 
+/**
+ * Объект из свойства `input` от redux-form
+ */
 declare type FormInputType = {
     name?: string,
     value?: any,
@@ -43,4 +69,7 @@ declare type CssClassName = string;
  */
 declare type CustomView = React.ReactNode;
 
+/**
+ * HTTP метод
+ */
 declare type HttpMethod = 'get' | 'post' | 'put' | 'delete' | string;

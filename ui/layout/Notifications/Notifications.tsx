@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {components} from '../../../hoc';
+import {components, theme} from '../../../hoc';
 import {
     setFlashes,
     setClosing,
@@ -43,6 +43,7 @@ interface INotificationsPrivateProps extends IConnectHocOutput, IComponentsHocOu
 @connect(state => ({
     notifications: getNotifications(state)
 }))
+@theme()
 @components('ui')
 export default class Notifications extends React.PureComponent<INotificationsProps & INotificationsPrivateProps> {
 

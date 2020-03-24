@@ -5,8 +5,8 @@ import {demoItems} from './basic';
 
 /**
  * Pagination with layout switcher
- * @order 4
- * @col 4
+ * @order 5
+ * @col 6
  */
 export default class extends React.PureComponent {
     render() {

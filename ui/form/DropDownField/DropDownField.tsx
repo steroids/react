@@ -49,7 +49,6 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
         disabled: false,
         required: false,
         className: '',
-        autoComplete: false,
         showReset: false,
         multiple: false
     };
@@ -99,7 +98,7 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
     }
 
     _onSearch(e) {
-        this.props.onSearch(e.target.value);
+        this.props.onSearch(e.target ? e.target.value : e.nativeEvent.text);
     }
 
     _onReset() {

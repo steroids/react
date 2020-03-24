@@ -57,7 +57,7 @@ export default class TextField extends React.PureComponent<ITextFieldProps & ITe
                 inputProps={{
                     name: this.props.input.name,
                     value: this.props.input.value || '',
-                    onChange: e => this.props.input.onChange(e.target.value),
+                    onChange: e => this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
                     onKeyUp: this._onKeyUp,
                     placeholder: this.props.placeholder,
                     disabled: this.props.disabled,

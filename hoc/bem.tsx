@@ -5,16 +5,14 @@ export interface IBemHocInput {
 
 }
 
-export interface IBemHocOutput {
+export interface IBemHocOutput extends IComponentsHocOutput {
     bem?: {
         element(...classes: any[]): string;
         block(...classes: any[]): string;
     } | any,
-    components?: IComponentsHocOutput,
 }
 
-export interface IBemHocPrivateProps {
-    components: IComponentsHocOutput,
+export interface IBemHocPrivateProps extends IComponentsHocOutput {
 }
 
 export default (namespace: string, styles = null): any => WrappedComponent =>

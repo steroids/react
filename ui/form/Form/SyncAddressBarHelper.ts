@@ -8,7 +8,7 @@ import _isEmpty from 'lodash-es/isEmpty';
 import _isFunction from 'lodash-es/isFunction';
 import {initialize} from 'redux-form';
 import {push} from 'connected-react-router';
-import {getCurrentRoute} from '../../../reducers/navigation';
+import {getRoute, getRouteParams} from '../../../reducers/router';
 
 export default class SyncAddressBarHelper {
     static restore(
@@ -58,11 +58,12 @@ export default class SyncAddressBarHelper {
             }
         });
         const querySeparator = useHash ? '#' : '?';
-        const currentRoute = getCurrentRoute(store.getState() || {});
+        const currentRoute = getRoute(store.getState() || {});
+        const params = getRouteParams(store.getState() || {});
         if (_isEmpty(values)) {
             if (currentRoute) {
                 store.dispatch(
-                    push(pathToRegexp.compile(currentRoute.path)(currentRoute.params))
+                    push(pathToRegexp.compile(currentRoute.path)(params))
                 );
             } else {
                 location.hash = null;
@@ -70,7 +71,7 @@ export default class SyncAddressBarHelper {
         } else if (currentRoute) {
             store.dispatch(
                 push(
-                    pathToRegexp.compile(currentRoute.path)(currentRoute.params) +
+                    pathToRegexp.compile(currentRoute.path)(params) +
                     querySeparator +
                     queryString.stringify(values)
                 )

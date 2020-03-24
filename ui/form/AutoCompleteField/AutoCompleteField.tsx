@@ -13,6 +13,7 @@ import {IInputFieldProps} from '../InputField/InputField';
  * Поле ввода текста с подсказками (auto-complete)
  */
 interface IAutoCompleteFieldProps extends IInputFieldProps, IFieldHocInput, IDataProviderHocInput {
+    searchOnFocus: boolean,
 }
 
 export interface IAutoCompleteFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
@@ -129,11 +130,14 @@ export default class AutoCompleteField extends React.PureComponent<IAutoComplete
         if (!this.props.isOpened) {
             this.props.onOpen();
         }
-        this.props.input.onChange(e.target.value);
+        this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text);
     }
 
     _onFocus(e) {
         this.props.onOpen();
+        if (this.props.searchOnFocus) {
+            this.props.onSearch(this.props.input.value);
+        }
         if (this.props.inputProps && this.props.inputProps.onFocus) {
             this.props.inputProps.onFocus(e);
         }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
+import {components, theme} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface ILoaderProps {
@@ -10,6 +10,7 @@ interface ILoaderPrivateProps extends IComponentsHocOutput {
 
 }
 
+@theme()
 @components('ui')
 export default class Loader extends React.PureComponent<ILoaderProps & ILoaderPrivateProps> {
 

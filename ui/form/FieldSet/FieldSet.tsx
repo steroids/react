@@ -17,7 +17,6 @@ export default class FieldSet extends React.PureComponent<IFieldSetProps> {
                                 .filter(Boolean)
                                 .join('.'),
                             layout: mergeLayoutProp(context.layout, this.props.layout),
-                            size: this.props.size || context.size
                         }}
                     >
                         {this.props.children}

@@ -16,8 +16,9 @@ export interface IDetailColumn {
   hint?: string | boolean | JSX.Element,
   attribute?: string,
   visible?: boolean,
+  value?: any,
   valueView?: any,
-  valueProps?: any
+  valueProps?: any,
 }
 
 export interface IDetailProps {
@@ -25,9 +26,13 @@ export interface IDetailProps {
     model?: string | ((...args: any[]) => any) | any;
     view?: any;
     attributes?: (string | IDetailColumn)[];
+    className?: string,
+    size?: Size,
+    emptyText?: any,
 }
 
 export interface IDetailViewProps {
+    className?: string,
     items: (IDetailColumn & {
         label: any,
         value: any,
@@ -95,8 +100,18 @@ export default class Detail extends React.PureComponent<IDetailProps & IDetailPr
                 />
             );
         }
+
+        if (attribute.value) {
+            return attribute.value;
+        }
+
         return (
-            <Format item={this.props.item} model={this.props.model} {...attribute} />
+            <Format
+                item={this.props.item}
+                model={this.props.model}
+                emptyText={this.props.emptyText}
+                {...attribute}
+            />
         );
     }
 }

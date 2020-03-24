@@ -1,14 +1,12 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {navigationAddConfigs, navigationRemoveConfigs, getConfigId} from '../actions/navigation';
-import {getCurrentRoute} from '../reducers/navigation';
+import {navigationAddConfigs, navigationRemoveConfigs, getConfigId} from '../actions/router';
+import {getRouteParams} from '../reducers/router';
 import {IConnectHocOutput} from './connect';
 
 interface IFetchHocInput {
     navigationData?: object,
-    route?: {
-        params?: object,
-    },
+    routeParams?: object,
 }
 
 interface IFetchHocOutput {
@@ -28,7 +26,7 @@ interface IFetchHocOptions {
 
 const stateMap = state => ({
     navigationData: (state.navigation && state.navigation.data) || null,
-    route: getCurrentRoute(state)
+    routeParams: getRouteParams(state)
 });
 export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedComponent =>
     connect(stateMap)(
@@ -50,7 +48,7 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                         configsFunc({
                             ...this.props,
                             ...this.state.overwriteProps,
-                            params: this.props.route.params
+                            params: this.props.routeParams
                         })
                     )
                 );
@@ -62,7 +60,7 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                         configsFunc({
                             ...this.props,
                             ...this.state.overwriteProps,
-                            params: this.props.route.params
+                            params: this.props.routeParams
                         })
                     )
                 );
@@ -73,14 +71,14 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                     configsFunc({
                         ...prevProps,
                         ...prevState.overwriteProps,
-                        params: prevProps.route.params
+                        params: prevProps.routeParams
                     })
                 );
                 const nextConfigs = [].concat(
                     configsFunc({
                         ...this.props,
                         ...this.state.overwriteProps,
-                        params: this.props.route.params
+                        params: this.props.routeParams
                     })
                 );
                 for (
@@ -104,7 +102,7 @@ export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedCo
                     configsFunc({
                         ...this.props,
                         ...this.state.overwriteProps,
-                        params: this.props.route.params
+                        params: this.props.routeParams
                     })
                 );
                 if (this.props.navigationData) {

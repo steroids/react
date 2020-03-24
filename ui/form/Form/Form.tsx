@@ -15,15 +15,17 @@ import SyncAddressBarHelper from './SyncAddressBarHelper';
 import Field from '../Field';
 import Button from '../Button';
 import {IConnectHocOutput} from '../../../hoc/connect';
+import {IFieldProps} from '../Field/Field';
+import {theme} from '../../../hoc';
+import {IThemeHocInput, IThemeHocOutput} from '../../../hoc/theme';
 
-export interface IFormProps extends IFormSubmitHocInput {
+export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
     formId: string;
     prefix?: string;
     model?: string | ((...args: any[]) => any) | any;
     action?: string;
     actionMethod?: string;
     layout?: FormLayout;
-    size?: Size;
     onSubmit?: (...args: any[]) => any;
     validators?: any[];
     onBeforeSubmit?: (...args: any[]) => any;
@@ -34,7 +36,8 @@ export interface IFormProps extends IFormSubmitHocInput {
     initialValues?: any | any[];
     className?: CssClassName;
     view?: CustomView;
-    fields?: (
+    fields?: (string | IFieldProps)[],
+    /*fields?: (
         | string
         | {
         label?: string,
@@ -42,7 +45,7 @@ export interface IFormProps extends IFormSubmitHocInput {
         required?: boolean,
         component?: string | React.ReactNode
     }
-        )[];
+        )[];*/
     submitLabel?: string;
     syncWithAddressBar?: boolean;
     restoreCustomizer?: (...args: any[]) => any; // TODO Refactor it!
@@ -54,7 +57,7 @@ export interface IFormViewProps {
     onSubmit: any,
 }
 
-interface IFormPrivateProps extends IConnectHocOutput, IFormSubmitHocOutput, IComponentsHocOutput {
+interface IFormPrivateProps extends IFormSubmitHocOutput, IThemeHocOutput, IConnectHocOutput, IComponentsHocOutput {
     formValues?: any | any[];
     locationSearch?: string;
     isInvalid?: boolean;
@@ -87,6 +90,7 @@ const filterValues = (values = {}) => {
 })
 @formSubmit()
 @reduxForm()
+@theme()
 @components('ui', 'store', 'clientStorage')
 export default class Form extends React.PureComponent<IFormProps & IFormPrivateProps> {
 
@@ -168,7 +172,6 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
                     model: this.props.model,
                     prefix: this.props.prefix,
                     layout: this.props.layout,
-                    size: this.props.size,
                 }}
             >
                 <FormView

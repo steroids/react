@@ -31,9 +31,9 @@ export default class LocaleComponent {
     sourceLanguage: string;
     translations: any;
 
-    constructor(components) {
-        this.language = 'en';
-        this.sourceLanguage = 'ru';
+    constructor(components, config) {
+        this.language = config.language || 'en';
+        this.sourceLanguage = config.sourceLanguage || 'ru';
         this.backendTimeZone = null;
         this.backendTimeDiff = null; // in microseconds
         this.translations = {};
@@ -46,7 +46,7 @@ export default class LocaleComponent {
         }
     }
 
-    moment(date, format = undefined) {
+    moment(date = undefined, format = undefined) {
         if (
             this.backendTimeZone &&
             date &&

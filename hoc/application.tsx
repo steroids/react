@@ -8,6 +8,7 @@ import LocaleComponent from '../components/LocaleComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
 import {IComponentsHocOutput} from './components';
+import {ThemeContext, defaultTheme} from './theme';
 
 export interface IApplicationHocInput {
 }
@@ -20,7 +21,7 @@ export interface IApplicationHocConfig {
         [key: string]: {
             className: any,
             [key: string]: any,
-        },
+        } | any,
     }
     onInit?: (...args: any) => any,
 }
@@ -76,12 +77,10 @@ export default (config: IApplicationHocConfig): any => WrappedComponent =>
             if (!process.env.IS_SSR) {
                 return (
                     <Provider store={this._components.store.store}>
-                        <ComponentsContext.Provider
-                            value={{
-                                components: this._components,
-                            }}
-                        >
-                            <WrappedComponent {...this.props as IApplicationHocOutput} />
+                        <ComponentsContext.Provider value={{components: this._components}}>
+                            <ThemeContext.Provider value={defaultTheme}>
+                                <WrappedComponent {...this.props as IApplicationHocOutput} />
+                            </ThemeContext.Provider>
                         </ComponentsContext.Provider>
                     </Provider>
                 );

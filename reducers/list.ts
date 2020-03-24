@@ -162,6 +162,7 @@ export default (state = initialState, action) => {
     }
     return state;
 };
+export const isListInitialized = (state, listId) => !!_get(state, ['list', 'lists', listId]);
 export const getList = (state, listId) =>
     _get(state, ['list', 'lists', listId]) || null;
 export const getIds = (state, listId) => {
@@ -170,6 +171,7 @@ export const getIds = (state, listId) => {
         (list && list.items && list.items.map(item => item[list.primaryKey])) || []
     );
 };
+export const getListItems = (state, listId) => _get(state, ['list', 'lists', listId, 'items']);
 export const getCheckedIds = (state, listId) => {
     return _get(state, ['list', 'selectedIds', listId]) || [];
 };

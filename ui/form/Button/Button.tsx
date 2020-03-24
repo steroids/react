@@ -1,21 +1,30 @@
 import * as React from 'react';
-import _isObject from 'lodash-es/isObject';
+import _isNumber from 'lodash-es/isNumber';
 import {connect} from 'react-redux';
 import {isSubmitting} from 'redux-form';
 import {push} from 'connected-react-router';
-import {components} from '../../../hoc';
+import {components, theme} from '../../../hoc';
 import FieldLayout from '../FieldLayout';
-import {getNavUrl} from '../../../reducers/navigation';
+import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {FormContext, IFormContext, mergeLayoutProp} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
+import {IThemeHocInput} from '../../../hoc/theme';
+import normalize from '../../../hoc/normalize';
+
+interface IButtonBadge {
+    enable?: boolean,
+    value?: number,
+    color?: ColorName,
+    className?: string,
+}
 
 /**
  * Button
  * Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику onClick),
- * смена страницы в рамках роутинга (goToPage), переход по внешней ссылке (url) или отправки формы (submit form)
+ * смена страницы в рамках роутинга (goToRoute), переход по внешней ссылке (url) или отправки формы (submit form)
  */
-export interface IButtonProps {
+export interface IButtonProps extends IThemeHocInput {
     /**
      * Название поля
      * @example Save
@@ -27,12 +36,6 @@ export interface IButtonProps {
      * @example submit
      */
     type?: 'button' | 'submit';
-
-    /**
-     * Размер
-     * @example sm
-     */
-    size?: Size;
 
     /**
      * Цвет состояния
@@ -50,6 +53,11 @@ export interface IButtonProps {
      * Иконка
      */
     icon?: any;
+
+    /**
+     * Цифра (к примеру, новые сообщения)
+     */
+    badge?: number | IButtonBadge;
 
     /**
      * Отображать индикатор загрузки?
@@ -151,45 +159,60 @@ export interface IButtonProps {
 }
 
 export interface IButtonViewProps extends IButtonProps {
+    _badge?: IButtonBadge,
     isLoading: boolean,
     url?: string,
     formId: string,
     layout?: string,
-    size?: string,
     disabled?: boolean,
-    onClick?: (e: Event) => void,
+    onClick?: any,
     submitting: boolean,
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+    _badge?: IButtonBadge,
     submitting?: boolean;
+    toPath?: string;
 }
 
 type ButtonState = {
     isLoading?: boolean
 };
 
+const defaultProps = {
+    type: 'button',
+    color: 'primary',
+    outline: false,
+    disabled: false,
+    submitting: false,
+    block: false,
+    className: '',
+    badge: {
+        enable: false,
+        value: 0,
+        color: 'secondary',
+    },
+};
+
 @connect((state: any, props: any) => ({
     submitting: props.formId
         ? isSubmitting(props.formId)(state)
         : !!props.submitting,
-    to: props.toRoute
-        ? getNavUrl(state, props.toRoute, props.toRouteParams)
-        : props.to
+    toPath: props.toRoute ? getRouteProp(state, props.toRoute, 'path') : null,
 }))
+@theme()
+@normalize({
+    fromKey: 'badge',
+    toKey: '_badge',
+    normalizer: badge => ({
+        ...defaultProps.badge,
+        enable: !!badge || badge === 0,
+        ...(_isNumber(badge) ? {value: badge} : badge),
+    }),
+})
 @components('ui')
 export default class Button extends React.PureComponent<IButtonProps & IButtonPrivateProps, ButtonState> {
     _isMounted: any;
-
-    static defaultProps = {
-        type: 'button',
-        color: 'primary',
-        outline: false,
-        disabled: false,
-        submitting: false,
-        block: false,
-        className: '',
-    };
 
     constructor(props) {
         super(props);
@@ -232,13 +255,12 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                 {...this.props}
                 isLoading={this.state.isLoading}
                 url={
-                    this.props.link && !(this.props.url || this.props.to)
+                    this.props.link && !(this.props.url || this.props.to || this.props.toPath)
                         ? '#'
-                        : this.props.url || this.props.to
+                        : this.props.url || this.props.to || buildUrl(this.props.toPath, this.props.toRouteParams)
                 }
                 formId={context.formId}
                 layout={layout}
-                size={this.props.size || context.size}
                 disabled={disabled}
                 onClick={!disabled ? this._onClick : undefined}
             >
@@ -252,7 +274,6 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                     {...this.props}
                     label={null}
                     layout={layout}
-                    size={this.props.size}
                 >
                     {button}
                 </FieldLayout>
@@ -267,8 +288,9 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
             e.preventDefault();
             return;
         }
-        if (this.props.to || this.props.to === '') {
-            this._onLinkClick(e, this.props.to);
+        const to = this.props.to || (this.props.toPath ? buildUrl(this.props.toPath, this.props.toRouteParams) : null);
+        if (to || to === '') {
+            this._onLinkClick(e, to);
         }
         if (this.props.onClick) {
             const result = this.props.onClick(e);

@@ -1,11 +1,11 @@
 import _isArray from 'lodash-es/isArray';
 import _trim from 'lodash-es/trim';
 import { push } from 'connected-react-router';
-export const NAVIGATION_INIT_ROUTES = 'NAVIGATION_INIT_ROUTES';
-export const NAVIGATION_SET_PARAMS = 'NAVIGATION_SET_PARAMS';
-export const NAVIGATION_ADD_CONFIGS = 'NAVIGATION_ADD_CONFIGS';
-export const NAVIGATION_REMOVE_CONFIGS = 'NAVIGATION_REMOVE_CONFIGS';
-export const NAVIGATION_SET_DATA = 'NAVIGATION_SET_DATA';
+export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
+export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
+export const ROUTER_ADD_CONFIGS = 'ROUTER_ADD_CONFIGS';
+export const ROUTER_REMOVE_CONFIGS = 'ROUTER_REMOVE_CONFIGS';
+export const ROUTER_SET_DATA = 'ROUTER_SET_DATA';
 const normalizeConfigs = configs => {
   if (!configs) {
     configs = [];
@@ -32,42 +32,44 @@ const defaultFetchHandler = config => (dispatch, getState, { http }) => {
       .then(result => result.data)
   );
 };
-export const initRoutes = routesTree => ({
-  type: NAVIGATION_INIT_ROUTES,
-  routesTree
+export const initRoutes = routes => ({
+  type: ROUTER_INIT_ROUTES,
+  routes,
 });
 export const initParams = params => ({
-  type: NAVIGATION_SET_PARAMS,
+  type: ROUTER_SET_PARAMS,
   params
 });
-export const goToPage = (pageId, params = {}) => (dispatch, getState) => {
-  const getNavUrl = require('../reducers/navigation').getNavUrl;
-  return dispatch(push(getNavUrl(getState(), pageId, params)));
+export const goToRoute = (routeId, params = null) => (dispatch, getState) => {
+  const getRouteProp = require('../reducers/router').getRouteProp;
+  const buildUrl = require('../reducers/router').buildUrl;
+  const path = getRouteProp(getState(), routeId, 'path');
+  return dispatch(push(buildUrl(path, params)));
 };
 export const goToParent = (level = 1) => (dispatch, getState) => {
-  const getParentRoute = require('../reducers/navigation').getParentRoute;
-  const getCurrentRoute = require('../reducers/navigation').getCurrentRoute;
+  const getRouteParent = require('../reducers/router').getRouteParent;
+  const getRouteParams = require('../reducers/router').getRouteParams;
   const state = getState();
-  const currentRoute = getCurrentRoute(state);
-  const parentRoute = getParentRoute(state, level);
+  const params = getRouteParams(state);
+  const parentRoute = getRouteParent(state, level);
   const parentRouteId = parentRoute ? parentRoute.id : null;
-  const parentRouteParams = parentRoute ? currentRoute.params : null;
+  const parentRouteParams = parentRoute ? params : null;
   if (parentRouteId) {
-    return dispatch(goToPage(parentRouteId, parentRouteParams));
+    return dispatch(goToRoute(parentRouteId, parentRouteParams));
   }
 };
 export const getConfigId = config => config.id || _trim(config.url, '/');
 export const navigationAddConfigs = configs => dispatch => {
   configs = normalizeConfigs(configs);
   dispatch({
-    type: NAVIGATION_ADD_CONFIGS,
+    type: ROUTER_ADD_CONFIGS,
     configs
   });
   configs.forEach(config => {
     const onFetch = config.onFetch || defaultFetchHandler;
     onFetch(config).then(data =>
       dispatch({
-        type: NAVIGATION_SET_DATA,
+        type: ROUTER_SET_DATA,
         config,
         data
       })
@@ -77,7 +79,7 @@ export const navigationAddConfigs = configs => dispatch => {
 export const navigationRemoveConfigs = configs => {
   configs = normalizeConfigs(configs);
   return {
-    type: NAVIGATION_REMOVE_CONFIGS,
+    type: ROUTER_REMOVE_CONFIGS,
     configs
   };
 };

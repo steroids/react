@@ -6,14 +6,19 @@ const fs = require('fs');
 const app = new typedocModule.Application();
 const {inputFiles} = app.bootstrap({
     ignoreCompilerErrors: true,
+    includeDeclarations: true,
+    excludeExternals: true,
     inputFiles: [
         path.resolve(__dirname, '../hoc'),
         path.resolve(__dirname, '../ui'),
+        path.resolve(__dirname, '..'),
     ],
     tsconfig: path.resolve(__dirname, '../tsconfig.json'),
 });
 
 const src = app.expandInputFiles(inputFiles);
+//src.push(path.resolve(__dirname, '../index.d.ts'));
+//console.log(src);
 const project = app.convert(src);
 const filesMap = {};
 project.files.forEach(file => {
@@ -33,7 +38,7 @@ const typeToString = (type) => {
         return null;
     }
 
-    switch(type.type) {
+    switch (type.type) {
         case 'intrinsic':
         case 'reference':
             return type.name;
@@ -48,6 +53,9 @@ const typeToString = (type) => {
             return type.types.map(subType => typeToString(subType)).join(' | ');
 
         case 'intersection':
+            if (type.types[0].name === 'Omit') {
+                return type.types[0].typeArguments[0].name;
+            }
             return type.types.map(subType => typeToString(subType)).join(' & ');
 
         case 'reflection':
@@ -57,9 +65,66 @@ const typeToString = (type) => {
     throw new Error('Unknown type on convert to string: ' + JSON.stringify(type));
 };
 
+const typeToObject = type => {
+    if (!type) {
+        return null;
+    }
+
+    switch (type.kindString) {
+        case 'Property':
+            return typeToObject(type.type.declaration);
+
+        case 'Variable':
+            return JSON.parse(type.defaultValue);
+
+        case 'Type literal':
+        case 'Object literal':
+            const obj = {};
+            (type.children || []).forEach(item => {
+                obj[item.name] = typeToObject(item);
+            });
+            return obj;
+    }
+
+    throw new Error('Unknown type on convert to string: ' + JSON.stringify(type));
+};
+
+// Store components by file path
+const components = {};
+json.children.forEach(moduleItem => {
+    if (moduleItem.kindString === 'External module' && moduleItem.flags && moduleItem.flags.isExported === true) {
+        (moduleItem.children || []).forEach(item => {
+            if (item.kindString === 'Class' && moduleItem.flags && moduleItem.flags.isExported === true) {
+                // Find default props
+                let defaultProps = null;
+                (item.children || []).forEach(property => {
+                    if (property.name === 'defaultProps' && property.flags && property.flags.isExported === true) {
+                        defaultProps = typeToObject(property);
+                    }
+                });
+
+                components[JSON.parse(moduleItem.name)] = {
+                    name: item.name,
+                    decorators: (item.decorators || []).map(decorator => decorator.name),
+                    defaultProps,
+                };
+            }
+            if (item.kindString === 'Object literal' && item.name === 'defaultProps' && item.flags && item.flags.isConst === true) {
+                components[JSON.parse(moduleItem.name)] = {
+                    ...components[JSON.parse(moduleItem.name)],
+                    defaultProps: typeToObject(item),
+                };
+            }
+        });
+    }
+});
+
+// Store docs
 const docs = {
     interfaces: {},
+    declarations: {},
     demos: {},
+    components,
 };
 json.children.forEach(file => {
     (file.children || []).forEach(item => {
@@ -73,6 +138,7 @@ json.children.forEach(file => {
 
             docs.interfaces[item.name] = {
                 name: item.name,
+                moduleName: JSON.parse(file.name),
                 description: !item.comment || typeof item.comment === 'string'
                     ? item.comment || ''
                     : item.comment.shortText,
@@ -92,6 +158,22 @@ json.children.forEach(file => {
                             .map(tag => tag.text)
                             .join(' ')
                     })),
+            };
+        }
+        if (item.kindString === 'Type alias' && item.flags && item.flags.isExported === true) {
+            docs.declarations[item.name] = {
+                name: item.name,
+                description: !item.comment || typeof item.comment === 'string'
+                    ? item.comment || ''
+                    : item.comment.shortText,
+                descriptionTags: typeof item.comment === 'object'
+                    ? item.comment.tags
+                    : [],
+                type: typeToString(item.type),
+                example: (_.get(item, 'comment.tags') || [])
+                    .filter(tag => tag.tag === 'example')
+                    .map(tag => tag.text)
+                    .join(' '),
             };
         }
     });

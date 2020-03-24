@@ -2,23 +2,23 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
-import {getCurrentRoute} from '../../../reducers/navigation';
-import {isInitialized} from '../../../reducers/navigation';
-import {initRoutes, initParams} from '../../../actions/navigation';
+import {getRoute} from '../../../reducers/router';
+import {isRouterInitialized} from '../../../reducers/router';
+import {initRoutes, initParams} from '../../../actions/router';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
 interface INavigationHocPrivateProps extends IConnectHocOutput {
-  /*
-      isInitialized: PropTypes.bool
-   */
-  isInitialized?: boolean,
-  routes?: boolean,
-  route?: boolean,
+    /*
+        isInitialized: PropTypes.bool
+     */
+    isRouterInitialized?: boolean,
+    routes?: boolean,
+    route?: boolean,
 }
 
 const stateMap = state => ({
-    isInitialized: isInitialized(state),
-    route: getCurrentRoute(state)
+    isRouterInitialized: isRouterInitialized(state),
+    route: getRoute(state)
 });
 export const walkRoutesRecursive = item => {
     let items = null;
@@ -95,7 +95,7 @@ export default (routes = null): any => WrappedComponent =>
             }
 
             render() {
-                if (!_isArray(this.props.routes) && !this.props.isInitialized) {
+                if (!_isArray(this.props.routes) && !this.props.isRouterInitialized) {
                     return null;
                 }
                 return <WrappedComponent {...this.props} />;

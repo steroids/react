@@ -13,7 +13,7 @@ import {IInputFieldProps} from '../InputField/InputField';
  * Поле ввода текста с подсказками (auto-complete)
  */
 interface IAutoCompleteFieldProps extends IInputFieldProps, IFieldHocInput, IDataProviderHocInput {
-    searchOnFocus: boolean,
+    searchOnFocus?: boolean,
 }
 
 export interface IAutoCompleteFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {

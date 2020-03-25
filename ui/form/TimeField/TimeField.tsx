@@ -47,7 +47,7 @@ export interface ITimeFieldProps extends IFieldHocInput {
     /**
      * Объект, который будет передан в props внутреннего компонента используемого для выбора времени.
      */
-    pickerProps: any;
+    pickerProps?: any;
 
     [key: string]: any;
 }

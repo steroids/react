@@ -51,7 +51,6 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log("DATETIME UPDATED");
         const newState = this._parseToState(nextProps);
         if (!_isEqual(this.state, newState)) {
             this.setState(newState);
@@ -78,6 +77,7 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                             name: '',
                             value: this.state.date,
                         }}
+                        layout={false}
                         {...this.props.dateProps}
                     />
                 }
@@ -87,11 +87,12 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                         required={this.props.required}
                         disabled={this.props.disabled}
                         timeFormat={this.props.timeFormat}
+                        onChange={value => this._onChange({time: value})}
                         input={{
                             name: '',
                             value: this.state.time,
-                            onChange: value => this._onChange({time: value})
                         }}
+                        layout={false}
                         {...this.props.timeProps}
                     />
                 }
@@ -122,7 +123,9 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
     _parseDate(date) {
         const formats = [
             this.props.displayDateFormat + ' ' + this.props.timeFormat,
-            this.props.valueDateFormat + ' ' + this.props.timeFormat
+            this.props.displayDateFormat + ' ' + this.props.timeFormat + ':ss',
+            this.props.valueDateFormat + ' ' + this.props.timeFormat,
+            this.props.valueDateFormat + ' ' + this.props.timeFormat + ':ss',
         ];
         const format = formats.find(format => {
             return (

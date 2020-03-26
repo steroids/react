@@ -83,9 +83,7 @@ export default class TimeField extends React.PureComponent<ITimeFieldProps & ITi
         required: false,
         className: '',
         timeFormat: 'HH:mm',
-        inputProps: {
-            value: '00:00'
-        }
+        placeholder: '00:00',
     };
 
     render() {
@@ -96,11 +94,16 @@ export default class TimeField extends React.PureComponent<ITimeFieldProps & ITi
                 inputProps={{
                     type: this.props.type,
                     name: this.props.input.name,
-                    value: this.props.input.value || '',
-                    onChange: value => this.props.input.onChange(value),
                     placeholder: this.props.placeholder,
                     disabled: this.props.disabled,
-                    ...this.props.inputProps
+                    ...this.props.inputProps,
+                    value: this.props.input.value || '',
+                    onChange: value => {
+                        this.props.input.onChange(value);
+                        if (this.props.onChange) {
+                            this.props.onChange(value);
+                        }
+                    },
                 }}
             />
         );

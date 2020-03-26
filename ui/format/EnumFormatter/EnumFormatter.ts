@@ -11,6 +11,7 @@ import {IConnectHocOutput} from '../../../hoc/connect';
 
 export interface IEnumFormatterProps extends IFormatterHocInput {
     items?: string | {id: number | string, label: string}[] | {getLabel: () => string | any};
+    value?: number | string,
 }
 
 interface IEnumFormatterPrivateProps extends IFormatterHocOutput, IConnectHocOutput {

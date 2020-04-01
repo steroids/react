@@ -17,7 +17,8 @@ export default class HttpComponent {
 
     constructor(components) {
         this._components = components;
-        this.apiUrl = typeof location !== 'undefined' ? location.protocol + '//' + location.host : '';
+        this.apiUrl = typeof location !== 'undefined'
+            ? location.protocol + '//' + location.host : (process.env.BACKEND_URL || '');
         this.accessTokenKey = 'accessToken';
         this._lazyRequests = {};
         this._axios = null;
@@ -26,7 +27,7 @@ export default class HttpComponent {
         this._promises = [];
     }
 
-    getAxiosConfig() {
+    async getAxiosConfig() {
         const config = {
             withCredentials: true,
             headers: {
@@ -37,7 +38,7 @@ export default class HttpComponent {
             }
         };
         // Add CSRF header
-        if (!this._csrfToken && !process.env.IS_SSR) {
+        if (!this._csrfToken && !process.env.IS_SSR && process.env.PLATFORM === 'web') {
             const metaElement = document.querySelector('meta[name=csrf-token]');
             if (metaElement) {
                 this._csrfToken = metaElement.getAttribute('content');
@@ -50,11 +51,11 @@ export default class HttpComponent {
         if (this._accessToken === false) {
             const clientStorage = this._components.clientStorage;
             this._accessToken =
-                clientStorage.get(this.accessTokenKey, clientStorage.STORAGE_COOKIE) ||
-                clientStorage.get(this.accessTokenKey) ||
+                await clientStorage.get(this.accessTokenKey, clientStorage.STORAGE_COOKIE) ||
+                await clientStorage.get(this.accessTokenKey) ||
                 null;
             if (this._accessToken) {
-                clientStorage.set(
+                await clientStorage.set(
                     this.accessTokenKey,
                     this._accessToken,
                     clientStorage.STORAGE_COOKIE,
@@ -93,10 +94,10 @@ export default class HttpComponent {
     /**
      * @returns {string}
      */
-    getAccessToken() {
+    async getAccessToken() {
         if (this._accessToken === false) {
             this._accessToken =
-                this._components.clientStorage.get(this.accessTokenKey) || null;
+                await this._components.clientStorage.get(this.accessTokenKey) || null;
         }
         return this._accessToken;
     }
@@ -105,9 +106,9 @@ export default class HttpComponent {
         this._axios = null;
     }
 
-    getAxiosInstance() {
+    async getAxiosInstance() {
         if (!this._axios) {
-            this._axios = axios.create(this.getAxiosConfig());
+            this._axios = axios.create(await this.getAxiosConfig());
         }
         return this._axios;
     }
@@ -196,7 +197,8 @@ export default class HttpComponent {
     }
 
     _sendAxios(config) {
-        const promise = this.getAxiosInstance()(config)
+        const promise = this.getAxiosInstance().then(instance =>
+            instance(config)
             .then(response => {
                 this.afterRequest(response);
                 return response;
@@ -204,7 +206,9 @@ export default class HttpComponent {
             .catch(error => {
                 console.error('Error, request/response: ', config, String(error)); // eslint-disable-line no-console
                 throw error;
-            });
+            })
+        );
+
         // Store promises for SSR
         if (process.env.IS_SSR) {
             this._promises.push(promise);

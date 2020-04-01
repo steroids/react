@@ -35,6 +35,7 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
     autoSave?: boolean;
     initialValues?: any | any[];
     className?: CssClassName;
+    style?: any;
     view?: CustomView;
     fields?: (string | IFieldProps)[],
     /*fields?: (
@@ -120,7 +121,7 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
                 this.props.restoreCustomizer
             );
         }
-        if (this.props.autoFocus) {
+        if (this.props.autoFocus && process.env.PLATFORM === 'web') {
             const inputEl = findDOMNode(this).querySelector('input:not([type=hidden])');
             setTimeout(() => {
                 if (inputEl && inputEl.focus) {
@@ -189,7 +190,7 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
                     ))}
                     {this.props.submitLabel && (
                         <Button
-                            type='submit'
+                            onClick={this.props.handleSubmit(this.props.onSubmit)}
                             label={this.props.submitLabel}
                         />
                     )}

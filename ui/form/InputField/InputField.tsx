@@ -114,8 +114,7 @@ export default class InputField extends React.PureComponent<IInputFieldProps & I
                     type: this.props.type,
                     name: this.props.input.name,
                     value: this.props.input.value || '',
-                    //onChange: value => this.props.input.onChange(value),
-                    onChange: e => this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
+                    onChange: value => this.props.input.onChange(value),
                     placeholder: this.props.placeholder,
                     disabled: this.props.disabled,
                     ...this.props.inputProps

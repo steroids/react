@@ -1,6 +1,7 @@
 import _isArray from 'lodash-es/isArray';
 import _trim from 'lodash-es/trim';
 import { push } from 'connected-react-router';
+export const ROUTER_INIT_NAVIGATION = 'ROUTER_INIT_NAVIGATION';
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
 export const ROUTER_ADD_CONFIGS = 'ROUTER_ADD_CONFIGS';
@@ -32,6 +33,12 @@ const defaultFetchHandler = config => (dispatch, getState, { http }) => {
       .then(result => result.data)
   );
 };
+export const initNavigation = navigation => {
+  return {
+    type: ROUTER_INIT_NAVIGATION,
+    navigation,
+  }
+};
 export const initRoutes = routes => ({
   type: ROUTER_INIT_ROUTES,
   routes,
@@ -41,10 +48,14 @@ export const initParams = params => ({
   params
 });
 export const goToRoute = (routeId, params = null) => (dispatch, getState) => {
-  const getRouteProp = require('../reducers/router').getRouteProp;
-  const buildUrl = require('../reducers/router').buildUrl;
-  const path = getRouteProp(getState(), routeId, 'path');
-  return dispatch(push(buildUrl(path, params)));
+  if (process.env.PLATFORM === 'mobile') {
+    getState().router.navigation.navigate(routeId, params);
+  } else {
+    const getRouteProp = require('../reducers/router').getRouteProp;
+    const buildUrl = require('../reducers/router').buildUrl;
+    const path = getRouteProp(getState(), routeId, 'path');
+    return dispatch(push(buildUrl(path, params)));
+  }
 };
 export const goToParent = (level = 1) => (dispatch, getState) => {
   const getRouteParent = require('../reducers/router').getRouteParent;

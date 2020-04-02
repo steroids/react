@@ -41,31 +41,37 @@ export default class StoreComponent {
     }
 
     initStore(config = {} as IStoreComponentConfig) {
-        const initialState = {
-            ...(!process.env.IS_SSR
+        let initialState = {
+            ...(!process.env.IS_SSR && process.env.PLATFORM === 'web'
                 // @ts-ignore
                 ? _merge(...(window.APP_REDUX_PRELOAD_STATES || [{}]))
                 : {}),
             ...config.initialState
         };
-        const createHistory = process.env.IS_SSR || typeof location === 'undefined'
-            ? createMemoryHistory
-            : location.protocol === 'file:'
-                ? createHashHistory
-                : createBrowserHistory;
-        this.history = createHistory({
-            ..._get(initialState, 'config.store.history', {}),
-            ...config.history
-        });
-        // Add '?' for fix connected-react-router
-        if (process.env.IS_SSR && !this.history.location.search) {
-            this.history.location.search = '?';
+
+        if (process.env.PLATFORM !== 'mobile') {
+            const createHistory = process.env.IS_SSR || typeof location === 'undefined'
+                ? createMemoryHistory
+                : location.protocol === 'file:'
+                    ? createHashHistory
+                    : createBrowserHistory;
+            this.history = createHistory({
+                ..._get(initialState, 'config.store.history', {}),
+                ...config.history
+            });
+            // Add '?' for fix connected-react-router
+            if (process.env.IS_SSR && !this.history.location.search && process.env.PLATFORM !== 'mobile') {
+                this.history.location.search = '?';
+            }
+            this._routerReducer = connectRouter(this.history);
         }
-        this._routerReducer = connectRouter(this.history);
+
         this.store = createStore(
-            reducers({
-                router: this._routerReducer
-            }),
+            reducers(
+                this._routerReducer ? {
+                    router: this._routerReducer
+                } : {}
+            ),
             initialState,
             compose(
                 applyMiddleware(({getState}) => next => action =>
@@ -73,7 +79,7 @@ export default class StoreComponent {
                 ),
                 applyMiddleware(routerMiddleware(this.history)),
                 // @ts-ignore
-                !process.env.IS_SSR && window.__REDUX_DEVTOOLS_EXTENSION__
+                !process.env.IS_SSR && window.__REDUX_DEVTOOLS_EXTENSION__ && process.env.PLATFORM !== 'mobile'
                     // @ts-ignore
                     ? window.__REDUX_DEVTOOLS_EXTENSION__()
                     : f => f

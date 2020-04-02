@@ -54,8 +54,7 @@ interface IDropDownFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOu
 @dataProvider()
 @conditional(process.env.PLATFORM === 'web', enhanceWithClickOutside)
 @components('ui')
-export default class DropDownField extends React.PureComponent<IDropDownFieldProps & IDropDownFieldPrivateProps,
-    {}> {
+export default class DropDownField extends React.PureComponent<IDropDownFieldProps & IDropDownFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,
@@ -85,7 +84,7 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
                     placeholder:
                         this.props.searchPlaceholder ||
                         __('Начните вводить символы для поиска...'),
-                    onChange: value => this.props.onSearch(value),
+                    onChange: e => this.props.onSearch(e.target ? e.target.value : e.nativeEvent.text),
                     tabIndex: -1
                 }}
                 items={this.props.items.map(item => ({

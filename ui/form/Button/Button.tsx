@@ -212,6 +212,9 @@ const defaultProps = {
 })
 @components('ui')
 export default class Button extends React.PureComponent<IButtonProps & IButtonPrivateProps, ButtonState> {
+
+    static defaultProps = defaultProps;
+
     _isMounted: any;
 
     constructor(props) {

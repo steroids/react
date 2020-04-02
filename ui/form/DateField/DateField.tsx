@@ -64,9 +64,11 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
                 disabled={this.props.disabled}
                 onChange={value => {
                     if (value) {
-                        this.props.input.onChange(
-                            moment(value).format(this.props.valueFormat)
-                        );
+                        const date = moment(value).format(this.props.valueFormat);
+                        this.props.input.onChange(date);
+                        if (this.props.onChange) {
+                            this.props.onChange(date);
+                        }
                     }
                 }}
                 locale={this.props.locale}

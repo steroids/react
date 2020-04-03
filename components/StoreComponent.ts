@@ -22,6 +22,7 @@ export default class StoreComponent {
     _components: any;
     _routerReducer: any;
     history: any;
+    navigationNative: any;
     store: any;
 
     constructor(components, config, lazyInit = false) {

@@ -1,7 +1,6 @@
 import _isArray from 'lodash-es/isArray';
 import _trim from 'lodash-es/trim';
 import { push } from 'connected-react-router';
-export const ROUTER_INIT_NAVIGATION = 'ROUTER_INIT_NAVIGATION';
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
 export const ROUTER_ADD_CONFIGS = 'ROUTER_ADD_CONFIGS';
@@ -33,12 +32,6 @@ const defaultFetchHandler = config => (dispatch, getState, { http }) => {
       .then(result => result.data)
   );
 };
-export const initNavigation = navigation => {
-  return {
-    type: ROUTER_INIT_NAVIGATION,
-    navigation,
-  }
-};
 export const initRoutes = routes => ({
   type: ROUTER_INIT_ROUTES,
   routes,
@@ -47,9 +40,9 @@ export const initParams = params => ({
   type: ROUTER_SET_PARAMS,
   params
 });
-export const goToRoute = (routeId, params = null) => (dispatch, getState) => {
+export const goToRoute = (routeId, params = null) => (dispatch, getState, {store}) => {
   if (process.env.PLATFORM === 'mobile') {
-    getState().router.navigation.navigate(routeId, params);
+    store.navigationNative.navigate(routeId, params);
   } else {
     const getRouteProp = require('../reducers/router').getRouteProp;
     const buildUrl = require('../reducers/router').buildUrl;

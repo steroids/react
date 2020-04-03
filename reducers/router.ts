@@ -14,7 +14,6 @@ import {
     ROUTER_ADD_CONFIGS,
     ROUTER_REMOVE_CONFIGS,
     ROUTER_SET_DATA,
-    ROUTER_INIT_NAVIGATION,
     getConfigId,
 } from '../actions/router';
 
@@ -178,12 +177,6 @@ const findRecursive = (item: IRoute, predicate: string | any, pathItems: IRoute[
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case ROUTER_INIT_NAVIGATION:
-            return {
-                ...state,
-                navigation: action.navigation
-            };
-
         case ROUTER_INIT_ROUTES:
             const routesMap = {};
             const activeIds = [];

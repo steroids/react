@@ -50,12 +50,18 @@ export default class HttpComponent {
         // Set access token
         if (this._accessToken === false) {
             const clientStorage = this._components.clientStorage;
-            this._accessToken =
-                await clientStorage.get(this.accessTokenKey, clientStorage.STORAGE_COOKIE) ||
-                await clientStorage.get(this.accessTokenKey) ||
+            const tokenValue =
+                clientStorage.get(this.accessTokenKey, clientStorage.STORAGE_COOKIE) ||
+                clientStorage.get(this.accessTokenKey) ||
                 null;
+
+            // client storage method 'get' could be asynchronous
+            this._accessToken = tokenValue instanceof Promise
+                ? await tokenValue
+                : tokenValue;
+
             if (this._accessToken) {
-                await clientStorage.set(
+                clientStorage.set(
                     this.accessTokenKey,
                     this._accessToken,
                     clientStorage.STORAGE_COOKIE,

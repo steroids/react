@@ -83,6 +83,12 @@ export default class HttpComponent {
         this.resetConfig();
     }
 
+    removeAccessToken() {
+        this._accessToken = null;
+        this.resetConfig();
+        this._components.clientStorage.remove(this.accessTokenKey);
+    }
+
     /**
      * @param {string} value
      */
@@ -203,9 +209,9 @@ export default class HttpComponent {
     }
 
     _sendAxios(config) {
-        const promise = this.getAxiosInstance().then(instance =>
-            instance(config)
-            .then(response => {
+        const promise = this.getAxiosInstance().then(instance => {
+            return instance(config);
+        }).then(response => {
                 this.afterRequest(response);
                 return response;
             })
@@ -213,7 +219,7 @@ export default class HttpComponent {
                 console.error('Error, request/response: ', config, String(error)); // eslint-disable-line no-console
                 throw error;
             })
-        );
+        ;
 
         // Store promises for SSR
         if (process.env.IS_SSR) {

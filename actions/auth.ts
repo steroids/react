@@ -38,7 +38,7 @@ export const setData = data => ({
   type: AUTH_SET_DATA,
   data
 });
-export const logout = () => (dispatch, getState, { http }) => {
-  http.setAccessToken(null);
-  return dispatch([setUser(null), goToRoute('root')]);
+export const logout = (redirectPageId = 'root') => (dispatch, getState, { http }) => {
+  http.removeAccessToken();
+  return dispatch([setUser(null), redirectPageId && goToRoute(redirectPageId)].filter(Boolean));
 };

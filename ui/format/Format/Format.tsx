@@ -17,27 +17,25 @@ export interface IFormatProps {
     emptyText?: any;
 }
 
-interface IFormatPrivateProps extends IComponentsHocOutput {
+interface IFormatPrivateProps extends IComponentsHocOutput {}
 
+export function getFormatterPropsFromModel(model, attribute) {
+    if (!model || !attribute) {
+        return null;
+    }
+    if (_isFunction(model.formatters)) {
+        return model.formatters()[attribute] || null;
+    }
+    if (_isObject(model.formatters)) {
+        return model.formatters[attribute] || null;
+    }
+    return null;
 }
 
 @components('ui')
 export default class Format extends React.Component<IFormatProps & IFormatPrivateProps> {
 
     static WrappedComponent: any;
-
-    static getFormatterPropsFromModel(model, attribute) {
-        if (!model || !attribute) {
-            return null;
-        }
-        if (_isFunction(model.formatters)) {
-            return model.formatters()[attribute] || null;
-        }
-        if (_isObject(model.formatters)) {
-            return model.formatters[attribute] || null;
-        }
-        return null;
-    }
 
     render() {
       return (
@@ -52,14 +50,14 @@ export default class Format extends React.Component<IFormatProps & IFormatPrivat
         // Get field config from model
         const model = this.props.model || context.model;
         props = {
-            ...Format.WrappedComponent.getFormatterPropsFromModel(model, this.props.attribute),
+            ...getFormatterPropsFromModel(model, this.props.attribute),
             ...props
         };
         const ComponentField = _isString(props.component)
             ? this.props.ui.getFormatter('format.' + props.component)
             : props.component;
         if (ComponentField) {
-            return <ComponentField {...props} />;
+            return <ComponentField {...props}/>;
         }
         return _get(this.props.item, this.props.attribute) || this.props.emptyText || null;
     }

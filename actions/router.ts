@@ -40,11 +40,15 @@ export const initParams = params => ({
   type: ROUTER_SET_PARAMS,
   params
 });
-export const goToRoute = (routeId, params = null) => (dispatch, getState) => {
-  const getRouteProp = require('../reducers/router').getRouteProp;
-  const buildUrl = require('../reducers/router').buildUrl;
-  const path = getRouteProp(getState(), routeId, 'path');
-  return dispatch(push(buildUrl(path, params)));
+export const goToRoute = (routeId, params = null) => (dispatch, getState, {store}) => {
+  if (process.env.PLATFORM === 'mobile') {
+    store.navigationNative.navigate(routeId, params);
+  } else {
+    const getRouteProp = require('../reducers/router').getRouteProp;
+    const buildUrl = require('../reducers/router').buildUrl;
+    const path = getRouteProp(getState(), routeId, 'path');
+    return dispatch(push(buildUrl(path, params)));
+  }
 };
 export const goToParent = (level = 1) => (dispatch, getState) => {
   const getRouteParent = require('../reducers/router').getRouteParent;

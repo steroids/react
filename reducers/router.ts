@@ -14,7 +14,7 @@ import {
     ROUTER_ADD_CONFIGS,
     ROUTER_REMOVE_CONFIGS,
     ROUTER_SET_DATA,
-    getConfigId
+    getConfigId,
 } from '../actions/router';
 
 export interface IRoute {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as pathToRegexp from 'path-to-regexp';
+import {parse, compile} from 'path-to-regexp';
 import {matchPath} from 'react-router';
 import * as queryString from 'query-string';
 import _get from 'lodash-es/get';
@@ -81,11 +81,10 @@ export const buildUrl = (path, params = null) => {
     let url = path;
     let pathKeys = [];
     try {
-        pathKeys = pathToRegexp
-            .parse(path)
+        pathKeys = parse(path)
             .slice(1)
             .map((p: any) => p.name);
-        url = pathToRegexp.compile(path)({
+        url = compile(path)({
             ...params,
         });
     } catch (e) {

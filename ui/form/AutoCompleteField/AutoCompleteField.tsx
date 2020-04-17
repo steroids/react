@@ -67,6 +67,7 @@ interface IAutoCompleteFieldPrivateProps extends IFieldHocOutput, IDataProviderH
 @props({
     autoComplete: true,
     multiple: false,
+    valueItemKey: 'label',
 })
 @dataProvider()
 @conditional(process.env.PLATFORM === 'web', enhanceWithClickOutside)

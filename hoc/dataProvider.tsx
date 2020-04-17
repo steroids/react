@@ -2,16 +2,11 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {change} from 'redux-form';
 import _remove from 'lodash-es/remove';
-import _some from 'lodash-es/some';
-import _has from 'lodash-es/has';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _isFunction from 'lodash-es/isFunction';
-import _isObject from 'lodash-es/isObject';
 import _includes from 'lodash-es/includes';
 import _uniqBy from 'lodash-es/uniqBy';
-import _isInteger from 'lodash-es/isInteger';
-import _orderBy from 'lodash-es/orderBy';
 import _isBoolean from 'lodash-es/isBoolean';
 
 import {getEnumLabels} from '../reducers/fields';
@@ -21,6 +16,8 @@ import {IFieldHocInput} from "./field";
 import Enum from "../base/Enum";
 import {IConnectHocOutput} from './connect';
 import normalize, {INormalizeHocConfig} from './normalize';
+import {smartSearch} from '../utils/text';
+import {normalizeItems} from '../utils/data';
 
 export interface IDataProviderHocInput {
     input?: FormInputType,
@@ -41,6 +38,7 @@ export interface IDataProviderHocInput {
     autoFetch?: any;
     selectFirst?: any;
     onSelect?: any;
+    valueItemKey?: string,
 }
 
 export interface IDataProviderHocOutput {
@@ -86,6 +84,7 @@ const defaultProps = {
         minLength: 2,
         delay: 100,
     },
+    valueItemKey: 'id',
 };
 
 const normalizeMap = [
@@ -120,51 +119,6 @@ export default (): any => WrappedComponent =>
 
                     static defaultProps = defaultProps;
 
-                    /**
-                     * Normalize items for save to state. Support enum class or normal items list.
-                     * @param {array|object} items
-                     * @returns {*}
-                     */
-                    static normalizeItems(items) {
-                        // Array
-                        if (_isArray(items)) {
-                            // List of strings/numbers
-                            if (_some(items, item => _isString(item) || _isInteger(item))) {
-                                return items.map(item => {
-                                    if (_isString(item) || _isInteger(item)) {
-                                        return {
-                                            id: item,
-                                            label: item
-                                        };
-                                    }
-                                    return item;
-                                });
-                            }
-                            // Labels as ids
-                            if (_some(items, item => !_has(item, 'id'))) {
-                                return _uniqBy(
-                                    items.map(item => {
-                                        return {
-                                            id: item.label,
-                                            ...item
-                                        };
-                                    }),
-                                    'label'
-                                );
-                            }
-                            return items;
-                        }
-                        // Enum
-                        if (_isObject(items) && _isFunction(items.getLabels)) {
-                            const labels = items.getLabels();
-                            return Object.keys(labels).map(id => ({
-                                id,
-                                label: labels[id]
-                            }));
-                        }
-                        return [];
-                    }
-
                     constructor(props) {
                         super(props);
 
@@ -175,7 +129,7 @@ export default (): any => WrappedComponent =>
                         this._onItemMouseOver = this._onItemMouseOver.bind(this);
                         this._onKeyDown = this._onKeyDown.bind(this);
                         this._delayTimer = null;
-                        const sourceItems = DataProviderHoc.normalizeItems(this.props.items);
+                        const sourceItems = normalizeItems(this.props.items);
                         this.state = {
                             query: '',
                             isOpened: false,
@@ -213,7 +167,7 @@ export default (): any => WrappedComponent =>
                     UNSAFE_componentWillReceiveProps(nextProps) {
                         // Refresh normalized source items on change items from props
                         if (this.props.items !== nextProps.items) {
-                            const sourceItems = DataProviderHoc.normalizeItems(nextProps.items);
+                            const sourceItems = normalizeItems(nextProps.items);
                             this.setState({
                                 sourceItems,
                                 items: sourceItems
@@ -229,7 +183,7 @@ export default (): any => WrappedComponent =>
                         }
                         // Store selected items in state on change value
                         if (this.props.input.value !== nextProps.input.value) {
-                            const sourceItems = DataProviderHoc.normalizeItems(nextProps.items);
+                            const sourceItems = normalizeItems(nextProps.items);
                             this.setState({
                                 selectedItems: this._findSelectedItems(
                                     _uniqBy(
@@ -297,7 +251,7 @@ export default (): any => WrappedComponent =>
                     _findSelectedItems(items, value) {
                         const selectedValues =
                             value === false || value === 0 ? [value] : [].concat(value || []);
-                        return items.filter(item => _includes(selectedValues, item.id));
+                        return items.filter(item => _includes(selectedValues, item[this.props.valueItemKey]));
                     }
 
                     /**
@@ -352,79 +306,9 @@ export default (): any => WrappedComponent =>
                      * @private
                      */
                     _searchClientSide(query) {
-                        if (!query) {
-                            this.setState({
-                                items: this.state.sourceItems
-                            });
-                            return;
-                        }
-                        const toWords = str =>
-                            (str.match(/^[^A-ZА-Я]+/) || []).concat(
-                                str.match(/[A-ZА-Я][^A-ZА-Я]*/g) || []
-                            );
-                        const queryCharacters = query.split('');
-                        // Match
-                        let items = this.state.sourceItems.filter(item => {
-                            const id = item.id;
-                            const words = toWords(item.label || '');
-                            if (words.length === 0 || !id) {
-                                return false;
-                            }
-                            let word = null;
-                            let highlighted = [['', false]];
-                            let index = 0;
-                            let wordIndex = 0;
-                            let wordChar = null;
-                            let wordCharIndex = 0;
-                            while (true) {
-                                const char = queryCharacters[index];
-                                if (!char) {
-                                    highlighted.push([
-                                        word.substr(wordCharIndex) + words.slice(wordIndex + 1).join(''),
-                                        false
-                                    ]);
-                                    break;
-                                }
-                                word = words[wordIndex];
-                                wordChar = (word && word.split('')[wordCharIndex]) || '';
-                                if (!word) {
-                                    highlighted = [];
-                                    break;
-                                }
-                                const isMatch = !char.match(/[A-ZА-Я]/)
-                                    ? wordChar.toLowerCase() === char.toLowerCase()
-                                    : wordChar === char;
-                                if (isMatch) {
-                                    index++;
-                                    wordCharIndex++;
-                                    highlighted[highlighted.length - 1][0] += wordChar;
-                                    highlighted[highlighted.length - 1][1] = true;
-                                } else {
-                                    highlighted.push([word.substr(wordCharIndex), false]);
-                                    highlighted.push(['', false]);
-                                    wordIndex++;
-                                    wordCharIndex = 0;
-                                }
-                            }
-                            highlighted = highlighted.filter(item => !!item[0]);
-                            if (highlighted.findIndex(item => item[1]) !== -1) {
-                                item.labelHighlighted = highlighted;
-                                return true;
-                            }
-                            return false;
+                        this.setState({
+                            items: smartSearch(query, this.state.sourceItems),
                         });
-                        items = _orderBy(
-                            items,
-                            item => {
-                                // Fined first word is priority
-                                if (item.labelHighlighted) {
-                                    return item.labelHighlighted.findIndex(i => i[1]);
-                                }
-                                return Infinity;
-                            },
-                            'asc'
-                        );
-                        this.setState({items});
                     }
 
                     /**
@@ -450,7 +334,7 @@ export default (): any => WrappedComponent =>
                         if (result && _isFunction(result.then)) {
                             this.setState({isLoading: true});
                             result.then(items => {
-                                items = DataProviderHoc.normalizeItems(items);
+                                items = normalizeItems(items);
                                 this.setState({
                                     isLoading: false,
                                     items,
@@ -460,7 +344,7 @@ export default (): any => WrappedComponent =>
                         }
                         // Check is items list
                         if (_isArray(result)) {
-                            const items = DataProviderHoc.normalizeItems(result);
+                            const items = normalizeItems(result);
                             this.setState({
                                 items,
                                 sourceItems: isAutoFetch ? items : this.state.sourceItems
@@ -475,15 +359,15 @@ export default (): any => WrappedComponent =>
                      * @private
                      */
                     _onItemClick(item, skipToggle = false) {
-                        const id = item.id;
+                        const value = item[this.props.valueItemKey];
                         if (this.props.multiple) {
                             const values = [].concat(this.props.input.value || []);
-                            if (values.indexOf(id) !== -1) {
+                            if (values.indexOf(value) !== -1) {
                                 if (!skipToggle) {
-                                    _remove(values, value => value === id);
+                                    _remove(values, value => value === value);
                                 }
                             } else {
-                                values.push(id);
+                                values.push(value);
                             }
                             this.props.input.onChange(values);
                             // Fix bug. Without this calls component Form is not get differect values
@@ -494,8 +378,8 @@ export default (): any => WrappedComponent =>
                                 );
                             }
                         } else {
-                            if (this.props.input.value !== id) {
-                                this.props.input.onChange(id);
+                            if (this.props.input.value !== value) {
+                                this.props.input.onChange(value);
                             }
                             this._onClose();
                         }

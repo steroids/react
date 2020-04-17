@@ -18,7 +18,8 @@ interface IFieldListItem extends IFieldHocInput {
     placeholder?: string,
     className?: CssClassName,
     headerClassName?: CssClassName,
-    view?: CustomView
+    view?: CustomView,
+    [key: string]: any,
 }
 
 export interface IFieldListProps extends IFieldHocInput {

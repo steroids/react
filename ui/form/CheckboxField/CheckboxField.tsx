@@ -26,7 +26,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldHocO
         name: string,
         type: string,
         checked: boolean,
-        onChange: (e: Event) => void,
+        onChange: (value: string) => void,
         disabled: boolean,
     }
 }

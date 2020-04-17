@@ -4,7 +4,6 @@ import {change} from 'redux-form';
 import _remove from 'lodash-es/remove';
 import _some from 'lodash-es/some';
 import _has from 'lodash-es/has';
-import _get from 'lodash-es/get';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _isFunction from 'lodash-es/isFunction';
@@ -21,8 +20,7 @@ import components, {IComponentsHocOutput} from './components';
 import {IFieldHocInput} from "./field";
 import Enum from "../base/Enum";
 import {IConnectHocOutput} from './connect';
-import {INormalizeHocConfig} from './normalize';
-import {normalize} from './index';
+import normalize, {INormalizeHocConfig} from './normalize';
 
 export interface IDataProviderHocInput {
     input?: FormInputType,

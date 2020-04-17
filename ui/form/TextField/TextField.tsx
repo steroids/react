@@ -16,7 +16,7 @@ export interface ITextFieldProps extends IFieldHocInput {
 export interface ITextFieldViewProps extends IFieldHocOutput {
     inputProps: {
         name: string,
-        onChange: (e: Event) => void,
+        onChange: (value: string) => void,
         onKeyUp: (e: Event) => void,
         value: string | number,
         placeholder: string,

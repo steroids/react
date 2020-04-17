@@ -84,7 +84,7 @@ export default class DropDownField extends React.PureComponent<IDropDownFieldPro
                     placeholder:
                         this.props.searchPlaceholder ||
                         __('Начните вводить символы для поиска...'),
-                    onChange: e => this.props.onSearch(e.target ? e.target.value : e.nativeEvent.text),
+                    onChange: value => this.props.onSearch(value),
                     tabIndex: -1
                 }}
                 items={this.props.items.map(item => ({

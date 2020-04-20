@@ -7,6 +7,7 @@ import {IFieldHocInput, IFieldHocOutput} from "../../../hoc/field";
 import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../../../hoc/dataProvider";
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IInputFieldProps} from '../InputField/InputField';
+import {conditional} from "conditional-decorator";
 
 /**
  * AutoComplete
@@ -21,7 +22,7 @@ export interface IAutoCompleteFieldViewProps extends IFieldHocOutput, IDataProvi
     inputProps: {
         type: string,
         name: string,
-        onChange: (e: Event) => void,
+        onChange: (value: string) => void,
         onFocus: (e: Event) => void,
         onBlur: (e: Event) => void,
         value: string | number,
@@ -69,7 +70,7 @@ interface IAutoCompleteFieldPrivateProps extends IFieldHocOutput, IDataProviderH
     valueItemKey: 'label',
 })
 @dataProvider()
-@enhanceWithClickOutside
+@conditional(process.env.PLATFORM === 'web', enhanceWithClickOutside)
 @components('ui')
 export default class AutoCompleteField extends React.PureComponent<IAutoCompleteFieldProps & IAutoCompleteFieldPrivateProps> {
     static defaultProps = {
@@ -120,18 +121,18 @@ export default class AutoCompleteField extends React.PureComponent<IAutoComplete
                         this.props.hoveredItem && this.props.hoveredItem.id === item.id
                 }))}
                 selectedItems={this.props.selectedItems}
-                isOpened={this.props.isOpened && this.props.items.length > 0}
+                isOpened={this.props.isOpened}
                 onItemClick={this.props.onItemClick}
                 onItemMouseOver={this.props.onItemMouseOver}
             />
         );
     }
 
-    _onChange(e) {
+    _onChange(value) {
         if (!this.props.isOpened) {
             this.props.onOpen();
         }
-        this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text);
+        this.props.input.onChange(value);
     }
 
     _onFocus(e) {

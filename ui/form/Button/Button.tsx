@@ -11,6 +11,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IThemeHocInput} from '../../../hoc/theme';
 import normalize from '../../../hoc/normalize';
+import {goToRoute} from "../../../actions/router";
 
 interface IButtonBadge {
     enable?: boolean,
@@ -52,7 +53,7 @@ export interface IButtonProps extends IThemeHocInput {
     /**
      * Иконка
      */
-    icon?: any;
+    icon?: string | number;
 
     /**
      * Цифра (к примеру, новые сообщения)
@@ -94,12 +95,6 @@ export interface IButtonProps extends IThemeHocInput {
      * @example https://ya.ru
      */
     url?: string;
-
-    /**
-     * Ссылка (`path`) на страницу в рамках роутера SPA приложения, будет вызвано действие `push`
-     * @example /profile/51
-     */
-    to?: string;
 
     /**
      * При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное
@@ -167,6 +162,12 @@ export interface IButtonProps extends IThemeHocInput {
      */
     layout?: FormLayout;
 
+    /**
+     * ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки
+     * при отправке формы.
+     */
+    formId?: string,
+
     textColor?: any;
 }
 
@@ -183,7 +184,6 @@ export interface IButtonViewProps extends IButtonProps {
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
     _badge?: IButtonBadge,
     submitting?: boolean;
-    toPath?: string;
 }
 
 type ButtonState = {
@@ -211,7 +211,6 @@ const defaultProps = {
     submitting: props.formId
         ? isSubmitting(props.formId)(state)
         : !!props.submitting,
-    toPath: props.toRoute ? getRouteProp(state, props.toRoute, 'path') : null,
 }))
 @theme()
 @normalize({
@@ -278,12 +277,12 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
         const button = (
             <ButtonView
                 {...this.props}
-                isLoading={this.state.isLoading}
                 isFailed={this.state.isFailed}
+                isLoading={this.state.isLoading || this.props.submitting}
                 url={
-                    this.props.link && !(this.props.url || this.props.to || this.props.toPath)
+                    this.props.link && !this.props.url
                         ? '#'
-                        : this.props.url || this.props.to || buildUrl(this.props.toPath, this.props.toRouteParams)
+                        : this.props.url
                 }
                 formId={context.formId}
                 layout={layout}
@@ -314,9 +313,8 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
             e.preventDefault();
             return;
         }
-        const to = this.props.to || (this.props.toPath ? buildUrl(this.props.toPath, this.props.toRouteParams) : null);
-        if (to || to === '') {
-            this._onLinkClick(e, to);
+        if (this.props.toRoute) {
+            this._onLinkClick(e);
         }
         if (this.props.onClick) {
             const result = this.props.onClick(e);
@@ -354,10 +352,10 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
         }
     }
 
-    _onLinkClick(e, url) {
+    _onLinkClick(e) {
         if (!e.ctrlKey && !e.shiftKey && !e.metaKey) {
             e.preventDefault();
-            this.props.dispatch(push(url));
+            this.props.dispatch(goToRoute(this.props.toRoute, this.props.toRouteParams));
         }
     }
 }

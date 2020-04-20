@@ -15,8 +15,7 @@ import components, {IComponentsHocOutput} from './components';
 import {IFieldHocInput} from "./field";
 import Enum from "../base/Enum";
 import {IConnectHocOutput} from './connect';
-import {INormalizeHocConfig} from './normalize';
-import {normalize} from './index';
+import normalize, {INormalizeHocConfig} from './normalize';
 import {smartSearch} from '../utils/text';
 import {normalizeItems} from '../utils/data';
 

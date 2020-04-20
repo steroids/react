@@ -143,7 +143,7 @@ export default class HttpComponent {
                 params: params
             },
             options
-        ).then(response => response.data);
+        ).then((response: any) => response.data);
     }
 
     post(url, params = {}, options = {}) {
@@ -154,7 +154,7 @@ export default class HttpComponent {
                 data: params
             },
             options
-        ).then(response => response.data);
+        ).then((response: any) => response.data);
     }
 
     delete(url, params = {}, options = {}) {
@@ -165,7 +165,7 @@ export default class HttpComponent {
                 data: params
             },
             options
-        ).then(response => response.data);
+        ).then((response: any) => response.data);
     }
 
     send(method, url, params = {}, options = {}) {
@@ -218,8 +218,7 @@ export default class HttpComponent {
             .catch(error => {
                 console.error('Error, request/response: ', config, String(error)); // eslint-disable-line no-console
                 throw error;
-            })
-        ;
+            });
 
         // Store promises for SSR
         if (process.env.IS_SSR) {

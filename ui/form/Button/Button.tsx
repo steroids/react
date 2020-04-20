@@ -66,6 +66,18 @@ export interface IButtonProps extends IThemeHocInput {
     isLoading?: boolean;
 
     /**
+     * Отобразить кнопку в состоянии неуспешного нажатия (например, при неуспешном ajax запросе)
+     * @example true
+     */
+    isFailed?: boolean;
+
+    /**
+     * Через сколько миллисекунд должно исчезнуть состояние "failed"
+     * @example 5000
+     */
+    resetFailedMs?: number,
+
+    /**
      * Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным
      * @example true
      */
@@ -160,7 +172,6 @@ export interface IButtonProps extends IThemeHocInput {
 
 export interface IButtonViewProps extends IButtonProps {
     _badge?: IButtonBadge,
-    isLoading?: boolean,
     url?: string,
     formId?: string,
     layout?: string,
@@ -177,6 +188,7 @@ interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
 
 type ButtonState = {
     isLoading?: boolean
+    isFailed?: boolean
 };
 
 const defaultProps = {
@@ -187,6 +199,7 @@ const defaultProps = {
     submitting: false,
     block: false,
     className: '',
+    resetFailedMs: 2000,
     badge: {
         enable: false,
         value: 0,
@@ -216,13 +229,19 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
     static defaultProps = defaultProps;
 
     _isMounted: any;
+    _failedTimer: any;
 
     constructor(props) {
         super(props);
+
         this._isMounted = false;
+        this._failedTimer = null;
+
         this.state = {
             isLoading: this.props.isLoading,
+            isFailed: this.props.isFailed,
         };
+
         this._onClick = this._onClick.bind(this);
     }
 
@@ -233,6 +252,9 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
     componentDidUpdate(prevProps: Readonly<IButtonProps & IButtonPrivateProps>) {
         if (prevProps.isLoading !== this.props.isLoading) {
             this.setState({isLoading: this.props.isLoading});
+        }
+        if (prevProps.isFailed !== this.props.isFailed) {
+            this.setState({isFailed: this.props.isFailed});
         }
     }
 
@@ -257,6 +279,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
             <ButtonView
                 {...this.props}
                 isLoading={this.state.isLoading}
+                isFailed={this.state.isFailed}
                 url={
                     this.props.link && !(this.props.url || this.props.to || this.props.toPath)
                         ? '#'
@@ -298,7 +321,14 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
         if (this.props.onClick) {
             const result = this.props.onClick(e);
             if (result instanceof Promise) {
-                this.setState({isLoading: true});
+                this.setState({
+                    isLoading: true,
+                    isFailed: false,
+                });
+                if (this._failedTimer) {
+                    clearTimeout(this._failedTimer);
+                }
+
                 result
                     .then(() => {
                         if (this._isMounted) {
@@ -307,7 +337,16 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                     })
                     .catch(e => {
                         if (this._isMounted) {
-                            this.setState({isLoading: false});
+                            this.setState({
+                                isLoading: false,
+                                isFailed: this.props.resetFailedMs > 0,
+                            });
+
+                            if (this.props.resetFailedMs > 0) {
+                                this._failedTimer = setTimeout(() => {
+                                    this.setState({isFailed: false});
+                                }, this.props.resetFailedMs);
+                            }
                         }
                         throw e;
                     });

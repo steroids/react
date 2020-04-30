@@ -13,8 +13,8 @@ interface IDateTimeFormatterPrivateProps extends IFormatterHocOutput, IComponent
 
 }
 
-@formatter()
 @components('locale')
+@formatter()
 export default class DateTimeFormatter extends React.Component<IDateTimeFormatterProps & IDateTimeFormatterPrivateProps> {
 
     static defaultProps = {
@@ -29,7 +29,10 @@ export default class DateTimeFormatter extends React.Component<IDateTimeFormatte
             this.props.timeZone === false
                 ? moment(this.props.value).locale(this.props.locale.language)
                 : this.props.locale.moment(this.props.value);
-        return date.format(this.props.format);
+
+        return this.props.renderValue(
+            date.format(this.props.format)
+        );
     }
 
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {ComponentsContext} from './application';
 
-interface IComponents {
+export interface IComponents {
     clientStorage?: any,
     html?: any,
     http?: any,
@@ -10,6 +10,7 @@ interface IComponents {
     store?: any,
     ui?: any,
     resource?: any,
+    ws?: any,
 }
 
 export interface IComponentsHocInput {

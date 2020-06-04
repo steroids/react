@@ -19,10 +19,12 @@ export default class Money extends React.Component<IMoneyFormatterProps & IMoney
     };
 
     render() {
-        return Money.getAsString(
-            this.props.value,
-            this.props.currency,
-            this.props.scale
+        return this.props.renderValue(
+            Money.getAsString(
+                this.props.value,
+                this.props.currency,
+                this.props.scale
+            )
         );
     }
 

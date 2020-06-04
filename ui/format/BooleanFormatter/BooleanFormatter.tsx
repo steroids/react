@@ -13,6 +13,8 @@ interface IBooleanFormatterPrivateProps extends IFormatterHocOutput {
 @formatter()
 export default class BooleanFormatter extends React.Component<IBooleanFormatterProps & IBooleanFormatterPrivateProps> {
     render() {
-        return this.props.value ? __('Да') : __('Нет');
+        return this.props.renderValue(
+            this.props.value ? __('Да') : __('Нет')
+        );
     }
 }

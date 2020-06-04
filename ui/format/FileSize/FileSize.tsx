@@ -40,7 +40,9 @@ export default class FileSize extends React.Component<IFileSizeFormatterProps & 
     }
 
     render() {
-        return FileSize.asHumanFileSize(this.props.value, this.props.showZero);
+        return this.props.renderValue(
+            FileSize.asHumanFileSize(this.props.value, this.props.showZero)
+        );
     }
 
 }

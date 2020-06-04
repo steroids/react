@@ -2,7 +2,7 @@ import * as React from 'react';
 import components, {IComponentsHocOutput} from './components';
 
 export interface IBemHocInput {
-
+    style?: any
 }
 
 export interface IBemHocOutput extends IComponentsHocOutput {
@@ -20,17 +20,24 @@ export default (namespace: string, styles = null): any => WrappedComponent =>
         class BemHoc extends React.PureComponent<IBemHocInput & IBemHocPrivateProps> {
             static WrappedComponent = WrappedComponent;
 
-            render() {
-                const props = {} as IBemHocOutput;
+            private readonly bem;
+
+            constructor(props) {
+                super(props);
 
                 if (namespace) {
-                    props.bem = this.props.components.html.bem(namespace);
+                    this.bem = this.props.components.html.bem(namespace, props.style);
                 }
 
                 // Only for React Native
                 if (styles && this.props.components.html.addStyles) {
                     this.props.components.html.addStyles(styles);
                 }
+            }
+
+            render() {
+                const props = {} as IBemHocOutput;
+                props.bem = this.bem;
 
                 return (
                     <WrappedComponent

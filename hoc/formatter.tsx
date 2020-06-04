@@ -20,10 +20,10 @@ export interface IFormatterHocInput extends IThemeHocInput, IComponentsHocOutput
     value?: any, // or valueFrom, valueTo, value*
 }
 
-export interface IFormatterHocOutput extends IThemeHocOutput{
+export interface IFormatterHocOutput extends IThemeHocOutput {
     item?: object,
     value?: any, // or valueFrom, valueTo, value*
-    renderValue: (value: any) => React.ComponentType<any> | string,
+    renderValue?: (value: any) => React.ComponentType<any> | string,
 }
 
 export default (config: IFormatterHocConfig = {}): any => WrappedComponent =>
@@ -50,7 +50,12 @@ export default (config: IFormatterHocConfig = {}): any => WrappedComponent =>
                     try {
                         FormatterView = this.props.ui.getView(config.componentId || this.componentId());
                     } catch (e) {
-                        FormatterView = this.props.ui.getView('format.DefaultView');
+                    }
+                    if (!FormatterView) {
+                        try {
+                            FormatterView = this.props.ui.getView('format.DefaultView');
+                        } catch (e) {
+                        }
                     }
 
                     return FormatterView

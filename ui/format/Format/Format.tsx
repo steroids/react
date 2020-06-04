@@ -6,8 +6,6 @@ import _isString from 'lodash-es/isString';
 import {components} from '../../../hoc';
 import {FormContext} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
-import {Text} from "react-native";
-import FormatDefaultView from "../../../../react-native/ui/format/FormatDefaultView";
 
 export interface IFormatProps {
     attribute?: string;
@@ -63,7 +61,11 @@ export default class Format extends React.Component<IFormatProps & IFormatPrivat
         }
 
         const resultValue = _get(this.props.item, this.props.attribute) || this.props.emptyText || null;
-        const FormatDefaultView = this.props.ui.getView('format.DefaultView');
+        let FormatDefaultView = null;
+        try {
+            FormatDefaultView = this.props.ui.getView('format.DefaultView');
+        } catch (e) {
+        }
 
         return FormatDefaultView
             ? <FormatDefaultView>{resultValue}</FormatDefaultView>

@@ -16,7 +16,6 @@ export interface IEnumFormatterProps extends IFormatterHocInput {
 }
 
 interface IEnumFormatterPrivateProps extends IFormatterHocOutput, IConnectHocOutput {
-
 }
 
 /**

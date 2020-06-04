@@ -8,7 +8,6 @@ import {getEnumLabels} from '../../../reducers/fields';
 import {formatter} from '../../../hoc';
 import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
 import {IConnectHocOutput} from '../../../hoc/connect';
-import {Text} from "react-native";
 
 export interface IEnumFormatterProps extends IFormatterHocInput {
     items?: string | {id: number | string, label: string}[] | {getLabel: () => string | any};

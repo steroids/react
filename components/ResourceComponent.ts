@@ -30,7 +30,7 @@ export default class ResourceComponent {
         return this.loadScript(
             ResourceComponent.RESOURCE_GOOGLE_MAP_API,
             {
-                libraries: 'places',
+                libraries: 'places,geometry',
                 key: this.googleApiKey,
                 language: this.language || locale.language,
             },

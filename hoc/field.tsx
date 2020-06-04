@@ -225,8 +225,7 @@ export default (customConfig): any => WrappedComponent => {
                                     errors={isInvalid ? errors : null}
                                     isInvalid={isInvalid}
                                 >
-                                    {!config.list && this.props.formId && process.env.PLATFORM === 'web'
-                                     && config.attributes.map(attribute => (
+                                    {!config.list && this.props.formId && process.env.IS_WEB && config.attributes.map(attribute => (
                                         <Field
                                             key={this.props.formId + attribute}
                                             name={getName(this.props, attribute)}

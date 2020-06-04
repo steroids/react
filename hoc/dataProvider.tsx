@@ -211,13 +211,13 @@ export default (): any => WrappedComponent =>
                     }
 
                     componentDidMount() {
-                        if (process.env.PLATFORM === 'web') {
+                        if (process.env.IS_WEB) {
                             window.addEventListener('keydown', this._onKeyDown);
                         }
                     }
 
                     componentWillUnmount() {
-                        if (process.env.PLATFORM === 'web') {
+                        if (process.env.IS_WEB) {
                             window.removeEventListener('keydown', this._onKeyDown);
                         }
                     }

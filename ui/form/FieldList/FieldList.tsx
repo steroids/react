@@ -102,13 +102,13 @@ export default class FieldList extends React.PureComponent<IFieldListProps & IFi
                 this._onAdd();
             }
         }
-        if (this.props.enableKeyboardNavigation && process.env.PLATFORM === 'web') {
+        if (this.props.enableKeyboardNavigation && process.env.IS_WEB) {
             document.addEventListener('keydown', this._onKeyDown, false);
         }
     }
 
     componentWillUnmount() {
-        if (this.props.enableKeyboardNavigation && process.env.PLATFORM === 'web') {
+        if (this.props.enableKeyboardNavigation && process.env.IS_WEB) {
             document.removeEventListener('keydown', this._onKeyDown, false);
         }
     }

@@ -43,7 +43,7 @@ export default class StoreComponent {
 
     initStore(config = {} as IStoreComponentConfig) {
         let initialState = {
-            ...(!process.env.IS_SSR && process.env.PLATFORM === 'web'
+            ...(process.env.IS_WEB
                 // @ts-ignore
                 ? _merge(...(window.APP_REDUX_PRELOAD_STATES || [{}]))
                 : {}),

@@ -70,7 +70,7 @@ interface IAutoCompleteFieldPrivateProps extends IFieldHocOutput, IDataProviderH
     valueItemKey: 'label',
 })
 @dataProvider()
-@conditional(process.env.PLATFORM === 'web', enhanceWithClickOutside)
+@conditional(!!process.env.IS_WEB, enhanceWithClickOutside)
 @components('ui')
 export default class AutoCompleteField extends React.PureComponent<IAutoCompleteFieldProps & IAutoCompleteFieldPrivateProps> {
     static defaultProps = {

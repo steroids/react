@@ -104,7 +104,8 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
                 ? this.props.routes.map(route => ({
                     id: route.id,
                     label: route.label,
-                    to: buildUrl(route.redirectTo || route.path, this.props.routerParams),
+                    toRoute: route.id,
+                    toRouteParams: this.props.routerParams,
                     visible: route.isNavVisible,
                     active: (this.props.activeRouteIds || []).includes(route.id),
                 })) as INavItem[]

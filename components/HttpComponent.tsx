@@ -38,7 +38,7 @@ export default class HttpComponent {
             }
         };
         // Add CSRF header
-        if (!this._csrfToken && !process.env.IS_SSR && process.env.PLATFORM === 'web') {
+        if (!this._csrfToken && !process.env.IS_SSR && process.env.IS_WEB) {
             const metaElement = document.querySelector('meta[name=csrf-token]');
             if (metaElement) {
                 this._csrfToken = metaElement.getAttribute('content');

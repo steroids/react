@@ -11,6 +11,7 @@ export interface IComponents {
     ui?: any,
     resource?: any,
     ws?: any,
+    pushNotification?: any,
 }
 
 export interface IComponentsHocInput {

@@ -1,12 +1,15 @@
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
+import {ReactNode} from "react";
 
 export default class UiComponent {
     _components: any;
+    icons: {[name: string]: string | number | ReactNode};
     fields: {};
     formatters: {};
 
     constructor(components) {
+        this.icons = {};
         this.fields = {};
         this.formatters = {};
         this._components = {};
@@ -42,6 +45,10 @@ export default class UiComponent {
 
     getFormatterProps(path) {
         return this._getPropsConfig('formatters', path);
+    }
+
+    addIcons(icons) {
+        this.icons = icons;
     }
 
     _add(group, items) {

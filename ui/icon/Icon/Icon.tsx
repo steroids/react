@@ -11,7 +11,7 @@ interface IIconProps extends IComponentsHocOutput {
     [key: string]: any
 }
 
-interface IIconViewProps {
+export interface IIconViewProps {
     /**
      * @example require('icon.png'), <svg .../>, 'https://<site-name>/icon.png
      */
@@ -22,7 +22,6 @@ interface IIconViewProps {
 @components('ui')
 export default class Icon extends React.PureComponent<IIconProps> {
     getIcon() {
-        console.log("UI ICONS", this.props.ui.icons);
         return this.props.ui.icons
             ? this.props.ui.icons[this.props.name]
             : null;
@@ -31,7 +30,10 @@ export default class Icon extends React.PureComponent<IIconProps> {
     render() {
         const IconView = this.props.view || this.props.ui.getView('icon.IconView');
         return (
-            <IconView icon={this.getIcon()}/>
+            <IconView
+                {...this.props}
+                icon={this.getIcon()}
+            />
         )
     }
 }

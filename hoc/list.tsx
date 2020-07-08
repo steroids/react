@@ -8,7 +8,7 @@ import _isBoolean from 'lodash-es/isBoolean';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
 import _mergeWith from 'lodash-es/mergeWith';
-import * as queryString from 'query-string';
+import * as queryString from 'qs';
 
 import {init, lazyFetch, fetch, setSort, destroy, setLayoutName, initSSR} from '../actions/list';
 import {getList} from '../reducers/list';

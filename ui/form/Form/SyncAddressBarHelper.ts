@@ -1,5 +1,5 @@
 import * as pathToRegexp from 'path-to-regexp';
-import * as queryString from 'query-string';
+import * as queryString from 'qs';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import _isBoolean from 'lodash-es/isBoolean';
@@ -33,7 +33,6 @@ export default class SyncAddressBarHelper {
     /**
      * WARNING
      * Method incorrectly saves nested objects (e.g. {foo: [{bar: 1}]}
-     * // @todo use 'qs' library instead of 'query-string'
      *
      * @param {object} store
      * @param {object} values

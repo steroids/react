@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import {components} from "../../../hoc";
 import {IComponentsHocOutput} from "../../../hoc/components";
@@ -29,10 +29,14 @@ export default class Icon extends React.PureComponent<IIconProps> {
 
     render() {
         const IconView = this.props.view || this.props.ui.getView('icon.IconView');
+        let icon = this.getIcon();
+        if (!icon.match(/svg/)) {
+            icon = `<img alt=${this.props.name} src=${icon} />`
+        }
         return (
             <IconView
                 {...this.props}
-                icon={this.getIcon()}
+                icon={icon}
             />
         )
     }

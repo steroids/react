@@ -1,10 +1,15 @@
-
 import _orderBy from 'lodash-es/orderBy';
 
-const stringToWords = str =>
-    (str.match(/^[^A-ZА-Я]+/) || []).concat(
-        str.match(/[A-ZА-Я][^A-ZА-Я]*/g) || []
-    );
+const stringToWords = str => {
+    let words = [];
+    String(str).split(' ').forEach(strItem => {
+        words = words.concat(strItem.match(/^[^\p{Lu}]+/u));
+        words = words.concat(strItem.match(/[\p{Lu}][^\p{Lu}]*/gu));
+        words.push(' ');
+    });
+    words.pop();
+    return words.filter(Boolean);
+}
 
 export const smartSearch = (query, sourceItems) => {
     if (!query) {
@@ -39,7 +44,7 @@ export const smartSearch = (query, sourceItems) => {
                 highlighted = [];
                 break;
             }
-            const isMatch = !char.match(/[A-ZА-Я]/)
+            const isMatch = !char.match(/[\p{Lu}]/u)
                 ? wordChar.toLowerCase() === char.toLowerCase()
                 : wordChar === char;
             if (isMatch) {

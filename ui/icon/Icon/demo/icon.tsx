@@ -2,89 +2,67 @@ import * as React from 'react';
 import '@fortawesome/fontawesome-free/js/all.min'
 
 import Icon from '../Icon';
-import {AutoCompleteField, Form} from "../../../form";
 import {getFontAwesomeIconNames} from "../../../../../react-bootstrap/icon/fontawesome-icons";
 
 type IconState = {
-    iconName?: string | null
+    selectedIcons: any
 };
 
-/**
- * Install the latest free version of Font Awesome via yarn:
- * ```
- * $ yarn add @fortawesome/fontawesome-free
- * ```
- *
- * in your root style file (e.g. index.scss) import fontawesome styles
- * ```
- *  @import "~@fortawesome/fontawesome-free/scss/fontawesome";
- * ```
- *
- * and in hoc @application add the following code
- * ```
- *   ui.addIcons(getFontAwesomeIcons())
- * ```
- *
- * That get the icon used <Icon name={'icon-name'} />
- */
 export default class extends React.PureComponent<{}, IconState> {
 
     constructor(props) {
         super(props);
         this.state = {
-            iconName: null
+            selectedIcons: null,
         };
     }
 
-    renderSelectIcon() {
-        if (!this.state.iconName) {
-            return null;
-        }
+    renderIcons(icons) {
         return (
-            <div style={{padding: '50px', height: '200px', width: '200px'}}>
-                <Icon
-                    name={this.state.iconName}
-                />
+            <div className='row'>
+                {icons.map((iconName, index) => {
+                    return (
+                        <div className='col-md-1 p-3' key={index}>
+                            <div>
+                                <Icon
+                                    name={iconName}
+                                />
+                            </div>
+                            <div style={{padding: '20px', textAlign: 'center'}}>{iconName}</div>
+                        </div>
+                    );
+                })}
             </div>
         )
+    }
+
+    renderSelectIcons(icons) {
+        if (!this.state.selectedIcons) {
+            return this.renderIcons(icons)
+        }
+        return this.renderIcons(this.state.selectedIcons);
     }
 
     render() {
         const icons = getFontAwesomeIconNames();
         return (
             <>
-                <Form formId={'icon-search'}>
-                    <AutoCompleteField
-                        attribute={'searchField'}
-                        items={icons.map((iconName, index) => {
-                            return {
-                                id: index,
-                                label: iconName,
-                            };
-                        })}
-                        onSelect={item => {
-                            this.setState({iconName: item.label})
-                        }}
-                    />
-                </Form>
+                <input
+                    className='form-control'
+                    onChange={(event) => {
+                        const value = event.target.value;
+                        if (value.length === 0) {
+                            this.setState({selectedIcons: null})
+                            return
+                        }
+                        const selectedIcons = icons.filter(iconName => {
+                            return iconName.indexOf(value) === 0;
+                        })
+                        this.setState({selectedIcons: selectedIcons})
+                    }}
+                />
 
-                <div>Current Icon</div>
-                {this.renderSelectIcon()}
-
-                <div className='row'>
-                    {icons.map((iconName, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={'col-md-1'}
-                            >
-                                <Icon
-                                    name={iconName}
-                                />
-                            </div>
-                        );
-                    })}
-                </div>
+                {this.renderSelectIcons(icons)}
             </>
         );
     }

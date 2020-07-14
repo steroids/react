@@ -48,7 +48,6 @@ export default class extends React.PureComponent {
                         </h6>
                         <Grid
                             listId='ListStoryLoadMore'
-                            total={100}
                             items={items}
                             columns={[
                                 {
@@ -79,7 +78,6 @@ export default class extends React.PureComponent {
                         </h6>
                         <Grid
                             listId='ListStoryPagination'
-                            total={100}
                             items={items}
                             columns={[
                                 {
@@ -115,7 +113,6 @@ export default class extends React.PureComponent {
                         </h6>
                         <Grid
                             listId='ListStoryReverse'
-                            total={100}
                             items={items}
                             columns={[
                                 {

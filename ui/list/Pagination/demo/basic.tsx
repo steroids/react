@@ -15,11 +15,9 @@ export default class extends React.PureComponent {
                 <Pagination
                     //Pagination.defaultProps not working
                     aroundCount={5}
-                    list={{
-                        page: 2,
-                        pageSize: 10,
-                        total: 100,
-                    }}
+                    page={2}
+                    pageSize={10}
+                    total={100}
                 />
                 <div className='row'>
                     <div className='col'>
@@ -28,11 +26,9 @@ export default class extends React.PureComponent {
                         </h6>
                         <Pagination
                             aroundCount={3}
-                            list={{
-                                page: 2,
-                                pageSize: 20,
-                                total: 100,
-                            }}
+                            page={2}
+                            pageSize={20}
+                            total={100}
                             loadMore
                         />
                     </div>
@@ -43,11 +39,9 @@ export default class extends React.PureComponent {
                             </h6>
                             <Pagination
                                 aroundCount={3}
-                                list={{
-                                    page: 2,
-                                    pageSize: 20,
-                                    total: 100,
-                                }}
+                                page={2}
+                                pageSize={20}
+                                total={100}
                                 size={size}
                             />
                         </div>

@@ -2,7 +2,6 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
-import {setPageSize} from '../../../actions/list';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {ListControlPosition} from '../../../hoc/list';
@@ -16,6 +15,7 @@ export interface IPaginationSizeProps {
     className?: string;
     size?: Size;
     view?: CustomView,
+    onChange?: (value: number) => void,
 }
 
 export interface IPaginationSizeViewProps extends IPaginationSizeProps {
@@ -36,12 +36,19 @@ interface IPaginationSizePrivateProps extends IConnectHocOutput, IComponentsHocO
     };
 }
 
+const defaultProps = {
+    sizes: [30, 50, 100],
+};
+
 @connect()
 @components('ui')
 export default class PaginationSize extends React.PureComponent<IPaginationSizeProps & IPaginationSizePrivateProps> {
 
+    static defaultProps = defaultProps;
+
     constructor(props) {
         super(props);
+
         this._onSelect = this._onSelect.bind(this);
     }
 
@@ -61,8 +68,8 @@ export default class PaginationSize extends React.PureComponent<IPaginationSizeP
         );
     }
 
-    _onSelect(size) {
-        this.props.dispatch(setPageSize(this.props.listId, size));
+    _onSelect(value) {
+        this.props.onChange(value);
     }
 
 }

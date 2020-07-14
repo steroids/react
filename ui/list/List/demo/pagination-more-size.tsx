@@ -13,8 +13,7 @@ export default class extends React.PureComponent {
         return (
             <List
                 listId='ListDemoPaginationMore'
-                items={demoItems.slice(0, 3)}
-                total={demoItems.length}
+                items={demoItems}
                 pagination={{
                     loadMore: true,
                 }}

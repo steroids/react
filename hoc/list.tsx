@@ -1,26 +1,23 @@
 import * as React from 'react';
-import {getFormValues} from 'redux-form';
+import {getFormValues, initialize, change} from 'redux-form';
 import _get from 'lodash-es/get';
-import _has from 'lodash-es/has';
 import _isEqual from 'lodash-es/isEqual';
-import _isString from 'lodash-es/isString';
 import _isBoolean from 'lodash-es/isBoolean';
-import _isArray from 'lodash-es/isArray';
-import _isEmpty from 'lodash-es/isEmpty';
-import _mergeWith from 'lodash-es/mergeWith';
-import * as queryString from 'query-string';
+import _union from 'lodash-es/union';
 
-import {init, lazyFetch, fetch, setSort, destroy, setLayoutName, initSSR} from '../actions/list';
+import {listInit, listLazyFetch, listFetch, listDestroy, IList} from '../actions/list';
 import {getList} from '../reducers/list';
-import {getMeta} from '../reducers/fields';
+import {getModel} from '../reducers/fields';
 import components, {IComponentsHocOutput} from './components';
 import connect, {IConnectHocOutput} from './connect';
 import normalize, {INormalizeHocConfig} from './normalize';
 import {IFormProps} from '../ui/form/Form/Form';
-import {IPaginationProps} from '../ui/list/Pagination/Pagination';
 import {IPaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
 import {IEmptyProps} from '../ui/list/Empty/Empty';
 import {INavItem} from '../ui/nav/Nav/Nav';
+import {queryConfig, queryReplace, queryRestore} from '../utils/query';
+import {IPaginationProps} from '../ui/list/Pagination/Pagination';
+import {Model} from '../components/MetaComponent';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -39,23 +36,16 @@ interface ILayoutProps {
     view?: CustomView,
 }
 
+interface IAddressBar {
+    enable?: boolean,
+    useHash?: boolean,
+}
+
 export interface IListHocInput {
-    /*
-    scope: PropTypes.arrayOf(PropTypes.string),
-    onFetch: PropTypes.func,
-    query: PropTypes.object,
-    items: PropTypes.array,
-    total: PropTypes.number,
-    itemsIndexing: PropTypes.bool,
-    syncWithAddressBar: PropTypes.bool,
-    restoreCustomizer: PropTypes.func,
-    model: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.func,
-        PropTypes.object
-    ]),
-     */
     listId?: string,
+    primaryKey?: string,
+    action?: string,
+    actionMethod?: HttpMethod,
     pagination?: boolean | IPaginationProps,
     paginationSize?: boolean | IPaginationSizeProps,
     sort?: boolean | ISortProps,
@@ -65,21 +55,13 @@ export interface IListHocInput {
         formId?: string,
     },
     autoDestroy?: boolean,
-
-    primaryKey?: string,
-    action?: string,
-    actionMethod?: HttpMethod,
-    scope?: any,
-    onFetch?: any,
-    query?: any,
-    items?: any,
-    total?: any,
-    itemsIndexing?: any,
-    syncWithAddressBar?: any,
-    restoreCustomizer?: any,
-    model?: any,
-    layoutProps?: any,
-    locationSearch?: any,
+    onFetch?: (list: IList, query: object, http: any) => Promise<any>,
+    addressBar?: boolean | IAddressBar,
+    scope?: string[],
+    query?: object,
+    model?: Model,
+    searchModel?: Model,
+    items?: Array<any>,
 }
 
 export interface IListHocOutput {
@@ -87,7 +69,6 @@ export interface IListHocOutput {
         searchForm={searchForm}
         items={items}
         fetch={this._onFetch}
-        sort={this._onSort}
      */
     isLoading?: boolean,
     emptyNode?: React.ReactNode,
@@ -102,39 +83,22 @@ export interface IListHocOutput {
 }
 
 export interface IListHocPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
-    /*
-    list: PropTypes.shape({
-        meta: PropTypes.object,
-        isFetched: PropTypes.bool,
-        isLoading: PropTypes.bool,
-        page: PropTypes.number,
-        pageSize: PropTypes.number,
-        total: PropTypes.number,
-        sort: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.arrayOf(PropTypes.string)
-        ]),
-        query: PropTypes.object,
-        items: PropTypes.array
-    })
-     */
-    list?: {
-        meta?: object,
-        isFetched?: boolean,
-        isLoading?: boolean,
-        page?: number,
-        pageSize?: number,
-        total?: number,
-        sort?: string | string[],
-        query?: object,
-        items?: Array<any>,
-        layoutName?: string,
+    list?: IList,
+    formValues?: any,
+    searchFormValues?: any,
+    location?: {
+        search?: string,
+        hash?: string,
+        pathname?: string,
     },
     _pagination?: IPaginationProps,
     _paginationSize?: IPaginationSizeProps,
     _sort?: ISortProps,
     _layout?: ILayoutProps,
     _empty?: IEmptyProps,
+    _addressBar?: IAddressBar,
+    _model?: Model,
+    _searchModel?: Model,
 }
 
 const defaultProps = {
@@ -144,6 +108,7 @@ const defaultProps = {
     pagination: {
         enable: true,
         attribute: 'page',
+        aroundCount: 3,
         defaultValue: 1,
         loadMore: false,
         position: 'bottom',
@@ -169,44 +134,21 @@ const defaultProps = {
     empty: {
         enable: false,
         text: 'Записи не найдены',
-    }
+    },
+    addressBar: {
+        enable: false,
+        useHash: false,
+    },
 };
 
 const stateMap = (state, props) => {
-    const formId = getFormId(props);
-    if (formId && !formValuesSelectors[formId]) {
-        formValuesSelectors[formId] = getFormValues(formId);
-    }
-
     const list = getList(state, props.listId);
-    let model = props.model || _get(list, 'meta.model');
-    if (_isString(model)) {
-        model = getMeta(state, model) || null;
-    }
-
-    let searchForm = props.searchForm;
-    if (searchForm) {
-        let searchModel = searchForm.model || _get(list, 'meta.searchModel');
-        if (_isString(searchModel)) {
-            searchForm.model = {
-                fields: {
-                    ..._get(getMeta(state, searchModel), 'fields'),
-                    ..._get(getMeta(state, searchModel), 'searchFields')
-                },
-                ...searchForm.model
-            };
-            if (_isEmpty(searchForm.model)) {
-                searchForm.model = null;
-            }
-        }
-    }
-
     return {
-        model,
-        searchForm,
         list,
-        formValues: (formId && formValuesSelectors[formId](state)) || null,
-        locationSearch: _get(state, 'router.location.search', '')
+        model: getModel(state, props.model || _get(list, 'meta.model')),
+        searchModel: getModel(state, _get(props, 'searchModel') || _get(props, 'searchForm.model') || _get(list, 'meta.searchModel')),
+        formValues: getFormValues(getFormId(props))(state) || null,
+        location: _get(state, 'router.location') || null,
     };
 };
 
@@ -225,7 +167,7 @@ const normalizeMap = [
         normalizer: paginationSize => ({
             ...defaultProps.paginationSize,
             enable: !!paginationSize,
-            defaultValue: _get(paginationSize, 'numbers.0') || 50,
+            defaultValue: _get(paginationSize, 'sizes.0') || 50,
             ...(_isBoolean(paginationSize) ? {enable: paginationSize} : paginationSize),
         }),
     },
@@ -244,6 +186,7 @@ const normalizeMap = [
         normalizer: layout => ({
             ...defaultProps.layout,
             enable: !!layout,
+            defaultValue: _get(layout, 'items.0.id') || null,
             ...(_isBoolean(layout) ? {enable: layout} : layout),
         }),
     },
@@ -257,16 +200,57 @@ const normalizeMap = [
             ...(_isBoolean(empty) ? {enable: empty} : (_isBoolean(empty) ? {text: empty} : empty)),
         }),
     },
+    {
+        fromKey: 'addressBar',
+        toKey: '_addressBar',
+        normalizer: addressBar => ({
+            ...defaultProps.addressBar,
+            enable: !!addressBar,
+            ...(_isBoolean(addressBar) ? {enable: addressBar} : addressBar),
+        }),
+    },
+    {
+        fromKey: 'model',
+        toKey: '_model',
+        normalizer: (model, props) => props.meta.normalizeModel(model),
+    },
+    {
+        fromKey: 'searchModel',
+        toKey: '_searchModel',
+        normalizer: (searchModel, props) => props.meta.normalizeModel(searchModel, props._addressBar.enable && {
+            attributes: [ // default attributes
+                props._pagination.enable && {
+                    type: 'integer',
+                    attribute: props._pagination.attribute,
+                    defaultValue: props._pagination.defaultValue,
+                },
+                props._paginationSize.enable && {
+                    type: 'integer',
+                    attribute: props._paginationSize.attribute,
+                    defaultValue: props._paginationSize.defaultValue,
+                },
+                props._sort.enable && {
+                    type: 'string', // TODO Need list of strings
+                    jsType: 'string[]',
+                    attribute: props._sort.attribute,
+                    defaultValue: props._sort.defaultValue,
+                },
+                props._layout.enable && {
+                    type: 'string',
+                    attribute: props._layout.attribute,
+                    defaultValue: props._layout.defaultValue,
+                },
+            ].filter(Boolean)
+        }),
+    },
 ] as INormalizeHocConfig[];
 
-let formValuesSelectors = {};
-export const getFormId = props =>
-    _get(props, 'searchForm.formId', props.listId);
+export const getFormId = props => _get(props, 'searchForm.formId', props.listId);
 
 export default (): any => WrappedComponent =>
     connect(stateMap)(
-        normalize(normalizeMap)(
-            components('store')(
+        components('store', 'meta')(
+            normalize(normalizeMap)(
                 class ListHoc extends React.PureComponent<IListHocInput & IListHocPrivateProps> {
 
                     static WrappedComponent = WrappedComponent;
@@ -275,12 +259,17 @@ export default (): any => WrappedComponent =>
 
                     constructor(props) {
                         super(props);
+
                         this._onFetch = this._onFetch.bind(this);
-                        this._onSort = this._onSort.bind(this);
+                        this._onPageChange = this._onPageChange.bind(this);
+                        this._onPageSizeChange = this._onPageSizeChange.bind(this);
+                        this._onSortChange = this._onSortChange.bind(this);
+                        this._onLayoutChange = this._onLayoutChange.bind(this);
                     }
 
                     UNSAFE_componentWillMount() {
-                        if (process.env.IS_SSR) {
+                        // TODO
+                        /*if (process.env.IS_SSR) {
                             const query = queryString.parse(this.props.locationSearch);
                             this.props.dispatch(
                                 initSSR(this.props.listId, {
@@ -289,94 +278,96 @@ export default (): any => WrappedComponent =>
                                     query
                                 })
                             );
-                        }
+                        }*/
                     }
 
                     componentDidMount() {
-                        // Restore values from address bar
-                        if (this.props.syncWithAddressBar) {
-                            const page = Number(
-                                _get(
-                                    queryString.parse(this.props.locationSearch),
-                                    'page',
-                                    this.props._pagination.defaultValue
-                                )
-                            );
-                            const SyncAddressBarHelper = require('../ui/form/Form/SyncAddressBarHelper').default;
-                            SyncAddressBarHelper.restore(
-                                this.props.store,
-                                this.props.listId,
-                                {
-                                    ...queryString.parse(this.props.locationSearch),
-                                    page: page > 0 ? page : 1
-                                },
-                                true,
-                                this.props.restoreCustomizer
-                            );
-                        }
                         if (!this.props.list) {
-                            this.props.dispatch(init(this.props.listId, this.props));
+                            let initialValues: any = {
+                                [this.props._pagination.attribute]: this.props._pagination.defaultValue,
+                                [this.props._paginationSize.attribute]: this.props._paginationSize.defaultValue,
+                                [this.props._sort.attribute]: this.props._sort.defaultValue,
+                                [this.props._layout.attribute]: this.props._layout.defaultValue,
+                            };
+
+                            // Restore from location params (address bar)
+                            if (this.props._addressBar.enable && this.props.searchModel) {
+                                initialValues = {
+                                    ...initialValues,
+                                    ...queryRestore(
+                                        this.props.searchModel,
+                                        this.props.location,
+                                        this.props._addressBar.useHash
+                                    ),
+                                };
+                            }
+
+                            // TODO Сейчас обнуляем страницу при обновлении страницы. По хорошему бы
+                            // TODO надо добавить поддержку пагинации loadMore не с первой страницы (сейчас глючит)
+                            //initialValues.page = 1;
+
+                            // Merge with query from props
+                            initialValues = {
+                                ...initialValues,
+                                ...this.props.query,
+                            }
+
+                            this.props.dispatch([
+                                listInit(this.props.listId, this.props),
+                                initialize(getFormId(this.props), initialValues)
+                            ]);
                         }
                     }
 
-                    UNSAFE_componentWillReceiveProps(nextProps) {
-                        const customizer = (objValue, srcValue) => {
-                            if (_isArray(objValue)) {
-                                return srcValue;
+                    componentDidUpdate(prevProps, prevState, snapshot) {
+                        const toDispatch = [];
+
+                        if (!_isEqual(prevProps.formValues, this.props.formValues)) {
+                            const formValues = {...this.props.formValues};
+
+                            // Has changes (but not page) -> reset page
+                            const pageAttribute = this.props._pagination.attribute;
+                            const prevPage = _get(prevProps, ['formValues', pageAttribute]);
+                            const nextPage = _get(this.props, ['formValues', pageAttribute]);
+                            if (prevPage && prevPage === nextPage && nextPage > 1) {
+                                formValues[pageAttribute] = this.props._pagination.defaultValue;
+                                toDispatch.push(change(getFormId(this.props), pageAttribute, formValues[pageAttribute]));
                             }
-                        };
-                        const getQuery = props => {
-                            const query = _get(props, 'list.query') || {};
-                            const formValues = _get(props, 'formValues') || {};
-                            if (this.props.searchForm) {
-                                Object.keys(query).forEach(attribute => {
-                                    if (!_has(formValues, attribute)) {
-                                        formValues[attribute] = null;
-                                    }
-                                });
-                            }
-                            return _mergeWith({}, query, formValues, customizer);
-                        };
-                        // Send fetch request on change query or init list
-                        const prevQuery = getQuery(this.props);
-                        let nextQuery = getQuery(nextProps);
-                        if (!_isEqual(this.props.query, nextProps.query)) {
-                            nextQuery = {...nextQuery, ...nextProps.query};
-                        }
-                        if (
-                            !_isEqual(prevQuery, nextQuery) ||
-                            (!this.props.list && nextProps.list)
-                        ) {
-                            const page = this.props._pagination.enable === true
-                                ? Number(_get(nextQuery, 'page', this.props._pagination.defaultValue))
-                                : undefined;
-                            this.props.dispatch(
-                                lazyFetch(this.props.listId, {
-                                    page,
-                                    ...nextProps.query,
-                                    query: nextQuery
-                                })
-                            );
-                            if (this.props.syncWithAddressBar) {
-                                const SyncAddressBarHelper = require('../ui/form/Form/SyncAddressBarHelper').default;
-                                SyncAddressBarHelper.save(
-                                    this.props.store,
-                                    {
-                                        ...nextQuery,
-                                        page: page > 1 && page
-                                    },
-                                    false
-                                );
+
+                            // Send request
+                            this.props.dispatch(listLazyFetch(this.props.listId));
+
+                            // Sync with address bar
+                            if (this.props._addressBar.enable && this.props.searchModel) {
+                                toDispatch.push(queryReplace(
+                                    this.props.searchModel,
+                                    this.props.location,
+                                    formValues,
+                                    this.props._addressBar.useHash
+                                ));
                             }
                         }
-                        if (this.props.items !== nextProps.items) {
-                            this.props.dispatch(init(this.props.listId, nextProps));
+
+                        // Check change query
+                        if (prevProps.query !== this.props.query) {
+                            _union(Object.keys(prevProps.query), Object.keys(this.props.query)).forEach(key => {
+                                if (_isEqual(prevProps.query[key], this.props.query[key])) {
+                                    toDispatch.push(change(getFormId(this.props), key, this.props.query[key]));
+                                }
+                            });
                         }
+
+                        // Check change items
+                        if (prevProps.items !== this.props.items) {
+                            toDispatch.push(listInit(this.props.listId, this.props));
+                        }
+
+                        this.props.dispatch(toDispatch);
                     }
 
                     componentWillUnmount() {
                         if (this.props.autoDestroy) {
-                            this.props.dispatch(destroy(this.props.listId));
+                            this.props.dispatch(listDestroy(this.props.listId));
                         }
                     }
 
@@ -385,34 +376,16 @@ export default (): any => WrappedComponent =>
                         if (!this.props.list) {
                             return null;
                         }
-                        let items = _get(this.props, 'list.items') || [];
-                        // Set 'index' property to items depending on page number
-                        if (this.props.itemsIndexing) {
-                            items = [].concat(
-                                items.map(item => ({
-                                    ...item,
-                                    index:
-                                        items.findIndex(searchItem => searchItem.id === item.id) +
-                                        (this.props.list.page > 1 &&
-                                            (this.props.list.page - 1) * this.props.list.pageSize) +
-                                        1
-                                }))
-                            );
+
+                        // Wait load items (if local)
+                        if (!this.props.list.isRemote && !this.props.list.items) {
+                            return null;
                         }
-                        // Customize model from backend
-                        const searchForm = this.props.searchForm
-                            ? {
-                                ...this.props.searchForm,
-                                model:
-                                    this.props.searchForm.model ||
-                                    _get(this.props.list, 'meta.searchModel')
-                            }
-                            : null;
 
                         const outputProps = {
                             isLoading: _get(this.props, 'list.isLoading'),
-                            searchForm,
-                            items,
+                            searchForm: this.props.searchForm,
+                            items: this.props.list.items,
                             emptyNode: this.renderEmpty(),
                             paginationNode: this.renderPagination(),
                             paginationPosition: this.props._pagination.position,
@@ -420,17 +393,20 @@ export default (): any => WrappedComponent =>
                             paginationSizePosition: this.props._paginationSize.position,
                             layoutNode: this.renderLayoutNames(),
                             layoutPosition: this.props._layout.position,
-                            layoutSelected: this.props.list.layoutName,
+                            layoutSelected: _get(this.props.formValues, this.props._layout.attribute) || null,
                             outsideSearchFormNode: this.renderOutsideSearchForm(),
                             fetch: this._onFetch,
-                            onSort: this._onSort,
                         } as IListHocOutput;
 
+                        const Form = require('../ui/form/Form').default;
                         return (
-                            <WrappedComponent
-                                {...this.props}
-                                {...outputProps}
-                            />
+                            <>
+                                <Form formId={getFormId(this.props)}/>
+                                <WrappedComponent
+                                    {...this.props}
+                                    {...outputProps}
+                                />
+                            </>
                         );
                     }
 
@@ -444,6 +420,7 @@ export default (): any => WrappedComponent =>
                         if (this.props._empty.enable === false) {
                             return null;
                         }
+
                         const Empty = require('../ui/list/Empty').default;
                         return (
                             <Empty
@@ -457,23 +434,21 @@ export default (): any => WrappedComponent =>
                         if (this.props._pagination.enable === false) {
                             return null;
                         }
-                        if (
-                            !this.props.list.items ||
-                            this.props.list.total <= this.props.list.pageSize
-                        ) {
+                        const page = _get(this.props.formValues, this.props._pagination.attribute) || null;
+                        const pageSize = _get(this.props.formValues, this.props._paginationSize.attribute) || null;
+                        if (!page || !pageSize || !this.props.list.items || this.props.list.total <= pageSize) {
                             return null;
                         }
+
                         const Pagination = require('../ui/list/Pagination').default;
                         return (
                             <Pagination
                                 {...this.props}
                                 {...this.props.pagination}
-                                syncWithAddressBar={Boolean(
-                                    (this.props.searchForm &&
-                                        this.props.searchForm.fields &&
-                                        this.props.searchForm.syncWithAddressBar) ||
-                                    this.props.syncWithAddressBar
-                                )}
+                                page={page}
+                                pageSize={pageSize}
+                                total={this.props.list.total}
+                                onChange={this._onPageChange}
                             />
                         );
                     }
@@ -485,12 +460,14 @@ export default (): any => WrappedComponent =>
                         if (!this.props.list.items || this.props.list.items.length === 0) {
                             return null;
                         }
+
                         const PaginationSize = require('../ui/list/PaginationSize').default;
                         return (
                             <div>
                                 <PaginationSize
                                     {...this.props}
                                     {...this.props._paginationSize}
+                                    onChange={this._onPageSizeChange}
                                 />
                             </div>
                         );
@@ -500,14 +477,14 @@ export default (): any => WrappedComponent =>
                         if (this.props._layout.enable === false) {
                             return null;
                         }
+
                         const NavComponent = this.props._layout.view || require('../ui/nav/Nav').default;
+                        const layoutName = _get(this.props.formValues, this.props._layout.attribute) || null;
                         return (
                             <NavComponent
                                 {...this.props._layout}
-                                activeTab={this.props.list.layoutName}
-                                onChange={layoutName =>
-                                    this.props.dispatch(setLayoutName(this.props.listId, layoutName))
-                                }
+                                activeTab={layoutName}
+                                onChange={this._onLayoutChange}
                             />
                         );
                     }
@@ -519,35 +496,41 @@ export default (): any => WrappedComponent =>
                         if (this.props.searchForm.layout === 'table') {
                             return null;
                         }
-                        if (
-                            (this.props.scope || []).includes('model') &&
-                            !this.props.list.isFetched
-                        ) {
+                        if ((this.props.scope || []).includes('model') && !this.props.list.isFetched) {
                             return null;
                         }
 
                         const Form = require('../ui/form/Form').default;
-
                         return (
                             <Form
                                 submitLabel={__('Найти')}
                                 {...this.props.searchForm}
-                                model={
-                                    _get(this.props.searchForm, 'model') ||
-                                    _get(this.props.list, 'meta.searchModel')
-                                }
                                 formId={getFormId(this.props)}
+                                model={this.props._searchModel}
+                                addressBar={false}
                                 onSubmit={() => this._onFetch()}
                             />
                         );
                     }
 
                     _onFetch(params = {}) {
-                        this.props.dispatch(fetch(this.props.listId, params));
+                        this.props.dispatch(listFetch(this.props.listId, params));
                     }
 
-                    _onSort(sort) {
-                        this.props.dispatch(setSort(this.props.listId, sort));
+                    _onPageChange(value) {
+                        this.props.dispatch(change(getFormId(this.props), this.props._pagination.attribute, value));
+                    }
+
+                    _onPageSizeChange(value) {
+                        this.props.dispatch(change(getFormId(this.props), this.props._paginationSize.attribute, value));
+                    }
+
+                    _onSortChange(value) {
+                        this.props.dispatch(change(getFormId(this.props), this.props._sort.attribute, value));
+                    }
+
+                    _onLayoutChange(value) {
+                        this.props.dispatch(change(getFormId(this.props), this.props._layout.attribute, value));
                     }
                 }
             )

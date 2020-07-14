@@ -13,14 +13,14 @@ export default class extends React.PureComponent {
         return (
             <List
                 listId='ListDemoPaginationPages'
-                items={demoItems.slice(0, 3)}
-                total={demoItems.length}
+                items={demoItems}
                 pagination={{
                     loadMore: false,
                     position: 'both'
                 }}
                 paginationSize={{
                     defaultValue: 3,
+                    sizes: [2, 3, 4],
                 }}
                 className='list-group'
                 itemProps={{

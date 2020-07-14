@@ -13,8 +13,7 @@ export default class extends React.PureComponent {
         return (
             <List
                 listId='ListDemoPaginationLayout'
-                items={demoItems.slice(0, 4)}
-                total={demoItems.length}
+                items={demoItems}
                 layout={{
                     items: [
                         {
@@ -25,7 +24,7 @@ export default class extends React.PureComponent {
                             id: 'grid',
                             label: 'Grid',
                         },
-                    ]
+                    ],
                 }}
                 contentClassName='row mx-lg-n1'
                 itemView={(props: any) => (

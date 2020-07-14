@@ -17,6 +17,13 @@ export default class extends React.PureComponent {
     render() {
         return (
             <>
+                <div>
+                    <a
+                        target={'_blank'}
+                        href={'https://github.com/steroids/react/blob/master/ui/form/Button/demo/sizes.tsx'}>
+                        Github
+                    </a>
+                </div>
                 {Object.keys(sizes).map(size => (
                     <Button
                         key={size}

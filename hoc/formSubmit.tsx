@@ -3,6 +3,8 @@ import {SubmissionError} from 'redux-form';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
+import _isPlainObject from 'lodash-es/isPlainObject';
+import _isArray from 'lodash-es/isArray';
 import components from './components';
 import {IComponentsHocOutput} from './components';
 import validate from "../ui/form/validate";
@@ -50,6 +52,34 @@ export default (): any => WrappedComponent =>
                 return <WrappedComponent {...this.props} onSubmit={this._onSubmit}/>;
             }
 
+            cleanEmptyObject(object) {
+                // if all properties are null substitute the object with null
+                if (!Object.values(object).some(x => (x !== null))) {
+                    return null;
+                }
+
+                Object.keys(object).forEach(key => {
+                    if (_isPlainObject(object[key])) {
+                        object[key] = this.cleanEmptyObject(object[key]);
+                    }
+
+                    if (_isArray(object[key])) {
+                        let array = object[key];
+
+                        array.forEach((value, index) => {
+                            if (_isPlainObject(value)) {
+                                array[index] = this.cleanEmptyObject(value);
+                            }
+                        })
+                        if (!object[key].some(x => (x !== null))) {
+                            object[key] = [];
+                        }
+                    }
+                })
+
+                return object;
+            }
+
             _onSubmit(values) {
                 // Append non touched fields to values object
                 Object.keys(this.props.formRegisteredFields || {}).forEach(key => {
@@ -58,6 +88,8 @@ export default (): any => WrappedComponent =>
                         _set(values, name, null);
                     }
                 });
+                values = this.cleanEmptyObject(values);
+
                 // Event onBeforeSubmit
                 if (
                     this.props.onBeforeSubmit &&

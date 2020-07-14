@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {parse, compile} from 'path-to-regexp';
 import {matchPath} from 'react-router';
-import * as queryString from 'query-string';
+import * as queryString from 'qs';
 import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
 import _pick from 'lodash-es/pick';

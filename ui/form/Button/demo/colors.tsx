@@ -22,6 +22,13 @@ export default class extends React.PureComponent {
     render() {
         return (
             <>
+                <div>
+                    <a
+                        target={'_blank'}
+                        href={'https://github.com/steroids/react/blob/master/ui/form/Button/demo/colors.tsx'}>
+                        Github
+                    </a>
+                </div>
                 {Object.keys(colors).map(color => (
                     <Button
                         key={color}

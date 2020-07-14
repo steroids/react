@@ -6,7 +6,7 @@ import _isEqual from 'lodash-es/isEqual';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _get from 'lodash-es/get';
-import * as queryString from 'query-string';
+import * as queryString from 'qs';
 import components, {IComponentsHocOutput} from '../../../hoc/components';
 import formSubmit, {IFormSubmitHocInput, IFormSubmitHocOutput} from '../../../hoc/formSubmit';
 import {FormContext} from '../../../hoc/form';

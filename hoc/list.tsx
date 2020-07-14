@@ -15,7 +15,7 @@ import {IFormProps} from '../ui/form/Form/Form';
 import {IPaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
 import {IEmptyProps} from '../ui/list/Empty/Empty';
 import {INavItem} from '../ui/nav/Nav/Nav';
-import {queryConfig, queryReplace, queryRestore} from '../utils/query';
+import {queryReplace, queryRestore} from '../utils/query';
 import {IPaginationProps} from '../ui/list/Pagination/Pagination';
 import {Model} from '../components/MetaComponent';
 

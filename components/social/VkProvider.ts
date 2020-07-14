@@ -1,4 +1,4 @@
-import * as queryString from 'query-string';
+import * as queryString from 'qs';
 
 export default class VkProvider {
     _components: any;

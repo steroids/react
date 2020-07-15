@@ -51,7 +51,7 @@ export default class StoreComponent {
         };
 
         if (process.env.PLATFORM !== 'mobile') {
-            const createHistory = process.env.IS_SSR || typeof location === 'undefined'
+            const createHistory: any = process.env.IS_SSR || typeof location === 'undefined'
                 ? createMemoryHistory
                 : location.protocol === 'file:'
                     ? createHashHistory

@@ -8,25 +8,21 @@ import {demoItems} from './basic';
  * @order 2
  * @col 4
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <List
-                listId='ListDemoPaginationPages'
-                items={demoItems}
-                pagination={{
-                    loadMore: false,
-                    position: 'both'
-                }}
-                paginationSize={{
-                    defaultValue: 3,
-                    sizes: [2, 3, 4],
-                }}
-                className='list-group'
-                itemProps={{
-                    className: 'list-group-item',
-                }}
-            />
-        );
-    }
-}
+export default () => (
+    <List
+        listId='ListDemoPaginationPages'
+        items={demoItems}
+        pagination={{
+            loadMore: false,
+            position: 'both'
+        }}
+        paginationSize={{
+            defaultValue: 3,
+            sizes: [2, 3, 4],
+        }}
+        className='list-group'
+        itemProps={{
+            className: 'list-group-item',
+        }}
+    />
+);

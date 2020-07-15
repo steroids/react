@@ -7,14 +7,10 @@ import List from '../List';
  * @order 3
  * @col 4
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <List
-                listId='ListDemoPaginationEmpty'
-                items={[]}
-                empty='Empty data'
-            />
-        );
-    }
-}
+export default () => (
+    <List
+        listId='ListDemoPaginationEmpty'
+        items={[]}
+        empty='Empty data'
+    />
+);

@@ -21,72 +21,68 @@ const items = [
     },
 ];
 
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
+export default () => (
+    <>
+        <DropDownField
+            label='Dropdown'
+            items={items}
+        />
+
+        <div className='row mb-4'>
+            <div className='col'>
                 <DropDownField
-                    label='Dropdown'
+                    label='Disabled'
+                    disabled
                     items={items}
                 />
+            </div>
+            <div className='col'>
+                <DropDownField
+                    label='Required'
+                    required
+                    items={items}
+                />
+            </div>
+            <div className='col'>
+                <DropDownField
+                    label='Show reset'
+                    showReset
+                    items={items}
+                />
+            </div>
+        </div>
 
-                <div className='row mb-4'>
-                    <div className='col'>
-                        <DropDownField
-                            label='Disabled'
-                            disabled
-                            items={items}
-                        />
-                    </div>
-                    <div className='col'>
-                        <DropDownField
-                            label='Required'
-                            required
-                            items={items}
-                        />
-                    </div>
-                    <div className='col'>
-                        <DropDownField
-                            label='Show reset'
-                            showReset
-                            items={items}
-                        />
-                    </div>
-                </div>
+        <div className='row mb-4'>
+            <div className='col'>
+                <DropDownField
+                    label='Auto Complete'
+                    autoComplete
+                    items={items}
 
-                <div className='row mb-4'>
-                    <div className='col'>
-                        <DropDownField
-                            label='Auto Complete'
-                            autoComplete
-                            items={items}
-
-                        />
-                    </div>
-                    <div className='col'>
-                        <DropDownField
-                            label='Search Placeholder'
-                            autoComplete
-                            searchPlaceholder='Search...'
-                            items={items}
-                        />
-                    </div>
-                    <div className='col'>
-                        <DropDownField
-                            label='Multiple'
-                            multiple
-                            items={items}
-                        />
-                    </div>
-                    <div className='col'>
-                        <DropDownField
-                            label='Errors'
-                            errors={['Error 1 text', 'Error 2 text']}
-                            items={items}
-                        />
-                    </div>
-                </div>
-            </>
-        );
-    }
-}
+                />
+            </div>
+            <div className='col'>
+                <DropDownField
+                    label='Search Placeholder'
+                    autoComplete
+                    searchPlaceholder='Search...'
+                    items={items}
+                />
+            </div>
+            <div className='col'>
+                <DropDownField
+                    label='Multiple'
+                    multiple
+                    items={items}
+                />
+            </div>
+            <div className='col'>
+                <DropDownField
+                    label='Errors'
+                    errors={['Error 1 text', 'Error 2 text']}
+                    items={items}
+                />
+            </div>
+        </div>
+    </>
+);

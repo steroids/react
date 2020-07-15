@@ -8,12 +8,8 @@ import CheckboxField from '../CheckboxField';
  * @order 2
  * @col 3
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <CheckboxField label='Disabled' disabled/>
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <CheckboxField label='Disabled' disabled/>
+    </>
+);

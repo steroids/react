@@ -8,39 +8,35 @@ import {demoItems} from './basic';
  * @order 6
  * @col 6
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <List
-                listId='ListDemoPaginationSearch'
-                items={demoItems}
-                model={{
-                    attributes: [
-                        'title:string:Название',
-                        {
-                            attribute: 'category',
-                            label: 'Категория',
-                            searchField: 'DropDownField',
-                        }
-                    ]
-                }}
-                searchForm={{
-                    layout: 'horizontal',
-                    fields: [
-                        'title',
-                        'category',
-                    ]
-                }}
-                paginationSize={{
-                    attribute: 'ps',
-                    sizes: [2, 4],
-                }}
-                addressBar
-                className='list-group'
-                itemProps={{
-                    className: 'list-group-item',
-                }}
-            />
-        );
-    }
-}
+export default () => (
+    <List
+        listId='ListDemoPaginationSearch'
+        items={demoItems}
+        model={{
+            attributes: [
+                'title:string:Название',
+                {
+                    attribute: 'category',
+                    label: 'Категория',
+                    searchField: 'DropDownField',
+                }
+            ]
+        }}
+        searchForm={{
+            layout: 'horizontal',
+            fields: [
+                'title',
+                'category',
+            ]
+        }}
+        paginationSize={{
+            attribute: 'ps',
+            sizes: [2, 4],
+        }}
+        addressBar
+        className='list-group'
+        itemProps={{
+            className: 'list-group-item',
+        }}
+    />
+);

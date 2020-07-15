@@ -7,12 +7,8 @@ import InputField from '../InputField';
  * @order 1
  * @col 3
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <InputField label='Input'/>
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <InputField label='Input'/>
+    </>
+);

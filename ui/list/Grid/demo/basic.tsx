@@ -37,107 +37,103 @@ const items = [
     },
 ];
 
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <div className='row mb-4'>
-                    <div className='col'>
-                        <h6>
-                            Load more
-                        </h6>
-                        <Grid
-                            listId='ListStoryLoadMore'
-                            items={items}
-                            columns={[
-                                {
-                                    label: 'Name',
-                                    attribute: 'name',
-                                },
-                                {
-                                    label: __('Second name'),
-                                    attribute: 'secondName',
-                                },
-                                {
-                                    label: 'Work',
-                                    attribute: 'work',
-                                },
-                            ]}
-                            searchForm={searchForm}
-                            pagination={{
-                                loadMore: true,
-                            }}
-                            paginationSize={{
-                                defaultValue: 10,
-                            }}
-                        />
-                    </div>
-                    <div className='col'>
-                        <h6>
-                            Pagination
-                        </h6>
-                        <Grid
-                            listId='ListStoryPagination'
-                            items={items}
-                            columns={[
-                                {
-                                    label: 'Name',
-                                    attribute: 'name',
-                                    // visible: false,
-                                },
-                                {
-                                    label: __('Second name'),
-                                    attribute: 'secondName',
-                                },
-                                {
-                                    label: 'Work',
-                                    attribute: 'work',
-                                },
-                            ]}
-                            searchForm={searchForm}
-                            paginationSize={{
-                                enable: true,
-                                defaultValue: 10,
-                            }}
-                            pagination={{
-                                enable: true,
-                                loadMore: false,
-                            }}
-                        />
-                    </div>
-                </div>
-                <div className='row mb-4'>
-                    <div className='col-4'>
-                        <h6>
-                            Visible (column Work - visible: false)
-                        </h6>
-                        <Grid
-                            listId='ListStoryReverse'
-                            items={items}
-                            columns={[
-                                {
-                                    label: 'Name',
-                                    attribute: 'name',
-                                },
-                                {
-                                    label: __('Second name'),
-                                    attribute: 'secondName',
-                                },
-                                {
-                                    label: 'Work',
-                                    attribute: 'work',
-                                    visible: false,
-                                },
-                            ]}
-                            paginationSize={{
-                                enable: true,
-                                defaultValue: 10,
-                            }}
-                            searchForm={searchForm}
-                        />
-                    </div>
-                </div>
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <div className='row mb-4'>
+            <div className='col'>
+                <h6>
+                    Load more
+                </h6>
+                <Grid
+                    listId='ListStoryLoadMore'
+                    items={items}
+                    columns={[
+                        {
+                            label: 'Name',
+                            attribute: 'name',
+                        },
+                        {
+                            label: __('Second name'),
+                            attribute: 'secondName',
+                        },
+                        {
+                            label: 'Work',
+                            attribute: 'work',
+                        },
+                    ]}
+                    searchForm={searchForm}
+                    pagination={{
+                        loadMore: true,
+                    }}
+                    paginationSize={{
+                        defaultValue: 10,
+                    }}
+                />
+            </div>
+            <div className='col'>
+                <h6>
+                    Pagination
+                </h6>
+                <Grid
+                    listId='ListStoryPagination'
+                    items={items}
+                    columns={[
+                        {
+                            label: 'Name',
+                            attribute: 'name',
+                            // visible: false,
+                        },
+                        {
+                            label: __('Second name'),
+                            attribute: 'secondName',
+                        },
+                        {
+                            label: 'Work',
+                            attribute: 'work',
+                        },
+                    ]}
+                    searchForm={searchForm}
+                    paginationSize={{
+                        enable: true,
+                        defaultValue: 10,
+                    }}
+                    pagination={{
+                        enable: true,
+                        loadMore: false,
+                    }}
+                />
+            </div>
+        </div>
+        <div className='row mb-4'>
+            <div className='col-4'>
+                <h6>
+                    Visible (column Work - visible: false)
+                </h6>
+                <Grid
+                    listId='ListStoryReverse'
+                    items={items}
+                    columns={[
+                        {
+                            label: 'Name',
+                            attribute: 'name',
+                        },
+                        {
+                            label: __('Second name'),
+                            attribute: 'secondName',
+                        },
+                        {
+                            label: 'Work',
+                            attribute: 'work',
+                            visible: false,
+                        },
+                    ]}
+                    paginationSize={{
+                        enable: true,
+                        defaultValue: 10,
+                    }}
+                    searchForm={searchForm}
+                />
+            </div>
+        </div>
+    </>
+);

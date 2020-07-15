@@ -30,17 +30,13 @@ export const demoItems = [
  * @order 1
  * @col 4
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <List
-                listId='ListDemoBasic'
-                items={demoItems}
-                className='list-group'
-                itemProps={{
-                    className: 'list-group-item',
-                }}
-            />
-        );
-    }
-}
+export default () => (
+    <List
+        listId='ListDemoBasic'
+        items={demoItems}
+        className='list-group'
+        itemProps={{
+            className: 'list-group-item',
+        }}
+    />
+);

@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import NumberField from '../NumberField';
 
-
 const sizes = {
     sm: 'Small',
     md: 'Middle',
@@ -14,16 +13,12 @@ const sizes = {
  * @order 5
  * @col 8
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <div className='row'>
-                {Object.keys(sizes).map(size => (
-                    <div className='col' key={size}>
-                        <NumberField label={size} size={size}/>
-                    </div>
-                ))}
+export default () => (
+    <div className='row'>
+        {Object.keys(sizes).map(size => (
+            <div className='col' key={size}>
+                <NumberField label={size} size={size}/>
             </div>
-        );
-    }
-}
+        ))}
+    </div>
+);

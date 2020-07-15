@@ -8,46 +8,42 @@ const sizes = {
     lg: 'Large',
 };
 
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
+export default () => (
+    <>
+        <Pagination
+            //Pagination.defaultProps not working
+            aroundCount={5}
+            page={2}
+            pageSize={10}
+            total={100}
+        />
+        <div className='row'>
+            <div className='col'>
+                <h6>
+                    Load more
+                </h6>
                 <Pagination
-                    //Pagination.defaultProps not working
-                    aroundCount={5}
+                    aroundCount={3}
                     page={2}
-                    pageSize={10}
+                    pageSize={20}
                     total={100}
+                    loadMore
                 />
-                <div className='row'>
-                    <div className='col'>
-                        <h6>
-                            Load more
-                        </h6>
-                        <Pagination
-                            aroundCount={3}
-                            page={2}
-                            pageSize={20}
-                            total={100}
-                            loadMore
-                        />
-                    </div>
-                    {Object.keys(sizes).map(size => (
-                        <div className='col' key={size}>
-                            <h6>
-                                {sizes[size]}
-                            </h6>
-                            <Pagination
-                                aroundCount={3}
-                                page={2}
-                                pageSize={20}
-                                total={100}
-                                size={size}
-                            />
-                        </div>
-                    ))}
+            </div>
+            {Object.keys(sizes).map(size => (
+                <div className='col' key={size}>
+                    <h6>
+                        {sizes[size]}
+                    </h6>
+                    <Pagination
+                        aroundCount={3}
+                        page={2}
+                        pageSize={20}
+                        total={100}
+                        size={size}
+                    />
                 </div>
-            </>
-        );
-    }
-}
+            ))}
+        </div>
+    </>
+);

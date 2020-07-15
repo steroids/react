@@ -7,12 +7,8 @@ import NumberField from '../NumberField';
  * @order 1
  * @col 3
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <NumberField label='Amount'/>
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <NumberField label='Amount'/>
+    </>
+);

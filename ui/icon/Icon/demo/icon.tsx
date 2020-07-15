@@ -12,6 +12,7 @@ export default class extends React.PureComponent<{}, IconState> {
 
     constructor(props) {
         super(props);
+
         this.state = {
             selectedIcons: null,
         };

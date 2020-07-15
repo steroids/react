@@ -1,6 +1,17 @@
+import BooleanFormatter from './BooleanFormatter';
 import DateFormatter from './DateFormatter';
 import DateTimeFormatter from './DateTimeFormatter';
+import EnumFormatter from './EnumFormatter';
 import FileSize from './FileSize';
-import PhotosFormatter from './PhotosFormatter';
 import Money from './Money';
-export { DateFormatter, DateTimeFormatter, FileSize, PhotosFormatter, Money };
+import PhotosFormatter from './PhotosFormatter';
+
+export default {
+    'format.BooleanFormatter': BooleanFormatter,
+    'format.DateFormatter': DateFormatter,
+    'format.DateTimeFormatter': DateTimeFormatter,
+    'format.EnumFormatter': EnumFormatter,
+    'format.FileSize': FileSize,
+    'format.Money': Money,
+    'format.PhotosFormatter': PhotosFormatter,
+};

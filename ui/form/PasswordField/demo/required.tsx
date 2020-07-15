@@ -2,18 +2,13 @@ import * as React from 'react';
 
 import PasswordField from '../PasswordField';
 
-
 /**
  * Required
  * @order 3
  * @col 3
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <PasswordField label='Required' required/>
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <PasswordField label='Required' required/>
+    </>
+);

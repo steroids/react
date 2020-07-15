@@ -13,14 +13,10 @@ const levels = {
     dark: 'Dark notification',
 };
 
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <Notifications
-                    initialFlashes={levels}
-                />
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <Notifications
+            initialFlashes={levels}
+        />
+    </>
+);

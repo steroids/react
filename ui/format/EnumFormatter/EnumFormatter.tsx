@@ -5,16 +5,13 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {getEnumLabels} from '../../../reducers/fields';
-import {formatter} from '../../../hoc';
-import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
-import {IConnectHocOutput} from '../../../hoc/connect';
+import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-export interface IEnumFormatterProps extends IFormatterHocInput {
+export interface IEnumFormatterProps {
     items?: string | {id: number | string, label: string}[] | {getLabel: () => string | any};
     value?: number | string,
-}
-
-interface IEnumFormatterPrivateProps extends IFormatterHocOutput, IConnectHocOutput {
+    view?: CustomView;
 }
 
 /**
@@ -40,11 +37,12 @@ export const getLabel = (items, id) => {
         ? getEnumLabels(state, props.items)
         : props.items
 }))
-@formatter()
-export default class EnumFormatter extends React.Component<IEnumFormatterProps & IEnumFormatterPrivateProps> {
+@components('ui')
+export default class EnumFormatter extends React.Component<IEnumFormatterProps & IComponentsHocOutput> {
     render() {
-        return this.props.renderValue(
-            getLabel(this.props.items, this.props.value)
-        );
+        const EnumFormatterView = this.props.view || this.props.ui.getView('format.DefaultFormatterView');
+        return <EnumFormatterView
+            value={getLabel(this.props.items, this.props.value)}
+        />;
     }
 }

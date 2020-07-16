@@ -1,20 +1,18 @@
 import * as React from 'react';
-import {formatter} from '../../../hoc';
-import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {components} from '../../../hoc';
+import {IComponentsHocOutput} from '../../../hoc/components';
 
-export interface IBooleanFormatterProps extends IFormatterHocInput {
+export interface IBooleanFormatterProps {
     value?: string | number | boolean;
+    view?: CustomView;
 }
 
-interface IBooleanFormatterPrivateProps extends IFormatterHocOutput {
-
-}
-
-@formatter()
-export default class BooleanFormatter extends React.Component<IBooleanFormatterProps & IBooleanFormatterPrivateProps> {
+@components('ui')
+export default class BooleanFormatter extends React.Component<IBooleanFormatterProps & IComponentsHocOutput> {
     render() {
-        return this.props.renderValue(
-            this.props.value ? __('Да') : __('Нет')
-        );
+        const BooleanFormatterView = this.props.view || this.props.ui.getView('format.BooleanFormatterView');
+        return <BooleanFormatterView
+            value={this.props.value}
+        />;
     }
 }

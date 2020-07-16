@@ -7,7 +7,6 @@ import fetch from './fetch';
 import field from './field';
 import file from './file';
 import form from './form';
-import formatter from './formatter';
 import formSubmit from './formSubmit';
 import http from './http';
 import layout from './layout';
@@ -27,7 +26,6 @@ export {
     field,
     file,
     form,
-    formatter,
     formSubmit,
     http,
     layout,

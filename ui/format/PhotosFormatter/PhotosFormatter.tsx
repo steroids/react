@@ -1,9 +1,8 @@
 import * as React from 'react';
-//import Gallery from 'react-grid-gallery';
-import {formatter} from '../../../hoc';
-import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {IComponentsHocOutput} from '../../../hoc/components';
+import {components} from "../../../hoc";
 
-export interface IMoneyFormatterProps extends IFormatterHocInput {
+export interface IMoneyFormatterProps {
     value?: {
         uid?: number,
         src?: string,
@@ -13,35 +12,28 @@ export interface IMoneyFormatterProps extends IFormatterHocInput {
     }[];
     photoRowHeight?: number;
     videoRowHeight?: number;
+    view?: CustomView;
 }
 
-interface IMoneyFormatterPrivateProps extends IFormatterHocOutput {
-
-}
-
-@formatter()
-export default class PhotosFormatter extends React.Component<IMoneyFormatterProps & IMoneyFormatterPrivateProps> {
+@components('ui')
+export default class PhotosFormatter extends React.Component<IMoneyFormatterProps & IComponentsHocOutput> {
 
     static defaultProps = {
         photoRowHeight: 120
     };
 
     render() {
-        // TODO react-grid-gallery library now is not supported! We need implement our gallery with blackjack and hokers 8<)
-        //const photos = this.props.value;
-        // if (!photos || photos.length === 0) {
+        // TODO react-grid-gallery library now is not supported! We need implement our gallery with blackjack and hookers 8<)
+        const photos = this.props.value;
+        if (!photos || photos.length === 0) {
         return null;
-        // }
-        // return (
-        //     <Gallery
-        //         images={photos}
-        //         margin={3}
-        //         rowHeight={this.props.photoRowHeight}
-        //         backdropClosesModal={true}
-        //         enableImageSelection={false}
-        //         imageCountSeparator={__(' из ')}
-        //     />
-        // );
+        }
+
+        const PhotoFormatterView = this.props.view || this.props.ui.getView('format.PhotosFormatterView');
+        return <PhotoFormatterView
+            value={photos}
+            photoRowHeight={this.props.photoRowHeight}
+        />;
     }
 
 }

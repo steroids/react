@@ -1,21 +1,17 @@
 import * as React from 'react';
 import moment from 'moment';
-import {components, formatter} from '../../../hoc';
-import {IFormatterHocInput, IFormatterHocOutput} from '../../../hoc/formatter';
+import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-export interface IDateTimeFormatterProps extends IFormatterHocInput {
+export interface IDateTimeFormatterProps{
     format?: string;
     timeZone?: string | boolean;
+    view?: CustomView;
+    value?: any;
 }
 
-interface IDateTimeFormatterPrivateProps extends IFormatterHocOutput, IComponentsHocOutput {
-
-}
-
-@components('locale')
-@formatter()
-export default class DateTimeFormatter extends React.Component<IDateTimeFormatterProps & IDateTimeFormatterPrivateProps> {
+@components('locale','ui')
+export default class DateTimeFormatter extends React.Component<IDateTimeFormatterProps & IComponentsHocOutput> {
 
     static defaultProps = {
         format: 'LLL'
@@ -30,9 +26,10 @@ export default class DateTimeFormatter extends React.Component<IDateTimeFormatte
                 ? moment(this.props.value).locale(this.props.locale.language)
                 : this.props.locale.moment(this.props.value);
 
-        return this.props.renderValue(
-            date.format(this.props.format)
-        );
+        const DateTimeFormatterView = this.props.view || this.props.ui.getView('format.DefaultFormatterView');
+        return <DateTimeFormatterView
+            value={date.format(this.props.format)}
+        />;
     }
 
 }

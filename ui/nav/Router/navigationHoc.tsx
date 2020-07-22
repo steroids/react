@@ -45,7 +45,7 @@ export const walkRoutesRecursive = item => {
         items
     };
 };
-export const treeToList = (item, isRoot = true) => {
+export const treeToList = (item, defaultItem, isRoot = true) => {
     if (_isArray(item)) {
         return item;
     }
@@ -55,7 +55,7 @@ export const treeToList = (item, isRoot = true) => {
     let items = item.path ? [item] : [];
     if (_isArray(item.items)) {
         item.items.forEach(sub => {
-            items = items.concat(treeToList(sub, false));
+            items = items.concat(treeToList(sub, defaultItem, false));
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).map(id => {
@@ -65,11 +65,17 @@ export const treeToList = (item, isRoot = true) => {
                         ...item.items[id],
                         id
                     },
+                    defaultItem,
                     false
                 )
             );
         });
     }
+
+    if (_isObject(item) && !_isArray(item) && defaultItem) {
+        item = {...item, ...defaultItem};
+    }
+
     return items;
 };
 export default (routes = null): any => WrappedComponent =>

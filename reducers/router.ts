@@ -300,3 +300,7 @@ export const getRouteParent = (state, routeId = null, level = 1) => {
         ? breadcrumbs[breadcrumbs.length - (level + 1)]
         : null;
 };
+export const getNavItems = (state, routeId, level = 1) => {
+    // TODO levels...
+    return getRouteChildren(state, routeId);
+}

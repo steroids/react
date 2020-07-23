@@ -6,10 +6,9 @@ import _get from 'lodash-es/get';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
-import {convertToRaw, ContentState} from 'draft-js';
+import {convertToRaw, ContentState, EditorState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import {EditorState} from 'draft-js';
 
 export interface IHtmlFieldProps extends IFieldHocInput {
     editorProps?: any,

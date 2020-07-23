@@ -41,6 +41,9 @@
     "react-transition-group": "=1.2.1",
     "redux": "^4.0.4",
     "redux-form": "^8.2.6",
-    "conditional-decorator": "^0.1.7"
+    "conditional-decorator": "^0.1.7",
+    "draft-js": "^0.11.6",
+    "draftjs-to-html": "^0.9.1",
+    "html-to-draftjs": "^1.5.0"
   }
 }

@@ -11,25 +11,32 @@ export default () => (
         <Form
             formId='TestForm'
         >
-            <FieldSet prefix='user'>
-                <InputField
-                    label='Email'
-                    attribute='email'
-                />
-                <TextField
-                    label='Message'
-                    attribute='message'
-                    submitOnEnter
-                />
-                <DateField
-                    label='Date'
-                    attribute='date'
-                />
-                <DateTimeField
-                    label='Start time'
-                    attribute='startTime'
-                />
-            </FieldSet>
+            <FieldSet
+                prefix='user'
+                label={'label'}
+                fields={[
+                    {
+                        component: 'InputField',
+                        attribute: 'email',
+                        label: 'Email'
+                    },
+                    {
+                        component: 'TextField',
+                        attribute: 'message',
+                        label: 'Message'
+                    },
+                    {
+                        component: 'DateField',
+                        attribute: 'date',
+                        label: 'Date'
+                    },
+                    {
+                        component: 'DateTimeField',
+                        attribute: 'startTime',
+                        label: 'Start time'
+                    },
+                ]}
+            />
         </Form>
     </>
 );

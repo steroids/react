@@ -304,13 +304,14 @@ export default (): any => WrappedComponent =>
                      */
                     _searchClientSide(query) {
                         this.setState({
-                            items: smartSearch(this.state.sourceItems, query),
+                            items: smartSearch(query, this.state.sourceItems),
                         });
                     }
 
                     /**
                      * Search by data provider (for example: http requests)
                      * @param {string} query
+                     * @param {string|number} value
                      * @param {boolean} isAutoFetch
                      * @private
                      */

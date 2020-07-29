@@ -154,8 +154,10 @@ export default (): any => WrappedComponent =>
                         // Check to auto fetch items first page
                         // or load async selected labels from backend if value provided without label
                         if (
-                            this.props.autoFetch && this.props.dataProvider
-                            || this.state.items.length === 0 && this.props.input.value
+                            this.props.dataProvider && (
+                                this.props.autoFetch
+                                || this.state.items.length === 0 && this.props.input.value
+                            )
                         ) {
                             this._searchDataProvider('', this.props.input.value || null, true);
                         }
@@ -319,9 +321,9 @@ export default (): any => WrappedComponent =>
                         if (!value && !isAutoFetch && query.length < this.props._autoComplete.minLength) {
                             return;
                         }
-                        const searchHandler = this.props.dataProvider && this.props.dataProvider.onSearch
-                            ? this.props.dataProvider.onSearch
-                            : this.props.http.post.bind(this.props.http);
+                        const searchHandler =
+                            this.props.dataProvider.onSearch ||
+                            this.props.http.post.bind(this.props.http);
                         const result = searchHandler(this.props.dataProvider.action, {
                             query,
                             value,

@@ -319,9 +319,9 @@ export default (): any => WrappedComponent =>
                         if (!value && !isAutoFetch && query.length < this.props._autoComplete.minLength) {
                             return;
                         }
-                        const searchHandler =
-                            this.props.dataProvider.onSearch ||
-                            this.props.http.post.bind(this.props.http);
+                        const searchHandler = this.props.dataProvider && this.props.dataProvider.onSearch
+                            ? this.props.dataProvider.onSearch
+                            : this.props.http.post.bind(this.props.http);
                         const result = searchHandler(this.props.dataProvider.action, {
                             query,
                             value,

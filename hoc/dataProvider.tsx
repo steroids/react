@@ -150,18 +150,15 @@ export default (): any => WrappedComponent =>
                         if (this.props.selectFirst && this.state.items.length > 0) {
                             this._onItemClick(this.state.items[0]);
                         }
+
                         // Check to auto fetch items first page
-                        if (this.props.autoFetch && this.props.dataProvider) {
-                            this._searchDataProvider('', true);
+                        // or load async selected labels from backend if value provided without label
+                        if (
+                            this.props.autoFetch && this.props.dataProvider
+                            || this.state.items.length === 0 && this.props.input.value
+                        ) {
+                            this._searchDataProvider('', this.props.input.value || null, true);
                         }
-                        // Async load selected labels from backend
-                        // TODO
-                        /*if (values.length > 0 && !this.getLabel()) {
-                                  this.props.dispatch(fetchByIds(this.props.fieldId, values, {
-                                      model: this.props.modelClass,
-                                      attribute: this.props.attribute,
-                                  }));
-                              }*/
                     }
 
                     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -317,8 +314,8 @@ export default (): any => WrappedComponent =>
                      * @param {boolean} isAutoFetch
                      * @private
                      */
-                    _searchDataProvider(query = '', isAutoFetch = false) {
-                        if (!isAutoFetch && query.length < this.props._autoComplete.minLength) {
+                    _searchDataProvider(query = '', value = null, isAutoFetch = false) {
+                        if (!value && !isAutoFetch && query.length < this.props._autoComplete.minLength) {
                             return;
                         }
                         const searchHandler =
@@ -326,6 +323,7 @@ export default (): any => WrappedComponent =>
                             this.props.http.post.bind(this.props.http);
                         const result = searchHandler(this.props.dataProvider.action, {
                             query,
+                            value,
                             model: this.props.model,
                             attribute: this.props.attribute,
                             ...this.props.dataProvider.params
@@ -338,7 +336,8 @@ export default (): any => WrappedComponent =>
                                 this.setState({
                                     isLoading: false,
                                     items,
-                                    sourceItems: isAutoFetch ? items : this.state.sourceItems
+                                    sourceItems: isAutoFetch ? items : this.state.sourceItems,
+                                    selectedItems: value ? this._findSelectedItems(items, value) : this.state.selectedItems
                                 });
                             });
                         }
@@ -347,7 +346,8 @@ export default (): any => WrappedComponent =>
                             const items = normalizeItems(result);
                             this.setState({
                                 items,
-                                sourceItems: isAutoFetch ? items : this.state.sourceItems
+                                sourceItems: isAutoFetch ? items : this.state.sourceItems,
+                                selectedItems: value ? this._findSelectedItems(items, value) : this.state.selectedItems
                             });
                         }
                     }

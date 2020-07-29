@@ -154,8 +154,10 @@ export default (): any => WrappedComponent =>
                         // Check to auto fetch items first page
                         // or load async selected labels from backend if value provided without label
                         if (
-                            this.props.autoFetch && this.props.dataProvider
-                            || this.state.items.length === 0 && this.props.input.value
+                            this.props.dataProvider && (
+                                this.props.autoFetch
+                                || this.state.items.length === 0 && this.props.input.value
+                            )
                         ) {
                             this._searchDataProvider('', this.props.input.value || null, true);
                         }

@@ -7,12 +7,8 @@ import CheckboxField from '../CheckboxField';
  * @order 1
  * @col 3
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <CheckboxField label={'Remember me'}/>
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <CheckboxField label={'Remember me'}/>
+    </>
+);

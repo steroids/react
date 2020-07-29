@@ -15,7 +15,11 @@ export interface IRouteItem {
     id?: string,
     path?: string,
     exact?: boolean,
+    redirectTo?: string,
     component?: any,
+    componentProps?: any,
+    isVisible?: boolean,
+    isNavVisible?: boolean,
     roles?: string[],
     items?: IRouteItem[] | {[key: string]: IRouteItem};
 }
@@ -30,6 +34,7 @@ export interface IRouterProps {
     history?: any;
     store?: any;
     basename?: any;
+    defaultRoles?: string[];
 }
 
 interface IRouterPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -55,7 +60,9 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
         super(props);
         this._renderItem = this._renderItem.bind(this);
         this.state = {
-            routes: treeToList(this.props.routes),
+            routes: treeToList(this.props.routes, {
+                roles: this.props.defaultRoles,
+            }),
         };
     }
 
@@ -136,7 +143,7 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
         return routes;
     }
 
-    _renderItem(route, props) {
+    _renderItem(route: IRouteItem, props) {
         if (route.redirectTo) {
             return (
                 <Redirect

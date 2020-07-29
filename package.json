@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.0.0-beta.22",
+  "version": "2.0.0-beta.27",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -28,7 +28,7 @@
     "lodash-es": "^4.17.15",
     "moment": "^2.24.0",
     "path-to-regexp": "^3.2.0",
-    "query-string": "^6.8.1",
+    "qs": "^6.9.4",
     "react": "^16.4.2",
     "react-click-outside": "^3.0.1",
     "react-day-picker": "^7.1.4",
@@ -41,6 +41,9 @@
     "react-transition-group": "=1.2.1",
     "redux": "^4.0.4",
     "redux-form": "^8.2.6",
-    "conditional-decorator": "^0.1.7"
+    "conditional-decorator": "^0.1.7",
+    "draft-js": "^0.11.6",
+    "draftjs-to-html": "^0.9.1",
+    "html-to-draftjs": "^1.5.0"
   }
 }

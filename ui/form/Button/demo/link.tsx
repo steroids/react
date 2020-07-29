@@ -7,17 +7,13 @@ import Button from '../Button';
  * @order 5
  * @col 4
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <Button
-                    link
-                    url='https://google.ru'
-                    target='_blank'
-                    label={__('Link')}
-                />
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <Button
+            link
+            url='https://google.ru'
+            target='_blank'
+            label={__('Link')}
+        />
+    </>
+);

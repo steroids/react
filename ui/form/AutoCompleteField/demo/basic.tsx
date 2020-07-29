@@ -7,17 +7,13 @@ import AutoCompleteField from '../AutoCompleteField';
  * @order 1
  * @col 6
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <AutoCompleteField
-                    label='Write city'
-                    items={[
-                        'Moscow',
-                    ]}
-                />
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <AutoCompleteField
+            label='Write city'
+            items={[
+                'Moscow',
+            ]}
+        />
+    </>
+);

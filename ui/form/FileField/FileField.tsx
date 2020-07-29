@@ -111,7 +111,7 @@ export default class FileField extends React.PureComponent<IFileFieldProps & IFi
                     };
                     // Add error
                     if (file.getResult() === File.RESULT_ERROR) {
-                        item.error = file.getResultHttpMessage().error;
+                        item.error = file.getResultHttpMessage()?.error;
                     }
                     // Add thumbnail image
                     if (data.images) {

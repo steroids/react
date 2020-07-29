@@ -7,14 +7,10 @@ import Button from '../Button';
  * @order 4
  * @col 4
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <Button disabled>
-                    Disabled
-                </Button>
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <Button disabled>
+            Disabled
+        </Button>
+    </>
+);

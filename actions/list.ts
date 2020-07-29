@@ -1,5 +1,34 @@
+import {getFormValues, change} from 'redux-form';
 import _get from 'lodash-es/get';
-import {IListHocInput, IListHocPrivateProps} from '../hoc/list';
+import _isArray from 'lodash-es/isArray';
+import _isEmpty from 'lodash-es/isEmpty';
+import _orderBy from 'lodash-es/orderBy';
+import _trimStart from 'lodash-es/trimStart';
+import _isFunction from 'lodash-es/isFunction';
+import {filterItems} from '../utils/data';
+
+export interface IList {
+    action?: string,
+    actionMethod?: string,
+    onFetch?: (list: IList, query: object, components: any) => Promise<any>,
+    condition?: (query: object) => any,
+    scope?: string[],
+    total?: number,
+    items?: Array<any>,
+    sourceItems?: Array<any>,
+    isRemote?: boolean,
+    loadMore?: boolean,
+    primaryKey?: string,
+    listId?: string,
+    formId?: string,
+    pageAttribute?: string,
+    pageSizeAttribute?: string,
+    sortAttribute?: string,
+    layoutAttribute?: string,
+    meta?: object,
+    isFetched?: boolean,
+    isLoading?: boolean,
+}
 
 export const LIST_INIT = 'LIST_INIT';
 export const LIST_BEFORE_FETCH = 'LIST_BEFORE_FETCH';
@@ -11,55 +40,114 @@ export const LIST_TOGGLE_ITEM = 'LIST_TOGGLE_ITEM';
 export const LIST_TOGGLE_ALL = 'LIST_TOGGLE_ALL';
 export const LIST_SET_LAYOUT = 'LIST_SET_LAYOUT';
 
-const STORAGE_LAYOUT_KEY_PREFIX = 'listLayout_';
+//const STORAGE_LAYOUT_KEY_PREFIX = 'listLayout_';
 
 const lazyTimers = {};
 
-const defaultFetchHandler = (list, http) => {
+const createList = (listId: string, props: any) => ({
+    action: props.action || props.action === '' ? props.action : null,
+    actionMethod: props.actionMethod || 'post',
+    onFetch: props.onFetch,
+    condition: props.condition,
+    scope: props.scope,
+    total: props.total || null,
+    items: null,
+    sourceItems: props.items || null,
+    isRemote: !props.items,
+    loadMore: props._pagination.loadMore,
+    primaryKey: props.primaryKey,
+    listId,
+    formId: _get(props, 'searchForm.formId') || listId,
+    pageAttribute: _get(props, '_pagination.attribute') || null,
+    pageSizeAttribute: _get(props, '_paginationSize.attribute') || null,
+    sortAttribute: _get(props, '_sort.attribute') || null,
+    layoutAttribute: _get(props, '_layout.attribute') || null,
+});
+
+export const httpFetchHandler = (list: IList, query, {http}) => {
     let url = list.action;
     if (list.scope) {
         url +=
             (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
     }
     return http
-        .send(list.actionMethod, url || location.pathname, {
-            ...list.query,
-            page: list.page !== null ? list.page : undefined,
-            pageSize: list.pageSize !== null ? list.pageSize : undefined,
-            sort: list.sort
-        })
+        .send(list.actionMethod, url || location.pathname, query)
         .then(response => response.data);
 };
 
-const createList = (listId, props: IListHocInput & IListHocPrivateProps, clientStorage) => ({
-    action: props.action || props.action === '' ? props.action : null,
-    actionMethod: props.actionMethod || 'post',
-    onFetch: props.onFetch,
-    scope: props.scope,
-    page: props._pagination.enable ? props._pagination.defaultValue : null,
-    pageSize: props._pagination.enable ? props._paginationSize.defaultValue : null,
-    sort: props._sort.defaultValue || null,
-    total: props.total || null,
-    query: props.query || null,
-    items: props.items || null,
-    loadMore: props._pagination.loadMore,
-    primaryKey: props.primaryKey,
-    layoutName:
-        clientStorage.get(STORAGE_LAYOUT_KEY_PREFIX + listId) ||
-        // TODO props.selectedLayoutName ||
-        _get(props, 'layout.items.0.id') ||
-        null,
-    listId,
-    type: LIST_INIT
+export const localFetchHandler = (list: IList, query: object) => {
+    query = {...query};
+
+    // Get page
+    const page = query[list.pageAttribute] || null;
+    delete query[list.pageAttribute];
+
+    // Get page size
+    const pageSize = query[list.pageSizeAttribute] || null;
+    delete query[list.pageSizeAttribute];
+
+    // Get sort
+    const sort = query[list.sortAttribute] || null;
+    delete query[list.sortAttribute];
+
+    // Delete layout param
+    delete query[list.layoutAttribute];
+
+    let items = [].concat(list.sourceItems || []);
+
+    // Remove null values from query
+    Object.keys(query).forEach(key => {
+        if (query[key] === null) {
+            delete query[key];
+        }
+    });
+
+    // Filter items
+    if (!_isEmpty(query)) {
+        items = filterItems(
+            items,
+            list.condition
+                ? (_isFunction(list.condition) ? list.condition(query) : list.condition)
+                : query
+        );
+    }
+
+    const total = items.length;
+
+    // Pagination
+    if (page && pageSize) {
+        const startIndex = (page - 1) * pageSize;
+        items = items.slice(startIndex, startIndex + pageSize);
+    }
+
+    // Sort
+    if (sort) {
+        items = _orderBy(
+            items,
+            sort.map(key => _trimStart(key, '-')),
+            sort.map(key => key.indexOf('-') === 0 ? 'desc' : 'asc'),
+        );
+    }
+
+    return {
+        items,
+        total,
+    };
+}
+
+/**
+ * Init list
+ * @param listId
+ * @param props
+ */
+export const listInit = (listId, props) => ({
+    payload: createList(listId, props),
+    type: LIST_INIT,
 });
 
-export const init = (listId, props) => (dispatch, getState, {clientStorage}) => dispatch({
-    ...createList(listId, props, clientStorage),
-    type: LIST_INIT
-});
-
-export const initSSR = (listId, props) => (dispatch, getState, {http, clientStorage}) => {
-    const stateList = _get(getState(), ['list', 'lists', listId]);
+/*export const initSSR = (listId, props) => (dispatch, getState, {http, clientStorage}) => {
+    const state = getState()
+    const stateList = _get(state, ['list', 'lists', listId]);
     const list = {
         ...createList(listId, props, clientStorage),
         ...stateList
@@ -73,68 +161,111 @@ export const initSSR = (listId, props) => (dispatch, getState, {http, clientStor
         }
         return;
     }
-    const onFetch = list.onFetch || defaultFetchHandler;
+    const onFetch = list.onFetch || httpFetchHandler;
     return dispatch(
-        onFetch(list, http).then(data => ({
+        onFetch(list, VALUES, http).then(data => ({
             ...list,
             ...data,
             type: LIST_INIT
         }))
     );
-};
+};*/
 
-export const fetch = (listId, params = {}) => (dispatch, getState, {http}) => {
-    const list = {
-        ..._get(getState(), ['list', 'lists', listId]),
-        ...params
-    };
-    if (!list.action && list.action !== '') {
+/**
+ * Update query values and send request
+ * @param listId
+ * @param query
+ */
+export const listFetch = (listId: string, query: object = {}) => (dispatch, getState, components) => {
+    const state = getState();
+    const list = _get(state, ['list', 'lists', listId]) as IList;
+
+    if (!list || (list.isRemote && !list.action && list.action !== '')) {
         return;
     }
-    const onFetch = list.onFetch || defaultFetchHandler;
-    return dispatch([
-        {
-            ...params,
+
+    const toDispatch = [];
+    const formValues = getFormValues(list.formId)(state);
+    const onFetch = list.onFetch || (list.isRemote ? httpFetchHandler : localFetchHandler);
+
+    // Change query
+    Object.keys(query || {}).forEach(key => {
+        formValues[key] = query[key];
+        toDispatch.push(change(list.formId, key, query[key]));
+    });
+
+    if (list.isRemote) {
+        // Set `Loading...`
+        toDispatch.push({
             listId,
             type: LIST_BEFORE_FETCH
-        },
-        onFetch(list, http).then(data => {
+        });
+    }
+
+    // Send request
+    toDispatch.push(
+        Promise.resolve(onFetch(list, formValues, components)).then(data => {
+            // Check list is not destroy
             if (!getState().list.lists[listId]) {
                 return [];
             }
+
+            if (_isArray(data)) {
+                data = {
+                    items: data,
+                    total: data.length,
+                    meta: null,
+                };
+            }
+
             return {
-                ...data,
+                items: data.items || [],
+                total: data.total || null,
+                meta: data.meta || null,
+                page: formValues[list.pageAttribute],
+                pageSize: formValues[list.pageSizeAttribute],
                 listId,
                 type: LIST_AFTER_FETCH
             };
         })
-    ]);
+    );
+
+    return dispatch(toDispatch);
 };
 
-export const lazyFetch = (listId, params) => dispatch => {
+/**
+ * Lazy update query values and send request
+ * @param listId
+ * @param query
+ */
+export const listLazyFetch = (listId: string, query: object = {}) => dispatch => {
     if (lazyTimers[listId]) {
         clearTimeout(lazyTimers[listId]);
     }
-    lazyTimers[listId] = setTimeout(() => dispatch(fetch(listId, params)), 200);
+    lazyTimers[listId] = setTimeout(() => dispatch(listFetch(listId, query)), 200);
 };
 
-export const setPage = (listId, page, loadMore) =>
-    fetch(listId, {
-        page,
-        loadMore
-    });
+/**
+ * Send request with same query
+ * @param listId
+ */
+export const listRefresh = (listId: string) => listFetch(listId);
 
-export const setPageSize = (listId, pageSize) =>
-    fetch(listId, {
-        page: 1,
-        pageSize
-    });
+/**
+ * Destroy list (remove from redux state)
+ * @param listId
+ */
+export const listDestroy = (listId: string) => {
+    if (lazyTimers[listId]) {
+        clearTimeout(lazyTimers[listId]);
+    }
+    return {
+        listId,
+        type: LIST_DESTROY,
+    };
+};
 
-export const setSort = (listId, sort) =>
-    fetch(listId, {
-        sort
-    });
-export const refresh = listId => fetch(listId);
+
 export const add = (listId, item) => ({
     item,
     listId,
@@ -146,15 +277,6 @@ export const update = (listId, item, condition) => ({
     listId,
     type: LIST_ITEM_UPDATE
 });
-export const destroy = listId => {
-    if (lazyTimers[listId]) {
-        clearTimeout(lazyTimers[listId]);
-    }
-    return {
-        listId,
-        type: LIST_DESTROY
-    };
-};
 export const toggleItem = (listId, itemId) => ({
     listId,
     itemId,
@@ -164,7 +286,9 @@ export const toggleAll = listId => ({
     listId,
     type: LIST_TOGGLE_ALL
 });
-export const setLayoutName = (listId, layoutName) => (
+
+// TODO local storage save?
+/*export const setLayoutName = (listId, layoutName) => (
     dispatch,
     getState,
     {clientStorage}
@@ -176,3 +300,4 @@ export const setLayoutName = (listId, layoutName) => (
         type: LIST_SET_LAYOUT
     });
 };
+*/

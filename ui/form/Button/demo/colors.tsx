@@ -18,27 +18,23 @@ const colors = {
  * @order 1
  * @col 8
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                {Object.keys(colors).map(color => (
-                    <Button
-                        key={color}
-                        color={color}
-                        label={colors[color]}
-                    />
-                ))}
-                <br/>
-                {Object.keys(colors).map(color => (
-                    <Button
-                        key={color}
-                        color={color}
-                        label={colors[color]}
-                        outline
-                    />
-                ))}
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        {Object.keys(colors).map(color => (
+            <Button
+                key={color}
+                color={color}
+                label={colors[color]}
+            />
+        ))}
+        <br/>
+        {Object.keys(colors).map(color => (
+            <Button
+                key={color}
+                color={color}
+                label={colors[color]}
+                outline
+            />
+        ))}
+    </>
+);

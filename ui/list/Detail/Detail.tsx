@@ -2,7 +2,7 @@ import * as React from 'react';
 import {components} from '../../../hoc';
 import {connect} from 'react-redux';
 import _isString from 'lodash-es/isString';
-import {getMeta} from '../../../reducers/fields';
+import {getModel} from '../../../reducers/fields';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
@@ -44,9 +44,7 @@ interface IDetailPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
 }
 
 @connect((state, props) => ({
-    model: _isString(props.model)
-        ? getMeta(state, props.model) || null
-        : props.model
+    model: getModel(state, props.model),
 }))
 @components('ui')
 export default class Detail extends React.PureComponent<IDetailProps & IDetailPrivateProps> {

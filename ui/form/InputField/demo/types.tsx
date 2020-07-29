@@ -15,16 +15,12 @@ const types = {
  * @order 5
  * @col 12
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <div className={'row'}>
-                {Object.keys(types).map(type => (
-                    <div className='col' key={type}>
-                        <InputField label={type} type={type}/>
-                    </div>
-                ))}
+export default () => (
+    <div className={'row'}>
+        {Object.keys(types).map(type => (
+            <div className='col' key={type}>
+                <InputField label={type} type={type}/>
             </div>
-        );
-    }
-}
+        ))}
+    </div>
+);

@@ -304,7 +304,7 @@ export default (): any => WrappedComponent =>
                      */
                     _searchClientSide(query) {
                         this.setState({
-                            items: smartSearch(query, this.state.sourceItems),
+                            items: smartSearch(this.state.sourceItems, query),
                         });
                     }
 

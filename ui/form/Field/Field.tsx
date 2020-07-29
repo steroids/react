@@ -5,7 +5,7 @@ import _isString from 'lodash-es/isString';
 
 import components, {IComponentsHocOutput} from '../../../hoc/components';
 import form, {IFormHocOutput} from '../../../hoc/form';
-import {getMeta} from '../../../reducers/fields';
+import {getModel} from '../../../reducers/fields';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {getFieldPropsFromModel} from '../../../hoc/field';
 
@@ -16,15 +16,9 @@ export interface IFieldPrivateProps extends IFormHocOutput, IConnectHocOutput, I
 }
 
 @form()
-@connect((state, props) => {
-    let model = props.model;
-    if (_isString(model)) {
-        model = getMeta(state, model) || null;
-    }
-    return {
-        model
-    };
-})
+@connect((state, props) => ({
+    model: getModel(state, props.model),
+}))
 @components('ui')
 export default class Field extends React.Component<IFieldProps & IFieldPrivateProps, {}> {
     render() {

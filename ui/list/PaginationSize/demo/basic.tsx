@@ -8,28 +8,24 @@ const sizes = {
     lg: 'Large',
 };
 
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <div className='row'>
-                    {Object.keys(sizes).map(size => (
-                        <div className='col' key={size}>
-                            <h6>
-                                {sizes[size]}
-                            </h6>
-                            <PaginationSize
-                                list={{
-                                    page: 2,
-                                    pageSize: 20,
-                                    total: 100,
-                                }}
-                                size={size}
-                            />
-                        </div>
-                    ))}
+export default () => (
+    <>
+        <div className='row'>
+            {Object.keys(sizes).map(size => (
+                <div className='col' key={size}>
+                    <h6>
+                        {sizes[size]}
+                    </h6>
+                    <PaginationSize
+                        list={{
+                            page: 2,
+                            pageSize: 20,
+                            total: 100,
+                        }}
+                        size={size}
+                    />
                 </div>
-            </>
-        );
-    }
-}
+            ))}
+        </div>
+    </>
+);

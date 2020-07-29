@@ -1,59 +1,90 @@
+import _get from 'lodash-es/get';
+
 import Crud from './Crud';
+import {IRouteItem} from '../nav/Router/Router';
+import {IGridProps} from '../list/Grid/Grid';
+import {IFormProps} from '../form/Form/Form';
 
 interface ICrudGeneratorProps {
-  componentProps?: any,
-  path?: any,
-  items?: any,
+    path: string,
+    mode?: 'pages' | 'modal',
+    restUrl?: string,
+    primaryKey?: 'id' | string,
+    model: string,
+    index?: boolean | IRouteItem,
+    create?: boolean | IRouteItem,
+    update?: boolean | IRouteItem,
+    view?: boolean | IRouteItem,
+    items?: IRouteItem[] | {[key: string]: IRouteItem};
+    grid?: IGridProps,
+    form?: IFormProps,
 }
 
-export {Crud};
-export const generatePagesCrud = (id, props = {} as ICrudGeneratorProps) => ({
+const defaultProps = {
+    mode: 'pages',
+    primaryKey: 'id',
+} as ICrudGeneratorProps;
+
+const generateCrudItem = (id: string, name, props: ICrudGeneratorProps) => ({
+    isVisible: true,
+    isNavVisible: false,
+    exact: name === 'index',
     component: Crud,
-    exact: true,
-    ...props,
-    id,
     componentProps: {
         baseRouteId: id,
-        ...props.componentProps
+        restUrl: props.restUrl,
+        ..._get(props, [name, 'componentProps']),
     },
-    items: [].concat(props.items || []).concat([
-        {
-            component: Crud,
-            exact: true,
-            isNavVisible: false,
-            ...props,
-            id: id + '_create',
+    ...props[name],
+})
+
+export {Crud};
+export const generateCrud = (id: string, props = defaultProps as ICrudGeneratorProps) => {
+    const items = {};
+
+    props = {
+        ...props,
+        ...defaultProps,
+    };
+
+    // Create
+    if (_get(props, 'create') !== false && _get(props, 'create.visible') !== false) {
+        items[`${id}_create`] = {
             path: props.path + '/create',
-            componentProps: {
-                baseRouteId: id,
-                ...props.componentProps
-            }
-        },
-        {
-            component: Crud,
+            ...generateCrudItem(id, 'create', props),
+        };
+    }
+
+    // Update
+    if (_get(props, 'update') !== false && _get(props, 'update.visible') !== false) {
+        items[`${id}_update`] = {
+            path: props.path + '/:id/update',
             fetch: ({params}) => ({
-                url: `${props.componentProps.restUrl}/${params.id}`,
+                url: `${props.restUrl}/${params[props.primaryKey]}`,
                 key: 'item'
             }),
-            isNavVisible: false,
-            ...props,
-            id: id + '_update',
-            path: props.path + '/:id/update',
-            componentProps: {
-                baseRouteId: id,
-                ...props.componentProps
-            }
-        },
-        {
-            component: Crud,
-            isNavVisible: false,
-            ...props,
-            id: id + '_view',
+            ...generateCrudItem(id, 'update', props),
+        };
+    }
+
+    // Detail (view)
+    if (_get(props, 'view') !== false && _get(props, 'view.visible') !== false) {
+        items[`${id}_view`] = {
             path: props.path + '/:id/view',
-            componentProps: {
-                baseRouteId: id,
-                ...props.componentProps
-            }
-        }
-    ])
-});
+            fetch: ({params}) => ({
+                url: `${props.restUrl}/${params[props.primaryKey]}`,
+                key: 'item'
+            }),
+            ...generateCrudItem(id, 'view', props),
+        };
+    }
+
+    return {
+        id,
+        ...generateCrudItem(id, 'index', props),
+        items: {
+            ...props.items,
+            ...items,
+        },
+    };
+};

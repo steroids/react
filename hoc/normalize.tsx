@@ -1,9 +1,10 @@
 import * as React from 'react';
+import _isEqual from 'lodash-es/isEqual';
 
 export interface INormalizeHocConfig {
     fromKey: string,
     toKey: string,
-    normalizer: (value: any) => any,
+    normalizer: (value: any, props: any) => any,
 }
 
 export default (configs: INormalizeHocConfig | INormalizeHocConfig[]): any => WrappedComponent =>
@@ -17,11 +18,10 @@ export default (configs: INormalizeHocConfig | INormalizeHocConfig[]): any => Wr
         }
 
         componentDidUpdate(prevProps: Readonly<{}>) {
-            const toNormalize = [].concat(configs).filter(config => prevProps[config.fromKey] !== this.props[config.fromKey]);
+            const toNormalize = [].concat(configs).filter(config => !_isEqual(prevProps[config.fromKey], this.props[config.fromKey]));
             if (toNormalize.length > 0) {
                 this.setState(this._normalize(toNormalize, this.props));
             }
-
         }
 
         render() {
@@ -36,7 +36,10 @@ export default (configs: INormalizeHocConfig | INormalizeHocConfig[]): any => Wr
         _normalize(configs: INormalizeHocConfig[], props) {
             const data = {};
             configs.map(config => {
-                data[config.toKey] = config.normalizer(props[config.fromKey]);
+                data[config.toKey] = config.normalizer(
+                    props[config.fromKey],
+                    {...this.props, ...this.state, ...data}
+                );
             });
             return data;
         }

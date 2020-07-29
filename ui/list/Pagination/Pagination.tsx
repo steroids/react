@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {change} from 'redux-form';
 import _get from 'lodash-es/get';
 import {components, theme} from '../../../hoc';
-import {setPage} from '../../../actions/list';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {ListControlPosition} from '../../../hoc/list';
@@ -11,6 +9,9 @@ import {IButtonProps} from '../../form/Button/Button';
 import {IThemeHocInput, IThemeHocOutput} from '../../../hoc/theme';
 
 export interface IPaginationProps extends IThemeHocInput {
+    page?: number,
+    pageSize?: number,
+    total?: number,
     enable?: boolean,
     attribute?: string,
     defaultValue?: number | null,
@@ -20,10 +21,10 @@ export interface IPaginationProps extends IThemeHocInput {
     position?: ListControlPosition,
     buttonProps?: IButtonProps,
     view?: CustomView,
+    onChange?: (value: number) => void,
 }
 
 export interface IPaginationViewProps extends IPaginationProps, IThemeHocOutput {
-    page: number,
     totalPages: number,
     pages: {
         page?: number,
@@ -43,16 +44,13 @@ interface IPaginationPrivateProps extends IConnectHocOutput, IComponentsHocOutpu
     };
     syncWithAddressBar?: boolean;
     page?: any;
+    formId?: string;
 }
 
 @connect()
 @theme()
 @components('ui')
 export default class Pagination extends React.PureComponent<IPaginationProps & IPaginationPrivateProps> {
-
-    static defaultProps = {
-        aroundCount: 3,
-    };
 
     constructor(props) {
         super(props);
@@ -61,23 +59,21 @@ export default class Pagination extends React.PureComponent<IPaginationProps & I
     }
 
     render() {
-        const page = _get(this.props, 'list.page', 1);
-        const totalPages = Math.ceil(
-            _get(this.props, 'list.total', 0) / _get(this.props, 'list.pageSize', 0)
-        );
+        const page = this.props.page;
+        const totalPages = Math.ceil((this.props.total || 0) / (this.props.pageSize || 1));
+
         // Do not show in last page in 'loadMore' mode
         if (this.props.loadMore && page >= totalPages) {
             return null;
         }
-        const PaginationView =
-            this.props.view ||
+
+        const PaginationView = this.props.view ||
             (this.props.loadMore
                 ? this.props.ui.getView('list.PaginationMoreView')
                 : this.props.ui.getView('list.PaginationButtonView'));
         return (
             <PaginationView
                 {...this.props}
-                page={page}
                 totalPages={totalPages}
                 pages={this.generatePages(page, totalPages).map(page => ({
                     page: page !== '...' ? page : null,
@@ -91,6 +87,10 @@ export default class Pagination extends React.PureComponent<IPaginationProps & I
     }
 
     generatePages(page, totalPages) {
+        if (!page || !totalPages) {
+            return [];
+        }
+
         const pages = [];
         for (let i = 1; i <= totalPages; i++) {
             // Store first and last
@@ -114,18 +114,8 @@ export default class Pagination extends React.PureComponent<IPaginationProps & I
     }
 
     _onSelect(page) {
-        if (page) {
-            if (this.props.attribute) {
-                // TODO
-                location.href =
-                    location.pathname + '?' + this.props.attribute + '=' + page;
-            } else if (this.props.syncWithAddressBar) {
-                this.props.dispatch(change(this.props.listId, 'page', page));
-            } else {
-                this.props.dispatch(
-                    setPage(this.props.listId, page, this.props.loadMore)
-                );
-            }
+        if (this.props.onChange && page) {
+            this.props.onChange(page);
         }
     }
 

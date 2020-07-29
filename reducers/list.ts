@@ -21,21 +21,20 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case LIST_INIT:
-            const {type, ...payload} = action; // eslint-disable-line no-unused-vars
             return {
                 ...state,
                 lists: {
                     ...state.lists,
-                    [action.listId]: {
+                    [action.payload.listId]: {
                         meta: {},
-                        layoutName: null,
-                        total: action.total || (action.items ? action.items.length : 0),
-                        isFetched: !!action.items,
+                        total: action.payload.total || (action.payload.items ? action.payload.items.length : 0),
+                        isFetched: !!action.payload.items,
                         isLoading: false,
-                        ...payload
+                        ...action.payload,
                     }
                 }
             };
+
         case LIST_BEFORE_FETCH:
             return {
                 ...state,
@@ -43,18 +42,18 @@ export default (state = initialState, action) => {
                     ...state.lists,
                     [action.listId]: {
                         ...state.lists[action.listId],
-                        ...action,
                         isLoading: true
                     }
                 }
             };
+
         case LIST_AFTER_FETCH:
             let items;
             const list = state.lists[action.listId];
-            if (list && list.items && list.loadMore && list.page > 1) {
+            if (list && list.items && list.loadMore && action.page > 1) {
                 items = [].concat(list.items);
                 action.items.forEach((entry, i) => {
-                    const index = (list.page - 1) * list.pageSize + i;
+                    const index = (action.page - 1) * action.pageSize + i;
                     items[index] = entry;
                 });
             } else {
@@ -73,6 +72,7 @@ export default (state = initialState, action) => {
                     }
                 }
             };
+
         case LIST_ITEM_ADD:
             if (state.lists[action.listId]) {
                 return {
@@ -93,6 +93,7 @@ export default (state = initialState, action) => {
                 };
             }
             break;
+
         case LIST_ITEM_UPDATE:
             return {
                 ...state,
@@ -109,6 +110,7 @@ export default (state = initialState, action) => {
                     }
                 }
             };
+
         case LIST_DESTROY:
             delete state.lists[action.listId];
             return {
@@ -117,6 +119,7 @@ export default (state = initialState, action) => {
                     ...state.lists
                 }
             };
+
         case LIST_TOGGLE_ITEM:
             const selectedIds = _get(state, ['selectedIds', action.listId]) || [];
             const index = selectedIds.indexOf(action.itemId);
@@ -132,6 +135,7 @@ export default (state = initialState, action) => {
                     [action.listId]: [].concat(selectedIds)
                 }
             };
+
         case LIST_TOGGLE_ALL:
             const list4 = state.lists[action.listId];
             if (list4) {
@@ -148,6 +152,7 @@ export default (state = initialState, action) => {
                 };
             }
             break;
+
         case LIST_SET_LAYOUT:
             return {
                 ...state,
@@ -162,9 +167,9 @@ export default (state = initialState, action) => {
     }
     return state;
 };
+
 export const isListInitialized = (state, listId) => !!_get(state, ['list', 'lists', listId]);
-export const getList = (state, listId) =>
-    _get(state, ['list', 'lists', listId]) || null;
+export const getList = (state, listId) => _get(state, ['list', 'lists', listId]) || null;
 export const getIds = (state, listId) => {
     const list = getList(state, listId);
     return (

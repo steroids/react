@@ -7,9 +7,7 @@ import _isString from 'lodash-es/isString';
 import {components, connect, theme} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {
-    buildUrl,
-    getActiveRouteIds,
-    getRouteChildren,
+    getActiveRouteIds, getNavItems,
     getRouterParams,
     IRoute
 } from '../../../reducers/router';
@@ -57,7 +55,7 @@ interface NavState {
 
 @connect(
     (state, props) => ({
-        routes: _isString(props.items) ? getRouteChildren(state, props.items) : null,
+        routes: _isString(props.items) ? getNavItems(state, props.items) : null,
         activeRouteIds: getActiveRouteIds(state),
         routerParams: getRouterParams(state),
     })

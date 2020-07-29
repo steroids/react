@@ -4,7 +4,7 @@ import _get from 'lodash-es/get';
 import {components} from '../../../hoc';
 import {getRoute, getRouteParam} from '../../../reducers/router';
 import {goToRoute} from '../../../actions/router';
-import {refresh} from '../../../actions/list';
+import {listRefresh} from '../../../actions/list';
 import Grid from '../../list/Grid';
 import Form from '../../form/Form';
 import {showNotification} from '../../../actions/notifications';
@@ -224,7 +224,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
             delete: {
                 onClick: async () => {
                     await this.props.http.delete(`${this.props.restUrl}/${itemId}`);
-                    this.props.dispatch(refresh(getCrudId(this.props)));
+                    this.props.dispatch(listRefresh(getCrudId(this.props)));
                 }
             }
         };

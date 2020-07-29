@@ -4,9 +4,8 @@ import _get from 'lodash-es/get';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import _isString from 'lodash-es/isString';
 
-import {getFieldProps, getMeta} from '../reducers/fields';
+import {getFieldProps, getModel} from '../reducers/fields';
 import connect from './connect';
 import components, {IComponentsHocOutput} from './components';
 import form, {IFormHocOutput} from './form';
@@ -141,13 +140,9 @@ export default (customConfig): any => WrappedComponent => {
                 errorSelectors[props.formId] = getFormSubmitErrors(props.formId);
             }
             const errorSelector = errorSelectors[props.formId];
-            let model = props.model;
-            if (_isString(model)) {
-                model = getMeta(state, model) || null;
-            }
             return {
                 ...values,
-                model,
+                model: getModel(state, props.model),
                 formErrors: errorSelector(state),
                 fieldPropsFromRedux: getFieldProps(state, getFieldId(props, config))
             };

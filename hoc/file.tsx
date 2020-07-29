@@ -7,7 +7,7 @@ import _difference from 'lodash-es/difference';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
 import QueueCollection from 'fileup-core/lib/models/QueueCollection';
-import * as buildURL from 'axios/lib/helpers/buildURL';
+import buildURL from 'axios/lib/helpers/buildURL';
 
 export interface IFileHocInput {
     /*

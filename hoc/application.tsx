@@ -9,6 +9,7 @@ import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
 import {IComponentsHocOutput} from './components';
 import {ThemeContext, defaultTheme} from './theme';
+import MetaComponent from '../components/MetaComponent';
 
 export interface IApplicationHocInput {
 }
@@ -40,6 +41,9 @@ const defaultComponents = {
     },
     locale: {
         className: LocaleComponent,
+    },
+    meta: {
+        className: MetaComponent,
     },
     store: {
         className: StoreComponent,

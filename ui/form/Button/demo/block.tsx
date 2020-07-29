@@ -7,15 +7,11 @@ import Button from '../Button';
  * @order 3
  * @col 4
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <>
-                <Button
-                    block
-                    label={__('Block')}
-                />
-            </>
-        );
-    }
-}
+export default () => (
+    <>
+        <Button
+            block
+            label={__('Block')}
+        />
+    </>
+);

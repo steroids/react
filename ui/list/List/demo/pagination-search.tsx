@@ -4,35 +4,39 @@ import List from '../List';
 import {demoItems} from './basic';
 
 /**
- * Pagination with search form
+ * Pagination with search form, address bar and custom pagination
  * @order 6
  * @col 6
  */
-export default class extends React.PureComponent {
-    render() {
-        return (
-            <List
-                listId='ListDemoPaginationSearch'
-                items={demoItems.slice(0, 3)}
-                searchForm={{
-                    layout: 'horizontal',
-                    fields: [
-                        {
-                            attribute: 'title',
-                            label: 'Название',
-                        },
-                        {
-                            attribute: 'category',
-                            label: 'Категория',
-                            component: 'DropDownField',
-                        }
-                    ]
-                }}
-                className='list-group'
-                itemProps={{
-                    className: 'list-group-item',
-                }}
-            />
-        );
-    }
-}
+export default () => (
+    <List
+        listId='ListDemoPaginationSearch'
+        items={demoItems}
+        model={{
+            attributes: [
+                'title:string:Название',
+                {
+                    attribute: 'category',
+                    label: 'Категория',
+                    searchField: 'DropDownField',
+                }
+            ]
+        }}
+        searchForm={{
+            layout: 'horizontal',
+            fields: [
+                'title',
+                'category',
+            ]
+        }}
+        paginationSize={{
+            attribute: 'ps',
+            sizes: [2, 4],
+        }}
+        addressBar
+        className='list-group'
+        itemProps={{
+            className: 'list-group-item',
+        }}
+    />
+);

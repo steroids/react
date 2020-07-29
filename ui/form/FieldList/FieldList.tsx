@@ -2,12 +2,11 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {arrayPush} from 'redux-form';
 import {findDOMNode} from 'react-dom';
-import _isString from 'lodash-es/isString';
 import {components, field} from '../../../hoc';
 import {getFieldPropsFromModel, IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import Field from '../Field';
 import tableNavigationHandler from './tableNavigationHandler';
-import {getMeta} from '../../../reducers/fields';
+import {getModel} from '../../../reducers/fields';
 import {FormContext} from '../../../hoc/form';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -74,15 +73,9 @@ const defaultProps = {
     componentId: 'form.FieldList',
     list: true,
 })
-@connect((state, props) => {
-    let model = props.model;
-    if (_isString(model)) {
-        model = getMeta(state, model) || null;
-    }
-    return {
-        model,
-    };
-})
+@connect((state, props) => ({
+    model: getModel(state, props.model),
+}))
 @components('ui')
 export default class FieldList extends React.PureComponent<IFieldListProps & IFieldListPrivateProps> {
 

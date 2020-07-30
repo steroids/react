@@ -1,6 +1,9 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
+import {components, connect} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {getActiveRouteIds, getNavItems, getRouterParams, IRoute} from '../../../reducers/router';
+import _isString from 'lodash-es/isString';
+import {IThemeHocOutput} from '../../../hoc/theme';
 
 export interface ITreeItem {
     id?: string | number,
@@ -16,7 +19,8 @@ export interface ITreeProps {
         label?: string | any,
         items?: any[],
         visible?: boolean
-    }[];
+    }[] | string;
+    level?: number;
     itemsKey?: string;
     selectedItemId?: string;
     className?: string;
@@ -38,22 +42,33 @@ export interface ITreeViewProps extends ITreeProps {
     })[],
 }
 
-interface ITreePrivateProps extends IComponentsHocOutput {
-
+interface ITreePrivateProps extends IComponentsHocOutput, IThemeHocOutput {
+    activeRouteIds?: string[],
+    routerParams?: object,
+    routes?: IRoute[];
 }
 
 interface TreeState {
     opened?: any,
     selectedUniqId?: any,
+    activeTab?: any
 }
 
+@connect(
+    (state, props) => ({
+        routes: _isString(props.items) ? getNavItems(state, props.items) : [],
+        activeRouteIds: getActiveRouteIds(state),
+        routerParams: getRouterParams(state),
+    })
+)
 @components('ui', 'clientStorage')
 export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateProps, TreeState> {
     static STORAGE_KEY_PREFIX = 'tree_';
     static defaultProps = {
         itemsKey: 'items',
         autoOpenLevels: 1,
-        autoSave: false
+        autoSave: false,
+        level: 0,
     };
 
     constructor(props) {
@@ -73,8 +88,15 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     render() {
         const TreeView = this.props.view || this.props.ui.getView('nav.TreeView');
+        let items = this.props.items;
+
+        if (_isString(items)) {
+            items = this.props.routes;
+        }
+        const treeItems = this._getItems(items);
+
         return (
-            <TreeView {...this.props} items={this._getItems(this.props.items)}/>
+            <TreeView {...this.props} items={treeItems}/>
         );
     }
 
@@ -97,9 +119,23 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     _getItems(items, parentId = '', level = 0) {
         let result = [];
+        if (_isString(items)) {
+            return null;
+        }
+
+        if (this.props.level && level == this.props.level) {
+            return null;
+        }
+
         (items || []).forEach((item, index) => {
             const uniqId = this._resolveId(item, index, parentId);
             const isOpened = !!this.state.opened[uniqId];
+            let hasItems = item[this.props.itemsKey] && item[this.props.itemsKey].length > 0;
+
+            if (this.props.level && (level == this.props.level - 1)) {
+                hasItems = false;
+            }
+
             result.push({
                 ...item,
                 uniqId,
@@ -107,14 +143,13 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                 level,
                 isOpened,
                 isSelected: this.state.selectedUniqId === uniqId,
-                hasItems:
-                    item[this.props.itemsKey] && item[this.props.itemsKey].length > 0,
+                hasItems,
                 onClick: e => this._onItemClick(e, uniqId, item)
             });
             if (isOpened) {
                 result = result.concat(
                     this._getItems(item[this.props.itemsKey], uniqId, level + 1)
-                );
+                ).filter(Boolean);
             }
         });
         return result;
@@ -122,6 +157,10 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     _autoOpen(items, parentId = '', level = 1) {
         let opened = {};
+        if (_isString(items)) {
+            return null;
+        }
+
         (items || []).forEach((item, index) => {
             const uniqId = this._resolveId(item, index, parentId);
             if (this.props.autoOpenLevels >= level) {
@@ -146,6 +185,10 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     _findChildById(items, itemId, parentId = '', level = 1) {
         let finedItem = null;
+        if (_isString(items)) {
+            return null;
+        }
+
         (items || []).forEach((item, index) => {
             const uniqId = this._resolveId(item, index, parentId);
             if (!finedItem && (item.id === itemId || uniqId === itemId)) {

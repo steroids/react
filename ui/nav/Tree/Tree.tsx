@@ -45,7 +45,7 @@ export interface ITreeViewProps extends ITreeProps {
 interface ITreePrivateProps extends IComponentsHocOutput, IThemeHocOutput {
     activeRouteIds?: string[],
     routerParams?: object,
-    routes?: IRoute[];
+    routes?: IRoute[] | null;
 }
 
 interface TreeState {
@@ -56,7 +56,7 @@ interface TreeState {
 
 @connect(
     (state, props) => ({
-        routes: _isString(props.items) ? getNavItems(state, props.items) : [],
+        routes: _isString(props.items) ? getNavItems(state, props.items) : null,
         activeRouteIds: getActiveRouteIds(state),
         routerParams: getRouterParams(state),
     })

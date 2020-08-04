@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import _isString from 'lodash-es/isString';
 
 /**
  * Install the latest free version of Font Awesome via yarn:
@@ -58,7 +59,7 @@ export default class Icon extends React.PureComponent<IIconProps> {
         let icon = this.props.ui.getIcon(this.props.name);
 
         // Fix width attribute in icon
-        if (icon.indexOf('<svg') === 0) {
+        if (_isString(icon) && icon.indexOf('<svg') === 0) {
             const match = icon.match(/<svg([^>]+)/);
             if (match && match[0].indexOf('width') === -1) {
                 icon = icon.replace(match[0], match[0] + ' width=16');

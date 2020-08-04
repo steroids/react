@@ -26,13 +26,13 @@ export interface IDetailProps {
     model?: string | ((...args: any[]) => any) | any;
     view?: any;
     attributes?: (string | IDetailColumn)[];
-    className?: string,
+    className?: CssClassName,
     size?: Size,
     emptyText?: any,
 }
 
 export interface IDetailViewProps {
-    className?: string,
+    className?: CssClassName,
     items: (IDetailColumn & {
         label: any,
         value: any,

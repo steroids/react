@@ -11,14 +11,44 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 
 export interface IHtmlFieldProps extends IFieldHocInput {
+
+    /**
+     * Конфигурация wysiwyg реадактора
+     */
     editorProps?: any,
     className?: CssClassName,
+
+    /**
+     * Url на который будет отправлена форма загрузки файла
+     * @example /api/v1/upload-files
+     */
     uploadUrl?: string,
+
+    /**
+     * После загрузки изображения на сервер,
+     * можно указать с каким процессором должно вернуться картинка
+     * @example origin
+     */
     uploadImagesProcessor?: string,
     view?: CustomView,
+
+    /**
+     * Обработчик события при фокусе на редактора
+     * @param event
+     */
     onFocus?: (event: any) => any,
+
+    /**
+     * Обработчик события при снятии фокуса с редактора
+     * @param event
+     * @param editorState
+     */
     onBlur?: (event, editorState) => any,
-    onTab?: (event) => any,
+
+    /**
+     * Пользовательские кнопки
+     * @example [<CustomButton/>]
+     */
     customButtons?: Array<any>,
 }
 
@@ -61,9 +91,8 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
         disabled: false,
         className: '',
         customButtons: [],
-        onFocus: () => {},
-        onBlur: () => {},
-        onTab: () => {},
+        // onFocus: () => {},
+        // onBlur: () => {},
     };
 
     static defaultEditorConfig = {
@@ -193,7 +222,6 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
                 toolbarCustomButtons={this.props.customButtons}
                 onFocus={(event) => this.props.onFocus(event)}
                 onBlur={(event, editorState) => this.props.onBlur(event, editorState)}
-                onTab={(event) => this.props.onTab(event)}
                 editorState={this.state.editorState}
                 onEditorStateChange={editorState => {
                     const html = draftToHtml(convertToRaw(editorState.getCurrentContent()))

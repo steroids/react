@@ -7,7 +7,7 @@ export interface IModalProps {
     onClose?: (...args: any[]) => any;
     title?: string,
     view?: any;
-    className?: string;
+    className?: CssClassName;
     isClosing?: boolean;
     group?: string;
 }

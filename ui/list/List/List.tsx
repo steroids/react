@@ -8,7 +8,7 @@ export interface IListProps extends IListHocInput {
     itemView?: React.ComponentType;
     itemProps?: object;
     view?: React.ComponentType;
-    className?: string;
+    className?: CssClassName;
     contentClassName?: string;
 }
 
@@ -24,7 +24,7 @@ export interface IListItemViewProps extends IListProps, IListHocOutput {
         label?: string | any,
     },
     index: number,
-    className?: string;
+    className?: CssClassName;
     contentClassName?: string;
     layoutSelected?: PrimaryKey;
 }

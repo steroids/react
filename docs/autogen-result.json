@@ -1038,9 +1038,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -1127,9 +1127,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -1916,27 +1916,169 @@
                 }
             ]
         },
-        "IControlItem": {
-            "name": "IControlItem",
-            "moduleName": "ui/crud/Controls/Controls",
+        "ICrudChildrenProps": {
+            "name": "ICrudChildrenProps",
+            "moduleName": "ui/crud/Crud/Crud",
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IButtonProps"
+                "ICrudProps"
             ],
             "items": [
                 {
-                    "name": "content",
-                    "description": "React.ReactNode | Element",
+                    "name": "baseRouteId",
+                    "description": "string",
                     "required": false,
-                    "type": "React.ReactNode | Element",
+                    "type": "string",
                     "example": ""
                 },
                 {
-                    "name": "contentProps",
+                    "name": "controlsHandler",
                     "description": "any",
                     "required": false,
                     "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "crudId",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "detail",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "detailComponent",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "form",
+                    "description": "IFormProps",
+                    "required": false,
+                    "type": "IFormProps",
+                    "example": ""
+                },
+                {
+                    "name": "formComponent",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "grid",
+                    "description": "IGridProps",
+                    "required": false,
+                    "type": "IGridProps",
+                    "example": ""
+                },
+                {
+                    "name": "gridComponent",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemId",
+                    "description": "PrimaryKey",
+                    "required": false,
+                    "type": "PrimaryKey",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "ICrudItem[] | {}",
+                    "required": false,
+                    "type": "ICrudItem[] | {}",
+                    "example": ""
+                },
+                {
+                    "name": "mode",
+                    "description": "\"page\" | \"modal\"",
+                    "required": false,
+                    "type": "\"page\" | \"modal\"",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "\"id\" | string",
+                    "required": false,
+                    "type": "\"id\" | string",
+                    "example": ""
+                },
+                {
+                    "name": "restUrl",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "searchModel",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "ICrudItem": {
+            "name": "ICrudItem",
+            "moduleName": "ui/crud/Crud/Crud",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "component",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "componentProps",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "control",
+                    "description": "IControlItem",
+                    "required": false,
+                    "type": "IControlItem",
                     "example": ""
                 },
                 {
@@ -1947,10 +2089,10 @@
                     "example": ""
                 },
                 {
-                    "name": "position",
-                    "description": "\"left\" | \"right\"",
+                    "name": "route",
+                    "description": "IRouteItem",
                     "required": false,
-                    "type": "\"left\" | \"right\"",
+                    "type": "IRouteItem",
                     "example": ""
                 },
                 {
@@ -1959,86 +2101,22 @@
                     "required": false,
                     "type": "boolean",
                     "example": ""
-                }
-            ]
-        },
-        "IControlsProps": {
-            "name": "IControlsProps",
-            "moduleName": "ui/crud/Controls/Controls",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [],
-            "items": [
+                },
                 {
-                    "name": "items",
-                    "description": "IControlItem[]",
+                    "name": "visibleFor",
+                    "description": "string[]",
                     "required": false,
-                    "type": "IControlItem[]",
+                    "type": "string[]",
                     "example": ""
                 },
                 {
-                    "name": "view",
-                    "description": "any",
+                    "name": "withModel",
+                    "description": "boolean",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": ""
                 }
             ]
-        },
-        "IControlsViewProps": {
-            "name": "IControlsViewProps",
-            "moduleName": "ui/crud/Controls/Controls",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [
-                "IControlsProps"
-            ],
-            "items": [
-                {
-                    "name": "items",
-                    "description": "IControlItem & {color: ColorName, confirm: string, icon: string, label: string | any, outline: boolean, position: \"right\" | \"left\"}[]",
-                    "required": true,
-                    "type": "IControlItem & {color: ColorName, confirm: string, icon: string, label: string | any, outline: boolean, position: \"right\" | \"left\"}[]",
-                    "example": ""
-                },
-                {
-                    "name": "view",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                }
-            ]
-        },
-        "ICrudDetailViewProps": {
-            "name": "ICrudDetailViewProps",
-            "moduleName": "ui/crud/Crud/Crud",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [
-                "IDetailViewProps"
-            ],
-            "items": []
-        },
-        "ICrudFormViewProps": {
-            "name": "ICrudFormViewProps",
-            "moduleName": "ui/crud/Crud/Crud",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [
-                "IFormViewProps"
-            ],
-            "items": []
-        },
-        "ICrudGridViewProps": {
-            "name": "ICrudGridViewProps",
-            "moduleName": "ui/crud/Crud/Crud",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [
-                "IGridViewProps"
-            ],
-            "items": []
         },
         "ICrudProps": {
             "name": "ICrudProps",
@@ -2048,24 +2126,10 @@
             "extends": [],
             "items": [
                 {
-                    "name": "actions",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
                     "name": "baseRouteId",
                     "description": "string",
                     "required": false,
                     "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "controls",
-                    "description": "IControlItem[]",
-                    "required": false,
-                    "type": "IControlItem[]",
                     "example": ""
                 },
                 {
@@ -2076,28 +2140,28 @@
                     "example": ""
                 },
                 {
-                    "name": "detailView",
+                    "name": "detail",
                     "description": "any",
                     "required": false,
                     "type": "any",
                     "example": ""
                 },
                 {
-                    "name": "editMode",
-                    "description": "\"page\" | \"modal\"",
+                    "name": "detailComponent",
+                    "description": "any",
                     "required": false,
-                    "type": "\"page\" | \"modal\"",
+                    "type": "any",
                     "example": ""
                 },
                 {
                     "name": "form",
-                    "description": "any",
+                    "description": "IFormProps",
                     "required": false,
-                    "type": "any",
+                    "type": "IFormProps",
                     "example": ""
                 },
                 {
-                    "name": "formView",
+                    "name": "formComponent",
                     "description": "any",
                     "required": false,
                     "type": "any",
@@ -2105,34 +2169,55 @@
                 },
                 {
                     "name": "grid",
+                    "description": "IGridProps",
+                    "required": false,
+                    "type": "IGridProps",
+                    "example": ""
+                },
+                {
+                    "name": "gridComponent",
                     "description": "any",
                     "required": false,
                     "type": "any",
                     "example": ""
                 },
                 {
-                    "name": "gridView",
-                    "description": "any",
+                    "name": "items",
+                    "description": "ICrudItem[] | {}",
                     "required": false,
-                    "type": "any",
+                    "type": "ICrudItem[] | {}",
                     "example": ""
                 },
                 {
-                    "name": "item",
-                    "description": "any",
+                    "name": "mode",
+                    "description": "\"page\" | \"modal\"",
                     "required": false,
-                    "type": "any",
+                    "type": "\"page\" | \"modal\"",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
                     "example": ""
                 },
                 {
                     "name": "primaryKey",
-                    "description": "any",
+                    "description": "\"id\" | string",
                     "required": false,
-                    "type": "any",
+                    "type": "\"id\" | string",
                     "example": ""
                 },
                 {
                     "name": "restUrl",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "searchModel",
                     "description": "string",
                     "required": false,
                     "type": "string",
@@ -2147,9 +2232,9 @@
                 }
             ]
         },
-        "ICrudViewProps": {
-            "name": "ICrudViewProps",
-            "moduleName": "ui/crud/Crud/Crud",
+        "ICrudGeneratorProps": {
+            "name": "ICrudGeneratorProps",
+            "moduleName": "ui/crud/index",
             "description": "",
             "descriptionTags": [],
             "extends": [
@@ -2157,101 +2242,52 @@
             ],
             "items": [
                 {
-                    "name": "actions",
-                    "description": "any",
+                    "name": "create",
+                    "description": "boolean | ICrudItem",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean | ICrudItem",
                     "example": ""
                 },
                 {
-                    "name": "baseRouteId",
+                    "name": "delete",
+                    "description": "boolean | ICrudItem",
+                    "required": false,
+                    "type": "boolean | ICrudItem",
+                    "example": ""
+                },
+                {
+                    "name": "index",
+                    "description": "boolean | ICrudItem",
+                    "required": false,
+                    "type": "boolean | ICrudItem",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "ICrudItem[] | {}",
+                    "required": false,
+                    "type": "ICrudItem[] | {}",
+                    "example": ""
+                },
+                {
+                    "name": "path",
                     "description": "string",
                     "required": false,
                     "type": "string",
                     "example": ""
                 },
                 {
-                    "name": "controls",
-                    "description": "IControlItem[]",
-                    "required": true,
-                    "type": "IControlItem[]",
-                    "example": ""
-                },
-                {
-                    "name": "crudId",
-                    "description": "string",
+                    "name": "update",
+                    "description": "boolean | ICrudItem",
                     "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "detailView",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "editMode",
-                    "description": "\"page\" | \"modal\"",
-                    "required": false,
-                    "type": "\"page\" | \"modal\"",
-                    "example": ""
-                },
-                {
-                    "name": "form",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "formView",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "grid",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "gridView",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "item",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "primaryKey",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "restUrl",
-                    "description": "string",
-                    "required": false,
-                    "type": "string",
+                    "type": "boolean | ICrudItem",
                     "example": ""
                 },
                 {
                     "name": "view",
-                    "description": "any",
+                    "description": "boolean | ICrudItem",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean | ICrudItem",
                     "example": ""
                 }
             ]
@@ -2341,10 +2377,10 @@
                 },
                 {
                     "name": "className",
-                    "description": "Дополнительные CSS классы",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
+                    "type": "CssClassName",
+                    "example": ""
                 },
                 {
                     "name": "color",
@@ -2527,10 +2563,10 @@
                 },
                 {
                     "name": "className",
-                    "description": "Дополнительные CSS классы",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
+                    "type": "CssClassName",
+                    "example": ""
                 },
                 {
                     "name": "color",
@@ -2836,10 +2872,10 @@
                 },
                 {
                     "name": "displayFormat",
-                    "description": "string",
+                    "description": "Формат даты показываемый пользователю",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "DD.MM.YYYY\n"
                 },
                 {
                     "name": "pickerProps",
@@ -2850,10 +2886,10 @@
                 },
                 {
                     "name": "placeholder",
-                    "description": "any",
+                    "description": "Placeholder подсказка",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "Your text...\n"
                 },
                 {
                     "name": "style",
@@ -2864,10 +2900,10 @@
                 },
                 {
                     "name": "valueFormat",
-                    "description": "string",
+                    "description": "Формат даты отправляемый на сервер",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "YYYY-MM-DD\n"
                 },
                 {
                     "name": "view",
@@ -2956,10 +2992,10 @@
                 },
                 {
                     "name": "displayDateFormat",
-                    "description": "string",
+                    "description": "Формат даты показываемый пользователю",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "DD.MM.YYYY\n"
                 },
                 {
                     "name": "style",
@@ -2970,10 +3006,10 @@
                 },
                 {
                     "name": "timeFormat",
-                    "description": "string",
+                    "description": "Формат времени",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "HH:mm\n"
                 },
                 {
                     "name": "timeProps",
@@ -2984,10 +3020,10 @@
                 },
                 {
                     "name": "valueDateFormat",
-                    "description": "string",
+                    "description": "Формат даты отправляемый на сервер",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "YYYY-MM-DD\n"
                 },
                 {
                     "name": "view",
@@ -3042,9 +3078,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3056,17 +3092,17 @@
                 },
                 {
                     "name": "searchPlaceholder",
-                    "description": "string",
+                    "description": "Placeholder подсказка",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "Your text...\n"
                 },
                 {
                     "name": "showReset",
-                    "description": "boolean",
+                    "description": "Показать кнопку для сброса выбранного значения",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "style",
@@ -3238,10 +3274,10 @@
                 },
                 {
                     "name": "label",
-                    "description": "string | boolean | any",
+                    "description": "Название поля либо отмена отображение поля (false)",
                     "required": false,
                     "type": "string | boolean | any",
-                    "example": ""
+                    "example": "Visible\n"
                 },
                 {
                     "name": "layout",
@@ -3259,10 +3295,10 @@
                 },
                 {
                     "name": "required",
-                    "description": "boolean",
+                    "description": "Обязательное ли поле? Если true,\nто к названию будет добавлен модификатор 'required' - красная звездочка (по умолчанию)",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 }
             ]
         },
@@ -3339,9 +3375,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -3454,9 +3490,39 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IFormContext"
+                "IFormContext",
+                "IComponentsHocOutput"
             ],
-            "items": []
+            "items": [
+                {
+                    "name": "className",
+                    "description": "CssClassName",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
+                {
+                    "name": "fields",
+                    "description": "Конфигурационный массив с полями формы",
+                    "required": false,
+                    "type": "IFieldProps[]",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "Название поля",
+                    "required": false,
+                    "type": "any",
+                    "example": "Save\n"
+                },
+                {
+                    "name": "view",
+                    "description": "CustomView",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": ""
+                }
+            ]
         },
         "IFileFieldProps": {
             "name": "IFileFieldProps",
@@ -3505,10 +3571,10 @@
                 },
                 {
                     "name": "showRemove",
-                    "description": "boolean",
+                    "description": "Показать значок удаление файла",
                     "required": true,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "view",
@@ -3571,17 +3637,17 @@
             "items": [
                 {
                     "name": "action",
-                    "description": "string",
+                    "description": "Url на который будет отправлена форма",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "api/v1/handle-form\n"
                 },
                 {
                     "name": "actionMethod",
-                    "description": "string",
+                    "description": "Тип HTTP запроса (GET | POST | PUT | DELETE)",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "POST\n"
                 },
                 {
                     "name": "autoFocus",
@@ -3614,13 +3680,13 @@
                 {
                     "name": "formId",
                     "description": "string",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": ""
                 },
                 {
                     "name": "initialValues",
-                    "description": "any | any[]",
+                    "description": "Начальные значения формы",
                     "required": false,
                     "type": "any | any[]",
                     "example": ""
@@ -3641,21 +3707,21 @@
                 },
                 {
                     "name": "onAfterSubmit",
-                    "description": "{}",
+                    "description": "Обработчик события после отправки формы",
                     "required": false,
                     "type": "{}",
                     "example": ""
                 },
                 {
                     "name": "onBeforeSubmit",
-                    "description": "{}",
+                    "description": "Обработчик события перед отправкой формы",
                     "required": false,
                     "type": "{}",
                     "example": ""
                 },
                 {
                     "name": "onChange",
-                    "description": "{}",
+                    "description": "Обработчик события при каком-либо изменении в форме",
                     "required": false,
                     "type": "{}",
                     "example": ""
@@ -3669,7 +3735,7 @@
                 },
                 {
                     "name": "onSubmit",
-                    "description": "{}",
+                    "description": "Обработчик события отправки формы",
                     "required": false,
                     "type": "{}",
                     "example": ""
@@ -3690,17 +3756,17 @@
                 },
                 {
                     "name": "style",
-                    "description": "any",
+                    "description": "Объект CSS стилей",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "{width: '45%'}\n"
                 },
                 {
                     "name": "submitLabel",
-                    "description": "string",
+                    "description": "Надпись на конпке отправки формы",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "Submit\n"
                 },
                 {
                     "name": "syncWithAddressBar",
@@ -3766,52 +3832,45 @@
                 },
                 {
                     "name": "customButtons",
-                    "description": "Array",
+                    "description": "Пользовательские кнопки",
                     "required": false,
                     "type": "Array",
-                    "example": ""
+                    "example": "[<CustomButton/>]\n"
                 },
                 {
                     "name": "editorProps",
-                    "description": "any",
+                    "description": "Конфигурация wysiwyg реадактора",
                     "required": false,
                     "type": "any",
                     "example": ""
                 },
                 {
                     "name": "onBlur",
-                    "description": "{}",
+                    "description": "Обработчик события при снятии фокуса с редактора",
                     "required": false,
                     "type": "{}",
                     "example": ""
                 },
                 {
                     "name": "onFocus",
-                    "description": "{}",
-                    "required": false,
-                    "type": "{}",
-                    "example": ""
-                },
-                {
-                    "name": "onTab",
-                    "description": "{}",
+                    "description": "Обработчик события при фокусе на редактора",
                     "required": false,
                     "type": "{}",
                     "example": ""
                 },
                 {
                     "name": "uploadImagesProcessor",
-                    "description": "string",
+                    "description": "После загрузки изображения на сервер,\nможно указать с каким процессором должно вернуться картинка",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "origin\n"
                 },
                 {
                     "name": "uploadUrl",
-                    "description": "string",
+                    "description": "Url на который будет отправлена форма загрузки файла",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "/api/v1/upload-files\n"
                 },
                 {
                     "name": "view",
@@ -3850,10 +3909,10 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "Дополнительные CSS классы",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
+                    "type": "CssClassName",
+                    "example": ""
                 },
                 {
                     "name": "inputProps",
@@ -4441,17 +4500,17 @@
                 },
                 {
                     "name": "placeholder",
-                    "description": "string",
+                    "description": "Placeholder подсказка",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "Your text...\n"
                 },
                 {
                     "name": "submitOnEnter",
-                    "description": "boolean",
+                    "description": "Отправлять форму при нажатии на кнопку `enter`",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "view",
@@ -4490,10 +4549,10 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "Дополнительные CSS классы",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
-                    "example": "my-block\n"
+                    "type": "CssClassName",
+                    "example": ""
                 },
                 {
                     "name": "inputProps",
@@ -4631,24 +4690,24 @@
             "items": [
                 {
                     "name": "format",
-                    "description": "string",
+                    "description": "Формат даты",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "LLL\n"
                 },
                 {
                     "name": "timeZone",
-                    "description": "string | boolean",
+                    "description": "Показывать ли дату учитываю временную зону",
                     "required": false,
                     "type": "string | boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "value",
-                    "description": "any",
+                    "description": "Дата",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "2023-09-11\n"
                 },
                 {
                     "name": "view",
@@ -4668,17 +4727,17 @@
             "items": [
                 {
                     "name": "items",
-                    "description": "string | {id: number | string, label: string}[] | {getLabel: {}}",
+                    "description": "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: [{id: 1, label: \"London\"}]",
                     "required": false,
                     "type": "string | {id: number | string, label: string}[] | {getLabel: {}}",
                     "example": ""
                 },
                 {
                     "name": "value",
-                    "description": "number | string",
+                    "description": "Уникальный идентификатор элемента из `items`",
                     "required": false,
                     "type": "number | string",
-                    "example": ""
+                    "example": "unique label\n"
                 },
                 {
                     "name": "view",
@@ -4698,17 +4757,17 @@
             "items": [
                 {
                     "name": "showZero",
-                    "description": "boolean",
+                    "description": "Если не указан размер файла, то в случае, если showZero = true\nто будет показан `0`, иначе пустая строка",
                     "required": false,
                     "type": "boolean",
-                    "example": ""
+                    "example": "true\n"
                 },
                 {
                     "name": "value",
-                    "description": "any",
+                    "description": "Размер файла",
                     "required": false,
                     "type": "any",
-                    "example": ""
+                    "example": "6920\n"
                 },
                 {
                     "name": "view",
@@ -4779,6 +4838,43 @@
         },
         "IMoneyFormatterProps": {
             "name": "IMoneyFormatterProps",
+            "moduleName": "ui/format/Money/Money",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "currency",
+                    "description": "Валюта @enum {eur, rub, usd}",
+                    "required": false,
+                    "type": "string",
+                    "example": "rub\n"
+                },
+                {
+                    "name": "scale",
+                    "description": "Округление числа",
+                    "required": false,
+                    "type": "number",
+                    "example": "2\n"
+                },
+                {
+                    "name": "value",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "CustomView",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": ""
+                }
+            ]
+        },
+        "IPhotosFormatterProps": {
+            "name": "IPhotosFormatterProps",
             "moduleName": "ui/format/PhotosFormatter/PhotosFormatter",
             "description": "",
             "descriptionTags": [],
@@ -4841,16 +4937,16 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
                     "name": "logo",
-                    "description": "{className: string, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
+                    "description": "{className: CssClassName, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
                     "required": false,
-                    "type": "{className: string, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
+                    "type": "{className: CssClassName, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
                     "example": ""
                 },
                 {
@@ -4881,16 +4977,16 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
                     "name": "logo",
-                    "description": "{className: string, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
+                    "description": "{className: CssClassName, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
                     "required": false,
-                    "type": "{className: string, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
+                    "type": "{className: CssClassName, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
                     "example": ""
                 },
                 {
@@ -4950,17 +5046,17 @@
                 },
                 {
                     "name": "level",
-                    "description": "ColorName",
+                    "description": "Цвет всплывающего уведомления",
                     "required": false,
                     "type": "ColorName",
-                    "example": ""
+                    "example": "warning\n"
                 },
                 {
                     "name": "message",
-                    "description": "string",
+                    "description": "Сообщение во всплывающем уведомлении",
                     "required": false,
                     "type": "string",
-                    "example": ""
+                    "example": "Сохранено!\n"
                 },
                 {
                     "name": "onClose",
@@ -4987,9 +5083,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5236,59 +5332,6 @@
                 }
             ]
         },
-        "IActionColumnProps": {
-            "name": "IActionColumnProps",
-            "moduleName": "ui/list/ActionColumn/ActionColumn",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [],
-            "items": [
-                {
-                    "name": "actions",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "item",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "primaryKey",
-                    "description": "string",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "view",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                }
-            ]
-        },
-        "IActionColumnViewProps": {
-            "name": "IActionColumnViewProps",
-            "moduleName": "ui/list/ActionColumn/ActionColumn",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [],
-            "items": [
-                {
-                    "name": "items",
-                    "description": "IActionColumnItem[]",
-                    "required": true,
-                    "type": "IActionColumnItem[]",
-                    "example": ""
-                }
-            ]
-        },
         "ICheckboxColumnProps": {
             "name": "ICheckboxColumnProps",
             "moduleName": "ui/list/CheckboxColumn/CheckboxColumn",
@@ -5331,6 +5374,84 @@
                     "description": "{name: string, onChange: any, value: any}",
                     "required": true,
                     "type": "{name: string, onChange: any, value: any}",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlsColumnItem": {
+            "name": "IControlsColumnItem",
+            "moduleName": "ui/list/ControlsColumn/ControlsColumn",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IButtonProps"
+            ],
+            "items": [
+                {
+                    "name": "rule",
+                    "description": "\"view\" | \"update\" | \"delete\" | string",
+                    "required": false,
+                    "type": "\"view\" | \"update\" | \"delete\" | string",
+                    "example": ""
+                },
+                {
+                    "name": "visible",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlsColumnProps": {
+            "name": "IControlsColumnProps",
+            "moduleName": "ui/list/ControlsColumn/ControlsColumn",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "controls",
+                    "description": "IControlItem[] | {}",
+                    "required": false,
+                    "type": "IControlItem[] | {}",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlsColumnViewProps": {
+            "name": "IControlsColumnViewProps",
+            "moduleName": "ui/list/ControlsColumn/ControlsColumn",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "IControlsColumnItem[]",
+                    "required": true,
+                    "type": "IControlsColumnItem[]",
                     "example": ""
                 }
             ]
@@ -5409,9 +5530,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5460,9 +5581,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5483,9 +5604,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5542,9 +5663,9 @@
                 },
                 {
                     "name": "headerClassName",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5608,17 +5729,17 @@
             ],
             "items": [
                 {
-                    "name": "actions",
-                    "description": "any[] | {}",
-                    "required": false,
-                    "type": "any[] | {}",
-                    "example": ""
-                },
-                {
                     "name": "columns",
                     "description": "string | IGridColumn[]",
                     "required": true,
                     "type": "string | IGridColumn[]",
+                    "example": ""
+                },
+                {
+                    "name": "controls",
+                    "description": "IControlItem[] | {}",
+                    "required": false,
+                    "type": "IControlItem[] | {}",
                     "example": ""
                 },
                 {
@@ -5702,9 +5823,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5776,9 +5897,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5823,9 +5944,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5897,9 +6018,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6000,9 +6121,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6114,9 +6235,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6188,9 +6309,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6267,9 +6388,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6327,9 +6448,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6489,6 +6610,121 @@
                 }
             ]
         },
+        "IControlItem": {
+            "name": "IControlItem",
+            "moduleName": "ui/nav/Controls/Controls",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IButtonProps"
+            ],
+            "items": [
+                {
+                    "name": "content",
+                    "description": "React.ReactNode | Element",
+                    "required": false,
+                    "type": "React.ReactNode | Element",
+                    "example": ""
+                },
+                {
+                    "name": "contentProps",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "id",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "position",
+                    "description": "\"left\" | \"right\"",
+                    "required": false,
+                    "type": "\"left\" | \"right\"",
+                    "example": ""
+                },
+                {
+                    "name": "visible",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlsProps": {
+            "name": "IControlsProps",
+            "moduleName": "ui/nav/Controls/Controls",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "items",
+                    "description": "IControlItem[]",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": ""
+                },
+                {
+                    "name": "navProps",
+                    "description": "INavProps",
+                    "required": false,
+                    "type": "INavProps",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "IControlsViewProps": {
+            "name": "IControlsViewProps",
+            "moduleName": "ui/nav/Controls/Controls",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IControlsProps"
+            ],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "IControlItem & {color: ColorName, confirm: string, icon: string, label: string | any, outline: boolean, position: \"right\" | \"left\"}[]",
+                    "required": true,
+                    "type": "IControlItem & {color: ColorName, confirm: string, icon: string, label: string | any, outline: boolean, position: \"right\" | \"left\"}[]",
+                    "example": ""
+                },
+                {
+                    "name": "navProps",
+                    "description": "INavProps",
+                    "required": false,
+                    "type": "INavProps",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                }
+            ]
+        },
         "ILinkProps": {
             "name": "ILinkProps",
             "moduleName": "ui/nav/Link/Link",
@@ -6520,9 +6756,9 @@
             "items": [
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6601,9 +6837,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6695,6 +6931,13 @@
                     "example": ""
                 },
                 {
+                    "name": "fetch",
+                    "description": "IFetchHocConfig",
+                    "required": false,
+                    "type": "IFetchHocConfig",
+                    "example": ""
+                },
+                {
                     "name": "id",
                     "description": "string",
                     "required": false,
@@ -6723,6 +6966,13 @@
                     "example": ""
                 },
                 {
+                    "name": "model",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
                     "name": "path",
                     "description": "string",
                     "required": false,
@@ -6731,9 +6981,9 @@
                 },
                 {
                     "name": "redirectTo",
-                    "description": "string",
+                    "description": "boolean | string",
                     "required": false,
-                    "type": "string",
+                    "type": "boolean | string",
                     "example": ""
                 },
                 {
@@ -6741,6 +6991,13 @@
                     "description": "string[]",
                     "required": false,
                     "type": "string[]",
+                    "example": ""
+                },
+                {
+                    "name": "searchModel",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
                     "example": ""
                 }
             ]
@@ -6750,7 +7007,9 @@
             "moduleName": "ui/nav/Router/Router",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "INavigationHocInputProps"
+            ],
             "items": [
                 {
                     "name": "autoScrollTop",
@@ -6764,13 +7023,6 @@
                     "description": "any",
                     "required": false,
                     "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "defaultRoles",
-                    "description": "string[]",
-                    "required": false,
-                    "type": "string[]",
                     "example": ""
                 },
                 {
@@ -6820,6 +7072,22 @@
                     "description": "any",
                     "required": false,
                     "type": "any",
+                    "example": ""
+                }
+            ]
+        },
+        "INavigationHocInputProps": {
+            "name": "INavigationHocInputProps",
+            "moduleName": "ui/nav/Router/navigationHoc",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "defaultRoles",
+                    "description": "string[]",
+                    "required": false,
+                    "type": "string[]",
                     "example": ""
                 }
             ]
@@ -6884,9 +7152,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6898,9 +7166,9 @@
                 },
                 {
                     "name": "items",
-                    "description": "{id: string | number, items: any[], label: string | any, visible: boolean}[]",
+                    "description": "{id: string | number, items: any[], label: string | any, visible: boolean}[] | string",
                     "required": false,
-                    "type": "{id: string | number, items: any[], label: string | any, visible: boolean}[]",
+                    "type": "{id: string | number, items: any[], label: string | any, visible: boolean}[] | string",
                     "example": ""
                 },
                 {
@@ -6908,6 +7176,13 @@
                     "description": "string",
                     "required": false,
                     "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "level",
+                    "description": "number",
+                    "required": false,
+                    "type": "number",
                     "example": ""
                 },
                 {
@@ -6958,9 +7233,9 @@
                 },
                 {
                     "name": "className",
-                    "description": "string",
+                    "description": "CssClassName",
                     "required": false,
-                    "type": "string",
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -6982,6 +7257,13 @@
                     "description": "string",
                     "required": false,
                     "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "level",
+                    "description": "number",
+                    "required": false,
+                    "type": "number",
                     "example": ""
                 },
                 {
@@ -7011,6 +7293,13 @@
     "declarations": {
         "Dispatch": {
             "name": "Dispatch",
+            "description": "",
+            "descriptionTags": [],
+            "type": "{}",
+            "example": ""
+        },
+        "IFetchHocConfig": {
+            "name": "IFetchHocConfig",
             "description": "",
             "descriptionTags": [],
             "type": "{}",
@@ -7222,20 +7511,32 @@
                 }
             }
         },
-        "ui/crud/Controls/Controls": {
-            "name": "Controls",
-            "decorators": [
-                "components"
-            ],
-            "defaultProps": null
-        },
         "ui/crud/Crud/Crud": {
             "name": "Crud",
             "decorators": [
+                "normalize",
                 "connect",
                 "components"
             ],
             "defaultProps": {
+                "primaryKey": "id"
+            }
+        },
+        "ui/crud/Crud/CrudForm": {
+            "name": "CrudForm",
+            "decorators": [
+                "connect"
+            ],
+            "defaultProps": null
+        },
+        "ui/crud/Crud/CrudGrid": {
+            "name": "CrudGrid",
+            "decorators": [],
+            "defaultProps": null
+        },
+        "ui/crud/index": {
+            "defaultProps": {
+                "mode": "page",
                 "primaryKey": "id"
             }
         },
@@ -7404,7 +7705,9 @@
         },
         "ui/form/FieldSet/FieldSet": {
             "name": "FieldSet",
-            "decorators": [],
+            "decorators": [
+                "components"
+            ],
             "defaultProps": null
         },
         "ui/form/FileField/FileField": {
@@ -7718,17 +8021,17 @@
                 "openFirst": true
             }
         },
-        "ui/list/ActionColumn/ActionColumn": {
-            "name": "ActionColumn",
-            "decorators": [
-                "components"
-            ],
-            "defaultProps": null
-        },
         "ui/list/CheckboxColumn/CheckboxColumn": {
             "name": "CheckboxColumn",
             "decorators": [
                 "connect",
+                "components"
+            ],
+            "defaultProps": null
+        },
+        "ui/list/ControlsColumn/ControlsColumn": {
+            "name": "ControlsColumn",
+            "decorators": [
                 "components"
             ],
             "defaultProps": null
@@ -7749,11 +8052,8 @@
             "defaultProps": null
         },
         "ui/list/Grid/Grid": {
-            "name": "Grid",
-            "decorators": [
-                "list",
-                "components"
-            ],
+            "name": "item",
+            "decorators": [],
             "defaultProps": null
         },
         "ui/list/List/List": {
@@ -7819,6 +8119,13 @@
                 "items": []
             }
         },
+        "ui/nav/Controls/Controls": {
+            "name": "Controls",
+            "decorators": [
+                "components"
+            ],
+            "defaultProps": null
+        },
         "ui/nav/Link/Link": {
             "name": "Link",
             "decorators": [],
@@ -7854,12 +8161,14 @@
         "ui/nav/Tree/Tree": {
             "name": "Tree",
             "decorators": [
+                "connect",
                 "components"
             ],
             "defaultProps": {
                 "autoOpenLevels": 1,
                 "autoSave": false,
-                "itemsKey": "items"
+                "itemsKey": "items",
+                "level": 0
             }
         }
     }

@@ -6,7 +6,16 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
 export interface ITextFieldProps extends IFieldHocInput {
+    /**
+     * Placeholder подсказка
+     * @example Your text...
+     */
     placeholder?: string;
+
+    /**
+     * Отправлять форму при нажатии на кнопку `enter`
+     * @example true
+     */
     submitOnEnter?: boolean;
     inputProps?: any;
     className?: CssClassName;

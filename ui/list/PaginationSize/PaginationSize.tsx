@@ -12,7 +12,7 @@ export interface IPaginationSizeProps {
     defaultValue?: number | null,
     sizes?: number[];
     position?: ListControlPosition,
-    className?: string;
+    className?: CssClassName;
     size?: Size;
     view?: CustomView,
     onChange?: (value: number) => void,

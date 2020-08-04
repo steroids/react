@@ -8,8 +8,23 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IDateTimeFieldProps extends IFieldHocInput {
+
+    /**
+     * Формат даты показываемый пользователю
+     * @example DD.MM.YYYY
+     */
     displayDateFormat?: string;
+
+    /**
+     * Формат даты отправляемый на сервер
+     * @example YYYY-MM-DD
+     */
     valueDateFormat?: string;
+
+    /**
+     * Формат времени
+     * @example HH:mm
+     */
     timeFormat?: string;
     dateProps?: any;
     timeProps?: any;

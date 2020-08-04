@@ -9,7 +9,20 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IEnumFormatterProps {
-    items?: string | {id: number | string, label: string}[] | {getLabel: () => string | any};
+
+    /**
+     * Перечисление элементов.
+     * 1) Может быть строкой вида: `app.geo.enums.Cities`
+     * 2) Массивом: [{id: 1, label: "London"}]
+     */
+    items?: string
+        | {id: number | string, label: string}[]
+        | {getLabel: () => string | any};
+
+    /**
+     * Уникальный идентификатор элемента из `items`
+     * @example unique label
+     */
     value?: number | string,
     view?: CustomView;
 }

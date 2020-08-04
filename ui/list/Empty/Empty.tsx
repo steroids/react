@@ -5,7 +5,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 export interface IEmptyProps {
     enable?: boolean,
     text?: string | React.ReactNode;
-    className?: string;
+    className?: CssClassName;
     view?: CustomView,
 }
 

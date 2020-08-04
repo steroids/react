@@ -7,10 +7,25 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
 export interface IDateFieldProps extends IFieldHocInput {
     pickerProps?: any;
+
+    /**
+     * Формат даты показываемый пользователю
+     * @example DD.MM.YYYY
+     */
     displayFormat?: string;
+
+    /**
+     * Формат даты отправляемый на сервер
+     * @example YYYY-MM-DD
+     */
     valueFormat?: string;
     className?: CssClassName;
     view?: CustomView;
+
+    /**
+     * Placeholder подсказка
+     * @example Your text...
+     */
     placeholder?: any;
     style?: any;
 }

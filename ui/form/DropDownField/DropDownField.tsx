@@ -7,11 +7,21 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {conditional} from 'conditional-decorator';
 
 export interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInput {
+
+    /**
+     * Placeholder подсказка
+     * @example Your text...
+     */
     searchPlaceholder?: string;
     inputProps?: any;
-    className?: string;
+    className?: CssClassName;
     style?: any,
     view?: any;
+
+    /**
+     * Показать кнопку для сброса выбранного значения
+     * @example true
+     */
     showReset?: boolean;
 }
 
@@ -19,12 +29,22 @@ export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderH
     style?: any,
     items: {
         id: number | string | boolean,
+
+        /**
+         * Название поля
+         * @example Save
+         */
         label?: string,
         isSelected: boolean,
         isHovered: boolean,
     }[];
     selectedItems?: {
         id: number | string | boolean,
+
+        /**
+         * Название поля
+         * @example Save
+         */
         label?: string
     }[];
     multiple: boolean,

@@ -12,8 +12,18 @@ import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IFieldListItem extends IFieldHocInput {
+
+    /**
+     * Будет ли отображён item ?
+     * @example true
+     */
     visible?: boolean,
     component?: any,
+
+    /**
+     * Placeholder подсказка
+     * @example Your text...
+     */
     placeholder?: string,
     className?: CssClassName,
     headerClassName?: CssClassName,
@@ -27,7 +37,7 @@ export interface IFieldListProps extends IFieldHocInput {
     initialRowsCount?: number;
     showAdd?: boolean;
     showRemove?: boolean;
-    className?: string;
+    className?: CssClassName;
     view?: any;
     viewProps?: any;
     itemView?: any;

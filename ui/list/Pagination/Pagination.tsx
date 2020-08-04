@@ -17,7 +17,7 @@ export interface IPaginationProps extends IThemeHocInput {
     defaultValue?: number | null,
     aroundCount?: number;
     loadMore?: boolean,
-    className?: string;
+    className?: CssClassName;
     position?: ListControlPosition,
     buttonProps?: IButtonProps,
     view?: CustomView,

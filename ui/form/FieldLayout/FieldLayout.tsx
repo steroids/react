@@ -4,8 +4,19 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {mergeLayoutProp} from '../../../hoc/form';
 
 export interface IFieldLayoutProps {
+
+    /**
+     * Название поля либо отмена отображение поля (false)
+     * @example Visible
+     */
     label?: string | boolean | any;
     hint?: string | boolean;
+
+    /**
+     * Обязательное ли поле? Если true,
+     * то к названию будет добавлен модификатор 'required' - красная звездочка (по умолчанию)
+     * @example true
+     */
     required?: boolean;
     layout?: FormLayout;
     errors?: string | string[];

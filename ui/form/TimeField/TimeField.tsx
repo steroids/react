@@ -19,12 +19,7 @@ export interface ITimeFieldProps extends IFieldHocInput {
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
-
-    /**
-     * Дополнительные CSS классы
-     * @example my-block
-     */
-    className?: string;
+    className?: CssClassName;
 
     /**
      * Переопределение view React компонента для кастомизациии отображения

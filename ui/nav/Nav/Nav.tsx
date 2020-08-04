@@ -19,7 +19,7 @@ export interface INavItem extends IButtonProps {
     label?: string | any,
     url?: string,
     onClick?: (...args: any[]) => any,
-    className?: string,
+    className?: CssClassName,
     view?: any,
     visible?: boolean,
     content?: any,
@@ -31,7 +31,7 @@ export interface INavProps extends IThemeHocInput {
     items?: string | INavItem[];
     routes?: IRoute[],
     activeTab?: number | string;
-    className?: string;
+    className?: CssClassName;
     view?: any;
     onChange?: (...args: any[]) => any;
 }

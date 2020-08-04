@@ -4,9 +4,24 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IDateTimeFormatterProps{
+
+    /**
+     * Формат даты
+     * @example LLL
+     */
     format?: string;
+
+    /**
+     * Показывать ли дату учитываю временную зону
+     * @example true
+     */
     timeZone?: string | boolean;
     view?: CustomView;
+
+    /**
+    * Дата
+    * @example 2023-09-11
+    */
     value?: any;
 }
 

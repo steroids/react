@@ -23,18 +23,57 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
     formId?: string;
     prefix?: string;
     model?: string | ((...args: any[]) => any) | any;
+
+    /**
+     * Url на который будет отправлена форма
+     * @example api/v1/handle-form
+     */
     action?: string;
+
+    /**
+     * Тип HTTP запроса (GET | POST | PUT | DELETE)
+     * @example POST
+     */
     actionMethod?: string;
     layout?: FormLayout;
+
+    /**
+     * Обработчик события отправки формы
+     * @param args
+     */
     onSubmit?: (...args: any[]) => any;
     validators?: any[];
+
+    /**
+     * Обработчик события перед отправкой формы
+     * @param args
+     */
     onBeforeSubmit?: (...args: any[]) => any;
+
+    /**
+     * Обработчик события после отправки формы
+     * @param args
+     */
     onAfterSubmit?: (...args: any[]) => any;
+
+    /**
+     * Обработчик события при каком-либо изменении в форме
+     * @param args
+     */
     onChange?: (...args: any[]) => any;
     onComplete?: (...args: any[]) => any;
     autoSave?: boolean;
+
+    /**
+     * Начальные значения формы
+     */
     initialValues?: any | any[];
     className?: CssClassName;
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
     style?: any;
     view?: CustomView;
     fields?: (string | IFieldProps)[],
@@ -47,6 +86,10 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
         component?: string | React.ReactNode
     }
         )[];*/
+    /**
+     * Надпись на конпке отправки формы
+     * @example Submit
+     */
     submitLabel?: string;
     syncWithAddressBar?: boolean;
     restoreCustomizer?: (...args: any[]) => any; // TODO Refactor it!

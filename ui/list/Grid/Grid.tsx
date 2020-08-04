@@ -21,7 +21,7 @@ export interface IGridColumn {
     },
     label?: React.ReactNode,
     hint?: React.ReactNode,
-    headerClassName?: string,
+    headerClassName?: CssClassName,
     visible?: boolean,
     headerView?: any,
     headerProps?: any,

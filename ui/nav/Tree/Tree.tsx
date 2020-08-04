@@ -23,7 +23,7 @@ export interface ITreeProps {
     level?: number;
     itemsKey?: string;
     selectedItemId?: string;
-    className?: string;
+    className?: CssClassName;
     view?: any;
     autoOpenLevels?: number;
     onItemClick?: (...args: any[]) => any;

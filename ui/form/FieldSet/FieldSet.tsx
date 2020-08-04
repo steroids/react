@@ -4,12 +4,22 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import Field from '../Field';
 import _isString from 'lodash-es/isString';
+import {IFieldProps} from '../Field/Field';
 
 export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
-    fields?: any,
+
+    /**
+     * Конфигурационный массив с полями формы
+     */
+    fields?: IFieldProps[],
+
+    /**
+     * Название поля
+     * @example Save
+     */
     label?: any,
     view?: CustomView,
-    className?: string,
+    className?: CssClassName,
 }
 
 @components('ui')

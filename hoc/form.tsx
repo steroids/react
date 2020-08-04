@@ -11,7 +11,7 @@ export interface IFormHocInput {
     layout?: FormLayout;
     component?: string | React.ComponentType | JSX.Element;
     onChange?: (...args: any[]) => any;
-    className?: string;
+    className?: CssClassName;
     //layoutClassName?: string;
     //view?: any;
 }

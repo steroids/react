@@ -4,7 +4,17 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IMoneyFormatterProps {
+
+    /**
+     * Валюта @enum {eur, rub, usd}
+     * @example rub
+     */
     currency?: string;
+
+    /**
+     * Округление числа
+     * @example 2
+     */
     scale?: number;
     view?: CustomView;
     value?: any;

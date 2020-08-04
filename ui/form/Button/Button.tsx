@@ -15,7 +15,7 @@ interface IButtonBadge {
     enable?: boolean,
     value?: number,
     color?: ColorName,
-    className?: string,
+    className?: CssClassName,
 }
 
 /**
@@ -125,12 +125,7 @@ export interface IButtonProps extends IThemeHocInput {
      * @example {width: '45%'}
      */
     style?: object;
-
-    /**
-     * Дополнительные CSS классы
-     * @example my-block
-     */
-    className?: string;
+    className?: CssClassName;
 
     /**
      * Переопределение view React компонента для кастомизациии отображения

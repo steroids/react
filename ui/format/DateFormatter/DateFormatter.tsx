@@ -3,8 +3,18 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface IDateFormatterProps {
+
+    /**
+     * Формат даты
+     * @example LL
+     */
     format?: string;
     view?: CustomView;
+
+    /**
+     * Дата
+     * @example 2023-09-11
+     */
     value?: any;
 }
 

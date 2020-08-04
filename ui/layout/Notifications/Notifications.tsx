@@ -12,7 +12,17 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 interface INotificationItem {
     id?: number,
+
+    /**
+     * Цвет всплывающего уведомления
+     * @example warning
+     */
     level?: ColorName,
+
+    /**
+     * Сообщение во всплывающем уведомлении
+     * @example Сохранено!
+     */
     message?: string,
     isClosing?: boolean
 }
@@ -22,7 +32,7 @@ export interface INotificationsProps {
         [key: string]: string | any,
     };
     notifications?: INotificationItem[];
-    className?: string;
+    className?: CssClassName;
     view?: any;
     itemView?: any;
 }

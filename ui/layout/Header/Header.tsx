@@ -7,14 +7,14 @@ import {INavProps} from '../../nav/Nav/Nav';
 import {IThemeHocInput} from '../../../hoc/theme';
 
 export interface IHeaderProps extends IThemeHocInput {
-    className?: string;
+    className?: CssClassName;
     view?: any;
     logo?: {
         title: string,
         linkProps?: object,
         logoUrl?: string | any,
         logoSvg?: string | any,
-        className?: string,
+        className?: CssClassName,
     };
     nav?: INavProps;
 }

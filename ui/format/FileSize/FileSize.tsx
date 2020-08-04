@@ -3,8 +3,19 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IFileSizeFormatterProps {
+
+    /**
+     * Если не указан размер файла, то в случае, если showZero = true
+     * то будет показан `0`, иначе пустая строка
+     * @example true
+     */
     showZero?: boolean;
     view?: CustomView;
+
+    /**
+     * Размер файла
+     * @example 6920
+     */
     value?: any;
 }
 

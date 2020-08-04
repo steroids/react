@@ -8,6 +8,11 @@ import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
+
+    /**
+     * Показать значок удаление файла
+     * @example true
+     */
     showRemove: boolean,
     buttonComponent?: React.ReactNode; // TODO May be buttonView ?
     buttonProps?: any;
@@ -20,24 +25,77 @@ export interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
 export interface IFileFieldViewProps extends IFieldHocOutput, IFileHocOutput {
     buttonComponent?: React.ReactNode;
     buttonProps: {
+        /**
+         * Название поля
+         * @example Save
+         */
         label?: string | any,
         size?: boolean,
+
+        /**
+         * Переводит в неактивное состояние
+         * @example true
+         */
         disabled?: boolean,
+
+        /**
+         * Обработчик события нажатия
+         * @param e
+         */
         onClick?: (e: Event) => void,
     },
     itemView?: React.ReactNode;
     items: {
+
+        /**
+         * Уникальный текстовый идентификатор
+         * @example e65f5867-0083-48a7-af43-1121ed9e6280
+         */
         uid?: string,
+
+        /**
+         * ID файла
+         * @example 34
+         */
         fileId?: number | string,
+
+        /**
+         * Исходное название файла
+         * @example original-name
+         */
         title?: string,
+
+        /**
+         * Размер файла
+         * @example 9660
+         */
         size?: number | string,
         disabled?: boolean,
         showRemove?: boolean,
+
+        /**
+         * Обработчик события удаления файла
+         * @param e
+         */
         onRemove?: () => void,
         error?: string,
         image?: {
+            /**
+             * Url файла
+             * @example assets/file.txt
+             */
             url: string,
+
+            /**
+             * Ширина
+             * @example 1280
+             */
             width: string,
+
+            /**
+             * Высота
+             * @example 720
+             */
             height: string,
         },
         progress?: {

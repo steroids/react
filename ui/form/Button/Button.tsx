@@ -31,6 +31,12 @@ export interface IButtonProps extends IThemeHocInput {
     label?: string | any;
 
     /**
+     * Должна ли показываться надпись на кнопке в состоянии загрузки
+     * @example true
+     */
+    showLabelOnLoading?: Boolean;
+
+    /**
      * HTML Тип
      * @example submit
      */
@@ -172,6 +178,7 @@ export interface IButtonViewProps extends IButtonProps {
     disabled?: boolean,
     onClick?: any,
     submitting?: boolean,
+    showLabelOnLoading: boolean,
 }
 
 interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -193,6 +200,7 @@ const defaultProps = {
     block: false,
     className: '',
     resetFailedMs: 2000,
+    showLabelOnLoading: true,
     badge: {
         enable: false,
         value: 0,
@@ -323,7 +331,8 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                 result
                     .then(() => {
                         if (this._isMounted) {
-                            this.setState({isLoading: false});
+                            // timeout is set to assure that the user will see loading state
+                            setTimeout(() => this.setState({isLoading: false}), 800);
                         }
                     })
                     .catch(e => {

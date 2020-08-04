@@ -1,5 +1,297 @@
 {
     "interfaces": {
+        "IList": {
+            "name": "IList",
+            "moduleName": "actions/list",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "action",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "actionMethod",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "condition",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "formId",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "isFetched",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "isLoading",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "isRemote",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "items",
+                    "description": "Array",
+                    "required": false,
+                    "type": "Array",
+                    "example": ""
+                },
+                {
+                    "name": "layoutAttribute",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "listId",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "loadMore",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "meta",
+                    "description": "object",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "onFetch",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "pageAttribute",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "pageSizeAttribute",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "scope",
+                    "description": "string[]",
+                    "required": false,
+                    "type": "string[]",
+                    "example": ""
+                },
+                {
+                    "name": "sortAttribute",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "sourceItems",
+                    "description": "Array",
+                    "required": false,
+                    "type": "Array",
+                    "example": ""
+                },
+                {
+                    "name": "total",
+                    "description": "number",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                }
+            ]
+        },
+        "Model": {
+            "name": "Model",
+            "moduleName": "components/MetaComponent",
+            "description": "Мета информация о моделе",
+            "extends": [],
+            "items": [
+                {
+                    "name": "attributes",
+                    "description": "string | ModelAttribute[]",
+                    "required": false,
+                    "type": "string | ModelAttribute[]",
+                    "example": ""
+                },
+                {
+                    "name": "primaryKey",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                }
+            ]
+        },
+        "ModelAttribute": {
+            "name": "ModelAttribute",
+            "moduleName": "components/MetaComponent",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "attribute",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "defaultValue",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "field",
+                    "description": "string | any",
+                    "required": false,
+                    "type": "string | any",
+                    "example": ""
+                },
+                {
+                    "name": "fieldProps",
+                    "description": "object",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "formatter",
+                    "description": "string | any",
+                    "required": false,
+                    "type": "string | any",
+                    "example": ""
+                },
+                {
+                    "name": "formatterProps",
+                    "description": "object",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "fromStringConverter",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "isRequired",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "isSortable",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "jsType",
+                    "description": "\"boolean\" | \"string\" | \"string[]\" | \"number\" | \"number[]\" | string",
+                    "required": false,
+                    "type": "\"boolean\" | \"string\" | \"string[]\" | \"number\" | \"number[]\" | string",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "searchField",
+                    "description": "string | any",
+                    "required": false,
+                    "type": "string | any",
+                    "example": ""
+                },
+                {
+                    "name": "searchFieldProps",
+                    "description": "object",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "toStringConverter",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "type",
+                    "description": "\"autoTime\" | \"boolean\" | \"dateTime\" | \"date\" | \"double\" | \"email\" | \"enum\" | \"file\" | \"files\" | \"html\" | \"integer\" | \"money\" | \"password\" | \"phone\" | \"primaryKey\" | \"size\" | \"string\" | \"text\" | \"time\"",
+                    "required": false,
+                    "type": "\"autoTime\" | \"boolean\" | \"dateTime\" | \"date\" | \"double\" | \"email\" | \"enum\" | \"file\" | \"files\" | \"html\" | \"integer\" | \"money\" | \"password\" | \"phone\" | \"primaryKey\" | \"size\" | \"string\" | \"text\" | \"time\"",
+                    "example": ""
+                }
+            ]
+        },
         "IApplicationHocConfig": {
             "name": "IApplicationHocConfig",
             "moduleName": "hoc/application",
@@ -985,71 +1277,6 @@
             "extends": [],
             "items": []
         },
-        "IFormatterHocInput": {
-            "name": "IFormatterHocInput",
-            "moduleName": "hoc/formatter",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [
-                "IThemeHocInput",
-                "IComponentsHocOutput"
-            ],
-            "items": [
-                {
-                    "name": "attribute",
-                    "description": "string",
-                    "required": false,
-                    "type": "string",
-                    "example": ""
-                },
-                {
-                    "name": "item",
-                    "description": "object",
-                    "required": false,
-                    "type": "object",
-                    "example": ""
-                },
-                {
-                    "name": "value",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                }
-            ]
-        },
-        "IFormatterHocOutput": {
-            "name": "IFormatterHocOutput",
-            "moduleName": "hoc/formatter",
-            "description": "",
-            "descriptionTags": [],
-            "extends": [
-                "IThemeHocOutput"
-            ],
-            "items": [
-                {
-                    "name": "item",
-                    "description": "object",
-                    "required": false,
-                    "type": "object",
-                    "example": ""
-                },
-                {
-                    "name": "renderValue",
-                    "description": "{}",
-                    "required": false,
-                    "type": "{}",
-                    "example": ""
-                },
-                {
-                    "name": "value",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                }
-            ]
-        },
         "IHttpHocInput": {
             "name": "IHttpHocInput",
             "moduleName": "hoc/http",
@@ -1184,6 +1411,13 @@
                     "example": ""
                 },
                 {
+                    "name": "addressBar",
+                    "description": "boolean | IAddressBar",
+                    "required": false,
+                    "type": "boolean | IAddressBar",
+                    "example": ""
+                },
+                {
                     "name": "autoDestroy",
                     "description": "boolean",
                     "required": false,
@@ -1199,16 +1433,9 @@
                 },
                 {
                     "name": "items",
-                    "description": "any",
+                    "description": "Array",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "itemsIndexing",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
+                    "type": "Array",
                     "example": ""
                 },
                 {
@@ -1219,13 +1446,6 @@
                     "example": ""
                 },
                 {
-                    "name": "layoutProps",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
                     "name": "listId",
                     "description": "string",
                     "required": false,
@@ -1233,24 +1453,17 @@
                     "example": ""
                 },
                 {
-                    "name": "locationSearch",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
                     "name": "model",
-                    "description": "any",
+                    "description": "Model",
                     "required": false,
-                    "type": "any",
+                    "type": "Model",
                     "example": ""
                 },
                 {
                     "name": "onFetch",
-                    "description": "any",
+                    "description": "{}",
                     "required": false,
-                    "type": "any",
+                    "type": "{}",
                     "example": ""
                 },
                 {
@@ -1276,23 +1489,16 @@
                 },
                 {
                     "name": "query",
-                    "description": "any",
+                    "description": "object",
                     "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "restoreCustomizer",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
+                    "type": "object",
                     "example": ""
                 },
                 {
                     "name": "scope",
-                    "description": "any",
+                    "description": "string[]",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": ""
                 },
                 {
@@ -1303,24 +1509,17 @@
                     "example": ""
                 },
                 {
+                    "name": "searchModel",
+                    "description": "Model",
+                    "required": false,
+                    "type": "Model",
+                    "example": ""
+                },
+                {
                     "name": "sort",
                     "description": "boolean | ISortProps",
                     "required": false,
                     "type": "boolean | ISortProps",
-                    "example": ""
-                },
-                {
-                    "name": "syncWithAddressBar",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
-                    "name": "total",
-                    "description": "any",
-                    "required": false,
-                    "type": "any",
                     "example": ""
                 }
             ]
@@ -1415,6 +1614,13 @@
             ],
             "items": [
                 {
+                    "name": "_addressBar",
+                    "description": "IAddressBar",
+                    "required": false,
+                    "type": "IAddressBar",
+                    "example": ""
+                },
+                {
                     "name": "_empty",
                     "description": "IEmptyProps",
                     "required": false,
@@ -1426,6 +1632,13 @@
                     "description": "ILayoutProps",
                     "required": false,
                     "type": "ILayoutProps",
+                    "example": ""
+                },
+                {
+                    "name": "_model",
+                    "description": "Model",
+                    "required": false,
+                    "type": "Model",
                     "example": ""
                 },
                 {
@@ -1443,6 +1656,13 @@
                     "example": ""
                 },
                 {
+                    "name": "_searchModel",
+                    "description": "Model",
+                    "required": false,
+                    "type": "Model",
+                    "example": ""
+                },
+                {
                     "name": "_sort",
                     "description": "ISortProps",
                     "required": false,
@@ -1457,10 +1677,31 @@
                     "example": ""
                 },
                 {
-                    "name": "list",
-                    "description": "{isFetched: boolean, isLoading: boolean, items: Array, layoutName: string, meta: object, page: number, pageSize: number, query: object, sort: string | string[], total: number}",
+                    "name": "formValues",
+                    "description": "any",
                     "required": false,
-                    "type": "{isFetched: boolean, isLoading: boolean, items: Array, layoutName: string, meta: object, page: number, pageSize: number, query: object, sort: string | string[], total: number}",
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "list",
+                    "description": "IList",
+                    "required": false,
+                    "type": "IList",
+                    "example": ""
+                },
+                {
+                    "name": "location",
+                    "description": "{hash: string, pathname: string, search: string}",
+                    "required": false,
+                    "type": "{hash: string, pathname: string, search: string}",
+                    "example": ""
+                },
+                {
+                    "name": "searchFormValues",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
                     "example": ""
                 }
             ]
@@ -3524,10 +3765,38 @@
                     "example": ""
                 },
                 {
+                    "name": "customButtons",
+                    "description": "Array",
+                    "required": false,
+                    "type": "Array",
+                    "example": ""
+                },
+                {
                     "name": "editorProps",
                     "description": "any",
                     "required": false,
                     "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onBlur",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onFocus",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onTab",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
                     "example": ""
                 },
                 {
@@ -4335,15 +4604,20 @@
             "moduleName": "ui/format/BooleanFormatter/BooleanFormatter",
             "description": "",
             "descriptionTags": [],
-            "extends": [
-                "IFormatterHocInput"
-            ],
+            "extends": [],
             "items": [
                 {
                     "name": "value",
                     "description": "string | number | boolean",
                     "required": false,
                     "type": "string | number | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "CustomView",
+                    "required": false,
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -4353,9 +4627,7 @@
             "moduleName": "ui/format/DateTimeFormatter/DateTimeFormatter",
             "description": "",
             "descriptionTags": [],
-            "extends": [
-                "IFormatterHocInput"
-            ],
+            "extends": [],
             "items": [
                 {
                     "name": "format",
@@ -4370,6 +4642,20 @@
                     "required": false,
                     "type": "string | boolean",
                     "example": ""
+                },
+                {
+                    "name": "value",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "CustomView",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": ""
                 }
             ]
         },
@@ -4378,9 +4664,7 @@
             "moduleName": "ui/format/EnumFormatter/EnumFormatter",
             "description": "",
             "descriptionTags": [],
-            "extends": [
-                "IFormatterHocInput"
-            ],
+            "extends": [],
             "items": [
                 {
                     "name": "items",
@@ -4395,6 +4679,13 @@
                     "required": false,
                     "type": "number | string",
                     "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "CustomView",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": ""
                 }
             ]
         },
@@ -4403,15 +4694,27 @@
             "moduleName": "ui/format/FileSize/FileSize",
             "description": "",
             "descriptionTags": [],
-            "extends": [
-                "IFormatterHocInput"
-            ],
+            "extends": [],
             "items": [
                 {
                     "name": "showZero",
                     "description": "boolean",
                     "required": false,
                     "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "value",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "CustomView",
+                    "required": false,
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -4479,9 +4782,7 @@
             "moduleName": "ui/format/PhotosFormatter/PhotosFormatter",
             "description": "",
             "descriptionTags": [],
-            "extends": [
-                "IFormatterHocInput"
-            ],
+            "extends": [],
             "items": [
                 {
                     "name": "photoRowHeight",
@@ -4502,6 +4803,13 @@
                     "description": "number",
                     "required": false,
                     "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "CustomView",
+                    "required": false,
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -5616,10 +5924,38 @@
                     "example": ""
                 },
                 {
+                    "name": "onChange",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "page",
+                    "description": "number",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "pageSize",
+                    "description": "number",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
                     "name": "position",
                     "description": "ListControlPosition",
                     "required": false,
                     "type": "ListControlPosition",
+                    "example": ""
+                },
+                {
+                    "name": "total",
+                    "description": "number",
+                    "required": false,
+                    "type": "number",
                     "example": ""
                 },
                 {
@@ -5691,6 +6027,13 @@
                     "example": ""
                 },
                 {
+                    "name": "onChange",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
                     "name": "onSelect",
                     "description": "{}",
                     "required": true,
@@ -5707,7 +6050,14 @@
                 {
                     "name": "page",
                     "description": "number",
-                    "required": true,
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "pageSize",
+                    "description": "number",
+                    "required": false,
                     "type": "number",
                     "example": ""
                 },
@@ -5723,6 +6073,13 @@
                     "description": "ListControlPosition",
                     "required": false,
                     "type": "ListControlPosition",
+                    "example": ""
+                },
+                {
+                    "name": "total",
+                    "description": "number",
+                    "required": false,
+                    "type": "number",
                     "example": ""
                 },
                 {
@@ -5774,6 +6131,13 @@
                     "description": "boolean",
                     "required": false,
                     "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
                     "example": ""
                 },
                 {
@@ -5848,6 +6212,13 @@
                     "description": "{isActive: boolean, label: string | number, size: number}[]",
                     "required": true,
                     "type": "{isActive: boolean, label: string | number, size: number}[]",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "{}",
+                    "required": false,
+                    "type": "{}",
                     "example": ""
                 },
                 {
@@ -6310,6 +6681,13 @@
                     "example": ""
                 },
                 {
+                    "name": "componentProps",
+                    "description": "any",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "exact",
                     "description": "boolean",
                     "required": false,
@@ -6324,6 +6702,20 @@
                     "example": ""
                 },
                 {
+                    "name": "isNavVisible",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "isVisible",
+                    "description": "boolean",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
                     "name": "items",
                     "description": "IRouteItem[] | {}",
                     "required": false,
@@ -6332,6 +6724,13 @@
                 },
                 {
                     "name": "path",
+                    "description": "string",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "redirectTo",
                     "description": "string",
                     "required": false,
                     "type": "string",
@@ -6365,6 +6764,13 @@
                     "description": "any",
                     "required": false,
                     "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "defaultRoles",
+                    "description": "string[]",
+                    "required": false,
+                    "type": "string[]",
                     "example": ""
                 },
                 {
@@ -6684,242 +7090,7 @@
             "example": ""
         }
     },
-    "demos": {
-        "form": {
-            "AutoCompleteField": {
-                "basic": {
-                    "order": 1,
-                    "col": 6,
-                    "title": "Basic",
-                    "description": ""
-                }
-            },
-            "Button": {
-                "block": {
-                    "order": 3,
-                    "col": 4,
-                    "title": "Block",
-                    "description": ""
-                },
-                "colors": {
-                    "order": 1,
-                    "col": 8,
-                    "title": "Colors",
-                    "description": ""
-                },
-                "disabled": {
-                    "order": 4,
-                    "col": 4,
-                    "title": "Disabled",
-                    "description": ""
-                },
-                "link": {
-                    "order": 5,
-                    "col": 4,
-                    "title": "Link",
-                    "description": ""
-                },
-                "sizes": {
-                    "order": 2,
-                    "col": 4,
-                    "title": "Sizes",
-                    "description": ""
-                }
-            },
-            "CheckboxField": {
-                "basic": {
-                    "order": 1,
-                    "col": 3,
-                    "title": "Basic",
-                    "description": ""
-                },
-                "disabled": {
-                    "order": 2,
-                    "col": 3,
-                    "title": "Disabled",
-                    "description": ""
-                },
-                "errors": {
-                    "order": 4,
-                    "col": 3,
-                    "title": "Errors",
-                    "description": ""
-                },
-                "required": {
-                    "order": 3,
-                    "col": 3,
-                    "title": "Required",
-                    "description": ""
-                }
-            },
-            "InputField": {
-                "basic": {
-                    "order": 1,
-                    "col": 3,
-                    "title": "Basic",
-                    "description": ""
-                },
-                "disabled": {
-                    "order": 2,
-                    "col": 3,
-                    "title": "Disabled",
-                    "description": ""
-                },
-                "errors": {
-                    "order": 7,
-                    "col": 4,
-                    "title": "Errors",
-                    "description": ""
-                },
-                "placeholder": {
-                    "order": 4,
-                    "col": 3,
-                    "title": "Placeholder",
-                    "description": ""
-                },
-                "required": {
-                    "order": 3,
-                    "col": 3,
-                    "title": "Required",
-                    "description": ""
-                },
-                "sizes": {
-                    "order": 6,
-                    "col": 8,
-                    "title": "Sizes",
-                    "description": ""
-                },
-                "types": {
-                    "order": 5,
-                    "col": 12,
-                    "title": "Types",
-                    "description": ""
-                }
-            },
-            "NumberField": {
-                "basic": {
-                    "order": 1,
-                    "col": 3,
-                    "title": "Basic",
-                    "description": ""
-                },
-                "disabled": {
-                    "order": 2,
-                    "col": 3,
-                    "title": "Disabled",
-                    "description": ""
-                },
-                "errors": {
-                    "order": 6,
-                    "col": 4,
-                    "title": "Errors",
-                    "description": ""
-                },
-                "placeholder": {
-                    "order": 4,
-                    "col": 3,
-                    "title": "Placeholder",
-                    "description": ""
-                },
-                "required": {
-                    "order": 3,
-                    "col": 3,
-                    "title": "Required",
-                    "description": ""
-                },
-                "sizes": {
-                    "order": 5,
-                    "col": 8,
-                    "title": "Sizes",
-                    "description": ""
-                }
-            },
-            "PasswordField": {
-                "basic": {
-                    "order": 1,
-                    "col": 3,
-                    "title": "Basic",
-                    "description": ""
-                },
-                "disabled": {
-                    "order": 2,
-                    "col": 3,
-                    "title": "Disabled",
-                    "description": ""
-                },
-                "errors": {
-                    "order": 6,
-                    "col": 4,
-                    "title": "Errors",
-                    "description": ""
-                },
-                "placeholder": {
-                    "order": 4,
-                    "col": 3,
-                    "title": "Placeholder",
-                    "description": ""
-                },
-                "required": {
-                    "order": 3,
-                    "col": 3,
-                    "title": "Required",
-                    "description": ""
-                },
-                "security": {
-                    "order": 7,
-                    "col": 3,
-                    "title": "Security",
-                    "description": ""
-                },
-                "sizes": {
-                    "order": 5,
-                    "col": 8,
-                    "title": "Sizes",
-                    "description": ""
-                }
-            }
-        },
-        "list": {
-            "List": {
-                "basic": {
-                    "order": 1,
-                    "col": 4,
-                    "title": "Basic",
-                    "description": ""
-                },
-                "empty": {
-                    "order": 3,
-                    "col": 4,
-                    "title": "Empty view with custom text when no items",
-                    "description": ""
-                },
-                "pagination-layout": {
-                    "order": 5,
-                    "col": 6,
-                    "title": "Pagination with layout switcher",
-                    "description": ""
-                },
-                "pagination-more-size": {
-                    "order": 4,
-                    "col": 6,
-                    "title": "Pagination with load more and show sizes switcher",
-                    "description": ""
-                },
-                "pagination-pages": {
-                    "order": 2,
-                    "col": 4,
-                    "title": "Pagination with page numbers and custom position (show both: top and bottom)",
-                    "description": ""
-                },
-                "pagination-search": {
-                    "order": 6,
-                    "col": 6,
-                    "title": "Pagination with search form",
-                    "description": ""
-                }
-            }
-        }
-    },
+    "demos": {},
     "components": {
         "base/Enum": {
             "name": "Enum",
@@ -6943,6 +7114,11 @@
         },
         "components/LocaleComponent": {
             "name": "LocaleComponent",
+            "decorators": [],
+            "defaultProps": null
+        },
+        "components/MetaComponent": {
+            "name": "MetaComponent",
             "decorators": [],
             "defaultProps": null
         },
@@ -7006,6 +7182,10 @@
                 "actionMethod": "get",
                 "autoDestroy": true,
                 "primaryKey": "id",
+                "addressBar": {
+                    "enable": false,
+                    "useHash": false
+                },
                 "empty": {
                     "enable": false,
                     "text": "Записи не найдены"
@@ -7017,6 +7197,7 @@
                     "position": "top"
                 },
                 "pagination": {
+                    "aroundCount": 3,
                     "attribute": "page",
                     "defaultValue": 1,
                     "enable": true,
@@ -7074,11 +7255,6 @@
                 "required": false
             }
         },
-        "ui/form/AutoCompleteField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/BlankField/BlankField": {
             "name": "BlankField",
             "decorators": [
@@ -7110,31 +7286,6 @@
                 }
             }
         },
-        "ui/form/Button/demo/block": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/Button/demo/colors": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/Button/demo/disabled": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/Button/demo/link": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/Button/demo/sizes": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/CheckboxField/CheckboxField": {
             "name": "CheckboxField",
             "decorators": [
@@ -7147,26 +7298,6 @@
                 "disabled": false,
                 "required": false
             }
-        },
-        "ui/form/CheckboxField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/CheckboxField/demo/disabled": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/CheckboxField/demo/errors": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/CheckboxField/demo/required": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
         },
         "ui/form/CheckboxListField/CheckboxListField": {
             "name": "CheckboxListField",
@@ -7196,11 +7327,6 @@
                 "valueFormat": "YYYY-MM-DD"
             }
         },
-        "ui/form/DateField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/DateTimeField/DateTimeField": {
             "name": "DateTimeField",
             "decorators": [
@@ -7215,11 +7341,6 @@
                 "timeFormat": "HH:mm",
                 "valueDateFormat": "YYYY-MM-DD"
             }
-        },
-        "ui/form/DateTimeField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
         },
         "ui/form/DropDownField/DropDownField": {
             "name": "DropDownField",
@@ -7237,11 +7358,6 @@
                 "required": false,
                 "showReset": false
             }
-        },
-        "ui/form/DropDownField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
         },
         "ui/form/Field/Field": {
             "name": "Field",
@@ -7269,11 +7385,6 @@
                 }
             }
         },
-        "ui/form/FieldLayout/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/FieldList/FieldList": {
             "name": "FieldList",
             "decorators": [
@@ -7290,11 +7401,6 @@
                 "showAdd": true,
                 "showRemove": true
             }
-        },
-        "ui/form/FieldList/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
         },
         "ui/form/FieldSet/FieldSet": {
             "name": "FieldSet",
@@ -7319,11 +7425,6 @@
                 }
             }
         },
-        "ui/form/FileField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/Form/AutoSaveHelper": {
             "name": "AutoSaveHelper",
             "decorators": [],
@@ -7345,11 +7446,6 @@
             "decorators": [],
             "defaultProps": null
         },
-        "ui/form/Form/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/HtmlField/HtmlField": {
             "name": "HtmlField",
             "decorators": [
@@ -7358,11 +7454,12 @@
             ],
             "defaultProps": {
                 "className": "",
+                "customButtons": [],
                 "disabled": false
             }
         },
         "ui/form/HtmlField/demo/basic": {
-            "name": "default",
+            "name": "CustomButton",
             "decorators": [],
             "defaultProps": null
         },
@@ -7381,41 +7478,6 @@
                 "type": "text"
             }
         },
-        "ui/form/InputField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/InputField/demo/disabled": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/InputField/demo/errors": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/InputField/demo/placeholder": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/InputField/demo/required": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/InputField/demo/sizes": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/InputField/demo/types": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/NumberField/NumberField": {
             "name": "NumberField",
             "decorators": [
@@ -7433,36 +7495,6 @@
                 "step": null
             }
         },
-        "ui/form/NumberField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/NumberField/demo/disabled": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/NumberField/demo/errors": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/NumberField/demo/placeholder": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/NumberField/demo/required": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/NumberField/demo/sizes": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/PasswordField/PasswordField": {
             "name": "PasswordField",
             "decorators": [
@@ -7478,41 +7510,6 @@
                 "security": false
             }
         },
-        "ui/form/PasswordField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/PasswordField/demo/disabled": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/PasswordField/demo/errors": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/PasswordField/demo/placeholder": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/PasswordField/demo/required": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/PasswordField/demo/security": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/form/PasswordField/demo/sizes": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/RadioListField/RadioListField": {
             "name": "RadioListField",
             "decorators": [
@@ -7526,11 +7523,6 @@
                 "errors": [],
                 "required": false
             }
-        },
-        "ui/form/RadioListField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
         },
         "ui/form/RangeField/RangeField": {
             "name": "RangeField",
@@ -7547,11 +7539,6 @@
                 "required": false,
                 "type": "input"
             }
-        },
-        "ui/form/RangeField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
         },
         "ui/form/ReCaptchaField/ReCaptchaField": {
             "name": "ReCaptchaField",
@@ -7606,11 +7593,6 @@
                 "submitOnEnter": false
             }
         },
-        "ui/form/TextField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/form/TimeField/TimeField": {
             "name": "TimeField",
             "decorators": [
@@ -7624,60 +7606,43 @@
                 "timeFormat": "HH:mm"
             }
         },
-        "ui/form/TimeField/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/format/BooleanFormatter/BooleanFormatter": {
             "name": "BooleanFormatter",
             "decorators": [
-                "formatter"
+                "components"
             ],
             "defaultProps": null
         },
         "ui/format/DateFormatter/DateFormatter": {
             "name": "DateFormatter",
             "decorators": [
-                "components",
-                "formatter"
+                "components"
             ],
             "defaultProps": {
                 "format": "LL"
             }
         },
-        "ui/format/DateFormatter/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/format/DateTimeFormatter/DateTimeFormatter": {
             "name": "DateTimeFormatter",
             "decorators": [
-                "components",
-                "formatter"
+                "components"
             ],
             "defaultProps": {
                 "format": "LLL"
             }
         },
-        "ui/format/DateTimeFormatter/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/format/EnumFormatter/EnumFormatter": {
             "name": "EnumFormatter",
             "decorators": [
                 "connect",
-                "formatter"
+                "components"
             ],
             "defaultProps": null
         },
         "ui/format/FileSize/FileSize": {
             "name": "FileSize",
             "decorators": [
-                "formatter"
+                "components"
             ],
             "defaultProps": null
         },
@@ -7691,7 +7656,7 @@
         "ui/format/Money/Money": {
             "name": "Money",
             "decorators": [
-                "formatter"
+                "components"
             ],
             "defaultProps": {
                 "scale": 2
@@ -7700,7 +7665,7 @@
         "ui/format/PhotosFormatter/PhotosFormatter": {
             "name": "PhotosFormatter",
             "decorators": [
-                "formatter"
+                "components"
             ],
             "defaultProps": {
                 "photoRowHeight": 120
@@ -7743,11 +7708,6 @@
             ],
             "defaultProps": null
         },
-        "ui/layout/Notifications/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/list/Accordion/Accordion": {
             "name": "Accordion",
             "decorators": [
@@ -7788,22 +7748,12 @@
             ],
             "defaultProps": null
         },
-        "ui/list/Empty/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/list/Grid/Grid": {
             "name": "Grid",
             "decorators": [
                 "list",
                 "components"
             ],
-            "defaultProps": null
-        },
-        "ui/list/Grid/demo/basic": {
-            "name": "default",
-            "decorators": [],
             "defaultProps": null
         },
         "ui/list/List/List": {
@@ -7814,36 +7764,6 @@
             ],
             "defaultProps": null
         },
-        "ui/list/List/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/list/List/demo/empty": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/list/List/demo/pagination-layout": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/list/List/demo/pagination-more-size": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/list/List/demo/pagination-pages": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
-        "ui/list/List/demo/pagination-search": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
-        },
         "ui/list/Pagination/Pagination": {
             "name": "Pagination",
             "decorators": [
@@ -7851,13 +7771,6 @@
                 "theme",
                 "components"
             ],
-            "defaultProps": {
-                "aroundCount": 3
-            }
-        },
-        "ui/list/Pagination/demo/basic": {
-            "name": "default",
-            "decorators": [],
             "defaultProps": null
         },
         "ui/list/PaginationSize/PaginationSize": {
@@ -7866,12 +7779,13 @@
                 "connect",
                 "components"
             ],
-            "defaultProps": null
-        },
-        "ui/list/PaginationSize/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
+            "defaultProps": {
+                "sizes": [
+                    30,
+                    50,
+                    100
+                ]
+            }
         },
         "ui/modal/Modal/Modal": {
             "name": "Modal",
@@ -7920,11 +7834,6 @@
             "defaultProps": {
                 "layout": "button"
             }
-        },
-        "ui/nav/Nav/demo/basic": {
-            "name": "default",
-            "decorators": [],
-            "defaultProps": null
         },
         "ui/nav/Router/Router": {
             "name": "Router",

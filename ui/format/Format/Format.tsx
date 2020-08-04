@@ -63,7 +63,7 @@ export default class Format extends React.Component<IFormatProps & IFormatPrivat
         const resultValue = _get(this.props.item, this.props.attribute) || this.props.emptyText || null;
         let FormatDefaultView = null;
         try {
-            FormatDefaultView = this.props.ui.getView('format.DefaultView');
+            FormatDefaultView = this.props.ui.getView('format.DefaultFormatterView');
         } catch (e) {
         }
 

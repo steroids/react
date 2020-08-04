@@ -44,13 +44,11 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
         super(props);
         const html = this.props.input.value || '';
         const contentBlock = htmlToDraft(html);
-        if (contentBlock) {
-            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-            const editorState = EditorState.createWithContent(contentState);
-            this.state = {
-                editorState: editorState,
-            };
-        }
+        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+        const editorState = EditorState.createWithContent(contentState);
+        this.state = {
+            editorState: editorState,
+        };
     }
 
     onEditorStateChange: Function = (editorState) => {
@@ -245,7 +243,7 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
                                     uploader.start();
                                 })
                             },
-                            previewImage: false,
+                            previewImage: true,
                             inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
                             alt: {present: false, mandatory: false},
                             defaultSize: {

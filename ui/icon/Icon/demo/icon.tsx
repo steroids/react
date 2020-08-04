@@ -2,7 +2,7 @@ import * as React from 'react';
 import '@fortawesome/fontawesome-free/js/all.min'
 
 import Icon from '../Icon';
-import {getFontAwesomeIconNames} from "../../../../../react-bootstrap/icon/fontawesome-icons";
+import fontAwesomeIcons from "@steroidsjs/bootstrap/icon/fontawesome";
 
 type IconState = {
     selectedIcons: any
@@ -45,7 +45,7 @@ export default class extends React.PureComponent<{}, IconState> {
     }
 
     render() {
-        const icons = getFontAwesomeIconNames();
+        const icons = Object.keys(fontAwesomeIcons);
         return (
             <>
                 <input

@@ -24,7 +24,7 @@ export interface ICrudItem {
     withModel?: boolean,
     component?: any,
     componentProps?: any,
-    route?: IRouteItem,
+    route?: boolean | IRouteItem,
     control?: IControlItem,
 }
 
@@ -120,15 +120,15 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
     }
 
     _getControls(itemId = null) {
-        itemId = itemId || _get(this.props, ['routeParams', this.props.primaryKey]);
+        itemId = itemId || _get(this.props, ['routeParams', this.props.primaryKey]) || null;
 
         return this.props._items.map(item => {
             const control: IControlItem = {
                 id: item.id,
                 visible: itemId
-                    ? item.withModel
+                    ? !!item.withModel
                     : this.props.routeId !== generateRouteId(this.props.baseRouteId, item.id)
-                        && (!!item.withModel === !!this.props.itemId),
+                        && (!!item.withModel === !!itemId),
             };
             if (item.route !== false) {
                 control.toRoute = generateRouteId(this.props.baseRouteId, item.id);
@@ -140,6 +140,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
             if (item.id === 'delete') {
                 control.onClick = this._onDelete;
             }
+
             return control;
         });
     }

@@ -47,14 +47,10 @@ export default class Icon extends React.PureComponent<IIconProps> {
 
     render() {
         const IconView = this.props.view || this.props.ui.getView('icon.IconView');
-        let icon = this.getIcon();
-        if (!icon.match(/svg/)) {
-            icon = `<img alt=${this.props.name} src=${icon} />`
-        }
         return (
             <IconView
                 {...this.props}
-                icon={icon}
+                icon={this.getIcon()}
             />
         )
     }

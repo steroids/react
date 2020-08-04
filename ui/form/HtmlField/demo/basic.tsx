@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {EditorState, Modifier} from 'draft-js';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import HtmlField from '../HtmlField';
 
 export default () => (

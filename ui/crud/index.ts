@@ -23,7 +23,7 @@ const defaultProps: ICrudGeneratorProps = {
     primaryKey: 'id',
 };
 
-const defaultItems = {
+const defaultItems: ({[key: string]: ICrudItem}) = {
     index: {
         component: Crud,
     },
@@ -32,9 +32,11 @@ const defaultItems = {
     },
     update: {
         component: CrudForm,
+        withModel: true,
     },
     delete: {
         route: false,
+        withModel: true,
     },
 };
 
@@ -59,6 +61,7 @@ export const generateCrud = (baseRouteId: string, props = defaultProps as ICrudG
         item = {
             ...defaultItems[id],
             ...item,
+            id,
         }
 
         const isIndex = id === 'index';
@@ -66,6 +69,7 @@ export const generateCrud = (baseRouteId: string, props = defaultProps as ICrudG
         // Add route
         let route = null;
         if (item.route !== false) {
+            const routeProps = item.route === 'object' ? item.route : {};
             route = {
                 id: generateRouteId(baseRouteId, id),
                 path: props.path + (
@@ -84,10 +88,10 @@ export const generateCrud = (baseRouteId: string, props = defaultProps as ICrudG
                         key: 'item',
                     })
                     : null,
-                ...item.route,
+                ...routeProps,
                 componentProps: {
                     ...item.componentProps,
-                    ...item.route?.componentProps,
+                    ...routeProps.componentProps,
                 },
             };
 

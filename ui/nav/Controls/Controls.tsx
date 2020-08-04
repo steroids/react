@@ -40,27 +40,25 @@ export default class Controls extends React.PureComponent<IControlsProps & ICont
     render() {
         const defaultItems = {
             index: {
-                actionType: 'list',
                 label: __('К списку'),
-                icon: 'keyboard_arrow_left',
+                icon: 'back',
                 color: 'secondary',
                 outline: true
             },
             create: {
-                actionType: 'list',
                 label: __('Добавить'),
-                icon: 'add_circle',
+                icon: 'create',
                 color: 'success',
                 outline: true
             },
             view: {
                 label: __('Просмотр'),
-                color: 'secondary',
+                color: 'view',
                 outline: true
             },
             update: {
                 label: __('Редактировать'),
-                color: 'secondary',
+                color: 'update',
                 outline: true
             },
             delete: {

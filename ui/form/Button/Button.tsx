@@ -51,7 +51,7 @@ export interface IButtonProps extends IThemeHocInput {
     /**
      * Иконка
      */
-    icon?: string | number;
+    icon?: string;
 
     /**
      * Цифра (к примеру, новые сообщения)
@@ -125,6 +125,7 @@ export interface IButtonProps extends IThemeHocInput {
      * @example {width: '45%'}
      */
     style?: object;
+
     className?: CssClassName;
 
     /**

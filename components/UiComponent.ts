@@ -51,6 +51,10 @@ export default class UiComponent {
         this.icons = icons;
     }
 
+    getIcon(name) {
+        return this.icons && this.icons[name] || null;
+    }
+
     _add(group, items, defaultNamespace = null) {
         // require.context()
         if (_isFunction(items) && _isFunction(items.keys)) {
@@ -66,10 +70,10 @@ export default class UiComponent {
             // object
             this._components[group] = this._components[group] || {};
             Object.keys(items).forEach(key => {
-                if (key.indexOf('.') === -1 && defaultNamespace) {
-                    key = defaultNamespace + '.' + key;
-                }
-                this._components[group][key] = items[key];
+                const name = key.indexOf('.') === -1 && defaultNamespace
+                    ? defaultNamespace + '.' + key
+                    : key;
+                this._components[group][name] = items[key];
             });
         } else {
             throw new Error(`Unsupported ${group} format for add component.`);

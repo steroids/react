@@ -46,7 +46,7 @@ const lazyTimers = {};
 
 const createList = (listId: string, props: any) => ({
     action: props.action || props.action === '' ? props.action : null,
-    actionMethod: props.actionMethod || 'post',
+    actionMethod: props.actionMethod || 'get',
     onFetch: props.onFetch,
     condition: props.condition,
     scope: props.scope,

@@ -4,27 +4,34 @@ import {HashRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
-import navigationHoc, {treeToList} from './navigationHoc';
+import _isBoolean from 'lodash-es/isBoolean';
+import _isArray from 'lodash-es/isArray';
+import _isObject from 'lodash-es/isObject';
+import {components, fetch} from '../../../hoc';
+import navigationHoc, {INavigationHocInputProps, treeToList} from './navigationHoc';
 import {getRouteId} from '../../../reducers/router';
 import {SsrProviderContext} from './SsrProvider';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {IFetchHocConfig} from '../../../hoc/fetch';
 
 export interface IRouteItem {
     id?: string,
     path?: string,
     exact?: boolean,
-    redirectTo?: string,
+    redirectTo?: boolean | string,
     component?: any,
     componentProps?: any,
     isVisible?: boolean,
     isNavVisible?: boolean,
+    model?: string,
+    searchModel?: string,
     roles?: string[],
+    fetch?: IFetchHocConfig,
     items?: IRouteItem[] | {[key: string]: IRouteItem};
 }
 
-export interface IRouterProps {
+export interface IRouterProps extends INavigationHocInputProps {
     wrapperView?: any;
     wrapperProps?: any;
     routes?: IRouteItem[] | {[key: string]: IRouteItem};
@@ -34,7 +41,6 @@ export interface IRouterProps {
     history?: any;
     store?: any;
     basename?: any;
-    defaultRoles?: string[];
 }
 
 interface IRouterPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -60,9 +66,7 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
         super(props);
         this._renderItem = this._renderItem.bind(this);
         this.state = {
-            routes: treeToList(this.props.routes, {
-                roles: this.props.defaultRoles,
-            }),
+            routes: treeToList(this.props.routes),
         };
     }
 
@@ -145,16 +149,33 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
 
     _renderItem(route: IRouteItem, props) {
         if (route.redirectTo) {
+            let to = route.redirectTo;
+            if (_isBoolean(route.redirectTo)) {
+                const key = _isObject(route.items) && !_isArray(route.items) ? Object.keys(route.items)[0] : '0';
+                to = _get(route, ['items', key, 'path']);
+            }
+            if (!to && to !== '') {
+                console.error('Not found path for redirect in route:', route)
+                return null;
+            }
             return (
                 <Redirect
                     {...props}
-                    to={route.redirectTo}
+                    to={to}
                     {...route.componentProps}
                 />
             );
         }
 
-        const Component = route.component;
+        if (!route.component) {
+            console.error('Not found component for route:', route)
+            return null;
+        }
+
+        let Component = route.component;
+        if (route.fetch) {
+            Component = fetch(route.fetch)(Component);
+        }
         return (
             <Component
                 {...props}

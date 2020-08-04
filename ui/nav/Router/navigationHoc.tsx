@@ -7,7 +7,11 @@ import {isRouterInitialized} from '../../../reducers/router';
 import {initRoutes, initParams} from '../../../actions/router';
 import {IConnectHocOutput} from '../../../hoc/connect';
 
-interface INavigationHocPrivateProps extends IConnectHocOutput {
+export interface INavigationHocInputProps {
+    defaultRoles?: string[];
+}
+
+interface INavigationHocPrivateProps extends INavigationHocInputProps, IConnectHocOutput {
     /*
         isInitialized: PropTypes.bool
      */
@@ -20,19 +24,17 @@ const stateMap = state => ({
     isRouterInitialized: isRouterInitialized(state),
     route: getRoute(state)
 });
-export const walkRoutesRecursive = item => {
+export const walkRoutesRecursive = (item, defaultItem) => {
     let items = null;
     if (_isArray(item.items)) {
-        items = item.items.map(walkRoutesRecursive);
+        items = item.items.map(i => walkRoutesRecursive(i, defaultItem));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items).map(id =>
-            walkRoutesRecursive({
-                ...item.items[id],
-                id
-            })
+            walkRoutesRecursive({...item.items[id], id}, defaultItem)
         );
     }
     return {
+        ...defaultItem,
         ...item,
         id: item.id,
         exact: item.exact,
@@ -45,7 +47,7 @@ export const walkRoutesRecursive = item => {
         items
     };
 };
-export const treeToList = (item, defaultItem, isRoot = true) => {
+export const treeToList = (item, isRoot = true) => {
     if (_isArray(item)) {
         return item;
     }
@@ -55,7 +57,7 @@ export const treeToList = (item, defaultItem, isRoot = true) => {
     let items = item.path ? [item] : [];
     if (_isArray(item.items)) {
         item.items.forEach(sub => {
-            items = items.concat(treeToList(sub, defaultItem, false));
+            items = items.concat(treeToList(sub, false));
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).map(id => {
@@ -65,15 +67,10 @@ export const treeToList = (item, defaultItem, isRoot = true) => {
                         ...item.items[id],
                         id
                     },
-                    defaultItem,
                     false
                 )
             );
         });
-    }
-
-    if (_isObject(item) && !_isArray(item) && defaultItem) {
-        item = {...item, ...defaultItem};
     }
 
     return items;
@@ -88,7 +85,12 @@ export default (routes = null): any => WrappedComponent =>
                     routes || (!_isArray(this.props.routes) ? this.props.routes : null);
                 if (routesTree) {
                     this.props.dispatch(
-                        initRoutes(walkRoutesRecursive({id: 'root', ...routesTree}))
+                        initRoutes(
+                            walkRoutesRecursive(
+                                {id: 'root', ...routesTree},
+                                this.props.defaultRoles ? {roles: this.props.defaultRoles} : null
+                            )
+                        )
                     );
                 }
                 this._initParams(this.props);

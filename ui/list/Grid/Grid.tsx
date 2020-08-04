@@ -5,11 +5,12 @@ import _isString from 'lodash-es/isString';
 import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
 import {components, list} from '../../../hoc';
-import ActionColumn from '../ActionColumn';
+import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IListHocInput, IListHocOutput} from '../../../hoc/list';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IDetailColumn} from '../Detail/Detail';
+import {IControlItem} from '../../nav/Controls/Controls';
 
 export interface IGridColumn {
     attribute?: string,
@@ -28,10 +29,13 @@ export interface IGridColumn {
     valueProps?: any
 }
 
+class item {
+}
+
 export interface IGridProps extends IListHocInput {
     view?: any;
     columns: (string | IGridColumn)[];
-    actions?: any[] | ((...args: any[]) => any);
+    controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
     model?: any;
     label?: any;
     fields?: any;
@@ -68,11 +72,11 @@ export default class Grid extends React.PureComponent<IGridProps & IGridPrivateP
         const columns = this.props.columns
             .map(column => (_isString(column) ? {attribute: column} : column))
             .filter((column: IGridColumn) => column.visible !== false);
-        if (this.props.actions) {
+        if (this.props.controls) {
             columns.push({
-                valueView: ActionColumn,
+                valueView: ControlsColumn,
                 valueProps: {
-                    actions: this.props.actions
+                    controls: this.props.controls
                 }
             });
         }

@@ -73,6 +73,7 @@ const defaultConfig = {
     attributes: [''],
     layout: null,
     list: false,
+    layoutProps: null,
 } as IFieldHocConfig;
 
 const valueSelectors = {};
@@ -217,6 +218,7 @@ export default (customConfig): any => WrappedComponent => {
                                     {...this.props}
                                     {...outputProps}
                                     {...(typeof config.layout === 'object' ? config.layout : {layout: config.layout})}
+                                    {...config.layoutProps}
                                     errors={isInvalid ? errors : null}
                                     isInvalid={isInvalid}
                                 >

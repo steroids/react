@@ -2,6 +2,7 @@ import * as React from 'react';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IButtonProps} from '../../form/Button/Button';
+import {INavProps} from '../Nav/Nav';
 
 export interface IControlItem extends IButtonProps {
     id?: string,
@@ -12,11 +13,13 @@ export interface IControlItem extends IButtonProps {
 }
 
 export interface IControlsProps {
-    items?: IControlItem[];
-    view?: any;
+    items?: IControlItem[],
+    navProps?: INavProps,
+    view?: any,
 }
 
 export interface IControlsViewProps extends IControlsProps {
+    className?: string,
     items: (IControlItem & {
         icon?: string,
         label?: string | any,
@@ -33,6 +36,7 @@ interface IControlsPrivateProps extends IComponentsHocOutput {
 
 @components('ui')
 export default class Controls extends React.PureComponent<IControlsProps & IControlsPrivateProps> {
+
     render() {
         const defaultItems = {
             index: {
@@ -68,8 +72,7 @@ export default class Controls extends React.PureComponent<IControlsProps & ICont
                 position: 'right'
             }
         };
-        const ControlsView =
-            this.props.view || this.props.ui.getView('crud.ControlsView');
+        const ControlsView = this.props.view || this.props.ui.getView('nav.ControlsView');
         return (
             <ControlsView
                 {...this.props}
@@ -80,4 +83,5 @@ export default class Controls extends React.PureComponent<IControlsProps & ICont
             />
         );
     }
+
 }

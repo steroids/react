@@ -7,11 +7,11 @@ import Money from './Money';
 import PhotosFormatter from './PhotosFormatter';
 
 export default {
-    'format.BooleanFormatter': BooleanFormatter,
-    'format.DateFormatter': DateFormatter,
-    'format.DateTimeFormatter': DateTimeFormatter,
-    'format.EnumFormatter': EnumFormatter,
-    'format.FileSize': FileSize,
-    'format.Money': Money,
-    'format.PhotosFormatter': PhotosFormatter,
+    BooleanFormatter,
+    DateFormatter,
+    DateTimeFormatter,
+    EnumFormatter,
+    FileSize,
+    Money,
+    PhotosFormatter,
 };

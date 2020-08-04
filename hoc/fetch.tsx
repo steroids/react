@@ -4,6 +4,8 @@ import {navigationAddConfigs, navigationRemoveConfigs, getConfigId} from '../act
 import {getRouteParams} from '../reducers/router';
 import {IConnectHocOutput} from './connect';
 
+export type IFetchHocConfig = (props: any) => object | object[];
+
 interface IFetchHocInput {
     navigationData?: object,
     routeParams?: object,
@@ -28,7 +30,7 @@ const stateMap = state => ({
     navigationData: (state.navigation && state.navigation.data) || null,
     routeParams: getRouteParams(state)
 });
-export default (configsFunc, options = {} as IFetchHocOptions): any => WrappedComponent =>
+export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions): any => WrappedComponent =>
     connect(stateMap)(
         class FetchHoc extends React.PureComponent<IFetchHocInput & IFetchHocPrivateProps, IFetchHocState> {
 

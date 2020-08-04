@@ -20,7 +20,7 @@ import {theme} from '../../../hoc';
 import {IThemeHocInput, IThemeHocOutput} from '../../../hoc/theme';
 
 export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
-    formId: string;
+    formId?: string;
     prefix?: string;
     model?: string | ((...args: any[]) => any) | any;
     action?: string;

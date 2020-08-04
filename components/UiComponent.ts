@@ -24,7 +24,7 @@ export default class UiComponent {
     }
 
     addFields(components) {
-        this._add('fields', components);
+        this._add('fields', components, 'form');
     }
 
     getField(path) {
@@ -36,7 +36,7 @@ export default class UiComponent {
     }
 
     addFormatters(components) {
-        this._add('formatters', components);
+        this._add('formatters', components, 'format');
     }
 
     getFormatter(path) {
@@ -51,7 +51,7 @@ export default class UiComponent {
         this.icons = icons;
     }
 
-    _add(group, items) {
+    _add(group, items, defaultNamespace = null) {
         // require.context()
         if (_isFunction(items) && _isFunction(items.keys)) {
             items.keys().forEach(fileName => {
@@ -64,10 +64,13 @@ export default class UiComponent {
             });
         } else if (_isObject(items)) {
             // object
-            this._components[group] = {
-                ...this._components[group],
-                ...items
-            };
+            this._components[group] = this._components[group] || {};
+            Object.keys(items).forEach(key => {
+                if (key.indexOf('.') === -1 && defaultNamespace) {
+                    key = defaultNamespace + '.' + key;
+                }
+                this._components[group][key] = items[key];
+            });
         } else {
             throw new Error(`Unsupported ${group} format for add component.`);
         }

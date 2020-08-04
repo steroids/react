@@ -15,7 +15,7 @@ export const init = (skipInitialized = false) => (dispatch, getState) => {
   });
 };
 export const reInit = () => init();
-export const login = (token, redirectPageId = 'root') => (
+export const login = (token, redirectPageId: string|boolean = 'root') => (
   dispatch,
   getState,
   { http }
@@ -23,7 +23,7 @@ export const login = (token, redirectPageId = 'root') => (
   http.setAccessToken(token);
   return dispatch({
     type: AUTH_INIT,
-    redirectPageId
+    redirectPageId: redirectPageId || null
   });
 };
 export const addSocial = social => ({

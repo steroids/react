@@ -214,7 +214,7 @@ export default (state = initialState, action) => {
             };
 
         case ROUTER_ADD_CONFIGS:
-            const configs = [].concat(state.configs);
+            const configs = [].concat(state.configs || []);
             const counters = {...state.counters};
             action.configs.forEach(config => {
                 const id = getConfigId(config);

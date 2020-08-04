@@ -25,12 +25,10 @@ const normalizeConfigs = configs => {
   });
   return configs;
 };
-const defaultFetchHandler = config => (dispatch, getState, { http }) => {
-  return dispatch(
-    http
+const defaultFetchHandler = (config, { http }) => {
+  return http
       .send(config.method, config.url, config.params)
-      .then(result => result.data)
-  );
+      .then(result => result.data);
 };
 export const initRoutes = routes => ({
   type: ROUTER_INIT_ROUTES,
@@ -63,7 +61,7 @@ export const goToParent = (level = 1) => (dispatch, getState) => {
   }
 };
 export const getConfigId = config => config.id || _trim(config.url, '/');
-export const navigationAddConfigs = configs => dispatch => {
+export const navigationAddConfigs = configs => (dispatch, getState, components) => {
   configs = normalizeConfigs(configs);
   dispatch({
     type: ROUTER_ADD_CONFIGS,
@@ -71,7 +69,7 @@ export const navigationAddConfigs = configs => dispatch => {
   });
   configs.forEach(config => {
     const onFetch = config.onFetch || defaultFetchHandler;
-    onFetch(config).then(data =>
+    onFetch(config, components).then(data =>
       dispatch({
         type: ROUTER_SET_DATA,
         config,

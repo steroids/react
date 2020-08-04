@@ -7,6 +7,7 @@ import {IRouteItem} from '../nav/Router/Router';
 import {generateRouteId, ICrudItem, ICrudProps} from './Crud/Crud';
 import {indexBy} from '../../utils/collection';
 import CrudForm from './Crud/CrudForm';
+import CrudGrid from './Crud/CrudGrid';
 
 export interface ICrudGeneratorProps extends ICrudProps {
     path?: string,
@@ -25,7 +26,7 @@ const defaultProps: ICrudGeneratorProps = {
 
 const defaultItems: ({[key: string]: ICrudItem}) = {
     index: {
-        component: Crud,
+        component: CrudGrid,
     },
     create: {
         component: CrudForm,
@@ -77,11 +78,12 @@ export const generateCrud = (baseRouteId: string, props = defaultProps as ICrudG
                         ? ('/' + (item.withModel ? `:${props.primaryKey}/` : '') + id)
                         : ''
                 ),
+                exact: true,
                 isVisible: true,
                 isNavVisible: false,
                 model: props.model,
                 searchModel: props.searchModel,
-                component: item.component,
+                component: Crud,
                 fetch: item.withModel
                     ? ({params}) => ({
                         url: `${props.restUrl}/${params[props.primaryKey]}`,
@@ -90,6 +92,7 @@ export const generateCrud = (baseRouteId: string, props = defaultProps as ICrudG
                     : null,
                 ...routeProps,
                 componentProps: {
+                    component: item.component,
                     ...item.componentProps,
                     ...routeProps.componentProps,
                 },
@@ -106,14 +109,24 @@ export const generateCrud = (baseRouteId: string, props = defaultProps as ICrudG
         crudItems.push(item);
     });
 
+    const crudProps = {
+        ..._omit(props, _keys(defaultItems).concat('path')),
+        baseRouteId,
+        items: crudItems,
+    };
+
     return {
         ...indexRoute,
         componentProps: {
-            ..._omit(props, _keys(defaultItems).concat('path')),
+            ...crudProps,
             ...indexRoute.componentProps,
-            baseRouteId,
-            items: crudItems,
         },
-        items: routeItems,
+        items: routeItems.map(routeItem => ({
+            ...routeItem,
+            componentProps: {
+                ...crudProps,
+                ...routeItem.componentProps,
+            },
+        })),
     };
 };

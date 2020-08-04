@@ -33,6 +33,7 @@ export interface ICrudProps {
     baseRouteId?: string;
     view?: any;
     items?: ICrudItem[] | {[key: string]: ICrudItem};
+    component?: any,
 
     mode?: 'page' | 'modal',
     restUrl?: string,
@@ -40,9 +41,9 @@ export interface ICrudProps {
     model?: string,
     searchModel?: string,
     grid?: IGridProps,
-    gridComponent?: any,
+    gridComponent?: any, // TODO
     form?: IFormProps,
-    formComponent?: any,
+    formComponent?: any, // TODO
     detail?: any,
     detailComponent?: any,
 }
@@ -100,21 +101,21 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
 
     render() {
         const CrudView = this.props.view || this.props.ui.getView('crud.CrudView');
-        const GridComponent = this.props.gridComponent || CrudGrid;
         const props = {
             ...this.props,
             itemId: this.props.itemId,
             controlsHandler: this._controlsHandler,
         };
+
+        const InnerComponent = this.props.component;
         return (
             <CrudView
                 {...this.props}
                 controls={this._getControls()}
             >
-                {this.props.children
-                    ? React.cloneElement(this.props.children as React.ReactElement<any>, props)
-                    : <GridComponent {...props} />
-                }
+                {InnerComponent && (
+                    <InnerComponent {...props} />
+                )}
             </CrudView>
         );
     }
@@ -122,7 +123,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
     _getControls(itemId = null) {
         itemId = itemId || _get(this.props, ['routeParams', this.props.primaryKey]) || null;
 
-        return this.props._items.map(item => {
+        return (this.props._items || []).map(item => {
             const control: IControlItem = {
                 id: item.id,
                 visible: itemId
@@ -134,7 +135,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                 control.toRoute = generateRouteId(this.props.baseRouteId, item.id);
                 control.toRouteParams = {
                     ...this.props.routeParams,
-                    [this.props.primaryKey]: item.withModel ? itemId : null,
+                    [this.props.primaryKey]: item.withModel ? itemId : undefined,
                 };
             }
             if (item.id === 'delete') {

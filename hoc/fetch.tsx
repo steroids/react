@@ -27,7 +27,7 @@ interface IFetchHocOptions {
 }
 
 const stateMap = state => ({
-    navigationData: (state.navigation && state.navigation.data) || null,
+    navigationData: (state.router && state.router.data) || null,
     routeParams: getRouteParams(state)
 });
 export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions): any => WrappedComponent =>

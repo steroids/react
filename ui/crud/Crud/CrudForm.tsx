@@ -3,9 +3,13 @@ import {showNotification} from '../../../actions/notifications';
 import Form from '../../form/Form/Form';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {getCrudFormId, ICrudChildrenProps} from './Crud';
-import {connect} from '../../../hoc';
+import {connect, fetch} from '../../../hoc';
 
 @connect()
+@fetch(props => props.itemId && ({
+    url: `${props.restUrl}/${props.itemId}`,
+    key: 'item',
+}))
 export default class CrudForm extends React.PureComponent<ICrudChildrenProps & IConnectHocOutput> {
 
     render() {

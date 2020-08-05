@@ -13,7 +13,7 @@ export default class CrudGrid extends React.PureComponent<ICrudChildrenProps> {
                 primaryKey={this.props.primaryKey}
                 model={this.props.model}
                 //searchModel={this.props.searchModel}
-                controls={this.props.controlsHandler}
+                controls={this.props.controlsGetter}
                 columns={[this.props.primaryKey]}
                 pagination={{
                     loadMore: false,

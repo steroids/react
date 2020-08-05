@@ -51,7 +51,7 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
                             ...this.props,
                             ...this.state.overwriteProps,
                             params: this.props.routeParams
-                        })
+                        }) || []
                     )
                 );
             }
@@ -63,7 +63,7 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
                             ...this.props,
                             ...this.state.overwriteProps,
                             params: this.props.routeParams
-                        })
+                        }) || []
                     )
                 );
             }
@@ -74,14 +74,14 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
                         ...prevProps,
                         ...prevState.overwriteProps,
                         params: prevProps.routeParams
-                    })
+                    }) || []
                 );
                 const nextConfigs = [].concat(
                     configsFunc({
                         ...this.props,
                         ...this.state.overwriteProps,
                         params: this.props.routeParams
-                    })
+                    }) || []
                 );
                 for (
                     let i = 0;
@@ -98,15 +98,15 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
             }
 
             render() {
-                let isLoading = !this.props.navigationData;
-                let dataProps = {};
                 const configs = [].concat(
                     configsFunc({
                         ...this.props,
                         ...this.state.overwriteProps,
                         params: this.props.routeParams
-                    })
+                    }) || []
                 );
+                let dataProps = {};
+                let isLoading = !this.props.navigationData && configs.length > 0;
                 if (this.props.navigationData) {
                     configs.forEach(config => {
                         const dataItem = this.props.navigationData[getConfigId(config)];

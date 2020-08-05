@@ -54,13 +54,13 @@ export default class Controls extends React.PureComponent<IControlsProps & ICont
             view: {
                 icon: 'view',
                 label: __('Просмотр'),
-                color: 'view',
+                color: 'secondary',
                 outline: true
             },
             update: {
                 icon: 'update',
                 label: __('Редактировать'),
-                color: 'update',
+                color: 'secondary',
                 outline: true
             },
             delete: {

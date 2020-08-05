@@ -29,7 +29,7 @@ export default class HttpComponent {
 
     async getAxiosConfig() {
         const config = {
-            withCredentials: process.env.PLATFORM !== 'mobile',
+            withCredentials: true,
             headers: {
                 // Add XMLHttpRequest header for detect ajax requests
                 'X-Requested-With': 'XMLHttpRequest',

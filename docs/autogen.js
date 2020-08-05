@@ -148,19 +148,16 @@ json.children.forEach(file => {
                 extends: extendsList,
                 items: (item.children || [])
                     .filter(property => property.kindString === 'Property')
-                    .map(property => {
-                        const propertyType = typeToString(property.type);
-                        return {
-                            name: property.name,
-                            description: _.get(property, 'comment.shortText', propertyType),
-                            required: !property.flags.isOptional,
-                            type: propertyType,
-                            example: (_.get(property, 'comment.tags') || [])
-                                .filter(tag => tag.tag === 'example')
-                                .map(tag => tag.text)
-                                .join(' ')
-                        }
-                    }),
+                    .map(property => ({
+                        name: property.name,
+                        description: _.get(property, 'comment.shortText', ''),
+                        required: !property.flags.isOptional,
+                        type: typeToString(property.type),
+                        example: (_.get(property, 'comment.tags') || [])
+                            .filter(tag => tag.tag === 'example')
+                            .map(tag => tag.text)
+                            .join(' ')
+                    })),
             };
         }
         if (item.kindString === 'Type alias' && item.flags && item.flags.isExported === true) {

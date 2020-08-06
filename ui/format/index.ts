@@ -6,7 +6,7 @@ import FileSize from './FileSize';
 import Money from './Money';
 import PhotosFormatter from './PhotosFormatter';
 
-export default {
+export {
     BooleanFormatter,
     DateFormatter,
     DateTimeFormatter,

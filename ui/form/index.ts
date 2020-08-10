@@ -24,7 +24,7 @@ import SwitcherField from './SwitcherField';
 import TextField from './TextField';
 import TimeField from './TimeField';
 
-export {
+export default {
     AutoCompleteField,
     BlankField,
     Button,

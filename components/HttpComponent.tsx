@@ -18,7 +18,7 @@ export default class HttpComponent {
     constructor(components) {
         this._components = components;
         this.apiUrl = typeof location !== 'undefined'
-            ? location.protocol + '//' + location.host : (process.env.BACKEND_URL || '');
+            ? location.protocol + '//' + location.host : (process.env.APP_BACKEND_URL || '');
         this.accessTokenKey = 'accessToken';
         this._lazyRequests = {};
         this._axios = null;

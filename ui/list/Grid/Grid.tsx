@@ -26,7 +26,9 @@ export interface IGridColumn {
     headerView?: any,
     headerProps?: any,
     valueView?: any,
-    valueProps?: any
+    valueProps?: any,
+    className?: CssClassName,
+    sortable?: boolean,
 }
 
 class item {
@@ -41,13 +43,16 @@ export interface IGridProps extends IListHocInput {
     fields?: any;
     searchForm?: any;
     itemsIndexing?: any;
+    onSort?: (arg: string) => void;
+    fetch?: () => void;
 }
 
-export interface IGridViewProps extends IListHocOutput {
-    renderValue: (item: object, column: IDetailColumn) => any,
+export interface IGridViewProps extends IGridProps, IGridPrivateProps {
+    renderValue: (item: object, column: IDetailColumn | IGridColumn) => any,
     columns: (IGridColumn & {
         label: any,
-    })[]
+    })[],
+    className: CssClassName,
 }
 
 interface IGridPrivateProps extends IListHocOutput, IComponentsHocOutput {

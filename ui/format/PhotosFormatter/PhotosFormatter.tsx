@@ -34,6 +34,10 @@ export interface IPhotosFormatterProps {
     view?: CustomView;
 }
 
+export interface IPhotosFormatterViewProps extends IPhotosFormatterProps {
+
+}
+
 @components('ui')
 export default class PhotosFormatter extends React.Component<IPhotosFormatterProps & IComponentsHocOutput> {
 

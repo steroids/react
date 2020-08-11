@@ -52,8 +52,9 @@ export interface IHtmlFieldProps extends IFieldHocInput {
     customButtons?: Array<any>,
 }
 
-export interface IHtmlFieldViewProps extends IFieldHocOutput {
-    editorProps?: any,
+export interface IHtmlFieldViewProps extends IHtmlFieldProps, IFieldHocOutput {
+    editorState?: any,
+    onEditorStateChange?: (state: any) => void,
 }
 
 interface IHtmlFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
@@ -91,8 +92,8 @@ export default class HtmlField extends React.PureComponent<IHtmlFieldProps & IHt
         disabled: false,
         className: '',
         customButtons: [],
-        // onFocus: () => {},
-        // onBlur: () => {},
+        onFocus: () => {},
+        onBlur: () => {},
     };
 
     static defaultEditorConfig = {

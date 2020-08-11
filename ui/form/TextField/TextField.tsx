@@ -25,11 +25,11 @@ export interface ITextFieldProps extends IFieldHocInput {
 export interface ITextFieldViewProps extends IFieldHocOutput {
     inputProps: {
         name: string,
-        onChange: (value: string) => void,
-        onKeyUp: (e: Event) => void,
+        onChange: (value: string | React.ChangeEvent) => void,
+        onKeyUp: (e: Event | React.KeyboardEvent) => void,
         value: string | number,
         placeholder: string,
-        disabled: string,
+        disabled: boolean,
     },
 }
 

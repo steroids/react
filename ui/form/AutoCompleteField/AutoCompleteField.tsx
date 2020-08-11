@@ -23,15 +23,17 @@ export interface IAutoCompleteFieldViewProps extends IFieldHocOutput, IDataProvi
         type: string,
         name: string,
         onChange: (value: string) => void,
-        onFocus: (e: Event) => void,
-        onBlur: (e: Event) => void,
+        onFocus: (e: Event | React.FocusEvent) => void,
+        onBlur: (e: Event | React.FocusEvent) => void,
         value: string | number,
+        className?: CssClassName
     },
     items: {
         id: number | string | boolean,
         label?: string,
         isSelected: boolean,
         isHovered: boolean,
+        labelHighlighted?: any[]
     }[];
     selectedItems?: {
         id: number | string | boolean,

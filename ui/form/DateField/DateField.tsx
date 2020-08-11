@@ -36,7 +36,9 @@ export interface IDateFieldViewProps extends IFieldHocOutput {
     parseDate: (date: string | Date) => Date | undefined,
     formatDate: (date: string | Date) => string,
     onChange: (day: string | Date) => void,
-    pickerProps: any
+    pickerProps: any,
+    displayFormat: string,
+    localeUtils: any,
 }
 
 interface IDateFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {}

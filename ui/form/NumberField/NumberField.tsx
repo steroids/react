@@ -32,10 +32,10 @@ export interface INumberFieldViewProps extends IFieldHocOutput {
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: string) => void,
+        onChange: (value: Event | React.ChangeEvent) => void,
         value: string | number,
         placeholder: string,
-        disabled: string,
+        disabled: boolean,
         min: string | number,
         max: string | number,
         step: string | number,

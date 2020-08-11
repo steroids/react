@@ -9,7 +9,7 @@ export interface IEmptyProps {
     view?: CustomView,
 }
 
-export interface IEmptyViewProps {
+export interface IEmptyViewProps extends IEmptyProps{
 
 }
 

@@ -51,7 +51,9 @@ export interface IFieldListViewProps extends IFieldHocOutput {
         size?: boolean,
     })[];
     renderField?: (field: object, prefix: string) => any,
-    onAdd?: () => void,
+    onAdd?: (e: any) => void,
+    showRemove?: boolean,
+    showAdd?: boolean,
 }
 
 export interface IFieldListItemViewProps extends IFieldHocOutput {
@@ -63,6 +65,7 @@ export interface IFieldListItemViewProps extends IFieldHocOutput {
     onRemove?: (rowIndex: number) => void,
     prefix: string,
     rowIndex: number,
+    showRemove: boolean,
 }
 
 interface IFieldListPrivateProps extends IFieldHocOutput, IConnectHocOutput, IComponentsHocOutput {

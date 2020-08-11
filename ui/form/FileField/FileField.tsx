@@ -22,8 +22,68 @@ export interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
     itemProps?: any;
 }
 
+interface IFileFieldItemProps extends IFieldHocOutput, IFileHocOutput {
+    /**
+     * Уникальный текстовый идентификатор
+     * @example e65f5867-0083-48a7-af43-1121ed9e6280
+     */
+    uid?: string,
+
+    imagesOnly?: boolean,
+
+    /**
+     * ID файла
+     * @example 34
+     */
+    fileId?: number | string,
+
+    /**
+     * Исходное название файла
+     * @example original-name
+     */
+    title?: string,
+    disabled?: boolean,
+    showRemove?: boolean,
+
+    /**
+     * Обработчик события удаления файла
+     * @param e
+     */
+    onRemove?: () => void,
+    error?: string,
+    image?: {
+        /**
+         * Url файла
+         * @example assets/file.txt
+         */
+        url: string,
+
+        /**
+         * Ширина
+         * @example 1280
+         */
+        width: string,
+
+        /**
+         * Высота
+         * @example 720
+         */
+        height: string,
+    },
+    progress?: {
+        bytesUploaded: number,
+        percent: number,
+    },
+}
+
+export interface IFileFieldItemViewProps extends IFileFieldItemProps {
+
+}
+
 export interface IFileFieldViewProps extends IFieldHocOutput, IFileHocOutput {
-    buttonComponent?: React.ReactNode;
+    buttonComponent?: React.ReactNode | any;
+    imagesOnly?: boolean;
+    itemProps?: any;
     buttonProps: {
         /**
          * Название поля
@@ -44,65 +104,8 @@ export interface IFileFieldViewProps extends IFieldHocOutput, IFileHocOutput {
          */
         onClick?: (e: Event) => void,
     },
-    itemView?: React.ReactNode;
-    items: {
-
-        /**
-         * Уникальный текстовый идентификатор
-         * @example e65f5867-0083-48a7-af43-1121ed9e6280
-         */
-        uid?: string,
-
-        /**
-         * ID файла
-         * @example 34
-         */
-        fileId?: number | string,
-
-        /**
-         * Исходное название файла
-         * @example original-name
-         */
-        title?: string,
-
-        /**
-         * Размер файла
-         * @example 9660
-         */
-        size?: number | string,
-        disabled?: boolean,
-        showRemove?: boolean,
-
-        /**
-         * Обработчик события удаления файла
-         * @param e
-         */
-        onRemove?: () => void,
-        error?: string,
-        image?: {
-            /**
-             * Url файла
-             * @example assets/file.txt
-             */
-            url: string,
-
-            /**
-             * Ширина
-             * @example 1280
-             */
-            width: string,
-
-            /**
-             * Высота
-             * @example 720
-             */
-            height: string,
-        },
-        progress?: {
-            bytesUploaded: number,
-            percent: number,
-        },
-    }[]
+    itemView?: React.ReactNode | any;
+    items: IFileFieldItemProps[]
 }
 
 interface IFileFieldPrivateProps extends IFieldHocOutput, IFileHocOutput, IComponentsHocOutput {

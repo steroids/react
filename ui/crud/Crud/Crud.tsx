@@ -66,6 +66,11 @@ interface ICrudPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
     _items?: ICrudItem[];
 }
 
+export interface ICrudViewProps {
+    className?: CssClassName,
+    controls?: IControlItem[],
+}
+
 const getRouteItemId = props => {
     return _get(props, ['routeParams', props.primaryKey + 'Action'])
         ? _get(props, ['routeParams', props.primaryKey])

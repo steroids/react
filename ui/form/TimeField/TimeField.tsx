@@ -62,6 +62,7 @@ export interface ITimeFieldViewProps extends IFieldHocOutput {
         disabled: string,
     },
     pickerProps: any,
+    type: any,
 }
 
 interface ITimeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {}

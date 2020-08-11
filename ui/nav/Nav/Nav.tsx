@@ -36,11 +36,12 @@ export interface INavProps extends IThemeHocInput {
     onChange?: (...args: any[]) => any;
 }
 
-export interface INavViewProps {
+export interface INavViewProps extends INavProps {
     onClick: (item: object, index: number) => void,
     items: (INavItem & {
         isActive: boolean,
-    })[]
+    })[],
+    navClassName?: CssClassName,
 }
 
 interface INavPrivateProps extends IComponentsHocOutput, IThemeHocOutput {

@@ -18,6 +18,7 @@ export interface ISwitcherFieldViewProps extends IFieldHocOutput, IDataProviderH
         isHovered: boolean,
     }[];
     onItemClick: (item: {id: number | string | boolean}) => void,
+    buttonProps?: any,
 }
 
 interface ISwitcherFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput, IComponentsHocOutput {

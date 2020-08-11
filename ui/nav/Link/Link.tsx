@@ -3,6 +3,7 @@ import Button from '../../form/Button';
 import {IButtonProps, IButtonViewProps} from '../../form/Button/Button';
 
 export interface ILinkProps extends IButtonProps {
+    to?: string,
 }
 
 export interface ILinkViewProps extends IButtonViewProps {

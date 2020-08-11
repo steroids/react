@@ -7,6 +7,10 @@ export interface IBooleanFormatterProps {
     view?: CustomView;
 }
 
+export interface IBooleanFormatterPropsView {
+    value?: string | number | boolean;
+}
+
 @components('ui')
 export default class BooleanFormatter extends React.Component<IBooleanFormatterProps & IComponentsHocOutput> {
     render() {

@@ -6,6 +6,16 @@ import FileSize from './FileSize';
 import Money from './Money';
 import PhotosFormatter from './PhotosFormatter';
 
+export {
+    BooleanFormatter,
+    DateFormatter,
+    DateTimeFormatter,
+    EnumFormatter,
+    FileSize,
+    Money,
+    PhotosFormatter,
+};
+
 export default {
     BooleanFormatter,
     DateFormatter,

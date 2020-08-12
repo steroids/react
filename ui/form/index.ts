@@ -24,6 +24,34 @@ import SwitcherField from './SwitcherField';
 import TextField from './TextField';
 import TimeField from './TimeField';
 
+export {
+    AutoCompleteField,
+    BlankField,
+    Button,
+    CheckboxField,
+    CheckboxListField,
+    DateField,
+    DateTimeField,
+    DropDownField,
+    Field,
+    FieldLayout,
+    FieldList,
+    FieldSet,
+    FileField,
+    Form,
+    HtmlField,
+    InputField,
+    NumberField,
+    PasswordField,
+    RadioListField,
+    RangeField,
+    ReCaptchaField,
+    SliderField,
+    SwitcherField,
+    TextField,
+    TimeField,
+};
+
 export default {
     AutoCompleteField,
     BlankField,

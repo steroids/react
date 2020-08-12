@@ -86,7 +86,10 @@ export default class HttpComponent {
     removeAccessToken() {
         this._accessToken = null;
         this.resetConfig();
-        this._components.clientStorage.remove(this.accessTokenKey);
+        this._components.clientStorage.remove(
+            this.accessTokenKey,
+            this._components.clientStorage.STORAGE_COOKIE,
+        );
     }
 
     /**

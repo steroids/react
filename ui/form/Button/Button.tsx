@@ -25,10 +25,16 @@ interface IButtonBadge {
  */
 export interface IButtonProps extends IThemeHocInput {
     /**
-     * Название поля
+     * Текст кнопки или ссылки
      * @example Save
      */
     label?: string | any;
+
+    /**
+     * Подсказка, отображается при наведении (через тег title)
+     * @example Save
+     */
+    hint?: string | any;
 
     /**
      * Должна ли показываться надпись на кнопке в состоянии загрузки
@@ -112,7 +118,7 @@ export interface IButtonProps extends IThemeHocInput {
      * будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
      * @param e => fetch(...)
      */
-    onClick?: (e: Event) => Promise<any> | void;
+    onClick?: (e: Event | React.MouseEvent) => Promise<any> | void;
 
     /**
      * Переводит кнопку в состояние "не активна"

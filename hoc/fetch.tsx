@@ -1,17 +1,19 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {navigationAddConfigs, navigationRemoveConfigs, getConfigId} from '../actions/router';
+import {navigationAddConfigs, navigationRemoveConfigs, getConfigId, navigationRefresh} from '../actions/router';
 import {getRouteParams} from '../reducers/router';
 import {IConnectHocOutput} from './connect';
 
 export type IFetchHocConfig = (props: any) => object | object[];
 
-interface IFetchHocInput {
+export interface IFetchHocInput {
     navigationData?: object,
     routeParams?: object,
 }
 
-interface IFetchHocOutput {
+export interface IFetchHocOutput {
+    fetchRefresh?: (ids?: string | string[]) => void,
+    fetchUpdate?: (props: any) => void,
 }
 
 interface IFetchHocPrivateProps extends IConnectHocOutput {
@@ -130,12 +132,17 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
                     ...this.props,
                     ...this.state.overwriteProps,
                     ...dataProps,
-                    updateApiConfig: this._onUpdate,
+                    fetchRefresh: this._onUpdate,
+                    fetchUpdate: this._onUpdate,
                 } as IFetchHocOutput;
 
                 return (
                     <WrappedComponent {...outputProps}/>
                 );
+            }
+
+            _onRefresh(ids = null) {
+                this.props.dispatch(navigationRefresh(ids));
             }
 
             _onUpdate(overwriteProps) {

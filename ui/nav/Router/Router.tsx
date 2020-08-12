@@ -17,6 +17,8 @@ import {IFetchHocConfig} from '../../../hoc/fetch';
 
 export interface IRouteItem {
     id?: string,
+    label?: string,
+    title?: string,
     path?: string,
     exact?: boolean,
     redirectTo?: boolean | string,

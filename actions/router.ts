@@ -1,87 +1,99 @@
 import _isArray from 'lodash-es/isArray';
 import _trim from 'lodash-es/trim';
-import { push } from 'connected-react-router';
+import {push} from 'connected-react-router';
+
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
 export const ROUTER_ADD_CONFIGS = 'ROUTER_ADD_CONFIGS';
 export const ROUTER_REMOVE_CONFIGS = 'ROUTER_REMOVE_CONFIGS';
 export const ROUTER_SET_DATA = 'ROUTER_SET_DATA';
 const normalizeConfigs = configs => {
-  if (!configs) {
-    configs = [];
-  }
-  if (!_isArray(configs)) {
-    configs = [configs];
-  }
-  configs.forEach((config, index) => {
-    if (!config.url && !config.id) {
-      throw new Error('id or url is required');
+    if (!configs) {
+        configs = [];
     }
-    configs[index] = {
-      method: 'get',
-      params: {},
-      ...config
-    };
-  });
-  return configs;
+    if (!_isArray(configs)) {
+        configs = [configs];
+    }
+    configs.forEach((config, index) => {
+        if (!config.url && !config.id) {
+            throw new Error('id or url is required');
+        }
+        configs[index] = {
+            method: 'get',
+            params: {},
+            ...config
+        };
+    });
+    return configs;
 };
-const defaultFetchHandler = (config, { http }) => {
-  return http
-      .send(config.method, config.url, config.params)
-      .then(result => result.data);
+const defaultFetchHandler = (config, {http}) => {
+    return http
+        .send(config.method, config.url, config.params)
+        .then(result => result.data);
 };
 export const initRoutes = routes => ({
-  type: ROUTER_INIT_ROUTES,
-  routes,
+    type: ROUTER_INIT_ROUTES,
+    routes,
 });
 export const initParams = params => ({
-  type: ROUTER_SET_PARAMS,
-  params
+    type: ROUTER_SET_PARAMS,
+    params
 });
 export const goToRoute = (routeId, params = null) => (dispatch, getState, {store}) => {
-  if (process.env.PLATFORM === 'mobile') {
-    store.navigationNative.navigate(routeId, params);
-  } else {
-    const getRouteProp = require('../reducers/router').getRouteProp;
-    const buildUrl = require('../reducers/router').buildUrl;
-    const path = getRouteProp(getState(), routeId, 'path');
-    return dispatch(push(buildUrl(path, params)));
-  }
+    if (process.env.PLATFORM === 'mobile') {
+        store.navigationNative.navigate(routeId, params);
+    } else {
+        const getRouteProp = require('../reducers/router').getRouteProp;
+        const buildUrl = require('../reducers/router').buildUrl;
+        const path = getRouteProp(getState(), routeId, 'path');
+        return dispatch(push(buildUrl(path, params)));
+    }
 };
 export const goToParent = (level = 1) => (dispatch, getState) => {
-  const getRouteParent = require('../reducers/router').getRouteParent;
-  const getRouteParams = require('../reducers/router').getRouteParams;
-  const state = getState();
-  const params = getRouteParams(state);
-  const parentRoute = getRouteParent(state, level);
-  const parentRouteId = parentRoute ? parentRoute.id : null;
-  const parentRouteParams = parentRoute ? params : null;
-  if (parentRouteId) {
-    return dispatch(goToRoute(parentRouteId, parentRouteParams));
-  }
+    const getRouteParent = require('../reducers/router').getRouteParent;
+    const getRouteParams = require('../reducers/router').getRouteParams;
+    const state = getState();
+    const params = getRouteParams(state);
+    const parentRoute = getRouteParent(state, level);
+    const parentRouteId = parentRoute ? parentRoute.id : null;
+    const parentRouteParams = parentRoute ? params : null;
+    if (parentRouteId) {
+        return dispatch(goToRoute(parentRouteId, parentRouteParams));
+    }
 };
 export const getConfigId = config => config.id || _trim(config.url, '/');
-export const navigationAddConfigs = configs => (dispatch, getState, components) => {
-  configs = normalizeConfigs(configs);
-  dispatch({
-    type: ROUTER_ADD_CONFIGS,
-    configs
-  });
-  configs.forEach(config => {
+
+const fetchByConfig = (config, dispatch, components) => {
     const onFetch = config.onFetch || defaultFetchHandler;
-    onFetch(config, components).then(data =>
-      dispatch({
-        type: ROUTER_SET_DATA,
-        config,
-        data
-      })
-    );
-  });
+    onFetch(config, components)
+        .then(data => dispatch({
+            type: ROUTER_SET_DATA,
+            config,
+            data,
+        }));
+}
+
+export const navigationAddConfigs = configs => (dispatch, getState, components) => {
+    configs = normalizeConfigs(configs);
+    dispatch({
+        type: ROUTER_ADD_CONFIGS,
+        configs
+    });
+    configs.forEach(config => fetchByConfig(config, dispatch, components));
 };
+
+export const navigationRefresh = (ids: string[] = null) => (dispatch, getState, components) => {
+    ids = [].concat(ids || []);
+
+    (getState().router?.configs || [])
+        .filter(config => ids.includes(config.id))
+        .forEach(config => fetchByConfig(config, dispatch, components));
+};
+
 export const navigationRemoveConfigs = configs => {
-  configs = normalizeConfigs(configs);
-  return {
-    type: ROUTER_REMOVE_CONFIGS,
-    configs
-  };
+    configs = normalizeConfigs(configs);
+    return {
+        type: ROUTER_REMOVE_CONFIGS,
+        configs
+    };
 };

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import _has from 'lodash-es/has';
 import _upperFirst from 'lodash-es/upperFirst';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -37,13 +36,11 @@ export default class ControlsColumn extends React.PureComponent<IControlsColumnP
         return (
             <ControlsColumnView
                 {...this.props}
-                items={controls.map(control => {
-                    const canKey = 'can' + _upperFirst(control.id);
-                    return {
-                        ...control,
-                        visible: control.visible !== false && (!_has(this.props.item, canKey) || !!this.props.item[canKey])
-                    };
-                })}
+                items={controls.map(control => ({
+                    ...control,
+                    position: 'left',
+                    visible: control.visible !== false && this.props.item['can' + _upperFirst(control.id)] !== false,
+                }))}
             />
         );
     }

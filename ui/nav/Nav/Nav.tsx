@@ -113,8 +113,7 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
             <NavView
                 {...this.props}
                 onClick={this._onClick}
-                items={items.filter(item => item.visible !== false)
-                }
+                items={items.filter(item => item.visible !== false)}
             >
                 {this.renderContent()}
             </NavView>

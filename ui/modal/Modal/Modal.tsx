@@ -10,6 +10,8 @@ export interface IModalProps {
     className?: CssClassName;
     isClosing?: boolean;
     group?: string;
+    component?: any;
+    componentProps?: any;
 }
 
 export interface IModalViewProps extends IModalProps {
@@ -25,9 +27,18 @@ export default class Modal extends React.PureComponent<IModalProps & IModalPriva
 
     render() {
         const ModalView = this.props.view || this.props.ui.getView('modal.ModalView');
+        const ContentComponent = this.props.component;
+
         return (
             <ModalView {...this.props}>
-                {this.props.children}
+                {ContentComponent && (
+                    <ContentComponent
+                        {...this.props}
+                        {...this.props.componentProps}
+                    />
+                ) || (
+                    this.props.children
+                )}
             </ModalView>
         );
     }

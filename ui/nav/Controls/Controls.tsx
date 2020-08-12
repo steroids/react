@@ -7,15 +7,14 @@ import {INavProps} from '../Nav/Nav';
 export interface IControlItem extends IButtonProps {
     id?: string,
     visible?: boolean,
-    content?: React.ReactNode | JSX.Element,
-    contentProps?: any,
-    position?: 'left' | 'right'
+    position?: 'left' | 'right',
 }
 
 export interface IControlsProps {
     items?: IControlItem[],
     navProps?: INavProps,
     view?: any,
+    className?: string,
 }
 
 export interface IControlsViewProps extends IControlsProps {
@@ -27,7 +26,7 @@ export interface IControlsViewProps extends IControlsProps {
         color?: ColorName,
         outline?: boolean,
         position?: 'right' | 'left'
-    })[]
+    })[],
 }
 
 interface IControlsPrivateProps extends IComponentsHocOutput {

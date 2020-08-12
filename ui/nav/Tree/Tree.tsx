@@ -1,25 +1,21 @@
 import * as React from 'react';
-import {components, connect} from '../../../hoc';
+import {components, connect, normalize} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
-import {getActiveRouteIds, getNavItems, getRouterParams, IRoute} from '../../../reducers/router';
+import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
 import _isString from 'lodash-es/isString';
 import {IThemeHocOutput} from '../../../hoc/theme';
+import {IRouteItem} from '../Router/Router';
+import {IButtonProps} from '../../form/Button/Button';
 
-export interface ITreeItem {
+export interface ITreeItem extends IButtonProps {
     id?: string | number,
-    label?: string | any,
     items?: any[],
     visible?: boolean
 }
 
 export interface ITreeProps {
     id?: string;
-    items?: {
-        id?: string | number,
-        label?: string | any,
-        items?: any[],
-        visible?: boolean
-    }[] | string;
+    items?: ITreeItem[] | string;
     level?: number;
     itemsKey?: string;
     selectedItemId?: string;
@@ -45,7 +41,8 @@ export interface ITreeViewProps extends ITreeProps {
 interface ITreePrivateProps extends IComponentsHocOutput, IThemeHocOutput {
     activeRouteIds?: string[],
     routerParams?: object,
-    routes?: IRoute[] | null;
+    routes?: IRouteItem[],
+    _items?: ITreeItem[] | string;
 }
 
 interface TreeState {
@@ -57,9 +54,32 @@ interface TreeState {
 @connect(
     (state, props) => ({
         routes: _isString(props.items) ? getNavItems(state, props.items) : null,
+        selectedItemId: _isString(props.items) ? getRouteId(state) : props.selectedItemId,
         activeRouteIds: getActiveRouteIds(state),
         routerParams: getRouterParams(state),
     })
+)
+@normalize(
+    {
+        fromKey: 'items',
+        toKey: '_items',
+        normalizer: (items, props) => {
+            if (props.routes) {
+                const routeToItem = (route: IRouteItem) => ({
+                    id: route.id,
+                    label: route.label || route.title,
+                    visible: route.isNavVisible !== false,
+                    toRoute: !route.items ? route.id : null,
+                    toRouteParams: !route.items ? props.routerParams : null,
+                    items: Array.isArray(route.items)
+                        ? route.items.map(r => routeToItem(r))
+                        : Object.keys(route.items || {}).map(id => routeToItem(route.items[id])),
+                });
+                return props.routes.map(route => routeToItem(route));
+            }
+            return items || [];
+        },
+    },
 )
 @components('ui', 'clientStorage')
 export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateProps, TreeState> {
@@ -79,7 +99,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     componentDidUpdate(prevProps) {
         if (
-            (!prevProps.items && this.props.items) ||
+            (!prevProps._items && this.props._items) ||
             prevProps.selectedItemId !== this.props.selectedItemId
         ) {
             this.setState(this._initState());
@@ -88,15 +108,11 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     render() {
         const TreeView = this.props.view || this.props.ui.getView('nav.TreeView');
-        let items = this.props.items;
-
-        if (_isString(items)) {
-            items = this.props.routes;
-        }
-        const treeItems = this._getItems(items);
-
         return (
-            <TreeView {...this.props} items={treeItems}/>
+            <TreeView
+                {...this.props}
+                items={this._getItems(this.props._items)}
+            />
         );
     }
 
@@ -104,11 +120,11 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
         // Initial opened items
         const key = Tree.STORAGE_KEY_PREFIX + this.props.id;
         const opened =
-            !this.state && this.props.clientStorage.get(key)
+            !this.state && this.props.clientStorage.get(key) && this.props.autoSave
                 ? JSON.parse(this.props.clientStorage.get(key))
-                : this._autoOpen(this.props.items);
+                : this._autoOpen(this.props._items);
         const selectedItem = this._findChildById(
-            this.props.items,
+            this.props._items,
             this.props.selectedItemId
         );
         return {
@@ -119,12 +135,8 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     _getItems(items, parentId = '', level = 0) {
         let result = [];
-        if (_isString(items)) {
-            return null;
-        }
-
         if (this.props.level && level == this.props.level) {
-            return null;
+            return [];
         }
 
         (items || []).forEach((item, index) => {
@@ -142,7 +154,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                 index,
                 level,
                 isOpened,
-                isSelected: this.state.selectedUniqId === uniqId,
+                isSelected: this.state.selectedUniqId === uniqId || this.props.activeRouteIds.includes(item.toRoute),
                 hasItems,
                 onClick: e => this._onItemClick(e, uniqId, item)
             });
@@ -157,9 +169,6 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     _autoOpen(items, parentId = '', level = 1) {
         let opened = {};
-        if (_isString(items)) {
-            return null;
-        }
 
         (items || []).forEach((item, index) => {
             const uniqId = this._resolveId(item, index, parentId);

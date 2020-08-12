@@ -185,7 +185,7 @@ export const listFetch = (listId: string, query: object = {}) => (dispatch, getS
     }
 
     const toDispatch = [];
-    const formValues = getFormValues(list.formId)(state);
+    const formValues = getFormValues(list.formId)(state) || {};
     const onFetch = list.onFetch || (list.isRemote ? httpFetchHandler : localFetchHandler);
 
     // Change query

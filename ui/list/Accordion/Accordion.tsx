@@ -3,6 +3,7 @@ import _get from 'lodash-es/get';
 import {components, list} from '../../../hoc';
 import {IListHocInput, IListHocOutput} from '../../../hoc/list';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {ReactNode} from 'react';
 
 export interface IAccordionProps extends IListHocInput {
     itemView: any;
@@ -17,8 +18,8 @@ export interface IAccordionProps extends IListHocInput {
 }
 
 export interface IAccordionViewProps extends IListHocOutput {
-    renderHeader: (item: object, index: number) => void,
-    renderItem: (item: object, index: number) => void,
+    renderHeader: (item: object, index?: number) => void,
+    renderItem: (item: object, index?: number) => ReactNode,
     openedId: PrimaryKey,
     onToggle: (item: object) => void,
     items: {

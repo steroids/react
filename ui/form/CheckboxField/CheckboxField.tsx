@@ -26,7 +26,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldHocO
         name: string,
         type: string,
         checked: boolean,
-        onChange: (value: string) => void,
+        onChange: (value: string | React.ChangeEvent) => void,
         disabled: boolean,
     }
 }
@@ -49,6 +49,8 @@ export default class CheckboxField extends React.PureComponent<ICheckboxFieldPro
         required: false,
         className: ''
     };
+
+    static WrappedComponent: any;
 
     componentDidMount() {
         if (this.props.input.value === undefined) {

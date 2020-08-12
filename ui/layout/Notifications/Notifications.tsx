@@ -39,10 +39,11 @@ export interface INotificationsProps {
 
 export interface INotificationsViewProps {
     notifications?: INotificationItem[];
+    className?: CssClassName;
 }
 
 export interface INotificationsItemViewProps extends INotificationItem {
-    onClosing: (notificationId: number) => void,
+    onClosing: (notificationId: number | React.MouseEvent) => void,
     onClose: (notificationId: number) => void,
 }
 

@@ -5,6 +5,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import Field from '../Field';
 import _isString from 'lodash-es/isString';
 import {IFieldProps} from '../Field/Field';
+import {IFieldHocOutput} from '../../../hoc/field';
 
 export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
 
@@ -20,6 +21,10 @@ export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
     label?: any,
     view?: CustomView,
     className?: CssClassName,
+}
+
+export interface IFieldSetViewProps extends IFieldHocOutput {
+
 }
 
 @components('ui')

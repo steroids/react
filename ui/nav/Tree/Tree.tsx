@@ -29,13 +29,15 @@ export interface ITreeProps {
 export interface ITreeViewProps extends ITreeProps {
     items: (ITreeItem & {
         uniqId: string,
+        className: CssClassName,
         index: number,
         level: number,
         isOpened: boolean,
         isSelected: boolean,
         hasItems: boolean,
-        onClick: (e: Event) => void,
+        onClick: (e: Event | React.MouseEvent) => void,
     })[],
+    levelPadding?: number
 }
 
 interface ITreePrivateProps extends IComponentsHocOutput, IThemeHocOutput {

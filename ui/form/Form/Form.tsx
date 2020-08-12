@@ -99,6 +99,14 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
 
 export interface IFormViewProps {
     onSubmit: any,
+    className?: CssClassName,
+    layout?: {
+        layout: FormLayoutName | boolean,
+        className: CssClassName,
+        label: boolean,
+        cols: number[],
+        [key: string]: any,
+    },
 }
 
 interface IFormPrivateProps extends IFormSubmitHocOutput, IThemeHocOutput, IConnectHocOutput, IComponentsHocOutput {

@@ -18,7 +18,7 @@ export default class HttpComponent {
     constructor(components) {
         this._components = components;
         this.apiUrl = typeof location !== 'undefined'
-            ? location.protocol + '//' + location.host : (process.env.BACKEND_URL || '');
+            ? location.protocol + '//' + location.host : (process.env.APP_BACKEND_URL || '');
         this.accessTokenKey = 'accessToken';
         this._lazyRequests = {};
         this._axios = null;
@@ -29,7 +29,7 @@ export default class HttpComponent {
 
     async getAxiosConfig() {
         const config = {
-            withCredentials: process.env.PLATFORM !== 'mobile',
+            withCredentials: true,
             headers: {
                 // Add XMLHttpRequest header for detect ajax requests
                 'X-Requested-With': 'XMLHttpRequest',
@@ -86,7 +86,10 @@ export default class HttpComponent {
     removeAccessToken() {
         this._accessToken = null;
         this.resetConfig();
-        this._components.clientStorage.remove(this.accessTokenKey);
+        this._components.clientStorage.remove(
+            this.accessTokenKey,
+            this._components.clientStorage.STORAGE_COOKIE,
+        );
     }
 
     /**

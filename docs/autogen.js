@@ -148,19 +148,16 @@ json.children.forEach(file => {
                 extends: extendsList,
                 items: (item.children || [])
                     .filter(property => property.kindString === 'Property')
-                    .map(property => {
-                        const propertyType = typeToString(property.type);
-                        return {
-                            name: property.name,
-                            description: _.get(property, 'comment.shortText', propertyType),
-                            required: !property.flags.isOptional,
-                            type: propertyType,
-                            example: (_.get(property, 'comment.tags') || [])
-                                .filter(tag => tag.tag === 'example')
-                                .map(tag => tag.text)
-                                .join(' ')
-                        }
-                    }),
+                    .map(property => ({
+                        name: property.name,
+                        description: _.get(property, 'comment.shortText', ''),
+                        required: !property.flags.isOptional,
+                        type: typeToString(property.type),
+                        example: (_.get(property, 'comment.tags') || [])
+                            .filter(tag => tag.tag === 'example')
+                            .map(tag => tag.text)
+                            .join(' ')
+                    })),
             };
         }
         if (item.kindString === 'Type alias' && item.flags && item.flags.isExported === true) {
@@ -185,6 +182,45 @@ json.children.forEach(file => {
     if (demoMatch) {
         const path = demoMatch[1].split('\/');
         const name = demoMatch[2];
+
+        if (!file.children) {
+            let order = 0;
+            let col = null;
+            let description = null;
+            let title = null;
+
+            const fileContents = fs.readFileSync(file.originalName).toString();
+
+            const matchOrderTagPattern = /@order\s(.*)$/gmi;
+            const matchColTagPattern = /@col\s(.*)$/gmi;
+            const matchCommentPattern = /[^import]\s\*\s[^@](.*)/gmi;
+
+            const tagMatch = fileContents.match(matchOrderTagPattern);
+            if (tagMatch) {
+                order = tagMatch[0].replace('@order', '').trim();
+            }
+
+            const colMatch = fileContents.match(matchColTagPattern);
+            if (colMatch) {
+                col = colMatch[0].replace('@col', '').trim();
+            }
+
+            const commentMatch = fileContents.match(matchCommentPattern);
+            if (commentMatch) {
+                description = commentMatch.map(cm => cm.replace('*', '').trim()).join('\n')
+            }
+
+            // Store, if not empty
+            if (order > 0 || title || description) {
+                _.set(docs.demos, path.concat(name), {
+                    order,
+                    col,
+                    title,
+                    description,
+                });
+            }
+        }
+
         (file.children || []).forEach(item => {
             if (item.kindString === 'Class') {
                 // Get title and description

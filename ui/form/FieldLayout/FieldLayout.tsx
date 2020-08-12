@@ -24,6 +24,10 @@ export interface IFieldLayoutProps {
 }
 
 export interface IFieldLayoutViewProps {
+    label: string | boolean | any,
+    required: boolean,
+    hint: string | boolean,
+    errors: string | string[],
     layout?: {
         layout: FormLayoutName | boolean,
         className: string,

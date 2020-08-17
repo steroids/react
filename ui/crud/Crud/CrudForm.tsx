@@ -1,16 +1,9 @@
 import * as React from 'react';
 import {showNotification} from '../../../actions/notifications';
 import Form from '../../form/Form/Form';
-import {IConnectHocOutput} from '../../../hoc/connect';
 import {getCrudFormId, ICrudChildrenProps} from './Crud';
-import {connect, fetch} from '../../../hoc';
 
-@connect()
-@fetch(props => props.itemId && ({
-    url: `${props.restUrl}/${props.itemId}`,
-    key: 'item',
-}))
-export default class CrudForm extends React.PureComponent<ICrudChildrenProps & IConnectHocOutput> {
+export default class CrudForm extends React.PureComponent<ICrudChildrenProps> {
 
     render() {
         return (
@@ -24,9 +17,7 @@ export default class CrudForm extends React.PureComponent<ICrudChildrenProps & I
                 layout='horizontal'
                 onComplete={() => {
                     window.scrollTo(0, 0);
-                    this.props.dispatch(
-                        showNotification('success', __('Запись успешно обновлена.'))
-                    );
+                    this.props.dispatch(showNotification(__('Запись успешно обновлена.'), 'success'));
                 }}
                 {...this.props.form}
             />

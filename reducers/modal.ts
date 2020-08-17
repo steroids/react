@@ -76,4 +76,4 @@ export default (state = initialState, action) => {
     }
 };
 
-export const getOpened = (state, group = MODAL_DEFAULT_GROUP) => _get(state, ['modal', 'opened', group]) || [];
+export const getOpened = (state, group = MODAL_DEFAULT_GROUP) => _get(state, ['modal', 'opened', group]) || null;

@@ -7,6 +7,7 @@ import {DEFAULT_PRIMARY_KEY, ICrudProps} from './Crud/Crud';
 export interface ICrudGeneratorProps extends ICrudProps {
     path?: string,
     label?: string,
+    models?: string | string[],
     route?: IRouteItem,
 }
 
@@ -17,8 +18,10 @@ export const generateCrud = (routeId: string, props: ICrudGeneratorProps) => {
         id: routeId,
         path: _trimEnd(props.path, '/') + `/:${pk}?/:${pk}Action?`,
         label: props.label,
-        model: props.model,
-        searchModel: props.searchModel,
+        models: [
+            props.model,
+            props.searchModel,
+        ].filter(Boolean).concat(props.models || []),
         component: Crud,
         ...props.route,
         componentProps: props,

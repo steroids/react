@@ -3,6 +3,7 @@ import {getFormValues, initialize, change} from 'redux-form';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _isBoolean from 'lodash-es/isBoolean';
+import _isString from 'lodash-es/isString';
 import _union from 'lodash-es/union';
 
 import {listInit, listLazyFetch, listFetch, listDestroy, IList} from '../actions/list';
@@ -132,7 +133,7 @@ const defaultProps = {
         position: 'top',
     },
     empty: {
-        enable: false,
+        enable: true,
         text: 'Записи не найдены',
     },
     addressBar: {
@@ -197,7 +198,7 @@ const normalizeMap = [
             ...defaultProps.empty,
             enable: !!empty,
             text: __('Записи не найдены'),
-            ...(_isBoolean(empty) ? {enable: empty} : (_isBoolean(empty) ? {text: empty} : empty)),
+            ...(_isBoolean(empty) ? {enable: empty} : (_isString(empty) ? {text: empty} : empty)),
         }),
     },
     {

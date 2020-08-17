@@ -61,7 +61,7 @@ export const goToParent = (level = 1) => (dispatch, getState) => {
         return dispatch(goToRoute(parentRouteId, parentRouteParams));
     }
 };
-export const getConfigId = config => config.id || _trim(config.url, '/');
+export const getConfigId = config => config ? (config.id || _trim(config.url, '/')) : null;
 
 const fetchByConfig = (config, dispatch, components) => {
     const onFetch = config.onFetch || defaultFetchHandler;
@@ -75,25 +75,27 @@ const fetchByConfig = (config, dispatch, components) => {
 
 export const navigationAddConfigs = configs => (dispatch, getState, components) => {
     configs = normalizeConfigs(configs);
-    dispatch({
-        type: ROUTER_ADD_CONFIGS,
-        configs
-    });
-    configs.forEach(config => fetchByConfig(config, dispatch, components));
+    if (configs.length > 0) {
+        dispatch({
+            type: ROUTER_ADD_CONFIGS,
+            configs
+        });
+        configs.forEach(config => fetchByConfig(config, dispatch, components));
+    }
 };
 
-export const navigationRefresh = (ids: string[] = null) => (dispatch, getState, components) => {
-    ids = [].concat(ids || []);
-
+export const navigationRefresh = (ids: string[]) => (dispatch, getState, components) => {
     (getState().router?.configs || [])
-        .filter(config => ids.includes(config.id))
+        .filter(config => !ids || ids.includes(config.id))
         .forEach(config => fetchByConfig(config, dispatch, components));
 };
 
 export const navigationRemoveConfigs = configs => {
     configs = normalizeConfigs(configs);
-    return {
-        type: ROUTER_REMOVE_CONFIGS,
-        configs
-    };
+    if (configs.length > 0) {
+        return {
+            type: ROUTER_REMOVE_CONFIGS,
+            configs
+        };
+    }
 };

@@ -26,8 +26,7 @@ export interface IRouteItem {
     componentProps?: any,
     isVisible?: boolean,
     isNavVisible?: boolean,
-    model?: string,
-    searchModel?: string,
+    models?: string | string[],
     roles?: string[],
     fetch?: IFetchHocConfig,
     items?: IRouteItem[] | {[key: string]: IRouteItem};

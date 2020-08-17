@@ -31,9 +31,6 @@ export interface IGridColumn {
     sortable?: boolean,
 }
 
-class item {
-}
-
 export interface IGridProps extends IListHocInput {
     view?: any;
     columns: (string | IGridColumn)[];

@@ -43,6 +43,7 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
                 this.state = {
                     overwriteProps: null
                 };
+                this._onRefresh = this._onRefresh.bind(this);
                 this._onUpdate = this._onUpdate.bind(this);
             }
 
@@ -132,7 +133,7 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
                     ...this.props,
                     ...this.state.overwriteProps,
                     ...dataProps,
-                    fetchRefresh: this._onUpdate,
+                    fetchRefresh: this._onRefresh,
                     fetchUpdate: this._onUpdate,
                 } as IFetchHocOutput;
 
@@ -142,6 +143,14 @@ export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions):
             }
 
             _onRefresh(ids = null) {
+                if (ids === null) {
+                    const configs = [].concat(configsFunc({
+                        ...this.props,
+                        ...this.state.overwriteProps,
+                        params: this.props.routeParams
+                    }) || []);
+                    ids = configs.map(config => config.id);
+                }
                 this.props.dispatch(navigationRefresh(ids));
             }
 

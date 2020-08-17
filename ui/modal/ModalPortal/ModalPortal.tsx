@@ -34,7 +34,7 @@ export default class ModalPortal extends React.PureComponent<IModalPortalProps &
     render() {
         return (
             <>
-                {this.props.opened.map((item, index) => this.renderModal(item, index))}
+                {(this.props.opened || []).map((item, index) => this.renderModal(item, index))}
             </>
         );
     }

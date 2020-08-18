@@ -1,8 +1,11 @@
 import * as React from 'react';
+import _isString from 'lodash-es/isString';
+import _omit from 'lodash-es/omit';
+import _isEqual from 'lodash-es/isEqual';
+import _keys from 'lodash-es/keys';
 import {components, connect, normalize} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
-import _isString from 'lodash-es/isString';
 import {IThemeHocOutput} from '../../../hoc/theme';
 import {IRouteItem} from '../Router/Router';
 import {IButtonProps} from '../../form/Button/Button';
@@ -156,7 +159,11 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                 index,
                 level,
                 isOpened,
-                isSelected: this.state.selectedUniqId === uniqId || this.props.activeRouteIds.includes(item.toRoute),
+                isSelected: this.state.selectedUniqId === uniqId
+                    || (
+                        this.props.activeRouteIds.includes(item.toRoute)
+                        && _isEqual(item.toRouteParams || {}, _omit(this.props.routerParams, _keys(item.toRouteParams)))
+                    ),
                 hasItems,
                 onClick: e => this._onItemClick(e, uniqId, item)
             });

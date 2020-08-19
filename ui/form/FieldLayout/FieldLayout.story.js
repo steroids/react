@@ -1,9 +1,13 @@
-import basic from './demo/basic';
+import layoutDefault from './demo/default';
+import layoutHorizontal from './demo/horizontal';
+import layoutInline from './demo/inline';
 
 export default {
   title: 'form.FieldLayout',
 };
 
 export {
-    basic,
+    layoutDefault,
+    layoutHorizontal,
+    layoutInline,
 }

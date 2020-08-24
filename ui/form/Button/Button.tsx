@@ -317,7 +317,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
 
     _onClick(e) {
         e.stopPropagation();
-        if (this.props.confirm && !confirm(this.props.confirm)) {
+        if (process.env.PLATFORM === 'web' && this.props.confirm && !confirm(this.props.confirm)) {
             e.preventDefault();
             return;
         }

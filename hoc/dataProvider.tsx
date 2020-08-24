@@ -367,7 +367,7 @@ export default (): any => WrappedComponent =>
                             const values = [].concat(this.props.input.value || []);
                             if (values.indexOf(value) !== -1) {
                                 if (!skipToggle) {
-                                    _remove(values, value => value === value);
+                                    _remove(values, itemValue => itemValue === value);
                                 }
                             } else {
                                 values.push(value);

@@ -17,7 +17,7 @@ export default class CrudForm extends React.PureComponent<ICrudChildrenProps> {
                 layout='horizontal'
                 onComplete={() => {
                     window.scrollTo(0, 0);
-                    this.props.dispatch(showNotification(__('Запись успешно обновлена.'), 'success'));
+                    this.props.dispatch(showNotification(__('Запись успешно обновлена.')));
                 }}
                 {...this.props.form}
             />

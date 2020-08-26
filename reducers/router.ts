@@ -174,6 +174,20 @@ const findRecursive = (item: IRoute, predicate: string | any, pathItems: IRoute[
     return finedItem;
 };
 
+const getMatch = (currentRoute, state) => {
+    const match = currentRoute
+        ? matchPath(String(state.location.pathname), _pick(currentRoute, ['id', 'exact', 'strict', 'path']))
+        : null;
+
+    return match && {
+        ...match,
+        params: {
+            ...state.location.query,
+            ...match.params,
+        },
+    };
+};
+
 export default (state = initialState, action) => {
     switch (action.type) {
         case ROUTER_INIT_ROUTES:
@@ -186,9 +200,7 @@ export default (state = initialState, action) => {
                 routesTree,
                 routesMap,
                 activeIds,
-                match: currentRoute
-                    ? matchPath(String(state.location.pathname), _pick(currentRoute, ['id', 'exact', 'strict', 'path']))
-                    : null,
+                match: getMatch(currentRoute, state),
             };
 
         case '@@router/LOCATION_CHANGE':
@@ -198,9 +210,7 @@ export default (state = initialState, action) => {
                 return {
                     ...state,
                     activeIds,
-                    match: currentRoute
-                        ? matchPath(String(state.location.pathname), _pick(currentRoute, ['id', 'exact', 'strict', 'path']))
-                        : null,
+                    match: getMatch(currentRoute, state),
                 };
             })();
 
@@ -209,6 +219,7 @@ export default (state = initialState, action) => {
                 ...state,
                 params: {
                     ...state.params,
+                    ...state.location.query,
                     ...action.params
                 }
             };

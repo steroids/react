@@ -8,13 +8,19 @@ import {IConnectHocOutput} from '../../../../hoc/connect';
 import Modal from '../Modal';
 
 interface IMyModalProps {
-    text?: string,
+    text: string;
+    isClosing: boolean;
+    onClose: (...args: any[]) => any;
 }
 
 class MyModal extends React.Component<IMyModalProps> {
     render() {
         return (
-            <Modal title='My Modal'>
+            <Modal
+                title='My Modal'
+                isClosing={this.props.isClosing}
+                onClose={this.props.onClose}
+            >
                 {this.props.text}
             </Modal>
         );

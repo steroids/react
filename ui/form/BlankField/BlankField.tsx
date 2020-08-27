@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {field} from "../../../hoc";
+
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {field} from '../../../hoc';
 
 interface IBlankFieldProps extends IFieldHocInput {
     text?: string | React.ReactNode;

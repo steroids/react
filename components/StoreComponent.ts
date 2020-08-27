@@ -17,6 +17,10 @@ interface IStoreComponentConfig {
     history: any,
 }
 
+/**
+ * Store Component
+ * Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router
+ */
 export default class StoreComponent {
     _asyncReducers: any;
     _components: any;

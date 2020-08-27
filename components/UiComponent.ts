@@ -2,6 +2,10 @@ import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {ReactNode} from "react";
 
+/**
+ * Ui Component
+ * Компонент для подгрузки и конфигурации UI компонентов приложения
+ */
 export default class UiComponent {
     _components: any;
     icons: {[name: string]: string | number | ReactNode};

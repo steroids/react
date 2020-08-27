@@ -12,6 +12,11 @@ export interface IThemeContext {
     size?: Size,
 }
 
+/**
+ * Theme HOC
+ * Получает данные темы (size, dark) из контекста и прокидывает их в `props`. Полученные данные используются
+ * для стилизации компонентов.
+ */
 export interface IThemeHocInput extends IThemeContext {
 }
 

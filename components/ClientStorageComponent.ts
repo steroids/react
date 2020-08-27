@@ -1,5 +1,9 @@
 import * as cookie from 'js-cookie';
 
+/**
+ * Client Storage Component
+ * Слой хранения данных в браузере (cookie, local/session storage) или ReactNative
+ */
 export default class ClientStorageComponent {
     STORAGE_COOKIE: string;
     STORAGE_LOCAL: any;

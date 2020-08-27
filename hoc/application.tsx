@@ -11,6 +11,11 @@ import {IComponentsHocOutput} from './components';
 import {ThemeContext, defaultTheme} from './theme';
 import MetaComponent from '../components/MetaComponent';
 
+/**
+ * Application HOC
+ * Обертка над корневым компонентом приложения, используется только в `Application.tsx`. Добавляет через React Context
+ * компоненты приложения и конфигурирует их.
+ */
 export interface IApplicationHocInput {
 }
 

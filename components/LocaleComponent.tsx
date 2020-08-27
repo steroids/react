@@ -21,13 +21,20 @@ if (process.env.IS_SSR) {
 }
 
 /**
- * @example
- *  {__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}
+ * Locale Component
+ * Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны
+ *
+ * Пример строки: `{__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}`
  */
 export default class LocaleComponent {
     backendTimeDiff: null;
     backendTimeZone: any;
-    language: any;
+
+    /**
+     * Язык приложения
+     * @example ru
+     */
+    language: string;
     sourceLanguage: string;
     translations: any;
 

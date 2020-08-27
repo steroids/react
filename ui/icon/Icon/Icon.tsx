@@ -56,7 +56,10 @@ export default class Icon extends React.PureComponent<IIconProps> {
 
     render() {
         const IconView = this.props.view || this.props.ui.getView('icon.IconView');
-        let icon = this.props.ui.getIcon(this.props.name);
+        const name = this.props.name;
+        let icon = name.indexOf('<svg') === 0 || name.indexOf('http') === 0
+            ? name
+            : this.props.ui.getIcon(this.props.name);
 
         // Fix width attribute in icon
         if (_isString(icon) && icon.indexOf('<svg') === 0) {

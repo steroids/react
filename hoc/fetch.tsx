@@ -6,6 +6,14 @@ import {IConnectHocOutput} from './connect';
 
 export type IFetchHocConfig = (props: any) => object | object[];
 
+/**
+ * Fetch HOC
+ * Используется для подгрузки данных с бекенда перед рендером компонента, на котором он применяется. На вход ему передается
+ * один или несколько объектов конфигураций (id, key, url, method, params, ...), которые описывают откуда нужно подтянуть данные.
+ *
+ * В процесс загрузки HOC будет отображать "Загрузка...", а после уже отрендерит компонент, передав данные в указанный
+ * ключ `key`. Все данные сохраняются в Redux Store, что позволяет избежать дополнительных запросов при использовании SSR.
+ */
 export interface IFetchHocInput {
     navigationData?: object,
     routeParams?: object,

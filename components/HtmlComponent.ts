@@ -1,5 +1,9 @@
 import _isString from 'lodash-es/isString';
 
+/**
+ * Html Component
+ * Хелпер для работы с БЭМ классами и DOM элементами
+ */
 export default class HtmlComponent {
     namespace = '';
 

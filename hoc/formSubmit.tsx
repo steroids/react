@@ -9,6 +9,10 @@ import components from './components';
 import {IComponentsHocOutput} from './components';
 import validate from "../ui/form/validate";
 
+/**
+ * Form Submit HOC
+ * Используется в `Form` для добавления обработчика `onSubmit`
+ */
 export interface IFormSubmitHocInput {
     action?: any,
     actionMethod?: string,

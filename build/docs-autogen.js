@@ -29,8 +29,8 @@ const json = project ? app.serializer.projectToObject(project) : null;
 if (!json || app.logger.hasErrors()) {
     return;
 }
-fs.writeFileSync(path.resolve(__dirname, 'autogen-raw.json'), JSON.stringify(json, null, '    '));
-//const json = JSON.parse(require('fs').readFileSync(__dirname + '/autogen-raw.json'));
+fs.writeFileSync(path.resolve(__dirname, 'docs-autogen-raw.json'), JSON.stringify(json, null, '    '));
+//const json = JSON.parse(require('fs').readFileSync(__dirname + '/docs-autogen-raw.json'));
 
 
 const typeToString = (type) => {
@@ -74,8 +74,16 @@ const typeToObject = type => {
         case 'Property':
             return typeToObject(type.type.declaration);
 
+        case 'Function':
+            return type.name + '()';
+
         case 'Variable':
-            return JSON.parse(type.defaultValue);
+            try {
+                return JSON.parse(type.defaultValue);
+            }
+            catch (e) {
+                return type.defaultValue;
+            }
 
         case 'Type literal':
         case 'Object literal':
@@ -89,12 +97,39 @@ const typeToObject = type => {
     throw new Error('Unknown type on convert to string: ' + JSON.stringify(type));
 };
 
+const findClassDocs = (children) => {
+    let title = null;
+    let description = null;
+    let tags = {};
+
+    (children || []).forEach(item => {
+        if (item.kindString === 'Class') {
+            // Get title and description
+            const commentLines = _.get(item, 'comment.shortText', '').split('\n');
+            title = commentLines.length > 0 ? commentLines.shift() : demoMatch[2];
+            description = commentLines.join('\n');
+
+            // Find order and col tags
+            let order = 0;
+            let col = null;
+            _.get(item, 'comment.tags', []).forEach(tag => {
+                tags[tag.tag] = tag.text.trim();
+            });
+        }
+    });
+
+    return {title, description, tags};
+};
+
 // Store components by file path
 const components = {};
 json.children.forEach(moduleItem => {
-    if (moduleItem.kindString === 'External module' && moduleItem.flags && moduleItem.flags.isExported === true) {
+    if (moduleItem.kindString === 'Module' && moduleItem.flags && moduleItem.flags.isExported === true) {
         (moduleItem.children || []).forEach(item => {
+            const moduleName = JSON.parse(moduleItem.name);
+
             if (item.kindString === 'Class' && moduleItem.flags && moduleItem.flags.isExported === true) {
+
                 // Find default props
                 let defaultProps = null;
                 (item.children || []).forEach(property => {
@@ -103,15 +138,43 @@ json.children.forEach(moduleItem => {
                     }
                 });
 
-                components[JSON.parse(moduleItem.name)] = {
+                const {title, description, tags} = findClassDocs(moduleItem.children);
+                let properties = null;
+                if (moduleName.match(/^components\//)) {
+                    properties = [];
+                    (item.children || []).forEach(property => {
+                        if (property.kindString === 'Property') {
+                            const propertyTitle = !property.comment || typeof property.comment === 'string'
+                                ? property.comment || ''
+                                : property.comment.shortText;
+
+                            if (propertyTitle) {
+                                properties.push({
+                                    name: property.name,
+                                    title: _.trim(propertyTitle),
+                                    example: _.trim((_.get(property, 'comment.tags') || [])
+                                        .filter(tag => tag.tag === 'example')
+                                        .map(tag => tag.text)
+                                        .join(' ')),
+                                });
+                            }
+                        }
+                    });
+                }
+
+                components[moduleName] = {
                     name: item.name,
                     decorators: (item.decorators || []).map(decorator => decorator.name),
                     defaultProps,
+                    title,
+                    description,
+                    tags,
+                    properties,
                 };
             }
             if (item.kindString === 'Object literal' && item.name === 'defaultProps' && item.flags && item.flags.isConst === true) {
-                components[JSON.parse(moduleItem.name)] = {
-                    ...components[JSON.parse(moduleItem.name)],
+                components[moduleName] = {
+                    ...components[moduleName],
                     defaultProps: typeToObject(item),
                 };
             }
@@ -221,37 +284,17 @@ json.children.forEach(file => {
             }
         }
 
-        (file.children || []).forEach(item => {
-            if (item.kindString === 'Class') {
-                // Get title and description
-                const commentLines = _.get(item, 'comment.shortText', '').split('\n');
-                const title = commentLines.length > 0 ? commentLines.shift() : demoMatch[2];
-                const description = commentLines.join('\n');
-
-                // Find order and col tags
-                let order = 0;
-                let col = null;
-                _.get(item, 'comment.tags', []).forEach(tag => {
-                    if (tag.tag === 'order') {
-                        order = _.toInteger(tag.text.trim());
-                    }
-                    if (tag.tag === 'col') {
-                        col = _.toInteger(tag.text.trim());
-                    }
-                });
-
-                // Store, if not empty
-                if (order > 0 || title || description) {
-                    _.set(docs.demos, path.concat(name), {
-                        order,
-                        col,
-                        title,
-                        description,
-                    });
-                }
-            }
-        });
+        // Store title, ..
+        const {title, description, tags} = findClassDocs(file.children);
+        if (title || description) {
+            _.set(docs.demos, path.concat(name), {
+                order: _.toInteger(tags['order']),
+                col: _.toInteger(tags['col']),
+                title,
+                description,
+            });
+        }
     }
 });
 
-fs.writeFileSync(path.resolve(__dirname, 'autogen-result.json'), JSON.stringify(docs, null, '    '));
+fs.writeFileSync(path.resolve(__dirname, 'docs-autogen-result.json'), JSON.stringify(docs, null, '    '));

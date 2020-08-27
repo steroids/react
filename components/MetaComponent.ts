@@ -26,6 +26,10 @@ export interface ModelAttribute {
     toStringConverter?: (value: any, type: string, item: any) => string | null,
 }
 
+/**
+ * Meta Component
+ * Компонент для работы с мета-данными моделей и типами приложения (appType)
+ */
 export default class MetaComponent {
 
     defaultPrimaryKey: string;

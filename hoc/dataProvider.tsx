@@ -19,6 +19,12 @@ import normalize, {INormalizeHocConfig} from './normalize';
 import {smartSearch} from '../utils/text';
 import {normalizeItems} from '../utils/data';
 
+/**
+ * Data Provider HOC
+ * Подготавливает коллекции данных для полей форм. Используется в выпадающих списках, чекбоксах, автокомплитах и т.п.
+ * Позволяет передать данные несколькими видами (enum, list, object, data provider), а на выход предоставит единый вид
+ * данных. Поддерживает подгрузку данных из вне (при autocomplete), поиск по данным, множественный выбор.
+ */
 export interface IDataProviderHocInput {
     input?: FormInputType,
     multiple?: boolean;

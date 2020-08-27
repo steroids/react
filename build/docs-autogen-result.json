@@ -318,8 +318,7 @@
         "IApplicationHocInput": {
             "name": "IApplicationHocInput",
             "moduleName": "hoc/application",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Application HOC\nОбертка над корневым компонентом приложения, используется только в `Application.tsx`. Добавляет через React Context\nкомпоненты приложения и конфигурирует их.",
             "extends": [],
             "items": []
         },
@@ -334,8 +333,7 @@
         "IBemHocInput": {
             "name": "IBemHocInput",
             "moduleName": "hoc/bem",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Bem HOC\nПрокидывает утилиту `bem` для правильной генерации CSS классов по методологии БЭМ (блок, элемент, модификатор)",
             "extends": [],
             "items": [
                 {
@@ -450,8 +448,7 @@
         "IComponentsHocInput": {
             "name": "IComponentsHocInput",
             "moduleName": "hoc/components",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Components HOC\nПрокидывает в пропсы компоненты приложения. Ключ соответствует названию компонента, объявленного при инициализации\nприложения (см. `Application.tsx`)",
             "extends": [],
             "items": []
         },
@@ -539,8 +536,7 @@
         "IConnectHocInput": {
             "name": "IConnectHocInput",
             "moduleName": "hoc/connect",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Connect HOC\nОбертка над `connect()` из `react-redux` для упрощения импорта.",
             "extends": [],
             "items": []
         },
@@ -563,8 +559,7 @@
         "IDataProviderHocInput": {
             "name": "IDataProviderHocInput",
             "moduleName": "hoc/dataProvider",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Data Provider HOC\nПодготавливает коллекции данных для полей форм. Используется в выпадающих списках, чекбоксах, автокомплитах и т.п.\nПозволяет передать данные несколькими видами (enum, list, object, data provider), а на выход предоставит единый вид\nданных. Поддерживает подгрузку данных из вне (при autocomplete), поиск по данным, множественный выбор.",
             "extends": [],
             "items": [
                 {
@@ -711,6 +706,51 @@
                 }
             ]
         },
+        "IFetchHocInput": {
+            "name": "IFetchHocInput",
+            "moduleName": "hoc/fetch",
+            "description": "Fetch HOC\nИспользуется для подгрузки данных с бекенда перед рендером компонента, на котором он применяется. На вход ему передается\nодин или несколько объектов конфигураций (id, key, url, method, params, ...), которые описывают откуда нужно подтянуть данные.",
+            "extends": [],
+            "items": [
+                {
+                    "name": "navigationData",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                },
+                {
+                    "name": "routeParams",
+                    "description": "",
+                    "required": false,
+                    "type": "object",
+                    "example": ""
+                }
+            ]
+        },
+        "IFetchHocOutput": {
+            "name": "IFetchHocOutput",
+            "moduleName": "hoc/fetch",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "fetchRefresh",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "fetchUpdate",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                }
+            ]
+        },
         "IFieldHocConfig": {
             "name": "IFieldHocConfig",
             "moduleName": "hoc/field",
@@ -758,8 +798,7 @@
         "IFieldHocInput": {
             "name": "IFieldHocInput",
             "moduleName": "hoc/field",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Field HOC\nОбертка над полями форм. Если создаете свой элемент формы - добавьте декоратор с этим HOC.",
             "extends": [
                 "IThemeHocInput"
             ],
@@ -879,8 +918,7 @@
         "IFileHocInput": {
             "name": "IFileHocInput",
             "moduleName": "hoc/file",
-            "description": "",
-            "descriptionTags": [],
+            "description": "File HOC\nКомпонент для асинхронной загрузки файлов на сервер, используется в `FileField`",
             "extends": [],
             "items": [
                 {
@@ -1025,8 +1063,7 @@
         "IFormHocInput": {
             "name": "IFormHocInput",
             "moduleName": "hoc/form",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Form HOC\nПолучает из контекста данные формы (formId, model, prefix, layout, ..) и прокидывает их в качестве `props` в компонент.\nИспользуется во всех полях формы (`*Field.tsx`) для получения данных из контекста.",
             "extends": [],
             "items": [
                 {
@@ -1207,8 +1244,7 @@
         "IFormSubmitHocInput": {
             "name": "IFormSubmitHocInput",
             "moduleName": "hoc/formSubmit",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Form Submit HOC\nИспользуется в `Form` для добавления обработчика `onSubmit`",
             "extends": [],
             "items": [
                 {
@@ -1280,8 +1316,7 @@
         "IHttpHocInput": {
             "name": "IHttpHocInput",
             "moduleName": "hoc/http",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Http HOC\nОбертка для асинхронного получения данных с бекенда. В отличии от `Fetch HOC`, он не хранит данные в Redux Store\nи не добавляет \"Загрузка...\" при запросе.",
             "extends": [],
             "items": []
         },
@@ -1304,8 +1339,7 @@
         "ILayoutHocInput": {
             "name": "ILayoutHocInput",
             "moduleName": "hoc/layout",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Layout HOC\nИспользуется для макета (layout) приложения, добавляя в него данные авторизации и статуса рендера страницы.\nПередаваемый первым аргументом `initAction` будет вызываться каждый раз, когда необходимо обновить данные\nавторизации (первая загрузка страницы, логин/регистация и выход).",
             "extends": [],
             "items": [
                 {
@@ -1392,8 +1426,7 @@
         "IListHocInput": {
             "name": "IListHocInput",
             "moduleName": "hoc/list",
-            "description": "",
-            "descriptionTags": [],
+            "description": "List HOC\nДобавляет массу возможностей для взаимодействия с коллекциями. Коллекции можно получать как с бекенда, так и передавать\nстатичным массивом. В обоих случаях поддерживается пагинация, сортировка, фильтрация данных. Выбранные фильтры\nсинхронизируются с адресной строкой.",
             "extends": [],
             "items": [
                 {
@@ -1706,6 +1739,14 @@
                 }
             ]
         },
+        "INormalizeHoOutput": {
+            "name": "INormalizeHoOutput",
+            "moduleName": "hoc/normalize",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
         "INormalizeHocConfig": {
             "name": "INormalizeHocConfig",
             "moduleName": "hoc/normalize",
@@ -1736,6 +1777,43 @@
                 }
             ]
         },
+        "INormalizeHocInput": {
+            "name": "INormalizeHocInput",
+            "moduleName": "hoc/normalize",
+            "description": "Normalize HOC\nПриводит данные к единому виду. Используется, когда данные в `props` могут быть записаны в нескольких форматах. На\nвыходе в отдельный `props` будут прокидываться \"нормализованные\" данные. При обновлении поля с оригинальными данными,\nпроцесс нормализации будет повторяться.",
+            "extends": [],
+            "items": []
+        },
+        "IPropsHoOutput": {
+            "name": "IPropsHoOutput",
+            "moduleName": "hoc/props",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IPropsHocInput": {
+            "name": "IPropsHocInput",
+            "moduleName": "hoc/props",
+            "description": "Props HOC\nДобавляет на выход переданные первым аргументом пропсы. Может использоваться, например, при необходимости передачи\nпропсов для ниже стоящих декораторов.",
+            "extends": [],
+            "items": []
+        },
+        "IScreenHoOutput": {
+            "name": "IScreenHoOutput",
+            "moduleName": "hoc/screen",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": []
+        },
+        "IScreenHocInput": {
+            "name": "IScreenHocInput",
+            "moduleName": "hoc/screen",
+            "description": "Screen HOC\nКомпонент подписывается на изменения размера экрана и обновляет ее в Redux Store.",
+            "extends": [],
+            "items": []
+        },
         "IThemeContext": {
             "name": "IThemeContext",
             "moduleName": "hoc/theme",
@@ -1762,8 +1840,7 @@
         "IThemeHocInput": {
             "name": "IThemeHocInput",
             "moduleName": "hoc/theme",
-            "description": "",
-            "descriptionTags": [],
+            "description": "Theme HOC\nПолучает данные темы (size, dark) из контекста и прокидывает их в `props`. Полученные данные используются\nдля стилизации компонентов.",
             "extends": [
                 "IThemeContext"
             ],
@@ -1922,9 +1999,18 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "ICrudProps"
+                "ICrudProps",
+                "IConnectHocOutput",
+                "IComponentsHocOutput"
             ],
             "items": [
+                {
+                    "name": "action",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
                 {
                     "name": "controlsGetter",
                     "description": "",
@@ -1965,6 +2051,13 @@
                     "description": "",
                     "required": false,
                     "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "dispatch",
+                    "description": "",
+                    "required": false,
+                    "type": "Dispatch",
                     "example": ""
                 },
                 {
@@ -2093,6 +2186,13 @@
             ],
             "items": [
                 {
+                    "name": "action",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
                     "name": "create",
                     "description": "",
                     "required": false,
@@ -2167,6 +2267,20 @@
                     "description": "",
                     "required": false,
                     "type": "boolean | ICrudItem",
+                    "example": ""
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemId",
+                    "description": "",
+                    "required": false,
+                    "type": "PrimaryKey",
                     "example": ""
                 },
                 {
@@ -2246,10 +2360,13 @@
             "moduleName": "ui/crud/Crud/Crud",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "Omit<IControlItem",
+                "'visible' | 'confirm' | 'onClick'>"
+            ],
             "items": [
                 {
-                    "name": "action",
+                    "name": "actionName",
                     "description": "",
                     "required": false,
                     "type": "string",
@@ -2270,17 +2387,31 @@
                     "example": ""
                 },
                 {
-                    "name": "control",
+                    "name": "confirm",
                     "description": "",
                     "required": false,
-                    "type": "IControlItem",
+                    "type": "string | {}",
                     "example": ""
                 },
                 {
-                    "name": "id",
+                    "name": "controlsExclude",
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "string[]",
+                    "example": ""
+                },
+                {
+                    "name": "controlsInclude",
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": ""
+                },
+                {
+                    "name": "mode",
+                    "description": "",
+                    "required": false,
+                    "type": "\"page\" | \"modal\"",
                     "example": ""
                 },
                 {
@@ -2291,24 +2422,24 @@
                     "example": ""
                 },
                 {
+                    "name": "pkRequired",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "title",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
                     "name": "visible",
                     "description": "",
                     "required": false,
-                    "type": "boolean",
-                    "example": ""
-                },
-                {
-                    "name": "visibleFor",
-                    "description": "",
-                    "required": false,
-                    "type": "string[]",
-                    "example": ""
-                },
-                {
-                    "name": "withModel",
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
+                    "type": "boolean | {}",
                     "example": ""
                 }
             ]
@@ -2448,6 +2579,29 @@
                 }
             ]
         },
+        "ICrudViewProps": {
+            "name": "ICrudViewProps",
+            "moduleName": "ui/crud/Crud/Crud",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
+                {
+                    "name": "controls",
+                    "description": "",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": ""
+                }
+            ]
+        },
         "ICrudGeneratorProps": {
             "name": "ICrudGeneratorProps",
             "moduleName": "ui/crud/index",
@@ -2457,6 +2611,20 @@
                 "ICrudProps"
             ],
             "items": [
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "models",
+                    "description": "",
+                    "required": false,
+                    "type": "string | string[]",
+                    "example": ""
+                },
                 {
                     "name": "path",
                     "description": "",
@@ -2487,7 +2655,7 @@
                     "name": "inputProps",
                     "description": "",
                     "required": true,
-                    "type": "{name: string, onBlur: {}, onChange: {}, onFocus: {}, type: string, value: string | number}",
+                    "type": "{className: CssClassName, name: string, onBlur: {}, onChange: {}, onFocus: {}, type: string, value: string | number}",
                     "example": ""
                 },
                 {
@@ -2501,7 +2669,7 @@
                     "name": "items",
                     "description": "",
                     "required": true,
-                    "type": "{id: number | string | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
+                    "type": "{id: number | string | boolean, isHovered: boolean, isSelected: boolean, label: string, labelHighlighted: any[]}[]",
                     "example": ""
                 },
                 {
@@ -2592,6 +2760,13 @@
                     "example": ""
                 },
                 {
+                    "name": "hint",
+                    "description": "Подсказка, отображается при наведении (через тег title)",
+                    "required": false,
+                    "type": "string | any",
+                    "example": "Save\n"
+                },
+                {
                     "name": "icon",
                     "description": "Иконка",
                     "required": false,
@@ -2614,7 +2789,7 @@
                 },
                 {
                     "name": "label",
-                    "description": "Название поля",
+                    "description": "Текст кнопки или ссылки",
                     "required": false,
                     "type": "string | any",
                     "example": "Save\n"
@@ -2785,6 +2960,13 @@
                     "example": ""
                 },
                 {
+                    "name": "hint",
+                    "description": "Подсказка, отображается при наведении (через тег title)",
+                    "required": false,
+                    "type": "string | any",
+                    "example": "Save\n"
+                },
+                {
                     "name": "icon",
                     "description": "Иконка",
                     "required": false,
@@ -2807,7 +2989,7 @@
                 },
                 {
                     "name": "label",
-                    "description": "Название поля",
+                    "description": "Текст кнопки или ссылки",
                     "required": false,
                     "type": "string | any",
                     "example": "Save\n"
@@ -3119,10 +3301,24 @@
             ],
             "items": [
                 {
+                    "name": "displayFormat",
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                },
+                {
                     "name": "formatDate",
                     "description": "",
                     "required": true,
                     "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "localeUtils",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
                     "example": ""
                 },
                 {
@@ -3326,6 +3522,13 @@
             ],
             "items": [
                 {
+                    "name": "autoComplete",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "isLoading",
                     "description": "",
                     "required": false,
@@ -3389,10 +3592,17 @@
                     "example": ""
                 },
                 {
+                    "name": "searchAutoFocus",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "searchInputProps",
                     "description": "",
                     "required": true,
-                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "type": "{className: CssClassName, disabled: boolean, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
                     "example": ""
                 },
                 {
@@ -3505,10 +3715,38 @@
             "extends": [],
             "items": [
                 {
+                    "name": "errors",
+                    "description": "",
+                    "required": true,
+                    "type": "string | string[]",
+                    "example": ""
+                },
+                {
+                    "name": "hint",
+                    "description": "",
+                    "required": true,
+                    "type": "string | boolean",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": true,
+                    "type": "string | boolean | any",
+                    "example": ""
+                },
+                {
                     "name": "layout",
                     "description": "",
                     "required": false,
                     "type": "{className: string, cols: number[], label: boolean, layout: FormLayoutName | boolean}",
+                    "example": ""
+                },
+                {
+                    "name": "required",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
                     "example": ""
                 }
             ]
@@ -3555,6 +3793,13 @@
                     "description": "",
                     "required": true,
                     "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "showRemove",
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
                     "example": ""
                 }
             ]
@@ -3676,6 +3921,20 @@
                     "required": false,
                     "type": "{}",
                     "example": ""
+                },
+                {
+                    "name": "showAdd",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "showRemove",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
                 }
             ]
         },
@@ -3716,6 +3975,97 @@
                     "required": false,
                     "type": "CustomView",
                     "example": ""
+                }
+            ]
+        },
+        "IFieldSetViewProps": {
+            "name": "IFieldSetViewProps",
+            "moduleName": "ui/form/FieldSet/FieldSet",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IFieldHocOutput"
+            ],
+            "items": []
+        },
+        "IFileFieldItemViewProps": {
+            "name": "IFileFieldItemViewProps",
+            "moduleName": "ui/form/FileField/FileField",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IFileFieldItemProps"
+            ],
+            "items": [
+                {
+                    "name": "disabled",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "error",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "fileId",
+                    "description": "ID файла",
+                    "required": false,
+                    "type": "number | string",
+                    "example": "34\n"
+                },
+                {
+                    "name": "image",
+                    "description": "",
+                    "required": false,
+                    "type": "{height: string, url: string, width: string}",
+                    "example": ""
+                },
+                {
+                    "name": "imagesOnly",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "onRemove",
+                    "description": "Обработчик события удаления файла",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "progress",
+                    "description": "",
+                    "required": false,
+                    "type": "{bytesUploaded: number, percent: number}",
+                    "example": ""
+                },
+                {
+                    "name": "showRemove",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "title",
+                    "description": "Исходное название файла",
+                    "required": false,
+                    "type": "string",
+                    "example": "original-name\n"
+                },
+                {
+                    "name": "uid",
+                    "description": "Уникальный текстовый идентификатор",
+                    "required": false,
+                    "type": "string",
+                    "example": "e65f5867-0083-48a7-af43-1121ed9e6280\n"
                 }
             ]
         },
@@ -3794,7 +4144,7 @@
                     "name": "buttonComponent",
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode",
+                    "type": "React.ReactNode | any",
                     "example": ""
                 },
                 {
@@ -3805,17 +4155,31 @@
                     "example": ""
                 },
                 {
+                    "name": "imagesOnly",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "itemProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "itemView",
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode",
+                    "type": "React.ReactNode | any",
                     "example": ""
                 },
                 {
                     "name": "items",
                     "description": "",
                     "required": true,
-                    "type": "{disabled: boolean, error: string, fileId: number | string, image: {height: string, url: string, width: string}, onRemove: {}, progress: {bytesUploaded: number, percent: number}, showRemove: boolean, size: number | string, title: string, uid: string}[]",
+                    "type": "IFileFieldItemProps[]",
                     "example": ""
                 }
             ]
@@ -4001,6 +4365,20 @@
             "extends": [],
             "items": [
                 {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
+                {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "{className: CssClassName, cols: number[], label: boolean, layout: FormLayoutName | boolean}",
+                    "example": ""
+                },
+                {
                     "name": "onSubmit",
                     "description": "",
                     "required": true,
@@ -4082,14 +4460,78 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
+                "IHtmlFieldProps",
                 "IFieldHocOutput"
             ],
             "items": [
                 {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
+                {
+                    "name": "customButtons",
+                    "description": "Пользовательские кнопки",
+                    "required": false,
+                    "type": "Array",
+                    "example": "[<CustomButton/>]\n"
+                },
+                {
                     "name": "editorProps",
+                    "description": "Конфигурация wysiwyg реадактора",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "editorState",
                     "description": "",
                     "required": false,
                     "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onBlur",
+                    "description": "Обработчик события при снятии фокуса с редактора",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onEditorStateChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "onFocus",
+                    "description": "Обработчик события при фокусе на редактора",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "uploadImagesProcessor",
+                    "description": "После загрузки изображения на сервер,\nможно указать с каким процессором должно вернуться картинка",
+                    "required": false,
+                    "type": "string",
+                    "example": "origin\n"
+                },
+                {
+                    "name": "uploadUrl",
+                    "description": "Url на который будет отправлена форма загрузки файла",
+                    "required": false,
+                    "type": "string",
+                    "example": "/api/v1/upload-files\n"
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
                     "example": ""
                 }
             ]
@@ -4258,7 +4700,7 @@
                     "name": "inputProps",
                     "description": "",
                     "required": true,
-                    "type": "{disabled: string, max: string | number, min: string | number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: string | number}",
+                    "type": "{disabled: boolean, max: string | number, min: string | number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: string | number}",
                     "example": ""
                 }
             ]
@@ -4289,10 +4731,24 @@
             "extends": [],
             "items": [
                 {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
+                {
                     "name": "inputProps",
                     "description": "",
                     "required": true,
-                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "type": "{disabled: boolean, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "example": ""
+                },
+                {
+                    "name": "isInvalid",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
                     "example": ""
                 },
                 {
@@ -4321,6 +4777,13 @@
                     "description": "",
                     "required": false,
                     "type": "\"success\" | \"warning\" | \"danger\"",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "number | string",
                     "example": ""
                 }
             ]
@@ -4655,6 +5118,13 @@
             ],
             "items": [
                 {
+                    "name": "buttonProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
                     "name": "items",
                     "description": "",
                     "required": true,
@@ -4729,7 +5199,7 @@
                     "name": "inputProps",
                     "description": "",
                     "required": true,
-                    "type": "{disabled: string, name: string, onChange: {}, onKeyUp: {}, placeholder: string, value: string | number}",
+                    "type": "{disabled: boolean, name: string, onChange: {}, onKeyUp: {}, placeholder: string, value: string | number}",
                     "example": ""
                 }
             ]
@@ -4850,6 +5320,13 @@
                     "required": false,
                     "type": "string",
                     "example": ""
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": ""
                 }
             ]
         },
@@ -4872,6 +5349,22 @@
                     "description": "",
                     "required": false,
                     "type": "CustomView",
+                    "example": ""
+                }
+            ]
+        },
+        "IBooleanFormatterPropsView": {
+            "name": "IBooleanFormatterPropsView",
+            "moduleName": "ui/format/BooleanFormatter/BooleanFormatter",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [],
+            "items": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "required": false,
+                    "type": "string | number | boolean",
                     "example": ""
                 }
             ]
@@ -5105,6 +5598,45 @@
                 }
             ]
         },
+        "IPhotosFormatterViewProps": {
+            "name": "IPhotosFormatterViewProps",
+            "moduleName": "ui/format/PhotosFormatter/PhotosFormatter",
+            "description": "",
+            "descriptionTags": [],
+            "extends": [
+                "IPhotosFormatterProps"
+            ],
+            "items": [
+                {
+                    "name": "photoRowHeight",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "value",
+                    "description": "",
+                    "required": false,
+                    "type": "{src: string, thumbnail: string, thumbnailHeight: number, thumbnailWidth: number, uid: number}[]",
+                    "example": ""
+                },
+                {
+                    "name": "videoRowHeight",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": ""
+                }
+            ]
+        },
         "IIconViewProps": {
             "name": "IIconViewProps",
             "moduleName": "ui/icon/Icon/Icon",
@@ -5171,7 +5703,7 @@
                     "name": "logo",
                     "description": "",
                     "required": false,
-                    "type": "{className: CssClassName, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
+                    "type": "{className: CssClassName, icon: string | any, linkProps: object, title: string}",
                     "example": ""
                 },
                 {
@@ -5211,7 +5743,7 @@
                     "name": "logo",
                     "description": "",
                     "required": false,
-                    "type": "{className: CssClassName, linkProps: object, logoSvg: string | any, logoUrl: string | any, title: string}",
+                    "type": "{className: CssClassName, icon: string | any, linkProps: object, title: string}",
                     "example": ""
                 },
                 {
@@ -5350,6 +5882,13 @@
             "descriptionTags": [],
             "extends": [],
             "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
                 {
                     "name": "notifications",
                     "description": "",
@@ -5862,8 +6401,39 @@
             "moduleName": "ui/list/Empty/Empty",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
-            "items": []
+            "extends": [
+                "IEmptyProps"
+            ],
+            "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
+                {
+                    "name": "enable",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": ""
+                },
+                {
+                    "name": "text",
+                    "description": "",
+                    "required": false,
+                    "type": "string | React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": ""
+                }
+            ]
         },
         "IGridColumn": {
             "name": "IGridColumn",
@@ -5877,6 +6447,13 @@
                     "description": "",
                     "required": false,
                     "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
                     "example": ""
                 },
                 {
@@ -5919,6 +6496,13 @@
                     "description": "",
                     "required": false,
                     "type": "React.ReactNode",
+                    "example": ""
+                },
+                {
+                    "name": "sortable",
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
                     "example": ""
                 },
                 {
@@ -5968,6 +6552,13 @@
                     "example": ""
                 },
                 {
+                    "name": "fetch",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
                     "name": "fields",
                     "description": "",
                     "required": false,
@@ -5996,6 +6587,13 @@
                     "example": ""
                 },
                 {
+                    "name": "onSort",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
                     "name": "searchForm",
                     "description": "",
                     "required": false,
@@ -6017,9 +6615,17 @@
             "description": "",
             "descriptionTags": [],
             "extends": [
-                "IListHocOutput"
+                "IGridProps",
+                "IGridPrivateProps"
             ],
             "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": true,
+                    "type": "CssClassName",
+                    "example": ""
+                },
                 {
                     "name": "columns",
                     "description": "",
@@ -6028,10 +6634,80 @@
                     "example": ""
                 },
                 {
+                    "name": "controls",
+                    "description": "",
+                    "required": false,
+                    "type": "IControlItem[] | {}",
+                    "example": ""
+                },
+                {
+                    "name": "fetch",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "fields",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "itemsIndexing",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "label",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "list",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "model",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "onSort",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
                     "name": "renderValue",
                     "description": "",
                     "required": true,
                     "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "searchForm",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
                     "example": ""
                 }
             ]
@@ -6619,6 +7295,27 @@
                     "example": ""
                 },
                 {
+                    "name": "component",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "componentProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "controls",
+                    "description": "",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": ""
+                },
+                {
                     "name": "group",
                     "description": "",
                     "required": false,
@@ -6644,6 +7341,13 @@
                     "description": "",
                     "required": false,
                     "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
                     "example": ""
                 },
                 {
@@ -6679,6 +7383,27 @@
                     "example": ""
                 },
                 {
+                    "name": "component",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "componentProps",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": ""
+                },
+                {
+                    "name": "controls",
+                    "description": "",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": ""
+                },
+                {
                     "name": "group",
                     "description": "",
                     "required": false,
@@ -6704,6 +7429,13 @@
                     "description": "",
                     "required": false,
                     "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "size",
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
                     "example": ""
                 },
                 {
@@ -6845,20 +7577,6 @@
             ],
             "items": [
                 {
-                    "name": "content",
-                    "description": "",
-                    "required": false,
-                    "type": "React.ReactNode | Element",
-                    "example": ""
-                },
-                {
-                    "name": "contentProps",
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": ""
-                },
-                {
                     "name": "id",
                     "description": "",
                     "required": false,
@@ -6888,6 +7606,13 @@
             "descriptionTags": [],
             "extends": [],
             "items": [
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                },
                 {
                     "name": "items",
                     "description": "",
@@ -6958,7 +7683,15 @@
             "extends": [
                 "IButtonProps"
             ],
-            "items": []
+            "items": [
+                {
+                    "name": "to",
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": ""
+                }
+            ]
         },
         "ILinkViewProps": {
             "name": "ILinkViewProps",
@@ -7109,8 +7842,24 @@
             "moduleName": "ui/nav/Nav/Nav",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "INavProps"
+            ],
             "items": [
+                {
+                    "name": "activeTab",
+                    "description": "",
+                    "required": false,
+                    "type": "number | string",
+                    "example": ""
+                },
+                {
+                    "name": "className",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
                 {
                     "name": "items",
                     "description": "",
@@ -7119,10 +7868,45 @@
                     "example": ""
                 },
                 {
+                    "name": "layout",
+                    "description": "",
+                    "required": false,
+                    "type": "\"button\" | \"icon\" | \"link\" | \"tabs\" | \"navbar\" | \"list\" | string",
+                    "example": ""
+                },
+                {
+                    "name": "navClassName",
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": ""
+                },
+                {
+                    "name": "onChange",
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": ""
+                },
+                {
                     "name": "onClick",
                     "description": "",
                     "required": true,
                     "type": "{}",
+                    "example": ""
+                },
+                {
+                    "name": "routes",
+                    "description": "",
+                    "required": false,
+                    "type": "IRoute[]",
+                    "example": ""
+                },
+                {
+                    "name": "view",
+                    "description": "",
+                    "required": false,
+                    "type": "any",
                     "example": ""
                 }
             ]
@@ -7191,10 +7975,17 @@
                     "example": ""
                 },
                 {
-                    "name": "model",
+                    "name": "label",
                     "description": "",
                     "required": false,
                     "type": "string",
+                    "example": ""
+                },
+                {
+                    "name": "models",
+                    "description": "",
+                    "required": false,
+                    "type": "string | string[]",
                     "example": ""
                 },
                 {
@@ -7219,7 +8010,7 @@
                     "example": ""
                 },
                 {
-                    "name": "searchModel",
+                    "name": "title",
                     "description": "",
                     "required": false,
                     "type": "string",
@@ -7322,7 +8113,9 @@
             "moduleName": "ui/nav/Tree/Tree",
             "description": "",
             "descriptionTags": [],
-            "extends": [],
+            "extends": [
+                "IButtonProps"
+            ],
             "items": [
                 {
                     "name": "id",
@@ -7336,13 +8129,6 @@
                     "description": "",
                     "required": false,
                     "type": "any[]",
-                    "example": ""
-                },
-                {
-                    "name": "label",
-                    "description": "",
-                    "required": false,
-                    "type": "string | any",
                     "example": ""
                 },
                 {
@@ -7393,7 +8179,7 @@
                     "name": "items",
                     "description": "",
                     "required": false,
-                    "type": "{id: string | number, items: any[], label: string | any, visible: boolean}[] | string",
+                    "type": "ITreeItem[] | string",
                     "example": ""
                 },
                 {
@@ -7474,7 +8260,7 @@
                     "name": "items",
                     "description": "",
                     "required": true,
-                    "type": "ITreeItem & {hasItems: boolean, index: number, isOpened: boolean, isSelected: boolean, level: number, onClick: {}, uniqId: string}[]",
+                    "type": "ITreeItem & {className: CssClassName, hasItems: boolean, index: number, isOpened: boolean, isSelected: boolean, level: number, onClick: {}, uniqId: string}[]",
                     "example": ""
                 },
                 {
@@ -7486,6 +8272,13 @@
                 },
                 {
                     "name": "level",
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": ""
+                },
+                {
+                    "name": "levelPadding",
                     "description": "",
                     "required": false,
                     "type": "number",
@@ -7802,77 +8595,143 @@
         "base/Enum": {
             "name": "Enum",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "components/ClientStorageComponent": {
             "name": "ClientStorageComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Client Storage Component",
+            "description": "Слой хранения данных в браузере (cookie, local/session storage) или ReactNative",
+            "tags": {},
+            "properties": []
         },
         "components/HtmlComponent": {
             "name": "HtmlComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Html Component",
+            "description": "Хелпер для работы с БЭМ классами и DOM элементами",
+            "tags": {},
+            "properties": []
         },
         "components/HttpComponent": {
             "name": "HttpComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Http Component",
+            "description": "Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.",
+            "tags": {},
+            "properties": []
         },
         "components/LocaleComponent": {
             "name": "LocaleComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Locale Component",
+            "description": "Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "language",
+                    "title": "Язык приложения",
+                    "example": "ru"
+                }
+            ]
         },
         "components/MetaComponent": {
             "name": "MetaComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Meta Component",
+            "description": "Компонент для работы с мета-данными моделей и типами приложения (appType)",
+            "tags": {},
+            "properties": []
         },
         "components/ResourceComponent": {
             "name": "ResourceComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Resource Component",
+            "description": "Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...",
+            "tags": {},
+            "properties": []
         },
         "components/SocialComponent": {
             "name": "SocialComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Social Component",
+            "description": "Провайдер для социальных сетей. Обеспечивает вызов окна соц сети для oauth авторизации",
+            "tags": {},
+            "properties": []
         },
         "components/StoreComponent": {
             "name": "StoreComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Store Component",
+            "description": "Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router",
+            "tags": {},
+            "properties": []
         },
         "components/UiComponent": {
             "name": "UiComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Ui Component",
+            "description": "Компонент для подгрузки и конфигурации UI компонентов приложения",
+            "tags": {},
+            "properties": []
         },
         "components/WebSocketComponent": {
             "name": "WebSocketComponent",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "Web Socket Component",
+            "description": "Компонент, обеспечивающий постоянное web-socket соединение с сервером. Поддерживает подписку на каналы, обработку\nответов и токен авторизации",
+            "tags": {},
+            "properties": []
         },
         "components/social/FacebookProvider": {
             "name": "FacebookProvider",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": []
         },
         "components/social/GoogleProvider": {
             "name": "GoogleProvider",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": []
         },
         "components/social/SteamProvider": {
             "name": "Vk",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": []
         },
         "components/social/VkProvider": {
             "name": "VkProvider",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": []
         },
         "hoc/dataProvider": {
             "defaultProps": {
@@ -7894,7 +8753,7 @@
                     "useHash": false
                 },
                 "empty": {
-                    "enable": false,
+                    "enable": true,
                     "text": "Записи не найдены"
                 },
                 "layout": {
@@ -7932,34 +8791,46 @@
         "ui/crud/Crud/Crud": {
             "name": "Crud",
             "decorators": [
+                "components",
                 "normalize",
                 "connect",
-                "components"
+                "fetch"
             ],
             "defaultProps": {
-                "mode": "page",
+                "mode": "DEFAULT_MODE",
                 "primaryKey": "DEFAULT_PRIMARY_KEY"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/crud/Crud/CrudDetail": {
             "name": "CrudGrid",
-            "decorators": [
-                "fetch"
-            ],
-            "defaultProps": null
+            "decorators": [],
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/crud/Crud/CrudForm": {
             "name": "CrudForm",
-            "decorators": [
-                "connect",
-                "fetch"
-            ],
-            "defaultProps": null
+            "decorators": [],
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/crud/Crud/CrudGrid": {
             "name": "CrudGrid",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/AutoCompleteField/AutoCompleteField": {
             "name": "AutoCompleteField",
@@ -7975,14 +8846,22 @@
                 "className": "",
                 "disabled": false,
                 "required": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/BlankField/BlankField": {
             "name": "BlankField",
             "decorators": [
                 "field"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/Button/Button": {
             "name": "Button",
@@ -8007,7 +8886,11 @@
                     "enable": false,
                     "value": 0
                 }
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/CheckboxField/CheckboxField": {
             "name": "CheckboxField",
@@ -8020,7 +8903,11 @@
                 "className": "",
                 "disabled": false,
                 "required": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/CheckboxListField/CheckboxListField": {
             "name": "CheckboxListField",
@@ -8034,7 +8921,11 @@
                 "disabled": false,
                 "multiple": true,
                 "required": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/DateField/DateField": {
             "name": "DateField",
@@ -8048,7 +8939,11 @@
                 "displayFormat": "DD.MM.YYYY",
                 "required": false,
                 "valueFormat": "YYYY-MM-DD"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/DateTimeField/DateTimeField": {
             "name": "DateTimeField",
@@ -8063,7 +8958,11 @@
                 "required": false,
                 "timeFormat": "HH:mm",
                 "valueDateFormat": "YYYY-MM-DD"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/DropDownField/DropDownField": {
             "name": "DropDownField",
@@ -8080,7 +8979,11 @@
                 "multiple": false,
                 "required": false,
                 "showReset": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/Field/Field": {
             "name": "Field",
@@ -8089,7 +8992,11 @@
                 "connect",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/FieldLayout/FieldLayout": {
             "name": "FieldLayout",
@@ -8106,7 +9013,11 @@
                     ],
                     "layout": "default"
                 }
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/FieldList/FieldList": {
             "name": "FieldList",
@@ -8123,14 +9034,22 @@
                 "required": false,
                 "showAdd": true,
                 "showRemove": true
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/FieldSet/FieldSet": {
             "name": "FieldSet",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/FileField/FileField": {
             "name": "FileField",
@@ -8148,12 +9067,20 @@
                     "color": "secondary",
                     "outline": true
                 }
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/Form/AutoSaveHelper": {
             "name": "AutoSaveHelper",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/Form/Form": {
             "name": "Form",
@@ -8164,12 +9091,20 @@
                 "theme",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/Form/SyncAddressBarHelper": {
             "name": "SyncAddressBarHelper",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/HtmlField/HtmlField": {
             "name": "HtmlField",
@@ -8180,13 +9115,23 @@
             "defaultProps": {
                 "className": "",
                 "customButtons": [],
-                "disabled": false
-            }
+                "disabled": false,
+                "onBlur": "onBlur()",
+                "onFocus": "onFocus()"
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/HtmlField/demo/basic": {
             "name": "CustomButton",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/InputField/InputField": {
             "name": "InputField",
@@ -8201,7 +9146,11 @@
                 "placeholder": "",
                 "required": false,
                 "type": "text"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/NumberField/NumberField": {
             "name": "NumberField",
@@ -8218,7 +9167,11 @@
                 "placeholder": "",
                 "required": false,
                 "step": null
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/PasswordField/PasswordField": {
             "name": "PasswordField",
@@ -8233,7 +9186,11 @@
                 "placeholder": "",
                 "required": false,
                 "security": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/RadioListField/RadioListField": {
             "name": "RadioListField",
@@ -8247,7 +9204,11 @@
                 "disabled": false,
                 "errors": [],
                 "required": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/RangeField/RangeField": {
             "name": "RangeField",
@@ -8263,7 +9224,11 @@
                 "placeholderTo": "",
                 "required": false,
                 "type": "input"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/ReCaptchaField/ReCaptchaField": {
             "name": "ReCaptchaField",
@@ -8271,7 +9236,11 @@
                 "field",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/SliderField/SliderField": {
             "name": "SliderField",
@@ -8286,7 +9255,11 @@
                 "max": 100,
                 "min": 0,
                 "required": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/SwitcherField/SwitcherField": {
             "name": "SwitcherField",
@@ -8300,7 +9273,11 @@
                 "disabled": false,
                 "errors": [],
                 "required": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/TextField/TextField": {
             "name": "TextField",
@@ -8316,7 +9293,11 @@
                 "placeholder": "",
                 "required": false,
                 "submitOnEnter": false
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/form/TimeField/TimeField": {
             "name": "TimeField",
@@ -8329,14 +9310,22 @@
                 "placeholder": "00:00",
                 "required": false,
                 "timeFormat": "HH:mm"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/BooleanFormatter/BooleanFormatter": {
             "name": "BooleanFormatter",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/DateFormatter/DateFormatter": {
             "name": "DateFormatter",
@@ -8345,7 +9334,11 @@
             ],
             "defaultProps": {
                 "format": "LL"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/DateTimeFormatter/DateTimeFormatter": {
             "name": "DateTimeFormatter",
@@ -8354,7 +9347,11 @@
             ],
             "defaultProps": {
                 "format": "LLL"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/EnumFormatter/EnumFormatter": {
             "name": "EnumFormatter",
@@ -8362,21 +9359,33 @@
                 "connect",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/FileSize/FileSize": {
             "name": "FileSize",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/Format/Format": {
             "name": "Format",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/Money/Money": {
             "name": "Money",
@@ -8385,7 +9394,11 @@
             ],
             "defaultProps": {
                 "scale": 2
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/format/PhotosFormatter/PhotosFormatter": {
             "name": "PhotosFormatter",
@@ -8394,19 +9407,31 @@
             ],
             "defaultProps": {
                 "photoRowHeight": 120
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/icon/Icon/Icon": {
             "name": "Icon",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/icon/Icon/demo/icon": {
             "name": "default",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/layout/Header/Header": {
             "name": "Header",
@@ -8414,7 +9439,11 @@
                 "theme",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/layout/Loader/Loader": {
             "name": "Loader",
@@ -8422,7 +9451,11 @@
                 "theme",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/layout/Notifications/Notifications": {
             "name": "Notifications",
@@ -8431,7 +9464,11 @@
                 "theme",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/Accordion/Accordion": {
             "name": "Accordion",
@@ -8441,7 +9478,11 @@
             ],
             "defaultProps": {
                 "openFirst": true
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/CheckboxColumn/CheckboxColumn": {
             "name": "CheckboxColumn",
@@ -8449,14 +9490,22 @@
                 "connect",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/ControlsColumn/ControlsColumn": {
             "name": "ControlsColumn",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/Detail/Detail": {
             "name": "Detail",
@@ -8464,19 +9513,34 @@
                 "connect",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/Empty/Empty": {
             "name": "Empty",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/Grid/Grid": {
-            "name": "item",
-            "decorators": [],
-            "defaultProps": null
+            "name": "Grid",
+            "decorators": [
+                "list",
+                "components"
+            ],
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/List/List": {
             "name": "List",
@@ -8484,7 +9548,11 @@
                 "list",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/Pagination/Pagination": {
             "name": "Pagination",
@@ -8493,7 +9561,11 @@
                 "theme",
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/list/PaginationSize/PaginationSize": {
             "name": "PaginationSize",
@@ -8507,19 +9579,33 @@
                     50,
                     100
                 ]
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/modal/Modal/Modal": {
             "name": "Modal",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": {
+                "size": "md"
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/modal/Modal/demo/basic": {
             "name": "MyModal",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/modal/ModalPortal/ModalPortal": {
             "name": "ModalPortal",
@@ -8529,7 +9615,11 @@
             "defaultProps": {
                 "animationDelayMc": 300,
                 "group": "MODAL_DEFAULT_GROUP"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/nav/Breadcrumbs/Breadcrumbs": {
             "name": "Breadcrumbs",
@@ -8539,19 +9629,31 @@
             ],
             "defaultProps": {
                 "items": []
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/nav/Controls/Controls": {
             "name": "Controls",
             "decorators": [
                 "components"
             ],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/nav/Link/Link": {
             "name": "Link",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/nav/Nav/Nav": {
             "name": "Nav",
@@ -8562,7 +9664,11 @@
             ],
             "defaultProps": {
                 "layout": "button"
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/nav/Router/Router": {
             "name": "Router",
@@ -8573,17 +9679,26 @@
             ],
             "defaultProps": {
                 "autoScrollTop": true
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/nav/Router/SsrProvider": {
             "name": "SsrProvider",
             "decorators": [],
-            "defaultProps": null
+            "defaultProps": null,
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         },
         "ui/nav/Tree/Tree": {
             "name": "Tree",
             "decorators": [
                 "connect",
+                "normalize",
                 "components"
             ],
             "defaultProps": {
@@ -8591,7 +9706,11 @@
                 "autoSave": false,
                 "itemsKey": "items",
                 "level": 0
-            }
+            },
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": null
         }
     }
 }

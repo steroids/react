@@ -14,6 +14,11 @@ export interface IComponents {
     pushNotification?: any,
 }
 
+/**
+ * Components HOC
+ * Прокидывает в пропсы компоненты приложения. Ключ соответствует названию компонента, объявленного при инициализации
+ * приложения (см. `Application.tsx`)
+ */
 export interface IComponentsHocInput {
 }
 

@@ -11,6 +11,10 @@ import components, {IComponentsHocOutput} from './components';
 import form, {IFormHocOutput} from './form';
 import theme, {IThemeHocInput, IThemeHocOutput} from './theme';
 
+/**
+ * Field HOC
+ * Обертка над полями форм. Если создаете свой элемент формы - добавьте декоратор с этим HOC.
+ */
 export interface IFieldHocInput extends IThemeHocInput {
 
     prefix?: string | boolean;

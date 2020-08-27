@@ -1,5 +1,9 @@
 import providers from './social';
 
+/**
+ * Social Component
+ * Провайдер для социальных сетей. Обеспечивает вызов окна соц сети для oauth авторизации
+ */
 export default class SocialComponent {
     _components: any;
     _initializing: any;

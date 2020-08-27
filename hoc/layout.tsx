@@ -22,6 +22,12 @@ export const STATUS_HTTP_ERROR = 'render_error';
 export const STATUS_ACCESS_DENIED = 'access_denied';
 export const STATUS_OK = 'ok';
 
+/**
+ * Layout HOC
+ * Используется для макета (layout) приложения, добавляя в него данные авторизации и статуса рендера страницы.
+ * Передаваемый первым аргументом `initAction` будет вызываться каждый раз, когда необходимо обновить данные
+ * авторизации (первая загрузка страницы, логин/регистация и выход).
+ */
 export interface ILayoutHocInput {
     route?: IRoute,
     user?: {

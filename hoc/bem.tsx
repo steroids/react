@@ -1,6 +1,10 @@
 import * as React from 'react';
 import components, {IComponentsHocOutput} from './components';
 
+/**
+ * Bem HOC
+ * Прокидывает утилиту `bem` для правильной генерации CSS классов по методологии БЭМ (блок, элемент, модификатор)
+ */
 export interface IBemHocInput {
     style?: any
 }

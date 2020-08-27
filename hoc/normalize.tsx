@@ -1,6 +1,20 @@
 import * as React from 'react';
 import _isEqual from 'lodash-es/isEqual';
 
+/**
+ * Normalize HOC
+ * Приводит данные к единому виду. Используется, когда данные в `props` могут быть записаны в нескольких форматах. На
+ * выходе в отдельный `props` будут прокидываться "нормализованные" данные. При обновлении поля с оригинальными данными,
+ * процесс нормализации будет повторяться.
+ */
+export interface INormalizeHocInput {
+
+}
+
+export interface INormalizeHoOutput {
+
+}
+
 export interface INormalizeHocConfig {
     fromKey: string,
     toKey: string,
@@ -8,7 +22,7 @@ export interface INormalizeHocConfig {
 }
 
 export default (configs: INormalizeHocConfig | INormalizeHocConfig[]): any => WrappedComponent =>
-    class NormalizeHoc extends React.PureComponent {
+    class NormalizeHoc extends React.PureComponent<INormalizeHocInput> {
         static WrappedComponent = WrappedComponent;
 
         constructor(props) {

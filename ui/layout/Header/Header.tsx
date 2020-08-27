@@ -12,8 +12,7 @@ export interface IHeaderProps extends IThemeHocInput {
     logo?: {
         title: string,
         linkProps?: object,
-        logoUrl?: string | any,
-        logoSvg?: string | any,
+        icon?: string | any,
         className?: CssClassName,
     };
     nav?: INavProps;

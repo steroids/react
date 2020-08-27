@@ -4,6 +4,10 @@ import _trimEnd from 'lodash-es/trimEnd';
 import {setFlashes} from '../actions/notifications';
 import axios from 'axios';
 
+/**
+ * Http Component
+ * Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.
+ */
 export default class HttpComponent {
     accessTokenKey = 'accessToken';
     apiUrl: string;

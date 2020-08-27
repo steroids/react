@@ -5,7 +5,8 @@ import {
 } from '../actions/notifications';
 
 const initialState = {
-    items: []
+    items: [],
+    position: ''
 };
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -14,28 +15,16 @@ export default (state = initialState, action) => {
                 ...state,
                 items: []
                     .concat(state.items)
-                    .filter(
-                        item =>
-                            item.level !== action.level || item.message !== action.message
-                    ) // unique
                     .concat([
                         {
                             id: action.id,
                             level: action.level || 'info',
                             message: action.message,
-                            isClosing: false
+                            isClosing: false,
+                            position: action.position
                         }
-                    ])
-            };
-        case NOTIFICATIONS_CLOSING:
-            return {
-                ...state,
-                items: [].concat(state.items).map(item => {
-                    if (item.id === action.id) {
-                        item.isClosing = true;
-                    }
-                    return item;
-                })
+                    ]),
+                position: action.position
             };
         case NOTIFICATIONS_CLOSE:
             return {
@@ -47,3 +36,4 @@ export default (state = initialState, action) => {
     }
 };
 export const getNotifications = state => state.notifications.items;
+export const getPosition = state => state.notifications.position;

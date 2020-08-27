@@ -132,7 +132,7 @@ const defaultItems: ({ [key: string]: ICrudItem }) = {
                     [props.primaryKey + 'Action']: null,
                 }));
             }
-        }
+        },
     },
 };
 
@@ -203,7 +203,7 @@ const defaultItems: ({ [key: string]: ICrudItem }) = {
     };
 })
 @fetch(props => {
-    return props.itemId && {
+    return props.itemId && props.restUrl && {
         id: getCrudId(props) + '_' + props.itemId,
         url: `${props.restUrl}/${props.itemId}`,
         key: 'item',

@@ -53,7 +53,12 @@ export default class LocaleComponent {
         }
     }
 
-    moment(date = undefined, format = undefined) {
+    /**
+     * Получение экземпляра `moment` с учетом временной зоны бекенда
+     * @param date Дата
+     * @param format Формат
+     */
+    moment(date: string = undefined, format: string = undefined) {
         if (
             this.backendTimeZone &&
             date &&

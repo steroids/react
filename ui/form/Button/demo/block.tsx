@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from '../Button';
 
 /**
- * Block
+ * Block button
  * @order 3
  * @col 4
  */

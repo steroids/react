@@ -219,8 +219,8 @@ export default (customConfig): any => WrappedComponent => {
 
                             return (
                                 <FieldLayout
-                                    {...this.props}
                                     {...outputProps}
+                                    {...this.props}
                                     {...(typeof config.layout === 'object' ? config.layout : {layout: config.layout})}
                                     {...config.layoutProps}
                                     errors={isInvalid ? errors : null}
@@ -236,8 +236,8 @@ export default (customConfig): any => WrappedComponent => {
                                     ))}
                                     {(config.list && (
                                         <FieldArray
-                                            {...this.props}
                                             {...outputProps}
+                                            {...this.props}
                                             name={getName(this.props, '')}
                                             component={WrappedComponent}
                                             formId={this.props.formId}
@@ -245,9 +245,9 @@ export default (customConfig): any => WrappedComponent => {
                                         />
                                     )) || (
                                         <WrappedComponent
-                                            {...this.props}
                                             {...outputProps}
                                             {...inputProps}
+                                            {...this.props}
                                             isInvalid={isInvalid}
                                             formId={this.props.formId}
                                             fieldId={this._fieldId}

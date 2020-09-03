@@ -54,6 +54,7 @@ export interface IDataProviderHocOutput {
     onClose?: any,
     onSearch?: any,
     onItemClick?: any,
+    onItemRemove?: any,
     onItemMouseOver?: any,
 }
 
@@ -126,6 +127,7 @@ export default (): any => WrappedComponent =>
                         this._onClose = this._onClose.bind(this);
                         this._onSearch = this._onSearch.bind(this);
                         this._onItemClick = this._onItemClick.bind(this);
+                        this._onItemRemove = this._onItemRemove.bind(this);
                         this._onItemMouseOver = this._onItemMouseOver.bind(this);
                         this._onKeyDown = this._onKeyDown.bind(this);
                         this._delayTimer = null;
@@ -235,6 +237,7 @@ export default (): any => WrappedComponent =>
                                 onClose={this._onClose}
                                 onSearch={this._onSearch}
                                 onItemClick={this._onItemClick}
+                                onItemRemove={this._onItemRemove}
                                 onItemMouseOver={this._onItemMouseOver}
                             />
                         );
@@ -367,7 +370,7 @@ export default (): any => WrappedComponent =>
                             const values = [].concat(this.props.input.value || []);
                             if (values.indexOf(value) !== -1) {
                                 if (!skipToggle) {
-                                    _remove(values, value => value === value);
+                                    _remove(values, val => val === value);
                                 }
                             } else {
                                 values.push(value);
@@ -392,6 +395,16 @@ export default (): any => WrappedComponent =>
                                 name: this.props.input.name
                             });
                         }
+                    }
+
+                    /**
+                     * Handler for user remove item and close items dropdown menu
+                     * @param {object} item
+                     * @private
+                     */
+                    _onItemRemove(item) {
+                        this._onClose();
+                        this._onItemClick(item);
                     }
 
                     /**

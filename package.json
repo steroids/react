@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.0.0-beta.52",
+  "version": "2.0.0-beta.53",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -38,7 +38,6 @@
     "react-router": "^5.1.2",
     "connected-react-router": "^6.5.2",
     "react-router-dom": "^5.1.2",
-    "react-transition-group": "=1.2.1",
     "redux": "^4.0.4",
     "redux-form": "^8.2.6",
     "conditional-decorator": "^0.1.7",

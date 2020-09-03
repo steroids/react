@@ -58,7 +58,7 @@ export default (): any => WrappedComponent =>
 
             cleanEmptyObject(object) {
                 // if all properties are null substitute the object with null
-                if (!Object.values(object).some(x => (x !== null))) {
+                if (!Object.values(object).some(x => x)) {
                     return null;
                 }
 
@@ -74,12 +74,13 @@ export default (): any => WrappedComponent =>
                             if (_isPlainObject(value)) {
                                 array[index] = this.cleanEmptyObject(value);
                             }
-                        })
-                        if (!object[key].some(x => (x !== null))) {
+                        });
+
+                        if (!object[key].some(x => Boolean(x))) {
                             object[key] = [];
                         }
                     }
-                })
+                });
 
                 return object;
             }

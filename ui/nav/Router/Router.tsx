@@ -24,6 +24,7 @@ export interface IRouteItem {
     redirectTo?: boolean | string,
     component?: any,
     componentProps?: any,
+    layout?: string,
     isVisible?: boolean,
     isNavVisible?: boolean,
     models?: string | string[],
@@ -150,12 +151,8 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
 
     _renderItem(route: IRouteItem, props) {
         if (route.redirectTo) {
-            let to = route.redirectTo;
-            if (_isBoolean(route.redirectTo)) {
-                const key = _isObject(route.items) && !_isArray(route.items) ? Object.keys(route.items)[0] : '0';
-                to = _get(route, ['items', key, 'path']);
-            }
-            if (!to && to !== '') {
+            const to = this._findRedirectPathRecursive(route);
+            if (to === null) {
                 console.error('Not found path for redirect in route:', route)
                 return null;
             }
@@ -183,5 +180,20 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
                 {...route.componentProps}
             />
         );
+    }
+
+    _findRedirectPathRecursive(route: IRouteItem) {
+        if (!route) {
+            return null;
+        }
+
+        if (typeof route.redirectTo === 'boolean') {
+            const key = _isObject(route.items) && !_isArray(route.items) ? Object.keys(route.items)[0] : '0';
+            return this._findRedirectPathRecursive(_get(route, ['items', key]));
+        } else if (typeof route.redirectTo === 'string') {
+            return route.redirectTo;
+        }
+
+        return route.path || route.path === '' ? route.path : null;
     }
 }

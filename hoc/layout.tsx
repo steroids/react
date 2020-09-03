@@ -14,6 +14,7 @@ import {goToRoute} from '../actions/router';
 import components, {IComponentsHocOutput} from './components';
 import {IConnectHocOutput} from './connect';
 import HttpComponent from '../components/HttpComponent';
+import {IRouteItem} from '../ui/nav/Router/Router';
 
 export const STATUS_LOADING = 'loading';
 export const STATUS_NOT_FOUND = 'not_found';
@@ -44,6 +45,10 @@ export interface ILayoutHocOutput {
     http?: any,
     status: string,
     renderError: string,
+    route: IRouteItem,
+    user: any,
+    data: any,
+    isInitialized: boolean,
 }
 
 interface ILayoutHocPrivateProps extends IConnectHocOutput, IComponentsHocOutput {

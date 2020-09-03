@@ -24,27 +24,34 @@ const stateMap = state => ({
     isRouterInitialized: isRouterInitialized(state),
     route: getRoute(state)
 });
-export const walkRoutesRecursive = (item, defaultItem) => {
-    let items = null;
-    if (_isArray(item.items)) {
-        items = item.items.map(i => walkRoutesRecursive(i, defaultItem));
-    } else if (_isObject(item.items)) {
-        items = Object.keys(item.items).map(id =>
-            walkRoutesRecursive({...item.items[id], id}, defaultItem)
-        );
-    }
-    return {
+export const walkRoutesRecursive = (item, defaultItem, parentItem: any = {}) => {
+    const normalizedItem = {
         ...defaultItem,
         ...item,
         id: item.id,
         exact: item.exact,
-        path: item.path,
+        path: item.path && (item.path.indexOf('/') !== 0 && parentItem.path ? parentItem.path + '/': '') + item.path,
         label: item.label,
         title: item.title,
-        isVisible: item.isVisible,
+        isVisible: typeof item.isVisible !== 'undefined' ? item.isVisible : parentItem.isVisible,
+        isNavVisible: typeof item.isNavVisible !== 'undefined' ? item.isNavVisible : parentItem.isNavVisible,
+        layout: item.layout || parentItem.layout || null,
+        roles: item.roles || parentItem.roles || null,
         component: null,
         componentProps: null,
-        items
+    };
+
+    let items = null;
+    if (_isArray(item.items)) {
+        items = item.items.map(i => walkRoutesRecursive(i, defaultItem, normalizedItem));
+    } else if (_isObject(item.items)) {
+        items = Object.keys(item.items).map(id =>
+            walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem)
+        );
+    }
+    return {
+        ...normalizedItem,
+        items,
     };
 };
 export const treeToList = (item, isRoot = true) => {

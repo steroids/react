@@ -10,6 +10,7 @@ import {IConnectHocOutput} from '../../../hoc/connect';
 import {IThemeHocInput} from '../../../hoc/theme';
 import normalize from '../../../hoc/normalize';
 import {goToRoute} from "../../../actions/router";
+import {buildUrl, getRouteProp} from '../../../reducers/router';
 
 interface IButtonBadge {
     enable?: boolean,
@@ -114,8 +115,8 @@ export interface IButtonProps extends IThemeHocInput {
     confirm?: string;
 
     /**
-     * Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка автоматически
-     * будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
+     * Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка
+     * автоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
      * @param e => fetch(...)
      */
     onClick?: (e: Event | React.MouseEvent) => Promise<any> | void;
@@ -174,6 +175,8 @@ export interface IButtonProps extends IThemeHocInput {
      */
     formId?: string,
 
+    tag?: 'button' | 'a',
+
     textColor?: any;
 }
 
@@ -215,11 +218,21 @@ const defaultProps = {
     },
 };
 
-@connect((state: any, props: any) => ({
-    submitting: props.formId
-        ? isSubmitting(props.formId)(state)
-        : !!props.submitting,
-}))
+@connect(
+    (state, props) => {
+        let url;
+        if (props.toRoute) {
+            url = buildUrl(getRouteProp(state, props.toRoute, 'path'), props.toRouteParams)
+        }
+
+        return {
+            url: typeof props.url !== 'undefined' ? props.url : url,
+            submitting: props.formId
+                ? isSubmitting(props.formId)(state)
+                : !!props.submitting,
+        };
+    }
+)
 @theme()
 @normalize({
     fromKey: 'badge',
@@ -281,17 +294,15 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
         const ButtonView = this.props.view || this.props.ui.getView('form.ButtonView');
         const disabled = this.props.submitting || this.props.disabled || this.state.isLoading;
         const layout = mergeLayoutProp(context.layout, this.props.layout);
+        const tag = this.props.tag || (this.props.link || this.props.url ? 'a' : 'button');
 
         const button = (
             <ButtonView
                 {...this.props}
+                tag={tag}
                 isFailed={this.state.isFailed}
                 isLoading={this.state.isLoading || this.props.submitting}
-                url={
-                    this.props.link && !this.props.url
-                        ? '#'
-                        : this.props.url
-                }
+                url={this.props.url || (tag === 'a' ? '#' : null)}
                 formId={context.formId}
                 layout={layout}
                 disabled={disabled}

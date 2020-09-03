@@ -12,7 +12,13 @@ export interface ILinkViewProps extends IButtonViewProps {
 export default class Link extends React.PureComponent<ILinkProps> {
 
     render() {
-        return <Button link {...this.props} />;
+        return (
+            <Button
+                tag='a'
+                link
+                {...this.props}
+            />
+        );
     }
 
 }

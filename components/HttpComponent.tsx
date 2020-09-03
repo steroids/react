@@ -19,11 +19,14 @@ export default class HttpComponent {
     _lazyRequests: any;
     _promises: any;
 
-    constructor(components) {
+    constructor(components, config: any = {}) {
         this._components = components;
-        this.apiUrl = typeof location !== 'undefined'
-            ? location.protocol + '//' + location.host : (process.env.APP_BACKEND_URL || '');
-        this.accessTokenKey = 'accessToken';
+
+        this.apiUrl = config.apiUrl
+            || process.env.APP_BACKEND_URL
+            || (typeof location !== 'undefined' ? location.protocol + '//' + location.host : '');
+        this.accessTokenKey = config.accessTokenKey || 'accessToken';
+
         this._lazyRequests = {};
         this._axios = null;
         this._csrfToken = null;

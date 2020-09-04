@@ -33,10 +33,20 @@ export const walkRoutesRecursive = (item, defaultItem, parentItem: any = {}) => 
         path: item.path && (item.path.indexOf('/') !== 0 && parentItem.path ? parentItem.path + '/': '') + item.path,
         label: item.label,
         title: item.title,
-        isVisible: typeof item.isVisible !== 'undefined' ? item.isVisible : parentItem.isVisible,
-        isNavVisible: typeof item.isNavVisible !== 'undefined' ? item.isNavVisible : parentItem.isNavVisible,
-        layout: item.layout || parentItem.layout || null,
-        roles: item.roles || parentItem.roles || null,
+        isVisible: typeof item.isVisible !== 'undefined'
+            ? item.isVisible
+            : (typeof parentItem.isVisible !== 'undefined'
+                    ? parentItem.isVisible
+                    : defaultItem.isVisible
+            ),
+        isNavVisible: typeof item.isNavVisible !== 'undefined'
+            ? item.isNavVisible
+            : (typeof parentItem.isNavVisible !== 'undefined'
+                    ? parentItem.isNavVisible
+                    : defaultItem.isNavVisible
+            ),
+        layout: item.layout || parentItem.layout || defaultItem.layout || null,
+        roles: item.roles || parentItem.roles || defaultItem.roles || null,
         component: null,
         componentProps: null,
     };

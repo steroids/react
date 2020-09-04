@@ -38,7 +38,7 @@ export interface ITreeViewProps extends ITreeProps {
         isOpened: boolean,
         isSelected: boolean,
         hasItems: boolean,
-        onClick: (e: Event | React.MouseEvent) => void,
+        onClick: (e: Event | React.MouseEvent | any) => void,
     })[],
     levelPadding?: number
 }

@@ -23,7 +23,7 @@ export default class HttpComponent {
         this._components = components;
 
         this.apiUrl = config.apiUrl
-            || process.env.APP_BACKEND_URL
+            //|| process.env.APP_BACKEND_URL
             || (typeof location !== 'undefined' ? location.protocol + '//' + location.host : '');
         this.accessTokenKey = config.accessTokenKey || 'accessToken';
 

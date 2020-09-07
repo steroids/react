@@ -695,6 +695,14 @@
                     "example": null
                 },
                 {
+                    "name": "onItemRemove",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
                     "name": "onOpen",
                     "decorators": [],
                     "description": "",
@@ -1533,11 +1541,27 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "data",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
                     "name": "http",
                     "decorators": [],
                     "description": "",
                     "required": false,
                     "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "isInitialized",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -1549,11 +1573,27 @@
                     "example": null
                 },
                 {
+                    "name": "route",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IRouteItem",
+                    "example": null
+                },
+                {
                     "name": "status",
                     "decorators": [],
                     "description": "",
                     "required": true,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "user",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
                     "example": null
                 }
             ]
@@ -3328,7 +3368,7 @@
                 {
                     "name": "onClick",
                     "decorators": [],
-                    "description": "Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка автоматически\nбудет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.",
+                    "description": "Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка\nавтоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.",
                     "required": false,
                     "type": "{}",
                     "example": null
@@ -3364,6 +3404,14 @@
                     "required": false,
                     "type": "object",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tag",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"button\" | \"a\"",
+                    "example": null
                 },
                 {
                     "name": "target",
@@ -3615,6 +3663,14 @@
                     "description": "",
                     "required": false,
                     "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "tag",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"button\" | \"a\"",
                     "example": null
                 },
                 {
@@ -7001,6 +7057,65 @@
                 }
             ]
         },
+        "ITooltipProps": {
+            "name": "ITooltipProps",
+            "moduleName": "ui/layout/Tooltip/Tooltip",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "arrowPosition",
+                    "decorators": [],
+                    "description": "Стили для позиционирования стрелки",
+                    "required": false,
+                    "type": "{bottom: string, left: string, right: string, top: string}",
+                    "example": null
+                },
+                {
+                    "name": "calculatePosition",
+                    "decorators": [],
+                    "description": "Рассчет позиции подсказки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "content",
+                    "decorators": [],
+                    "description": "Текст подсказки",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Это всплывающая подсказка.'"
+                },
+                {
+                    "name": "defaultVisible",
+                    "decorators": [],
+                    "description": "Показывать ли подсказку сразу после рендера страницы",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "position",
+                    "decorators": [],
+                    "description": "Позиционирование подсказки, относительно целевого элемента",
+                    "required": false,
+                    "type": "\"top\" | \"topLeft\" | \"topRight\" | \"bottom\" | \"bottomLeft\" | \"bottomRight\" | \"left\" | \"leftTop\" | \"leftBottom\" | \"right\" | \"rightTop\" | \"rightBottom\" | string",
+                    "example": "'top'"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Стили для абсолютного позиционирования подсказки",
+                    "required": false,
+                    "type": "{left: \"unset\" | number, right: \"unset\" | number, top: \"unset\" | number}",
+                    "example": null
+                }
+            ]
+        },
         "IAccordionHeaderViewProps": {
             "name": "IAccordionHeaderViewProps",
             "moduleName": "ui/list/Accordion/Accordion",
@@ -9418,6 +9533,14 @@
                     "example": null
                 },
                 {
+                    "name": "layout",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "models",
                     "decorators": [],
                     "description": "",
@@ -9892,6 +10015,16 @@
         }
     },
     "demos": {
+        "crud": {
+            "Crud": {
+                "default": {
+                    "order": "1",
+                    "col": "8",
+                    "title": null,
+                    "description": "Default"
+                }
+            }
+        },
         "form": {
             "AutoCompleteField": {
                 "basic": {
@@ -24962,6 +25095,1403 @@
                 }
             ]
         },
+        "ui/layout/Tooltip/Tooltip": {
+            "name": "Tooltip",
+            "moduleName": "ui/layout/Tooltip/Tooltip",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "_gap",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "_parentRef",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "RefObject",
+                    "example": null
+                },
+                {
+                    "name": "_position",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "_timer",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "UNSAFE_componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "UNSAFE_componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "UNSAFE_componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "calculatePosition",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "tooltipDimension",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "arrowDimensions",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidCatch",
+                    "decorators": [],
+                    "description": "Catches exceptions generated in descendant components. Unhandled exceptions will cause\nthe entire component tree to unmount.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "error",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Error",
+                            "example": null
+                        },
+                        {
+                            "name": "errorInfo",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ErrorInfo",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidMount",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentDidUpdate",
+                    "decorators": [],
+                    "description": "Called immediately after updating occurs. Not called for the initial render.\n\nThe snapshot is only present if getSnapshotBeforeUpdate is present and returns non-null.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "snapshot",
+                            "decorators": [],
+                            "description": "",
+                            "required": false,
+                            "type": "SS",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillUnmount",
+                    "decorators": [],
+                    "description": "Called immediately before a component is destroyed. Perform any necessary cleanup in this method, such as\ncancelled network requests, or cleaning up any DOM elements created in `componentDidMount`.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getSnapshotBeforeUpdate",
+                    "decorators": [],
+                    "description": "Runs before React applies the result of `render` to the document, and\nreturns an object to be given to componentDidUpdate. Useful for saving\nthings such as scroll position before `render` causes changes to it.\n\nNote: the presence of getSnapshotBeforeUpdate prevents any of the deprecated\nlifecycle events from running.\n",
+                    "required": true,
+                    "type": "SS | null",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onHideTooltip",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "onShowTooltip",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "optimizeArrowInHorizontalBottom",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "arrowHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "optimizeArrowInHorizontalTop",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "optimizeArrowInVerticalLeft",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "optimizeArrowInVerticalRight",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "arrowWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "render",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "setHorizontalBottomPosition",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentTop",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "arrowHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setHorizontalPositionLeft",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentLeft",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentRight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setHorizontalPositionRight",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentLeft",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentRight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setHorizontalTopPosition",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentTop",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setVerticalLeftPosition",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentLeft",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setVerticalPositionBottom",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentTop",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setVerticalPositionTop",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentTop",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setVerticalRightPosition",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "parentRight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "parentWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "tooltipWidth",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "arrowHeight",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "shouldComponentUpdate",
+                    "decorators": [],
+                    "description": "Called to determine whether the change in props and state should trigger a re-render.\n\n`Component` always returns true.\n`PureComponent` implements a shallow comparison on props and state and returns true if any\nprops or states have changed.\n\nIf false is returned, `Component#render`, `componentWillUpdate`\nand `componentDidUpdate` will not be called.\n",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "updatePosition",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "substr",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        },
+                        {
+                            "name": "newSubstr",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        },
+                        {
+                            "name": "sliceType",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "\"byType\" | \"byModify\"",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ui/layout/Tooltip/TooltipPortal": {
+            "name": "TooltipPortal",
+            "moduleName": "ui/layout/Tooltip/TooltipPortal",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "el",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "HTMLDivElement",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "UNSAFE_componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "UNSAFE_componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "UNSAFE_componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidCatch",
+                    "decorators": [],
+                    "description": "Catches exceptions generated in descendant components. Unhandled exceptions will cause\nthe entire component tree to unmount.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "error",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Error",
+                            "example": null
+                        },
+                        {
+                            "name": "errorInfo",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ErrorInfo",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidMount",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentDidUpdate",
+                    "decorators": [],
+                    "description": "Called immediately after updating occurs. Not called for the initial render.\n\nThe snapshot is only present if getSnapshotBeforeUpdate is present and returns non-null.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "snapshot",
+                            "decorators": [],
+                            "description": "",
+                            "required": false,
+                            "type": "SS",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillUnmount",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getSnapshotBeforeUpdate",
+                    "decorators": [],
+                    "description": "Runs before React applies the result of `render` to the document, and\nreturns an object to be given to componentDidUpdate. Useful for saving\nthings such as scroll position before `render` causes changes to it.\n\nNote: the presence of getSnapshotBeforeUpdate prevents any of the deprecated\nlifecycle events from running.\n",
+                    "required": true,
+                    "type": "SS | null",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "render",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "shouldComponentUpdate",
+                    "decorators": [],
+                    "description": "Called to determine whether the change in props and state should trigger a re-render.\n\n`Component` always returns true.\n`PureComponent` implements a shallow comparison on props and state and returns true if any\nprops or states have changed.\n\nIf false is returned, `Component#render`, `componentWillUpdate`\nand `componentDidUpdate` will not be called.\n",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ui/layout/Tooltip/TooltipPortalInner": {
+            "name": "TooltipPortal",
+            "moduleName": "ui/layout/Tooltip/TooltipPortalInner",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [],
+            "methods": [
+                {
+                    "name": "UNSAFE_componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "UNSAFE_componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "UNSAFE_componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidCatch",
+                    "decorators": [],
+                    "description": "Catches exceptions generated in descendant components. Unhandled exceptions will cause\nthe entire component tree to unmount.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "error",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Error",
+                            "example": null
+                        },
+                        {
+                            "name": "errorInfo",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ErrorInfo",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidMount",
+                    "decorators": [],
+                    "description": "Called immediately after a component is mounted. Setting state here will trigger re-rendering.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentDidUpdate",
+                    "decorators": [],
+                    "description": "Called immediately after updating occurs. Not called for the initial render.\n\nThe snapshot is only present if getSnapshotBeforeUpdate is present and returns non-null.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "snapshot",
+                            "decorators": [],
+                            "description": "",
+                            "required": false,
+                            "type": "SS",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillUnmount",
+                    "decorators": [],
+                    "description": "Called immediately before a component is destroyed. Perform any necessary cleanup in this method, such as\ncancelled network requests, or cleaning up any DOM elements created in `componentDidMount`.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getSnapshotBeforeUpdate",
+                    "decorators": [],
+                    "description": "Runs before React applies the result of `render` to the document, and\nreturns an object to be given to componentDidUpdate. Useful for saving\nthings such as scroll position before `render` causes changes to it.\n\nNote: the presence of getSnapshotBeforeUpdate prevents any of the deprecated\nlifecycle events from running.\n",
+                    "required": true,
+                    "type": "SS | null",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "render",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "shouldComponentUpdate",
+                    "decorators": [],
+                    "description": "Called to determine whether the change in props and state should trigger a re-render.\n\n`Component` always returns true.\n`PureComponent` implements a shallow comparison on props and state and returns true if any\nprops or states have changed.\n\nIf false is returned, `Component#render`, `componentWillUpdate`\nand `componentDidUpdate` will not be called.\n",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
         "ui/list/Accordion/Accordion": {
             "name": "Accordion",
             "moduleName": "ui/list/Accordion/Accordion",
@@ -30237,6 +31767,24 @@
                             "description": "",
                             "required": true,
                             "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "_findRedirectPathRecursive",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "route",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IRouteItem",
                             "example": null
                         }
                     ]

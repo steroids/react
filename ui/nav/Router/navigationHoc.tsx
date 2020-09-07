@@ -24,7 +24,7 @@ const stateMap = state => ({
     isRouterInitialized: isRouterInitialized(state),
     route: getRoute(state)
 });
-export const walkRoutesRecursive = (item, defaultItem, parentItem: any = {}) => {
+export const walkRoutesRecursive = (item, defaultItem: any = {}, parentItem: any = {}) => {
     const normalizedItem = {
         ...defaultItem,
         ...item,
@@ -105,7 +105,7 @@ export default (routes = null): any => WrappedComponent =>
                         initRoutes(
                             walkRoutesRecursive(
                                 {id: 'root', ...routesTree},
-                                this.props.defaultRoles ? {roles: this.props.defaultRoles} : null
+                                this.props.defaultRoles ? {roles: this.props.defaultRoles} : undefined
                             )
                         )
                     );

@@ -2,47 +2,55 @@ import * as React from 'react';
 import TooltipInnerPortal from './TooltipPortalInner';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
-import {login} from '../../../actions/auth';
 
+/**
+ * Варианты позиций всплывающей подсказки
+ * @example 'top'
+ */
+type TooltipPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
+    'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
+
+interface TooltipArrowPosition {
+    left?: number | string,
+    right?: number | string,
+    top?: number | string,
+    bottom?: number | string,
+}
+
+interface TooltipStylePosition {
+    left: 'unset' | number,
+    right: 'unset' | number,
+    top: 'unset' | number,
+}
 
 export interface ITooltipProps {
     /**
      * Текст подсказки
      * @example 'Это всплывающая подсказка.'
      */
-    content?: string,
+    content?: string | any,
 
     /**
      * Позиционирование подсказки, относительно целевого элемента
-     * @example 'top'
      */
-    position?: 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
-        'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string,
+    position?: TooltipPosition,
 
     /**
      * Показывать ли подсказку сразу после рендера страницы
-     * @example 'top'
+     * @example true
      */
-    isTooltipVisible?: boolean,
+    defaultVisible?: boolean,
 
     /**
      * Стили для абсолютного позиционирования подсказки
      */
-    style?: {
-        left: 'unset' | number,
-        right: 'unset' | number,
-        top: 'unset' | number,
-    },
+    style?: TooltipStylePosition,
 
     /**
      * Стили для позиционирования стрелки
+     * @example {left: 10}
      */
-    arrowPosition?: {
-        left: string,
-        right: string,
-        top: string,
-        bottom: string,
-    },
+    arrowPosition?: TooltipArrowPosition,
 
     /**
      * Рассчет позиции подсказки
@@ -50,20 +58,18 @@ export interface ITooltipProps {
     calculatePosition?: (tooltipDimensions: object, arrowDimensions: object) => void // type DOMRect
 }
 
+export interface ITooltipViewProps extends ITooltipProps {
+    isTooltipVisible: boolean,
+    content: string | any,
+    position: TooltipPosition,
+    style: TooltipStylePosition,
+}
+
 interface ITooltipState {
     isComponentExist: boolean,
     isTooltipVisible: boolean,
-    style: {
-        left: 'unset' | number,
-        right: 'unset' | number,
-        top: 'unset' | number,
-    },
-    arrowPosition: {
-        left?: string,
-        right?: string,
-        top?: string,
-        bottom?: string,
-    };
+    style: TooltipStylePosition,
+    arrowPosition: TooltipArrowPosition;
 }
 
 @components('ui')
@@ -73,7 +79,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
     * @Todo + check all calculations + describe
     *       + 12 positions
     *       - custom styles / classes
-    *       - isTooltipVisible -> logic
+    *       - defaultVisible -> logic
     *       - check window resize
     *       - check for more properties
     *       - fix arrow position (right, bottom) NOT centered
@@ -81,9 +87,9 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
     * */
 
     static defaultProps = {
-        content: 'Tooltip content...',
+        content: '',
         position: 'top',
-        isTooltipVisible: false,
+        defaultVisible: false,
     };
 
     _timer: any;        // Таймер для плавной анимации показа/скрытия подсказки
@@ -95,7 +101,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
         super(props);
         this.state = {
             isComponentExist: false,
-            isTooltipVisible: this.props.isTooltipVisible,
+            isTooltipVisible: this.props.defaultVisible,
             style: {
                 left: null,
                 right: null,
@@ -119,7 +125,9 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
     }
 
     componentDidMount() {
-        this.props.isTooltipVisible ? this.onShowTooltip() : null;
+        if (this.state.isTooltipVisible) {
+            this.onShowTooltip();
+        }
     }
 
     onShowTooltip() {
@@ -138,17 +146,12 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
     }
 
     onHideTooltip() {
-        if (this.props.isTooltipVisible) {
-            return null;
-        }
-
-        let check = false;
-        this.setState({isTooltipVisible: check});
+        this.setState({isTooltipVisible: false});
         if (this._timer) {
             clearTimeout(this._timer);
         }
         this._timer = setTimeout(() => {
-            this.setState({isComponentExist: check});
+            this.setState({isComponentExist: false});
         }, 300);
     }
 
@@ -185,7 +188,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
 
     optimizeArrowInVerticalLeft = (parentWidth) => {
         this.setState({
-            arrowPosition: {left: `${ parentWidth / 2 }px`}
+            arrowPosition: {left: parentWidth / 2}
         });
     }
 
@@ -193,7 +196,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
         this.setState({
             arrowPosition: {
                 left: null,
-                right: `${ (parentWidth / 2) - (arrowWidth / 2) }px`
+                right: (parentWidth / 2) - (arrowWidth / 2),
             }
         });
     }
@@ -216,7 +219,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
     }
 
     /*
-   * Функции для рассчета и оптимизиации положения Tooltip - HORIZONTAL
+   * Функции для расчета и оптимизации положения Tooltip - HORIZONTAL
    * */
 
     setHorizontalPositionLeft = (parentLeft, parentRight, parentWidth, tooltipWidth): number => {
@@ -247,14 +250,14 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
 
     optimizeArrowInHorizontalTop = (parentHeight) => {
         this.setState({
-            arrowPosition: {top: `${parentHeight / 2}px`}
+            arrowPosition: {top: parentHeight / 2}
         });
     }
 
     optimizeArrowInHorizontalBottom = (parentHeight, arrowHeight) => {
         this.setState({
             arrowPosition: {
-                bottom: `${ (parentHeight / 2) - (arrowHeight / 2) }px`
+                bottom: (parentHeight / 2) - (arrowHeight / 2)
             }
         });
     }
@@ -448,8 +451,11 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
     }
 
     render() {
-        const TooltipView = this.props.ui.getView('layout.TooltipView');
+        if (!this.props.content) {
+            return this.props.children;
+        }
 
+        const TooltipView = this.props.ui.getView('layout.TooltipView');
         return (
             <span
                 style={{display: 'inline-block', cursor: 'pointer'}}

@@ -33,7 +33,7 @@ export interface INumberFieldViewProps extends IFieldHocOutput {
         type: string,
         name: string,
         onChange: (value: Event | React.ChangeEvent) => void,
-        value: string | number,
+        value: number,
         placeholder: string,
         disabled: boolean,
         min: string | number,
@@ -72,7 +72,7 @@ export default class NumberField extends React.PureComponent<INumberFieldProps &
                 {...this.props}
                 inputProps={{
                     name: this.props.input.name,
-                    value: this.props.input.value || '',
+                    value: this.props.input.value || undefined,
                     onChange: e => this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
                     type: 'number',
                     min: this.props.min,

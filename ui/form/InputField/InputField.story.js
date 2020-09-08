@@ -5,6 +5,8 @@ import placeholder from './demo/placeholder';
 import required from './demo/required';
 import sizes from './demo/sizes';
 import types from './demo/types';
+import addons from './demo/addons';
+import textAddons from './demo/textAddons';
 
 export default {
   title: 'form.InputField',
@@ -18,4 +20,6 @@ export {
     required,
     sizes,
     types,
+    addons,
+    textAddons
 }

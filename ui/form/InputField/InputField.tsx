@@ -1,8 +1,8 @@
 import * as React from 'react';
+import {ReactNode} from 'react';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
-import {ReactNode} from "react";
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
@@ -48,13 +48,26 @@ export interface IInputFieldProps extends IFieldHocInput {
      * Изображение или React-нода, которая будет отрендерена слева от поля.
      * @example require('icon.png') | <component/>
      */
-    prefixElement?: number | ReactNode;
+    textBefore?: number | ReactNode | string;
 
     /**
      * Изображение или React-нода, которая будет отрендерена справа от поля.
      * @example require('icon.png') | <component/>
      */
-    suffixElement?: number | ReactNode;
+    textAfter?: number | ReactNode | string;
+
+    /**
+     * Текст или React-нода, которая будет отрендерена слева от поля.
+     * @example 'http://'
+     */
+    addonBefore?: ReactNode | string;
+
+    /**
+     * Текст или React-нода, которая будет отрендерена справа от поля.
+     * @example '.com'
+     */
+    addonAfter?: ReactNode | string;
+
     [key: string]: any;
 }
 
@@ -72,6 +85,11 @@ export interface IInputFieldViewProps extends IFieldHocOutput {
         placeholder: string,
         disabled: string,
     },
+
+    textBefore?: number | ReactNode | string,
+    textAfter?: number | ReactNode | string,
+    addonBefore?: ReactNode | string,
+    addonAfter?: ReactNode | string,
 }
 
 interface IInputFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
@@ -92,7 +110,11 @@ export default class InputField extends React.PureComponent<IInputFieldProps & I
         required: false,
         className: '',
         placeholder: '',
-        errors: []
+        errors: [],
+        textBefore: null,
+        textAfter: null,
+        addonBefore: null,
+        addonAfter: null,
     };
 
     render() {

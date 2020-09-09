@@ -81,7 +81,7 @@ export default class Icon extends React.PureComponent<IIconProps> {
         return (
             <IconView
                 {...this.props}
-                icon={icon}
+                icon={icon || this.props.name}
             />
         );
     }

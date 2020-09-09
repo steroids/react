@@ -9,17 +9,19 @@ import _get from 'lodash-es/get';
 import _merge from 'lodash-es/merge';
 import _isPlainObject from 'lodash-es/isPlainObject';
 
-// @ts-ignore
-import reducers from 'reducers';
-
 interface IStoreComponentConfig {
     initialState: any,
     history: any,
 }
 
+/**
+ * Store Component
+ * Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router
+ */
 export default class StoreComponent {
     _asyncReducers: any;
     _components: any;
+    reducers: any;
     _routerReducer: any;
     history: any;
     navigationNative: any;
@@ -27,6 +29,9 @@ export default class StoreComponent {
 
     constructor(components, config, lazyInit = false) {
         this._components = components;
+
+        this.reducers = config.reducers || require('reducers').default;
+
         this.history = null;
         this.store = null;
         this._asyncReducers = {};
@@ -68,7 +73,7 @@ export default class StoreComponent {
         }
 
         this.store = createStore(
-            reducers(
+            this.reducers(
                 this._routerReducer ? {
                     router: this._routerReducer
                 } : {}
@@ -116,7 +121,7 @@ export default class StoreComponent {
             ...this._asyncReducers,
             ...asyncReducers
         };
-        this.store.replaceReducer(reducers(this._asyncReducers));
+        this.store.replaceReducer(this.reducers(this._asyncReducers));
     }
 
     errorHandler(error, action) {

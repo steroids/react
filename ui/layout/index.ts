@@ -1,2 +1,10 @@
+import Header from './Header';
+import Loader from './Loader';
 import Notifications from './Notifications';
-export { Notifications };
+import Tooltip from './Tooltip';
+export {
+    Header,
+    Loader,
+    Notifications,
+    Tooltip,
+};

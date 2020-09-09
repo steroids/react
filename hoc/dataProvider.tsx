@@ -19,6 +19,12 @@ import normalize, {INormalizeHocConfig} from './normalize';
 import {smartSearch} from '../utils/text';
 import {normalizeItems} from '../utils/data';
 
+/**
+ * Data Provider HOC
+ * Подготавливает коллекции данных для полей форм. Используется в выпадающих списках, чекбоксах, автокомплитах и т.п.
+ * Позволяет передать данные несколькими видами (enum, list, object, data provider), а на выход предоставит единый вид
+ * данных. Поддерживает подгрузку данных из вне (при autocomplete), поиск по данным, множественный выбор.
+ */
 export interface IDataProviderHocInput {
     input?: FormInputType,
     multiple?: boolean;
@@ -54,6 +60,7 @@ export interface IDataProviderHocOutput {
     onClose?: any,
     onSearch?: any,
     onItemClick?: any,
+    onItemRemove?: any,
     onItemMouseOver?: any,
 }
 
@@ -126,6 +133,7 @@ export default (): any => WrappedComponent =>
                         this._onClose = this._onClose.bind(this);
                         this._onSearch = this._onSearch.bind(this);
                         this._onItemClick = this._onItemClick.bind(this);
+                        this._onItemRemove = this._onItemRemove.bind(this);
                         this._onItemMouseOver = this._onItemMouseOver.bind(this);
                         this._onKeyDown = this._onKeyDown.bind(this);
                         this._delayTimer = null;
@@ -235,6 +243,7 @@ export default (): any => WrappedComponent =>
                                 onClose={this._onClose}
                                 onSearch={this._onSearch}
                                 onItemClick={this._onItemClick}
+                                onItemRemove={this._onItemRemove}
                                 onItemMouseOver={this._onItemMouseOver}
                             />
                         );
@@ -392,6 +401,16 @@ export default (): any => WrappedComponent =>
                                 name: this.props.input.name
                             });
                         }
+                    }
+
+                    /**
+                     * Handler for user remove item and close items dropdown menu
+                     * @param {object} item
+                     * @private
+                     */
+                    _onItemRemove(item) {
+                        this._onClose();
+                        this._onItemClick(item);
                     }
 
                     /**

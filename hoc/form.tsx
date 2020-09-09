@@ -1,5 +1,10 @@
 import * as React from 'react';
 
+/**
+ * Form HOC
+ * Получает из контекста данные формы (formId, model, prefix, layout, ..) и прокидывает их в качестве `props` в компонент.
+ * Используется во всех полях формы (`*Field.tsx`) для получения данных из контекста.
+ */
 export interface IFormHocInput {
     prefix?: string | boolean;
     label?: string | boolean | any;

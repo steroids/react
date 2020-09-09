@@ -37,7 +37,7 @@ export default class NotificationsDemo extends React.PureComponent<IConnectHocOu
                                 key={level}
                                 color={level}
                                 label={__(`Уведомление типа "${level}"`)}
-                                onClick={() => this.props.dispatch(showNotification(message, {level}))}
+                                onClick={() => this.props.dispatch(showNotification(message, level))}
                                 style={{  margin: '10px 0' }}
                             />
                             ))

@@ -24,27 +24,44 @@ const stateMap = state => ({
     isRouterInitialized: isRouterInitialized(state),
     route: getRoute(state)
 });
-export const walkRoutesRecursive = (item, defaultItem) => {
-    let items = null;
-    if (_isArray(item.items)) {
-        items = item.items.map(i => walkRoutesRecursive(i, defaultItem));
-    } else if (_isObject(item.items)) {
-        items = Object.keys(item.items).map(id =>
-            walkRoutesRecursive({...item.items[id], id}, defaultItem)
-        );
-    }
-    return {
+export const walkRoutesRecursive = (item, defaultItem: any = {}, parentItem: any = {}) => {
+    const normalizedItem = {
         ...defaultItem,
         ...item,
         id: item.id,
         exact: item.exact,
-        path: item.path,
+        path: item.path && (item.path.indexOf('/') !== 0 && parentItem.path ? parentItem.path + '/': '') + item.path,
         label: item.label,
         title: item.title,
-        isVisible: item.isVisible,
+        isVisible: typeof item.isVisible !== 'undefined'
+            ? item.isVisible
+            : (typeof parentItem.isVisible !== 'undefined'
+                    ? parentItem.isVisible
+                    : defaultItem.isVisible
+            ),
+        isNavVisible: typeof item.isNavVisible !== 'undefined'
+            ? item.isNavVisible
+            : (typeof parentItem.isNavVisible !== 'undefined'
+                    ? parentItem.isNavVisible
+                    : defaultItem.isNavVisible
+            ),
+        layout: item.layout || parentItem.layout || defaultItem.layout || null,
+        roles: item.roles || parentItem.roles || defaultItem.roles || null,
         component: null,
         componentProps: null,
-        items
+    };
+
+    let items = null;
+    if (_isArray(item.items)) {
+        items = item.items.map(i => walkRoutesRecursive(i, defaultItem, normalizedItem));
+    } else if (_isObject(item.items)) {
+        items = Object.keys(item.items).map(id =>
+            walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem)
+        );
+    }
+    return {
+        ...normalizedItem,
+        items,
     };
 };
 export const treeToList = (item, isRoot = true) => {
@@ -88,7 +105,7 @@ export default (routes = null): any => WrappedComponent =>
                         initRoutes(
                             walkRoutesRecursive(
                                 {id: 'root', ...routesTree},
-                                this.props.defaultRoles ? {roles: this.props.defaultRoles} : null
+                                this.props.defaultRoles ? {roles: this.props.defaultRoles} : undefined
                             )
                         )
                     );

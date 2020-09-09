@@ -9,6 +9,10 @@ import File from 'fileup-core/lib/models/File';
 import QueueCollection from 'fileup-core/lib/models/QueueCollection';
 import buildURL from 'axios/lib/helpers/buildURL';
 
+/**
+ * File HOC
+ * Компонент для асинхронной загрузки файлов на сервер, используется в `FileField`
+ */
 export interface IFileHocInput {
     /*
       multiple: PropTypes.bool,

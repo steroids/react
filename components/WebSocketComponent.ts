@@ -1,5 +1,10 @@
 import {IComponents} from '../hoc/components';
 
+/**
+ * Web Socket Component
+ * Компонент, обеспечивающий постоянное web-socket соединение с сервером. Поддерживает подписку на каналы, обработку
+ * ответов и токен авторизации
+ */
 export default class WebSocketComponent {
 
     wsUrl: string;

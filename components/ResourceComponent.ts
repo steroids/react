@@ -1,6 +1,10 @@
 import * as queryString from 'qs';
 import _isArray from 'lodash-es/isArray';
 
+/**
+ * Resource Component
+ * Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...
+ */
 export default class ResourceComponent {
     _callbacks: any;
     _components: any;

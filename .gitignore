@@ -67,4 +67,4 @@ Thumbs.db
 # Mac DS_Store Files
 .DS_Store
 
-docs/autogen-raw.json
+build/docs-autogen-raw.json

@@ -8,6 +8,11 @@ declare module '*.svg' {
     export default content;
 }
 
+declare module '*.png' {
+    const content: string;
+    export default content;
+}
+
 /**
  * Метод для локализации фраз и предложений
  * @example {__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}

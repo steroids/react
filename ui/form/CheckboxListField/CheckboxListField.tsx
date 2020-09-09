@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {components, field} from '../../../hoc';
+import {components, field, props} from '../../../hoc';
 import dataProvider, {IDataProviderHocInput, IDataProviderHocOutput} from "../../../hoc/dataProvider";
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -38,6 +38,9 @@ interface ICheckboxListFieldPrivateProps extends IFieldHocOutput, IDataProviderH
 
 @field({
     componentId: 'form.CheckboxListField'
+})
+@props({
+    multiple: true,
 })
 @dataProvider()
 @components('ui')

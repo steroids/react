@@ -4,6 +4,11 @@ import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import components, {IComponentsHocInput} from './components';
 
+/**
+ * Http HOC
+ * Обертка для асинхронного получения данных с бекенда. В отличии от `Fetch HOC`, он не хранит данные в Redux Store
+ * и не добавляет "Загрузка..." при запросе.
+ */
 export interface IHttpHocInput {
 }
 

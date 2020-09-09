@@ -75,8 +75,8 @@ interface IDropDownFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOu
     componentId: 'form.DropDownField'
 })
 @dataProvider()
-@conditional(!!process.env.IS_WEB, enhanceWithClickOutside)
 @components('ui')
+@conditional(!!process.env.IS_WEB, enhanceWithClickOutside)
 export default class DropDownField extends React.PureComponent<IDropDownFieldProps & IDropDownFieldPrivateProps> {
     static defaultProps = {
         disabled: false,

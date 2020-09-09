@@ -32,6 +32,11 @@ interface IFieldListItem extends IFieldHocInput {
 }
 
 export interface IFieldListProps extends IFieldHocInput {
+    /**
+     * Начальные значения в полях
+     * @example {name: 'Ivan', amount: 5}
+     */
+    initialValues?: {[key: string]: any}
     items?: IFieldListItem[];
     fields?: any;
     initialRowsCount?: number;
@@ -189,7 +194,7 @@ export default class FieldList extends React.PureComponent<IFieldListProps & IFi
     }
 
     _onAdd() {
-        this.props.fields.push();
+        this.props.fields.push(this.props.initialValues);
     }
 
     _onRemove(rowIndex) {

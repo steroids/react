@@ -13,7 +13,7 @@ import {conditional} from "conditional-decorator";
  * AutoComplete
  * Поле ввода текста с подсказками (auto-complete)
  */
-interface IAutoCompleteFieldProps extends IInputFieldProps, IFieldHocInput, IDataProviderHocInput {
+export interface IAutoCompleteFieldProps extends IInputFieldProps, IFieldHocInput, IDataProviderHocInput {
     searchOnFocus?: boolean,
 }
 

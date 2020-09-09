@@ -11,6 +11,10 @@ import components, {IComponentsHocOutput} from './components';
 import form, {IFormHocOutput} from './form';
 import theme, {IThemeHocInput, IThemeHocOutput} from './theme';
 
+/**
+ * Field HOC
+ * Обертка над полями форм. Если создаете свой элемент формы - добавьте декоратор с этим HOC.
+ */
 export interface IFieldHocInput extends IThemeHocInput {
 
     prefix?: string | boolean;
@@ -215,8 +219,8 @@ export default (customConfig): any => WrappedComponent => {
 
                             return (
                                 <FieldLayout
-                                    {...this.props}
                                     {...outputProps}
+                                    {...this.props}
                                     {...(typeof config.layout === 'object' ? config.layout : {layout: config.layout})}
                                     {...config.layoutProps}
                                     errors={isInvalid ? errors : null}
@@ -232,8 +236,8 @@ export default (customConfig): any => WrappedComponent => {
                                     ))}
                                     {(config.list && (
                                         <FieldArray
-                                            {...this.props}
                                             {...outputProps}
+                                            {...this.props}
                                             name={getName(this.props, '')}
                                             component={WrappedComponent}
                                             formId={this.props.formId}
@@ -241,9 +245,9 @@ export default (customConfig): any => WrappedComponent => {
                                         />
                                     )) || (
                                         <WrappedComponent
-                                            {...this.props}
                                             {...outputProps}
                                             {...inputProps}
+                                            {...this.props}
                                             isInvalid={isInvalid}
                                             formId={this.props.formId}
                                             fieldId={this._fieldId}

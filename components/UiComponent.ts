@@ -2,17 +2,23 @@ import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {ReactNode} from "react";
 
+/**
+ * Ui Component
+ * Компонент для подгрузки и конфигурации UI компонентов приложения
+ */
 export default class UiComponent {
     _components: any;
     icons: {[name: string]: string | number | ReactNode};
     fields: {};
     formatters: {};
+    _portalElement: HTMLDivElement;
 
     constructor(components) {
         this.icons = {};
         this.fields = {};
         this.formatters = {};
         this._components = {};
+        this._portalElement = null;
     }
 
     addViews(components) {
@@ -89,5 +95,13 @@ export default class UiComponent {
 
     _getPropsConfig(group, path) {
         return (this[group] && this[group][path]) || null;
+    }
+
+    setPortalElement(element) {
+        this._portalElement = element;
+    }
+
+    getPortalElement() {
+        return this._portalElement;
     }
 }

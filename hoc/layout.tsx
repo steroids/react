@@ -135,12 +135,12 @@ export default (initAction): any => WrappedComponent =>
                                 delete data.meta;
                                 this.props.dispatch(
                                     [
-                                        // User auth
-                                        setUser(user),
                                         // Meta models & enums
                                         Boolean(meta) && setMeta(meta),
                                         // User auth
                                         setData(data),
+                                        // User auth
+                                        setUser(user),
                                         this.props.redirectPageId && goToRoute(this.props.redirectPageId)
                                     ].filter(Boolean)
                                 );

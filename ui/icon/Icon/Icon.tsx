@@ -58,24 +58,30 @@ export default class Icon extends React.PureComponent<IIconProps> {
     render() {
         const IconView = this.props.view || this.props.ui.getView('icon.IconView');
         const name = this.props.name;
-        let icon = name.indexOf('<svg') === 0 || name.indexOf('http') === 0
-            ? name
-            : this.props.ui.getIcon(this.props.name);
+        let icon;
 
-        if (_isObject(icon) && _isString(icon.default)) {
-            icon = icon.default;
-        }
+        if (process.env.PLATFORM === 'mobile') {
+            icon = this.props.ui.getIcon(name) || name;
+        } else {
+            icon = name.indexOf('<svg') === 0 || name.indexOf('http') === 0
+                ? name
+                : this.props.ui.getIcon(this.props.name);
 
-        // Fix width attribute in icon
-        if (_isString(icon) && icon.indexOf('<svg') === 0) {
-            const match = icon.match(/<svg([^>]+)/);
-            if (match && match[0].indexOf('width') === -1) {
-                icon = icon.replace(match[0], match[0] + ' width=16');
+            if (_isObject(icon) && _isString(icon.default)) {
+                icon = icon.default;
             }
-        }
 
-        if (!icon) {
-            throw new Error('Not found icon with name "' + name + '"');
+            // Fix width attribute in icon
+            if (_isString(icon) && icon.indexOf('<svg') === 0) {
+                const match = icon.match(/<svg([^>]+)/);
+                if (match && match[0].indexOf('width') === -1) {
+                    icon = icon.replace(match[0], match[0] + ' width=16');
+                }
+            }
+
+            if (!icon) {
+                throw new Error('Not found icon with name "' + name + '"');
+            }
         }
 
         return (

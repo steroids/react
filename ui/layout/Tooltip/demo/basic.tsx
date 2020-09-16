@@ -6,17 +6,17 @@ import {Button} from '@steroidsjs/core/ui/form';
 export default () => (
     <>
         <div>
-            <Tooltip defaultVisible position='leftBottom' content='Loooooong.....'>
-                <Button style={{height: '100px'}} className='mx-3' label='Show Tooltip Right'/>
-            </Tooltip>
-            <Tooltip position='bottomLeft' content='Looooooooooong....'>
-                <Button className='mx-3' label='Show Tooltip Top'/>
-            </Tooltip>
-            <Tooltip position='topRight' content='Looooooooooong....'>
+            <Tooltip position='left' content='Всплывающая подсказка.'>
                 <Button className='mx-3' label='Show Tooltip Left'/>
             </Tooltip>
-            <Tooltip defaultVisible position='rightTop' content='Очень большое сообщение....'>
-                <Button style={{height: '150px'}}  label='Show Tooltip Bottom'/>
+            <Tooltip defaultVisible position='top' content='Всплывающая подсказка.'>
+                <Button className='mx-3' label='Show Tooltip on Top'/>
+            </Tooltip>
+            <Tooltip defaultVisible position='bottom' content='Всплывающая подсказка.'>
+                <Button label='Show Tooltip Bottom'/>
+            </Tooltip>
+            <Tooltip position='right' content='Всплывающая подсказка.'>
+                <Button className='mx-3' label='Show Tooltip Right'/>
             </Tooltip>
         </div>
     </>

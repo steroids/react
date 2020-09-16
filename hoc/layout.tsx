@@ -13,7 +13,6 @@ import {setMeta} from '../actions/fields';
 import {goToRoute} from '../actions/router';
 import components, {IComponentsHocOutput} from './components';
 import {IConnectHocOutput} from './connect';
-import HttpComponent from '../components/HttpComponent';
 import {IRouteItem} from '../ui/nav/Router/Router';
 
 export const STATUS_LOADING = 'loading';
@@ -135,12 +134,12 @@ export default (initAction): any => WrappedComponent =>
                                 delete data.meta;
                                 this.props.dispatch(
                                     [
-                                        // User auth
-                                        setUser(user),
                                         // Meta models & enums
                                         Boolean(meta) && setMeta(meta),
                                         // User auth
                                         setData(data),
+                                        // User auth
+                                        setUser(user),
                                         this.props.redirectPageId && goToRoute(this.props.redirectPageId)
                                     ].filter(Boolean)
                                 );

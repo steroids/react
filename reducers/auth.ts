@@ -30,7 +30,6 @@ export default (state = initialState, action) => {
         case AUTH_SET_DATA:
             return {
                 ...state,
-                isInitialized: true,
                 data: _merge({}, state.data, action.data)
             };
         case AUTH_ADD_SOCIAL:

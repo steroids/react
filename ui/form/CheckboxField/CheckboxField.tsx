@@ -19,6 +19,8 @@ export interface ICheckboxFieldProps extends IFieldHocInput {
     className?: CssClassName;
 
     view?: CustomView;
+
+    [key: string]: any,
 }
 
 export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldHocOutput {

@@ -59,7 +59,7 @@ type RouterState = {
     routeId: getRouteId(state)
 }))
 @components('store')
-export default class Router extends React.PureComponent<IRouterProps & IRouterPrivateProps, RouterState> {
+export default class Router extends React.Component<IRouterProps & IRouterPrivateProps, RouterState> {
     static defaultProps = {
         autoScrollTop: true
     };
@@ -70,6 +70,11 @@ export default class Router extends React.PureComponent<IRouterProps & IRouterPr
         this.state = {
             routes: treeToList(this.props.routes),
         };
+    }
+
+    shouldComponentUpdate(nextProps) {
+        // Do not re-render component, routes tree is static
+        return false;
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {

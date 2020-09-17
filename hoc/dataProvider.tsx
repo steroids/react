@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {change} from 'redux-form';
 import _remove from 'lodash-es/remove';
 import _isString from 'lodash-es/isString';
+import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _isFunction from 'lodash-es/isFunction';
 import _includes from 'lodash-es/includes';
@@ -206,14 +207,17 @@ export default (): any => WrappedComponent =>
                                 )
                             });
                         }
-                        // Check auto fetch on change autoFetch flag or data provider config
-                        if (
-                            nextProps.autoFetch &&
-                            nextProps.dataProvider &&
-                            (!this.props.autoFetch ||
-                                this.props.dataProvider !== nextProps.dataProvider)
+
+                        let params = this.props?.dataProvider?.params || {};
+                        let nextParams = nextProps?.dataProvider?.params || {};
+
+                        // Check changes of dataProvider params
+                        // which contains update data getting from form values or props
+                        // also auto fetch on change autoFetch flag
+                        if (nextProps.autoFetch && nextProps.dataProvider
+                            && (!this.props.autoFetch || !_isEqual(params, nextParams))
                         ) {
-                            this._searchDataProvider('');
+                            this._searchDataProvider('', null, this.props.autoFetch);
                         }
                     }
 

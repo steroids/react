@@ -11,6 +11,7 @@ import {IListHocInput, IListHocOutput} from '../../../hoc/list';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IDetailColumn} from '../Detail/Detail';
 import {IControlItem} from '../../nav/Controls/Controls';
+import {IFormProps} from '../../form/Form/Form';
 
 export interface IGridColumn {
     attribute?: string,
@@ -38,7 +39,7 @@ export interface IGridProps extends IListHocInput {
     model?: any;
     label?: any;
     fields?: any;
-    searchForm?: any;
+    searchForm?: IFormProps;
     itemsIndexing?: any;
     onSort?: (arg: string) => void;
     fetch?: () => void;

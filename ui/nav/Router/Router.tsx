@@ -28,6 +28,7 @@ export interface IRouteItem {
     isVisible?: boolean,
     isNavVisible?: boolean,
     models?: string | string[],
+    enums?: string | string[],
     roles?: string[],
     fetch?: IFetchHocConfig,
     items?: IRouteItem[] | {[key: string]: IRouteItem};

@@ -8,6 +8,7 @@ export interface ICrudGeneratorProps extends ICrudProps {
     path?: string,
     label?: string,
     models?: string | string[],
+    enums?: string | string[],
     route?: IRouteItem,
 }
 
@@ -22,6 +23,7 @@ export const generateCrud = (routeId: string, props: ICrudGeneratorProps) => {
             props.model,
             props.searchModel,
         ].filter(Boolean).concat(props.models || []),
+        enums: props.enums,
         component: Crud,
         ...props.route,
         componentProps: props,

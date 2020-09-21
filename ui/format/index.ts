@@ -3,7 +3,7 @@ import DateFormatter from './DateFormatter';
 import DateTimeFormatter from './DateTimeFormatter';
 import EnumFormatter from './EnumFormatter';
 import FileSize from './FileSize';
-import Money from './Money';
+import MoneyFormatter from './MoneyFormatter';
 import PhotosFormatter from './PhotosFormatter';
 
 export {
@@ -12,7 +12,7 @@ export {
     DateTimeFormatter,
     EnumFormatter,
     FileSize,
-    Money,
+    MoneyFormatter,
     PhotosFormatter,
 };
 
@@ -22,6 +22,6 @@ export default {
     DateTimeFormatter,
     EnumFormatter,
     FileSize,
-    Money,
+    MoneyFormatter,
     PhotosFormatter,
 };

@@ -43,6 +43,8 @@ interface IIconProps extends IComponentsHocOutput {
      * @example MyCustomView
      */
     view?: React.ComponentType;
+
+    [key: string]: any,
 }
 
 export interface IIconViewProps extends IIconProps {

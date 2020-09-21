@@ -106,7 +106,7 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
             format => {
                 return (
                     date &&
-                    (date instanceof String ? date.length === format.length : true) &&
+                    date.length === format.length &&
                     moment(date, format).isValid()
                 );
             }

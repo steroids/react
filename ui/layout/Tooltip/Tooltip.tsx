@@ -3,6 +3,7 @@ import TooltipInnerPortal from './TooltipPortalInner';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
+
 /**
  * Варианты позиций всплывающей подсказки
  * @example 'top'
@@ -55,7 +56,7 @@ export interface ITooltipProps {
     /**
      * Рассчет позиции подсказки
      */
-    calculatePosition?: (tooltipDimensions: object, arrowDimensions: object) => void // type DOMRect
+    calculatePosition?: (tooltipDimensions: object, arrowDimensions: object) => void
 }
 
 export interface ITooltipViewProps extends ITooltipProps {
@@ -95,7 +96,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
     _timer: any;        // Таймер для плавной анимации показа/скрытия подсказки
     _gap: number;       // Расстояние между подсказкой и целевым элементом
     _position: string;  // Позиционирование подсказки, относительно целевого элемента
-    _parentRef: React.RefObject<any>; // Ссылка на целевой элемент
+    _childRef: React.RefObject<any>; // Ссылка на целевой элемент
 
     constructor(props) {
         super(props);
@@ -113,7 +114,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
                 top: null,
                 bottom: null,
             }
-        }
+        };
         this.onShowTooltip = this.onShowTooltip.bind(this);
         this.onHideTooltip = this.onHideTooltip.bind(this);
         this.calculatePosition = this.calculatePosition.bind(this);
@@ -121,7 +122,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
         this._timer = null;
         this._gap = 16;
         this._position = this.props.position;
-        this._parentRef = React.createRef();
+        this._childRef = React.createRef();
     }
 
     componentDidMount() {
@@ -155,169 +156,13 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
         }, 300);
     }
 
-
-    /*
-    * Функции для рассчета и оптимизиации положения Tooltip - VERTICAL
-    * */
-
-    setVerticalPositionTop = (parentTop, parentHeight, tooltipHeight): number => {
-        let top = 0;
-        // Проверка - выходит ли tooltip за верхний край страницы?
-        // Если да - меняем позицию на bottom
-        if ((parentTop - window.scrollY) <= Math.round(tooltipHeight + this._gap)) {
-            top = parentTop + parentHeight;
-            this.updatePosition('top', 'bottom', 'byType');
-        } else {
-            top = parentTop - tooltipHeight;
-        }
-        return top;
-    }
-
-    setVerticalPositionBottom = (parentTop, parentHeight, tooltipHeight): number => {
-        let top = 0;
-        /// Проверка - выходит ли tooltip за нижний край страницы?
-        // Если да - меняем позицию на top
-        if ((window.innerHeight - (parentTop + parentHeight - window.scrollY)) <= Math.round(tooltipHeight + this._gap)) {
-            top = parentTop - tooltipHeight;
-            this.updatePosition('bottom', 'top', 'byType')
-        } else {
-            top = parentTop + parentHeight;
-        }
-        return top;
-    }
-
-    optimizeArrowInVerticalLeft = (parentWidth) => {
-        this.setState({
-            arrowPosition: {left: parentWidth / 2}
-        });
-    }
-
-    optimizeArrowInVerticalRight = (parentWidth, arrowWidth) => {
-        this.setState({
-            arrowPosition: {
-                left: null,
-                right: (parentWidth / 2) - (arrowWidth / 2),
-            }
-        });
-    }
-
-    setVerticalLeftPosition = (parentLeft, parentWidth, tooltipWidth) => {
-        this.updatePosition('Right', 'Left', 'byModify');
-        // Если ширина tooltip больше ширины родителя - выставить стрелку на середину родителя
-        if (parentLeft < tooltipWidth) {
-            this.optimizeArrowInVerticalLeft(parentWidth);
-        }
-        return parentLeft;
-    }
-
-    setVerticalRightPosition = (parentRight, parentWidth, tooltipWidth, arrowHeight) => {
-        this.updatePosition('Left', 'Right', 'byModify');
-        if (parentWidth < tooltipWidth) {
-            this.optimizeArrowInVerticalRight(parentWidth, arrowHeight);
-        }
-        return document.body.clientWidth - parentRight;
-    }
-
-    /*
-   * Функции для расчета и оптимизации положения Tooltip - HORIZONTAL
-   * */
-
-    setHorizontalPositionLeft = (parentLeft, parentRight, parentWidth, tooltipWidth): number => {
-        let left = 0;
-        // Проверка - выходит ли tooltip за левый край страницы?
-        // Если да - меняем позицию на right
-        if (parentLeft <= Math.round(tooltipWidth + this._gap)) {
-            left = parentRight;
-            this.updatePosition('left', 'right', 'byType');
-        } else {
-            left = parentLeft - tooltipWidth;
-        }
-        return left;
-    }
-
-    setHorizontalPositionRight = (parentLeft, parentRight, parentWidth, tooltipWidth): number => {
-        let left = 0;
-        // Проверка - выходит ли tooltip за правый край страницы?
-        // Если да - меняем позицию на left
-        if (document.body.clientWidth - parentRight <= Math.round(tooltipWidth + this._gap)) {
-            left = parentLeft - tooltipWidth;
-            this.updatePosition('right', 'left', 'byType');
-        } else {
-            left = parentRight;
-        }
-        return left;
-    }
-
-    optimizeArrowInHorizontalTop = (parentHeight) => {
-        this.setState({
-            arrowPosition: {top: parentHeight / 2}
-        });
-    }
-
-    optimizeArrowInHorizontalBottom = (parentHeight, arrowHeight) => {
-        this.setState({
-            arrowPosition: {
-                bottom: (parentHeight / 2) - (arrowHeight / 2)
-            }
-        });
-    }
-
-    setHorizontalTopPosition = (parentTop, parentHeight, tooltipHeight) => {
-        this.updatePosition('Bottom', 'Top', 'byModify');
-        if (parentHeight < tooltipHeight) {
-            this.optimizeArrowInHorizontalTop(parentHeight);
-        }
-        return parentTop;
-    }
-
-    setHorizontalBottomPosition = (parentTop, parentHeight, tooltipHeight, arrowHeight) => {
-        this.updatePosition('Top', 'Bottom', 'byModify');
-        if (parentHeight < tooltipHeight) {
-            this.optimizeArrowInHorizontalBottom(parentHeight, arrowHeight);
-        }
-        return parentTop + parentHeight - tooltipHeight;
-    }
-
-
-    /*
-    * Функция смены позиции
-    *
-    * */
-
-    updatePosition = (substr: string, newSubstr: string, sliceType: 'byType' | 'byModify' ) => {
-        // Меняем основную позицию (top|left|right|bottom)
-        if (sliceType === 'byType') {
-            let index = this._position.indexOf(substr);
-            if (index >= 0) {
-                this._position = newSubstr + this._position.slice(substr.length);
-            } else {
-                this._position = newSubstr;
-            }
-            return;
-        }
-        // Меняем дополнительную позицию
-        if (sliceType === 'byModify') {
-            let index = this._position.indexOf(substr);
-            if (index > 0) {
-                this._position = this._position.slice(0, index) + newSubstr;
-            } else {
-                this._position = this._position + newSubstr;
-            }
-            return;
-        }
-    }
-
-    // САМАЯ ВАЖНАЯ ФУНКЦИЯ ===========================
+    // Основная функция расчета позиции
     calculatePosition(tooltipDimension, arrowDimensions) {
-        const {top, right, left, width, height} = this._parentRef.current.firstChild.length === undefined ?
-            this._parentRef.current.firstChild.getBoundingClientRect() : this._parentRef.current.getBoundingClientRect();
-
-        // let style = {...this.state.style};
         let style =  { left: null, right: null, top: null };
 
+        const {top, right, left, width, height} = this._childRef.current.getBoundingClientRect();
         let parentDimensions = {top, right, left, width, height};
         parentDimensions.top += window.scrollY;
-        this._position = this.props.position;
 
         switch (this._position) {
             case 'top': {
@@ -374,7 +219,7 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
             case 'left': {
                 style.left = this.setHorizontalPositionLeft(parentDimensions.left,
                     parentDimensions.right, parentDimensions.width, tooltipDimension.width);
-                style.top = (parentDimensions.top + (parentDimensions.height / 2)) - (tooltipDimension.height / 2)
+                style.top = (parentDimensions.top + (parentDimensions.height / 2)) - (tooltipDimension.height / 2);
                 break;
             }
 
@@ -454,16 +299,23 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
         if (!this.props.content) {
             return this.props.children;
         }
-
         const TooltipView = this.props.ui.getView('layout.TooltipView');
+        const childrenElement: any = typeof this.props.children === 'object' ? React.Children.only(this.props.children) : undefined;
         return (
-            <span
-                style={{display: 'inline-block', cursor: 'pointer'}}
-                onMouseOver={this.onShowTooltip}
-                onMouseOut={this.onHideTooltip}
-                ref={this._parentRef}
-            >
-                {this.props.children}
+            <>
+                {childrenElement && (React.cloneElement(childrenElement, {
+                    ref: this._childRef,
+                    onMouseOver: this.onShowTooltip,
+                    onMouseOut: this.onHideTooltip,
+                })) || (
+                    <span
+                        ref={this._childRef}
+                        onMouseOver={this.onShowTooltip}
+                        onMouseOut={this.onHideTooltip}
+                    >
+                        {this.props.children}
+                    </span>
+                )}
                 {this.state.isComponentExist && (
                     <TooltipInnerPortal>
                         <TooltipView
@@ -476,7 +328,158 @@ export default class Tooltip extends React.PureComponent<ITooltipProps & ICompon
                         />
                     </TooltipInnerPortal>
                 )}
-            </span>
+            </>
         );
     }
+
+    /*
+    * Функции для рассчета и оптимизиации положения Tooltip - VERTICAL
+    * */
+
+    setVerticalPositionTop = (parentTop, parentHeight, tooltipHeight): number => {
+        let top: number;
+        // Проверка - выходит ли tooltip за верхний край страницы?
+        // Если да - меняем позицию на bottom
+        if ((parentTop - window.scrollY) <= Math.round(tooltipHeight + this._gap)) {
+            top = parentTop + parentHeight;
+            this.updatePosition('top', 'bottom', 'byType');
+        } else {
+            top = parentTop - tooltipHeight;
+        }
+        return top;
+    };
+
+    setVerticalPositionBottom = (parentTop, parentHeight, tooltipHeight): number => {
+        let top: number;
+        /// Проверка - выходит ли tooltip за нижний край страницы?
+        // Если да - меняем позицию на top
+        if ((window.innerHeight - (parentTop + parentHeight - window.scrollY)) <= Math.round(tooltipHeight + this._gap)) {
+            top = parentTop - tooltipHeight;
+            this.updatePosition('bottom', 'top', 'byType')
+        } else {
+            top = parentTop + parentHeight;
+        }
+        return top;
+    };
+
+    optimizeArrowInVerticalLeft = (parentWidth) => {
+        this.setState({
+            arrowPosition: {left: parentWidth / 2}
+        });
+    };
+
+    optimizeArrowInVerticalRight = (parentWidth, arrowWidth) => {
+        this.setState({
+            arrowPosition: {
+                left: null,
+                right: (parentWidth / 2) - (arrowWidth / 2),
+            }
+        });
+    };
+
+    setVerticalLeftPosition = (parentLeft, parentWidth, tooltipWidth) => {
+        this.updatePosition('Right', 'Left', 'byModify');
+        // Если ширина tooltip больше ширины родителя - выставить стрелку на середину родителя
+        if (parentLeft < tooltipWidth) {
+            this.optimizeArrowInVerticalLeft(parentWidth);
+        }
+        return parentLeft;
+    };
+
+    setVerticalRightPosition = (parentRight, parentWidth, tooltipWidth, arrowHeight) => {
+        this.updatePosition('Left', 'Right', 'byModify');
+        if (parentWidth < tooltipWidth) {
+            this.optimizeArrowInVerticalRight(parentWidth, arrowHeight);
+        }
+        return document.body.clientWidth - parentRight;
+    };
+
+    /*
+   * Функции для расчета и оптимизации положения Tooltip - HORIZONTAL
+   * */
+
+    setHorizontalPositionLeft = (parentLeft, parentRight, parentWidth, tooltipWidth): number => {
+        let left: number;
+        // Проверка - выходит ли tooltip за левый край страницы?
+        // Если да - меняем позицию на right
+        if (parentLeft <= Math.round(tooltipWidth + this._gap)) {
+            left = parentRight;
+            this.updatePosition('left', 'right', 'byType');
+        } else {
+            left = parentLeft - tooltipWidth;
+        }
+        return left;
+    };
+
+    setHorizontalPositionRight = (parentLeft, parentRight, parentWidth, tooltipWidth): number => {
+        let left: number;
+        // Проверка - выходит ли tooltip за правый край страницы?
+        // Если да - меняем позицию на left
+        if (document.body.clientWidth - parentRight <= Math.round(tooltipWidth + this._gap)) {
+            left = parentLeft - tooltipWidth;
+            this.updatePosition('right', 'left', 'byType');
+        } else {
+            left = parentRight;
+        }
+        return left;
+    };
+
+    optimizeArrowInHorizontalTop = (parentHeight) => {
+        this.setState({
+            arrowPosition: {top: parentHeight / 2}
+        });
+    };
+
+    optimizeArrowInHorizontalBottom = (parentHeight, arrowHeight) => {
+        this.setState({
+            arrowPosition: {
+                bottom: (parentHeight / 2) - (arrowHeight / 2)
+            }
+        });
+    };
+
+    setHorizontalTopPosition = (parentTop, parentHeight, tooltipHeight) => {
+        this.updatePosition('Bottom', 'Top', 'byModify');
+        if (parentHeight < tooltipHeight) {
+            this.optimizeArrowInHorizontalTop(parentHeight);
+        }
+        return parentTop;
+    };
+
+    setHorizontalBottomPosition = (parentTop, parentHeight, tooltipHeight, arrowHeight) => {
+        this.updatePosition('Top', 'Bottom', 'byModify');
+        if (parentHeight < tooltipHeight) {
+            this.optimizeArrowInHorizontalBottom(parentHeight, arrowHeight);
+        }
+        return parentTop + parentHeight - tooltipHeight;
+    };
+
+
+    /*
+    * Функция смены позиции
+    *
+    * */
+
+    updatePosition = (substr: string, newSubstr: string, sliceType: 'byType' | 'byModify' ) => {
+        // Меняем основную позицию (top|left|right|bottom)
+        if (sliceType === 'byType') {
+            let index = this._position.indexOf(substr);
+            if (index >= 0) {
+                this._position = newSubstr + this._position.slice(substr.length);
+            } else {
+                this._position = newSubstr;
+            }
+            return;
+        }
+        // Меняем дополнительную позицию
+        if (sliceType === 'byModify') {
+            let index = this._position.indexOf(substr);
+            if (index > 0) {
+                this._position = this._position.slice(0, index) + newSubstr;
+            } else {
+                this._position = this._position + newSubstr;
+            }
+            return;
+        }
+    };
 }

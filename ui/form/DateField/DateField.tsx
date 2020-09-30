@@ -28,16 +28,19 @@ export interface IDateFieldProps extends IFieldHocInput {
      */
     placeholder?: any;
     style?: any;
+
+    /**
+     * Иконка
+     * @example calendar-day
+     */
+    icon?: boolean | string;
 }
 
-export interface IDateFieldViewProps extends IFieldHocOutput {
+export interface IDateFieldViewProps extends IFieldHocOutput, IDateFieldProps {
     name: string,
-    placeholder?: string,
     parseDate: (date: string | Date) => Date | undefined,
     formatDate: (date: string | Date) => string,
     onChange: (day: string | Date) => void,
-    pickerProps: any,
-    displayFormat: string,
     localeUtils: any,
 }
 

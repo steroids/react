@@ -5,6 +5,7 @@ import multiple from './demo/multiple';
 import placeholder from './demo/placeholder';
 import required from './demo/required';
 import showReset from './demo/show-reset';
+import noBorder from './demo/no-border';
 
 export default {
   title: 'form.DropDownField',
@@ -18,4 +19,5 @@ export {
     placeholder,
     required,
     showReset,
+    noBorder,
 }

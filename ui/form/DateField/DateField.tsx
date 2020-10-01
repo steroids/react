@@ -36,6 +36,10 @@ export interface IDateFieldProps extends IFieldHocInput {
     icon?: boolean | string;
 }
 
+export interface IDateFieldState {
+    month: Date,
+}
+
 export interface IDateFieldViewProps extends IFieldHocOutput, IDateFieldProps {
     name: string,
     parseDate: (date: string | Date) => Date | undefined,
@@ -50,9 +54,12 @@ interface IDateFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
     componentId: 'form.DateField'
 })
 @components('ui', 'locale')
-export default class DateField extends React.PureComponent<IDateFieldProps & IDateFieldPrivateProps> {
+export default class DateField extends React.PureComponent<IDateFieldProps & IDateFieldPrivateProps, IDateFieldState> {
 
     static WrappedComponent: any;
+
+    fromMonth: Date;
+    toMonth: Date;
 
     static defaultProps = {
         disabled: false,
@@ -66,10 +73,20 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
         super(props);
         this._parseDate = this._parseDate.bind(this);
         this._formatDate = this._formatDate.bind(this);
+        this._handleYearMonthChange = this._handleYearMonthChange.bind(this);
+
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth();
+
+        this.fromMonth = new Date(currentYear - 100, 0);
+        this.toMonth = new Date(currentYear + 50, 11);
+
+        this.state = {
+            month: new Date(currentYear, currentMonth),
+        }
     }
 
     render() {
-        // TODO Add months switcher http://react-day-picker.js.org/examples/elements-year-navigation
         const DateFieldView =
             this.props.view || this.props.ui.getView('form.DateFieldView');
 
@@ -93,9 +110,21 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
                 }}
                 locale={this.props.locale}
                 localeUtils={MomentLocaleUtils}
-                pickerProps={this.props.pickerProps}
+                pickerProps={{
+                    dayPickerProps: {
+                        month: this.state.month,
+                        fromMonth: this.fromMonth,
+                        toMonth: this.toMonth,
+                    },
+                    onYearMonthChange: this._handleYearMonthChange,
+                    ...this.props.pickerProps
+                }}
             />
         );
+    }
+
+    _handleYearMonthChange(month) {
+        this.setState({ month });
     }
 
     /**

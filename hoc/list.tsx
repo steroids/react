@@ -403,6 +403,7 @@ export default (): any => WrappedComponent =>
                             layoutSelected: _get(this.props.formValues, this.props._layout.attribute) || null,
                             outsideSearchFormNode: this.renderOutsideSearchForm(),
                             fetch: this._onFetch,
+                            onSort: this._onSortChange,
                         } as IListHocOutput;
 
                         const Form = require('../ui/form/Form').default;

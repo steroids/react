@@ -7,6 +7,7 @@ import sizes from './demo/sizes';
 import types from './demo/types';
 import addons from './demo/addons';
 import textAddons from './demo/textAddons';
+import mask from './demo/mask';
 
 export default {
   title: 'form.InputField',
@@ -21,5 +22,6 @@ export {
     sizes,
     types,
     addons,
-    textAddons
+    textAddons,
+    mask
 }

@@ -12,7 +12,7 @@ const types = {
 
 /**
  * Types
- * @order 5
+ * @order 11
  * @col 12
  */
 export default () => (

@@ -3,6 +3,7 @@ import {ReactNode} from 'react';
 import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import InputMask from 'react-input-mask';
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
@@ -26,7 +27,7 @@ export interface IInputFieldProps extends IFieldHocInput {
     placeholder?: string;
 
     /**
-     * Свойства для элемента <input />
+     * Свойства для элемента \<input /\>
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
@@ -68,6 +69,12 @@ export interface IInputFieldProps extends IFieldHocInput {
      */
     addonAfter?: ReactNode | string;
 
+    /**
+     * Конфигурация маски
+     * @example { mask: '+7 (999) 999-99-99' }
+     */
+    maskProps?: any;
+
     [key: string]: any;
 }
 
@@ -90,6 +97,12 @@ export interface IInputFieldViewProps extends IFieldHocOutput {
     textAfter?: number | ReactNode | string,
     addonBefore?: ReactNode | string,
     addonAfter?: ReactNode | string,
+
+    //types for react-input-mask
+    maskProps?: any;
+    onFocus?: (e: Event | React.FocusEvent) => void,
+    onBlur?: (e: Event | React.FocusEvent) => void,
+    onMouseDown?: (e: Event | React.MouseEvent) => void;
 }
 
 interface IInputFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
@@ -124,6 +137,31 @@ export default class InputField extends React.PureComponent<IInputFieldProps & I
         }
         const InputFieldView =
             this.props.view || this.props.ui.getView('form.InputFieldView');
+
+
+        // react-input-mask HOC for mask
+        if (this.props.maskProps) {
+            return (
+                <InputMask
+                    {...this.props}
+                    {...this.props.maskProps}
+                    value={this.props.input.value || ''}
+                    onChange={e => this.props.input.onChange(e.target.value)}
+                >
+                    <InputFieldView
+                        {...this.props}
+                        inputProps={{
+                            type: this.props.type,
+                            name: this.props.input.name,
+                            placeholder: this.props.placeholder,
+                            disabled: this.props.disabled,
+                            ...this.props.inputProps
+                        }}
+                    />
+                </InputMask>
+            );
+        }
+
         return (
             <InputFieldView
                 {...this.props}

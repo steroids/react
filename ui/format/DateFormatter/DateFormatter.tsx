@@ -2,7 +2,7 @@ import * as React from 'react';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
-interface IDateFormatterProps {
+export interface IDateFormatterProps {
 
     /**
      * Формат даты

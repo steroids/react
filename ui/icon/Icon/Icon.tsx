@@ -23,7 +23,7 @@ import _isString from 'lodash-es/isString';
  *
  * That get the icon used <Icon name={'icon-name'} />
  */
-interface IIconProps extends IComponentsHocOutput {
+export interface IIconProps extends IComponentsHocOutput {
     /**
      * Имя иконки (латиницей). Импорт иконок происходит на старте приложения.
      * @example create

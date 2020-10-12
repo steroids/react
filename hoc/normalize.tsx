@@ -11,7 +11,7 @@ export interface INormalizeHocInput {
 
 }
 
-export interface INormalizeHoOutput {
+export interface INormalizeHocOutput {
 
 }
 

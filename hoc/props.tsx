@@ -10,7 +10,7 @@ export interface IPropsHocInput {
 
 }
 
-export interface IPropsHoOutput {
+export interface IPropsHocOutput {
 
 }
 

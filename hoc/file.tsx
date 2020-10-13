@@ -7,6 +7,7 @@ import _difference from 'lodash-es/difference';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
 import QueueCollection from 'fileup-core/lib/models/QueueCollection';
+import DropArea from 'fileup-core/lib/form/DropArea';;
 import buildURL from 'axios/lib/helpers/buildURL';
 
 /**
@@ -43,6 +44,7 @@ export interface IFileHocInput {
     imagesProcessor?: any;
     imagesExactSize?: any;
     initialFiles?: any;
+    isDropAreaEnable?: boolean;
 }
 
 export interface IFileHocOutput {
@@ -57,6 +59,10 @@ export interface IFileHocOutput {
     files?: any[];
     onBrowse?: any;
     onRemove?: any;
+}
+
+interface IFileHocState {
+    isDragging: boolean;
 }
 
 const imagesMimeTypes = [
@@ -74,10 +80,12 @@ export const generateBackendUrl = props => {
     });
 };
 
-export default (): any => WrappedComponent =>
-    class FileHoc extends React.PureComponent<IFileHocInput> {
+export default (config?: any): any => WrappedComponent =>
+    class FileHoc extends React.PureComponent<IFileHocInput, IFileHocState> {
         _uploader: any;
         forceUpdate: any;
+        dropAreaRef: React.RefObject<any>;
+
         static WrappedComponent = WrappedComponent;
         /**
          * Proxy real name, prop types and default props for storybook
@@ -98,6 +106,8 @@ export default (): any => WrappedComponent =>
             this._onQueueRemove = this._onQueueRemove.bind(this);
             this._onBrowse = this._onBrowse.bind(this);
             this._onRemove = this._onRemove.bind(this);
+            this._onDragOver = this._onDragOver.bind(this);
+            this._onDragLeave = this._onDragLeave.bind(this);
             this._uploader = new FileUp({
                 dropArea: {},
                 backendUrl: generateBackendUrl(this.props),
@@ -107,6 +117,13 @@ export default (): any => WrappedComponent =>
                     multiple: this.props.multiple
                 }
             });
+
+            this.state = {
+                isDragging: false,
+            };
+
+            this.dropAreaRef = React.createRef();
+
             // Add uploaded files
             if (this.props.initialFiles) {
                 this.initFiles(this.props.initialFiles);
@@ -127,42 +144,40 @@ export default (): any => WrappedComponent =>
             );
         }
 
+        initDropArea() {
+            this._uploader.dropArea.container = this.dropAreaRef.current;
+            this._uploader.dropArea._enable = true;
+            this._uploader.dropArea.init();
+        }
+
         componentDidMount() {
-            this._uploader.queue.on(
-                QueueCollection.EVENT_ITEM_STATUS,
-                this._onQueueUpdate
-            );
-            this._uploader.queue.on(
-                QueueCollection.EVENT_ITEM_PROGRESS,
-                this._onQueueUpdate
-            );
-            this._uploader.queue.on(
-                QueueCollection.EVENT_ITEM_END,
-                this._onQueueItemEnd
-            );
-            this._uploader.queue.on(
-                QueueCollection.EVENT_REMOVE,
-                this._onQueueRemove
-            );
+            this._uploader.queue.on(QueueCollection.EVENT_ITEM_STATUS, this._onQueueUpdate);
+            this._uploader.queue.on(QueueCollection.EVENT_ITEM_PROGRESS, this._onQueueUpdate);
+            this._uploader.queue.on(QueueCollection.EVENT_ITEM_END, this._onQueueItemEnd);
+            this._uploader.queue.on(QueueCollection.EVENT_REMOVE, this._onQueueRemove);
+
+            if (config?.isDropAreaEnable) {
+                this.initDropArea();
+                this._uploader.dropArea.on(DropArea.EVENT_DRAG_OVER, this._onDragOver);
+                this._uploader.dropArea.on(DropArea.EVENT_DRAG_LEAVE, this._onDragLeave);
+                this._uploader.dropArea.on(DropArea.EVENT_DROP, this._onDragLeave);
+
+            }
         }
 
         componentWillUnmount() {
-            this._uploader.queue.off(
-                QueueCollection.EVENT_ITEM_STATUS,
-                this._onQueueUpdate
-            );
-            this._uploader.queue.off(
-                QueueCollection.EVENT_ITEM_PROGRESS,
-                this._onQueueUpdate
-            );
-            this._uploader.queue.off(
-                QueueCollection.EVENT_ITEM_END,
-                this._onQueueItemEnd
-            );
-            this._uploader.queue.off(
-                QueueCollection.EVENT_REMOVE,
-                this._onQueueRemove
-            );
+            this._uploader.queue.off(QueueCollection.EVENT_ITEM_STATUS, this._onQueueUpdate);
+            this._uploader.queue.off(QueueCollection.EVENT_ITEM_PROGRESS, this._onQueueUpdate);
+            this._uploader.queue.off(QueueCollection.EVENT_ITEM_END, this._onQueueItemEnd);
+            this._uploader.queue.off(QueueCollection.EVENT_REMOVE, this._onQueueRemove);
+
+            if (config?.isDropAreaEnable) {
+                this._uploader.dropArea.off(DropArea.EVENT_DRAG_OVER, this._onDragOver);
+                this._uploader.dropArea.off(DropArea.EVENT_DRAG_LEAVE, this._onDragLeave);
+                this._uploader.dropArea.off(DropArea.EVENT_DROP, this._onDragLeave);
+
+            }
+
         }
 
         UNSAFE_componentWillReceiveProps(nextProps) {
@@ -217,9 +232,20 @@ export default (): any => WrappedComponent =>
                     files={[].concat(this._uploader.queue.getFiles())}
                     onBrowse={this._onBrowse}
                     onRemove={this._onRemove}
+                    dropAreaRef={this.dropAreaRef}
+                    isDragging={this.state.isDragging}
                 />
             );
         }
+
+        _onDragOver() {
+            this.setState({ isDragging: true });
+        }
+
+        _onDragLeave() {
+            this.setState({ isDragging: false });
+        }
+
 
         /**
          * Triggered by queue when file status or progress updated

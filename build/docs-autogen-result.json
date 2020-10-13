@@ -4898,6 +4898,258 @@
             ],
             "properties": []
         },
+        "IFileDragFieldItemViewProps": {
+            "name": "IFileDragFieldItemViewProps",
+            "moduleName": "ui/form/FileDragField/FileDragField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": {
+                "className": "",
+                "disabled": false,
+                "required": false,
+                "showRemove": true,
+                "buttonProps": {
+                    "color": "secondary",
+                    "outline": true
+                }
+            },
+            "extends": [
+                "IFileDragFieldItemProps"
+            ],
+            "properties": [
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "error",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "fileId",
+                    "decorators": [],
+                    "description": "ID файла",
+                    "required": false,
+                    "type": "number | string",
+                    "example": "34"
+                },
+                {
+                    "name": "image",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{height: string, url: string, width: string}",
+                    "example": null
+                },
+                {
+                    "name": "imagesOnly",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "onRemove",
+                    "decorators": [],
+                    "description": "Обработчик события удаления файла",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "progress",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{bytesUploaded: number, percent: number}",
+                    "example": null
+                },
+                {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Исходное название файла",
+                    "required": false,
+                    "type": "string",
+                    "example": "original-name"
+                },
+                {
+                    "name": "uid",
+                    "decorators": [],
+                    "description": "Уникальный текстовый идентификатор",
+                    "required": false,
+                    "type": "string",
+                    "example": "e65f5867-0083-48a7-af43-1121ed9e6280"
+                }
+            ]
+        },
+        "IFileDragFieldProps": {
+            "name": "IFileDragFieldProps",
+            "moduleName": "ui/form/FileDragField/FileDragField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": {
+                "className": "",
+                "disabled": false,
+                "required": false,
+                "showRemove": true,
+                "buttonProps": {
+                    "color": "secondary",
+                    "outline": true
+                }
+            },
+            "extends": [
+                "IFieldHocInput",
+                "IFileHocInput"
+            ],
+            "properties": [
+                {
+                    "name": "buttonComponent",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": null
+                },
+                {
+                    "name": "itemProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "itemView",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": null
+                },
+                {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "Показать значок удаление файла",
+                    "required": true,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
+                    "example": null
+                }
+            ]
+        },
+        "IFileDragFieldViewProps": {
+            "name": "IFileDragFieldViewProps",
+            "moduleName": "ui/form/FileDragField/FileDragField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": {
+                "className": "",
+                "disabled": false,
+                "required": false,
+                "showRemove": true,
+                "buttonProps": {
+                    "color": "secondary",
+                    "outline": true
+                }
+            },
+            "extends": [
+                "IFieldHocOutput",
+                "IFileHocOutput"
+            ],
+            "properties": [
+                {
+                    "name": "buttonComponent",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode | any",
+                    "example": null
+                },
+                {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{disabled: boolean, label: string | any, onClick: {}, size: boolean}",
+                    "example": null
+                },
+                {
+                    "name": "imagesOnly",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "itemProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "itemView",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "React.ReactNode | any",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IFileDragFieldItemProps[]",
+                    "example": null
+                }
+            ]
+        },
         "IFileFieldItemViewProps": {
             "name": "IFileFieldItemViewProps",
             "moduleName": "ui/form/FileField/FileField",
@@ -15814,6 +16066,310 @@
             "description": "",
             "tags": {},
             "properties": [],
+            "methods": [
+                {
+                    "name": "UNSAFE_componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "UNSAFE_componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "UNSAFE_componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nThis method will not stop working in React 17.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidCatch",
+                    "decorators": [],
+                    "description": "Catches exceptions generated in descendant components. Unhandled exceptions will cause\nthe entire component tree to unmount.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "error",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Error",
+                            "example": null
+                        },
+                        {
+                            "name": "errorInfo",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ErrorInfo",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentDidMount",
+                    "decorators": [],
+                    "description": "Called immediately after a component is mounted. Setting state here will trigger re-rendering.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentDidUpdate",
+                    "decorators": [],
+                    "description": "Called immediately after updating occurs. Not called for the initial render.\n\nThe snapshot is only present if getSnapshotBeforeUpdate is present and returns non-null.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "snapshot",
+                            "decorators": [],
+                            "description": "",
+                            "required": false,
+                            "type": "SS",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillMount",
+                    "decorators": [],
+                    "description": "Called immediately before mounting occurs, and before `Component#render`.\nAvoid introducing any side-effects or subscriptions in this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillReceiveProps",
+                    "decorators": [],
+                    "description": "Called when the component may be receiving new props.\nReact may call this even if props have not changed, so be sure to compare new and existing\nprops if you only want to handle changes.\n\nCalling `Component#setState` generally does not trigger this method.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "componentWillUnmount",
+                    "decorators": [],
+                    "description": "Called immediately before a component is destroyed. Perform any necessary cleanup in this method, such as\ncancelled network requests, or cleaning up any DOM elements created in `componentDidMount`.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "componentWillUpdate",
+                    "decorators": [],
+                    "description": "Called immediately before rendering when new props or state is received. Not called for the initial render.\n\nNote: You cannot call `Component#setState` here.\n\nNote: the presence of getSnapshotBeforeUpdate or getDerivedStateFromProps\nprevents this from being invoked.\n",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getSnapshotBeforeUpdate",
+                    "decorators": [],
+                    "description": "Runs before React applies the result of `render` to the document, and\nreturns an object to be given to componentDidUpdate. Useful for saving\nthings such as scroll position before `render` causes changes to it.\n\nNote: the presence of getSnapshotBeforeUpdate prevents any of the deprecated\nlifecycle events from running.\n",
+                    "required": true,
+                    "type": "SS | null",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "prevState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "render",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Element",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "shouldComponentUpdate",
+                    "decorators": [],
+                    "description": "Called to determine whether the change in props and state should trigger a re-render.\n\n`Component` always returns true.\n`PureComponent` implements a shallow comparison on props and state and returns true if any\nprops or states have changed.\n\nIf false is returned, `Component#render`, `componentWillUpdate`\nand `componentDidUpdate` will not be called.\n",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextState",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Readonly",
+                            "example": null
+                        },
+                        {
+                            "name": "nextContext",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ui/form/FileDragField/FileDragField": {
+            "name": "FileDragField",
+            "moduleName": "ui/form/FileDragField/FileDragField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "defaultProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{className: string, disabled: boolean, required: boolean, showRemove: boolean, buttonProps: object}",
+                    "example": null
+                }
+            ],
             "methods": [
                 {
                     "name": "UNSAFE_componentWillMount",

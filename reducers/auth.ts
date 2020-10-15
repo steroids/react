@@ -37,7 +37,10 @@ export default (state = initialState, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    socials: [...state.user.socials, action.social]
+                    socials: [
+                        ...(state.user?.socials || []),
+                        ...(action.social || [])
+                    ]
                 }
             };
     }

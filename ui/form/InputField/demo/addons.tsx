@@ -4,8 +4,8 @@ import InputField from '../InputField';
 
 /**
  * Addons
- * @order 6
- * @col 3
+ * @order 8
+ * @col 6
  */
 export default () => (
     <>

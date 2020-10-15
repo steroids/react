@@ -15,7 +15,7 @@ export interface ITimeFieldProps extends IFieldHocInput {
     placeholder?: string;
 
     /**
-     * Свойства для элемента <input />
+     * Свойства для элемента \<input /\>
      * @example {onKeyDown: ...}
      */
     inputProps?: any;

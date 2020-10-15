@@ -87,10 +87,10 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                         disabled={this.props.disabled}
                         displayFormat={this.props.displayDateFormat}
                         valueFormat={this.props.valueDateFormat}
-                        onChange={value => this._onChange({date: value})}
                         input={{
                             name: '',
                             value: this.state.date,
+                            onChange: value => this._onChange({date: value})
                         }}
                         layout={false}
                         {...this.props.dateProps}
@@ -102,10 +102,10 @@ export default class DateTimeField extends React.PureComponent<IDateTimeFieldPro
                         required={this.props.required}
                         disabled={this.props.disabled}
                         timeFormat={this.props.timeFormat}
-                        onChange={value => this._onChange({time: value})}
                         input={{
                             name: '',
                             value: this.state.time,
+                            onChange: value => this._onChange({time: value})
                         }}
                         layout={false}
                         {...this.props.timeProps}

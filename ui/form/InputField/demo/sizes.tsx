@@ -10,8 +10,8 @@ const sizes = {
 
 /**
  * Sizes
- * @order 6
- * @col 8
+ * @order 10
+ * @col 12
  */
 export default () => (
     <div className={'row'}>

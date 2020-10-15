@@ -2088,16 +2088,6 @@
                 }
             ]
         },
-        "INormalizeHoOutput": {
-            "name": "INormalizeHoOutput",
-            "moduleName": "hoc/normalize",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": []
-        },
         "INormalizeHocConfig": {
             "name": "INormalizeHocConfig",
             "moduleName": "hoc/normalize",
@@ -2143,9 +2133,9 @@
             "extends": [],
             "properties": []
         },
-        "IPropsHoOutput": {
-            "name": "IPropsHoOutput",
-            "moduleName": "hoc/props",
+        "INormalizeHocOutput": {
+            "name": "INormalizeHocOutput",
+            "moduleName": "hoc/normalize",
             "title": "",
             "description": "",
             "tags": {},
@@ -2163,9 +2153,9 @@
             "extends": [],
             "properties": []
         },
-        "IScreenHoOutput": {
-            "name": "IScreenHoOutput",
-            "moduleName": "hoc/screen",
+        "IPropsHocOutput": {
+            "name": "IPropsHocOutput",
+            "moduleName": "hoc/props",
             "title": "",
             "description": "",
             "tags": {},
@@ -2178,6 +2168,16 @@
             "moduleName": "hoc/screen",
             "title": "Screen HOC",
             "description": "Компонент подписывается на изменения размера экрана и обновляет ее в Redux Store.",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": []
+        },
+        "IScreenHocOutput": {
+            "name": "IScreenHocOutput",
+            "moduleName": "hoc/screen",
+            "title": "",
+            "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -3101,6 +3101,14 @@
             ],
             "properties": [
                 {
+                    "name": "enums",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | string[]",
+                    "example": null
+                },
+                {
                     "name": "label",
                     "decorators": [],
                     "description": "",
@@ -3753,7 +3761,7 @@
                 {
                     "name": "inputProps",
                     "decorators": [],
-                    "description": "Свойства для элемента <input />",
+                    "description": "Свойства для элемента \\<input /\\>",
                     "required": false,
                     "type": "any",
                     "example": "{onKeyDown: ...}"
@@ -3829,7 +3837,7 @@
                 {
                     "name": "inputProps",
                     "decorators": [],
-                    "description": "Свойства для элемента <input />",
+                    "description": "Свойства для элемента \\<input /\\>",
                     "required": false,
                     "type": "any",
                     "example": "{onKeyDown: ...}"
@@ -3910,6 +3918,14 @@
                     "example": "DD.MM.YYYY"
                 },
                 {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "boolean | string",
+                    "example": "calendar-day"
+                },
+                {
                     "name": "pickerProps",
                     "decorators": [],
                     "description": "",
@@ -3951,6 +3967,25 @@
                 }
             ]
         },
+        "IDateFieldState": {
+            "name": "IDateFieldState",
+            "moduleName": "ui/form/DateField/DateField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "month",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Date",
+                    "example": null
+                }
+            ]
+        },
         "IDateFieldViewProps": {
             "name": "IDateFieldViewProps",
             "moduleName": "ui/form/DateField/DateField",
@@ -3959,16 +3994,25 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IFieldHocOutput"
+                "IFieldHocOutput",
+                "IDateFieldProps"
             ],
             "properties": [
                 {
-                    "name": "displayFormat",
+                    "name": "className",
                     "decorators": [],
                     "description": "",
-                    "required": true,
-                    "type": "string",
+                    "required": false,
+                    "type": "CssClassName",
                     "example": null
+                },
+                {
+                    "name": "displayFormat",
+                    "decorators": [],
+                    "description": "Формат даты показываемый пользователю",
+                    "required": false,
+                    "type": "string",
+                    "example": "DD.MM.YYYY"
                 },
                 {
                     "name": "formatDate",
@@ -3977,6 +4021,14 @@
                     "required": true,
                     "type": "{}",
                     "example": null
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "boolean | string",
+                    "example": "calendar-day"
                 },
                 {
                     "name": "localeUtils",
@@ -4014,16 +4066,40 @@
                     "name": "pickerProps",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null
                 },
                 {
                     "name": "placeholder",
                     "decorators": [],
+                    "description": "Placeholder подсказка",
+                    "required": false,
+                    "type": "any",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
                     "description": "",
                     "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "valueFormat",
+                    "decorators": [],
+                    "description": "Формат даты отправляемый на сервер",
+                    "required": false,
                     "type": "string",
+                    "example": "YYYY-MM-DD"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
                     "example": null
                 }
             ]
@@ -4171,6 +4247,14 @@
                     "example": null
                 },
                 {
+                    "name": "noBorder",
+                    "decorators": [],
+                    "description": "Включает стиль без 'border'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "searchPlaceholder",
                     "decorators": [],
                     "description": "Placeholder подсказка",
@@ -4253,6 +4337,14 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "noBorder",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
                     "type": "boolean",
                     "example": null
                 },
@@ -5500,10 +5592,18 @@
                 {
                     "name": "inputProps",
                     "decorators": [],
-                    "description": "Свойства для элемента <input />",
+                    "description": "Свойства для элемента \\<input /\\>",
                     "required": false,
                     "type": "any",
                     "example": "{onKeyDown: ...}"
+                },
+                {
+                    "name": "maskProps",
+                    "decorators": [],
+                    "description": "Конфигурация маски",
+                    "required": false,
+                    "type": "any",
+                    "example": "{ mask: '+7 (999) 999-99-99' }"
                 },
                 {
                     "name": "placeholder",
@@ -5607,6 +5707,38 @@
                     "example": null
                 },
                 {
+                    "name": "maskProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onMouseDown",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "placeholder",
                     "decorators": [],
                     "description": "",
@@ -5702,7 +5834,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "{disabled: boolean, max: string | number, min: string | number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: string | number}",
+                    "type": "{disabled: boolean, max: string | number, min: string | number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: number}",
                     "example": null
                 }
             ]
@@ -6306,7 +6438,7 @@
                 {
                     "name": "inputProps",
                     "decorators": [],
-                    "description": "Свойства для элемента <input />",
+                    "description": "Свойства для элемента \\<input /\\>",
                     "required": false,
                     "type": "any",
                     "example": "{onKeyDown: ...}"
@@ -6472,6 +6604,41 @@
                     "description": "",
                     "required": false,
                     "type": "string | number | boolean",
+                    "example": null
+                }
+            ]
+        },
+        "IDateFormatterProps": {
+            "name": "IDateFormatterProps",
+            "moduleName": "ui/format/DateFormatter/DateFormatter",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "format",
+                    "decorators": [],
+                    "description": "Формат даты",
+                    "required": false,
+                    "type": "string",
+                    "example": "LL"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Дата",
+                    "required": false,
+                    "type": "any",
+                    "example": "2023-09-11"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CustomView",
                     "example": null
                 }
             ]
@@ -6658,7 +6825,7 @@
         },
         "IMoneyFormatterProps": {
             "name": "IMoneyFormatterProps",
-            "moduleName": "ui/format/Money/Money",
+            "moduleName": "ui/format/MoneyFormatter/MoneyFormatter",
             "title": "",
             "description": "",
             "tags": {},
@@ -6672,6 +6839,14 @@
                     "required": false,
                     "type": "string",
                     "example": "rub"
+                },
+                {
+                    "name": "precision",
+                    "decorators": [],
+                    "description": "Разрядность (при передаче int в значении)",
+                    "required": false,
+                    "type": "number",
+                    "example": "2"
                 },
                 {
                     "name": "scale",
@@ -6784,6 +6959,51 @@
                     "required": false,
                     "type": "CustomView",
                     "example": null
+                }
+            ]
+        },
+        "IIconProps": {
+            "name": "IIconProps",
+            "moduleName": "ui/icon/Icon/Icon",
+            "title": "Install the latest free version of Font Awesome via yarn:",
+            "description": "```\n$ yarn add @fortawesome/fontawesome-free\n```\n\nin your root style file (e.g. index.scss) import fontawesome styles\n```\n @import \"~@fortawesome/fontawesome-free/scss/fontawesome\";\n```\n\nand in hoc @application add the following code\n```\n  ui.addIcons(getFontAwesomeIcons())\n```\n\nThat get the icon used <Icon name={'icon-name'} />\n",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IComponentsHocOutput"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CssClassName",
+                    "example": null
+                },
+                {
+                    "name": "name",
+                    "decorators": [],
+                    "description": "Имя иконки (латиницей). Импорт иконок происходит на старте приложения.",
+                    "required": false,
+                    "type": "string",
+                    "example": "create"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок, отображаемый при наведении (через нативное поле title)",
+                    "required": false,
+                    "type": "string",
+                    "example": "Добавить запись"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "required": false,
+                    "type": "React.ComponentType",
+                    "example": "MyCustomView"
                 }
             ]
         },
@@ -8050,7 +8270,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IFormProps",
                     "example": null
                 },
                 {
@@ -8168,7 +8388,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IFormProps",
                     "example": null
                 },
                 {
@@ -9602,6 +9822,14 @@
                     "example": null
                 },
                 {
+                    "name": "enums",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | string[]",
+                    "example": null
+                },
+                {
                     "name": "exact",
                     "decorators": [],
                     "description": "",
@@ -10206,6 +10434,12 @@
                 }
             },
             "InputField": {
+                "addons": {
+                    "order": "8",
+                    "col": "6",
+                    "title": null,
+                    "description": "Addons"
+                },
                 "basic": {
                     "order": "1",
                     "col": "3",
@@ -10219,10 +10453,16 @@
                     "description": "Disabled"
                 },
                 "errors": {
-                    "order": "7",
-                    "col": "4",
+                    "order": "5",
+                    "col": "6",
                     "title": null,
                     "description": "Errors"
+                },
+                "mask": {
+                    "order": "7",
+                    "col": "3",
+                    "title": null,
+                    "description": "Mask"
                 },
                 "placeholder": {
                     "order": "4",
@@ -10235,6 +10475,12 @@
                     "col": "3",
                     "title": null,
                     "description": "Required"
+                },
+                "textAddons": {
+                    "order": "9",
+                    "col": "6",
+                    "title": null,
+                    "description": "TextAddons"
                 }
             },
             "NumberField": {
@@ -13482,6 +13728,22 @@
             "tags": {},
             "properties": [
                 {
+                    "name": "fromMonth",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "toMonth",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Date",
+                    "example": null
+                },
+                {
                     "name": "WrappedComponent",
                     "decorators": [],
                     "description": "",
@@ -13570,6 +13832,24 @@
                     "parameters": [
                         {
                             "name": "date",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "_handleYearMonthChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "month",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -22618,9 +22898,9 @@
                 }
             ]
         },
-        "ui/format/Money/Money": {
-            "name": "Money",
-            "moduleName": "ui/format/Money/Money",
+        "ui/format/MoneyFormatter/MoneyFormatter": {
+            "name": "MoneyFormatter",
+            "moduleName": "ui/format/MoneyFormatter/MoneyFormatter",
             "title": "",
             "description": "",
             "tags": {},
@@ -22988,40 +23268,6 @@
                         },
                         {
                             "name": "nextContext",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "any",
-                            "example": null
-                        }
-                    ]
-                },
-                {
-                    "name": "getAsString",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "string",
-                    "example": null,
-                    "parameters": [
-                        {
-                            "name": "amount",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "any",
-                            "example": null
-                        },
-                        {
-                            "name": "currency",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "any",
-                            "example": null
-                        },
-                        {
-                            "name": "scale",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -25532,19 +25778,19 @@
             "tags": {},
             "properties": [
                 {
+                    "name": "_childRef",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "RefObject",
+                    "example": null
+                },
+                {
                     "name": "_gap",
                     "decorators": [],
                     "description": "",
                     "required": true,
                     "type": "number",
-                    "example": null
-                },
-                {
-                    "name": "_parentRef",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "RefObject",
                     "example": null
                 },
                 {
@@ -31833,7 +32079,48 @@
             "title": "",
             "description": "",
             "tags": {},
-            "properties": [],
+            "properties": [
+                {
+                    "name": "context",
+                    "decorators": [],
+                    "description": "If using the new style context, re-declare this in your class to be the\n`React.ContextType` of your `static contextType`.\nShould be used with type annotation or static contextType.\n\n```ts\nstatic contextType = MyContext\n// For TS pre-3.7:\ncontext!: React.ContextType<typeof MyContext>\n// For TS 3.7 and above:\ndeclare context: React.ContextType<typeof MyContext>\n```\n",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "props",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Readonly & Readonly",
+                    "example": null
+                },
+                {
+                    "name": "refs",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "state",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Readonly",
+                    "example": null
+                },
+                {
+                    "name": "contextType",
+                    "decorators": [],
+                    "description": "If set, `this.context` will be set at runtime to the current value of the given Context.\n\nUsage:\n\n```ts\ntype MyContext = number\nconst Ctx = React.createContext<MyContext>(0)\n\nclass Foo extends React.Component {\n  static contextType = Ctx\n  context!: React.ContextType<typeof Ctx>\n  render () {\n    return <>My context's value: {this.context}</>;\n  }\n}\n```\n",
+                    "required": false,
+                    "type": "Context",
+                    "example": null
+                }
+            ],
             "methods": [
                 {
                     "name": "UNSAFE_componentWillMount",
@@ -32088,6 +32375,24 @@
                     ]
                 },
                 {
+                    "name": "forceUpdate",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "callback",
+                            "decorators": [],
+                            "description": "",
+                            "required": false,
+                            "type": "{}",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "getSnapshotBeforeUpdate",
                     "decorators": [],
                     "description": "Runs before React applies the result of `render` to the document, and\nreturns an object to be given to componentDidUpdate. Useful for saving\nthings such as scroll position before `render` causes changes to it.\n\nNote: the presence of getSnapshotBeforeUpdate prevents any of the deprecated\nlifecycle events from running.\n",
@@ -32132,31 +32437,41 @@
                     "parameters": []
                 },
                 {
+                    "name": "setState",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "state",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{} | S | Pick",
+                            "example": null
+                        },
+                        {
+                            "name": "callback",
+                            "decorators": [],
+                            "description": "",
+                            "required": false,
+                            "type": "{}",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "shouldComponentUpdate",
                     "decorators": [],
-                    "description": "Called to determine whether the change in props and state should trigger a re-render.\n\n`Component` always returns true.\n`PureComponent` implements a shallow comparison on props and state and returns true if any\nprops or states have changed.\n\nIf false is returned, `Component#render`, `componentWillUpdate`\nand `componentDidUpdate` will not be called.\n",
+                    "description": "",
                     "required": true,
                     "type": "boolean",
                     "example": null,
                     "parameters": [
                         {
                             "name": "nextProps",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "Readonly",
-                            "example": null
-                        },
-                        {
-                            "name": "nextState",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "Readonly",
-                            "example": null
-                        },
-                        {
-                            "name": "nextContext",
                             "decorators": [],
                             "description": "",
                             "required": true,

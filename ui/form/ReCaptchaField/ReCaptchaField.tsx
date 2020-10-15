@@ -29,7 +29,8 @@ export default class ReCaptchaField extends React.PureComponent<IReCaptchaFieldP
                 {...props}
                 reCaptchaProps={{
                     sitekey: this.props.resource.googleCaptchaSiteKey,
-                    onChange: value => input.onChange(value)
+                    action: this.props.action,
+                    verifyCallback: value => input.onChange(value)
                 }}
             />
         );

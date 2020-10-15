@@ -4,8 +4,8 @@ import InputField from '../InputField';
 
 /**
  * Errors
- * @order 7
- * @col 4
+ * @order 5
+ * @col 6
  */
 export default () => (
     <>

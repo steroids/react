@@ -4,8 +4,8 @@ import InputField from '../InputField';
 
 /**
  * TextAddons
- * @order 7
- * @col 3
+ * @order 9
+ * @col 6
  */
 export default () => (
     <>

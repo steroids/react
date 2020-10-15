@@ -7,7 +7,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 export interface ICheckboxListFieldProps extends IFieldHocInput, IDataProviderHocInput {
 
     /**
-     * Свойства для элемента <input />
+     * Свойства для элемента \<input /\>
      * @example {onKeyDown: ...}
      */
     inputProps?: any;

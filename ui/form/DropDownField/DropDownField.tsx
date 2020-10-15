@@ -23,6 +23,12 @@ export interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInp
      * @example true
      */
     showReset?: boolean;
+
+    /**
+     * Включает стиль без 'border'
+     * @example true
+     */
+    noBorder?: boolean;
 }
 
 export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
@@ -61,6 +67,7 @@ export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderH
     isOpened?: boolean,
     isLoading?: boolean,
     showReset?: boolean,
+    noBorder?: boolean,
     autoComplete?: any,
     searchAutoFocus?: any,
     onOpen: () => void,

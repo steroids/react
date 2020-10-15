@@ -12,7 +12,7 @@ export interface IScreenHocInput {
 
 }
 
-export interface IScreenHoOutput {
+export interface IScreenHocOutput {
 
 }
 

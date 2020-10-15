@@ -36,7 +36,9 @@ export default (...names): any => WrappedComponent =>
         static WrappedComponent = WrappedComponent;
 
         render() {
-            if (this.props.components) {
+            if (typeof window !== 'undefined' && window['SteroidsComponents']) {
+                return this.renderInternal(window['SteroidsComponents']);
+            } else if (this.props.components) {
                 return this.renderInternal(this.props.components);
             } else {
                 return (

@@ -30,6 +30,7 @@ export interface IApplicationHocConfig {
         } | any,
     }
     onInit?: (...args: any) => any,
+    useGlobal?: boolean,
 }
 
 export const ComponentsContext = React.createContext({} as IComponentsHocOutput);
@@ -75,6 +76,10 @@ export default (config: IApplicationHocConfig): any => WrappedComponent =>
                 const {className, ...componentConfig} = componentsConfig[name];
                 this._components[name] = new className(this._components, componentConfig);
             });
+
+            if (config.useGlobal !== false && typeof window !== 'undefined') {
+                window['SteroidsComponents'] = this._components;
+            }
 
             // Init callback
             if (config.onInit) {

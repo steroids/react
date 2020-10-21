@@ -104,7 +104,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     componentDidUpdate(prevProps) {
         if (
-            (!prevProps._items && this.props._items) ||
+            !_isEqual(prevProps._items, this.props._items) ||
             prevProps.selectedItemId !== this.props.selectedItemId
         ) {
             this.setState(this._initState());
@@ -184,6 +184,11 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
             if (this.props.autoOpenLevels >= level) {
                 opened[uniqId] = true;
             }
+
+            if (this.props.selectedItemId === item.id) {
+                opened[uniqId] = true;
+            }
+
             if (this.props.selectedItemId) {
                 const finedItem = this._findChildById(
                     item[this.props.itemsKey],

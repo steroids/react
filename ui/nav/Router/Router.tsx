@@ -32,6 +32,7 @@ export interface IRouteItem {
     roles?: string[],
     fetch?: IFetchHocConfig,
     items?: IRouteItem[] | {[key: string]: IRouteItem};
+    [key: string]: any,
 }
 
 export interface IRouterProps extends INavigationHocInputProps {

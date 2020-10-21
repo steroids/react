@@ -4,6 +4,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 
 export interface IReCaptchaFieldProps extends IFieldHocInput {
+    action?: any;
     view?: CustomView;
 }
 

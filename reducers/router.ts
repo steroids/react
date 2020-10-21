@@ -32,6 +32,7 @@ export interface IRoute {
     componentProps?: object,
     roles?: string[],
     items?: IRoute[],
+    [key: string]: any,
 }
 
 interface IRouterInitialState {

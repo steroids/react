@@ -328,6 +328,7 @@ export default (): any => WrappedComponent =>
 
                     componentDidUpdate(prevProps, prevState, snapshot) {
                         const toDispatch = [];
+                        let isSentFetch = false;
 
                         if (!_isEqual(prevProps.formValues, this.props.formValues)) {
                             const formValues = {...this.props.formValues};
@@ -342,7 +343,8 @@ export default (): any => WrappedComponent =>
                             }
 
                             // Send request
-                            this.props.dispatch(listLazyFetch(this.props.listId));
+                            toDispatch.push(listLazyFetch(this.props.listId));
+                            isSentFetch = true;
 
                             // Sync with address bar
                             if (this.props._addressBar.enable && this.props.searchModel) {
@@ -367,6 +369,11 @@ export default (): any => WrappedComponent =>
                         // Check change items
                         if (prevProps.items !== this.props.items) {
                             toDispatch.push(listInit(this.props.listId, this.props));
+
+                            // Send request
+                            if (!isSentFetch) {
+                                toDispatch.push(listLazyFetch(this.props.listId));
+                            }
                         }
 
                         this.props.dispatch(toDispatch);

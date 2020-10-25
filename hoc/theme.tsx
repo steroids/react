@@ -31,7 +31,7 @@ export const defaultTheme = {
 export const ThemeContext = React.createContext(defaultTheme as IThemeContext);
 
 export default (config: IThemeContext = {}): any => WrappedComponent =>
-    class FormHoc extends React.PureComponent<IThemeHocInput> {
+    class ThemeHoc extends React.PureComponent<IThemeHocInput> {
         static WrappedComponent = WrappedComponent;
 
         render() {

@@ -4,7 +4,6 @@ import {HashRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
-import _isBoolean from 'lodash-es/isBoolean';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {components, fetch} from '../../../hoc';

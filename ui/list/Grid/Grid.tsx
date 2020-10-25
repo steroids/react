@@ -59,7 +59,7 @@ interface IGridPrivateProps extends IListHocOutput, IComponentsHocOutput {
 
 @list()
 @components('ui')
-export default class Grid extends React.PureComponent<IGridProps & IGridPrivateProps> {
+export default class Grid extends React.Component<IGridProps & IGridPrivateProps> {
     constructor(props) {
         super(props);
         this.renderValue = this.renderValue.bind(this);

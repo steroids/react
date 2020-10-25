@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import {ComponentsContext} from './application';
+import Hoc from '../base/Hoc';
+import multi from './multi';
 
 export interface IComponents {
     clientStorage?: any,
@@ -30,38 +32,54 @@ interface IComponentHocPrivateProps {
     components?: IComponents,
 }
 
-export default (...names): any => WrappedComponent =>
-    class ComponentHoc extends React.PureComponent<IComponentsHocInput & IComponentHocPrivateProps> {
+const exportComponents = (components, names) => {
+    const props = {};
+    names.forEach(items => {
+        [].concat(items).forEach(name => {
+            props[name] = window['SteroidsComponents'][name];
+        });
+    });
+    return props;
+}
 
-        static WrappedComponent = WrappedComponent;
+export default (...names): any => WrappedComponent => {
+    if (typeof window !== 'undefined' && window['SteroidsComponents']) {
+        return multi()(
+            class ComponentsGlobalHoc extends Hoc<IComponentsHocInput & IComponentHocPrivateProps> {
 
-        render() {
-            if (typeof window !== 'undefined' && window['SteroidsComponents']) {
-                return this.renderInternal(window['SteroidsComponents']);
-            } else if (this.props.components) {
-                return this.renderInternal(this.props.components);
-            } else {
-                return (
-                    <ComponentsContext.Consumer>
-                        {({components}) => this.renderInternal(components)}
-                    </ComponentsContext.Consumer>
-                );
+                static WrappedComponent = WrappedComponent;
+
+                getProps() {
+                    return {
+                        ...this.props,
+                        ...exportComponents(window['SteroidsComponents'], names),
+                        components: window['SteroidsComponents'],
+                    };
+                }
             }
-        }
+        )
+    } else {
+        return multi()(
+            class ComponentsContextHoc extends React.PureComponent<IComponentsHocInput & IComponentHocPrivateProps> {
 
-        renderInternal(components) {
-            const props = {};
-            names.forEach(items => {
-                [].concat(items).forEach(name => {
-                    props[name] = components[name];
-                });
-            });
-            return (
-                <WrappedComponent
-                    {...this.props}
-                    {...props}
-                    components={components}
-                />
-            );
-        }
+                static WrappedComponent = WrappedComponent;
+
+                render() {
+                    return (
+                        <ComponentsContext.Consumer>
+                            {({components}) => (
+                                <WrappedComponent
+                                    {...this.props}
+                                    {...exportComponents(components, names)}
+                                    components={components}
+                                />
+                            )}
+                        </ComponentsContext.Consumer>
+                    );
+                }
+            }
+        )
     }
+
+}
+

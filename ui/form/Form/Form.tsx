@@ -16,7 +16,6 @@ import Field from '../Field';
 import Button from '../Button';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IFieldProps} from '../Field/Field';
-import {theme} from '../../../hoc';
 import {IThemeHocInput, IThemeHocOutput} from '../../../hoc/theme';
 
 export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
@@ -142,7 +141,6 @@ const filterValues = (values = {}) => {
 })
 @formSubmit()
 @reduxForm()
-@theme()
 @components('ui', 'store', 'clientStorage')
 export default class Form extends React.PureComponent<IFormProps & IFormPrivateProps> {
 

@@ -6,7 +6,6 @@ import _keys from 'lodash-es/keys';
 import {components, connect, normalize} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
-import {IThemeHocOutput} from '../../../hoc/theme';
 import {IRouteItem} from '../Router/Router';
 import {IButtonProps} from '../../form/Button/Button';
 
@@ -43,7 +42,7 @@ export interface ITreeViewProps extends ITreeProps {
     levelPadding?: number
 }
 
-interface ITreePrivateProps extends IComponentsHocOutput, IThemeHocOutput {
+interface ITreePrivateProps extends IComponentsHocOutput {
     activeRouteIds?: string[],
     routerParams?: object,
     routes?: IRouteItem[],

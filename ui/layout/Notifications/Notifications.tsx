@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {components, theme} from '../../../hoc';
+import {components} from '../../../hoc';
 import {
     setFlashes,
     closeNotification
@@ -65,7 +65,6 @@ interface INotificationsState  {
     notifications: getNotifications(state),
     position: getPosition(state)
 }))
-@theme()
 @components('ui')
 export default class Notifications extends React.PureComponent<INotificationsProps & INotificationsPrivateProps, INotificationsState> {
 

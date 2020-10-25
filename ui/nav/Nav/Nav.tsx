@@ -4,14 +4,13 @@ import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
-import {components, connect, theme} from '../../../hoc';
+import {components, connect} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {
     getActiveRouteIds, getNavItems,
     getRouterParams,
     IRoute
 } from '../../../reducers/router';
-import {IThemeHocInput, IThemeHocOutput} from '../../../hoc/theme';
 import {IButtonProps} from '../../form/Button/Button';
 
 export interface INavItem extends IButtonProps {
@@ -26,7 +25,7 @@ export interface INavItem extends IButtonProps {
     contentProps?: any
 }
 
-export interface INavProps extends IThemeHocInput {
+export interface INavProps {
     layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list' | string;
     items?: string | INavItem[];
     routes?: IRoute[],
@@ -44,7 +43,7 @@ export interface INavViewProps extends INavProps {
     navClassName?: CssClassName,
 }
 
-interface INavPrivateProps extends IComponentsHocOutput, IThemeHocOutput {
+interface INavPrivateProps extends IComponentsHocOutput {
     activeRouteIds?: string[],
     routerParams?: object,
 }
@@ -61,7 +60,6 @@ interface NavState {
         routerParams: getRouterParams(state),
     })
 )
-@theme()
 @components('ui')
 export default class Nav extends React.PureComponent<INavProps & INavPrivateProps, NavState> {
     static defaultProps = {

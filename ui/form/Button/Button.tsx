@@ -2,12 +2,11 @@ import * as React from 'react';
 import _isNumber from 'lodash-es/isNumber';
 import {connect} from 'react-redux';
 import {isSubmitting} from 'redux-form';
-import {components, theme} from '../../../hoc';
+import {components} from '../../../hoc';
 import FieldLayout from '../FieldLayout';
 import {FormContext, IFormContext, mergeLayoutProp} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
-import {IThemeHocInput} from '../../../hoc/theme';
 import normalize from '../../../hoc/normalize';
 import {goToRoute} from "../../../actions/router";
 import {buildUrl, getRouteProp} from '../../../reducers/router';
@@ -24,7 +23,7 @@ interface IButtonBadge {
  * Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику onClick),
  * смена страницы в рамках роутинга (goToRoute), переход по внешней ссылке (url) или отправки формы (submit form)
  */
-export interface IButtonProps extends IThemeHocInput {
+export interface IButtonProps {
     /**
      * Текст кнопки или ссылки
      * @example Save
@@ -233,7 +232,6 @@ const defaultProps = {
         };
     }
 )
-@theme()
 @normalize({
     fromKey: 'badge',
     toKey: '_badge',

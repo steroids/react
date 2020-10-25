@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import _get from 'lodash-es/get';
-import {components, theme} from '../../../hoc';
+import {components} from '../../../hoc';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {ListControlPosition} from '../../../hoc/list';
 import {IButtonProps} from '../../form/Button/Button';
-import {IThemeHocInput, IThemeHocOutput} from '../../../hoc/theme';
 
-export interface IPaginationProps extends IThemeHocInput {
+export interface IPaginationProps {
     page?: number,
     pageSize?: number,
     total?: number,
@@ -24,7 +23,7 @@ export interface IPaginationProps extends IThemeHocInput {
     onChange?: (value: number) => void,
 }
 
-export interface IPaginationViewProps extends IPaginationProps, IThemeHocOutput {
+export interface IPaginationViewProps extends IPaginationProps {
     totalPages: number,
     pages: {
         page?: number,
@@ -48,7 +47,6 @@ interface IPaginationPrivateProps extends IConnectHocOutput, IComponentsHocOutpu
 }
 
 @connect()
-@theme()
 @components('ui')
 export default class Pagination extends React.PureComponent<IPaginationProps & IPaginationPrivateProps> {
 

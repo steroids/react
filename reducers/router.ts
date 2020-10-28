@@ -100,7 +100,7 @@ export const buildUrl = (path, params = null) => {
             queryObj[key] = params[key];
         });
     const query = queryString.stringify(queryObj);
-    if (!_isEmpty(query)) {
+    if (!_isEmpty(query) && url) {
         url = url + (url.indexOf('?') !== -1 ? '&' : '?') + query;
     }
 

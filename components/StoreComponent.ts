@@ -36,6 +36,10 @@ export default class StoreComponent {
         this.store = null;
         this._asyncReducers = {};
 
+        this.getState = this.getState.bind(this);
+        this.dispatch = this.dispatch.bind(this);
+        this.subscribe = this.subscribe.bind(this);
+
         if (!lazyInit) {
             this.initStore();
         }
@@ -113,6 +117,10 @@ export default class StoreComponent {
 
     getState() {
         return this.store.getState();
+    }
+
+    subscribe(handler) {
+        return this.store.subscribe(handler);
     }
 
     addReducers(asyncReducers) {

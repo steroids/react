@@ -4,6 +4,7 @@ export default (): any => WrappedComponent => {
     if (WrappedComponent.IS_MULTI_HOC) {
         return WrappedComponent;
     }
+    return WrappedComponent;
 
     const names = [];
     let ItemComponent = WrappedComponent;
@@ -36,7 +37,8 @@ export default (): any => WrappedComponent => {
             while (true) {
                 if (ItemComponent?.prototype?.getProps) {
                     const instance = new ItemComponent(this._props);
-                    this._props = instance.getProps(this);
+                    instance.forceUpdate = this.forceUpdate.bind(this);
+                    this._props = instance.getProps();
                     this._instances.push(instance);
                 } else {
                     this._LastComponent = ItemComponent;
@@ -47,18 +49,20 @@ export default (): any => WrappedComponent => {
         }
 
         render() {
-            this._props = this.props;
-            this._instances.forEach(instance => {
-                if (!instance.getProps) {
-                    console.log(instance);
-                }
-                this._props = instance.getProps.apply({...instance, props: this._props});
-            });
+            this._updateProps(this.props);
 
             const Component: any = this._LastComponent;
             return (
                 <Component {...this._props}/>
             );
+        }
+
+        _updateProps(props) {
+            this._props = props;
+            this._instances.forEach(instance => {
+                instance.props = this._props;
+                this._props = instance.getProps();
+            });
         }
 
     }
@@ -73,11 +77,11 @@ export default (): any => WrappedComponent => {
     methods.forEach(method => {
         MultiHoc.prototype[method] = function() {
             const args = arguments;
-            this._props = this.props;
             this._instances.forEach(instance => {
+                this._updateProps(this.props);
+
                 if (instance[method]) {
                     instance[method].apply({...instance, props: this._props}, args);
-                    this._props = instance.getProps.apply({...instance, props: this._props});
                 }
             });
         };

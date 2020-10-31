@@ -176,7 +176,17 @@ export interface IButtonProps {
 
     tag?: 'button' | 'a',
 
-    textColor?: any;
+    /**
+     * Размер
+     */
+    size?: Size,
+
+    /**
+     * Темная тема
+     */
+    dark?: boolean,
+
+    textColor?: any,
 }
 
 export interface IButtonViewProps extends IButtonProps {

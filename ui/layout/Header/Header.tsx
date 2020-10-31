@@ -15,6 +15,16 @@ export interface IHeaderProps {
         className?: CssClassName,
     };
     nav?: INavProps;
+
+    /**
+     * Размер
+     */
+    size?: Size,
+
+    /**
+     * Темная тема
+     */
+    dark?: boolean,
 }
 
 export interface IHeaderViewProps extends IHeaderProps, IBemHocOutput {

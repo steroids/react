@@ -22,7 +22,7 @@ export interface INavItem extends IButtonProps {
     view?: any,
     visible?: boolean,
     content?: any,
-    contentProps?: any
+    contentProps?: any,
 }
 
 export interface INavProps {
@@ -33,6 +33,16 @@ export interface INavProps {
     className?: CssClassName;
     view?: any;
     onChange?: (...args: any[]) => any;
+
+    /**
+     * Размер
+     */
+    size?: Size,
+
+    /**
+     * Темная тема
+     */
+    dark?: boolean,
 }
 
 export interface INavViewProps extends INavProps {

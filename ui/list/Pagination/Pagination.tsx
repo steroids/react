@@ -21,6 +21,16 @@ export interface IPaginationProps {
     buttonProps?: IButtonProps,
     view?: CustomView,
     onChange?: (value: number) => void,
+
+    /**
+     * Размер
+     */
+    size?: Size,
+
+    /**
+     * Темная тема
+     */
+    dark?: boolean,
 }
 
 export interface IPaginationViewProps extends IPaginationProps {

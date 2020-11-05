@@ -1,6 +1,6 @@
 import _isArray from 'lodash-es/isArray';
 import _trim from 'lodash-es/trim';
-import {push} from 'connected-react-router';
+import {push, replace} from 'connected-react-router';
 
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
@@ -39,14 +39,15 @@ export const initParams = params => ({
     type: ROUTER_SET_PARAMS,
     params
 });
-export const goToRoute = (routeId, params = null) => (dispatch, getState, {store}) => {
+export const goToRoute = (routeId, params = null, isReplace = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
     } else {
         const getRouteProp = require('../reducers/router').getRouteProp;
         const buildUrl = require('../reducers/router').buildUrl;
         const path = getRouteProp(getState(), routeId, 'path');
-        return dispatch(push(buildUrl(path, params)));
+        const method = isReplace ? replace : push;
+        return dispatch(method(buildUrl(path, params)));
     }
 };
 export const goToParent = (level = 1) => (dispatch, getState) => {

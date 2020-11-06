@@ -9,7 +9,7 @@ import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {components, fetch} from '../../../hoc';
 import navigationHoc, {INavigationHocInputProps, treeToList} from './navigationHoc';
-import {getRouteId} from '../../../reducers/router';
+import {getActiveRouteIds, getRouteId, getRoutesMap} from '../../../reducers/router';
 import {SsrProviderContext} from './SsrProvider';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -41,10 +41,12 @@ export interface IRouterProps extends INavigationHocInputProps {
     routes?: IRouteItem[] | {[key: string]: IRouteItem};
     pathname?: string;
     routeId?: string;
+    activeRouteIds?: string[];
     autoScrollTop?: boolean;
     history?: any;
     store?: any;
     basename?: any;
+    activePath?: string;
 }
 
 interface IRouterPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -58,7 +60,9 @@ type RouterState = {
 @navigationHoc()
 @connect(state => ({
     pathname: _get(state, 'router.location.pathname'),
-    routeId: getRouteId(state)
+    routeId: getRouteId(state),
+    activePath: state.router?.location?.pathname,
+    activeRouteIds: getActiveRouteIds(state),
 }))
 @components('store')
 export default class Router extends React.Component<IRouterProps & IRouterPrivateProps, RouterState> {
@@ -157,19 +161,37 @@ export default class Router extends React.Component<IRouterProps & IRouterPrivat
     }
 
     _renderItem(route: IRouteItem, props) {
-        if (route.redirectTo) {
+        let children = null;
+        this.props.activeRouteIds.find(activeRouteId => {
+            if (activeRouteId === route.id) {
+                // Stop
+                return true;
+            }
+
+            const activeRoute = this.state.routes.find(r => r.id === activeRouteId);
+            if (activeRoute.component) {
+                children = this._renderComponent(activeRoute, {...props, children});
+            }
+            return false;
+        });
+
+        if (route.redirectTo && route.path === this.props.activePath) {
             const to = this._findRedirectPathRecursive(route);
             if (to === null) {
                 console.error('Not found path for redirect in route:', route)
                 return null;
             }
-            return (
-                <Redirect
-                    {...props}
-                    to={to}
-                    {...route.componentProps}
-                />
-            );
+
+            // Check already redirected
+            if (this.props.activePath !== to) {
+                return (
+                    <Redirect
+                        {...props}
+                        to={to}
+                        {...route.componentProps}
+                    />
+                );
+            }
         }
 
         if (!route.component) {
@@ -177,6 +199,10 @@ export default class Router extends React.Component<IRouterProps & IRouterPrivat
             return null;
         }
 
+        return this._renderComponent(route, {...props, children});
+    }
+
+    _renderComponent(route: IRouteItem, props) {
         let Component = route.component;
         if (route.fetch) {
             Component = fetch(route.fetch)(Component);
@@ -201,6 +227,8 @@ export default class Router extends React.Component<IRouterProps & IRouterPrivat
             return route.redirectTo;
         }
 
-        return route.path || route.path === '' ? route.path : null;
+        return route.path || route.path === ''
+            ? route.path
+            : null;
     }
 }

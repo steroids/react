@@ -14,6 +14,7 @@ import FileField from './FileField';
 import Form from './Form';
 import HtmlField from './HtmlField';
 import InputField from './InputField';
+import NavField from './NavField';
 import NumberField from './NumberField';
 import PasswordField from './PasswordField';
 import RadioListField from './RadioListField';
@@ -41,6 +42,7 @@ export {
     Form,
     HtmlField,
     InputField,
+    NavField,
     NumberField,
     PasswordField,
     RadioListField,
@@ -69,6 +71,7 @@ export default {
     Form,
     HtmlField,
     InputField,
+    NavField,
     NumberField,
     PasswordField,
     RadioListField,

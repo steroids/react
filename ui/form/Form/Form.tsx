@@ -173,7 +173,8 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
             );
         }
         if (this.props.autoFocus && process.env.IS_WEB) {
-            const inputEl = findDOMNode(this).querySelector('input:not([type=hidden])');
+            const element: any = findDOMNode(this);
+            const inputEl = element.querySelector('input:not([type=hidden])');
             setTimeout(() => {
                 if (inputEl && inputEl.focus) {
                     inputEl.focus();

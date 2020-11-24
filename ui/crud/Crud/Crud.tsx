@@ -221,6 +221,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
 
     static defaultProps = {
         primaryKey: DEFAULT_PRIMARY_KEY,
+        queryKey: DEFAULT_QUERY_KEY,
         mode: DEFAULT_MODE,
     };
 

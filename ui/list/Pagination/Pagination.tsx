@@ -92,6 +92,7 @@ export default class Pagination extends React.PureComponent<IPaginationProps & I
         }
 
         const pages = [];
+        const aroundCount = this.props.aroundCount || 3;
         for (let i = 1; i <= totalPages; i++) {
             // Store first and last
             if (i === 1 || i === totalPages) {
@@ -99,10 +100,7 @@ export default class Pagination extends React.PureComponent<IPaginationProps & I
                 continue;
             }
             // Store around
-            if (
-                page - this.props.aroundCount < i &&
-                i < page + this.props.aroundCount
-            ) {
+            if (page - aroundCount < i && i < page +aroundCount) {
                 pages.push(i);
                 continue;
             }

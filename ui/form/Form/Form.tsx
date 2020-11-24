@@ -233,8 +233,7 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
                     onSubmit={this.props.handleSubmit(this.props.onSubmit)}
                 >
                     {this.props.children}
-                    {this.props.fields &&
-                    this.props.fields.map((field: any, index) => (
+                    {(this.props.fields || []).map((field: any, index) => (
                         <Field
                             key={index}
                             {...(_isString(field) ? {attribute: field} : field)}

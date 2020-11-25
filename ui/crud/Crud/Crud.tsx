@@ -58,9 +58,9 @@ export interface ICrudProps {
     view?: boolean | ICrudItem,
     delete?: boolean | ICrudItem,
     items?: ICrudItem[] | { [key: string]: ICrudItem };
-    grid?: IGridProps,
+    grid?: IGridProps | ((props: ICrudClickProps) => IGridProps),
     gridComponent?: any,
-    form?: IFormProps,
+    form?: IFormProps | ((props: ICrudClickProps) => IFormProps),
     formComponent?: any,
     detail?: IDetailProps,
     detailComponent?: any,
@@ -264,17 +264,20 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
         const ItemComponent = crudItem.component;
         const CrudView = /* TODO this.props.view || */this.props.ui.getView('crud.CrudView');
         const restUrl = typeof this.props.restUrl === 'function' ? this.props.restUrl(this.props) : this.props.restUrl;
+        const form = typeof this.props.form === 'function' ? this.props.form(this.props) : this.props.form;
+        const grid = typeof this.props.grid === 'function' ? this.props.grid(this.props) : this.props.grid;
         return (
             <CrudView
                 {...this.props}
                 title={this.props.routeTitle}
-                restUrl={restUrl}
                 controls={this._getControls()}
             >
                 {ItemComponent && (
                     <ItemComponent
                         {...this.props}
                         restUrl={restUrl}
+                        form={form}
+                        grid={grid}
                         routeId={this.props.routeId}
                         controlsGetter={this._getControls}
                         {...crudItem.componentProps}

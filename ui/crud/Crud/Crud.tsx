@@ -20,7 +20,7 @@ import CrudDetail from './CrudDetail';
 import {closeModal, openModal} from '../../../actions/modal';
 import Modal from '../../modal/Modal';
 import {getOpened} from '../../../reducers/modal';
-import {IModalProps} from '../../modal/Modal/Modal';
+import {listRefresh} from '../../../actions/list';
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
     title?: string,
@@ -131,7 +131,9 @@ const defaultItems: ({ [key: string]: ICrudItem }) = {
             const restUrl = typeof props.restUrl === 'function' ? props.restUrl(props) : props.restUrl;
             await props.http.delete(`${restUrl}/${itemId}`);
 
-            if (props.action !== CRUD_ACTION_INDEX) {
+            if (props.action === CRUD_ACTION_INDEX) {
+                props.dispatch(listRefresh(getCrudGridId(props)));
+            } else {
                 props.dispatch(goToRoute(props.routeId, {
                     ...props.routeParams,
                     [props.queryKey]: null,

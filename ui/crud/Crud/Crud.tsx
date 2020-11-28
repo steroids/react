@@ -73,6 +73,9 @@ export interface ICrudChildrenProps extends ICrudProps, IConnectHocOutput, IComp
     routeId?: string,
     controlsGetter?: any,
     restUrl?: string,
+    onComplete?: () => void,
+    form?: IFormProps,
+    grid?: IGridProps,
 }
 
 interface ICrudPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
@@ -88,9 +91,12 @@ interface ICrudPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
     _items?: ICrudItem[];
 }
 
+const MODE_PAGE = 'page';
+const MODE_MODAL = 'modal';
+
 export const DEFAULT_PRIMARY_KEY = 'id';
 export const DEFAULT_QUERY_KEY = 'id';
-export const DEFAULT_MODE = 'page';
+export const DEFAULT_MODE = MODE_PAGE;
 export const CRUD_ACTION_INDEX = 'index';
 
 export interface ICrudViewProps {
@@ -196,7 +202,7 @@ const defaultItems: ({ [key: string]: ICrudItem }) = {
     let action = routeAction;
     const crudItem = props._items.find(item => item.actionName === action);
     const mode = crudItem && crudItem.mode || props.mode || DEFAULT_MODE;
-    if (mode === 'modal' && !isModal) {
+    if (mode === MODE_MODAL && !isModal) {
         action = CRUD_ACTION_INDEX;
         itemId = null;
     }
@@ -231,6 +237,8 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
         super(props);
 
         this._getControls = this._getControls.bind(this);
+        this._onComplete = this._onComplete.bind(this);
+        this._onModalClose = this._onModalClose.bind(this);
     }
 
     componentDidMount() {
@@ -247,7 +255,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
         const isModal = !!this.props.modalId;
 
         // In modal mode always render index on page
-        if (mode === 'modal' && !isModal) {
+        if (mode === MODE_MODAL && !isModal) {
             crudItem = this.props._items.find(item => item.actionName === CRUD_ACTION_INDEX);
         }
 
@@ -278,8 +286,10 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                         restUrl={restUrl}
                         form={form}
                         grid={grid}
+                        mode={mode}
                         routeId={this.props.routeId}
                         controlsGetter={this._getControls}
+                        onComplete={this._onComplete}
                         {...crudItem.componentProps}
                     />
                 )}
@@ -292,7 +302,7 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
         const mode = crudItem && crudItem.mode || this.props.mode;
         const isModal = !!this.props.modalId;
 
-        if (mode !== 'modal') {
+        if (mode !== MODE_MODAL) {
             if (isModal) {
                 this.props.dispatch(closeModal(getCrudModalId(this.props)));
             }
@@ -314,16 +324,38 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
                     modalId: getCrudModalId(this.props),
                     size: 'lg',
                     title: crudItem.title || crudItem.label || null,
-                    onClose: () => this.props.dispatch(goToRoute(this.props.routeId, {
-                        ...this.props.routeParams,
-                        [this.props.queryKey]: null,
-                        [this.props.queryKey + 'Action']: null,
-                    })),
+                    onClose: this._onModalClose,
                     component: Crud,
                     componentProps: this.props,
                 }));
             }
         }
+    }
+
+    _onComplete() {
+        const crudItem = this.props._items.find(item => item.actionName === this.props.routeAction);
+        const mode = crudItem && crudItem.mode || this.props.mode;
+        if (mode === MODE_MODAL) {
+            this.props.dispatch(closeModal(getCrudModalId(this.props)));
+            this._onModalClose();
+        } else {
+            this.props.dispatch(goToRoute(this.props.routeId, {
+                ...this.props.routeParams,
+                [this.props.queryKey]: null,
+                [this.props.queryKey + 'Action']: null,
+            }));
+        }
+    }
+
+    _onModalClose() {
+        this.props.dispatch([
+            listRefresh(getCrudGridId(this.props)),
+            goToRoute(this.props.routeId, {
+                ...this.props.routeParams,
+                [this.props.queryKey]: null,
+                [this.props.queryKey + 'Action']: null,
+            }),
+        ]);
     }
 
     _getControls(item = null) {

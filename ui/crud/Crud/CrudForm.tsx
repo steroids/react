@@ -13,11 +13,18 @@ export default class CrudForm extends React.PureComponent<ICrudChildrenProps> {
                 model={this.props.model}
                 autoFocus
                 submitLabel={this.props.itemId ? __('Сохранить') : __('Добавить')}
-                initialValues={this.props.item}
+                initialValues={{
+                    ...this.props.form.initialValues,
+                    ...this.props.item,
+                }}
                 layout='horizontal'
                 onComplete={() => {
                     window.scrollTo(0, 0);
                     this.props.dispatch(showNotification(__('Запись успешно обновлена.')));
+
+                    if (this.props.onComplete) {
+                        this.props.onComplete();
+                    }
                 }}
                 {...this.props.form}
             />

@@ -134,12 +134,15 @@ export default (): any => WrappedComponent =>
                         .filter(item => !!item.uid)
                         .map(
                             item => new File({
+                                path: item.title || item.label || item.uid || item.id,
                                 status: File.STATUS_END,
                                 result: File.RESULT_SUCCESS,
                                 resultHttpStatus: 200,
                                 resultHttpMessage: {
                                     id: item.id || item.uid,
-                                    images: [{url: item.thumbnailUrl}],
+                                    images: item.thumbnailUrl
+                                        ? [{url: item.thumbnailUrl}]
+                                        : null,
                                 },
                                 uid: item.uid,
                             })

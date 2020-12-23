@@ -7,6 +7,15 @@ export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
 export const ROUTER_ADD_CONFIGS = 'ROUTER_ADD_CONFIGS';
 export const ROUTER_REMOVE_CONFIGS = 'ROUTER_REMOVE_CONFIGS';
 export const ROUTER_SET_DATA = 'ROUTER_SET_DATA';
+
+export interface IFetchConfig {
+    id?: string | number,
+    url: string,
+    key: string,
+    method?: 'get' | 'post' | string,
+    params?: any,
+}
+
 const normalizeConfigs = configs => {
     if (!configs) {
         configs = [];
@@ -74,8 +83,8 @@ const fetchByConfig = (config, dispatch, components) => {
         }));
 }
 
-export const navigationAddConfigs = configs => (dispatch, getState, components) => {
-    configs = normalizeConfigs(configs);
+export const navigationAddConfigs = (configs: IFetchConfig|IFetchConfig[]) => (dispatch, getState, components) => {
+    configs = normalizeConfigs(configs) as IFetchConfig[];
     if (configs.length > 0) {
         dispatch({
             type: ROUTER_ADD_CONFIGS,

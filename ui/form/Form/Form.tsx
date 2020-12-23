@@ -61,7 +61,24 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
      * @param args
      */
     onChange?: (...args: any[]) => any;
+
+    /**
+     * Обработчик успешного выполнения формы (без ошибок)
+     * @param args
+     */
     onComplete?: (...args: any[]) => any;
+
+    /**
+     * Автоматически стартовать 2fa аутентификацию (отправлять код)
+     */
+    autoStartTwoFactor?: boolean,
+
+    /**
+     * Обработчик, который вызывается при запросе 2FA
+     */
+    onTwoFactor?: (providerName: string, info?: any) => Promise<any>
+
+
     autoSave?: boolean;
 
     /**
@@ -145,6 +162,10 @@ const filterValues = (values = {}) => {
 @theme()
 @components('ui', 'store', 'clientStorage')
 export default class Form extends React.PureComponent<IFormProps & IFormPrivateProps> {
+
+    static defaultProps = {
+        autoStartTwoFactor: true,
+    };
 
     componentDidMount() {
         // Restore values from query, when autoSave flag is set

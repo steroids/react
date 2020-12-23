@@ -22,6 +22,8 @@ export interface IFormSubmitHocInput {
     onSubmit?: any,
     onAfterSubmit?: any,
     onComplete?: any,
+    onTwoFactor?: (providerName: string, info?: any) => Promise<any>
+    autoStartTwoFactor?: boolean,
 }
 
 export interface IFormSubmitHocOutput {
@@ -44,7 +46,8 @@ export default (): any => WrappedComponent =>
             static propTypes = WrappedComponent.propTypes;
             static defaultProps = {
                 ...WrappedComponent.defaultProps,
-                actionMethod: 'POST'
+                actionMethod: 'POST',
+                autoStartTwoFactor: true,
             };
 
             constructor(props) {
@@ -112,9 +115,24 @@ export default (): any => WrappedComponent =>
                     .send(
                         this.props.actionMethod,
                         this.props.action || location.pathname,
-                        values
+                        values,
+                        {
+                            onTwoFactor: this.props.onTwoFactor
+                                ? async (providerName) => {
+                                    const info = this.props.autoStartTwoFactor
+                                        ? await this.props.http.post(`/api/v1/auth/2fa/${providerName}/send`)
+                                        : null;
+                                    this.props.onTwoFactor(providerName, info);
+                                }
+                                : undefined
+                        }
                     )
                     .then(response => {
+                        // Skip on 2fa
+                        if (response.twoFactor) {
+                            return;
+                        }
+
                         const data = response.data || {};
                         // Event onAfterSubmit
                         if (

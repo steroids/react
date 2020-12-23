@@ -44,6 +44,8 @@ export interface IIconProps extends IComponentsHocOutput {
      */
     view?: React.ComponentType;
 
+    onClick?: any,
+
     [key: string]: any,
 }
 

@@ -452,7 +452,7 @@ export default (): any => WrappedComponent =>
                         return (
                             <Pagination
                                 {...this.props}
-                                {...this.props.pagination}
+                                {...this.props._pagination}
                                 page={page}
                                 pageSize={pageSize}
                                 total={this.props.list.total}

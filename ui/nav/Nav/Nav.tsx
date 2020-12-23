@@ -97,7 +97,7 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
         const items = Array.isArray(this.props.items)
             ? this.props.items.map((item, index) => ({
                 ...item,
-                active: this.state.activeTab === (_has(item, 'id') ? item.id : index),
+                isActive: this.state.activeTab === (_has(item, 'id') ? item.id : index),
             }))
             : (this.props.routes
                 ? this.props.routes.map(route => ({
@@ -106,7 +106,7 @@ export default class Nav extends React.PureComponent<INavProps & INavPrivateProp
                     toRoute: route.id,
                     toRouteParams: this.props.routerParams,
                     visible: route.isNavVisible,
-                    active: (this.props.activeRouteIds || []).includes(route.id),
+                    isActive: (this.props.activeRouteIds || []).includes(route.id),
                 })) as INavItem[]
                 : []
             );

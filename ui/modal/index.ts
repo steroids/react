@@ -1,2 +1,6 @@
 import ModalPortal from './ModalPortal';
-export { ModalPortal };
+import TwoFactorModal from './TwoFactorModal';
+export {
+    ModalPortal,
+    TwoFactorModal,
+};

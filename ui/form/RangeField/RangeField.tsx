@@ -69,7 +69,7 @@ export default class RangeField extends React.PureComponent<IRangeFieldProps & I
             !nextProps.inputTo.value
         ) {
             this._timer = setTimeout(() => {
-                const inputEl = findDOMNode(this.refTo).querySelector('input');
+                const inputEl = this.refTo.current.querySelector('input');
                 if (inputEl) {
                     inputEl.focus();
                 }

@@ -21,6 +21,7 @@ export interface IRangeFieldProps extends IFieldHocInput {
     toProps?: any;
     className?: CssClassName;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface IRangeFieldViewProps extends IFieldHocOutput {

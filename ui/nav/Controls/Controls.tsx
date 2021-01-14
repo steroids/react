@@ -15,6 +15,7 @@ export interface IControlsProps {
     navProps?: INavProps,
     view?: any,
     className?: string,
+    [key: string]: any,
 }
 
 export interface IControlsViewProps extends IControlsProps {

@@ -27,6 +27,7 @@ export interface ITreeProps {
     autoOpenLevels?: number;
     onItemClick?: (...args: any[]) => any;
     autoSave?: boolean;
+    [key: string]: any;
 }
 
 export interface ITreeViewProps extends ITreeProps {

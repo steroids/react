@@ -43,6 +43,7 @@ export interface IGridProps extends IListHocInput {
     itemsIndexing?: any;
     onSort?: (arg: string) => void;
     fetch?: () => void;
+    [key: string]: any;
 }
 
 export interface IGridViewProps extends IGridProps, IGridPrivateProps {

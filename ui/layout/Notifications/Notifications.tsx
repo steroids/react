@@ -37,6 +37,7 @@ export interface INotificationsProps {
     view?: any;
     itemView?: any;
     position?: string;
+    [key: string]: any;
 }
 
 export interface INotificationsViewProps {

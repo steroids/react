@@ -8,6 +8,7 @@ export interface ISwitcherFieldProps extends IFieldHocInput, IDataProviderHocInp
     className?: CssClassName;
     view?: CustomView;
     buttonProps?: any;
+    [key: string]: any;
 }
 
 export interface ISwitcherFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {

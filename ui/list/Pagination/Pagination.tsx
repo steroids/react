@@ -22,6 +22,7 @@ export interface IPaginationProps extends IThemeHocInput {
     buttonProps?: IButtonProps,
     view?: CustomView,
     onChange?: (value: number) => void,
+    [key: string]: any,
 }
 
 export interface IPaginationViewProps extends IPaginationProps, IThemeHocOutput {

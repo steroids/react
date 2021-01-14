@@ -20,6 +20,7 @@ export interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
     view?: CustomView;
     itemView?: CustomView;
     itemProps?: any;
+    [key: string]: any;
 }
 
 interface IFileFieldItemProps extends IFieldHocOutput, IFileHocOutput {

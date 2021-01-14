@@ -20,6 +20,7 @@ export interface ITextFieldProps extends IFieldHocInput {
     inputProps?: any;
     className?: CssClassName;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface ITextFieldViewProps extends IFieldHocOutput {

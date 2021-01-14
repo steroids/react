@@ -64,6 +64,7 @@ export interface ICrudProps {
     formComponent?: any,
     detail?: IDetailProps,
     detailComponent?: any,
+    [key: string]: any,
 }
 
 export interface ICrudChildrenProps extends ICrudProps, IConnectHocOutput, IComponentsHocOutput {

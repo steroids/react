@@ -16,6 +16,7 @@ export interface IPaginationSizeProps {
     size?: Size;
     view?: CustomView,
     onChange?: (value: number) => void,
+    [key: string]: any,
 }
 
 export interface IPaginationSizeViewProps extends IPaginationSizeProps {

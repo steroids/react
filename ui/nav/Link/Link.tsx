@@ -4,6 +4,7 @@ import {IButtonProps, IButtonViewProps} from '../../form/Button/Button';
 
 export interface ILinkProps extends IButtonProps {
     to?: string,
+    [key: string]: any,
 }
 
 export interface ILinkViewProps extends IButtonViewProps {

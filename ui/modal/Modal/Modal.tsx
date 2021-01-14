@@ -15,6 +15,7 @@ export interface IModalProps {
     component?: any;
     componentProps?: any;
     controls?: IControlItem[],
+    [key: string]: any,
 }
 
 export interface IModalViewProps extends IModalProps {

@@ -24,6 +24,7 @@ interface ITwoFactorModalPrivateProps extends ITwoFactorModalProps, IFetchHocOut
 export interface ITwoFactorModalViewProps extends ITwoFactorModalPrivateProps {
     description?: string,
     formProps?: any,
+    [key: string]: any,
 }
 
 @fetch(({providerName}) => ({
@@ -32,7 +33,7 @@ export interface ITwoFactorModalViewProps extends ITwoFactorModalPrivateProps {
     key: 'info',
 }))
 @components('ui')
-export default class TwoFactorModal extends React.PureComponent<ITwoFactorModalPrivateProps> {
+export default class TwoFactorModal extends React.PureComponent<ITwoFactorModalViewProps & ITwoFactorModalPrivateProps> {
 
     render() {
         const TwoFactorModalView = this.props.view || this.props.ui.getView('modal.TwoFactorModalView');

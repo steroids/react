@@ -112,6 +112,7 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
     restoreCustomizer?: (...args: any[]) => any; // TODO Refactor it!
     useHash?: boolean; // TODO Refactor it!
     autoFocus?: boolean;
+    [key: string]: any;
 }
 
 export interface IFormViewProps {

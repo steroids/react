@@ -15,6 +15,7 @@ export interface IAccordionProps extends IListHocInput {
     openFirst?: boolean;
     openedId?: number | string;
     onToggle?: (...args: any[]) => any;
+    [key: string]: any,
 }
 
 export interface IAccordionViewProps extends IListHocOutput {

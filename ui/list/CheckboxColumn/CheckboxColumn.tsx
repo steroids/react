@@ -10,6 +10,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 export interface ICheckboxColumnProps {
     fieldProps?: any;
     view?: any;
+    [key: string]: any,
 }
 
 export interface ICheckboxColumnViewProps {

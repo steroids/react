@@ -10,7 +10,7 @@ export interface IEmptyProps {
 }
 
 export interface IEmptyViewProps extends IEmptyProps{
-
+    [key: string]: any,
 }
 
 interface IEmptyPrivateProps extends IComponentsHocOutput {

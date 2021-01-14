@@ -21,6 +21,7 @@ export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
     label?: any,
     view?: CustomView,
     className?: CssClassName,
+    [key: string]: any,
 }
 
 export interface IFieldSetViewProps extends IFieldHocOutput {

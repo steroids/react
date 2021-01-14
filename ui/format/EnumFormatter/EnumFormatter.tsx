@@ -25,6 +25,7 @@ export interface IEnumFormatterProps {
      */
     value?: number | string,
     view?: CustomView;
+    [key: string]: any;
 }
 
 /**

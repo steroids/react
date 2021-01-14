@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.0.0-beta.90",
+  "version": "2.0.0-beta.93",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -16,7 +16,7 @@
     "docs": "typedoc --ignoreCompilerErrors --json typedoc.json ."
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "conditional-decorator": "^0.1.7",
     "connected-react-router": "^6.5.2",
     "domready": "^1.0.8",

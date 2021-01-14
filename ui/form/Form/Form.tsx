@@ -76,7 +76,7 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
     /**
      * Обработчик, который вызывается при запросе 2FA
      */
-    onTwoFactor?: (providerName: string, info?: any) => Promise<any>
+    onTwoFactor?: (providerName: string, info?: any) => Promise<any> | any | void
 
 
     autoSave?: boolean;

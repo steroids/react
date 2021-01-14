@@ -293,7 +293,7 @@ export default class HttpComponent {
             const {openModal} = require('../actions/modal');
             store.dispatch(openModal(TwoFactorModal, {
                 providerName,
-                onClose: () => resolve()
+                onClose: resolve,
             }));
         });
     }

@@ -256,7 +256,7 @@ export const getFormId = props => _get(props, 'searchForm.formId', props.listId)
 
 export default (): any => WrappedComponent =>
     connect(stateMap)(
-        components('store', 'meta')(
+        components('store', 'meta', 'clientStorage')(
             normalize(normalizeMap)(
                 class ListHoc extends React.PureComponent<IListHocInput & IListHocPrivateProps> {
 
@@ -295,6 +295,7 @@ export default (): any => WrappedComponent =>
                                 [this.props._paginationSize.attribute]: this.props._paginationSize.defaultValue,
                                 [this.props._sort.attribute]: this.props._sort.defaultValue,
                                 [this.props._layout.attribute]: this.props._layout.defaultValue,
+                                [this.props._layout.attribute]: this.props.clientStorage.get(this.props._layout.attribute) || this.props._layout.defaultValue,
                             };
 
                             // Restore from location params (address bar)
@@ -538,6 +539,7 @@ export default (): any => WrappedComponent =>
                     }
 
                     _onLayoutChange(value) {
+                        this.props.clientStorage.set(this.props._layout.attribute, value);
                         this.props.dispatch(change(getFormId(this.props), this.props._layout.attribute, value));
                     }
                 }

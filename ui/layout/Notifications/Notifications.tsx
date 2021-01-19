@@ -8,7 +8,7 @@ import {
 import {getNotifications, getPosition} from '../../../reducers/notifications';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
-import { orderBy } from 'lodash';
+import _orderBy from 'lodash-es/orderBy';
 
 interface INotificationItem {
     id?: number,
@@ -122,7 +122,7 @@ export default class Notifications extends React.PureComponent<INotificationsPro
         const NotificationsItemView = this.props.itemView || this.props.ui.getView('layout.NotificationsItemView');
 
         const closingIds = this.state.closing.map(item => item.id);
-        const notifications = orderBy([].concat(this.state.notifications).concat(this.state.closing),['id'],'asc') ;
+        const notifications = _orderBy([].concat(this.state.notifications).concat(this.state.closing),['id'],'asc') ;
 
         return (
             <NotificationsView {...this.props}>

@@ -13,7 +13,7 @@ export interface IFileFieldProps extends IFieldHocInput, IFileHocInput {
      * Показать значок удаление файла
      * @example true
      */
-    showRemove: boolean,
+    showRemove?: boolean,
     buttonComponent?: React.ReactNode; // TODO May be buttonView ?
     buttonProps?: any;
     className?: CssClassName;

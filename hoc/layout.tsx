@@ -169,6 +169,9 @@ export default (initAction): any => WrappedComponent =>
                         const userRoles = []
                             .concat(_get(this.props, 'user.role') || [])
                             .concat(_get(this.props, 'user.roles') || []);
+                        if (userRoles.length === 0) {
+                            userRoles.push(null); // Guest
+                        }
                         if (_intersection(pageRoles, userRoles).length === 0) {
                             status = STATUS_ACCESS_DENIED;
                             if (process.env.NODE_ENV !== 'production') {

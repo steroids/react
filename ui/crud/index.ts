@@ -1,4 +1,4 @@
-import _trimEnd from 'lodash/trimEnd';
+import _trimEnd from 'lodash-es/trimEnd';
 
 import Crud from './Crud';
 import {IRouteItem} from '../nav/Router/Router';

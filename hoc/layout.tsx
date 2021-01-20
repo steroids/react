@@ -5,6 +5,7 @@ import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _upperFirst from 'lodash-es/upperFirst';
 import _merge from 'lodash-es/merge';
+import _intersection from 'lodash-es/intersection';
 
 import {getRoute, IRoute} from '../reducers/router';
 import {getData, getInitializeCounter, getUser, isInitialized} from '../reducers/auth';
@@ -165,15 +166,17 @@ export default (initAction): any => WrappedComponent =>
                         status = STATUS_NOT_FOUND;
                     } else {
                         const pageRoles = _get(this.props, 'route.roles') || [];
-                        const userRole = _get(this.props, 'user.role') || null;
-                        if (!pageRoles.includes(userRole)) {
+                        const userRoles = []
+                            .concat(_get(this.props, 'user.role') || [])
+                            .concat(_get(this.props, 'user.roles') || []);
+                        if (_intersection(pageRoles, userRoles).length === 0) {
                             status = STATUS_ACCESS_DENIED;
                             if (process.env.NODE_ENV !== 'production') {
                                 console.log(
                                     'Access denied. Page roles: ',
                                     pageRoles,
-                                    'User role:',
-                                    userRole,
+                                    'User roles:',
+                                    userRoles.join(),
                                     'Route:',
                                     this.props.route
                                 ); // eslint-disable-line no-console

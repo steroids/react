@@ -122,10 +122,15 @@ fbjs@^2.0.0:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fileup-core@^1.0.8, fileup-core@^1.1.2:
+fileup-core@^1.0.8:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/fileup-core/-/fileup-core-1.1.2.tgz#0095deb27b9c1ea9ef28d2b8c089118f14459fbb"
   integrity sha1-AJXesnucHqnvKNK4wIkRjxRFn7s=
+
+fileup-core@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/fileup-core/-/fileup-core-1.2.0.tgz#0a08e679906af5b67e1f45ff48267c17f4319684"
+  integrity sha512-jU5gTr5t0NYmdAnaqndOCVYrogEumTfI4FJEjb8ZtAi4BXVSHjHRty6s0pjqJ29FZB7e9XzumYmpNg8vzwtd/w==
 
 fileup-redux@^1.1.3:
   version "1.1.3"

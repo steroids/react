@@ -173,7 +173,14 @@ export default class FileField extends React.PureComponent<IFileFieldProps & IFi
                     };
                     // Add error
                     if (file.getResult() === File.RESULT_ERROR) {
-                        item.error = file.getResultHttpMessage()?.error;
+                        if (typeof file.getResultHttpMessage() === 'string' && file.getResultHttpMessage().substr(0, 1) === '{') {
+                            const errorResponse = JSON.parse(file.getResultHttpMessage());
+                            item.error = errorResponse.error || errorResponse.message || __('Ошибка');
+                        } else {
+                            item.error = file.getResultHttpMessage()
+                                ? JSON.stringify(file.getResultHttpMessage())
+                                : __('Ошибка');
+                        }
                     }
                     // Add thumbnail image
                     if (data.images) {

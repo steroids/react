@@ -31,6 +31,7 @@ export interface IDateTimeFieldProps extends IFieldHocInput {
     style?: any;
     className?: CssClassName;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface IDateTimeFieldViewProps extends IFieldHocOutput {

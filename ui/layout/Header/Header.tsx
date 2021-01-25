@@ -25,6 +25,8 @@ export interface IHeaderProps {
      * Темная тема
      */
     dark?: boolean,
+
+    [key: string]: any;
 }
 
 export interface IHeaderViewProps extends IHeaderProps, IBemHocOutput {

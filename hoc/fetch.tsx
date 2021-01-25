@@ -1,10 +1,16 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {navigationAddConfigs, navigationRemoveConfigs, getConfigId, navigationRefresh} from '../actions/router';
+import {
+    navigationAddConfigs,
+    navigationRemoveConfigs,
+    getConfigId,
+    navigationRefresh,
+    IFetchConfig
+} from '../actions/router';
 import {getRouteParams} from '../reducers/router';
 import {IConnectHocOutput} from './connect';
 
-export type IFetchHocConfig = (props: any) => object | object[];
+export type IFetchHocConfig = (props: any) => IFetchConfig | IFetchConfig[];
 
 /**
  * Fetch HOC

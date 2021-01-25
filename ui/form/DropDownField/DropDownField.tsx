@@ -29,6 +29,8 @@ export interface IDropDownFieldProps extends IFieldHocInput, IDataProviderHocInp
      * @example true
      */
     noBorder?: boolean;
+
+    [key: string]: any;
 }
 
 export interface IDropDownFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {

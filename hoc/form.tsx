@@ -75,9 +75,7 @@ export default (config = {} as IFormHocConfig): any => WrappedComponent =>
                             ...context,
                             ...this.props,
                             layout: mergeLayoutProp(context.layout, this.props.layout),
-                            prefix: config.appendPrefix
-                                ? String(context.prefix || '') + String(this.props.prefix || '')
-                                : this.props.prefix || context.prefix,
+                            prefix: this.props.prefix || context.prefix,
 
                         } as IFormHocOutput;
                         return (

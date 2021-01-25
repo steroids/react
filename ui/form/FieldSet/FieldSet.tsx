@@ -21,6 +21,7 @@ export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
     label?: any,
     view?: CustomView,
     className?: CssClassName,
+    [key: string]: any,
 }
 
 export interface IFieldSetViewProps extends IFieldHocOutput {
@@ -51,11 +52,11 @@ export default class FieldSet extends React.PureComponent<IFieldSetProps> {
                                 {...this.props}
                             >
                                 {this.props.children}
-                                {this.props.fields &&
-                                this.props.fields.map((field: any, index) => (
+                                {(this.props.fields || []).map((field: any, index) => (
                                     <Field
                                         key={index}
                                         {...(_isString(field) ? {attribute: field} : field)}
+                                        prefix={null}
                                     />
                                 ))}
                             </FieldSetView>

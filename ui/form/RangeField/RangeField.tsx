@@ -21,6 +21,7 @@ export interface IRangeFieldProps extends IFieldHocInput {
     toProps?: any;
     className?: CssClassName;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface IRangeFieldViewProps extends IFieldHocOutput {
@@ -69,7 +70,7 @@ export default class RangeField extends React.PureComponent<IRangeFieldProps & I
             !nextProps.inputTo.value
         ) {
             this._timer = setTimeout(() => {
-                const inputEl = findDOMNode(this.refTo).querySelector('input');
+                const inputEl = this.refTo.current.querySelector('input');
                 if (inputEl) {
                     inputEl.focus();
                 }

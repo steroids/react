@@ -1,12 +1,21 @@
 import _isArray from 'lodash-es/isArray';
 import _trim from 'lodash-es/trim';
-import {push} from 'connected-react-router';
+import {push, replace} from 'connected-react-router';
 
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
 export const ROUTER_ADD_CONFIGS = 'ROUTER_ADD_CONFIGS';
 export const ROUTER_REMOVE_CONFIGS = 'ROUTER_REMOVE_CONFIGS';
 export const ROUTER_SET_DATA = 'ROUTER_SET_DATA';
+
+export interface IFetchConfig {
+    id?: string | number,
+    url: string,
+    key: string,
+    method?: 'get' | 'post' | string,
+    params?: any,
+}
+
 const normalizeConfigs = configs => {
     if (!configs) {
         configs = [];
@@ -39,14 +48,15 @@ export const initParams = params => ({
     type: ROUTER_SET_PARAMS,
     params
 });
-export const goToRoute = (routeId, params = null) => (dispatch, getState, {store}) => {
+export const goToRoute = (routeId, params = null, isReplace = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
     } else {
         const getRouteProp = require('../reducers/router').getRouteProp;
         const buildUrl = require('../reducers/router').buildUrl;
         const path = getRouteProp(getState(), routeId, 'path');
-        return dispatch(push(buildUrl(path, params)));
+        const method = isReplace ? replace : push;
+        return dispatch(method(buildUrl(path, params)));
     }
 };
 export const goToParent = (level = 1) => (dispatch, getState) => {
@@ -73,8 +83,8 @@ const fetchByConfig = (config, dispatch, components) => {
         }));
 }
 
-export const navigationAddConfigs = configs => (dispatch, getState, components) => {
-    configs = normalizeConfigs(configs);
+export const navigationAddConfigs = (configs: IFetchConfig|IFetchConfig[]) => (dispatch, getState, components) => {
+    configs = normalizeConfigs(configs) as IFetchConfig[];
     if (configs.length > 0) {
         dispatch({
             type: ROUTER_ADD_CONFIGS,

@@ -21,6 +21,7 @@ export interface IFieldLayoutProps {
     layout?: FormLayout;
     errors?: string | string[];
     layoutView?: CustomView;
+    [key: string]: any;
 }
 
 export interface IFieldLayoutViewProps {

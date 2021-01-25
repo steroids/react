@@ -1,10 +1,10 @@
 import queryString from 'query-string';
-import _get from 'lodash/get';
-import _isObject from 'lodash/isObject';
-import _isString from 'lodash/isString';
-import _toInteger from 'lodash/toInteger';
-import _groupBy from 'lodash/groupBy';
-import _cloneDeep from 'lodash/cloneDeep';
+import _get from 'lodash-es/get';
+import _isObject from 'lodash-es/isObject';
+import _isString from 'lodash-es/isString';
+import _toInteger from 'lodash-es/toInteger';
+import _groupBy from 'lodash-es/groupBy';
+import _cloneDeep from 'lodash-es/cloneDeep';
 import {replace} from 'connected-react-router';
 import {Model} from '../components/MetaComponent';
 

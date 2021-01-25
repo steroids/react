@@ -15,6 +15,7 @@ export interface IFormatProps {
     getFormatter?: any;
     ui?: any;
     emptyText?: any;
+    [key: string]: any;
 }
 
 interface IFormatPrivateProps extends IComponentsHocOutput {}

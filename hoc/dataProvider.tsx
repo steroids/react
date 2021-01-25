@@ -217,7 +217,7 @@ export default (): any => WrappedComponent =>
                         if (nextProps.autoFetch && nextProps.dataProvider
                             && (!this.props.autoFetch || !_isEqual(params, nextParams))
                         ) {
-                            this._searchDataProvider('', null, this.props.autoFetch);
+                            this._searchDataProvider('', null, this.props.autoFetch, nextParams);
                         }
                     }
 
@@ -328,21 +328,24 @@ export default (): any => WrappedComponent =>
                      * @param {string} query
                      * @param {string|number} value
                      * @param {boolean} isAutoFetch
+                     * @param {object} dataProviderParams
                      * @private
                      */
-                    _searchDataProvider(query = '', value = null, isAutoFetch = false) {
+                    _searchDataProvider(query = '', value = null, isAutoFetch = false, dataProviderParams = null) {
                         if (!value && !isAutoFetch && query.length < this.props._autoComplete.minLength) {
                             return;
                         }
                         const searchHandler =
                             this.props.dataProvider.onSearch ||
                             this.props.http.post.bind(this.props.http);
+                        const searchParams = dataProviderParams || this.props.dataProvider.params;
+
                         const result = searchHandler(this.props.dataProvider.action, {
                             query,
                             value,
                             model: this.props.model,
                             attribute: this.props.attribute,
-                            ...this.props.dataProvider.params
+                            ...searchParams
                         });
                         // Check is promise
                         if (result && _isFunction(result.then)) {

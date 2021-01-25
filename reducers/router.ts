@@ -100,7 +100,7 @@ export const buildUrl = (path, params = null) => {
             queryObj[key] = params[key];
         });
     const query = queryString.stringify(queryObj);
-    if (!_isEmpty(query)) {
+    if (!_isEmpty(query) && url) {
         url = url + (url.indexOf('?') !== -1 ? '&' : '?') + query;
     }
 
@@ -246,17 +246,20 @@ export default (state = initialState, action) => {
         case ROUTER_REMOVE_CONFIGS:
             let configs2 = [].concat(state.configs);
             const counters2 = {...state.counters};
+            let data = {...state.data};
             action.configs.forEach(config => {
                 const id = getConfigId(config);
                 if (counters2[id]) {
                     counters2[id]--;
                     if (counters2[id] <= 0) {
                         configs2 = configs2.filter(item => getConfigId(item) !== id);
+                        delete data[id];
                     }
                 }
             });
             return {
                 ...state,
+                data,
                 configs: configs2,
                 counters: counters2
             };

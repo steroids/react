@@ -60,7 +60,24 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
      * @param args
      */
     onChange?: (...args: any[]) => any;
+
+    /**
+     * Обработчик успешного выполнения формы (без ошибок)
+     * @param args
+     */
     onComplete?: (...args: any[]) => any;
+
+    /**
+     * Автоматически стартовать 2fa аутентификацию (отправлять код)
+     */
+    autoStartTwoFactor?: boolean,
+
+    /**
+     * Обработчик, который вызывается при запросе 2FA
+     */
+    onTwoFactor?: (providerName: string, info?: any) => Promise<any> | any | void
+
+
     autoSave?: boolean;
 
     /**
@@ -94,6 +111,7 @@ export interface IFormProps extends IFormSubmitHocInput, IThemeHocInput {
     restoreCustomizer?: (...args: any[]) => any; // TODO Refactor it!
     useHash?: boolean; // TODO Refactor it!
     autoFocus?: boolean;
+    [key: string]: any;
 }
 
 export interface IFormViewProps {
@@ -144,6 +162,10 @@ const filterValues = (values = {}) => {
 @components('ui', 'store', 'clientStorage')
 export default class Form extends React.PureComponent<IFormProps & IFormPrivateProps> {
 
+    static defaultProps = {
+        autoStartTwoFactor: true,
+    };
+
     componentDidMount() {
         // Restore values from query, when autoSave flag is set
         if (this.props.autoSave) {
@@ -171,7 +193,8 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
             );
         }
         if (this.props.autoFocus && process.env.IS_WEB) {
-            const inputEl = findDOMNode(this).querySelector('input:not([type=hidden])');
+            const element: any = findDOMNode(this);
+            const inputEl = element.querySelector('input:not([type=hidden])');
             setTimeout(() => {
                 if (inputEl && inputEl.focus) {
                     inputEl.focus();
@@ -230,8 +253,7 @@ export default class Form extends React.PureComponent<IFormProps & IFormPrivateP
                     onSubmit={this.props.handleSubmit(this.props.onSubmit)}
                 >
                     {this.props.children}
-                    {this.props.fields &&
-                    this.props.fields.map((field: any, index) => (
+                    {(this.props.fields || []).map((field: any, index) => (
                         <Field
                             key={index}
                             {...(_isString(field) ? {attribute: field} : field)}

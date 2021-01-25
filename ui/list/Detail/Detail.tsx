@@ -29,6 +29,7 @@ export interface IDetailProps {
     className?: CssClassName,
     size?: Size,
     emptyText?: any,
+    [key: string]: any,
 }
 
 export interface IDetailViewProps {

@@ -50,6 +50,8 @@ export interface IHtmlFieldProps extends IFieldHocInput {
      * @example [<CustomButton/>]
      */
     customButtons?: Array<any>,
+
+    [key: string]: any,
 }
 
 export interface IHtmlFieldViewProps extends IHtmlFieldProps, IFieldHocOutput {

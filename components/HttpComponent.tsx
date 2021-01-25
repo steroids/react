@@ -4,6 +4,12 @@ import _trimEnd from 'lodash-es/trimEnd';
 import {setFlashes} from '../actions/notifications';
 import axios from 'axios';
 
+interface IHttpRequestOptions {
+    lazy?: boolean | number,
+    cancelToken?: any,
+    onTwoFactor?: (providerName: string) => Promise<any>
+}
+
 /**
  * Http Component
  * Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.
@@ -145,7 +151,7 @@ export default class HttpComponent {
         return method;
     }
 
-    get(url, params = {}, options = {}) {
+    get(url, params = {}, options: IHttpRequestOptions = {}) {
         return this._send(
             url,
             {
@@ -156,7 +162,7 @@ export default class HttpComponent {
         ).then((response: any) => response.data);
     }
 
-    post(url, params = {}, options = {}) {
+    post(url, params = {}, options: IHttpRequestOptions = {}) {
         return this._send(
             url,
             {
@@ -167,7 +173,7 @@ export default class HttpComponent {
         ).then((response: any) => response.data);
     }
 
-    delete(url, params = {}, options = {}) {
+    delete(url, params = {}, options: IHttpRequestOptions = {}) {
         return this._send(
             url,
             {
@@ -178,7 +184,7 @@ export default class HttpComponent {
         ).then((response: any) => response.data);
     }
 
-    send(method, url, params = {}, options = {}) {
+    send(method, url, params = {}, options: IHttpRequestOptions = {}) {
         method = method.toLowerCase();
         return this._send(
             url,
@@ -194,7 +200,7 @@ export default class HttpComponent {
         return require('../hoc/http')(requestFunc);
     }
 
-    _send(method, config, options) {
+    _send(method, config, options: IHttpRequestOptions) {
         const axiosConfig = {
             ...config,
             url: this.getUrl(method)
@@ -208,23 +214,22 @@ export default class HttpComponent {
             }
             return new Promise((resolve, reject) => {
                 const timeout = options.lazy !== true ? options.lazy : 200;
-                this._lazyRequests[method] = setTimeout(() => {
-                    this._sendAxios(axiosConfig)
-                        .then(result => resolve(result))
-                        .catch(result => reject(result));
-                }, timeout);
+                if (typeof timeout === 'number') {
+                    this._lazyRequests[method] = setTimeout(() => {
+                        this._sendAxios(axiosConfig, options)
+                            .then(result => resolve(result))
+                            .catch(result => reject(result));
+                    }, timeout);
+                }
             });
         }
-        return this._sendAxios(axiosConfig);
+        return this._sendAxios(axiosConfig, options);
     }
 
-    _sendAxios(config) {
-        const promise = this.getAxiosInstance().then(instance => {
-            return instance(config);
-        }).then(response => {
-                this.afterRequest(response);
-                return response;
-            })
+    _sendAxios(config, options: IHttpRequestOptions) {
+        const promise = this.getAxiosInstance()
+            .then(instance => instance(config))
+            .then(response => this.afterRequest(response, config, options).then(newResponse => newResponse || response))
             .catch(error => {
                 console.error('Error, request/response: ', config, String(error)); // eslint-disable-line no-console
                 throw error;
@@ -237,12 +242,14 @@ export default class HttpComponent {
         return promise;
     }
 
-    afterRequest(response) {
+    async afterRequest(response, config, options: IHttpRequestOptions) {
         const store = this._components.store;
+
         // Flash
         if (response.data.flashes) {
             store.dispatch(setFlashes(response.data.flashes));
         }
+
         // Ajax redirect
         if (response.data.redirectUrl && !process.env.IS_SSR) {
             if (location.href === response.data.redirectUrl.split('#')[0]) {
@@ -252,5 +259,42 @@ export default class HttpComponent {
                 window.location.href = response.data.redirectUrl;
             }
         }
+
+        // 2fa
+        // {"errors":{"amount":["2FA_REQUIRED:notifier"]}}
+        if (response.data.errors) {
+            const match = JSON.stringify(response.data.errors).match(/2FA_REQUIRED:([a-zA-Z0-9-_]+)/);
+            if (match) {
+                const providerName = match[1];
+
+                // Mark 2fa, remove errors - only 2fa need
+                response.twoFactor = providerName;
+                delete response.data.errors;
+
+                if (options.onTwoFactor) {
+                    await options.onTwoFactor(providerName);
+                } else {
+                    // Require verification code
+                    await this._onTwoFactor(providerName);
+
+                    // Retry request
+                    return this._sendAxios(config, options);
+                }
+            }
+        }
+
+        return response;
+    }
+
+    _onTwoFactor(providerName) {
+        return new Promise((resolve) => {
+            const store = this._components.store;
+            const TwoFactorModal = require('../ui/modal/TwoFactorModal').default;
+            const {openModal} = require('../actions/modal');
+            store.dispatch(openModal(TwoFactorModal, {
+                providerName,
+                onClose: resolve,
+            }));
+        });
     }
 }

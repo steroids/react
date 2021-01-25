@@ -48,6 +48,7 @@ export interface IFieldListProps extends IFieldHocInput {
     itemView?: any;
     itemViewProps?: any;
     enableKeyboardNavigation?: boolean;
+    [key: string]: any;
 }
 
 export interface IFieldListViewProps extends IFieldHocOutput {

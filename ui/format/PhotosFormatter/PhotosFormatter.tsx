@@ -32,6 +32,7 @@ export interface IPhotosFormatterProps {
     photoRowHeight?: number;
     videoRowHeight?: number;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface IPhotosFormatterViewProps extends IPhotosFormatterProps {

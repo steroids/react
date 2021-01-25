@@ -187,6 +187,8 @@ export interface IButtonProps {
     dark?: boolean,
 
     textColor?: any,
+
+    [key: string]: any;
 }
 
 export interface IButtonViewProps extends IButtonProps {
@@ -336,7 +338,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
 
     _onClick(e) {
         e.stopPropagation();
-        if (process.env.PLATFORM === 'web' && this.props.confirm && !confirm(this.props.confirm)) {
+        if (process.env.IS_WEB && this.props.confirm && !confirm(this.props.confirm)) {
             e.preventDefault();
             return;
         }

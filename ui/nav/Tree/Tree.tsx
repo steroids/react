@@ -26,6 +26,7 @@ export interface ITreeProps {
     autoOpenLevels?: number;
     onItemClick?: (...args: any[]) => any;
     autoSave?: boolean;
+    [key: string]: any;
 }
 
 export interface ITreeViewProps extends ITreeProps {
@@ -69,17 +70,23 @@ interface TreeState {
         toKey: '_items',
         normalizer: (items, props) => {
             if (props.routes) {
-                const routeToItem = (route: IRouteItem) => ({
-                    id: route.id,
-                    label: route.label || route.title,
-                    visible: route.isNavVisible !== false,
-                    toRoute: !route.items ? route.id : null,
-                    toRouteParams: !route.items ? props.routerParams : null,
-                    items: Array.isArray(route.items)
-                        ? route.items.map(r => routeToItem(r))
-                        : Object.keys(route.items || {}).map(id => routeToItem(route.items[id])),
-                });
-                return props.routes.map(route => routeToItem(route));
+                const routeToItem = (route: IRouteItem) => {
+                    const items = (
+                        Array.isArray(route.items)
+                            ? route.items.map(r => routeToItem(r))
+                            : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
+                    ).filter(r => r.visible);
+
+                    return {
+                        id: route.id,
+                        label: route.label || route.title,
+                        visible: route.isNavVisible !== false,
+                        toRoute: items.length === 0 ? route.id : null,
+                        toRouteParams: items.length === 0 ? props.routerParams : null,
+                        items,
+                    };
+                };
+                return props.routes.map(route => routeToItem(route)).filter(r => r.visible);
             }
             return items || [];
         },

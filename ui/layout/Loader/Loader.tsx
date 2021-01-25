@@ -4,6 +4,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface ILoaderProps {
     view?: any;
+    [key: string]: any;
 }
 
 interface ILoaderPrivateProps extends IComponentsHocOutput {

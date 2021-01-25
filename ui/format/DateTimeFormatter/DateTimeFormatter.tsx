@@ -23,6 +23,8 @@ export interface IDateTimeFormatterProps{
     * @example 2023-09-11
     */
     value?: any;
+
+    [key: string]: any;
 }
 
 @components('locale','ui')

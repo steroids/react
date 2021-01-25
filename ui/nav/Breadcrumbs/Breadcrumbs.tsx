@@ -11,6 +11,7 @@ export interface IBreadcrumbsProps {
     pageId?: string;
     pageTitle?: string;
     view?: any;
+    [key: string]: any;
 }
 
 export interface IBreadcrumbsViewProps extends IBreadcrumbsProps{

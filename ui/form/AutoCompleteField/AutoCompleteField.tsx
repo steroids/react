@@ -15,6 +15,7 @@ import {conditional} from "conditional-decorator";
  */
 export interface IAutoCompleteFieldProps extends IInputFieldProps, IFieldHocInput, IDataProviderHocInput {
     searchOnFocus?: boolean,
+    [key: string]: any,
 }
 
 export interface IAutoCompleteFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {

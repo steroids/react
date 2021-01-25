@@ -16,6 +16,8 @@ export interface IPasswordFieldProps extends IInputFieldProps, IFieldHocInput {
      * @example true
      */
     security?: boolean;
+
+    [key: string]: any;
 }
 
 export interface IPasswordFieldViewProps {

@@ -8,6 +8,7 @@ export interface IRadioListFieldProps extends IFieldHocInput, IDataProviderHocIn
     inputProps?: any;
     className?: CssClassName;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface IRadioListFieldViewProps extends IFieldHocOutput, IDataProviderHocOutput {
@@ -15,6 +16,7 @@ export interface IRadioListFieldViewProps extends IFieldHocOutput, IDataProvider
         type: string,
         name: string,
         disabled: string,
+        onChange: any,
     },
     items: {
         id: number | string | boolean,

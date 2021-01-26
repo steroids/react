@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {components} from '../../../hoc';
+import {connect, components} from '../../../hoc';
 import {getRouteBreadcrumbs} from '../../../reducers/router';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';

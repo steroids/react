@@ -8,7 +8,6 @@ import LocaleComponent from '../components/LocaleComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
 import {IComponentsHocOutput} from './components';
-import {ThemeContext, defaultTheme} from './theme';
 import MetaComponent from '../components/MetaComponent';
 
 /**
@@ -60,7 +59,7 @@ const defaultComponents = {
 };
 
 export default (config: IApplicationHocConfig): any => WrappedComponent =>
-    class ApplicationHoc extends React.PureComponent<IApplicationHocInput> {
+    class ApplicationHoc extends React.Component<IApplicationHocInput> {
 
         _components: any;
 
@@ -88,16 +87,29 @@ export default (config: IApplicationHocConfig): any => WrappedComponent =>
         }
 
         render() {
-            if (!process.env.IS_SSR) {
-                return (
-                    <Provider store={this._components.store.store}>
-                        <ComponentsContext.Provider value={{components: this._components}}>
-                            <ThemeContext.Provider value={defaultTheme}>
-                                <WrappedComponent {...this.props as IApplicationHocOutput} />
-                            </ThemeContext.Provider>
-                        </ComponentsContext.Provider>
-                    </Provider>
+            if (process.env.IS_SSR) {
+                return null;
+            }
+
+            let content = (
+                <WrappedComponent {...this.props as IApplicationHocOutput} />
+            );
+            if (!process.env.APP_COMPONENTS_GLOBAL) {
+                content = (
+                    <ComponentsContext.Provider value={{components: this._components}}>
+                        {content}
+                    </ComponentsContext.Provider>
                 );
             }
+
+            if (process.env.APP_MULTI_HOC) {
+                //return content;
+            }
+
+            return (
+                <Provider store={this._components.store.store}>
+                    {content}
+                </Provider>
+            );
         }
     }

@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {Route, Switch, Redirect, StaticRouter} from 'react-router';
 import {HashRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {ConnectedRouter} from 'connected-react-router';
+import ConnectedRouter from './ConnectedRouter';
 import _get from 'lodash-es/get';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
-import {components, fetch} from '../../../hoc';
+import {components, connect, fetch} from '../../../hoc';
 import navigationHoc, {INavigationHocInputProps, treeToList} from './navigationHoc';
-import {getActiveRouteIds, getRouteId, getRoutesMap} from '../../../reducers/router';
+import {getActiveRouteIds, getRouteId} from '../../../reducers/router';
 import {SsrProviderContext} from './SsrProvider';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -56,6 +55,7 @@ type RouterState = {
     routes?: any,
     map?: any
 };
+
 @navigationHoc()
 @connect(state => ({
     pathname: _get(state, 'router.location.pathname'),
@@ -127,7 +127,10 @@ export default class Router extends React.Component<IRouterProps & IRouterPrivat
             );
         } else {
             return (
-                <ConnectedRouter history={this.props.store.history}>
+                <ConnectedRouter
+                    store={this.props.store.store}
+                    history={this.props.store.history}
+                >
                     {this.renderContent()}
                 </ConnectedRouter>
             );
@@ -170,6 +173,20 @@ export default class Router extends React.Component<IRouterProps & IRouterPrivat
             const activeRoute = this.state.routes.find(r => r.id === activeRouteId);
             if (activeRoute.component) {
                 children = this._renderComponent(activeRoute, {...props, children});
+            } else if (activeRoute.redirectTo && activeRoute.path === this.props.activePath) {
+                const to = this._findRedirectPathRecursive(activeRoute);
+                if (to === null) {
+                    console.error('Not found path for redirect in route:', route)
+                    return null;
+                }
+
+                children = (
+                    <Redirect
+                        {...props}
+                        to={to}
+                        {...activeRoute.componentProps}
+                    />
+                )
             }
             return false;
         });

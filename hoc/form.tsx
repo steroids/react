@@ -64,7 +64,7 @@ export const mergeLayoutProp = (layout1, layout2) => {
 export const FormContext = React.createContext<IFormContext>({});
 
 export default (config = {} as IFormHocConfig): any => WrappedComponent =>
-    class FormHoc extends React.PureComponent<IFormHocPrivateProps & IFormHocInput> {
+    class FormHoc extends React.Component<IFormHocPrivateProps & IFormHocInput> {
         static WrappedComponent = WrappedComponent;
 
         render() {

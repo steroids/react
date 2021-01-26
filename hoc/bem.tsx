@@ -42,7 +42,7 @@ export default (namespace: string, styles = null): any => WrappedComponent =>
                     }
                 }
 
-                getProps() {
+                _getProps() {
                     return {
                         ...this.props,
                         bem: this._bem,

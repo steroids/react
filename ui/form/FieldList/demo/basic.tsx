@@ -16,7 +16,7 @@ export default () => (
             <FieldList
                 attribute='items'
                 label='Items'
-                initialRowsCount={100}
+                initialRowsCount={2}
                 items={[
                     {
                         attribute: 'id',

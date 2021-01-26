@@ -1,8 +1,7 @@
 import * as React from 'react';
 import _isNumber from 'lodash-es/isNumber';
-import {connect} from 'react-redux';
 import {isSubmitting} from 'redux-form';
-import {components} from '../../../hoc';
+import {connect, components} from '../../../hoc';
 import FieldLayout from '../FieldLayout';
 import {FormContext, IFormContext, mergeLayoutProp} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -172,7 +171,7 @@ export interface IButtonProps {
      * ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки
      * при отправке формы.
      */
-    formId?: string,
+    formId?: string | boolean,
 
     tag?: 'button' | 'a',
 
@@ -229,6 +228,16 @@ const defaultProps = {
     },
 };
 
+@normalize({
+    fromKey: 'badge',
+    toKey: '_badge',
+    normalizer: badge => ({
+        ...defaultProps.badge,
+        enable: !!badge || badge === 0,
+        ...(_isNumber(badge) ? {value: badge} : badge),
+    }),
+})
+@components('ui')
 @connect(
     (state, props) => {
         let url;
@@ -244,17 +253,7 @@ const defaultProps = {
         };
     }
 )
-@normalize({
-    fromKey: 'badge',
-    toKey: '_badge',
-    normalizer: badge => ({
-        ...defaultProps.badge,
-        enable: !!badge || badge === 0,
-        ...(_isNumber(badge) ? {value: badge} : badge),
-    }),
-})
-@components('ui')
-export default class Button extends React.PureComponent<IButtonProps & IButtonPrivateProps, ButtonState> {
+export default class Button extends React.Component<IButtonProps & IButtonPrivateProps, ButtonState> {
 
     static defaultProps = defaultProps;
 
@@ -293,6 +292,9 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
     }
 
     render() {
+        if (this.props.formId === false) {
+            return this.renderContent();
+        }
         return (
             <FormContext.Consumer>
                 {context => this.renderContent(context)}
@@ -300,10 +302,10 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
         );
     }
 
-    renderContent(context: IFormContext) {
+    renderContent(context: IFormContext = null) {
         const ButtonView = this.props.view || this.props.ui.getView('form.ButtonView');
         const disabled = this.props.submitting || this.props.disabled || this.state.isLoading;
-        const layout = mergeLayoutProp(context.layout, this.props.layout);
+        const layout = context ? mergeLayoutProp(context.layout, this.props.layout) : this.props.layout
         const tag = this.props.tag || (this.props.link || this.props.url ? 'a' : 'button');
 
         const button = (
@@ -313,7 +315,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
                 isFailed={this.state.isFailed}
                 isLoading={this.state.isLoading || this.props.submitting}
                 url={this.props.url || (tag === 'a' ? '#' : null)}
-                formId={context.formId}
+                formId={context ? context.formId : null}
                 layout={layout}
                 disabled={disabled}
                 onClick={!disabled ? this._onClick : undefined}
@@ -322,7 +324,7 @@ export default class Button extends React.PureComponent<IButtonProps & IButtonPr
             </ButtonView>
         );
 
-        if (context.formId && layout !== false) {
+        if (context && context.formId && layout !== false) {
             return (
                 <FieldLayout
                     {...this.props}

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
+import {components, connect} from '../../../hoc';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {ListControlPosition} from '../../../hoc/list';

@@ -90,7 +90,7 @@ const stateMap = (state, props) => {
 
 export default (): any => WrappedComponent =>
     connect(stateMap)(
-        class FileHoc extends React.PureComponent<IFileHocInput> {
+        class FileHoc extends React.Component<IFileHocInput> {
             _uploader: any;
             forceUpdate: any;
             static WrappedComponent = WrappedComponent;

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import _isArray from 'lodash-es/isArray';
 import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {getEnumLabels} from '../../../reducers/fields';
-import {components} from '../../../hoc';
+import {components, connect} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IEnumFormatterProps {

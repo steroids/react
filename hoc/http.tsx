@@ -26,7 +26,7 @@ interface IHttpHocState {
 
 export default (requestFunc): any => WrappedComponent =>
     components()(
-        class HttpHoc extends React.PureComponent<IHttpHocInput & IHttpHocPrivateProps, IHttpHocState> {
+        class HttpHoc extends React.Component<IHttpHocInput & IHttpHocPrivateProps, IHttpHocState> {
             static WrappedComponent = WrappedComponent;
 
             _isRendered = false;

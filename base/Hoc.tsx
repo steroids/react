@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-export default class Hoc<P = {}, S = {}, SS = any> extends React.PureComponent<P, S, SS> {
+export default class Hoc<P = {}, S = {}, SS = any> extends React.Component<P, S, SS> {
 
     static WrappedComponent;
 
-    getProps() {
+    _getProps() {
         return this.props;
     }
 
     render() {
         const WrappedComponent: any = this.constructor['WrappedComponent'];
         return (
-            <WrappedComponent {...this.getProps()}/>
+            <WrappedComponent {...this._getProps()}/>
         );
     }
 }

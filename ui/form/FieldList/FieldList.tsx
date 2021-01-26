@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import {arrayPush} from 'redux-form';
 import {findDOMNode} from 'react-dom';
 import {components, field} from '../../../hoc';
@@ -8,8 +7,9 @@ import Field from '../Field';
 import tableNavigationHandler from './tableNavigationHandler';
 import {getModel} from '../../../reducers/fields';
 import {FormContext} from '../../../hoc/form';
-import {IConnectHocOutput} from '../../../hoc/connect';
+import connect, {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import {shouldUpdate} from '../../../utils/data';
 
 interface IFieldListItem extends IFieldHocInput {
 
@@ -92,11 +92,11 @@ const defaultProps = {
     componentId: 'form.FieldList',
     list: true,
 })
+@components('ui')
 @connect((state, props) => ({
     model: getModel(state, props.model),
 }))
-@components('ui')
-export default class FieldList extends React.PureComponent<IFieldListProps & IFieldListPrivateProps> {
+export default class FieldList extends React.Component<IFieldListProps & IFieldListPrivateProps> {
 
     static defaultProps = defaultProps;
 
@@ -106,6 +106,10 @@ export default class FieldList extends React.PureComponent<IFieldListProps & IFi
         this._onRemove = this._onRemove.bind(this);
         this._renderField = this._renderField.bind(this);
         this._onKeyDown = this._onKeyDown.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps): boolean {
+        return shouldUpdate(this.props, nextProps, ['fields', 'meta']);
     }
 
     componentDidMount() {

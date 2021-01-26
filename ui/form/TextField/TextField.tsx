@@ -38,12 +38,12 @@ interface ITextFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput, ICo
 
 }
 
+@connect()
 @field({
     componentId: 'form.TextField'
 })
-@connect()
 @components('ui')
-export default class TextField extends React.PureComponent<ITextFieldProps & ITextFieldPrivateProps> {
+export default class TextField extends React.Component<ITextFieldProps & ITextFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

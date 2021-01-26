@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import {change} from 'redux-form';
 import _remove from 'lodash-es/remove';
 import _isString from 'lodash-es/isString';
@@ -15,7 +14,7 @@ import {IFieldHocOutput} from './field';
 import components, {IComponentsHocOutput} from './components';
 import {IFieldHocInput} from "./field";
 import Enum from "../base/Enum";
-import {IConnectHocOutput} from './connect';
+import connect, {IConnectHocOutput} from './connect';
 import normalize, {INormalizeHocConfig} from './normalize';
 import {smartSearch} from '../utils/text';
 import {normalizeItems} from '../utils/data';
@@ -112,10 +111,10 @@ const stateMap = (state, props) => ({
         : props.items
 });
 export default (): any => WrappedComponent =>
-    connect(stateMap)(
-        normalize(normalizeMap)(
-            components('http')(
-                class DataProviderHoc extends React.PureComponent<IDataProviderHocInput & IDataProviderHocPrivateProps, IDataProviderHocState> {
+    normalize(normalizeMap)(
+        components('http')(
+            connect(stateMap)(
+                class DataProviderHoc extends React.Component<IDataProviderHocInput & IDataProviderHocPrivateProps, IDataProviderHocState> {
 
                     _delayTimer: any;
 

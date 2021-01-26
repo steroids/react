@@ -56,7 +56,13 @@ export default (): any => WrappedComponent =>
             }
 
             render() {
-                return <WrappedComponent {...this.props} onSubmit={this._onSubmit}/>;
+                const props = {...this.props};
+
+                // Fix reduxForm dynamic functions
+                delete props['blur'];
+                delete props['change'];
+
+                return <WrappedComponent {...props} onSubmit={this._onSubmit}/>;
             }
 
             cleanEmptyObject(object) {

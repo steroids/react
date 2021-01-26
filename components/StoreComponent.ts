@@ -26,6 +26,7 @@ export default class StoreComponent {
     history: any;
     navigationNative: any;
     store: any;
+    lastAction: string;
 
     constructor(components, config, lazyInit = false) {
         this._components = components;
@@ -34,6 +35,7 @@ export default class StoreComponent {
 
         this.history = null;
         this.store = null;
+        this.lastAction = null;
         this._asyncReducers = {};
 
         this.getState = this.getState.bind(this);
@@ -166,6 +168,8 @@ export default class StoreComponent {
         }
         // Default case
         if (_isPlainObject(action) && action.type) {
+            this.lastAction = action.type;
+
             try {
                 return dispatch(action);
             } catch (e) {

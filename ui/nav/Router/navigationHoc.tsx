@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {getRoute} from '../../../reducers/router';
 import {isRouterInitialized} from '../../../reducers/router';
 import {initRoutes, initParams} from '../../../actions/router';
-import {IConnectHocOutput} from '../../../hoc/connect';
+import connect, {IConnectHocOutput} from '../../../hoc/connect';
 
 export interface INavigationHocInputProps {
     defaultRoles?: string[];
@@ -98,8 +97,7 @@ export default (routes = null): any => WrappedComponent =>
             static WrappedComponent = WrappedComponent;
 
             UNSAFE_componentWillMount() {
-                const routesTree =
-                    routes || (!_isArray(this.props.routes) ? this.props.routes : null);
+                const routesTree = routes || (!_isArray(this.props.routes) ? this.props.routes : null);
                 if (routesTree) {
                     this.props.dispatch(
                         initRoutes(

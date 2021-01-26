@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import _get from 'lodash-es/get';
-import {components} from '../../../hoc';
+import {connect, components} from '../../../hoc';
 import {toggleAll, toggleItem} from '../../../actions/list';
 import {isChecked, isCheckedAll} from '../../../reducers/list';
 import {IConnectHocOutput} from '../../../hoc/connect';

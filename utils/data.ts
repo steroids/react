@@ -2,6 +2,9 @@ import _uniqBy from 'lodash-es/uniqBy';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _some from 'lodash-es/some';
+import _get from 'lodash-es/get';
+import _omit from 'lodash-es/omit';
+import _isEqualWith from 'lodash-es/isEqualWith';
 import _has from 'lodash-es/has';
 import _isObject from 'lodash-es/isObject';
 import _isInteger from 'lodash-es/isInteger';
@@ -117,4 +120,45 @@ export const checkCondition = (item, condition) => {
     }
 
     return true;
+}
+
+const shouldUpdateSingle = (a, b) => {
+    if (_isFunction(a) && _isFunction(b)) {
+        return false;
+    }
+    return a !== b;
+};
+
+export const shouldUpdate = (objA, objB, deepPaths = null) => {
+    if (_isObject(objA) && _isObject(objB)) {
+        const keysA = Object.keys(objA);
+        const keysB = Object.keys(objB);
+        if (keysA.length !== keysB.length) {
+            return true;
+        }
+
+        // Convert deep paths to array of arrays
+        if (deepPaths) {
+            deepPaths = deepPaths.map(p => _isString(p) ? p.split('.') : p);
+        }
+
+        for (let i = 0; i < keysA.length; i++) {
+            const key = keysA[i];
+            let deepPath = null;
+            if (deepPaths) {
+                deepPath = deepPaths.find(p => p[0] === key) || null;
+            }
+
+            const hasChanges = deepPath
+                ? shouldUpdate(objA[key], objB[key], deepPath)
+                : shouldUpdateSingle(objA[key], objB[key]);
+            if (hasChanges) {
+                console.log(0, 'shouldUpdate changed key:', key, objA[key], objB[key]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    return shouldUpdateSingle(objA, objB);
 }

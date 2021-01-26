@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import {closeModal, modalMarkClosing} from '../../../actions/modal';
 import {getOpened, MODAL_DEFAULT_GROUP} from '../../../reducers/modal';
-import {IConnectHocOutput} from '../../../hoc/connect';
+import connect, {IConnectHocOutput} from '../../../hoc/connect';
 import {IModalProps} from '../Modal/Modal';
 
 export interface IModalPortalProps {

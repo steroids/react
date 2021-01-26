@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import {
     navigationAddConfigs,
     navigationRemoveConfigs,
@@ -8,7 +7,7 @@ import {
     IFetchConfig
 } from '../actions/router';
 import {getRouteParams} from '../reducers/router';
-import {IConnectHocOutput} from './connect';
+import connect, {IConnectHocOutput} from './connect';
 
 export type IFetchHocConfig = (props: any) => IFetchConfig | IFetchConfig[];
 
@@ -48,7 +47,7 @@ const stateMap = state => ({
 });
 export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions): any => WrappedComponent =>
     connect(stateMap)(
-        class FetchHoc extends React.PureComponent<IFetchHocInput & IFetchHocPrivateProps, IFetchHocState> {
+        class FetchHoc extends React.Component<IFetchHocInput & IFetchHocPrivateProps, IFetchHocState> {
 
             static WrappedComponent = WrappedComponent;
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import _get from 'lodash-es/get';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
@@ -13,7 +12,7 @@ import {init, setData, setUser} from '../actions/auth';
 import {setMeta} from '../actions/fields';
 import {goToRoute} from '../actions/router';
 import components, {IComponentsHocOutput} from './components';
-import {IConnectHocOutput} from './connect';
+import connect, {IConnectHocOutput} from './connect';
 import {IRouteItem} from '../ui/nav/Router/Router';
 
 export const STATUS_LOADING = 'loading';
@@ -69,10 +68,10 @@ const stateMap = state => ({
     redirectPageId: state.auth.redirectPageId
 });
 
-export default (initAction): any => WrappedComponent =>
-    connect(stateMap)(
-        components('http')(
-            class LayoutHoc extends React.PureComponent<ILayoutHocInput & ILayoutHocPrivateProps, ILayoutHocState> {
+export default (initAction = null): any => WrappedComponent =>
+    components('http')(
+        connect(stateMap)(
+            class LayoutHoc extends React.Component<ILayoutHocInput & ILayoutHocPrivateProps, ILayoutHocState> {
                 static WrappedComponent = WrappedComponent;
                 /**
                  * Proxy real name, prop types and default props
@@ -98,14 +97,13 @@ export default (initAction): any => WrappedComponent =>
                     // Callback for load initial page data (return promise)
                     if (_isFunction(initAction)) {
                         this.props.dispatch(init(true));
+                    } else {
+                        this.props.dispatch(setUser(null));
                     }
                 }
 
                 componentDidUpdate(prevProps) {
-                    if (
-                        _isFunction(initAction) &&
-                        this.props.initializeCounter > prevProps.initializeCounter
-                    ) {
+                    if (_isFunction(initAction) && this.props.initializeCounter > prevProps.initializeCounter) {
                         initAction(this.props, this.props.dispatch)
                             .then(data => {
                                 // Configure components

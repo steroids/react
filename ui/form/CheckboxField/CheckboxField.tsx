@@ -43,9 +43,9 @@ interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput,
         label: false
     }
 })
-@connect()
 @components('ui')
-export default class CheckboxField extends React.PureComponent<ICheckboxFieldProps & ICheckboxFieldPrivateProps> {
+@connect()
+export default class CheckboxField extends React.Component<ICheckboxFieldProps & ICheckboxFieldPrivateProps> {
     static defaultProps = {
         disabled: false,
         required: false,

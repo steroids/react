@@ -1,5 +1,7 @@
 import * as React from 'react';
 import _isEqual from 'lodash-es/isEqual';
+import Hoc from '../base/Hoc';
+import multi from './multi';
 
 /**
  * Normalize HOC
@@ -22,39 +24,42 @@ export interface INormalizeHocConfig {
 }
 
 export default (configs: INormalizeHocConfig | INormalizeHocConfig[]): any => WrappedComponent =>
-    class NormalizeHoc extends React.PureComponent<INormalizeHocInput> {
-        static WrappedComponent = WrappedComponent;
+    multi()(
+        class NormalizeHoc extends Hoc<INormalizeHocInput> {
+            static WrappedComponent = WrappedComponent;
 
-        constructor(props) {
-            super(props);
+            _state: any;
 
-            this.state = this._normalize([].concat(configs), this.props);
-        }
+            constructor(props) {
+                super(props);
 
-        componentDidUpdate(prevProps: Readonly<{}>) {
-            const toNormalize = [].concat(configs).filter(config => !_isEqual(prevProps[config.fromKey], this.props[config.fromKey]));
-            if (toNormalize.length > 0) {
-                this.setState(this._normalize(toNormalize, this.props));
+                this._state = this._normalize([].concat(configs), this.props);
+            }
+
+            componentDidUpdate(prevProps: Readonly<{}>) {
+                const toNormalize = [].concat(configs).filter(config => !_isEqual(prevProps[config.fromKey], this.props[config.fromKey]));
+                if (toNormalize.length > 0) {
+                    this._state = this._normalize(toNormalize, this.props);
+                    this.forceUpdate();
+                }
+            }
+
+            _getProps() {
+                return {
+                    ...this.props,
+                    ...this._state,
+                };
+            }
+
+            _normalize(configs: INormalizeHocConfig[], props) {
+                const data = {};
+                configs.map(config => {
+                    data[config.toKey] = config.normalizer(
+                        props[config.fromKey],
+                        {...this.props, ...this.state, ...data}
+                    );
+                });
+                return data;
             }
         }
-
-        render() {
-            return (
-                <WrappedComponent
-                    {...this.props}
-                    {...this.state}
-                />
-            );
-        }
-
-        _normalize(configs: INormalizeHocConfig[], props) {
-            const data = {};
-            configs.map(config => {
-                data[config.toKey] = config.normalizer(
-                    props[config.fromKey],
-                    {...this.props, ...this.state, ...data}
-                );
-            });
-            return data;
-        }
-    }
+    )

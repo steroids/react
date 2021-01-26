@@ -8,7 +8,7 @@ import {ReactNode} from "react";
  */
 export default class UiComponent {
     _components: any;
-    icons: {[name: string]: string | number | ReactNode};
+    icons: {[name: string]: string | number | ReactNode} | any;
     fields: {};
     formatters: {};
     _portalElement: HTMLDivElement;
@@ -58,6 +58,9 @@ export default class UiComponent {
     }
 
     getIcon(name) {
+        if (_isFunction(this.icons)) {
+            this.icons = this.icons();
+        }
         return this.icons && this.icons[name] || null;
     }
 
@@ -90,6 +93,12 @@ export default class UiComponent {
         if (!this._components[group] || !this._components[group][path]) {
             throw new Error(`Not found '${group}' by path '${path}'.`);
         }
+
+        // Lazy load component
+        if (_isObject(this._components[group][path]) && this._components[group][path].lazy) {
+            this._components[group][path] = this._components[group][path].lazy();
+        }
+
         return this._components[group][path];
     }
 

@@ -255,10 +255,10 @@ const normalizeMap = [
 export const getFormId = props => _get(props, 'searchForm.formId', props.listId);
 
 export default (): any => WrappedComponent =>
-    connect(stateMap)(
-        components('store', 'meta', 'clientStorage')(
-            normalize(normalizeMap)(
-                class ListHoc extends React.PureComponent<IListHocInput & IListHocPrivateProps> {
+    components('store', 'meta', 'clientStorage')(
+        normalize(normalizeMap)(
+            connect(stateMap)(
+                class ListHoc extends React.Component<IListHocInput & IListHocPrivateProps> {
 
                     static WrappedComponent = WrappedComponent;
 

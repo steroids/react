@@ -43,13 +43,13 @@ const exportComponents = (components, names) => {
 }
 
 export default (...names): any => WrappedComponent => {
-    if (typeof window !== 'undefined' && window['SteroidsComponents']) {
+    if (process.env.APP_COMPONENTS_GLOBAL) {
         return multi()(
-            class ComponentsGlobalHoc extends Hoc<IComponentsHocInput & IComponentHocPrivateProps> {
+            class ComponentsHoc extends Hoc<IComponentsHocInput & IComponentHocPrivateProps> {
 
                 static WrappedComponent = WrappedComponent;
 
-                getProps() {
+                _getProps() {
                     return {
                         ...this.props,
                         ...exportComponents(window['SteroidsComponents'], names),
@@ -60,7 +60,7 @@ export default (...names): any => WrappedComponent => {
         )
     } else {
         return multi()(
-            class ComponentsContextHoc extends React.PureComponent<IComponentsHocInput & IComponentHocPrivateProps> {
+            class ComponentsHoc extends React.Component<IComponentsHocInput & IComponentHocPrivateProps> {
 
                 static WrappedComponent = WrappedComponent;
 

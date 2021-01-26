@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import {connect} from 'react-redux';
+import {components, connect} from '../../../hoc';
 import _isString from 'lodash-es/isString';
 import {getModel} from '../../../reducers/fields';
 import _upperFirst from 'lodash-es/upperFirst';

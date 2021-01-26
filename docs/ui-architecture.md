@@ -78,7 +78,7 @@ UI Kit фреймворков, такие как Material UI, Ant Design, Bluepr
         ui.addIcons(require('@steroidsjs/bootstrap/icon/fontawesome').default);
     },
 })
-export default class Application extends React.PureComponent {
+export default class Application extends React.Component {
     // ...
 }
 ```

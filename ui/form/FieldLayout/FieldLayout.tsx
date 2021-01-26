@@ -2,6 +2,7 @@ import * as React from 'react';
 import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {mergeLayoutProp} from '../../../hoc/form';
+import {shouldUpdate} from '../../../utils/data';
 
 export interface IFieldLayoutProps {
 
@@ -52,8 +53,12 @@ const defaultProps = {
 };
 
 @components('ui')
-export default class FieldLayout extends React.PureComponent<IFieldLayoutProps & IFieldLayoutPrivateProps> {
+export default class FieldLayout extends React.Component<IFieldLayoutProps & IFieldLayoutPrivateProps> {
     static defaultProps = defaultProps;
+
+    shouldComponentUpdate(nextProps): boolean {
+        return shouldUpdate(this.props, nextProps, ['layout']);
+    }
 
     render() {
         if (this.props.layout === false) {

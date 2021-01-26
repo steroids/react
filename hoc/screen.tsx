@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
 import _isObject from 'lodash-es/isObject';
 import {setWidth, setMedia} from '../actions/screen';
-import {IConnectHocOutput} from './connect';
+import connect, {IConnectHocOutput} from './connect';
 
 /**
  * Screen HOC
@@ -21,7 +20,7 @@ interface IScreenWatcherHocPrivateProps extends IConnectHocOutput {
 
 export default (media): any => WrappedComponent =>
     connect()(
-        class ScreenWatcherHoc extends React.PureComponent<IScreenHocInput & IScreenWatcherHocPrivateProps> {
+        class ScreenWatcherHoc extends React.Component<IScreenHocInput & IScreenWatcherHocPrivateProps> {
             static WrappedComponent = WrappedComponent;
             /**
              * Proxy real name, prop types and default props for storybook

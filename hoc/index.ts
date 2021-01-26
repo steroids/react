@@ -15,7 +15,6 @@ import multi from './multi';
 import normalize from './normalize';
 import props from './props';
 import screen from './screen';
-import theme from './theme';
 
 export {
     application,
@@ -35,5 +34,4 @@ export {
     normalize,
     props,
     screen,
-    theme,
 };

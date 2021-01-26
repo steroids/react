@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {components} from '../../../hoc';
-import {
-    setFlashes,
-    closeNotification
-} from '../../../actions/notifications';
+import {components, connect} from '../../../hoc';
+import {setFlashes, closeNotification} from '../../../actions/notifications';
 import {getNotifications, getPosition} from '../../../reducers/notifications';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IComponentsHocOutput} from '../../../hoc/components';

@@ -1,27 +1,28 @@
 import * as React from 'react';
 
 export default (): any => WrappedComponent => {
+    if (!process.env.APP_MULTI_HOC) {
+        return WrappedComponent;
+    }
     if (WrappedComponent.IS_MULTI_HOC) {
         return WrappedComponent;
     }
-    return WrappedComponent;
 
     const names = [];
     let ItemComponent = WrappedComponent;
     while (true) {
-        if (ItemComponent?.prototype?.getProps) {
-            names.push = ItemComponent.displayName || ItemComponent.name;
-        } else {
+        if (!ItemComponent?.prototype?._getProps) {
             break;
         }
+        names.push(ItemComponent.displayName || ItemComponent.name);
         ItemComponent = ItemComponent.WrappedComponent
     }
 
     const MultiHoc = class MultiHoc extends React.Component {
 
         static IS_MULTI_HOC = true;
-
-        static displayName = names.join('_');
+        static WrappedComponent = WrappedComponent;
+        static displayName = 'Hoc_' + names.map(n => n.replace(/Hoc$/, '')).join('_') + '_' + (ItemComponent.displayName || ItemComponent.name);
 
         _props: any;
         _instances: any;
@@ -35,12 +36,12 @@ export default (): any => WrappedComponent => {
             this._LastComponent = null;
             let ItemComponent = WrappedComponent;
             while (true) {
-                if (ItemComponent?.prototype?.getProps) {
+                if (ItemComponent?.prototype?._getProps) {
                     const instance = new ItemComponent(this._props);
                     instance.forceUpdate = this.forceUpdate.bind(this);
-                    this._props = instance.getProps();
+                    this._props = instance._getProps();
                     this._instances.push(instance);
-                } else {
+                } else if (!ItemComponent.IS_MULTI_HOC) {
                     this._LastComponent = ItemComponent;
                     break;
                 }
@@ -51,6 +52,7 @@ export default (): any => WrappedComponent => {
         render() {
             this._updateProps(this.props);
 
+            console.log(9999, this)
             const Component: any = this._LastComponent;
             return (
                 <Component {...this._props}/>
@@ -61,7 +63,7 @@ export default (): any => WrappedComponent => {
             this._props = props;
             this._instances.forEach(instance => {
                 instance.props = this._props;
-                this._props = instance.getProps();
+                this._props = instance._getProps();
             });
         }
 
@@ -73,17 +75,24 @@ export default (): any => WrappedComponent => {
         'componentDidUpdate',
         'componentWillUnmount',
         'UNSAFE_componentWillMount',
+        //'shouldComponentUpdate',
     ];
     methods.forEach(method => {
         MultiHoc.prototype[method] = function() {
             const args = arguments;
+            const results = [];
             this._instances.forEach(instance => {
                 this._updateProps(this.props);
 
                 if (instance[method]) {
-                    instance[method].apply({...instance, props: this._props}, args);
+                    instance.props = this._props;
+                    results.push(instance[method].apply(instance, args));
                 }
             });
+
+            if (method === 'shouldComponentUpdate') {
+                return results.filter(result => !result).length === 0;
+            }
         };
     });
 

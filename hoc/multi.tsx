@@ -52,7 +52,6 @@ export default (): any => WrappedComponent => {
         render() {
             this._updateProps(this.props);
 
-            console.log(9999, this)
             const Component: any = this._LastComponent;
             return (
                 <Component {...this._props}/>

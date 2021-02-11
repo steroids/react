@@ -1,6 +1,9 @@
+import * as React from 'react';
+
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import {ReactNode} from "react";
+import _isString from 'lodash-es/isString';
+import {ReactNode} from 'react';
 
 /**
  * Ui Component
@@ -8,21 +11,41 @@ import {ReactNode} from "react";
  */
 export default class UiComponent {
     _components: any;
-    icons: {[name: string]: string | number | ReactNode} | any;
-    fields: {};
-    formatters: {};
+
+    _models: any;
+
+    icons: { [name: string]: string | number | ReactNode } | any;
+
+    fields: any;
+
+    formatters: any;
+
+    _registeredFields: any;
+
     _portalElement: HTMLDivElement;
 
-    constructor(components) {
+    constructor() {
         this.icons = {};
         this.fields = {};
         this.formatters = {};
         this._components = {};
+        this._models = {};
+        this._registeredFields = {};
         this._portalElement = null;
     }
 
     addViews(components) {
         this._add('views', components);
+    }
+
+    renderView(Component, props, forceNode = false) {
+        if (_isString(Component)) {
+            Component = this._getComponent('views', Component);
+        }
+        if (!forceNode && _isFunction(Component)) {
+            return Component(props);
+        }
+        return React.createElement(Component, props);
     }
 
     getView(path) {
@@ -37,8 +60,11 @@ export default class UiComponent {
         return this._getComponent('fields', path);
     }
 
-    getFieldProps(path) {
-        return this._getPropsConfig('fields', path);
+    getFieldProps(path, model = null, attribute = null) {
+        return {
+            ...this._getPropsConfig('fields', path),
+            ...this.getModel(model)?.fields?.[attribute],
+        };
     }
 
     addFormatters(components) {
@@ -61,14 +87,42 @@ export default class UiComponent {
         if (_isFunction(this.icons)) {
             this.icons = this.icons();
         }
-        return this.icons && this.icons[name] || null;
+        return this.icons?.[name] || null;
+    }
+
+    addModels(models) {
+        this._models = {...this._models, ...models};
+    }
+
+    getModel(name) {
+        if (_isString(name)) {
+            name = name.replace(/\\/g, '.').replace(/^\./, '');
+
+            const model = this._models[name] || null;
+            if (!model) {
+                console.warn('Steroids: Not found model meta:', name); // eslint-disable-line no-console
+            }
+            return model;
+        }
+        return name || null;
+    }
+
+    registerField(formId, attribute, type) {
+        if (!this._registeredFields[formId]) {
+            this._registeredFields[formId] = {};
+        }
+        this._registeredFields[formId][attribute] = type;
+    }
+
+    getRegisteredFields(formId) {
+        return this._registeredFields[formId] || null;
     }
 
     _add(group, items, defaultNamespace = null) {
         // require.context()
         if (_isFunction(items) && _isFunction(items.keys)) {
             items.keys().forEach(fileName => {
-                const matches = fileName.match(/^\.\/(.*\/)?[^\/]+\/([^\/]+)\.(js|ts)x?$/);
+                const matches = fileName.match(/^\.\/(.*\/)?[^\\/]+\/([^\\/]+)\.(js|ts)x?$/);
                 if (matches) {
                     const path = (matches[1] || '').replace(/\//g, '.') + matches[2];
                     this._components[group] = this._components[group] || {};
@@ -80,7 +134,7 @@ export default class UiComponent {
             this._components[group] = this._components[group] || {};
             Object.keys(items).forEach(key => {
                 const name = key.indexOf('.') === -1 && defaultNamespace
-                    ? defaultNamespace + '.' + key
+                    ? `${defaultNamespace}.${key}`
                     : key;
                 this._components[group][name] = items[key];
             });

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {ReactNode} from 'react';
-import {components, field} from '../../../hoc';
+import {ReactNode, useMemo} from 'react';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import InputMask from 'react-input-mask';
+import useField, {defineField} from '../../../hooks/field';
+import {useComponents} from '../../../hooks';
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
@@ -105,76 +104,64 @@ export interface IInputFieldViewProps extends IFieldHocOutput {
     onMouseDown?: (e: Event | React.MouseEvent) => void;
 }
 
-interface IInputFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+function InputField(props: IInputFieldProps) {
+    props = useField('InputField', props);
 
-}
+    const components = useComponents();
 
-@field({
-    componentId: 'form.InputField'
-})
-@components('ui')
-export default class InputField extends React.PureComponent<IInputFieldProps & IInputFieldPrivateProps> {
+    props.inputProps = useMemo(() => ({
+        type: props.type,
+        name: props.input.name,
+        value: props.input.value || '',
+        onChange: value => props.input.onChange(value),
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        ...props.inputProps,
+    }), [props.disabled, props.input, props.inputProps, props.placeholder, props.type]);
 
-    static WrappedComponent: any;
-
-    static defaultProps = {
-        type: 'text',
-        disabled: false,
-        required: false,
-        className: '',
-        placeholder: '',
-        errors: [],
-        textBefore: null,
-        textAfter: null,
-        addonBefore: null,
-        addonAfter: null,
-    };
-
-    render() {
-        // No render for hidden input
-        if (this.props.type === 'hidden') {
-            return null;
-        }
-        const InputFieldView =
-            this.props.view || this.props.ui.getView('form.InputFieldView');
-
-
-        // react-input-mask HOC for mask
-        if (this.props.maskProps) {
-            return (
-                <InputMask
-                    {...this.props}
-                    {...this.props.maskProps}
-                    value={this.props.input.value || ''}
-                    onChange={e => this.props.input.onChange(e.target.value)}
-                >
-                    <InputFieldView
-                        {...this.props}
-                        inputProps={{
-                            type: this.props.type,
-                            name: this.props.input.name,
-                            placeholder: this.props.placeholder,
-                            disabled: this.props.disabled,
-                            ...this.props.inputProps
-                        }}
-                    />
-                </InputMask>
-            );
-        }
-
-        return (
-            <InputFieldView
-                {...this.props}
-                inputProps={{
-                    type: this.props.type,
-                    name: this.props.input.name,
-                    value: this.props.input.value || '',
-                    onChange: value => this.props.input.onChange(value),
-                    placeholder: this.props.placeholder,
-                    disabled: this.props.disabled,
-                    ...this.props.inputProps
-                }}
-            />
-        );
+    // No render for hidden input
+    if (props.type === 'hidden') {
+        return null;
     }
+
+    // react-input-mask HOC for mask
+    // TODO
+    /*if (props.maskProps) {
+        return (
+            <InputMask
+                {...props}
+                {...props.maskProps}
+                value={props.input.value || ''}
+                onChange={e => props.input.onChange(e.target.value)}
+            >
+                <InputFieldView
+                    {...this.props}
+                    inputProps={{
+                        type: this.props.type,
+                        name: this.props.input.name,
+                        placeholder: this.props.placeholder,
+                        disabled: this.props.disabled,
+                        ...this.props.inputProps
+                    }}
+                />
+            </InputMask>
+        );
+    }*/
+
+    return components.ui.renderView(props.view || 'form.InputFieldView', props);
 }
+
+InputField.defaultProps = {
+    type: 'text',
+    disabled: false,
+    required: false,
+    className: '',
+    placeholder: '',
+    errors: [],
+    textBefore: null,
+    textAfter: null,
+    addonBefore: null,
+    addonAfter: null,
+};
+
+export default defineField('InputField')(InputField);

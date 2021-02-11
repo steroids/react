@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useMemo} from 'react';
 import {mergeLayoutProp} from '../../../hoc/form';
-import {shouldUpdate} from '../../../utils/data';
+import {useComponents} from '../../../hooks';
 
 export interface IFieldLayoutProps {
 
@@ -36,43 +35,36 @@ export interface IFieldLayoutViewProps {
         label: boolean,
         cols: number[],
         [key: string]: any,
-    };
+    },
+    children?: React.ReactNode
 }
 
-interface IFieldLayoutPrivateProps extends IComponentsHocOutput {
+function FieldLayout(props: IFieldLayoutProps) {
+    const components = useComponents();
+    const FieldLayoutView = props.layoutView || components.ui.getView('form.FieldLayoutView');
 
+    const layout = useMemo(() => mergeLayoutProp(FieldLayout.defaultProps.layout, props.layout), [props.layout]);
+    if (layout === false) {
+        return props.children;
+    }
+
+    return (
+        <FieldLayoutView
+            {...props}
+            layout={layout}
+        >
+            {props.children}
+        </FieldLayoutView>
+    );
 }
 
-const defaultProps = {
+FieldLayout.defaultProps = {
     layout: {
         layout: 'default',
-        cols: [3, 6]
+        cols: [3, 6],
     },
     required: false,
-    className: ''
+    className: '',
 };
 
-@components('ui')
-export default class FieldLayout extends React.Component<IFieldLayoutProps & IFieldLayoutPrivateProps> {
-    static defaultProps = defaultProps;
-
-    shouldComponentUpdate(nextProps): boolean {
-        return shouldUpdate(this.props, nextProps, ['layout']);
-    }
-
-    render() {
-        if (this.props.layout === false) {
-            return this.props.children;
-        }
-        const FieldLayoutView = this.props.layoutView || this.props.ui.getView('form.FieldLayoutView');
-        const layout = mergeLayoutProp(defaultProps.layout, this.props.layout);
-        return (
-            <FieldLayoutView
-                {...this.props}
-                layout={typeof layout === 'object' ? layout : {layout}}
-            >
-                {this.props.children}
-            </FieldLayoutView>
-        );
-    }
-}
+export default React.memo(FieldLayout);

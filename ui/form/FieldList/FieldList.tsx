@@ -60,6 +60,7 @@ export interface IFieldListViewProps extends IFieldHocOutput {
     onAdd?: (e: any) => void,
     showRemove?: boolean,
     showAdd?: boolean,
+    children?: React.ReactNode,
 }
 
 export interface IFieldListItemViewProps extends IFieldHocOutput {

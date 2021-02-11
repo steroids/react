@@ -25,7 +25,7 @@ export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
 }
 
 export interface IFieldSetViewProps extends IFieldHocOutput {
-
+    children?: React.ReactNode,
 }
 
 @components('ui')

@@ -1,36 +1,35 @@
 import * as React from 'react';
-import _get from 'lodash-es/get';
 import _isString from 'lodash-es/isString';
+import _isFunction from 'lodash-es/isFunction';
 
-import components, {IComponentsHocOutput} from '../../../hoc/components';
-import form, {IFormHocOutput} from '../../../hoc/form';
-import {getModel} from '../../../reducers/fields';
-import connect, {IConnectHocOutput} from '../../../hoc/connect';
-import {getFieldPropsFromModel} from '../../../hoc/field';
+import {useComponents} from '../../../hooks';
+import {useContext} from 'react';
+import {FormContext} from '../Form/Form';
 
 export interface IFieldProps {
+    attribute?: any;
+    model?: any;
+    component?: any;
     [key: string]: any,
 }
 
-export interface IFieldPrivateProps extends IFormHocOutput, IConnectHocOutput, IComponentsHocOutput{
-}
+export default function Field(props: IFieldProps) {
+    const components = useComponents();
 
-@form()
-@components('ui')
-@connect(
-    (state, props) => ({
-        model: getModel(state, props.model),
-    }),
-    ['fields']
-)
-export default class Field extends React.Component<IFieldProps & IFieldPrivateProps, {}> {
-    render() {
-        const component = this.props.component
-            || _get(getFieldPropsFromModel(this.props.model, this.props.attribute), 'component')
-            || 'InputField';
-        const ComponentField = _isString(component) ? this.props.ui.getField('form.' + component) : component;
-        return (
-            <ComponentField {...this.props} />
-        );
-    }
+    // Get model
+    const context = useContext(FormContext);
+    const model = props.model || context.model;
+
+    // Get component
+    const component = props.component
+        || components.ui.getModel(model)?.fields?.[props.attribute]?.component
+        || 'InputField';
+    const ComponentField = _isString(component)
+        ? components.ui.getField(`form.${component}`)
+        : component;
+
+    // Render
+    return _isFunction(ComponentField)
+        ? ComponentField(props)
+        : <ComponentField {...props} />;
 }

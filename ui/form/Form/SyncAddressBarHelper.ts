@@ -12,10 +12,7 @@ import {getRoute, getRouteParams} from '../../../reducers/router';
 
 export default class SyncAddressBarHelper {
     static restore(
-        store,
-        formId,
         initialValues,
-        forceRestore = false,
         customizer = null
     ) {
         let newValues = {
@@ -25,9 +22,7 @@ export default class SyncAddressBarHelper {
         if (customizer && _isFunction(customizer)) {
             newValues = customizer(initialValues, queryString.parse(location.hash));
         }
-        if (forceRestore || !_isEqual(initialValues, newValues)) {
-            store.dispatch(initialize(formId, newValues));
-        }
+        return newValues;
     }
 
     /**
@@ -78,5 +73,15 @@ export default class SyncAddressBarHelper {
         } else {
             location.hash = querySeparator + queryString.stringify(values);
         }
+    }
+
+    static cleanValues(values = {}) {
+        let obj = {...values};
+        Object.keys(obj).forEach(key => {
+            if (!obj[key] || (_isArray(obj[key]) && !obj[key].length)) {
+                delete obj[key];
+            }
+        });
+        return obj;
     }
 }

@@ -25,7 +25,16 @@ declare function __(phrase: string, params?: any): string;
 /**
  * Название цвета, соответствующее ему состоянию
  */
-declare type ColorName = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | string;
+declare type ColorName =
+    'primary'
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'danger'
+    | 'light'
+    | 'dark'
+    | string;
 
 /**
  * Уникальный ключ. ID, UUID или другое
@@ -47,9 +56,9 @@ declare type FormLayoutName = 'default' | 'horizontal' | 'inline' | string;
  */
 declare type FormLayout = FormLayoutName | boolean | {
     layout: FormLayoutName | boolean,
-    className: string,
-    label: boolean,
-    cols: number[],
+    className?: string,
+    label?: boolean,
+    cols?: number[],
     [key: string]: any,
 };
 

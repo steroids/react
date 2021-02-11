@@ -1,14 +1,16 @@
 import * as React from 'react';
-import _isNumber from 'lodash-es/isNumber';
-import {isSubmitting} from 'redux-form';
-import {connect, components} from '../../../hoc';
+import {useSelector, useDispatch} from 'react-redux';
 import FieldLayout from '../FieldLayout';
-import {FormContext, IFormContext, mergeLayoutProp} from '../../../hoc/form';
+import {FormContext, mergeLayoutProp} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
-import normalize from '../../../hoc/normalize';
-import {goToRoute} from "../../../actions/router";
+import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
+import {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import {useUpdateEffect} from 'react-use';
+import {useComponents} from '../../../hooks';
+import {useFormSelector} from '../../../hooks/field';
+import {IFormContext} from '../Form/Form';
 
 interface IButtonBadge {
     enable?: boolean,
@@ -39,7 +41,7 @@ export interface IButtonProps {
      * Должна ли показываться надпись на кнопке в состоянии загрузки
      * @example true
      */
-    showLabelOnLoading?: Boolean;
+    showLabelOnLoading?: boolean;
 
     /**
      * HTML Тип
@@ -135,7 +137,7 @@ export interface IButtonProps {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: object;
+    style?: any;
 
     className?: CssClassName;
 
@@ -211,7 +213,125 @@ type ButtonState = {
     isFailed?: boolean
 };
 
-const defaultProps = {
+function Button(props: IButtonProps) {
+    const components = useComponents();
+    const dispatch = useDispatch();
+
+    // Badge
+    const badge = useMemo(() => ({
+        ...Button.defaultProps.badge,
+        enable: !!props.badge || props.badge === 0,
+        ...(typeof props.badge === 'object' ? props.badge : {value: props.badge}),
+    }), [props.badge]);
+
+    // Route -> url
+    const routePath = useSelector(state => props.toRoute ? getRouteProp(state, props.toRoute, 'path') : null);
+    const url = typeof props.url !== 'undefined'
+        ? props.url
+        : (routePath ? buildUrl(routePath, props.toRouteParams) : null);
+
+    // Flags: isLoading, isFailed
+    const [{isLoading, isFailed}, setStateFlags] = useState({isLoading: false, isFailed: false});
+    useUpdateEffect(
+        () => setStateFlags({isLoading: props.isLoading, isFailed: props.isFailed}),
+        [props.isLoading, props.isFailed],
+    );
+
+    // Form submitting
+    const context: IFormContext = useContext(FormContext);
+    let submitting = useFormSelector(state => state.isSubmitting);
+    if (!context.formId) {
+        submitting = !!props.submitting;
+    }
+
+    const disabled = submitting || props.disabled || isLoading;
+    const tag = props.tag || (props.link || url ? 'a' : 'button');
+    const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
+
+    const failedTimer = useRef(null);
+    const onClick = useCallback((e) => {
+        e.stopPropagation();
+
+        if (process.env.IS_WEB && props.confirm && !window.confirm(props.confirm)) {
+            e.preventDefault();
+            return;
+        }
+
+        if (props.toRoute) {
+            if (!e.ctrlKey && !e.shiftKey && !e.metaKey) {
+                e.preventDefault();
+                dispatch(goToRoute(props.toRoute, props.toRouteParams));
+            }
+        }
+
+        if (props.onClick) {
+            const result = props.onClick(e);
+            if (result instanceof Promise) {
+                setStateFlags({
+                    isLoading: true,
+                    isFailed: false,
+                });
+
+                if (failedTimer.current) {
+                    clearTimeout(failedTimer.current);
+                }
+
+                result
+                    .then(() => {
+                        // timeout is set to assure that the user will see loading state
+                        setTimeout(() => {
+                            setStateFlags({
+                                isLoading: false,
+                                isFailed: false,
+                            });
+                        }, 500);
+                    })
+                    .catch(error => {
+                        setStateFlags({
+                            isLoading: false,
+                            isFailed: props.resetFailedMs > 0,
+                        });
+
+                        if (props.resetFailedMs > 0) {
+                            failedTimer.current = setTimeout(() => {
+                                setStateFlags({
+                                    isLoading: false,
+                                    isFailed: false,
+                                });
+                            }, props.resetFailedMs);
+                        }
+                        throw error;
+                    });
+            }
+        }
+    }, []);
+
+    const button = components.ui.renderView(props.view || 'form.ButtonView', {
+        ...props,
+        badge,
+        layout,
+        isFailed,
+        isLoading,
+        disabled,
+        tag,
+        formId: context?.formId || null,
+        url: url || (tag === 'a' ? '#' : null),
+        onClick: !disabled ? onClick : undefined,
+        children: props.label || props.children,
+    });
+
+    if (layout) {
+        return (
+            <FieldLayout layout={layout}>
+                {button}
+            </FieldLayout>
+        );
+    }
+
+    return button;
+}
+
+Button.defaultProps = {
     type: 'button',
     color: 'primary',
     outline: false,
@@ -228,166 +348,4 @@ const defaultProps = {
     },
 };
 
-@normalize({
-    fromKey: 'badge',
-    toKey: '_badge',
-    normalizer: badge => ({
-        ...defaultProps.badge,
-        enable: !!badge || badge === 0,
-        ...(_isNumber(badge) ? {value: badge} : badge),
-    }),
-})
-@components('ui')
-@connect(
-    (state, props) => {
-        let url;
-        if (props.toRoute) {
-            url = buildUrl(getRouteProp(state, props.toRoute, 'path'), props.toRouteParams)
-        }
-
-        return {
-            url: typeof props.url !== 'undefined' ? props.url : url,
-            submitting: props.formId
-                ? isSubmitting(props.formId)(state)
-                : !!props.submitting,
-        };
-    }
-)
-export default class Button extends React.Component<IButtonProps & IButtonPrivateProps, ButtonState> {
-
-    static defaultProps = defaultProps;
-
-    _isMounted: any;
-    _failedTimer: any;
-
-    constructor(props) {
-        super(props);
-
-        this._isMounted = false;
-        this._failedTimer = null;
-
-        this.state = {
-            isLoading: this.props.isLoading,
-            isFailed: this.props.isFailed,
-        };
-
-        this._onClick = this._onClick.bind(this);
-    }
-
-    componentDidMount() {
-        this._isMounted = true;
-    }
-
-    componentDidUpdate(prevProps: Readonly<IButtonProps & IButtonPrivateProps>) {
-        if (prevProps.isLoading !== this.props.isLoading) {
-            this.setState({isLoading: this.props.isLoading});
-        }
-        if (prevProps.isFailed !== this.props.isFailed) {
-            this.setState({isFailed: this.props.isFailed});
-        }
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
-    render() {
-        if (this.props.formId === false) {
-            return this.renderContent();
-        }
-        return (
-            <FormContext.Consumer>
-                {context => this.renderContent(context)}
-            </FormContext.Consumer>
-        );
-    }
-
-    renderContent(context: IFormContext = null) {
-        const ButtonView = this.props.view || this.props.ui.getView('form.ButtonView');
-        const disabled = this.props.submitting || this.props.disabled || this.state.isLoading;
-        const layout = context ? mergeLayoutProp(context.layout, this.props.layout) : this.props.layout
-        const tag = this.props.tag || (this.props.link || this.props.url ? 'a' : 'button');
-
-        const button = (
-            <ButtonView
-                {...this.props}
-                tag={tag}
-                isFailed={this.state.isFailed}
-                isLoading={this.state.isLoading || this.props.submitting}
-                url={this.props.url || (tag === 'a' ? '#' : null)}
-                formId={context ? context.formId : null}
-                layout={layout}
-                disabled={disabled}
-                onClick={!disabled ? this._onClick : undefined}
-            >
-                {this.props.label || this.props.children}
-            </ButtonView>
-        );
-
-        if (context && context.formId && layout !== false) {
-            return (
-                <FieldLayout
-                    {...this.props}
-                    label={null}
-                    layout={layout}
-                >
-                    {button}
-                </FieldLayout>
-            );
-        }
-        return button;
-    }
-
-    _onClick(e) {
-        e.stopPropagation();
-        if (process.env.IS_WEB && this.props.confirm && !confirm(this.props.confirm)) {
-            e.preventDefault();
-            return;
-        }
-        if (this.props.toRoute) {
-            this._onLinkClick(e);
-        }
-        if (this.props.onClick) {
-            const result = this.props.onClick(e);
-            if (result instanceof Promise) {
-                this.setState({
-                    isLoading: true,
-                    isFailed: false,
-                });
-                if (this._failedTimer) {
-                    clearTimeout(this._failedTimer);
-                }
-
-                result
-                    .then(() => {
-                        if (this._isMounted) {
-                            // timeout is set to assure that the user will see loading state
-                            setTimeout(() => this.setState({isLoading: false}), 800);
-                        }
-                    })
-                    .catch(e => {
-                        if (this._isMounted) {
-                            this.setState({
-                                isLoading: false,
-                                isFailed: this.props.resetFailedMs > 0,
-                            });
-
-                            if (this.props.resetFailedMs > 0) {
-                                this._failedTimer = setTimeout(() => {
-                                    this.setState({isFailed: false});
-                                }, this.props.resetFailedMs);
-                            }
-                        }
-                        throw e;
-                    });
-            }
-        }
-    }
-
-    _onLinkClick(e) {
-        if (!e.ctrlKey && !e.shiftKey && !e.metaKey) {
-            e.preventDefault();
-            this.props.dispatch(goToRoute(this.props.toRoute, this.props.toRouteParams));
-        }
-    }
-}
+export default Button;

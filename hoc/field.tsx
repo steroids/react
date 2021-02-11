@@ -162,8 +162,7 @@ export default (customConfig): any => WrappedComponent => {
                     formErrors: Object.keys(formErrors).length > 0 ? formErrors : null,
                     fieldPropsFromRedux: getFieldProps(state, getFieldId(props, config))
                 };
-            },
-            ['form', 'fields']
+            }
         )(
             components('ui')(
                 class FieldHoc extends React.Component<IFieldHocInput & IFieldHocPrivateProps> {
@@ -200,8 +199,7 @@ export default (customConfig): any => WrappedComponent => {
                     render() {
                         const FieldLayout = require('../ui/form/FieldLayout').default;
                         const outputProps = {
-                            ...this.props.ui.getFieldProps(config.componentId),
-                            ...getFieldPropsFromModel(this.props.model, this.props.attribute),
+                            ...this.props.ui.getFieldProps(config.componentId, this.props.model, this.props.attribute),
                             ...this.props.fieldPropsFromRedux,
                         } as IFieldHocOutput;
 

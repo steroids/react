@@ -40,6 +40,7 @@ export interface INotificationsViewProps {
     notifications?: INotificationItem[];
     className?: CssClassName;
     position: string;
+    children?: React.ReactNode,
 }
 
 export interface INotificationsItemViewProps extends INotificationItem {

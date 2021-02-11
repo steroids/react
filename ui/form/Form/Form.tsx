@@ -1,20 +1,18 @@
 import * as React from 'react';
-import {findDOMNode} from 'react-dom';
-import {reduxForm, isInvalid, initialize} from 'redux-form';
-import _isEqual from 'lodash-es/isEqual';
-import _isString from 'lodash-es/isString';
-import _isArray from 'lodash-es/isArray';
+import {useSelector, useDispatch} from 'react-redux';
+import {initialize} from 'redux-form';
 import _get from 'lodash-es/get';
+import _cloneDeep from 'lodash-es/cloneDeep';
 import * as queryString from 'qs';
-import components, {IComponentsHocOutput} from '../../../hoc/components';
-import formSubmit, {IFormSubmitHocInput, IFormSubmitHocOutput} from '../../../hoc/formSubmit';
-import {FormContext} from '../../../hoc/form';
+import {useCallback, useMemo, useReducer} from 'react';
+import {useEffectOnce, useMount, usePrevious, useUpdateEffect} from 'react-use';
+import {IFormSubmitHocInput} from '../../../hoc/formSubmit';
 import AutoSaveHelper from './AutoSaveHelper';
 import SyncAddressBarHelper from './SyncAddressBarHelper';
-import Field from '../Field';
-import Button from '../Button';
-import connect, {IConnectHocOutput} from '../../../hoc/connect';
 import {IFieldProps} from '../Field/Field';
+import {useComponents} from '../../../hooks';
+import {formInitialize} from '../../../actions/form';
+import {reducerItem} from '../../../reducers/form';
 
 export interface IFormProps extends IFormSubmitHocInput {
     formId?: string;
@@ -73,10 +71,9 @@ export interface IFormProps extends IFormSubmitHocInput {
     /**
      * Обработчик, который вызывается при запросе 2FA
      */
-    onTwoFactor?: (providerName: string, info?: any) => Promise<any> | any | void
+    onTwoFactor?: (providerName: string, info?: any) => Promise<any> | any | void,
 
-
-    autoSave?: boolean;
+    autoSave?: boolean,
 
     /**
      * Начальные значения формы
@@ -89,17 +86,16 @@ export interface IFormProps extends IFormSubmitHocInput {
      * @example {width: '45%'}
      */
     style?: any;
+
     view?: CustomView;
     fields?: (string | IFieldProps)[],
-    /*fields?: (
-        | string
-        | {
-        label?: string,
-        hint?: string,
-        required?: boolean,
-        component?: string | React.ReactNode
-    }
-        )[];*/
+
+    /**
+     * Использовать для данных глобальное хранилище (redux)
+     * @example true
+     */
+    globalState?: boolean,
+
     /**
      * Надпись на конпке отправки формы
      * @example Submit
@@ -114,6 +110,8 @@ export interface IFormProps extends IFormSubmitHocInput {
 }
 
 export interface IFormViewProps {
+    submitLabel?: string;
+    fields?: (string | IFieldProps)[],
     onSubmit: any,
     className?: CssClassName,
     layout?: {
@@ -123,156 +121,208 @@ export interface IFormViewProps {
         cols: number[],
         [key: string]: any,
     },
+    children?: React.ReactNode,
 }
 
-interface IFormPrivateProps extends IFormSubmitHocOutput, IConnectHocOutput, IComponentsHocOutput {
-    formValues?: any | any[];
-    locationSearch?: string;
-    isInvalid?: boolean;
-    formRegisteredFields?: any;
-    handleSubmit?: any;
+interface IFormReducerState {
+    values: any,
+    initialValues: any,
+    errors: any,
+    isInvalid: boolean,
+    isSubmitting: boolean,
 }
 
-let valuesSelector = null;
-let invalidSelector = null;
-const filterValues = (values = {}) => {
-    let obj = {...values};
-    Object.keys(obj).forEach(key => {
-        if (!obj[key] || (_isArray(obj[key]) && !obj[key].length)) {
-            delete obj[key];
-        }
+export interface IFormContext {
+    formId?: string;
+    model?: any;
+    prefix?: string | boolean;
+    layout?: FormLayout;
+    globalState?: boolean,
+    reducer?: any,
+}
+
+export const FormContext = React.createContext<IFormContext>({});
+export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
+
+/* @formSubmit()*/
+
+// Data providers
+const reactReducerProvider = (initialValues = {}) => {
+    // React reducer
+    const initialState: IFormReducerState = useMemo(() => ({ // eslint-disable-line react-hooks/rules-of-hooks
+        values: initialValues ? _cloneDeep(initialValues) : {},
+        initialValues,
+        errors: {},
+        isInvalid: false,
+        isSubmitting: false,
+    }), [initialValues]);
+    const reducer = useReducer(reducerItem, initialState); // eslint-disable-line react-hooks/rules-of-hooks
+
+    const [state] = reducer;
+    return {
+        values: state.values,
+        isInvalid: state.isInvalid,
+        isSubmitting: state.isSubmitting,
+        reducer,
+    };
+};
+const reduxProvider = (formId, initialValues) => {
+    const dispatch = useDispatch(); // eslint-disable-line react-hooks/rules-of-hooks
+    useEffectOnce(() => { // eslint-disable-line react-hooks/rules-of-hooks
+        dispatch(formInitialize(formId, initialValues));
     });
-    return obj;
+    return {
+        ...useSelector(state => ({ // eslint-disable-line react-hooks/rules-of-hooks
+            values: _get(state, ['form', formId, 'values']) || initialValues,
+            isInvalid: _get(state, ['form', formId, 'isInvalid']),
+            isSubmitting: _get(state, ['form', formId, 'isSubmitting']),
+        })),
+        reducer: null,
+    };
 };
 
-@connect(
-    (state, props) => {
-        invalidSelector = isInvalid(props.formId);
+export const normalizeLayout = layout => (typeof layout === 'object' ? layout : {layout});
 
-        let formValues = null;
-        if (props.onChange || props.autoSave || props.syncWithAddressBar) {
-            formValues = valuesSelector(state);
+export default function Form(props: IFormProps) {
+    // Get components and dispatch method
+    const components = useComponents();
+    const dispatch = useDispatch();
+
+    let initialValues = props.initialValues;
+
+    // Dev validation. You cannot change data provider (formId, globalState)
+    if (process.env.NODE_ENV !== 'production') {
+        const prevFormId = usePrevious(props.formId); // eslint-disable-line react-hooks/rules-of-hooks
+        const prevGlobalState = usePrevious(props.globalState); // eslint-disable-line react-hooks/rules-of-hooks
+        if ((prevFormId && props.formId !== prevFormId) || (prevGlobalState && props.globalState !== prevGlobalState)) {
+            throw new Error('Props formId and globalState cannot be changed dynamically! Its related to data provider');
         }
-
-        return {
-            form: props.formId,
-            formValues,
-            isInvalid: invalidSelector(state),
-            formRegisteredFields: _get(state, `form.${props.formId}.registeredFields`),
-            locationSearch: _get(state, 'router.location.search', '')
-        };
     }
-)
-@reduxForm()
-@formSubmit()
-@components('ui', 'store', 'clientStorage')
-export default class Form extends React.PureComponent<IFormProps & IFormPrivateProps> {
 
-    static defaultProps = {
-        autoStartTwoFactor: true,
-    };
+    // Restore initial state from address bar
+    const locationSearch = useSelector(state => _get(state, 'router.location.search', ''));
+    if (props.syncWithAddressBar) {
+        initialValues = SyncAddressBarHelper.restore(
+            {
+                ...props.initialValues,
+                ...SyncAddressBarHelper.cleanValues(queryString.parse(locationSearch)),
+            },
+            props.restoreCustomizer,
+        );
+    }
 
-    componentDidMount() {
-        // Restore values from query, when autoSave flag is set
-        if (this.props.autoSave) {
-            const values = AutoSaveHelper.restore(
-                this.props.clientStorage,
-                this.props.formId,
-                this.props.initialValues
-            );
-            if (values) {
-                this.props.dispatch(initialize(this.props.formId, values));
-            }
-        }
-        // Restore values from address bar
-        if (this.props.syncWithAddressBar) {
-            const query = Object.assign(
-                this.props.initialValues || {},
-                filterValues(queryString.parse(this.props.locationSearch))
-            );
-            SyncAddressBarHelper.restore(
-                this.props.store,
-                this.props.formId,
-                query,
-                true,
-                this.props.restoreCustomizer
+    // Resolve data provider
+    const {
+        values,
+        isInvalid,
+        isSubmitting,
+        reducer,
+    } = props.globalState
+        ? reduxProvider(props.formId, initialValues)
+        : reactReducerProvider(initialValues);
+
+    // Sync with address bar
+    useUpdateEffect(() => {
+        if (props.syncWithAddressBar) {
+            const page = Number(_get(values, 'page', 1));
+            SyncAddressBarHelper.save(
+                components.store,
+                SyncAddressBarHelper.cleanValues({
+                    ...values,
+                    page: page > 1 && page,
+                }),
+                props.useHash,
             );
         }
-        if (this.props.autoFocus && process.env.IS_WEB) {
-            const element: any = findDOMNode(this);
+    }, [props.syncWithAddressBar, props.useHash, values]);
+
+    // Normalize layout
+    const layout = useMemo(() => normalizeLayout(props.layout), [props.layout]);
+
+    // Auto focus
+    useMount(() => {
+        if (props.autoFocus && process.env.IS_WEB) {
+            // TODO
+            /*const element: any = findDOMNode(this);
             const inputEl = element.querySelector('input:not([type=hidden])');
             setTimeout(() => {
                 if (inputEl && inputEl.focus) {
                     inputEl.focus();
                 }
-            }, 10);
+            }, 10);*/
         }
-    }
+    });
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        // Check update values for trigger event
-        if (
-            (this.props.onChange ||
-                this.props.autoSave ||
-                this.props.syncWithAddressBar) &&
-            !_isEqual(this.props.formValues, nextProps.formValues)
-        ) {
-            if (this.props.onChange) {
-                this.props.onChange(nextProps.formValues);
-            }
-            if (this.props.autoSave && nextProps.formValues) {
-                AutoSaveHelper.save(
-                    this.props.clientStorage,
-                    this.props.formId,
-                    nextProps.formValues
-                );
-            }
-            if (this.props.syncWithAddressBar) {
-                const page = Number(_get(nextProps.formValues, 'page', 1));
-                const values = {
-                    ...nextProps.formValues,
-                    page: page > 1 && page
-                };
-                SyncAddressBarHelper.save(
-                    this.props.store,
-                    filterValues(values),
-                    nextProps.useHash
-                );
+    // Auto save
+    useMount(() => {
+        // Restore values from query, when autoSave flag is set
+        if (props.autoSave) {
+            const restoreValues = AutoSaveHelper.restore(
+                props.clientStorage,
+                props.formId,
+                props.initialValues,
+            );
+            if (restoreValues) {
+                dispatch(initialize(props.formId, restoreValues));
             }
         }
-    }
+    });
+    useUpdateEffect(() => {
+        if (props.autoSave && values) {
+            AutoSaveHelper.save(components.clientStorage, props.formId, values);
+        }
+    }, [props.autoSave, values]);
 
-    render() {
-        const FormView = this.props.view || this.props.ui.getView('form.FormView');
-        return (
-            <FormContext.Provider
-                value={{
-                    formId: this.props.formId,
-                    model: this.props.model,
-                    prefix: this.props.prefix,
-                    layout: this.props.layout,
-                }}
-            >
-                <FormView
-                    {...this.props}
-                    layout={typeof this.props.layout === 'object' ? this.props.layout : {layout: this.props.layout}}
-                    onSubmit={this.props.handleSubmit(this.props.onSubmit)}
-                >
-                    {this.props.children}
-                    {(this.props.fields || []).map((field: any, index) => (
-                        <Field
-                            key={index}
-                            {...(_isString(field) ? {attribute: field} : field)}
-                        />
-                    ))}
-                    {this.props.submitLabel && (
-                        <Button
-                            onClick={this.props.handleSubmit(this.props.onSubmit)}
-                            label={this.props.submitLabel}
-                        />
-                    )}
-                </FormView>
-            </FormContext.Provider>
+    // OnChange handler
+    useUpdateEffect(() => {
+        if (props.onChange) {
+            props.onChange(values);
+        }
+    }, [values]);
+
+    // OnSubmit handler
+    const onSubmit = useCallback(() => {
+        // TODO
+    }, []);
+
+    // Render context and form
+    let content = useMemo(() => (
+        <FormContext.Provider
+            value={{
+                formId: props.formId,
+                model: props.model,
+                prefix: props.prefix,
+                layout: props.layout,
+                globalState: props.globalState,
+            }}
+        >
+            {components.ui.renderView(props.view || 'form.FormView', {
+                isInvalid,
+                isSubmitting,
+                layout,
+                onSubmit,
+                children: props.children,
+            })}
+        </FormContext.Provider>
+    ), [
+        props.view,
+        props.children,
+        props.model,
+        props.prefix,
+        props.layout,
+        isInvalid,
+        isSubmitting,
+        layout,
+        onSubmit,
+    ]);
+
+    // Wrap with reducer provider, if need
+    if (!props.globalState) {
+        content = (
+            <FormReducerContext.Provider value={reducer}>
+                {content}
+            </FormReducerContext.Provider>
         );
     }
+    return content;
 }

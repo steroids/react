@@ -10,6 +10,7 @@ export interface IBooleanFormatterProps {
 
 export interface IBooleanFormatterPropsView {
     value?: string | number | boolean;
+    children?: React.ReactNode,
 }
 
 @components('ui')

@@ -20,6 +20,7 @@ import {closeModal, openModal} from '../../../actions/modal';
 import Modal from '../../modal/Modal';
 import {getOpened} from '../../../reducers/modal';
 import {listRefresh} from '../../../actions/list';
+import {ReactNode} from 'react';
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
     title?: string,
@@ -103,6 +104,7 @@ export interface ICrudViewProps {
     className?: CssClassName,
     controls?: IControlItem[],
     title?: string,
+    children?: ReactNode,
 }
 
 export const getCrudId = (props: ICrudProps & ICrudPrivateProps) => props.crudId || props.routeId;

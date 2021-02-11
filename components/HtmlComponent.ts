@@ -5,16 +5,20 @@ import _isString from 'lodash-es/isString';
  * Хелпер для работы с БЭМ классами и DOM элементами
  */
 export default class HtmlComponent {
+    _instances: any;
     namespace = '';
 
     constructor(components) {
+        this._instances = {};
     }
 
     bem(blockName) {
-        const bem = (...names) => this.classNames(...names);
-        bem.block = modifiers => this._applyModifiers(blockName, modifiers);
-        bem.element = (elementName, modifiers) => this._applyModifiers(blockName + '__' + elementName, modifiers);
-        return bem;
+        if (!this._instances[blockName]) {
+            this._instances[blockName] = (...names) => this.classNames(...names);
+            this._instances[blockName].block = modifiers => this._applyModifiers(blockName, modifiers);
+            this._instances[blockName].element = (elementName, modifiers) => this._applyModifiers(blockName + '__' + elementName, modifiers);
+        }
+        return this._instances[blockName];
     }
 
     classNames(...names) {

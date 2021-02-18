@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {ChangeEvent} from 'react';
 import {normalizeLayout} from '../ui/form/Form/Form';
 import {FormContext} from '../hooks/form';
 
@@ -17,14 +18,13 @@ export interface IFormHocInput {
     disabled?: boolean;
     layout?: FormLayout;
     component?: string | React.ComponentType | JSX.Element;
-    onChange?: (...args: any[]) => any;
+    onChange?: ((...args: any[]) => any);
     className?: CssClassName;
     //layoutClassName?: string;
     //view?: any;
 }
 
-export interface IFormHocOutput extends IFormHocInput {
-}
+export type IFormHocOutput = IFormHocInput
 
 interface IFormHocConfig {
     appendPrefix?: boolean;
@@ -36,9 +36,7 @@ export const mergeLayoutProp = (layout1, layout2) => {
     return {...layout2, ...layout1};
 };
 
-
-export default (config = {} as IFormHocConfig): any => WrappedComponent =>
-    class FormHoc extends React.Component<IFormHocInput> {
+export default (config = {} as IFormHocConfig): any => WrappedComponent => class FormHoc extends React.Component<IFormHocInput> {
         static WrappedComponent = WrappedComponent;
 
         render() {
@@ -59,4 +57,4 @@ export default (config = {} as IFormHocConfig): any => WrappedComponent =>
                 </FormContext.Consumer>
             );
         }
-    }
+};

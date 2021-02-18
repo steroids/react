@@ -40,8 +40,8 @@ interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput,
 @field({
     componentId: 'form.CheckboxField',
     layoutProps: {
-        label: false
-    }
+        label: false,
+    },
 })
 @components('ui')
 @connect()
@@ -49,7 +49,7 @@ export default class CheckboxField extends React.Component<ICheckboxFieldProps &
     static defaultProps = {
         disabled: false,
         required: false,
-        className: ''
+        className: '',
     };
 
     static WrappedComponent: any;
@@ -61,8 +61,7 @@ export default class CheckboxField extends React.Component<ICheckboxFieldProps &
     }
 
     render() {
-        const CheckboxFieldView =
-            this.props.view || this.props.ui.getView('form.CheckboxFieldView');
+        const CheckboxFieldView = this.props.view || this.props.ui.getView('form.CheckboxFieldView');
         return (
             <CheckboxFieldView
                 {...this.props}
@@ -72,7 +71,7 @@ export default class CheckboxField extends React.Component<ICheckboxFieldProps &
                     checked: !!this.props.input.value,
                     onChange: () => this.props.input.onChange(!this.props.input.value),
                     disabled: this.props.disabled,
-                    ...this.props.inputProps
+                    ...this.props.inputProps,
                 }}
             />
         );

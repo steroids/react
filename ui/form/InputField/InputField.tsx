@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactNode, useMemo} from 'react';
+import {ChangeEventHandler, ReactNode, useMemo} from 'react';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {defineField, useFormField} from '../../../hooks/form';
 import {useComponents} from '../../../hooks';
@@ -86,7 +86,7 @@ export interface IInputFieldViewProps extends IFieldHocOutput {
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: string) => void,
+        onChange: ChangeEventHandler<Element>,
         value: string | number,
         placeholder: string,
         disabled: string,

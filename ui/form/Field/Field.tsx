@@ -1,9 +1,9 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 
 import {useComponents} from '../../../hooks';
-import {useContext} from 'react';
 import {FormContext} from '../Form/Form';
 
 export interface IFieldProps {

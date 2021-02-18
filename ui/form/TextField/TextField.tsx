@@ -1,9 +1,12 @@
 import * as React from 'react';
+import { useMemo } from 'react';
 import {submit} from 'redux-form';
-import {components, connect, field} from '../../../hoc';
+import {useDispatch} from 'react-redux';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
+import useField, { defineField } from '../../../hooks/field';
+import { useComponents } from '../../../hooks';
 
 export interface ITextFieldProps extends IFieldHocInput {
     /**
@@ -38,56 +41,45 @@ interface ITextFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput, ICo
 
 }
 
-@connect()
-@field({
-    componentId: 'form.TextField'
-})
-@components('ui')
-export default class TextField extends React.Component<ITextFieldProps & ITextFieldPrivateProps> {
-    static defaultProps = {
-        disabled: false,
-        required: false,
-        className: '',
-        placeholder: '',
-        submitOnEnter: false,
-        errors: []
-    };
+function TextField(props: ITextFieldProps & ITextFieldPrivateProps) {
+    props = useField('TextField', props);
 
-    constructor(props) {
-        super(props);
-        this._onKeyUp = this._onKeyUp.bind(this);
-    }
+    const dispatch = useDispatch();
+    const components = useComponents();
 
-    render() {
-        const TextFieldView =
-            this.props.view || this.props.ui.getView('form.TextFieldView');
-        return (
-            <TextFieldView
-                {...this.props}
-                inputProps={{
-                    name: this.props.input.name,
-                    value: this.props.input.value || '',
-                    onChange: e => this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
-                    onKeyUp: this._onKeyUp,
-                    placeholder: this.props.placeholder,
-                    disabled: this.props.disabled,
-                    ...this.props.inputProps
-                }}
-            />
-        );
-    }
-
-    _onKeyUp(e) {
+    const _onKeyUp = e => {
         if (
-            this.props.submitOnEnter &&
-            this.props.formId &&
-            e.keyCode === 13 &&
-            !e.shiftKey
+            props.submitOnEnter
+            && props.formId
+            && e.keyCode === 13
+            && !e.shiftKey
         ) {
             e.preventDefault();
-
             // TODO This is not worked in redux... =(
-            this.props.dispatch(submit(this.props.formId));
+            dispatch(submit(props.formId));
         }
-    }
+    };
+
+    props.inputProps = useMemo(() => ({
+        name: props.input.name,
+        value: props.input.value || '',
+        onChange: e => props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
+        onKeyUp: _onKeyUp,
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        ...props.inputProps,
+    }), [props.disabled, props.input, props.inputProps, props.placeholder]);
+
+    return components.ui.renderView(props.view || 'form.TextFieldView', props);
 }
+
+TextField.defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    placeholder: '',
+    submitOnEnter: false,
+    errors: [],
+};
+
+export default defineField('TextField')(TextField);

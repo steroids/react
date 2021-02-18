@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {components, field} from '../../../hoc';
+import { useMemo } from 'react';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import useField, { defineField } from '../../../hooks/field';
+import { useComponents } from '../../../hooks';
 
 export interface IReCaptchaFieldProps extends IFieldHocInput {
     action?: any;
@@ -17,24 +19,21 @@ interface IReCaptchaFieldPrivateProps extends IFieldHocOutput, IComponentsHocOut
 
 }
 
-@field({
-    componentId: 'form.ReCaptchaField'
-})
-@components('resource', 'ui')
-export default class ReCaptchaField extends React.PureComponent<IReCaptchaFieldProps & IReCaptchaFieldPrivateProps> {
-    render() {
-        const {input, ...props} = this.props;
-        const ReCaptchaFieldView =
-            this.props.view || this.props.ui.getView('form.ReCaptchaFieldView');
-        return (
-            <ReCaptchaFieldView
-                {...props}
-                reCaptchaProps={{
-                    sitekey: this.props.resource.googleCaptchaSiteKey,
-                    action: this.props.action,
-                    verifyCallback: value => input.onChange(value)
-                }}
-            />
-        );
-    }
+function ReCaptchaField(props: IReCaptchaFieldProps & IReCaptchaFieldPrivateProps) {
+    props = useField('ReCaptchaField', props);
+
+    const components = useComponents();
+
+    props = useMemo(() => ({
+        ...props.input,
+        reCaptchaProps: {
+            sitekey: components.resource?.googleCaptchaSiteKey,
+            action: props.action,
+            verifyCallback: value => props.input.onChange(value),
+        },
+    }), [props.disabled, props.input, props.inputProps, props.placeholder, props.type, props.action]);
+
+    return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', props);
 }
+
+export default defineField('ReCaptchaField')(ReCaptchaField);

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {components, field} from '../../../hoc';
+import { useMemo, useState } from 'react';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IInputFieldProps} from '../InputField/InputField';
-
+import useField, { defineField } from '../../../hooks/field';
+import { useComponents } from '../../../hooks';
 
 /**
  * PasswordField
@@ -42,11 +43,6 @@ interface IPasswordFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutp
 
 }
 
-interface PasswordFieldState {
-    type?: string
-}
-
-
 export const checkPassword = password => {
     if (!password) {
         return null;
@@ -55,13 +51,13 @@ export const checkPassword = password => {
         lowerLetters: 'qwertyuiopasdfghjklzxcvbnm',
         upperLetters: 'QWERTYUIOPLKJHGFDSAZXCVBNM',
         digits: '0123456789',
-        special: '!@#$%^&*()_-+=|/.,:;[]{}'
+        special: '!@#$%^&*()_-+=|/.,:;[]{}',
     };
     let rating = 0;
-    Object.keys(symbols).map(key => {
-        for (let i = 0; i < password.length; i++) {
+    Object.keys(symbols).forEach(key => {
+        for (let i = 0; i < password.length; i += 1) {
             if (symbols[key].indexOf(password[i]) !== -1) {
-                rating++;
+                rating += 1;
                 break;
             }
         }
@@ -75,53 +71,35 @@ export const checkPassword = password => {
     return 'danger';
 };
 
-@field({
-    componentId: 'form.PasswordField'
-})
-@components('ui')
-export default class PasswordField extends React.PureComponent<IPasswordFieldProps & IPasswordFieldPrivateProps, PasswordFieldState> {
-    static defaultProps = {
-        disabled: false,
-        security: false,
-        required: false,
-        className: '',
-        placeholder: '',
-        errors: []
-    };
+function PasswordField(props: IPasswordFieldProps & IPasswordFieldPrivateProps) {
+    props = useField('PasswordField', props);
+    const [type, setType] = useState('password');
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            type: 'password',
-        };
-    }
+    const components = useComponents();
 
-    render() {
-        const PasswordFieldView =
-            this.props.view ||
-            this.props.ui.getView('form.PasswordFieldView') ||
-            this.props.ui.getView('form.InputFieldView');
-        return (
-            <PasswordFieldView
-                {...this.props}
-                inputProps={{
-                    name: this.props.input.name,
-                    value: this.props.input.value || '',
-                    onChange: e => this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
-                    type: this.state.type,
-                    placeholder: this.props.placeholder,
-                    disabled: this.props.disabled,
-                    ...this.props.inputProps
-                }}
-                security={this.props.security}
-                securityLevel={
-                    this.props.security
-                        ? checkPassword(this.props.input.value)
-                        : null
-                }
-                onShowPassword={() => this.setState({type: 'text'})}
-                onHidePassword={() => this.setState({type: 'password'})}
-            />
-        );
-    }
+    props.inputProps = useMemo(() => ({
+        name: props.input.name,
+        value: props.input.value || '',
+        onChange: e => props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
+        type,
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        ...props.inputProps,
+    }), [props.disabled, props.input, props.inputProps, props.placeholder, type]);
+    props.securityLevel = props.security ? checkPassword(props.input.value) : null;
+    props.onShowPassword = () => setType('text');
+    props.onHidePassword = () => setType('password');
+
+    return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', props);
 }
+
+PasswordField.defaultProps = {
+    disabled: false,
+    security: false,
+    required: false,
+    className: '',
+    placeholder: '',
+    errors: [],
+};
+
+export default defineField('PasswordField')(PasswordField);

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {field} from '../../../hoc';
+import { useMemo } from 'react';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import Nav, {INavProps} from '../../nav/Nav/Nav';
 import dataProvider, {IDataProviderHocOutput} from '../../../hoc/dataProvider';
+import useField, { defineField } from '../../../hooks/field';
 
 /**
  * NavField
@@ -11,26 +12,26 @@ import dataProvider, {IDataProviderHocOutput} from '../../../hoc/dataProvider';
 export interface INavFieldProps extends IFieldHocInput {
     navProps: INavProps,
     [key: string]: any,
-
 }
 
 interface INavFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput {
 
 }
 
-@field({
-    componentId: 'form.NavField'
-})
-@dataProvider()
-export default class NavField extends React.PureComponent<INavFieldProps & INavFieldPrivateProps> {
-    render() {
-        return (
-            <Nav
-                {...this.props.navProps}
-                items={this.props.items}
-                activeTab={this.props.input.value}
-                onChange={value => this.props.input.onChange(value)}
-            />
-        );
-    }
+function NavField(props: INavFieldProps & INavFieldPrivateProps) {
+    props = useField('NavField', props);
+
+    props.navProps = useMemo(() => ({
+        ...props.navProps,
+    }), [props.navProps, props.items, props.input]);
+    return (
+        <Nav
+            {...props.navProps}
+            items={props.items}
+            activeTab={props.input.value}
+            onChange={value => props.input.onChange(value)}
+        />
+    );
 }
+
+export default dataProvider()(defineField('NavField')(NavField));

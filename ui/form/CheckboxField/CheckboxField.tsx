@@ -1,8 +1,12 @@
 import * as React from 'react';
-import {components, connect, field} from '../../../hoc';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {IConnectHocOutput} from '../../../hoc/connect';
+import { useMount } from 'react-use';
+import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { IFieldHocInput, IFieldHocOutput } from '../../../hoc/field';
+import { IComponentsHocOutput } from '../../../hoc/components';
+import { IConnectHocOutput } from '../../../hoc/connect';
+import useField, { defineField } from '../../../hooks/field';
+import { useComponents } from '../../../hooks';
 
 /**
  * CheckboxField
@@ -37,44 +41,38 @@ interface ICheckboxFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput,
 
 }
 
-@field({
-    componentId: 'form.CheckboxField',
-    layoutProps: {
-        label: false
-    }
-})
-@components('ui')
-@connect()
-export default class CheckboxField extends React.Component<ICheckboxFieldProps & ICheckboxFieldPrivateProps> {
-    static defaultProps = {
-        disabled: false,
-        required: false,
-        className: ''
-    };
+function CheckboxField(props: ICheckboxFieldProps & ICheckboxFieldPrivateProps) {
+    props = useField('CheckboxField', {
+        ...props,
+        layoutProps: {
+            label: false,
+        },
+    });
+    const components = useComponents();
+    const dispatch = useDispatch();
 
-    static WrappedComponent: any;
-
-    componentDidMount() {
-        if (this.props.input.value === undefined) {
-            this.props.dispatch(this.props.input.onChange(false));
+    useMount(() => {
+        if (props.input.value === undefined) {
+            dispatch(props.input.onChange(false));
         }
-    }
+    });
 
-    render() {
-        const CheckboxFieldView =
-            this.props.view || this.props.ui.getView('form.CheckboxFieldView');
-        return (
-            <CheckboxFieldView
-                {...this.props}
-                inputProps={{
-                    name: this.props.input.name,
-                    type: 'checkbox',
-                    checked: !!this.props.input.value,
-                    onChange: () => this.props.input.onChange(!this.props.input.value),
-                    disabled: this.props.disabled,
-                    ...this.props.inputProps
-                }}
-            />
-        );
-    }
+    props.inputProps = useMemo(() => ({
+        name: props.input.name,
+        type: 'checkbox',
+        checked: !!props.input.value,
+        onChange: () => props.input.onChange(!props.input.value),
+        disabled: props.disabled,
+        ...props.inputProps,
+    }), [props.disabled, props.input, props.inputProps]);
+
+    return components.ui.renderView(props.view || 'form.CheckboxFieldView', props);
 }
+
+CheckboxField.defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+};
+
+export default defineField('CheckboxField')(CheckboxField);

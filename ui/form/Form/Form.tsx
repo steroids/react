@@ -141,9 +141,6 @@ export interface IFormContext {
     reducer?: any,
 }
 
-export const FormContext = React.createContext<IFormContext>({});
-export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
-
 /* @formSubmit()*/
 
 // Data providers

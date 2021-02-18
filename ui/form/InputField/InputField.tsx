@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ReactNode, useMemo} from 'react';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import useField, {defineField} from '../../../hooks/field';
+import {defineField, useFormField} from '../../../hooks/form';
 import {useComponents} from '../../../hooks';
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
@@ -105,7 +105,7 @@ export interface IInputFieldViewProps extends IFieldHocOutput {
 }
 
 function InputField(props: IInputFieldProps) {
-    props = useField('InputField', props);
+    props = useFormField('InputField', props);
 
     const components = useComponents();
 

@@ -8,7 +8,6 @@ import {
 } from 'react';
 import * as React from 'react';
 import {useComponents} from './index';
-import {FormContext, FormReducerContext} from '../ui/form/Form/Form';
 import {FORM_CHANGE, formChange} from '../actions/form';
 import {mergeLayoutProp} from '../hoc/form';
 import FieldLayout from '../ui/form/FieldLayout';
@@ -69,6 +68,9 @@ const reactStateProvider = () => {
     };
 };
 
+export const FormContext = React.createContext<IFormContext>({});
+export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
+
 // Field HOC
 export const defineField = componentId => Component => (props: IFieldHookProps) => {
     const context = useContext(FormContext);
@@ -111,7 +113,7 @@ export const useFormSelector = (selector: (state) => any) => {
     return null;
 };
 
-export default function useField(componentId: string, props: IFieldHookProps): IFieldHookResult {
+export function useFormField(componentId: string, props: IFieldHookProps): IFieldHookResult {
     // Get full name (attribute with prefix)
     const name = [props.prefix, props.attribute].filter(Boolean).join('.');
 

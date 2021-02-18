@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {FormContext, normalizeLayout} from '../ui/form/Form/Form';
+import {normalizeLayout} from '../ui/form/Form/Form';
+import {FormContext} from '../hooks/form';
 
 /**
  * Form HOC

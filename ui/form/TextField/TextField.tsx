@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { useMemo } from 'react';
+import {useCallback, useMemo} from 'react';
 import {submit} from 'redux-form';
 import {useDispatch} from 'react-redux';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {IConnectHocOutput} from '../../../hoc/connect';
-import useField, { defineField } from '../../../hooks/field';
-import { useComponents } from '../../../hooks';
+import {IFieldHocInput} from '../../../hoc/field';
+import {useComponents} from '../../../hooks';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 export interface ITextFieldProps extends IFieldHocInput {
     /**
@@ -23,10 +21,11 @@ export interface ITextFieldProps extends IFieldHocInput {
     inputProps?: any;
     className?: CssClassName;
     view?: CustomView;
+
     [key: string]: any;
 }
 
-export interface ITextFieldViewProps extends IFieldHocOutput {
+export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperProps {
     inputProps: {
         name: string,
         onChange: (value: string | React.ChangeEvent) => void,
@@ -37,17 +36,11 @@ export interface ITextFieldViewProps extends IFieldHocOutput {
     },
 }
 
-interface ITextFieldPrivateProps extends IFieldHocOutput, IConnectHocOutput, IComponentsHocOutput {
-
-}
-
-function TextField(props: ITextFieldProps & ITextFieldPrivateProps) {
-    props = useField('TextField', props);
-
+function TextField(props: ITextFieldProps & IFieldWrapperProps) {
     const dispatch = useDispatch();
     const components = useComponents();
 
-    const _onKeyUp = e => {
+    const onKeyUp = useCallback(e => {
         if (
             props.submitOnEnter
             && props.formId
@@ -58,19 +51,27 @@ function TextField(props: ITextFieldProps & ITextFieldPrivateProps) {
             // TODO This is not worked in redux... =(
             dispatch(submit(props.formId));
         }
-    };
+    }, [dispatch, props.formId, props.submitOnEnter]);
 
-    props.inputProps = useMemo(() => ({
+    const onChange = useCallback(
+        e => props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
+        [props.input],
+    );
+
+    const inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value || '',
-        onChange: e => props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
-        onKeyUp: _onKeyUp,
+        onChange,
+        onKeyUp,
         placeholder: props.placeholder,
         disabled: props.disabled,
         ...props.inputProps,
-    }), [props.disabled, props.input, props.inputProps, props.placeholder]);
+    }), [onKeyUp, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder]);
 
-    return components.ui.renderView(props.view || 'form.TextFieldView', props);
+    return components.ui.renderView(props.view || 'form.TextFieldView', {
+        ...props,
+        inputProps,
+    });
 }
 
 TextField.defaultProps = {
@@ -82,4 +83,4 @@ TextField.defaultProps = {
     errors: [],
 };
 
-export default defineField('TextField')(TextField);
+export default fieldWrapper('TextField')(TextField);

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useMemo } from 'react';
+import {useCallback, useMemo} from 'react';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import useField, { defineField } from '../../../hooks/field';
-import { useComponents } from '../../../hooks';
+import {useComponents} from '../../../hooks';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 /**
  * InputField
@@ -49,7 +49,7 @@ export interface ITimeFieldProps extends IFieldHocInput {
     [key: string]: any;
 }
 
-export interface ITimeFieldViewProps extends IFieldHocOutput {
+export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperProps {
     style?: any,
     isInvalid?: boolean,
     errors?: any,
@@ -67,29 +67,32 @@ export interface ITimeFieldViewProps extends IFieldHocOutput {
     type: any,
 }
 
-interface ITimeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {}
-
-function TimeField(props: ITimeFieldProps & ITimeFieldPrivateProps) {
-    props = useField('TimeField', props);
-
+function TimeField(props: ITimeFieldProps & IFieldWrapperProps) {
     const components = useComponents();
 
-    props.inputProps = useMemo(() => ({
+    const onChange = useCallback(value => {
+        props.input.onChange.call(null, value);
+        if (props.onChange) {
+            props.onChange.call(null, value);
+        }
+    }, [props.input.onChange, props.onChange]);
+    // eslint-disable-line react-hooks/exhaustive-deps
+
+    const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
         placeholder: props.placeholder,
         disabled: props.disabled,
         ...props.inputProps,
         value: props.input.value || '',
-        onChange: value => {
-            props.input.onChange(value);
-            if (props.onChange) {
-                props.onChange(value);
-            }
-        },
-    }), [props.disabled, props.input, props.inputProps, props.placeholder]);
+        onChange,
+    }), [onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder,
+        props.type]);
 
-    return components.ui.renderView(props.view || 'form.TimeFieldView', props);
+    return components.ui.renderView(props.view || 'form.TimeFieldView', {
+        ...props,
+        inputProps,
+    });
 }
 
 TimeField.defaultProps = {
@@ -100,4 +103,4 @@ TimeField.defaultProps = {
     placeholder: '00:00',
 };
 
-export default defineField('TimeField')(TimeField);
+export default fieldWrapper('TimeField')(TimeField);

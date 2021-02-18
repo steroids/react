@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { useMemo, useState } from 'react';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {IComponentsHocOutput} from '../../../hoc/components';
 import {IInputFieldProps} from '../InputField/InputField';
-import useField, { defineField } from '../../../hooks/field';
 import { useComponents } from '../../../hooks';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 /**
  * PasswordField
  * Поле ввода пароля
  */
-export interface IPasswordFieldProps extends IInputFieldProps, IFieldHocInput {
+export interface IPasswordFieldProps extends IInputFieldProps {
 
     /**
      * Если true, то отображается шкала сложности пароля и иконка 'отображения' пароля
@@ -21,7 +19,7 @@ export interface IPasswordFieldProps extends IInputFieldProps, IFieldHocInput {
     [key: string]: any;
 }
 
-export interface IPasswordFieldViewProps {
+export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrapperProps {
     inputProps: {
         type: string,
         name: string,
@@ -32,15 +30,10 @@ export interface IPasswordFieldViewProps {
     },
     security?: boolean,
     isInvalid?: boolean,
-    size?: number | string,
     className?: CssClassName,
     securityLevel?: 'success' | 'warning' | 'danger',
     onShowPassword: () => void,
     onHidePassword: () => void,
-}
-
-interface IPasswordFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
-
 }
 
 export const checkPassword = password => {
@@ -71,8 +64,7 @@ export const checkPassword = password => {
     return 'danger';
 };
 
-function PasswordField(props: IPasswordFieldProps & IPasswordFieldPrivateProps) {
-    props = useField('PasswordField', props);
+function PasswordField(props: IPasswordFieldProps & IFieldWrapperProps) {
     const [type, setType] = useState('password');
 
     const components = useComponents();
@@ -102,4 +94,4 @@ PasswordField.defaultProps = {
     errors: [],
 };
 
-export default defineField('PasswordField')(PasswordField);
+export default fieldWrapper('PasswordField')(PasswordField);

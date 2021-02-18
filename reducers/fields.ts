@@ -4,7 +4,7 @@ import {FIELDS_SET_META} from '../actions/fields';
 
 const initialState = {
     props: {},
-    meta: null
+    meta: null,
 };
 const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, '');
 export default (state = initialState, action) => {
@@ -17,17 +17,15 @@ export default (state = initialState, action) => {
                 ...state,
                 meta: {
                     ...state.meta,
-                    ...action.meta
-                }
+                    ...action.meta,
+                },
             };
     }
     return state;
 };
-export const getFieldProps = (state, fieldId) =>
-    _get(state, ['fields', 'props', fieldId, 'props']);
+
 export const isMetaFetched = state => _get(state, ['fields', 'meta']) !== null;
-export const getEnumLabels = (state, name) =>
-    _get(state, ['fields', 'meta', name, 'labels']) || null;
+export const getEnumLabels = (state, name) => _get(state, ['fields', 'meta', name, 'labels']) || null;
 const warnings = {};
 export const getModel = (state, name) => {
     if (_isString(name)) {
@@ -38,7 +36,6 @@ export const getModel = (state, name) => {
             console.warn('Steroids: Not found model meta:', name); // eslint-disable-line no-console
         }
         return meta;
-    } else {
-        return name || null;
     }
+    return name || null;
 };

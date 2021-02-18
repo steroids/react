@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useMemo } from 'react';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import useField, { defineField } from '../../../hooks/field';
+import {IFieldHocInput} from '../../../hoc/field';
 import { useComponents } from '../../../hooks';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 export interface IReCaptchaFieldProps extends IFieldHocInput {
     action?: any;
@@ -11,29 +10,23 @@ export interface IReCaptchaFieldProps extends IFieldHocInput {
     [key: string]: any;
 }
 
-export interface IReCaptchaFieldViewProps extends IFieldHocOutput {
+export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWrapperProps {
     reCaptchaProps: any,
 }
 
-interface IReCaptchaFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
-
-}
-
-function ReCaptchaField(props: IReCaptchaFieldProps & IReCaptchaFieldPrivateProps) {
-    props = useField('ReCaptchaField', props);
-
+function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperProps) {
     const components = useComponents();
 
-    props = useMemo(() => ({
-        ...props.input,
-        reCaptchaProps: {
-            sitekey: components.resource?.googleCaptchaSiteKey,
-            action: props.action,
-            verifyCallback: value => props.input.onChange(value),
-        },
-    }), [props.disabled, props.input, props.inputProps, props.placeholder, props.type, props.action]);
+    const reCaptchaProps = useMemo(() => ({
+        sitekey: components.resource?.googleCaptchaSiteKey,
+        action: props.action,
+        verifyCallback: value => props.input.onChange(value),
+    }), [components.resource.googleCaptchaSiteKey, props.action, props.input]);
 
-    return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', props);
+    return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', {
+        ...props,
+        reCaptchaProps,
+    });
 }
 
-export default defineField('ReCaptchaField')(ReCaptchaField);
+export default fieldWrapper('ReCaptchaField')(ReCaptchaField);

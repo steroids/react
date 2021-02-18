@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import useField, { defineField } from '../../../hooks/field';
-import { useComponents } from '../../../hooks';
-import { useMemo } from 'react';
+import _toInteger from 'lodash-es/toInteger';
+import {useMemo} from 'react';
+import {IFieldHocInput} from '../../../hoc/field';
+import {useComponents} from '../../../hooks';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 export interface ISliderFieldProps extends IFieldHocInput {
     sliderProps?: any;
@@ -11,10 +11,11 @@ export interface ISliderFieldProps extends IFieldHocInput {
     view?: CustomView;
     min?: number;
     max?: number;
+
     [key: string]: any;
 }
 
-export interface ISliderFieldViewProps extends IFieldHocOutput {
+export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperProps {
     slider: {
         min: number,
         max: number,
@@ -25,20 +26,12 @@ export interface ISliderFieldViewProps extends IFieldHocOutput {
     }
 }
 
-interface ISliderFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
+const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
-}
-
-const normalizeValue = value => {
-    return parseInt(String(value).replace(/[0-9]g/, '')) || 0;
-};
-
-function SliderField(props: ISliderFieldProps & ISliderFieldPrivateProps) {
-    props = useField('SliderField', props);
-
+function SliderField(props: ISliderFieldProps & IFieldWrapperProps) {
     const components = useComponents();
 
-    props.slider = useMemo(() => ({
+    const slider = useMemo(() => ({
         min: props.min,
         max: props.max,
         defaultValue: 0,
@@ -48,9 +41,12 @@ function SliderField(props: ISliderFieldProps & ISliderFieldPrivateProps) {
             value = normalizeValue(value);
             props.input.onChange(value);
         },
-    }), [props.input, props.inputProps, props.min, props.max, props.step]);
+    }), [props.input, props.min, props.max]);
 
-    return components.ui.renderView('form.SliderFieldView', props);
+    return components.ui.renderView('form.SliderFieldView', {
+        ...props,
+        slider,
+    });
 }
 
 SliderField.defaultProps = {
@@ -62,4 +58,4 @@ SliderField.defaultProps = {
     max: 100,
 };
 
-export default defineField('SliderField')(SliderField);
+export default fieldWrapper('SliderField')(SliderField);

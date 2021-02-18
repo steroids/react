@@ -14,7 +14,6 @@ export interface ICheckboxColumnProps {
 
 export interface ICheckboxColumnViewProps {
     fieldProps: {
-        fieldId: string,
     },
     input: {
         name: string,
@@ -33,33 +32,24 @@ interface ICheckboxColumnPrivateProps extends IConnectHocOutput, IComponentsHocO
 @connect((state, props) => ({
     isChecked: props.item
         ? isChecked(state, props.listId, _get(props.item, props.primaryKey))
-        : isCheckedAll(state, props.listId)
+        : isCheckedAll(state, props.listId),
 }))
 @components('ui')
 export default class CheckboxColumn extends React.PureComponent<ICheckboxColumnProps & ICheckboxColumnPrivateProps> {
-
     constructor(props) {
         super(props);
         this._onChange = this._onChange.bind(this);
     }
 
     render() {
-        const CheckboxColumnView =
-            this.props.view || this.props.ui.getView('list.CheckboxColumnView');
+        const CheckboxColumnView = this.props.view || this.props.ui.getView('list.CheckboxColumnView');
         return (
             <CheckboxColumnView
                 {...this.props}
-                fieldProps={{
-                    fieldId:
-                        this.props.listId +
-                        '_checkbox_' +
-                        (this.props.item ? this.props.item[this.props.primaryKey] : 'all'),
-                    ...this.props.fieldProps
-                }}
                 input={{
                     name: this.props.listId + '_checkbox',
                     value: this.props.isChecked,
-                    onChange: this._onChange
+                    onChange: this._onChange,
                 }}
             />
         );
@@ -70,12 +60,11 @@ export default class CheckboxColumn extends React.PureComponent<ICheckboxColumnP
             this.props.dispatch(
                 toggleItem(
                     this.props.listId,
-                    _get(this.props.item, this.props.primaryKey)
-                )
+                    _get(this.props.item, this.props.primaryKey),
+                ),
             );
         } else {
             this.props.dispatch(toggleAll(this.props.listId));
         }
     }
-
 }

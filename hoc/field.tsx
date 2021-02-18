@@ -6,7 +6,7 @@ import _upperFirst from 'lodash-es/upperFirst';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 
-import {getFieldProps, getModel} from '../reducers/fields';
+import {getModel} from '../reducers/fields';
 import connect from './connect';
 import components, {IComponentsHocOutput} from './components';
 import form, {IFormHocOutput} from './form';
@@ -55,7 +55,6 @@ export interface IFieldHocInput {
 
 export interface IFieldHocOutput extends IFormHocOutput {
     input?: FormInputType,
-    fieldId?: string,
     isInvalid?: boolean,
 
     dark?: boolean,
@@ -89,22 +88,14 @@ const defaultConfig = {
 const valueSelectors = {};
 const errorSelectors = {};
 let ID_COUNTER = 1;
-const generateUniqueId = () => {
-    return 'field' + ID_COUNTER++;
-};
-const getAttribute = (props, attribute) => {
-    return attribute
-        ? props['attribute' + _upperFirst(attribute)]
-        : props.attribute;
-};
-const getName = (props, attribute) => {
-    return [props.prefix, getAttribute(props, attribute)]
-        .filter(Boolean)
-        .join('.');
-};
-const getFieldId = (props, config) => {
-    return props.formId + '_' + getName(props, config.attributes[0]);
-};
+const generateUniqueId = () => 'field' + ID_COUNTER++;
+const getAttribute = (props, attribute) => attribute
+    ? props['attribute' + _upperFirst(attribute)]
+    : props.attribute;
+const getName = (props, attribute) => [props.prefix, getAttribute(props, attribute)]
+    .filter(Boolean)
+    .join('.');
+const getFieldId = (props, config) => props.formId + '_' + getName(props, config.attributes[0]);
 export const getFieldPropsFromModel = (model, attribute) => {
     if (!model || !attribute) {
         return null;
@@ -146,7 +137,7 @@ export default (customConfig): any => WrappedComponent => {
                     config.attributes.map(attribute => {
                         values['value' + _upperFirst(attribute)] = valueSelector(
                             state,
-                            getName(props, attribute)
+                            getName(props, attribute),
                         );
                     });
                 }
@@ -160,13 +151,11 @@ export default (customConfig): any => WrappedComponent => {
                     ...values,
                     model: getModel(state, props.model),
                     formErrors: Object.keys(formErrors).length > 0 ? formErrors : null,
-                    fieldPropsFromRedux: getFieldProps(state, getFieldId(props, config))
                 };
-            }
+            },
         )(
             components('ui')(
                 class FieldHoc extends React.Component<IFieldHocInput & IFieldHocPrivateProps> {
-
                     _fieldId: any;
 
                     constructor(props) {
@@ -176,7 +165,7 @@ export default (customConfig): any => WrappedComponent => {
                             config.attributes.forEach(attribute => {
                                 if (!this.props['attribute' + _upperFirst(attribute)]) {
                                     throw new Error(
-                                        `Please set attribute name '${attribute}' for component '${WrappedComponent.name}' in form '${this.props.formId}'`
+                                        `Please set attribute name '${attribute}' for component '${WrappedComponent.name}' in form '${this.props.formId}'`,
                                     );
                                 }
                             });
@@ -186,7 +175,7 @@ export default (customConfig): any => WrappedComponent => {
                             config.attributes.forEach(attribute => {
                                 state['value' + attribute] = _get(
                                     this.props,
-                                    ['input', 'value', attribute].filter(Boolean)
+                                    ['input', 'value', attribute].filter(Boolean),
                                 );
                             });
                             this.state = state;
@@ -211,7 +200,7 @@ export default (customConfig): any => WrappedComponent => {
                                 inputProps[`input${_upperFirst(attribute)}`] = {
                                     name: getName(this.props, attribute),
                                     value: this._getValue(attribute),
-                                    onChange: value => this._setValue(attribute, value)
+                                    onChange: value => this._setValue(attribute, value),
                                 };
                             });
                         }
@@ -252,7 +241,6 @@ export default (customConfig): any => WrappedComponent => {
                                         name={getName(this.props, '')}
                                         component={WrappedComponent}
                                         formId={this.props.formId}
-                                        fieldId={this._fieldId}
                                     />
                                 ) || (
                                     <WrappedComponent
@@ -261,7 +249,6 @@ export default (customConfig): any => WrappedComponent => {
                                         {...this.props}
                                         isInvalid={isInvalid}
                                         formId={this.props.formId}
-                                        fieldId={this._fieldId}
                                     />
                                 )}
                             </FieldLayout>
@@ -271,25 +258,23 @@ export default (customConfig): any => WrappedComponent => {
                     _getValue(attribute) {
                         if (this.props.formId) {
                             return _get(this.props, 'value' + _upperFirst(attribute));
-                        } else {
-                            return this.state['value' + attribute];
                         }
+                        return this.state['value' + attribute];
                     }
 
                     _setValue(attribute, value) {
                         if (this.props.formId) {
                             this.props.dispatch(
-                                change(this.props.formId, getName(this.props, attribute), value)
+                                change(this.props.formId, getName(this.props, attribute), value),
                             );
                         } else {
                             this.setState({
-                                ['value' + attribute]: value
+                                ['value' + attribute]: value,
                             });
                         }
                     }
-
-                }
-            )
-        )
-    )
-}
+                },
+            ),
+        ),
+    );
+};

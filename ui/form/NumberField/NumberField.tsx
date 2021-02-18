@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useMemo } from 'react';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {IFieldHocInput} from '../../../hoc/field';
 import {IInputFieldProps} from '../InputField/InputField';
-import useField, { defineField } from '../../../hooks/field';
 import { useComponents } from '../../../hooks';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 /**
  * NumberField
@@ -32,7 +31,7 @@ export interface INumberFieldProps extends IInputFieldProps, IFieldHocInput {
     [key: string]: any;
 }
 
-export interface INumberFieldViewProps extends IFieldHocOutput {
+export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperProps {
     inputProps: {
         type: string,
         name: string,
@@ -46,13 +45,7 @@ export interface INumberFieldViewProps extends IFieldHocOutput {
     },
 }
 
-interface INumberFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {
-
-}
-
-function NumberField(props: INumberFieldProps & INumberFieldPrivateProps) {
-    props = useField('NumberField', props);
-
+function NumberField(props: INumberFieldProps & IFieldWrapperProps) {
     const components = useComponents();
 
     props.inputProps = useMemo(() => ({
@@ -82,4 +75,4 @@ NumberField.defaultProps = {
     errors: [],
 };
 
-export default defineField('NumberField')(NumberField);
+export default fieldWrapper('NumberField')(NumberField);

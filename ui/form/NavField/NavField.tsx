@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { useMemo } from 'react';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import {IFieldHocInput} from '../../../hoc/field';
 import Nav, {INavProps} from '../../nav/Nav/Nav';
-import dataProvider, {IDataProviderHocOutput} from '../../../hoc/dataProvider';
-import useField, { defineField } from '../../../hooks/field';
+import dataProvider from '../../../hoc/dataProvider';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 /**
  * NavField
@@ -14,16 +13,7 @@ export interface INavFieldProps extends IFieldHocInput {
     [key: string]: any,
 }
 
-interface INavFieldPrivateProps extends IFieldHocOutput, IDataProviderHocOutput {
-
-}
-
-function NavField(props: INavFieldProps & INavFieldPrivateProps) {
-    props = useField('NavField', props);
-
-    props.navProps = useMemo(() => ({
-        ...props.navProps,
-    }), [props.navProps, props.items, props.input]);
+function NavField(props: INavFieldProps & IFieldWrapperProps) {
     return (
         <Nav
             {...props.navProps}
@@ -34,4 +24,4 @@ function NavField(props: INavFieldProps & INavFieldPrivateProps) {
     );
 }
 
-export default dataProvider()(defineField('NavField')(NavField));
+export default dataProvider()(fieldWrapper('NavField')(NavField));

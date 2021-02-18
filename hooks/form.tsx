@@ -24,7 +24,6 @@ export interface IFieldHookProps {
 
 export interface IFieldHookResult {
     formId: string,
-    fieldId: string,
     componentId: string,
     error?: any,
     input: {
@@ -37,9 +36,8 @@ export interface IFieldHookResult {
 }
 
 export interface IFieldWrapperProps {
-    formId: string, // TODO Need?
-    fieldId: string, // TODO Need?
-    componentId: string, // TODO Need?
+    formId: string,
+    componentId: string,
     error?: any,
     input: {
         name?: string,
@@ -87,6 +85,38 @@ const reactStateProvider = () => {
 export const FormContext = React.createContext<IFormContext>({});
 export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
 
+function useFormField(componentId: string, props: IFieldHookProps): IFieldHookResult {
+    // Get full name (attribute with prefix)
+    const name = [props.prefix, props.attribute].filter(Boolean).join('.');
+
+    // Get context, formId
+    const context = useContext(FormContext);
+    const formId = props.formId || context?.formId || null;
+    const model = props.model || context?.model || null;
+
+    // Resolve data provider
+    const {error, value, setValue} = formId
+        ? (!context.globalState ? reactReducerProvider(name) : reduxProvider(formId, name))
+        : reactStateProvider();
+
+    // Input object
+    const input = useMemo(() => ({
+        name,
+        value,
+        onChange: setValue,
+    }), [name, value, setValue]);
+
+    return {
+        ...props,
+        ...useComponents().ui.getFieldProps(componentId, model, props.attribute),
+        model,
+        componentId,
+        formId,
+        error,
+        input,
+    };
+}
+
 const FieldWrapper = (props) => {
     const components = useComponents();
     const newProps = useFormField(props.componentId, props);
@@ -102,7 +132,9 @@ export const fieldWrapper = (componentId, options: IFieldHocOptions = {}) => Com
     const context = useContext(FormContext);
     const metaProps = useComponents().ui.getFieldProps(componentId, props.model, props.attribute);
     const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
-    const content = useMemo(() => <FieldWrapper {...props} component={Component} componentId={componentId} />, [props]);
+    const content = React.memo((contentProps) => (
+        <FieldWrapper {...contentProps} component={Component} componentId={componentId} />
+    ));
 
     if (layout) {
         return (
@@ -138,41 +170,3 @@ export const useFormSelector = (selector: (state) => any) => {
     // No form
     return null;
 };
-
-export function useFormField(componentId: string, props: IFieldHookProps): IFieldHookResult {
-    // Get full name (attribute with prefix)
-    const name = [props.prefix, props.attribute].filter(Boolean).join('.');
-
-    // Get context, formId
-    const context = useContext(FormContext);
-    const formId = props.formId || context?.formId || null;
-    const model = props.model || context?.model || null;
-
-    // Resolve data provider
-    const {error, value, setValue} = formId
-        ? (!context.globalState ? reactReducerProvider(name) : reduxProvider(formId, name))
-        : reactStateProvider();
-
-    // Resolve fieldId
-    const fieldId = formId
-        ? `${formId}_${name}`
-        : useCallback(() => _uniqueId('field'), []); // eslint-disable-line react-hooks/rules-of-hooks
-
-    // Input object
-    const input = useMemo(() => ({
-        name,
-        value,
-        onChange: setValue,
-    }), [name, value, setValue]);
-
-    return {
-        ...props,
-        ...useComponents().ui.getFieldProps(componentId, model, props.attribute),
-        model,
-        componentId,
-        formId,
-        fieldId,
-        error,
-        input,
-    };
-}

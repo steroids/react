@@ -36,6 +36,22 @@ export interface IFieldHookResult {
     [key: string]: any,
 }
 
+export interface IFieldWrapperProps {
+    formId: string, // TODO Need?
+    fieldId: string, // TODO Need?
+    componentId: string, // TODO Need?
+    error?: any,
+    input: {
+        name?: string,
+        value?: any,
+        onChange: (value: any) => void,
+    },
+}
+
+interface IFieldHocOptions {
+    label?: boolean,
+}
+
 // Data providers
 const reduxProvider = (formId, name) => {
     const {value, error} = useSelector(state => ({ // eslint-disable-line react-hooks/rules-of-hooks
@@ -71,19 +87,29 @@ const reactStateProvider = () => {
 export const FormContext = React.createContext<IFormContext>({});
 export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
 
+const FieldWrapper = (props) => {
+    const components = useComponents();
+    const newProps = useFormField(props.componentId, props);
+
+    const Component = newProps.component;
+    delete newProps.component;
+
+    return components.ui.renderView(Component, newProps);
+};
+
 // Field HOC
-export const defineField = componentId => Component => (props: IFieldHookProps) => {
+export const fieldWrapper = (componentId, options: IFieldHocOptions = {}) => Component => (props: IFieldHookProps) => {
     const context = useContext(FormContext);
     const metaProps = useComponents().ui.getFieldProps(componentId, props.model, props.attribute);
     const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
-    const content = useMemo(() => <Component {...props} />, [props]);
+    const content = useMemo(() => <FieldWrapper {...props} component={Component} componentId={componentId} />, [props]);
 
     if (layout) {
         return (
             <FieldLayout
                 {...layout}
                 required={_has(props, 'required') ? props.required : metaProps.required}
-                label={_has(props, 'label') ? props.label : metaProps.label}
+                label={options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label)}
                 hint={_has(props, 'hint') ? props.hint : metaProps.hint}
                 error={props.error}
             >

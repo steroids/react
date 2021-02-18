@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {field} from '../../../hoc';
+import { useMemo } from 'react';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
+import useField, { defineField } from '../../../hooks/field';
+import { useComponents } from '../../../hooks';
 
 /**
  * InputField
@@ -67,41 +69,35 @@ export interface ITimeFieldViewProps extends IFieldHocOutput {
 
 interface ITimeFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput {}
 
-@field({
-    componentId: 'form.TimeField'
-})
-export default class TimeField extends React.PureComponent<ITimeFieldProps & ITimeFieldPrivateProps> {
+function TimeField(props: ITimeFieldProps & ITimeFieldPrivateProps) {
+    props = useField('TimeField', props);
 
-    static WrappedComponent: any;
+    const components = useComponents();
 
-    static defaultProps = {
-        disabled: false,
-        required: false,
-        className: '',
-        timeFormat: 'HH:mm',
-        placeholder: '00:00',
-    };
+    props.inputProps = useMemo(() => ({
+        type: props.type,
+        name: props.input.name,
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        ...props.inputProps,
+        value: props.input.value || '',
+        onChange: value => {
+            props.input.onChange(value);
+            if (props.onChange) {
+                props.onChange(value);
+            }
+        },
+    }), [props.disabled, props.input, props.inputProps, props.placeholder]);
 
-    render() {
-        const TimeFieldView = this.props.view || this.props.ui.getView('form.TimeFieldView');
-        return (
-            <TimeFieldView
-                {...this.props}
-                inputProps={{
-                    type: this.props.type,
-                    name: this.props.input.name,
-                    placeholder: this.props.placeholder,
-                    disabled: this.props.disabled,
-                    ...this.props.inputProps,
-                    value: this.props.input.value || '',
-                    onChange: value => {
-                        this.props.input.onChange(value);
-                        if (this.props.onChange) {
-                            this.props.onChange(value);
-                        }
-                    },
-                }}
-            />
-        );
-    }
+    return components.ui.renderView(props.view || 'form.TimeFieldView', props);
 }
+
+TimeField.defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    timeFormat: 'HH:mm',
+    placeholder: '00:00',
+};
+
+export default defineField('TimeField')(TimeField);

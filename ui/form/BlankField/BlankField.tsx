@@ -1,23 +1,15 @@
 import * as React from 'react';
 
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {field} from '../../../hoc';
+import {IFieldHocInput} from '../../../hoc/field';
+import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
 
 interface IBlankFieldProps extends IFieldHocInput {
     text?: string | React.ReactNode;
+    children?: React.ReactNode;
 }
 
-interface IBlankFieldPrivateProps extends IBlankFieldProps, IFieldHocOutput {
-
+function BlankField(props: IBlankFieldProps & IFieldWrapperProps) {
+    return <span>{props.text || props.children}</span>;
 }
 
-@field({
-    componentId: 'form.BlankField'
-})
-export default class BlankField extends React.PureComponent<IBlankFieldProps & IBlankFieldPrivateProps> {
-
-    render() {
-        return <span>{this.props.text || this.props.children}</span>;
-    }
-
-}
+export default fieldWrapper('BlankField')(BlankField);

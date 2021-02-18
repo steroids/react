@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {components, field} from '../../../hoc';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
+import useField, { defineField } from '../../../hooks/field';
+import { useComponents } from '../../../hooks';
+import { useMemo } from 'react';
 
 export interface ISliderFieldProps extends IFieldHocInput {
     sliderProps?: any;
@@ -27,54 +29,37 @@ interface ISliderFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput
 
 }
 
-@field({
-    componentId: 'form.SliderField'
-})
-@components('ui')
-export default class SliderField extends React.PureComponent<ISliderFieldProps & ISliderFieldPrivateProps> {
-    static defaultProps = {
-        disabled: false,
-        required: false,
-        className: '',
-        errors: [],
-        min: 0,
-        max: 100
-    };
+const normalizeValue = value => {
+    return parseInt(String(value).replace(/[0-9]g/, '')) || 0;
+};
 
-    static normalizeValue(value) {
-        return parseInt(String(value).replace(/[0-9]g/, '')) || 0;
-    }
+function SliderField(props: ISliderFieldProps & ISliderFieldPrivateProps) {
+    props = useField('SliderField', props);
 
-    constructor(props) {
-        super(props);
-        this._onChange = this._onChange.bind(this);
-        this._onAfterChange = this._onAfterChange.bind(this);
-    }
+    const components = useComponents();
 
-    render() {
-        const SliderFieldView =
-            this.props.view || this.props.ui.getView('form.SliderFieldView');
-        return (
-            <SliderFieldView
-                {...this.props}
-                slider={{
-                    min: this.props.min,
-                    max: this.props.max,
-                    defaultValue: 0,
-                    value: this.props.input.value || 0,
-                    onChange: this._onChange,
-                    onAfterChange: this._onAfterChange
-                }}
-            />
-        );
-    }
+    props.slider = useMemo(() => ({
+        min: props.min,
+        max: props.max,
+        defaultValue: 0,
+        value: props.input.value || 0,
+        onChange: range => props.input.onChange(range),
+        onAfterChange: value => {
+            value = normalizeValue(value);
+            props.input.onChange(value);
+        },
+    }), [props.input, props.inputProps, props.min, props.max, props.step]);
 
-    _onChange(range) {
-        this.props.input.onChange(range);
-    }
-
-    _onAfterChange(value) {
-        value = SliderField.normalizeValue(value);
-        this.props.input.onChange(value);
-    }
+    return components.ui.renderView('form.SliderFieldView', props);
 }
+
+SliderField.defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    errors: [],
+    min: 0,
+    max: 100,
+};
+
+export default defineField('SliderField')(SliderField);

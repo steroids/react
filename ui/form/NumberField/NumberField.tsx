@@ -1,8 +1,10 @@
 import * as React from 'react';
-import {components, field} from '../../../hoc';
+import { useMemo } from 'react';
 import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IInputFieldProps} from '../InputField/InputField';
+import useField, { defineField } from '../../../hooks/field';
+import { useComponents } from '../../../hooks';
 
 /**
  * NumberField
@@ -48,43 +50,36 @@ interface INumberFieldPrivateProps extends IFieldHocOutput, IComponentsHocOutput
 
 }
 
-@field({
-    componentId: 'form.NumberField'
-})
-@components('ui')
-export default class NumberField extends React.PureComponent<INumberFieldProps & INumberFieldPrivateProps> {
-    static defaultProps = {
-        disabled: false,
-        required: false,
-        className: '',
-        placeholder: '',
-        min: null,
-        max: null,
-        step: null,
-        errors: []
-    };
+function NumberField(props: INumberFieldProps & INumberFieldPrivateProps) {
+    props = useField('NumberField', props);
 
-    render() {
-        const NumberFieldView =
-            this.props.view ||
-            this.props.ui.getView('form.NumberFieldView') ||
-            this.props.ui.getView('form.InputFieldView');
-        return (
-            <NumberFieldView
-                {...this.props}
-                inputProps={{
-                    name: this.props.input.name,
-                    value: this.props.input.value || undefined,
-                    onChange: e => this.props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
-                    type: 'number',
-                    min: this.props.min,
-                    max: this.props.max,
-                    step: this.props.step,
-                    placeholder: this.props.placeholder,
-                    disabled: this.props.disabled,
-                    ...this.props.inputProps
-                }}
-            />
-        );
-    }
+    const components = useComponents();
+
+    props.inputProps = useMemo(() => ({
+        name: props.input.name,
+        value: props.input.value || undefined, // TODO replace 'undefined' with ''???;
+        onChange: e => props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
+        type: 'number',
+        min: props.min,
+        max: props.max,
+        step: props.step,
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        ...props.inputProps,
+    }), [props.disabled, props.input, props.inputProps, props.placeholder, props.min, props.max, props.step]);
+
+    return components.ui.renderView(props.view || 'form.NumberFieldView' || 'form.InputFieldView', props);
 }
+
+NumberField.defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    placeholder: '',
+    min: null,
+    max: null,
+    step: null,
+    errors: [],
+};
+
+export default defineField('NumberField')(NumberField);

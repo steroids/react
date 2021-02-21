@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _isEqual from 'lodash-es/isEqual';
-import { useEffect, useMemo, useState } from 'react';
+import {useMemo} from 'react';
 import {usePrevious} from 'react-use';
 
 /**
@@ -9,10 +9,12 @@ import {usePrevious} from 'react-use';
  * выходе в отдельный `props` будут прокидываться "нормализованные" данные. При обновлении поля с оригинальными данными,
  * процесс нормализации будет повторяться.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface INormalizeHookInput {
 
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface INormalizeHookOutput {
 
 }
@@ -29,7 +31,7 @@ interface IParams {
 
 const normalize = (configs: INormalizeHookConfig[], props: IParams): IParams => {
     const data = {};
-    configs.map(config => {
+    configs.forEach(config => {
         data[config.toKey] = config.normalizer(
             props[config.fromKey],
             {...props, ...data},
@@ -38,12 +40,16 @@ const normalize = (configs: INormalizeHookConfig[], props: IParams): IParams => 
     return data;
 };
 
-export default function (props: IParams, configs: INormalizeHookConfig | INormalizeHookConfig[]): INormalizeHookOutput {
+function useNormalize(props: IParams, configs: INormalizeHookConfig | INormalizeHookConfig[]): INormalizeHookOutput {
+    const previousProps = usePrevious(props);
 
     const state = useMemo(() => {
-        const toNormalize = [].concat(configs).filter(config => !_isEqual(usePrevious(config.fromKey), props[config.fromKey]));
-        return normalize(toNormalize, props)
+        const toNormalize = []
+            .concat(configs).filter(config => !_isEqual(previousProps[config.fromKey], props[config.fromKey]));
+        return normalize(toNormalize, props);
     }, [configs]);
 
     return {...props, ...state};
-};
+}
+
+export default useNormalize;

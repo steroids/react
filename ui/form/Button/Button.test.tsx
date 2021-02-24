@@ -1,8 +1,8 @@
 import React from 'react';
 import {act} from 'react-dom/test-utils';
+import ButtonView from '@steroidsjs/bootstrap/form/Button/ButtonView';
 import {IButtonProps} from './Button';
 import mountWithApp from '../../../tests/mountWithApp';
-import ButtonView from '../../../../react-bootstrap/form/Button/ButtonView';
 
 const Button = require('./Button').default;
 

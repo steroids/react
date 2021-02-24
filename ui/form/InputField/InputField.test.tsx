@@ -1,7 +1,7 @@
 import React from 'react';
+import InputFieldView from '@steroidsjs/bootstrap/form/InputField/InputFieldView';
 import InputField from './InputField';
 import mountWithApp from '../../../tests/mountWithApp';
-import InputFieldView from '../../../../react-bootstrap/form/InputField/InputFieldView';
 
 describe('InputField tests', () => {
     it('should render something without props', () => {

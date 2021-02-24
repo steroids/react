@@ -13,10 +13,11 @@
     "url": "https://github.com/steroids/react/issues"
   },
   "scripts": {
-    "docs": "typedoc --ignoreCompilerErrors --json typedoc.json ."
+    "docs": "typedoc --ignoreCompilerErrors --json typedoc.json .",
     "test": "jest"
   },
   "dependencies": {
+    "@steroidsjs/bootstrap": "^2.0.0-beta.50",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
     "axios": "^0.21.1",
     "conditional-decorator": "^0.1.7",

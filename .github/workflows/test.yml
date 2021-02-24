@@ -8,6 +8,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: steroids/react-bootstrap
-          path: ../react-bootstrap
+          path: react-bootstrap
       - run: yarn
+      - run: yarn add @steroidsjs/bootstrap
       - run: yarn test

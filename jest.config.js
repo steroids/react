@@ -8,6 +8,9 @@ module.exports = {
     ],
     moduleNameMapper: {
         'lodash-es/(.*)': 'lodash/$1',
+        '@steroidsjs/bootstrap/(.*)': require('fs').existsSync(require('path').resolve(__dirname, '/react-bootstrap'))
+            ? '<rootDir>/react-bootstrap/$1'
+            : '<rootDir>/../react-bootstrap/$1',
         '@steroidsjs/core/(.*)': '<rootDir>/$1',
     },
     globals: {

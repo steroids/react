@@ -13,7 +13,7 @@ export const init = (skipInitialized = false) => (dispatch, getState) => {
         }
     }
     return dispatch({
-        type: AUTH_INIT
+        type: AUTH_INIT,
     });
 };
 
@@ -22,34 +22,34 @@ export const reInit = () => init();
 export const login = (token, redirectPageId: string | boolean = 'root') => (
     dispatch,
     getState,
-    {http}
+    {http},
 ) => {
     http.setAccessToken(token);
     return dispatch({
         type: AUTH_INIT,
-        redirectPageId: redirectPageId || null
+        redirectPageId: redirectPageId || null,
     });
 };
 
 export const addSocial = social => ({
     type: AUTH_ADD_SOCIAL,
-    social
+    social,
 });
 
 export const setUser = user => ({
     type: AUTH_INIT_USER,
-    user: user || null
+    user: user || null,
 });
 
 export const setData = data => ({
     type: AUTH_SET_DATA,
-    data
+    data,
 });
 
 export const logout = (routeId: string | boolean = 'root', routeParams: any = null) => (dispatch, getState, {http}) => {
     http.removeAccessToken();
     return dispatch([
         setUser(null),
-        routeId && goToRoute(routeId, routeParams)
+        routeId && goToRoute(routeId, routeParams),
     ].filter(Boolean));
 };

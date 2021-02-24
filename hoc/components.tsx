@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {ComponentsContext} from './application';
 import Hoc from '../base/Hoc';
 import multi from './multi';
+import {ComponentsContext} from '../hooks/useApplication';
 
 export interface IComponents {
     clientStorage?: any,
@@ -36,38 +36,36 @@ const exportComponents = (components, names) => {
     const props = {};
     names.forEach(items => {
         [].concat(items).forEach(name => {
-            props[name] = window['SteroidsComponents'][name];
+            props[name] = window.SteroidsComponents[name];
         });
     });
     return props;
-}
+};
 
 export default (...names): any => WrappedComponent => {
     if (process.env.APP_COMPONENTS_GLOBAL) {
         return multi()(
             class ComponentsHoc extends Hoc<IComponentsHocInput & IComponentHocPrivateProps> {
-
                 static WrappedComponent = WrappedComponent;
 
                 _getProps() {
                     return {
                         ...this.props,
-                        ...exportComponents(window['SteroidsComponents'], names),
-                        components: window['SteroidsComponents'],
+                        ...exportComponents(window.SteroidsComponents, names),
+                        components: window.SteroidsComponents,
                     };
                 }
-            }
-        )
-    } else {
-        return multi()(
-            class ComponentsHoc extends React.Component<IComponentsHocInput & IComponentHocPrivateProps> {
-
+            },
+        );
+    }
+    return multi()(
+        class ComponentsHoc extends React.Component<IComponentsHocInput & IComponentHocPrivateProps> {
                 static WrappedComponent = WrappedComponent;
 
                 render() {
                     return (
                         <ComponentsContext.Consumer>
-                            {({components}) => (
+                            {(components) => (
                                 <WrappedComponent
                                     {...this.props}
                                     {...exportComponents(components, names)}
@@ -77,9 +75,6 @@ export default (...names): any => WrappedComponent => {
                         </ComponentsContext.Consumer>
                     );
                 }
-            }
-        )
-    }
-
-}
-
+        },
+    );
+};

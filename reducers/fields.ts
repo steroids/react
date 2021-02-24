@@ -20,8 +20,9 @@ export default (state = initialState, action) => {
                     ...action.meta,
                 },
             };
+        default:
+            return state;
     }
-    return state;
 };
 
 export const isMetaFetched = state => _get(state, ['fields', 'meta']) !== null;

@@ -1,10 +1,9 @@
-/backend
+/build
 /docs
 /tests
-/vendor
 /.idea
-/.gitattributes
 /.npmignore
-/stories
-/composer.json
-/composer.lock
+/jest..config.js
+/tsconfig.test.json
+*.test.ts
+*.test.tsx

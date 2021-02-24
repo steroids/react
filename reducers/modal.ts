@@ -4,7 +4,7 @@ import {MODAL_OPEN, MODAL_CLOSE, MODAL_MARK_CLOSING} from '../actions/modal';
 export const MODAL_DEFAULT_GROUP = 'modal';
 
 const initialState = {
-    opened: {}
+    opened: {},
 };
 
 export default (state = initialState, action) => {
@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
                     opened: {
                         ...state.opened,
                         [group]: [].concat(items),
-                    }
+                    },
                 };
             })();
 
@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
                     opened: {
                         ...state.opened,
                         [group]: [].concat(items),
-                    }
+                    },
                 };
             })();
 
@@ -67,7 +67,7 @@ export default (state = initialState, action) => {
                     opened: {
                         ...state.opened,
                         [group]: [].concat(items),
-                    }
+                    },
                 };
             })();
 

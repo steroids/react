@@ -1,12 +1,11 @@
 import {
     NOTIFICATIONS_SHOW,
-    NOTIFICATIONS_CLOSING,
-    NOTIFICATIONS_CLOSE
+    NOTIFICATIONS_CLOSE,
 } from '../actions/notifications';
 
 const initialState = {
     items: [],
-    position: ''
+    position: '',
 };
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -21,15 +20,15 @@ export default (state = initialState, action) => {
                             level: action.level || 'info',
                             message: action.message,
                             isClosing: false,
-                            position: action.position
-                        }
+                            position: action.position,
+                        },
                     ]),
-                position: action.position
+                position: action.position,
             };
         case NOTIFICATIONS_CLOSE:
             return {
                 ...state,
-                items: state.items.filter(item => item.id !== action.id)
+                items: state.items.filter(item => item.id !== action.id),
             };
         default:
             return state;

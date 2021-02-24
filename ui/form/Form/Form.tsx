@@ -13,6 +13,7 @@ import {IFieldProps} from '../Field/Field';
 import {useComponents} from '../../../hooks';
 import {formInitialize} from '../../../actions/form';
 import {reducerItem} from '../../../reducers/form';
+import {FormContext, FormReducerContext} from '../../../hooks/form';
 
 export interface IFormProps extends IFormSubmitHocInput {
     formId?: string;
@@ -124,7 +125,7 @@ export interface IFormViewProps {
     children?: React.ReactNode,
 }
 
-interface IFormReducerState {
+export interface IFormReducerState {
     values: any,
     initialValues: any,
     errors: any,
@@ -301,17 +302,8 @@ export default function Form(props: IFormProps) {
                 children: props.children,
             })}
         </FormContext.Provider>
-    ), [
-        props.view,
-        props.children,
-        props.model,
-        props.prefix,
-        props.layout,
-        isInvalid,
-        isSubmitting,
-        layout,
-        onSubmit,
-    ]);
+    ), [props.formId, props.model, props.prefix, props.layout, props.globalState, props.view, props.children,
+        components.ui, isInvalid, isSubmitting, layout, onSubmit]);
 
     // Wrap with reducer provider, if need
     if (!props.globalState) {

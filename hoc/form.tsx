@@ -31,9 +31,9 @@ interface IFormHocConfig {
 }
 
 export const mergeLayoutProp = (layout1, layout2) => {
-    layout1 = normalizeLayout(layout1);
-    layout2 = normalizeLayout(layout2);
-    return {...layout2, ...layout1};
+    layout1 = layout1 ? normalizeLayout(layout1) : null;
+    layout2 = layout2 ? normalizeLayout(layout2) : null;
+    return layout1 || layout2 ? {...layout2, ...layout1} : null;
 };
 
 export default (config = {} as IFormHocConfig): any => WrappedComponent => class FormHoc extends React.Component<IFormHocInput> {

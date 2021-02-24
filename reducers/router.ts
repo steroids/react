@@ -29,9 +29,10 @@ export interface IRoute {
     isVisible?: boolean,
     isNavVisible?: boolean,
     component?: React.ReactNode,
-    componentProps?: object,
+    componentProps?: Record<string, unknown>,
     roles?: string[],
     items?: IRoute[],
+
     [key: string]: any,
 }
 
@@ -40,22 +41,22 @@ interface IRouterInitialState {
         pathname: string,
         search: string,
         hash: string,
-        query: object,
+        query: Record<string, unknown>,
     },
     routesTree: IRoute,
-    routesMap: {[key: string]: IRoute},
+    routesMap: { [key: string]: IRoute },
     activeIds: string[],
     match: {
         path: string,
         url: string,
         isExact: string,
-        params: object,
+        params: Record<string, unknown>,
     },
 
-    params: object,
+    params: Record<string, unknown>,
     configs: any,
-    data: object,
-    counters: object,
+    data: Record<string, unknown>,
+    counters: Record<string, unknown>,
 }
 
 const initialState = {
@@ -69,7 +70,7 @@ const initialState = {
     params: {},
     configs: [],
     data: {},
-    counters: {}
+    counters: {},
 } as IRouterInitialState;
 
 /**
@@ -108,14 +109,30 @@ export const buildUrl = (path, params = null) => {
 };
 
 /**
+ * Return true, if item is 'active' - opened current route or it children
+ */
+const checkIsActive = (state, item) => {
+    // Check is active
+    const pathname = window.location.protocol === 'file:'
+        ? window.location.hash.replace(/^#/, '')
+        : _get(state, 'location.pathname');
+    const checkActive = (subPathname, subItem) => {
+        const match = matchPath(subPathname, _pick(subItem, ['exact', 'strict', 'path']));
+        return !!(match || (subItem.items || []).find(sub => checkActive(subPathname, sub)));
+    };
+    return checkActive(pathname, item);
+};
+
+/**
  * Normalize routes tree (convert object structure to items[])
  */
-const normalizeRoutes = (state, item: IRoute, activeIds: string[], routesMap: object) => {
+const normalizeRoutes = (state, item: IRoute, activeIds: string[], routesMap: Record<string, unknown>) => {
     let items = null;
     if (_isArray(item.items)) {
         items = item.items.map(subItem => normalizeRoutes(state, subItem, activeIds, routesMap));
     } else if (_isObject(item.items)) {
-        items = Object.keys(item.items).map(id => normalizeRoutes(state, {...item.items[id], id}, activeIds, routesMap));
+        items = Object.keys(item.items)
+            .map(id => normalizeRoutes(state, {...item.items[id], id}, activeIds, routesMap));
     }
     const normalizedItem = {
         ...item,
@@ -140,21 +157,6 @@ const normalizeRoutes = (state, item: IRoute, activeIds: string[], routesMap: ob
     }
 
     return normalizedItem;
-};
-
-/**
- * Return true, if item is 'active' - opened current route or it children
- */
-const checkIsActive = (state, item) => {
-    // Check is active
-    const pathname = location.protocol === 'file:'
-        ? location.hash.replace(/^#/, '')
-        : _get(state, 'location.pathname');
-    const checkActive = (pathname, item) => {
-        const match = matchPath(pathname, _pick(item, ['exact', 'strict', 'path']));
-        return !!(match || (item.items || []).find(sub => checkActive(pathname, sub)));
-    };
-    return checkActive(pathname, item);
 };
 
 /**
@@ -189,113 +191,94 @@ const getMatch = (currentRoute, state) => {
     };
 };
 
-export default (state = initialState, action) => {
-    switch (action.type) {
-        case ROUTER_INIT_ROUTES:
-            const routesMap = {};
-            const activeIds = [];
-            const routesTree = normalizeRoutes(state, action.routes, activeIds, routesMap);
-            const currentRoute = activeIds.length > 0 ? routesMap[activeIds[0]] : null;
-            return {
-                ...state,
-                routesTree,
-                routesMap,
-                activeIds,
-                match: getMatch(currentRoute, state),
-            };
-
-        case '@@router/LOCATION_CHANGE':
-            return (() => {
-                const activeIds = Object.keys(state.routesMap).filter(id => checkIsActive(state, state.routesMap[id]));
-                const currentRoute = activeIds.length > 0 ? state.routesMap[activeIds[0]] : null;
-                return {
-                    ...state,
-                    activeIds,
-                    match: getMatch(currentRoute, state),
-                };
-            })();
-
-        case ROUTER_SET_PARAMS:
-            return {
-                ...state,
-                params: {
-                    ...state.params,
-                    ...state.location.query,
-                    ...action.params
+const reducerMap = {
+    [ROUTER_INIT_ROUTES]: (state, action) => {
+        const routesMap = {};
+        const activeIds = [];
+        const routesTree = normalizeRoutes(state, action.routes, activeIds, routesMap);
+        const currentRoute = activeIds.length > 0 ? routesMap[activeIds[0]] : null;
+        return {
+            ...state,
+            routesTree,
+            routesMap,
+            activeIds,
+            match: getMatch(currentRoute, state),
+        };
+    },
+    '@@router/LOCATION_CHANGE': (state, action) => {
+        const activeIds = Object.keys(state.routesMap).filter(id => checkIsActive(state, state.routesMap[id]));
+        const currentRoute = activeIds.length > 0 ? state.routesMap[activeIds[0]] : null;
+        return {
+            ...state,
+            activeIds,
+            match: getMatch(currentRoute, state),
+        };
+    },
+    [ROUTER_SET_PARAMS]: (state, action) => ({
+        ...state,
+        params: {
+            ...state.params,
+            ...state.location.query,
+            ...action.params,
+        },
+    }),
+    [ROUTER_ADD_CONFIGS]: (state, action) => {
+        const configs = [].concat(state.configs || []);
+        const counters = {...state.counters};
+        action.configs.forEach(config => {
+            const id = getConfigId(config);
+            if (counters[id]) {
+                counters[id] += 1;
+            } else {
+                counters[id] = 1;
+                configs.push(config);
+            }
+        });
+        return {
+            ...state,
+            configs,
+            counters,
+        };
+    },
+    [ROUTER_REMOVE_CONFIGS]: (state, action) => {
+        let configs2 = [].concat(state.configs);
+        const counters2 = {...state.counters};
+        const data = {...state.data};
+        action.configs.forEach(config => {
+            const id = getConfigId(config);
+            if (counters2[id]) {
+                counters2[id] -= 1;
+                if (counters2[id] <= 0) {
+                    configs2 = configs2.filter(item => getConfigId(item) !== id);
+                    delete data[id];
                 }
-            };
-
-        case ROUTER_ADD_CONFIGS:
-            const configs = [].concat(state.configs || []);
-            const counters = {...state.counters};
-            action.configs.forEach(config => {
-                const id = getConfigId(config);
-                if (counters[id]) {
-                    counters[id]++;
-                } else {
-                    counters[id] = 1;
-                    configs.push(config);
-                }
-            });
-            return {
-                ...state,
-                configs,
-                counters
-            };
-
-        case ROUTER_REMOVE_CONFIGS:
-            let configs2 = [].concat(state.configs);
-            const counters2 = {...state.counters};
-            let data = {...state.data};
-            action.configs.forEach(config => {
-                const id = getConfigId(config);
-                if (counters2[id]) {
-                    counters2[id]--;
-                    if (counters2[id] <= 0) {
-                        configs2 = configs2.filter(item => getConfigId(item) !== id);
-                        delete data[id];
-                    }
-                }
-            });
-            return {
-                ...state,
-                data,
-                configs: configs2,
-                counters: counters2
-            };
-
-        case ROUTER_SET_DATA:
-            return {
-                ...state,
-                data: {
-                    ...state.data,
-                    [getConfigId(action.config)]: action.data
-                }
-            };
-    }
-    return state;
+            }
+        });
+        return {
+            ...state,
+            data,
+            configs: configs2,
+            counters: counters2,
+        };
+    },
+    [ROUTER_SET_DATA]: (state, action) => ({
+        ...state,
+        data: {
+            ...state.data,
+            [getConfigId(action.config)]: action.data,
+        },
+    }),
 };
-
-/*
-    Changes from version v1 -> v2
-
-    isInitialized -> isRouterInitialized
-    getBreadcrumbs -> getRouteBreadcrumbs
-    getNavItem -> getRoute
-    getNavUrl -> getRoute + buildNavItem
-    getCurrentRoute -> getRoute
-    getCurrentItem -> getRoute
-    getCurrentItemParam -> getRouteProp
-    getNavItems -> getRouteChildren
-    getParentRoute -> getRouteParent
- */
+export default (state = initialState, action) => reducerMap[action] ? reducerMap[action](state, action) : state;
 
 export const isRouterInitialized = state => !!state.router.routesTree;
 export const getRouterParams = state => _get(state.router, 'params');
 export const getActiveRouteIds = state => _get(state.router, 'activeIds') || null;
 export const getRoutesMap = state => _get(state.router, 'routesMap') || null;
 export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
-export const getRoute = (state, routeId = null) => _get(state.router, ['routesMap', routeId || getRouteId(state)]) || null;
+export const getRoute = (state, routeId = null) => _get(
+    state.router, ['routesMap', routeId || getRouteId(state)],
+) || null;
 export const getRouteProp = (state, routeId = null, param) => _get(getRoute(state, routeId), param) || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
 export const getRouteParam = (state, param) => _get(getRouteParams(state), param) || null;
@@ -306,8 +289,7 @@ export const getRouteBreadcrumbs = (state, routeId = null): IRoute[] => {
 };
 export const getRouteChildren = (state, routeId = null) => {
     const route = getRoute(state, routeId);
-    return route && route.items || null;
-
+    return route?.items || null;
 };
 export const getRouteParent = (state, routeId = null, level = 1) => {
     const route = getRoute(state, routeId);
@@ -316,7 +298,5 @@ export const getRouteParent = (state, routeId = null, level = 1) => {
         ? breadcrumbs[breadcrumbs.length - (level + 1)]
         : null;
 };
-export const getNavItems = (state, routeId, level = 1) => {
-    // TODO levels...
-    return getRouteChildren(state, routeId);
-}
+// TODO levels...
+export const getNavItems = (state, routeId/*, level = 1*/) => getRouteChildren(state, routeId);

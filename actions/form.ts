@@ -36,7 +36,7 @@ export const formReset = (formId) => ({
     type: FORM_RESET,
     formId,
 });
-
-export const formArrayPush = (formId, name, value) => {
-
-}
+//
+// export const formArrayPush = (formId, name, value) => {
+//
+// };

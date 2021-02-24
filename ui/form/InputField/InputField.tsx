@@ -146,7 +146,10 @@ function InputField(props: IInputFieldProps & IFieldWrapperProps) {
         );
     }*/
 
-    return components.ui.renderView(props.view || 'form.InputFieldView', props);
+    return components.ui.renderView(props.view || 'form.InputFieldView', {
+        ...props,
+        inputProps,
+    });
 }
 
 InputField.defaultProps = {

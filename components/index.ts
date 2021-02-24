@@ -15,5 +15,29 @@ export {
     MetaComponent,
     ResourceComponent,
     StoreComponent,
-    UiComponent
+    UiComponent,
+};
+
+export default {
+    clientStorage: {
+        className: ClientStorageComponent,
+    },
+    html: {
+        className: HtmlComponent,
+    },
+    http: {
+        className: HttpComponent,
+    },
+    locale: {
+        className: LocaleComponent,
+    },
+    meta: {
+        className: MetaComponent,
+    },
+    store: {
+        className: StoreComponent,
+    },
+    ui: {
+        className: UiComponent,
+    },
 };

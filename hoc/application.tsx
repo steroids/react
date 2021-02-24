@@ -1,115 +1,14 @@
 import * as React from 'react';
-import {Provider} from 'react-redux';
-import _merge from 'lodash-es/merge';
-import ClientStorageComponent from '../components/ClientStorageComponent';
-import HtmlComponent from '../components/HtmlComponent';
-import HttpComponent from '../components/HttpComponent';
-import LocaleComponent from '../components/LocaleComponent';
-import StoreComponent from '../components/StoreComponent';
-import UiComponent from '../components/UiComponent';
-import {IComponentsHocOutput} from './components';
-import MetaComponent from '../components/MetaComponent';
+import useApplication, {IApplicationHookConfig} from '../hooks/useApplication';
 
 /**
  * Application HOC
  * Обертка над корневым компонентом приложения, используется только в `Application.tsx`. Добавляет через React Context
  * компоненты приложения и конфигурирует их.
  */
-export interface IApplicationHocInput {
-}
-
-export interface IApplicationHocOutput {
-}
-
-export interface IApplicationHocConfig {
-    components?: {
-        [key: string]: {
-            className: any,
-            [key: string]: any,
-        } | any,
-    }
-    onInit?: (...args: any) => any,
-    useGlobal?: boolean,
-}
-
-export const ComponentsContext = React.createContext({} as IComponentsHocOutput);
-
-const defaultComponents = {
-    clientStorage: {
-        className: ClientStorageComponent,
-    },
-    html: {
-        className: HtmlComponent,
-    },
-    http: {
-        className: HttpComponent,
-    },
-    locale: {
-        className: LocaleComponent,
-    },
-    meta: {
-        className: MetaComponent,
-    },
-    store: {
-        className: StoreComponent,
-    },
-    ui: {
-        className: UiComponent,
-    },
+export default (config: IApplicationHookConfig): any => WrappedComponent => function ApplicationHoc(props) {
+    const {renderApplication} = useApplication(config);
+    return renderApplication(
+        <WrappedComponent {...props} />,
+    );
 };
-
-export default (config: IApplicationHocConfig): any => WrappedComponent =>
-    class ApplicationHoc extends React.Component<IApplicationHocInput> {
-
-        _components: any;
-
-        static WrappedComponent = WrappedComponent;
-
-        constructor(props) {
-            super(props);
-
-            // Create components
-            this._components = {};
-            const componentsConfig = _merge({}, defaultComponents, config.components);
-            Object.keys(componentsConfig).forEach(name => {
-                const {className, ...componentConfig} = componentsConfig[name];
-                this._components[name] = new className(this._components, componentConfig);
-            });
-
-            if (config.useGlobal !== false && typeof window !== 'undefined') {
-                window['SteroidsComponents'] = this._components;
-            }
-
-            // Init callback
-            if (config.onInit) {
-                config.onInit(this._components);
-            }
-        }
-
-        render() {
-            if (process.env.IS_SSR) {
-                return null;
-            }
-
-            let content = (
-                <WrappedComponent {...this.props as IApplicationHocOutput} />
-            );
-            if (!process.env.APP_COMPONENTS_GLOBAL) {
-                content = (
-                    <ComponentsContext.Provider value={{components: this._components}}>
-                        {content}
-                    </ComponentsContext.Provider>
-                );
-            }
-
-            if (process.env.APP_MULTI_HOC) {
-                //return content;
-            }
-
-            return (
-                <Provider store={this._components.store.store}>
-                    {content}
-                </Provider>
-            );
-        }
-    }

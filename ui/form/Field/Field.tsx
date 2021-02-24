@@ -4,7 +4,7 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 
 import {useComponents} from '../../../hooks';
-import {FormContext} from '../Form/Form';
+import {FormContext} from '../../../hooks/form';
 
 export interface IFieldProps {
     attribute?: any;

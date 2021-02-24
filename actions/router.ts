@@ -30,34 +30,33 @@ const normalizeConfigs = configs => {
         configs[index] = {
             method: 'get',
             params: {},
-            ...config
+            ...config,
         };
     });
     return configs;
 };
-const defaultFetchHandler = (config, {http}) => {
-    return http
-        .send(config.method, config.url, config.params)
-        .then(result => result.data);
-};
+const defaultFetchHandler = (config, {http}) => http
+    .send(config.method, config.url, config.params)
+    .then(result => result.data);
 export const initRoutes = routes => ({
     type: ROUTER_INIT_ROUTES,
     routes,
 });
 export const initParams = params => ({
     type: ROUTER_SET_PARAMS,
-    params
+    params,
 });
 export const goToRoute = (routeId, params = null, isReplace = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
-    } else {
-        const getRouteProp = require('../reducers/router').getRouteProp;
-        const buildUrl = require('../reducers/router').buildUrl;
-        const path = getRouteProp(getState(), routeId, 'path');
-        const method = isReplace ? replace : push;
-        return dispatch(method(buildUrl(path, params)));
+        return [];
     }
+
+    const getRouteProp = require('../reducers/router').getRouteProp;
+    const buildUrl = require('../reducers/router').buildUrl;
+    const path = getRouteProp(getState(), routeId, 'path');
+    const method = isReplace ? replace : push;
+    return dispatch(method(buildUrl(path, params)));
 };
 export const goToParent = (level = 1) => (dispatch, getState) => {
     const getRouteParent = require('../reducers/router').getRouteParent;
@@ -70,6 +69,7 @@ export const goToParent = (level = 1) => (dispatch, getState) => {
     if (parentRouteId) {
         return dispatch(goToRoute(parentRouteId, parentRouteParams));
     }
+    return [];
 };
 export const getConfigId = config => config ? (config.id || _trim(config.url, '/')) : null;
 
@@ -81,14 +81,14 @@ const fetchByConfig = (config, dispatch, components) => {
             config,
             data,
         }));
-}
+};
 
 export const navigationAddConfigs = (configs: IFetchConfig|IFetchConfig[]) => (dispatch, getState, components) => {
     configs = normalizeConfigs(configs) as IFetchConfig[];
     if (configs.length > 0) {
         dispatch({
             type: ROUTER_ADD_CONFIGS,
-            configs
+            configs,
         });
         configs.forEach(config => fetchByConfig(config, dispatch, components));
     }
@@ -105,7 +105,8 @@ export const navigationRemoveConfigs = configs => {
     if (configs.length > 0) {
         return {
             type: ROUTER_REMOVE_CONFIGS,
-            configs
+            configs,
         };
     }
+    return [];
 };

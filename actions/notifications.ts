@@ -1,4 +1,5 @@
-let ID_COUNTER = 0;
+import _uniqueId from 'lodash-es/uniqueId';
+
 export const NOTIFICATIONS_SHOW = 'NOTIFICATIONS_SHOW';
 export const NOTIFICATIONS_CLOSING = 'NOTIFICATIONS_CLOSING';
 export const NOTIFICATIONS_CLOSE = 'NOTIFICATIONS_CLOSE';
@@ -13,25 +14,26 @@ const showNotificationDefaults: IShowNotificationParameters = {
     timeOut: 10000,
 };
 
-export const showNotification = (message: string, level: ColorName = 'success', params: IShowNotificationParameters = {}) => dispatch => {
+export const closeNotification = (id = null) => ({
+    type: NOTIFICATIONS_CLOSE,
+    id,
+});
+
+export const showNotification = (
+    message: string,
+    level: ColorName,
+    params: IShowNotificationParameters = {},
+) => dispatch => {
     const {position, timeOut} = {...showNotificationDefaults, ...params} as IShowNotificationParameters;
-    const id = ++ID_COUNTER;
+    const id = _uniqueId();
 
-    dispatch({ type: NOTIFICATIONS_SHOW, id, message, level, position});
+    dispatch({type: NOTIFICATIONS_SHOW, id, message, level: level || 'success', position});
 
-    if(timeOut > 0){
+    if (timeOut > 0) {
         setTimeout(() => dispatch(closeNotification(id)), timeOut);
     }
 };
 
-export const closeNotification = (id = null) => ({
-    type: NOTIFICATIONS_CLOSE,
-    id
-});
-
-export const setFlashes = flashes =>
-    Object.keys(flashes).map((level: string) => {
-        return []
-            .concat(flashes[level] || [])
-            .map(message => showNotification(message, level));
-    });
+export const setFlashes = flashes => Object.keys(flashes).map((level: string) => []
+    .concat(flashes[level] || [])
+    .map(message => showNotification(message, level)));

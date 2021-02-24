@@ -3,7 +3,7 @@ export const SCREEN_SET_MEDIA = 'SCREEN_SET_MEDIA';
 
 export const setMedia = media => ({
     type: SCREEN_SET_MEDIA,
-    media
+    media,
 });
 
 let timer = null;
@@ -14,15 +14,15 @@ export const setWidth = (width, skipTimeout = false) => dispatch => {
     if (skipTimeout) {
         return dispatch({
             type: SCREEN_SET_WIDTH,
-            width
+            width,
         });
-    } else {
-        timer = setTimeout(() => {
-            dispatch({
-                type: SCREEN_SET_WIDTH,
-                width
-            });
-        }, 100);
     }
+    timer = setTimeout(() => {
+        dispatch({
+            type: SCREEN_SET_WIDTH,
+            width,
+        });
+    }, 100);
+
     return null;
 };

@@ -4,6 +4,7 @@ import _has from 'lodash-es/has';
 import _uniqueId from 'lodash-es/uniqueId';
 
 import {
+    NamedExoticComponent,
     useCallback, useContext, useMemo, useState,
 } from 'react';
 import * as React from 'react';
@@ -11,6 +12,7 @@ import {useComponents} from './index';
 import {FORM_CHANGE, formChange} from '../actions/form';
 import {mergeLayoutProp} from '../hoc/form';
 import FieldLayout from '../ui/form/FieldLayout';
+import {IFormContext, IFormReducerState} from '../ui/form/Form/Form';
 
 export interface IFieldHookProps {
     attribute?: string,
@@ -50,6 +52,9 @@ interface IFieldHocOptions {
     label?: boolean,
 }
 
+export const FormContext = React.createContext<IFormContext>({});
+export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
+
 // Data providers
 const reduxProvider = (formId, name) => {
     const {value, error} = useSelector(state => ({ // eslint-disable-line react-hooks/rules-of-hooks
@@ -81,9 +86,6 @@ const reactStateProvider = () => {
         setValue,
     };
 };
-
-export const FormContext = React.createContext<IFormContext>({});
-export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
 
 function useFormField(componentId: string, props: IFieldHookProps): IFieldHookResult {
     // Get full name (attribute with prefix)
@@ -117,41 +119,38 @@ function useFormField(componentId: string, props: IFieldHookProps): IFieldHookRe
     };
 }
 
-const FieldWrapper = (props) => {
-    const components = useComponents();
-    const newProps = useFormField(props.componentId, props);
-
-    const Component = newProps.component;
-    delete newProps.component;
-
-    return components.ui.renderView(Component, newProps);
-};
-
 // Field HOC
-export const fieldWrapper = (componentId, options: IFieldHocOptions = {}) => Component => (props: IFieldHookProps) => {
-    const context = useContext(FormContext);
-    const metaProps = useComponents().ui.getFieldProps(componentId, props.model, props.attribute);
-    const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
-    const content = React.memo((contentProps) => (
-        <FieldWrapper {...contentProps} component={Component} componentId={componentId} />
-    ));
+export const fieldWrapper = (
+    componentId,
+    options: IFieldHocOptions = {},
+) => <T extends any>(
+    Component: React.ComponentType<T>,
+) => (props: IFieldHookProps): T | any => {
+        const context = useContext(FormContext);
+        const metaProps = useComponents().ui.getFieldProps(componentId, props.model, props.attribute);
+        const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
-    if (layout) {
+        const FieldWrapper = newProps => useComponents().ui.renderView(Component, useFormField(componentId, newProps));
+        FieldWrapper.displayName = componentId;
+
+        if (layout) {
+            return (
+                <FieldLayout
+                    {...layout}
+                    required={_has(props, 'required') ? props.required : metaProps.required}
+                    label={options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label)}
+                    hint={_has(props, 'hint') ? props.hint : metaProps.hint}
+                    error={props.error}
+                >
+                    <FieldWrapper {...props} />
+                </FieldLayout>
+            );
+        }
+
         return (
-            <FieldLayout
-                {...layout}
-                required={_has(props, 'required') ? props.required : metaProps.required}
-                label={options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label)}
-                hint={_has(props, 'hint') ? props.hint : metaProps.hint}
-                error={props.error}
-            >
-                {content}
-            </FieldLayout>
+            <FieldWrapper {...props} />
         );
-    }
-
-    return content;
-};
+    };
 
 export const useFormSelector = (selector: (state) => any) => {
     const context = useContext(FormContext);
@@ -163,8 +162,8 @@ export const useFormSelector = (selector: (state) => any) => {
         }
 
         // React Reducer
-        const [state] = useContext(FormReducerContext); // eslint-disable-line react-hooks/rules-of-hooks
-        return selector(state);
+        const reducer = useContext(FormReducerContext); // eslint-disable-line react-hooks/rules-of-hooks
+        return reducer ? selector(reducer[0]) : null;
     }
 
     // No form

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import {useUpdateEffect} from 'react-use';
 import FieldLayout from '../FieldLayout';
 import {mergeLayoutProp} from '../../../hoc/form';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
-import {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import {useUpdateEffect} from 'react-use';
 import {useComponents, useFormSelector} from '../../../hooks';
 import {IFormContext} from '../Form/Form';
 import {FormContext} from '../../../hooks/form';
@@ -158,7 +158,7 @@ export interface IButtonProps {
      * Параметры роута, на который необходимо перейти, см. свойство `toRoute`.
      * @example {userId: 52}
      */
-    toRouteParams?: object;
+    toRouteParams?: Record<string, unknown>;
 
     /**
      * Выбор макета для распложения кнопки в форме. Если кнопка находится внутри `<Form>...</Form>`, то `layout` будет
@@ -193,7 +193,7 @@ export interface IButtonProps {
 }
 
 export interface IButtonViewProps extends IButtonProps {
-    _badge?: IButtonBadge,
+    badge?: IButtonBadge,
     url?: string,
     formId?: string,
     layout?: string,
@@ -202,16 +202,6 @@ export interface IButtonViewProps extends IButtonProps {
     submitting?: boolean,
     showLabelOnLoading: boolean,
 }
-
-interface IButtonPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
-    _badge?: IButtonBadge,
-    submitting?: boolean;
-}
-
-type ButtonState = {
-    isLoading?: boolean
-    isFailed?: boolean
-};
 
 function Button(props: IButtonProps) {
     const components = useComponents();
@@ -304,7 +294,7 @@ function Button(props: IButtonProps) {
                     });
             }
         }
-    }, []);
+    }, [dispatch, props]);
 
     const button = components.ui.renderView(props.view || 'form.ButtonView', {
         ...props,

@@ -10,8 +10,8 @@ import {filterItems} from '../utils/data';
 export interface IList {
     action?: string,
     actionMethod?: string,
-    onFetch?: (list: IList, query: object, components: any) => Promise<any>,
-    condition?: (query: object) => any,
+    onFetch?: (list: IList, query: Record<string, unknown>, components: any) => Promise<any>,
+    condition?: (query: Record<string, unknown>) => any,
     scope?: string[],
     total?: number,
     items?: Array<any>,
@@ -25,7 +25,7 @@ export interface IList {
     pageSizeAttribute?: string,
     sortAttribute?: string,
     layoutAttribute?: string,
-    meta?: object,
+    meta?: any,
     isFetched?: boolean,
     isLoading?: boolean,
 }
@@ -67,27 +67,27 @@ const createList = (listId: string, props: any) => ({
 export const httpFetchHandler = (list: IList, query, {http}) => {
     let url = list.action;
     if (list.scope) {
-        url +=
-            (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
+        url
+            += (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
     }
     return http
-        .send(list.actionMethod, url || location.pathname, query)
+        .send(list.actionMethod, url || window.location.pathname, query)
         .then(response => response.data);
 };
 
-export const localFetchHandler = (list: IList, query: object) => {
+export const localFetchHandler = (list: IList, query: Record<string, unknown>) => {
     query = {...query};
 
     // Get page
-    const page = query[list.pageAttribute] || null;
+    const page = parseInt(query[list.pageAttribute] as string, 10) || null;
     delete query[list.pageAttribute];
 
     // Get page size
-    const pageSize = query[list.pageSizeAttribute] || null;
+    const pageSize = parseInt(query[list.pageSizeAttribute] as string, 10) || null;
     delete query[list.pageSizeAttribute];
 
     // Get sort
-    const sort = query[list.sortAttribute] || null;
+    const sort = query[list.sortAttribute] ? [].concat(query[list.sortAttribute]) : null;
     delete query[list.sortAttribute];
 
     // Delete layout param
@@ -108,7 +108,7 @@ export const localFetchHandler = (list: IList, query: object) => {
             items,
             list.condition
                 ? (_isFunction(list.condition) ? list.condition(query) : list.condition)
-                : query
+                : query,
         );
     }
 
@@ -133,7 +133,7 @@ export const localFetchHandler = (list: IList, query: object) => {
         items,
         total,
     };
-}
+};
 
 /**
  * Init list
@@ -176,12 +176,12 @@ export const listInit = (listId, props) => ({
  * @param listId
  * @param query
  */
-export const listFetch = (listId: string, query: object = {}) => (dispatch, getState, components) => {
+export const listFetch = (listId: string, query: any = {}) => (dispatch, getState, components) => {
     const state = getState();
     const list = _get(state, ['list', 'lists', listId]) as IList;
 
     if (!list || (list.isRemote && !list.action && list.action !== '')) {
-        return;
+        return [];
     }
 
     const toDispatch = [];
@@ -198,7 +198,7 @@ export const listFetch = (listId: string, query: object = {}) => (dispatch, getS
         // Set `Loading...`
         toDispatch.push({
             listId,
-            type: LIST_BEFORE_FETCH
+            type: LIST_BEFORE_FETCH,
         });
     }
 
@@ -225,9 +225,9 @@ export const listFetch = (listId: string, query: object = {}) => (dispatch, getS
                 page: formValues[list.pageAttribute],
                 pageSize: formValues[list.pageSizeAttribute],
                 listId,
-                type: LIST_AFTER_FETCH
+                type: LIST_AFTER_FETCH,
             };
-        })
+        }),
     );
 
     return dispatch(toDispatch);
@@ -238,7 +238,7 @@ export const listFetch = (listId: string, query: object = {}) => (dispatch, getS
  * @param listId
  * @param query
  */
-export const listLazyFetch = (listId: string, query: object = {}) => dispatch => {
+export const listLazyFetch = (listId: string, query: any = {}) => dispatch => {
     if (lazyTimers[listId]) {
         clearTimeout(lazyTimers[listId]);
     }
@@ -265,26 +265,25 @@ export const listDestroy = (listId: string) => {
     };
 };
 
-
 export const add = (listId, item) => ({
     item,
     listId,
-    type: LIST_ITEM_ADD
+    type: LIST_ITEM_ADD,
 });
 export const update = (listId, item, condition) => ({
     item,
     condition,
     listId,
-    type: LIST_ITEM_UPDATE
+    type: LIST_ITEM_UPDATE,
 });
 export const toggleItem = (listId, itemId) => ({
     listId,
     itemId,
-    type: LIST_TOGGLE_ITEM
+    type: LIST_TOGGLE_ITEM,
 });
 export const toggleAll = listId => ({
     listId,
-    type: LIST_TOGGLE_ALL
+    type: LIST_TOGGLE_ALL,
 });
 
 // TODO local storage save?

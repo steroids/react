@@ -12,11 +12,11 @@ export interface IComponentsHookOutput {
     pushNotification?: any,
 }
 
-export default function (): IComponentsHookOutput {
-    if (process.env.APP_COMPONENTS_GLOBAL) {
-        return window['SteroidsComponents'];
-    } else {
-        // TODO Get components from context
-        //return useContext(ComponentsContext);
+export default function useComponents(): IComponentsHookOutput {
+    if (typeof window !== 'undefined' && window.SteroidsComponents) {
+        return window.SteroidsComponents;
     }
+    // TODO Get components from context
+    //return useContext(ComponentsContext);
+    return null;
 }

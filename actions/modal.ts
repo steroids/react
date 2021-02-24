@@ -1,12 +1,13 @@
+import _uniqueId from 'lodash-es/uniqueId';
+
 export const MODAL_OPEN = '@modal/open';
 export const MODAL_MARK_CLOSING = '@modal/markClosing';
 export const MODAL_CLOSE = '@modal/close';
 
-let idCounter = 0;
 export const openModal = (modal, props: any = {}) => {
     let id = props ? props.modalId : null;
     if (!id) {
-        modal._modalId = modal._modalId || 'modal-' + ++idCounter;
+        modal._modalId = modal._modalId || _uniqueId('modal');
         id = modal._modalId;
     }
 
@@ -24,7 +25,6 @@ export const modalMarkClosing = (id, group = null) => ({
     id,
     group,
 });
-
 
 export const closeModal = (id, group = null) => ({
     type: MODAL_CLOSE,

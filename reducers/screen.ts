@@ -3,32 +3,36 @@ import {SCREEN_SET_WIDTH, SCREEN_SET_MEDIA} from '../actions/screen';
 export const SCREE_PHONE = 'phone';
 export const SCREEN_TABLET = 'tablet';
 export const SCREEN_DESKTOP = 'desktop';
+
 const initialState = {
     width: 1280,
     media: {
         [SCREE_PHONE]: 320,
         [SCREEN_TABLET]: 768,
-        [SCREEN_DESKTOP]: 1024
-    }
+        [SCREEN_DESKTOP]: 1024,
+    },
 };
+
 export default (state = initialState, action) => {
     switch (action.type) {
         case SCREEN_SET_WIDTH:
             return {
                 ...state,
-                width: action.width
+                width: action.width,
             };
         case SCREEN_SET_MEDIA:
             return {
                 ...state,
                 media: {
                     ...state.media,
-                    ...action.media
-                }
+                    ...action.media,
+                },
             };
+        default:
+            return state;
     }
-    return state;
 };
+
 export const getDeviceType = state => {
     if (state.screen.width < state.screen.media[SCREEN_TABLET]) {
         return SCREE_PHONE;

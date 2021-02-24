@@ -1,4 +1,4 @@
-const isLocal = require('fs').existsSync(require('path').resolve(__dirname, '/react-bootstrap'));
+const isLocal = require('fs').existsSync(require('path').resolve(__dirname, 'react-bootstrap'));
 
 module.exports = {
     verbose: true,

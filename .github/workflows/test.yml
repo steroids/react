@@ -9,9 +9,7 @@ jobs:
         with:
           repository: steroids/react-bootstrap
           ref: hooks
-          path: react-bootstrap
+          path: /home/runner/work/react/react-bootstrap
       - run: yarn
-      - run: pwd
-      - run: ls
-      - run: cd .. && ls
+      - run: cd ../react-bootstrap && yarn
       - run: yarn test

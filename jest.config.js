@@ -1,4 +1,3 @@
-const isLocal = require('fs').existsSync(require('path').resolve(__dirname, '/react-bootstrap'));
 module.exports = {
     verbose: true,
     transform: {
@@ -9,7 +8,7 @@ module.exports = {
     ],
     moduleNameMapper: {
         'lodash-es/(.*)': 'lodash/$1',
-        '@steroidsjs/bootstrap/(.*)': isLocal ? '<rootDir>/react-bootstrap/$1' : '<rootDir>/../react-bootstrap/$1',
+        '@steroidsjs/bootstrap/(.*)': '<rootDir>/../react-bootstrap/$1',
         '@steroidsjs/core/(.*)': '<rootDir>/$1',
     },
     globals: {
@@ -22,7 +21,9 @@ module.exports = {
                     '@steroidsjs/core/*': [
                         './*',
                     ],
-                    '@steroidsjs/bootstrap/*': isLocal ? 'react-bootstrap/*' : '../react-bootstrap/*',
+                    '@steroidsjs/bootstrap/*': [
+                        '../react-bootstrap/*',
+                    ],
                 },
             },
         },

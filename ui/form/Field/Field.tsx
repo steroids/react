@@ -4,9 +4,10 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 
 import {useComponents} from '../../../hooks';
-import {FormContext} from '../../../hooks/form';
+import {FormContext} from '../Form/Form';
+import {IFieldWrapperInputProps} from './fieldWrapper';
 
-export interface IFieldProps {
+export interface IFieldProps extends IFieldWrapperInputProps {
     attribute?: any;
     model?: any;
     component?: any;

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import _toInteger from 'lodash-es/toInteger';
 import {useMemo} from 'react';
-import {IFieldHocInput} from '../../../hoc/field';
 import {useComponents} from '../../../hooks';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-export interface ISliderFieldProps extends IFieldHocInput {
+export interface ISliderFieldProps extends IFieldWrapperInputProps {
     sliderProps?: any;
     className?: CssClassName;
     view?: CustomView;
@@ -15,7 +14,7 @@ export interface ISliderFieldProps extends IFieldHocInput {
     [key: string]: any;
 }
 
-export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperProps {
+export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperOutputProps {
     slider: {
         min: number,
         max: number,
@@ -28,7 +27,7 @@ export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperP
 
 const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
-function SliderField(props: ISliderFieldProps & IFieldWrapperProps) {
+function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
     const slider = useMemo(() => ({
@@ -36,12 +35,12 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperProps) {
         max: props.max,
         defaultValue: 0,
         value: props.input.value || 0,
-        onChange: range => props.input.onChange(range),
+        onChange: range => props.input.onChange.call(null, range),
         onAfterChange: value => {
             value = normalizeValue(value);
-            props.input.onChange(value);
+            props.input.onChange.call(null, value);
         },
-    }), [props.input, props.min, props.max]);
+    }), [props.min, props.max, props.input.value, props.input.onChange]);
 
     return components.ui.renderView('form.SliderFieldView', {
         ...props,
@@ -58,4 +57,4 @@ SliderField.defaultProps = {
     max: 100,
 };
 
-export default fieldWrapper('SliderField')(SliderField);
+export default fieldWrapper('SliderField', SliderField);

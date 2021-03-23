@@ -1,6 +1,5 @@
-import * as React from 'react';
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useComponents} from '@steroidsjs/core/hooks';
+import {useMemo} from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {INavProps} from '../Nav/Nav';
 
@@ -30,58 +29,50 @@ export interface IControlsViewProps extends IControlsProps {
     })[],
 }
 
-interface IControlsPrivateProps extends IComponentsHocOutput {
+export default function Controls(props: IControlsProps) {
+    const defaultItems = {
+        index: {
+            icon: 'back',
+            label: __('К списку'),
+            color: 'secondary',
+            outline: true,
+        },
+        create: {
+            icon: 'create',
+            label: __('Добавить'),
+            color: 'success',
+            outline: true,
+        },
+        view: {
+            icon: 'view',
+            label: __('Просмотр'),
+            color: 'secondary',
+            outline: true,
+        },
+        update: {
+            icon: 'update',
+            label: __('Редактировать'),
+            color: 'secondary',
+            outline: true,
+        },
+        delete: {
+            icon: 'delete',
+            label: __('Удалить'),
+            confirm: __('Удалить запись?'),
+            color: 'danger',
+            outline: true,
+            position: 'right',
+        },
+    };
 
-}
+    const components = useComponents();
+    const items = useMemo(() => props.items.map(item => ({
+        ...defaultItems[item.id],
+        ...item,
+    })), [defaultItems, props.items]);
 
-@components('ui')
-export default class Controls extends React.PureComponent<IControlsProps & IControlsPrivateProps> {
-
-    render() {
-        const defaultItems = {
-            index: {
-                icon: 'back',
-                label: __('К списку'),
-                color: 'secondary',
-                outline: true
-            },
-            create: {
-                icon: 'create',
-                label: __('Добавить'),
-                color: 'success',
-                outline: true
-            },
-            view: {
-                icon: 'view',
-                label: __('Просмотр'),
-                color: 'secondary',
-                outline: true
-            },
-            update: {
-                icon: 'update',
-                label: __('Редактировать'),
-                color: 'secondary',
-                outline: true
-            },
-            delete: {
-                icon: 'delete',
-                label: __('Удалить'),
-                confirm: __('Удалить запись?'),
-                color: 'danger',
-                outline: true,
-                position: 'right'
-            }
-        };
-        const ControlsView = this.props.view || this.props.ui.getView('nav.ControlsView');
-        return (
-            <ControlsView
-                {...this.props}
-                items={this.props.items.map(item => ({
-                    ...defaultItems[item.id],
-                    ...item
-                }))}
-            />
-        );
-    }
-
+    return components.ui.renderView(props.view || 'nav.ControlsView', {
+        ...props,
+        items,
+    });
 }

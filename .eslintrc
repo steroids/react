@@ -47,6 +47,10 @@
     "react/button-has-type": "off",
     "prefer-template": "off",
     "react/require-default-props": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.test.tsx"]}],
+    "react-hooks/exhaustive-deps": ["warn", {
+      "additionalHooks": "^use(Async|AsyncFn|AsyncRetry|Debounce|UpdateEffect|IsomorphicLayoutEffect|DeepCompareEffect|ShallowCompareEffect)$"
+    }],
     "react/jsx-indent": [
       "error",
       4

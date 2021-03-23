@@ -1,21 +1,19 @@
 import * as React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {initialize} from 'redux-form';
+import {useSelector} from 'react-redux';
 import _get from 'lodash-es/get';
-import _cloneDeep from 'lodash-es/cloneDeep';
+import _isUndefined from 'lodash-es/isUndefined';
+import _set from 'lodash-es/set';
 import * as queryString from 'qs';
-import {useCallback, useMemo, useReducer} from 'react';
-import {useEffectOnce, useMount, usePrevious, useUpdateEffect} from 'react-use';
-import {IFormSubmitHocInput} from '../../../hoc/formSubmit';
+import {useCallback, useMemo} from 'react';
+import {useFirstMountState, useMount, usePrevious, useUpdateEffect} from 'react-use';
 import AutoSaveHelper from './AutoSaveHelper';
 import SyncAddressBarHelper from './SyncAddressBarHelper';
 import {IFieldProps} from '../Field/Field';
 import {useComponents} from '../../../hooks';
-import {formInitialize} from '../../../actions/form';
-import {reducerItem} from '../../../reducers/form';
-import {FormContext, FormReducerContext} from '../../../hooks/form';
+import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form';
+import validate from '../validate';
 
-export interface IFormProps extends IFormSubmitHocInput {
+export interface IFormProps {
     formId?: string;
     prefix?: string;
     model?: string | ((...args: any[]) => any) | any;
@@ -142,52 +140,15 @@ export interface IFormContext {
     reducer?: any,
 }
 
-/* @formSubmit()*/
+export const FormContext = React.createContext<IFormContext>({});
+export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
 
-// Data providers
-const reactReducerProvider = (initialValues = {}) => {
-    // React reducer
-    const initialState: IFormReducerState = useMemo(() => ({ // eslint-disable-line react-hooks/rules-of-hooks
-        values: initialValues ? _cloneDeep(initialValues) : {},
-        initialValues,
-        errors: {},
-        isInvalid: false,
-        isSubmitting: false,
-    }), [initialValues]);
-    const reducer = useReducer(reducerItem, initialState); // eslint-disable-line react-hooks/rules-of-hooks
-
-    const [state] = reducer;
-    return {
-        values: state.values,
-        isInvalid: state.isInvalid,
-        isSubmitting: state.isSubmitting,
-        reducer,
-    };
+const defaultProps = {
+    actionMethod: 'POST',
+    autoStartTwoFactor: true,
 };
-const reduxProvider = (formId, initialValues) => {
-    const dispatch = useDispatch(); // eslint-disable-line react-hooks/rules-of-hooks
-    useEffectOnce(() => { // eslint-disable-line react-hooks/rules-of-hooks
-        dispatch(formInitialize(formId, initialValues));
-    });
-    return {
-        ...useSelector(state => ({ // eslint-disable-line react-hooks/rules-of-hooks
-            values: _get(state, ['form', formId, 'values']) || initialValues,
-            isInvalid: _get(state, ['form', formId, 'isInvalid']),
-            isSubmitting: _get(state, ['form', formId, 'isSubmitting']),
-        })),
-        reducer: null,
-    };
-};
-
-export const normalizeLayout = layout => (typeof layout === 'object' ? layout : {layout});
 
 export default function Form(props: IFormProps) {
-    // Get components and dispatch method
-    const components = useComponents();
-    const dispatch = useDispatch();
-
-    let initialValues = props.initialValues;
-
     // Dev validation. You cannot change data provider (formId, globalState)
     if (process.env.NODE_ENV !== 'production') {
         const prevFormId = usePrevious(props.formId); // eslint-disable-line react-hooks/rules-of-hooks
@@ -197,32 +158,45 @@ export default function Form(props: IFormProps) {
         }
     }
 
-    // Restore initial state from address bar
+    // Get components and dispatch method
+    const components = useComponents();
+
+    // Normalize layout
+    const layout = useMemo(() => normalizeLayout(props.layout), [props.layout]);
+
+    // Resolve initial values
+    let initialValues = props.initialValues;
+
+    // Restore initial values from address bar and local storage
+    const isFirstMount = useFirstMountState();
     const locationSearch = useSelector(state => _get(state, 'router.location.search', ''));
-    if (props.syncWithAddressBar) {
-        initialValues = SyncAddressBarHelper.restore(
-            {
-                ...props.initialValues,
-                ...SyncAddressBarHelper.cleanValues(queryString.parse(locationSearch)),
-            },
-            props.restoreCustomizer,
-        );
+    if (isFirstMount) {
+        // Query
+        if (props.syncWithAddressBar) {
+            initialValues = SyncAddressBarHelper.restore(
+                {
+                    ...props.initialValues,
+                    ...SyncAddressBarHelper.cleanValues(queryString.parse(locationSearch)),
+                },
+                props.restoreCustomizer,
+            );
+        }
+
+        // Local storage
+        if (props.autoSave) {
+            initialValues = AutoSaveHelper.restore(props.clientStorage, props.formId, initialValues);
+        }
     }
 
-    // Resolve data provider
-    const {
-        values,
-        isInvalid,
-        isSubmitting,
-        reducer,
-    } = props.globalState
-        ? reduxProvider(props.formId, initialValues)
-        : reactReducerProvider(initialValues);
+    // Init data provider
+    const formProvider = props.globalState ? providers.redux : providers.reducer;
+    const {values, isInvalid, isSubmitting, setErrors, reducer} = formProvider.useForm(props.formId, initialValues);
 
     // Sync with address bar
     useUpdateEffect(() => {
         if (props.syncWithAddressBar) {
-            const page = Number(_get(values, 'page', 1));
+            // TODO
+            /*const page = Number(_get(values, 'page', 1));
             SyncAddressBarHelper.save(
                 components.store,
                 SyncAddressBarHelper.cleanValues({
@@ -230,12 +204,9 @@ export default function Form(props: IFormProps) {
                     page: page > 1 && page,
                 }),
                 props.useHash,
-            );
+            );*/
         }
     }, [props.syncWithAddressBar, props.useHash, values]);
-
-    // Normalize layout
-    const layout = useMemo(() => normalizeLayout(props.layout), [props.layout]);
 
     // Auto focus
     useMount(() => {
@@ -252,22 +223,10 @@ export default function Form(props: IFormProps) {
     });
 
     // Auto save
-    useMount(() => {
-        // Restore values from query, when autoSave flag is set
-        if (props.autoSave) {
-            const restoreValues = AutoSaveHelper.restore(
-                props.clientStorage,
-                props.formId,
-                props.initialValues,
-            );
-            if (restoreValues) {
-                dispatch(initialize(props.formId, restoreValues));
-            }
-        }
-    });
     useUpdateEffect(() => {
         if (props.autoSave && values) {
-            AutoSaveHelper.save(components.clientStorage, props.formId, values);
+            // TODO
+            //AutoSaveHelper.save(components.clientStorage, props.formId, values);
         }
     }, [props.autoSave, values]);
 
@@ -279,9 +238,76 @@ export default function Form(props: IFormProps) {
     }, [values]);
 
     // OnSubmit handler
-    const onSubmit = useCallback(() => {
+    const onSubmit = useCallback(async () => {
         // TODO
-    }, []);
+
+        // Append non touched fields to values object
+        if (props.formId) {
+            Object.keys(components.ui.getRegisteredFields(props.formId).formRegisteredFields || {}).forEach(key => {
+                const registeredName = this.props.formRegisteredFields[key].name;
+                if (_isUndefined(_get(values, registeredName))) {
+                    _set(values, registeredName, null);
+                }
+            });
+        }
+
+        const cleanedValues = cleanEmptyObject(values);
+
+        // Event onBeforeSubmit
+        if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {
+            return null;
+        }
+        if (props.validators) {
+            validate(cleanedValues, props.validators);
+        }
+        if (props.onSubmit) {
+            return props.onSubmit.call(null, cleanedValues);
+        }
+
+        // Send request
+        const response = await this.props.http.send(
+            this.props.actionMethod,
+            this.props.action || window.location.pathname,
+            cleanedValues,
+            {
+                onTwoFactor: this.props.onTwoFactor
+                    ? async (providerName) => {
+                        const info = this.props.autoStartTwoFactor
+                            ? await this.props.http.post(`/api/v1/auth/2fa/${providerName}/send`)
+                            : null;
+                        this.props.onTwoFactor(providerName, info);
+                    }
+                    : undefined,
+            },
+        );
+
+        // Skip on 2fa
+        if (response.twoFactor) {
+            return null;
+        }
+
+        const data = response.data || {};
+
+        // Event onAfterSubmit
+        if (props.onAfterSubmit && props.onAfterSubmit.call(null, cleanedValues, data, response) === false) {
+            return null;
+        }
+        if (data.errors) {
+            setErrors(props.formId, data.errors);
+            return null;
+        }
+        if (this.props.onComplete) {
+            this.props.onComplete.call(null, cleanedValues, data, response);
+        }
+        if (this.props.autoSave) {
+            // TODO
+            //const AutoSaveHelper = require('../ui/form/Form/AutoSaveHelper').default;
+            //AutoSaveHelper.remove(this.props.clientStorage, this.props.formId);
+        }
+
+        return null;
+    }, [components.ui, props.formId, props.onAfterSubmit, props.onBeforeSubmit, props.onSubmit,
+        props.validators, setErrors, values]);
 
     // Render context and form
     let content = useMemo(() => (

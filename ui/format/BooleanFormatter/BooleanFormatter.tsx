@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useComponents} from '@steroidsjs/core/hooks';
 
 export interface IBooleanFormatterProps {
     value?: string | number | boolean;
     view?: CustomView;
+
     [key: string]: any;
 }
 
@@ -13,12 +13,8 @@ export interface IBooleanFormatterPropsView {
     children?: React.ReactNode,
 }
 
-@components('ui')
-export default class BooleanFormatter extends React.Component<IBooleanFormatterProps & IComponentsHocOutput> {
-    render() {
-        const BooleanFormatterView = this.props.view || this.props.ui.getView('format.BooleanFormatterView');
-        return <BooleanFormatterView
-            value={this.props.value}
-        />;
-    }
+export default function BooleanFormatter(props: IBooleanFormatterProps) {
+    return useComponents().ui.renderView(props.view || 'format.BooleanFormatterView', {
+        value: props.value,
+    });
 }

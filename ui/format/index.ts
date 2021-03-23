@@ -4,7 +4,7 @@ import DateTimeFormatter from './DateTimeFormatter';
 import EnumFormatter from './EnumFormatter';
 import FileSize from './FileSize';
 import MoneyFormatter from './MoneyFormatter';
-import PhotosFormatter from './PhotosFormatter';
+// import PhotosFormatter from './PhotosFormatter';
 
 export {
     BooleanFormatter,
@@ -13,7 +13,7 @@ export {
     EnumFormatter,
     FileSize,
     MoneyFormatter,
-    PhotosFormatter,
+    // PhotosFormatter,
 };
 
 export default {
@@ -23,5 +23,5 @@ export default {
     EnumFormatter,
     FileSize,
     MoneyFormatter,
-    PhotosFormatter,
+    // PhotosFormatter,
 };

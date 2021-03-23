@@ -2,15 +2,14 @@ import * as React from 'react';
 import {useMount} from 'react-use';
 import {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
-import {IFieldHocInput} from '../../../hoc/field';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
 /**
  * CheckboxField
  * Одиночный чекбокс. Используется в формах для отметки булевого значения.
  */
-export interface ICheckboxFieldProps extends IFieldHocInput {
+export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
 
     /**
      * Свойства для элемента \<input /\>
@@ -25,7 +24,7 @@ export interface ICheckboxFieldProps extends IFieldHocInput {
     [key: string]: any,
 }
 
-export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrapperProps {
+export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         name: string,
         type: string,
@@ -35,7 +34,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
     }
 }
 
-function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperProps) {
+function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
     const dispatch = useDispatch();
 
@@ -63,4 +62,4 @@ CheckboxField.defaultProps = {
     className: '',
 };
 
-export default fieldWrapper('CheckboxField', {label: false})(CheckboxField);
+export default fieldWrapper('CheckboxField', CheckboxField, {label: false});

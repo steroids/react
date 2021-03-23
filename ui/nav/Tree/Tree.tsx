@@ -62,7 +62,7 @@ interface TreeState {
         selectedItemId: _isString(props.items) ? getRouteId(state) : props.selectedItemId,
         activeRouteIds: getActiveRouteIds(state),
         routerParams: getRouterParams(state),
-    })
+    }),
 )
 @normalize(
     {
@@ -95,6 +95,7 @@ interface TreeState {
 @components('ui', 'clientStorage')
 export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateProps, TreeState> {
     static STORAGE_KEY_PREFIX = 'tree_';
+
     static defaultProps = {
         itemsKey: 'items',
         autoOpenLevels: 1,
@@ -110,8 +111,8 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
 
     componentDidUpdate(prevProps) {
         if (
-            !_isEqual(prevProps._items, this.props._items) ||
-            prevProps.selectedItemId !== this.props.selectedItemId
+            !_isEqual(prevProps._items, this.props._items)
+            || prevProps.selectedItemId !== this.props.selectedItemId
         ) {
             this.setState(this._initState());
         }
@@ -130,17 +131,16 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
     _initState() {
         // Initial opened items
         const key = Tree.STORAGE_KEY_PREFIX + this.props.id;
-        const opened =
-            !this.state && this.props.clientStorage.get(key) && this.props.autoSave
-                ? JSON.parse(this.props.clientStorage.get(key))
-                : this._autoOpen(this.props._items);
+        const opened = !this.state && this.props.clientStorage.get(key) && this.props.autoSave
+            ? JSON.parse(this.props.clientStorage.get(key))
+            : this._autoOpen(this.props._items);
         const selectedItem = this._findChildById(
             this.props._items,
-            this.props.selectedItemId
+            this.props.selectedItemId,
         );
         return {
             opened,
-            selectedUniqId: selectedItem ? selectedItem.uniqId : null
+            selectedUniqId: selectedItem ? selectedItem.uniqId : null,
         };
     }
 
@@ -171,11 +171,11 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                         && _isEqual(item.toRouteParams || {}, _omit(this.props.routerParams, _keys(item.toRouteParams)))
                     ),
                 hasItems,
-                onClick: e => this._onItemClick(e, uniqId, item)
+                onClick: e => this._onItemClick(e, uniqId, item),
             });
             if (isOpened) {
                 result = result.concat(
-                    this._getItems(item[this.props.itemsKey], uniqId, level + 1)
+                    this._getItems(item[this.props.itemsKey], uniqId, level + 1),
                 ).filter(Boolean);
             }
         });
@@ -198,7 +198,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
             if (this.props.selectedItemId) {
                 const finedItem = this._findChildById(
                     item[this.props.itemsKey],
-                    this.props.selectedItemId
+                    this.props.selectedItemId,
                 );
                 if (finedItem) {
                     opened[uniqId] = true;
@@ -206,7 +206,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
             }
             opened = {
                 ...opened,
-                ...this._autoOpen(item[this.props.itemsKey], uniqId, level + 1)
+                ...this._autoOpen(item[this.props.itemsKey], uniqId, level + 1),
             };
         });
         return opened;
@@ -224,7 +224,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                 finedItem = {
                     ...item,
                     uniqId,
-                    level
+                    level,
                 };
             }
             if (!finedItem) {
@@ -232,7 +232,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                     item[this.props.itemsKey],
                     itemId,
                     uniqId,
-                    level + 1
+                    level + 1,
                 );
             }
         });
@@ -249,7 +249,7 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
             this.props.onItemClick(e, item);
         }
         const newState = {
-            selectedUniqId: this.state.selectedUniqId === uniqId ? null : uniqId
+            selectedUniqId: this.state.selectedUniqId === uniqId ? null : uniqId,
         };
         if (item.items) {
             this.setState(
@@ -257,13 +257,13 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                     ...newState,
                     opened: {
                         ...this.state.opened,
-                        [uniqId]: !this.state.opened[uniqId]
-                    }
+                        [uniqId]: !this.state.opened[uniqId],
+                    },
                 },
                 () => {
                     const key = Tree.STORAGE_KEY_PREFIX + this.props.id;
                     this.props.clientStorage.set(key, JSON.stringify(this.state.opened));
-                }
+                },
             );
         } else {
             this.setState(newState);

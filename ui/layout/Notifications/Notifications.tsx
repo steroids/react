@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {components, connect} from '../../../hoc';
+import _orderBy from 'lodash-es/orderBy';
+import {useCallback, useMemo, useState} from 'react';
+import {useMount, useUpdateEffect} from 'react-use';
+import useDispatch from '@steroidsjs/core/hooks/useDispatch';
+import {useComponents, useSelector} from '@steroidsjs/core/hooks';
 import {setFlashes, closeNotification} from '../../../actions/notifications';
 import {getNotifications, getPosition} from '../../../reducers/notifications';
-import {IConnectHocOutput} from '../../../hoc/connect';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import _orderBy from 'lodash-es/orderBy';
 
 interface INotificationItem {
     id?: number,
@@ -49,93 +50,74 @@ export interface INotificationsItemViewProps extends INotificationItem {
     position: string;
 }
 
-interface INotificationsPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
+function Notifications(props:INotificationsProps) {
+    const {notifications, position} = useSelector(state => ({
+        notifications: getNotifications(state),
+        position: getPosition(state),
+    }));
 
-}
+    const components = useComponents();
+    const [innerNotifications, setInnerNotifications] = useState(props.notifications);
+    const [closing, setClosing] = useState([]);
 
-interface INotificationsState  {
-    notifications: INotificationItem[];
-    closing: INotificationItem[];
-    position: string;
-}
-
-@connect(state => ({
-    notifications: getNotifications(state),
-    position: getPosition(state)
-}))
-@components('ui')
-export default class Notifications extends React.PureComponent<INotificationsProps & INotificationsPrivateProps, INotificationsState> {
-
-    static defaultProps = {
-        closeTimeoutMs: 1500,
-    };
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            notifications: [].concat(this.props.notifications),
-            closing: [],
-            position: this.props.position
-        };
-    }
-
-    componentDidMount() {
-        if (this.props.initialFlashes) {
-            this.props.dispatch(setFlashes(this.props.initialFlashes));
+    const dispatch = useDispatch();
+    useMount(() => {
+        if (props.initialFlashes) {
+            dispatch(setFlashes(props.initialFlashes));
 
             // Disable scroll or scroll to top on show notifications
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'manual';
-            } else {
-                setTimeout(() => window.scrollTo(0, 0), 1000);
+            if (typeof window !== 'undefined') {
+                if ('scrollRestoration' in window.history) {
+                    window.history.scrollRestoration = 'manual';
+                } else {
+                    setTimeout(() => window.scrollTo(0, 0), 1000);
+                }
             }
         }
-    }
+    });
 
-    componentDidUpdate(prevProps: INotificationsProps & INotificationsPrivateProps) {
-        if (prevProps.notifications !== this.props.notifications) {
-            const propsIds: number[] = this.props.notifications.map(item => item.id);
-            const toClose: INotificationItem[] = this.state.notifications.filter(item => !propsIds.includes(item.id));
+    useUpdateEffect(() => {
+        const propsIds: number[] = notifications.map(item => item.id);
+        const toClose: INotificationItem[] = innerNotifications.filter(item => !propsIds.includes(item.id));
 
-            this.setState({
-                notifications: [].concat(this.props.notifications),
-                closing: this.state.closing.concat(this.state.notifications.filter(item => !propsIds.includes(item.id))),
-            });
+        setInnerNotifications([].concat(notifications));
+        setClosing(closing.concat(innerNotifications.filter(item => !propsIds.includes(item.id))));
 
-            if (toClose.length > 0) {
-                setTimeout(() => {
-                    this.setState({
-                        closing: (this.state.closing).filter(item => !toClose.includes(item)),
-                    });
-                }, this.props.closeTimeoutMs);
-            }
+        if (toClose.length > 0) {
+            setTimeout(() => setClosing(closing.filter(item => !toClose.includes(item))), props.closeTimeoutMs);
         }
-    }
+    }, [closing, innerNotifications, notifications, props.closeTimeoutMs]);
 
-    render() {
-        const NotificationsView = this.props.view || this.props.ui.getView('layout.NotificationsView');
-        const NotificationsItemView = this.props.itemView || this.props.ui.getView('layout.NotificationsItemView');
+    const onClose = useCallback(
+        notificationId => dispatch(closeNotification(notificationId)),
+        [dispatch],
+    );
 
-        const closingIds = this.state.closing.map(item => item.id);
-        const notifications = _orderBy([].concat(this.state.notifications).concat(this.state.closing),['id'],'asc') ;
+    const closingIds = closing.map(item => item.id);
+    const items = useMemo(
+        () => _orderBy([].concat(innerNotifications).concat(closing), ['id'], 'asc')
+            .map(item => ({
+                ...item,
+                isClosing: closingIds.includes(item.id),
+                onClose: () => onClose(item.id),
+            })),
+        [closing, closingIds, innerNotifications, onClose],
+    );
 
-        return (
-            <NotificationsView {...this.props}>
-                {notifications.map(notification => (
-                    <NotificationsItemView
-                        {...notification}
-                        key={notification.id}
-                        position={notification.position}
-                        isClosing={closingIds.includes(notification.id)}
-                        onClose={this._onClose.bind(this, notification.id)}
-                    />
-                ))}
-            </NotificationsView>
-        );
-    }
-
-    _onClose(notificationId) {
-        this.props.dispatch(closeNotification(notificationId));
-    }
+    const NotificationsItemView = props.itemView || props.ui.getView('layout.NotificationsItemView');
+    return components.ui.renderView(props.view || 'layout.NotificationsView', {
+        ...props,
+        children: items.map(item => (
+            <NotificationsItemView
+                key={item.id}
+                {...item}
+            />
+        )),
+    });
 }
+
+Notifications.defaultProps = {
+    closeTimeoutMs: 1500,
+};
+
+export default Notifications;

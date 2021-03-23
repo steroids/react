@@ -11,10 +11,6 @@ import _isFunction from 'lodash-es/isFunction';
 import {
     ROUTER_INIT_ROUTES,
     ROUTER_SET_PARAMS,
-    ROUTER_ADD_CONFIGS,
-    ROUTER_REMOVE_CONFIGS,
-    ROUTER_SET_DATA,
-    getConfigId,
 } from '../actions/router';
 
 export interface IRoute {
@@ -220,52 +216,6 @@ const reducerMap = {
             ...state.params,
             ...state.location.query,
             ...action.params,
-        },
-    }),
-    [ROUTER_ADD_CONFIGS]: (state, action) => {
-        const configs = [].concat(state.configs || []);
-        const counters = {...state.counters};
-        action.configs.forEach(config => {
-            const id = getConfigId(config);
-            if (counters[id]) {
-                counters[id] += 1;
-            } else {
-                counters[id] = 1;
-                configs.push(config);
-            }
-        });
-        return {
-            ...state,
-            configs,
-            counters,
-        };
-    },
-    [ROUTER_REMOVE_CONFIGS]: (state, action) => {
-        let configs2 = [].concat(state.configs);
-        const counters2 = {...state.counters};
-        const data = {...state.data};
-        action.configs.forEach(config => {
-            const id = getConfigId(config);
-            if (counters2[id]) {
-                counters2[id] -= 1;
-                if (counters2[id] <= 0) {
-                    configs2 = configs2.filter(item => getConfigId(item) !== id);
-                    delete data[id];
-                }
-            }
-        });
-        return {
-            ...state,
-            data,
-            configs: configs2,
-            counters: counters2,
-        };
-    },
-    [ROUTER_SET_DATA]: (state, action) => ({
-        ...state,
-        data: {
-            ...state.data,
-            [getConfigId(action.config)]: action.data,
         },
     }),
 };

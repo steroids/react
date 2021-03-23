@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {ChangeEventHandler, ReactNode, useMemo} from 'react';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
@@ -12,7 +11,7 @@ type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-lo
  * InputField
  * Поле ввода текста
  */
-export interface IInputFieldProps extends IFieldHocInput {
+export interface IInputFieldProps extends IFieldWrapperInputProps {
     /**
      * HTML Тип
      * @example email
@@ -77,7 +76,7 @@ export interface IInputFieldProps extends IFieldHocInput {
     [key: string]: any;
 }
 
-export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperProps {
+export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
     style?: any,
     isInvalid?: boolean,
     errors?: any,
@@ -104,7 +103,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperPro
     onMouseDown?: (e: Event | React.MouseEvent) => void;
 }
 
-function InputField(props: IInputFieldProps & IFieldWrapperProps) {
+function InputField(props: IInputFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
     const inputProps = useMemo(() => ({
@@ -165,4 +164,4 @@ InputField.defaultProps = {
     addonAfter: null,
 };
 
-export default fieldWrapper('InputField')(InputField);
+export default fieldWrapper('InputField', InputField);

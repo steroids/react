@@ -1,10 +1,8 @@
-import * as React from 'react';
 import moment from 'moment';
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useComponents} from '@steroidsjs/core/hooks';
+import {IDateFormatterProps} from '@steroidsjs/core/ui/format/DateFormatter/DateFormatter';
 
-export interface IDateTimeFormatterProps{
-
+export interface IDateTimeFormatterProps {
     /**
      * Формат даты
      * @example LLL
@@ -19,34 +17,32 @@ export interface IDateTimeFormatterProps{
     view?: CustomView;
 
     /**
-    * Дата
-    * @example 2023-09-11
-    */
+     * Дата
+     * @example 2023-09-11
+     */
     value?: any;
 
     [key: string]: any;
 }
 
-@components('locale','ui')
-export default class DateTimeFormatter extends React.Component<IDateTimeFormatterProps & IComponentsHocOutput> {
+function DateTimeFormatter(props: IDateFormatterProps) {
+    const components = useComponents();
 
-    static defaultProps = {
-        format: 'LLL'
-    };
-
-    render() {
-        if (!this.props.value) {
-            return null;
-        }
-        const date =
-            this.props.timeZone === false
-                ? moment(this.props.value).locale(this.props.locale.language)
-                : this.props.locale.moment(this.props.value);
-
-        const DateTimeFormatterView = this.props.view || this.props.ui.getView('format.DefaultFormatterView');
-        return <DateTimeFormatterView
-            value={date.format(this.props.format)}
-        />;
+    if (!props.value) {
+        return null;
     }
 
+    const date = props.timeZone === false
+        ? moment(props.value).locale(components.locale.language)
+        : components.locale.moment(props.value);
+
+    return components.ui.renderView(props.view || 'format.DefaultFormatterView', {
+        value: date.format(props.format),
+    });
 }
+
+DateTimeFormatter.defaultProps = {
+    format: 'LLL',
+};
+
+export default DateTimeFormatter;

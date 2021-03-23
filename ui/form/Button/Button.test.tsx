@@ -8,7 +8,7 @@ const Button = require('./Button').default;
 
 describe('Button tests', () => {
     it('should render something without props', () => {
-        const wrapper = mountWithApp(<Button view={ButtonView} />);
+        const wrapper = mountWithApp(Button, {view: ButtonView});
         expect(wrapper).not.toBeEmptyRender();
     });
 
@@ -24,7 +24,7 @@ describe('Button tests', () => {
             disabled: true,
         };
 
-        const wrapper = mountWithApp(<Button {...props} view={ButtonView} />);
+        const wrapper = mountWithApp(Button, {...props, view: ButtonView});
 
         it('should static props transmitted unchanged', () => {
             expect(wrapper.find('Button')).toHaveProp(props);
@@ -55,17 +55,17 @@ describe('Button tests', () => {
 
     describe('Conditional props', () => {
         it('should render "a" tag with props tag', () => {
-            const wrapper = mountWithApp(<Button tag='a' view={ButtonView} />);
+            const wrapper = mountWithApp(Button, {tag: 'a', view: ButtonView});
             expect(wrapper.find('a')).toExist();
         });
 
         it('should render "a" tag with props url', () => {
-            const wrapper = mountWithApp(<Button url='https://ya.ru' view={ButtonView} />);
+            const wrapper = mountWithApp(Button, {url: 'https://ya.ru', view: ButtonView});
             expect(wrapper.find('a')).toExist();
         });
 
         it('should render "a" tag with props link', () => {
-            const wrapper = mountWithApp(<Button link view={ButtonView} />);
+            const wrapper = mountWithApp(Button, {link: true, view: ButtonView});
             expect(wrapper.find('a')).toExist();
         });
     });
@@ -78,7 +78,7 @@ describe('Button tests', () => {
         const flushPromises = () => new Promise(setImmediate);
 
         it('should isLoading toggling when onClick return Promise', async () => {
-            const wrapper = mountWithApp(<Button onClick={asyncClick} view={ButtonView} />);
+            const wrapper = mountWithApp(Button, {onClick: asyncClick, view: ButtonView});
             jest.useFakeTimers();
 
             expect(wrapper.find('.ButtonView').hasClass('ButtonView_loading')).toBeFalsy();

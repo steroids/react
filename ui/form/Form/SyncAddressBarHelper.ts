@@ -13,11 +13,11 @@ import {getRoute, getRouteParams} from '../../../reducers/router';
 export default class SyncAddressBarHelper {
     static restore(
         initialValues,
-        customizer = null
+        customizer = null,
     ) {
         let newValues = {
             ...initialValues,
-            ...queryString.parse(location.hash)
+            ...queryString.parse(window.location.hash),
         };
         if (customizer && _isFunction(customizer)) {
             newValues = customizer(initialValues, queryString.parse(location.hash));
@@ -57,7 +57,7 @@ export default class SyncAddressBarHelper {
         if (_isEmpty(values)) {
             if (currentRoute) {
                 store.dispatch(
-                    push(pathToRegexp.compile(currentRoute.path)(params))
+                    push(pathToRegexp.compile(currentRoute.path)(params)),
                 );
             } else {
                 location.hash = null;
@@ -65,10 +65,10 @@ export default class SyncAddressBarHelper {
         } else if (currentRoute) {
             store.dispatch(
                 push(
-                    pathToRegexp.compile(currentRoute.path)(params) +
-                    querySeparator +
-                    queryString.stringify(values)
-                )
+                    pathToRegexp.compile(currentRoute.path)(params)
+                    + querySeparator
+                    + queryString.stringify(values),
+                ),
             );
         } else {
             location.hash = querySeparator + queryString.stringify(values);
@@ -76,7 +76,7 @@ export default class SyncAddressBarHelper {
     }
 
     static cleanValues(values = {}) {
-        let obj = {...values};
+        const obj = {...values};
         Object.keys(obj).forEach(key => {
             if (!obj[key] || (_isArray(obj[key]) && !obj[key].length)) {
                 delete obj[key];

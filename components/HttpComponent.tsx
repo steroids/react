@@ -1,8 +1,8 @@
 import * as React from 'react';
 import _trimStart from 'lodash-es/trimStart';
 import _trimEnd from 'lodash-es/trimEnd';
-import {setFlashes} from '../actions/notifications';
 import axios from 'axios';
+import {setFlashes} from '../actions/notifications';
 
 interface IHttpRequestOptions {
     lazy?: boolean | number,
@@ -16,13 +16,19 @@ interface IHttpRequestOptions {
  */
 export default class HttpComponent {
     accessTokenKey = 'accessToken';
+
     apiUrl: string;
 
     _accessToken: any;
+
     _axios: any;
+
     _components: any;
+
     _csrfToken: any;
+
     _lazyRequests: any;
+
     _promises: any;
 
     constructor(components, config: any = {}) {
@@ -30,7 +36,7 @@ export default class HttpComponent {
 
         this.apiUrl = config.apiUrl
             //|| process.env.APP_BACKEND_URL
-            || (typeof location !== 'undefined' ? location.protocol + '//' + location.host : '');
+            || (typeof window !== 'undefined' ? window.location.protocol + '//' + window.location.host : '');
         this.accessTokenKey = config.accessTokenKey || 'accessToken';
 
         this._lazyRequests = {};
@@ -47,8 +53,8 @@ export default class HttpComponent {
                 // Add XMLHttpRequest header for detect ajax requests
                 'X-Requested-With': 'XMLHttpRequest',
                 // Add Content-Type
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+            } as any,
         };
         // Add CSRF header
         if (!this._csrfToken && !process.env.IS_SSR && process.env.IS_WEB) {
@@ -63,10 +69,9 @@ export default class HttpComponent {
         // Set access token
         if (this._accessToken === false) {
             const clientStorage = this._components.clientStorage;
-            const tokenValue =
-                clientStorage.get(this.accessTokenKey, clientStorage.STORAGE_COOKIE) ||
-                clientStorage.get(this.accessTokenKey) ||
-                null;
+            const tokenValue = clientStorage.get(this.accessTokenKey, clientStorage.STORAGE_COOKIE)
+                || clientStorage.get(this.accessTokenKey)
+                || null;
 
             // client storage method 'get' could be asynchronous
             this._accessToken = tokenValue instanceof Promise
@@ -78,12 +83,12 @@ export default class HttpComponent {
                     this.accessTokenKey,
                     this._accessToken,
                     clientStorage.STORAGE_COOKIE,
-                    180
+                    180,
                 );
             }
         }
         if (this._accessToken) {
-            config.headers['Authorization'] = 'Bearer ' + this._accessToken;
+            config.headers.Authorization = 'Bearer ' + this._accessToken;
         }
         return config;
     }
@@ -115,7 +120,7 @@ export default class HttpComponent {
             this.accessTokenKey,
             value,
             this._components.clientStorage.STORAGE_COOKIE,
-            180
+            180,
         );
     }
 
@@ -124,8 +129,7 @@ export default class HttpComponent {
      */
     async getAccessToken() {
         if (this._accessToken === false) {
-            this._accessToken =
-                await this._components.clientStorage.get(this.accessTokenKey) || null;
+            this._accessToken = await this._components.clientStorage.get(this.accessTokenKey) || null;
         }
         return this._accessToken;
     }
@@ -142,8 +146,8 @@ export default class HttpComponent {
     }
 
     getUrl(method) {
-        if (method === null) {
-            method = location.pathname;
+        if (method === null && typeof window !== 'undefined') {
+            method = window.location.pathname;
         }
         if (method.indexOf('://') === -1) {
             method = `${_trimEnd(this.apiUrl, '/')}/${_trimStart(method, '/')}`;
@@ -156,9 +160,9 @@ export default class HttpComponent {
             url,
             {
                 method: 'get',
-                params: params
+                params,
             },
-            options
+            options,
         ).then((response: any) => response.data);
     }
 
@@ -167,9 +171,9 @@ export default class HttpComponent {
             url,
             {
                 method: 'post',
-                data: params
+                data: params,
             },
-            options
+            options,
         ).then((response: any) => response.data);
     }
 
@@ -178,9 +182,9 @@ export default class HttpComponent {
             url,
             {
                 method: 'delete',
-                data: params
+                data: params,
             },
-            options
+            options,
         ).then((response: any) => response.data);
     }
 
@@ -190,20 +194,16 @@ export default class HttpComponent {
             url,
             {
                 method,
-                [method === 'get' ? 'params' : 'data']: params
+                [method === 'get' ? 'params' : 'data']: params,
             },
-            options
+            options,
         );
-    }
-
-    hoc(requestFunc) {
-        return require('../hoc/http')(requestFunc);
     }
 
     _send(method, config, options: IHttpRequestOptions) {
         const axiosConfig = {
             ...config,
-            url: this.getUrl(method)
+            url: this.getUrl(method),
         };
         if (options.cancelToken) {
             axiosConfig.cancelToken = options.cancelToken;
@@ -252,7 +252,7 @@ export default class HttpComponent {
 
         // Ajax redirect
         if (response.data.redirectUrl && !process.env.IS_SSR) {
-            if (location.href === response.data.redirectUrl.split('#')[0]) {
+            if (window.location.href === response.data.redirectUrl.split('#')[0]) {
                 window.location.href = response.data.redirectUrl;
                 window.location.reload();
             } else {

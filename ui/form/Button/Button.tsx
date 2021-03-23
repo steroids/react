@@ -3,14 +3,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {useUpdateEffect} from 'react-use';
 import FieldLayout from '../FieldLayout';
-import {mergeLayoutProp} from '../../../hoc/form';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {IConnectHocOutput} from '../../../hoc/connect';
 import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {useComponents, useFormSelector} from '../../../hooks';
-import {IFormContext} from '../Form/Form';
-import {FormContext} from '../../../hooks/form';
+import {FormContext, IFormContext} from '../Form/Form';
+import {mergeLayoutProp} from '../../../utils/form';
 
 interface IButtonBadge {
     enable?: boolean,

@@ -138,10 +138,9 @@ export const queryReplace = (model: Model, location, values, useHash) => {
             location.hash = query;
         }
         return [];
-    } else {
-        query = '?' + query
-        if (location.search !== query) {
-            return replace(location.pathname + query);
-        }
+    }
+    query = '?' + query;
+    if (location.search !== query) {
+        return replace(location.pathname + query);
     }
 };

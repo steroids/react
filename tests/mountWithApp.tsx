@@ -3,14 +3,19 @@ import {mount} from 'enzyme';
 import useApplication from '../hooks/useApplication';
 import {HtmlComponent} from '../components';
 
-function AppMock(props: {children: any}) {
+function AppMock(props: any) {
+    const {config, Component, ...childProps} = props;
     const {renderApplication} = useApplication({
+        ...config,
         components: {
+            ...config?.components,
             html: {
                 className: HtmlComponent,
+                ...config?.components?.html,
             },
             store: {
                 reducers: require('../reducers/index').default,
+                ...config?.components?.store,
             },
         },
         onInit: ({ui}) => {
@@ -21,9 +26,9 @@ function AppMock(props: {children: any}) {
         },
     });
 
-    return renderApplication(props.children);
+    return renderApplication(
+        <Component {...childProps} />,
+    );
 }
 
-export default (children: any) => mount(
-    <AppMock>{children}</AppMock>,
-);
+export default (Component: any, props: any = {}) => mount(<AppMock {...props} Component={Component} />);

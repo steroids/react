@@ -1,11 +1,10 @@
-import * as React from 'react';
 import _get from 'lodash-es/get';
 import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
 import _isString from 'lodash-es/isString';
-import {components} from '../../../hoc';
-import {FormContext} from '../../../hoc/form';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useComponents} from '@steroidsjs/core/hooks';
+import {useContext} from 'react';
+import {FormContext} from '@steroidsjs/core/ui/form/Form/Form';
 
 export interface IFormatProps {
     attribute?: string;
@@ -15,10 +14,9 @@ export interface IFormatProps {
     getFormatter?: any;
     ui?: any;
     emptyText?: any;
+
     [key: string]: any;
 }
-
-interface IFormatPrivateProps extends IComponentsHocOutput {}
 
 export function getFormatterPropsFromModel(model, attribute) {
     if (!model || !attribute) {
@@ -33,48 +31,22 @@ export function getFormatterPropsFromModel(model, attribute) {
     return null;
 }
 
-@components('ui')
-export default class Format extends React.Component<IFormatProps & IFormatPrivateProps> {
+export default function Format(props: IFormatProps) {
+    const context = useContext(FormContext);
+    const components = useComponents();
 
-    static WrappedComponent: any;
+    // Get field config from model
+    const model = props.model || context?.model;
+    props = {
+        ...getFormatterPropsFromModel(model, props.attribute),
+        ...props,
+    };
+    const component = _isString(props.component)
+        ? components.getFormatter('format.' + props.component)
+        : props.component;
 
-    render() {
-      return (
-          <FormContext.Consumer>
-            {context => this.renderContent(context)}
-          </FormContext.Consumer>
-      )
-    }
-
-    renderContent(context) {
-        let props = this.props;
-        // Get field config from model
-        const model = this.props.model || context.model;
-        props = {
-            ...getFormatterPropsFromModel(model, this.props.attribute),
-            ...props
-        };
-        const ComponentField = _isString(props.component)
-            ? this.props.ui.getFormatter('format.' + props.component)
-            : props.component;
-        const resultValue = _get(this.props.item, this.props.attribute) || this.props.emptyText || null;
-        if (ComponentField) {
-            return (
-                <ComponentField
-                    {...props}
-                    value={resultValue}
-                />
-            );
-        }
-
-        let FormatDefaultView = null;
-        try {
-            FormatDefaultView = this.props.ui.getView('format.DefaultFormatterView');
-        } catch (e) {
-        }
-
-        return FormatDefaultView
-            ? <FormatDefaultView>{resultValue}</FormatDefaultView>
-            : resultValue;
-    }
+    return components.ui.renderView(component || 'format.DefaultFormatterView', {
+        ...props,
+        value: _get(props.item, props.attribute) || props.emptyText || null,
+    });
 }

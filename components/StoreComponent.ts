@@ -3,7 +3,7 @@ import {routerMiddleware, connectRouter} from 'connected-react-router';
 import {
     createBrowserHistory,
     createMemoryHistory,
-    createHashHistory
+    createHashHistory,
 } from 'history';
 import _get from 'lodash-es/get';
 import _merge from 'lodash-es/merge';
@@ -20,21 +20,28 @@ interface IStoreComponentConfig {
  */
 export default class StoreComponent {
     _asyncReducers: any;
+
     _components: any;
+
     reducers: any;
+
     _routerReducer: any;
+
     history: any;
+
     navigationNative: any;
+
     store: any;
+
     lastAction: string;
 
     constructor(components, config, lazyInit = false) {
         this._components = components;
 
-        this.reducers = config.reducers || require('reducers').default;
+        this.reducers = config.reducers;
 
         this.history = null;
-        this.store = null;
+        this.store = config.store || null;
         this.lastAction = null;
         this._asyncReducers = {};
 
@@ -53,12 +60,12 @@ export default class StoreComponent {
     }
 
     initStore(config = {} as IStoreComponentConfig) {
-        let initialState = {
+        const initialState = {
             ...(process.env.IS_WEB
                 // @ts-ignore
                 ? _merge(...(window.APP_REDUX_PRELOAD_STATES || [{}]))
                 : {}),
-            ...config.initialState
+            ...config.initialState,
         };
 
         if (process.env.PLATFORM !== 'mobile') {
@@ -69,7 +76,7 @@ export default class StoreComponent {
                     : createBrowserHistory;
             this.history = createHistory({
                 ..._get(initialState, 'config.store.history', {}),
-                ...config.history
+                ...config.history,
             });
             // Add '?' for fix connected-react-router
             if (process.env.IS_SSR && !this.history.location.search && process.env.PLATFORM !== 'mobile') {
@@ -78,25 +85,25 @@ export default class StoreComponent {
             this._routerReducer = connectRouter(this.history);
         }
 
-        this.store = createStore(
-            this.reducers(
-                this._routerReducer ? {
-                    router: this._routerReducer
-                } : {}
-            ),
-            initialState,
-            compose(
-                applyMiddleware(({getState}) => next => action =>
-                    this._prepare(action, next, getState)
+        if (!this.store) {
+            this.store = createStore(
+                this.reducers(
+                    this._routerReducer ? {
+                        router: this._routerReducer,
+                    } : {},
                 ),
-                applyMiddleware(routerMiddleware(this.history)),
-                // @ts-ignore
-                !process.env.IS_SSR && window.__REDUX_DEVTOOLS_EXTENSION__ && process.env.PLATFORM !== 'mobile'
+                initialState,
+                compose(
+                    applyMiddleware(({getState}) => next => action => this._prepare(action, next, getState)),
+                    applyMiddleware(routerMiddleware(this.history)),
                     // @ts-ignore
-                    ? window.__REDUX_DEVTOOLS_EXTENSION__()
-                    : f => f
-            )
-        );
+                    !process.env.IS_SSR && window.__REDUX_DEVTOOLS_EXTENSION__ && process.env.PLATFORM !== 'mobile'
+                        // @ts-ignore
+                        ? window.__REDUX_DEVTOOLS_EXTENSION__()
+                        : f => f,
+                ),
+            );
+        }
     }
 
     configurate() {
@@ -129,7 +136,7 @@ export default class StoreComponent {
         this._asyncReducers = {
             router: this._routerReducer,
             ...this._asyncReducers,
-            ...asyncReducers
+            ...asyncReducers,
         };
         this.store.replaceReducer(this.reducers(this._asyncReducers));
     }
@@ -150,15 +157,15 @@ export default class StoreComponent {
             return action(
                 p => this._prepare(p, dispatch, getState),
                 getState,
-                this._components
+                this._components,
             );
         }
         // Promise, detect errors on rejects
         // Detect action through instanceof Promise is not working in production mode, then used single detection by type
         if (
-            typeof action === 'object' &&
-            typeof action.then === 'function' &&
-            typeof action.catch === 'function'
+            typeof action === 'object'
+            && typeof action.then === 'function'
+            && typeof action.catch === 'function'
         ) {
             return action
                 .then(payload => this._prepare(payload, dispatch, getState))

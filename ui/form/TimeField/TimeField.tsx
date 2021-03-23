@@ -1,15 +1,13 @@
 import * as React from 'react';
 import {useCallback, useMemo} from 'react';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 import {useComponents} from '../../../hooks';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * InputField
  * Поле ввода текста
  */
-export interface ITimeFieldProps extends IFieldHocInput {
+export interface ITimeFieldProps extends IFieldWrapperInputProps {
     /**
      * Placeholder подсказка
      * @example Your text...
@@ -49,7 +47,7 @@ export interface ITimeFieldProps extends IFieldHocInput {
     [key: string]: any;
 }
 
-export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperProps {
+export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutputProps {
     style?: any,
     isInvalid?: boolean,
     errors?: any,
@@ -67,7 +65,7 @@ export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperProps
     type: any,
 }
 
-function TimeField(props: ITimeFieldProps & IFieldWrapperProps) {
+function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
     const onChange = useCallback(value => {
@@ -103,4 +101,4 @@ TimeField.defaultProps = {
     placeholder: '00:00',
 };
 
-export default fieldWrapper('TimeField')(TimeField);
+export default fieldWrapper('TimeField', TimeField);

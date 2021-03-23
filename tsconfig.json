@@ -2,6 +2,15 @@
   "compilerOptions": {
     "jsx": "react",
     "experimentalDecorators": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@steroidsjs/core/*": [
+        "../react/*"
+      ],
+      "@steroidsjs/bootstrap/*": [
+        "../react-bootstrap/*"
+      ]
+    }
   }
 }

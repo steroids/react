@@ -1,39 +1,23 @@
-import * as React from 'react';
-import {connect, components} from '../../../hoc';
+import {useComponents, useSelector} from '@steroidsjs/core/hooks';
 import {getRouteBreadcrumbs} from '../../../reducers/router';
-import {IConnectHocOutput} from '../../../hoc/connect';
-import {IComponentsHocOutput} from '../../../hoc/components';
 
 export interface IBreadcrumbsProps {
     items?: any[];
-    params?: string;
     pageId?: string;
     pageTitle?: string;
     view?: any;
     [key: string]: any;
 }
 
-export interface IBreadcrumbsViewProps extends IBreadcrumbsProps{
+export type IBreadcrumbsViewProps = IBreadcrumbsProps;
 
-}
+export default function Breadcrumbs(props: IBreadcrumbsProps) {
+    const components = useComponents();
+    const routeItems = useSelector(state => props.pageId ? getRouteBreadcrumbs(state, props.pageId) : null);
+    const items = props.items || routeItems;
 
-interface IBreadcrumbsPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
-}
-
-@connect((state, props) => ({
-    items: props.items || getRouteBreadcrumbs(state, props.pageId) // TODO router breadcrumbs
-}))
-@components('ui')
-export default class Breadcrumbs extends React.PureComponent<IBreadcrumbsProps & IBreadcrumbsPrivateProps> {
-
-    static defaultProps = {
-        items: []
-    };
-
-    render() {
-        const BreadcrumbsView =
-            this.props.view || this.props.ui.getView('nav.BreadcrumbsView');
-        return <BreadcrumbsView {...this.props} />;
-    }
-
+    return components.ui.renderView(props.view || 'nav.BreadcrumbsView', {
+        ...props,
+        items,
+    });
 }

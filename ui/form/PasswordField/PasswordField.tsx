@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useMemo, useState } from 'react';
 import {IInputFieldProps} from '../InputField/InputField';
 import { useComponents } from '../../../hooks';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * PasswordField
@@ -19,7 +19,7 @@ export interface IPasswordFieldProps extends IInputFieldProps {
     [key: string]: any;
 }
 
-export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrapperProps {
+export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         type: string,
         name: string,
@@ -64,7 +64,7 @@ export const checkPassword = password => {
     return 'danger';
 };
 
-function PasswordField(props: IPasswordFieldProps & IFieldWrapperProps) {
+function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps) {
     const [type, setType] = useState('password');
 
     const components = useComponents();
@@ -94,4 +94,4 @@ PasswordField.defaultProps = {
     errors: [],
 };
 
-export default fieldWrapper('PasswordField')(PasswordField);
+export default fieldWrapper('PasswordField', PasswordField);

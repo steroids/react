@@ -9,8 +9,9 @@ const stringToWords = str => {
     });
     words.pop();
     return words.filter(Boolean);
-}
+};
 
+// eslint-disable-next-line import/prefer-default-export
 export const smartSearch = (query, sourceItems) => {
     if (!query) {
         return sourceItems;
@@ -29,12 +30,13 @@ export const smartSearch = (query, sourceItems) => {
         let wordIndex = 0;
         let wordChar = null;
         let wordCharIndex = 0;
+        // eslint-disable-next-line no-constant-condition
         while (true) {
             const char = queryCharacters[index];
             if (!char) {
                 highlighted.push([
                     word.substr(wordCharIndex) + words.slice(wordIndex + 1).join(''),
-                    false
+                    false,
                 ]);
                 break;
             }
@@ -48,19 +50,19 @@ export const smartSearch = (query, sourceItems) => {
                 ? wordChar.toLowerCase() === char.toLowerCase()
                 : wordChar === char;
             if (isMatch) {
-                index++;
-                wordCharIndex++;
+                index += 1;
+                wordCharIndex += 1;
                 highlighted[highlighted.length - 1][0] += wordChar;
                 highlighted[highlighted.length - 1][1] = true;
             } else {
                 highlighted.push([word.substr(wordCharIndex), false]);
                 highlighted.push(['', false]);
-                wordIndex++;
+                wordIndex += 1;
                 wordCharIndex = 0;
             }
         }
-        highlighted = highlighted.filter(item => !!item[0]);
-        if (highlighted.findIndex(item => item[1]) !== -1) {
+        highlighted = highlighted.filter(highlightedItem => !!highlightedItem[0]);
+        if (highlighted.findIndex(highlightedItem => highlightedItem[1]) !== -1) {
             item.labelHighlighted = highlighted;
             return true;
         }
@@ -75,7 +77,7 @@ export const smartSearch = (query, sourceItems) => {
             }
             return Infinity;
         },
-        'asc'
+        'asc',
     );
 
     return items;

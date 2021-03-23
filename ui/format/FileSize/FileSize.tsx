@@ -1,6 +1,4 @@
-import * as React from 'react';
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useComponents} from '@steroidsjs/core/hooks';
 
 export interface IFileSizeFormatterProps {
 
@@ -21,40 +19,34 @@ export interface IFileSizeFormatterProps {
     [key: string]: any;
 }
 
-@components('ui')
-export default class FileSize extends React.Component<IFileSizeFormatterProps & IComponentsHocOutput> {
-
-    static asHumanFileSize(bytes, showZero) {
-        if (!bytes) {
-            return showZero ? '0' : '';
-        }
-        const thresh = 1000;
-        if (Math.abs(bytes) < thresh) {
-            return bytes + ' ' + __('B');
-        }
-        const units = [
-            __('kB'),
-            __('MB'),
-            __('GB'),
-            __('TB'),
-            __('PB'),
-            __('EB'),
-            __('ZB'),
-            __('YB')
-        ];
-        let u = -1;
-        do {
-            bytes /= thresh;
-            ++u;
-        } while (Math.abs(bytes) >= thresh && u < units.length - 1);
-        return bytes.toFixed(1) + ' ' + units[u];
+export const asHumanFileSize = (bytes, showZero) => {
+    if (!bytes) {
+        return showZero ? '0' : '';
     }
-
-    render() {
-        const FileSizeFormatterView = this.props.view || this.props.ui.getView('format.DefaultFormatterView');
-        return <FileSizeFormatterView
-            value={ FileSize.asHumanFileSize(this.props.value, this.props.showZero)}
-        />;
+    const thresh = 1000;
+    if (Math.abs(bytes) < thresh) {
+        return bytes + ' ' + __('B');
     }
+    const units = [
+        __('kB'),
+        __('MB'),
+        __('GB'),
+        __('TB'),
+        __('PB'),
+        __('EB'),
+        __('ZB'),
+        __('YB'),
+    ];
+    let u = -1;
+    do {
+        bytes /= thresh;
+        u += 1;
+    } while (Math.abs(bytes) >= thresh && u < units.length - 1);
+    return bytes.toFixed(1) + ' ' + units[u];
+};
 
+export default function FileSize(props: IFileSizeFormatterProps) {
+    return useComponents().ui.renderView(props.view || 'format.DefaultFormatterView', {
+        value: asHumanFileSize(props.value, this.props.showZero),
+    });
 }

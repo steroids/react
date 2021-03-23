@@ -15,14 +15,14 @@ interface ISsrProviderProps {
 }
 
 export default class SsrProvider extends React.PureComponent<ISsrProviderProps> {
-
     render() {
         return (
             <SsrProviderContext.Provider
                 value={{
                     history: this.props.history,
-                    staticContext: this.props.staticContext
-                }}>
+                    staticContext: this.props.staticContext,
+                }}
+            >
                 <Provider store={this.props.store}>
                     {this.props.children}
                 </Provider>

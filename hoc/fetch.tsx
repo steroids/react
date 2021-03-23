@@ -1,174 +1,42 @@
 import * as React from 'react';
-import {
-    navigationAddConfigs,
-    navigationRemoveConfigs,
-    getConfigId,
-    navigationRefresh,
-    IFetchConfig
-} from '../actions/router';
+import {useSelector} from 'react-redux';
+import {useCallback, useMemo} from 'react';
 import {getRouteParams} from '../reducers/router';
-import connect, {IConnectHocOutput} from './connect';
-
-export type IFetchHocConfig = (props: any) => IFetchConfig | IFetchConfig[];
-
-/**
- * Fetch HOC
- * Используется для подгрузки данных с бекенда перед рендером компонента, на котором он применяется. На вход ему передается
- * один или несколько объектов конфигураций (id, key, url, method, params, ...), которые описывают откуда нужно подтянуть данные.
- *
- * В процесс загрузки HOC будет отображать "Загрузка...", а после уже отрендерит компонент, передав данные в указанный
- * ключ `key`. Все данные сохраняются в Redux Store, что позволяет избежать дополнительных запросов при использовании SSR.
- */
-export interface IFetchHocInput {
-    navigationData?: object,
-    routeParams?: object,
-}
+import useFetch, {IFetchConfig} from '../hooks/useFetch';
 
 export interface IFetchHocOutput {
     fetchRefresh?: (ids?: string | string[]) => void,
     fetchUpdate?: (props: any) => void,
 }
 
-interface IFetchHocPrivateProps extends IConnectHocOutput {
-
-}
-
-interface IFetchHocState {
-    overwriteProps?: any,
-}
+export type IFetchHocConfigFunc = (props: any) => IFetchConfig & {key: string}
 
 interface IFetchHocOptions {
     waitLoading?: any,
 }
 
-const stateMap = state => ({
-    navigationData: (state.router && state.router.data) || null,
-    routeParams: getRouteParams(state)
-});
-export default (configsFunc: IFetchHocConfig, options = {} as IFetchHocOptions): any => WrappedComponent =>
-    connect(stateMap)(
-        class FetchHoc extends React.Component<IFetchHocInput & IFetchHocPrivateProps, IFetchHocState> {
+export default (
+    configFunc: IFetchHocConfigFunc,
+    options: IFetchHocOptions = {},
+): any => WrappedComponent => function FetchHoc(props) {
+    const params = useSelector(state => getRouteParams(state));
+    const config = useMemo(() => configFunc({...props, params}), [params, props]);
+    const {data, isLoading, fetch} = useFetch(config);
 
-            static WrappedComponent = WrappedComponent;
+    const fetchRefresh = useCallback(() => fetch(), [fetch]);
+    const fetchUpdate = useCallback((newParams) => fetch({params: newParams}), [fetch]);
 
-            constructor(props) {
-                super(props);
-                this.state = {
-                    overwriteProps: null
-                };
-                this._onRefresh = this._onRefresh.bind(this);
-                this._onUpdate = this._onUpdate.bind(this);
-            }
+    if (isLoading && options.waitLoading !== false) {
+        // TODO Loader
+        return null;
+    }
 
-            UNSAFE_componentWillMount() {
-                this.props.dispatch(
-                    navigationAddConfigs(
-                        configsFunc({
-                            ...this.props,
-                            ...this.state.overwriteProps,
-                            params: this.props.routeParams
-                        }) || []
-                    )
-                );
-            }
-
-            componentWillUnmount() {
-                this.props.dispatch(
-                    navigationRemoveConfigs(
-                        configsFunc({
-                            ...this.props,
-                            ...this.state.overwriteProps,
-                            params: this.props.routeParams
-                        }) || []
-                    )
-                );
-            }
-
-            componentDidUpdate(prevProps, prevState) {
-                const prevConfigs = [].concat(
-                    configsFunc({
-                        ...prevProps,
-                        ...prevState.overwriteProps,
-                        params: prevProps.routeParams
-                    }) || []
-                );
-                const nextConfigs = [].concat(
-                    configsFunc({
-                        ...this.props,
-                        ...this.state.overwriteProps,
-                        params: this.props.routeParams
-                    }) || []
-                );
-                for (
-                    let i = 0;
-                    i < Math.max(prevConfigs.length, nextConfigs.length);
-                    i++
-                ) {
-                    if (getConfigId(prevConfigs[i]) !== getConfigId(nextConfigs[i])) {
-                        this.props.dispatch([
-                            navigationRemoveConfigs(prevConfigs[i]),
-                            navigationAddConfigs(nextConfigs[i])
-                        ]);
-                    }
-                }
-            }
-
-            render() {
-                const configs = [].concat(
-                    configsFunc({
-                        ...this.props,
-                        ...this.state.overwriteProps,
-                        params: this.props.routeParams
-                    }) || []
-                );
-                let dataProps = {};
-                let isLoading = !this.props.navigationData && configs.length > 0;
-                if (this.props.navigationData) {
-                    configs.forEach(config => {
-                        const dataItem = this.props.navigationData[getConfigId(config)];
-                        if (dataItem) {
-                            if (config.key) {
-                                dataProps[config.key] = dataItem;
-                            } else {
-                                dataProps = {...dataProps, ...dataItem};
-                            }
-                        } else {
-                            isLoading = true;
-                        }
-                    });
-                }
-                if (isLoading && options.waitLoading !== false) {
-                    // TODO Loader
-                    return null;
-                }
-
-                const outputProps = {
-                    ...this.props,
-                    ...this.state.overwriteProps,
-                    ...dataProps,
-                    fetchRefresh: this._onRefresh,
-                    fetchUpdate: this._onUpdate,
-                } as IFetchHocOutput;
-
-                return (
-                    <WrappedComponent {...outputProps}/>
-                );
-            }
-
-            _onRefresh(ids = null) {
-                if (ids === null) {
-                    const configs = [].concat(configsFunc({
-                        ...this.props,
-                        ...this.state.overwriteProps,
-                        params: this.props.routeParams
-                    }) || []);
-                    ids = configs.map(config => config.id);
-                }
-                this.props.dispatch(navigationRefresh(ids));
-            }
-
-            _onUpdate(overwriteProps) {
-                this.setState({overwriteProps});
-            }
-        }
-    )
+    return (
+        <WrappedComponent
+            {...props}
+            fetchRefresh={fetchRefresh}
+            fetchUpdate={fetchUpdate}
+            {...{[config.key]: data}}
+        />
+    );
+};

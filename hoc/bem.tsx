@@ -1,7 +1,7 @@
 import * as React from 'react';
-import components, {IComponentsHocOutput} from './components';
-import Hoc from '../base/Hoc';
-import multi from './multi';
+import {IComponentsHocOutput} from './components';
+import {useBem} from '../hooks';
+import {IBem} from '../hooks/useBem';
 
 /**
  * Bem HOC
@@ -12,42 +12,15 @@ export interface IBemHocInput {
 }
 
 export interface IBemHocOutput extends IComponentsHocOutput {
-    bem?: {
-        element(...classes: any[]): string;
-        block(...classes: any[]): string;
-    } | any,
+    bem?: IBem,
 }
 
-export interface IBemHocPrivateProps extends IComponentsHocOutput {
-}
-
-export default (namespace: string, styles = null): any => WrappedComponent =>
-    multi()(
-        components()(
-            class BemHoc extends Hoc<IBemHocInput & IBemHocPrivateProps> {
-                static WrappedComponent = WrappedComponent;
-
-                private readonly _bem;
-
-                constructor(props) {
-                    super(props);
-
-                    if (namespace) {
-                        this._bem = this.props.components.html.bem(namespace, props.style);
-                    }
-
-                    // Only for React Native
-                    if (styles && this.props.components.html.addStyles) {
-                        this.props.components.html.addStyles(styles);
-                    }
-                }
-
-                _getProps() {
-                    return {
-                        ...this.props,
-                        bem: this._bem,
-                    };
-                }
-            }
-        )
-    )
+export default (namespace: string): any => WrappedComponent => function BemHoc(props) {
+    const bem = useBem(namespace);
+    return (
+        <WrappedComponent
+            {...props}
+            bem={bem}
+        />
+    );
+};

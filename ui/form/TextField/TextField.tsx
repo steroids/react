@@ -2,11 +2,10 @@ import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 import {submit} from 'redux-form';
 import {useDispatch} from 'react-redux';
-import {IFieldHocInput} from '../../../hoc/field';
 import {useComponents} from '../../../hooks';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-export interface ITextFieldProps extends IFieldHocInput {
+export interface ITextFieldProps extends IFieldWrapperInputProps {
     /**
      * Placeholder подсказка
      * @example Your text...
@@ -25,7 +24,7 @@ export interface ITextFieldProps extends IFieldHocInput {
     [key: string]: any;
 }
 
-export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperProps {
+export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         name: string,
         onChange: (value: string | React.ChangeEvent) => void,
@@ -36,7 +35,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperProps
     },
 }
 
-function TextField(props: ITextFieldProps & IFieldWrapperProps) {
+function TextField(props: ITextFieldProps & IFieldWrapperOutputProps) {
     const dispatch = useDispatch();
     const components = useComponents();
 
@@ -54,8 +53,8 @@ function TextField(props: ITextFieldProps & IFieldWrapperProps) {
     }, [dispatch, props.formId, props.submitOnEnter]);
 
     const onChange = useCallback(
-        e => props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
-        [props.input],
+        e => props.input.onChange.call(null, e.target ? e.target.value : e.nativeEvent.text),
+        [props.input.onChange],
     );
 
     const inputProps = useMemo(() => ({
@@ -83,4 +82,4 @@ TextField.defaultProps = {
     errors: [],
 };
 
-export default fieldWrapper('TextField')(TextField);
+export default fieldWrapper('TextField', TextField);

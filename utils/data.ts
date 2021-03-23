@@ -2,9 +2,6 @@ import _uniqBy from 'lodash-es/uniqBy';
 import _isString from 'lodash-es/isString';
 import _isArray from 'lodash-es/isArray';
 import _some from 'lodash-es/some';
-import _get from 'lodash-es/get';
-import _omit from 'lodash-es/omit';
-import _isEqualWith from 'lodash-es/isEqualWith';
 import _has from 'lodash-es/has';
 import _isObject from 'lodash-es/isObject';
 import _isInteger from 'lodash-es/isInteger';
@@ -25,7 +22,7 @@ export const normalizeItems = (items) => {
                 if (_isString(item) || _isInteger(item)) {
                     return {
                         id: item,
-                        label: item
+                        label: item,
                     };
                 }
                 return item;
@@ -34,13 +31,11 @@ export const normalizeItems = (items) => {
         // Labels as ids
         if (_some(items, item => !_has(item, 'id'))) {
             return _uniqBy(
-                items.map(item => {
-                    return {
-                        id: item.label,
-                        ...item
-                    };
-                }),
-                'label'
+                items.map(item => ({
+                    id: item.label,
+                    ...item,
+                })),
+                'label',
             );
         }
         return items;
@@ -50,15 +45,11 @@ export const normalizeItems = (items) => {
         const labels = items.getLabels();
         return Object.keys(labels).map(id => ({
             id,
-            label: labels[id]
+            label: labels[id],
         }));
     }
     return [];
 };
-
-export const filterItems = (items: Array<any>, condition: any) => {
-    return items.filter(item => checkCondition(item, condition));
-}
 
 export const checkCondition = (item, condition) => {
     if (_isObject(condition) && !_isArray(condition)) {
@@ -113,6 +104,9 @@ export const checkCondition = (item, condition) => {
 
             case 'in': // ['in', 'ids', [5, 6, 10]]
                 return _isArray(item[key]) && item[key].includes(value);
+
+            default:
+                throw Error('Wrong operator: ' + operator);
         }
     }
     if (_isFunction(condition)) {
@@ -120,7 +114,9 @@ export const checkCondition = (item, condition) => {
     }
 
     return true;
-}
+};
+
+export const filterItems = (items: Array<any>, condition: any) => items.filter(item => checkCondition(item, condition));
 
 const shouldUpdateSingle = (a, b) => {
     if (_isFunction(a) && _isFunction(b)) {
@@ -142,7 +138,7 @@ export const shouldUpdate = (objA, objB, deepPaths = null) => {
             deepPaths = deepPaths.map(p => _isString(p) ? p.split('.') : p);
         }
 
-        for (let i = 0; i < keysA.length; i++) {
+        for (let i = 0; i < keysA.length; i += 1) {
             const key = keysA[i];
             let deepPath = null;
             if (deepPaths) {
@@ -161,4 +157,4 @@ export const shouldUpdate = (objA, objB, deepPaths = null) => {
     }
 
     return shouldUpdateSingle(objA, objB);
-}
+};

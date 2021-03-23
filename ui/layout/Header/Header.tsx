@@ -1,8 +1,4 @@
-import * as React from 'react';
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {IBemHocOutput} from '../../../hoc/bem';
-import {IConnectHocOutput} from '../../../hoc/connect';
+import {useComponents} from '@steroidsjs/core/hooks';
 import {INavProps} from '../../nav/Nav/Nav';
 
 export interface IHeaderProps {
@@ -10,7 +6,7 @@ export interface IHeaderProps {
     view?: any;
     logo?: {
         title: string,
-        linkProps?: object,
+        linkProps?: Record<string, unknown>,
         icon?: string | any,
         className?: CssClassName,
     };
@@ -29,21 +25,8 @@ export interface IHeaderProps {
     [key: string]: any;
 }
 
-export interface IHeaderViewProps extends IHeaderProps, IBemHocOutput {
-}
+export type IHeaderViewProps = IHeaderProps
 
-interface IHeaderPrivateProps extends IConnectHocOutput, IComponentsHocOutput {
-
-}
-
-@components('ui')
-export default class Header extends React.PureComponent<IHeaderProps & IHeaderPrivateProps> {
-
-    render() {
-        const HeaderView = this.props.view || this.props.ui.getView('layout.HeaderView');
-        return (
-            <HeaderView {...this.props}/>
-        );
-    }
-
+export default function Header(props:IHeaderProps) {
+    return useComponents().ui.renderView(props.view || 'layout.HeaderView', props);
 }

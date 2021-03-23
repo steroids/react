@@ -5,7 +5,7 @@ import mountWithApp from '../../../tests/mountWithApp';
 
 describe('InputField tests', () => {
     it('should render something without props', () => {
-        const wrapper = mountWithApp(<InputField view={InputFieldView} />);
+        const wrapper = mountWithApp(InputField, {view: InputFieldView});
         expect(wrapper).not.toBeEmptyRender();
     });
 
@@ -20,7 +20,7 @@ describe('InputField tests', () => {
             style: {width: '120px'},
         };
 
-        const wrapper = mountWithApp(<InputField {...props} view={InputFieldView} />);
+        const wrapper = mountWithApp(InputField, {...props, view: InputFieldView});
 
         it('should static props transmitted unchanged', () => {
             expect(wrapper.find('InputField')).toHaveProp(props);
@@ -44,14 +44,14 @@ describe('InputField tests', () => {
 
     describe('Conditional props', () => {
         it('should render empty with type "hidden"', () => {
-            const wrapper = mountWithApp(<InputField type='hidden' view={InputFieldView} />);
+            const wrapper = mountWithApp(InputField, {type: 'hidden', view: InputFieldView});
             expect(wrapper).toBeEmptyRender();
         });
     });
 
     describe('Actions', () => {
         it('should value change', () => {
-            const wrapper = mountWithApp(<InputField view={InputFieldView} />);
+            const wrapper = mountWithApp(InputField, {view: InputFieldView});
             wrapper.find('input').simulate('change', { target: { value: 'test' } });
             expect(wrapper.find('input')).toHaveProp('value', 'test');
         });

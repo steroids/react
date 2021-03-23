@@ -1,23 +1,33 @@
-import {IComponents} from '../hoc/components';
-
 /**
  * Web Socket Component
  * Компонент, обеспечивающий постоянное web-socket соединение с сервером. Поддерживает подписку на каналы, обработку
  * ответов и токен авторизации
  */
-export default class WebSocketComponent {
+import {IComponents} from '../hooks/useComponents';
 
+const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;
+
+export default class WebSocketComponent {
     wsUrl: string;
+
     streams: string[] | [string, string|number[]][];
+
     authHandler: (components: IComponents) => Promise<string>;
-    onOpen: (event: any, components: IComponents) => {};
-    onClose: (event: any, components: IComponents) => {};
-    onMessage: (data: object, components: IComponents) => {};
+
+    onOpen: (event: any, components: IComponents) => any;
+
+    onClose: (event: any, components: IComponents) => any;
+
+    onMessage: (data: Record<string, unknown>, components: IComponents) => any;
 
     _components: IComponents;
+
     _connection: any;
+
     _tryCount: any;
+
     _authToken: any;
+
     REASON_CODE_UNAUTHORIZED: number;
 
     constructor(components, config) {
@@ -72,7 +82,7 @@ export default class WebSocketComponent {
         streams = [].concat(streams);
 
         // Стримы для подписки
-        let forSubscribe = [];
+        const forSubscribe = [];
         streams.forEach(stream => {
             // Если стримов нет, то сразу добавляем
             if (this.streams.length === 0) {
@@ -81,13 +91,15 @@ export default class WebSocketComponent {
                 return;
             }
 
-            const name = this._getStreamName(stream);
+            const name = getStreamName(stream);
             // Перебираем текущие стримы
             this.streams.forEach((clientStream, index, clientStreams) => {
                 // Если текущий стрим и запрашиваемый вида [streamName, [ids...]]
                 // то из запрашиваемых id выбираем те, на которые не подписаны,
                 // формируем новый стрим с нужными id, добавляем с список для дальнейшей подписки
-                if (this._getStreamName(clientStream) === name && Array.isArray(clientStream) && Array.isArray(stream)) {
+                if (getStreamName(clientStream) === name && Array.isArray(clientStream)
+                    && Array.isArray(stream)
+                ) {
                     const idsForSubscribe = stream[1].filter(id => !clientStream.includes(id));
                     forSubscribe.push([name, idsForSubscribe]);
                     // К текущим стримам добавлем недостающие id
@@ -96,7 +108,7 @@ export default class WebSocketComponent {
                     forSubscribe.push(stream);
                 }
             });
-        })
+        });
 
         // Если есть стримы, на которые нужно подписаться, шлем серверу
         if (forSubscribe.length > 0) {
@@ -108,9 +120,7 @@ export default class WebSocketComponent {
     }
 
     unsubscribeStream(stream, id) {
-        id
-            ? this.unsubscribe([[stream, [id]]])
-            : this.unsubscribe([stream])
+        this.unsubscribe(id ? [[stream, [id]]] : [stream]);
     }
 
     unsubscribe(streams) {
@@ -120,12 +130,13 @@ export default class WebSocketComponent {
         streams = [].concat(streams);
 
         // Стримы для отписки
-        let forUnsubscribe = [];
+        const forUnsubscribe = [];
         this.streams.forEach((clientStream, index, clientStreams) => {
-            const name = this._getStreamName(clientStream);
+            const name = getStreamName(clientStream);
             streams.forEach(stream => {
-                if (this._getStreamName(stream) === name) {
-                    // Если подписаны на стрим вида 'stream', а запрос на отписку виду ['stream', [ids...]], ничего не делаем
+                if (getStreamName(stream) === name) {
+                    // Если подписаны на стрим вида 'stream', а запрос на отписку
+                    // виду ['stream', [ids...]], ничего не делаем
                     if (typeof clientStream === 'string' && Array.isArray(stream)) {
                         return;
                     }
@@ -135,7 +146,8 @@ export default class WebSocketComponent {
                         forUnsubscribe.push(clientStream);
                         clientStreams.splice(index, 1);
 
-                        // Если стримы вида ['stream', [ids...]], находим из запрашиваемых выбираем ids, на которые уже подписаны
+                        // Если стримы вида ['stream', [ids...]], находим из запрашиваемых выбираем ids,
+                        // на которые уже подписаны
                         // Формируем новый стрим и добавляем в список для дальнейшей отписки
                         // Удаляем эти ids из текущего списка
                     } else if (Array.isArray(stream) && Array.isArray(clientStream)) {
@@ -168,7 +180,9 @@ export default class WebSocketComponent {
                 this._connect();
             }
         } else if (this.streams) {
-            this._connection = new WebSocket(this.wsUrl + '?streams=' + this.streams.join(',') + '&token=' + this._authToken);
+            this._connection = new WebSocket(
+                this.wsUrl + '?streams=' + this.streams.join(',') + '&token=' + this._authToken,
+            );
             this._connection.onopen = this._onOpen;
             this._connection.onmessage = this._onMessage;
             this._connection.onclose = this._onClose;
@@ -187,7 +201,7 @@ export default class WebSocketComponent {
             delay = 15000;
         }
 
-        this._tryCount++;
+        this._tryCount += 1;
         setTimeout(this._connect, delay);
     }
 
@@ -214,9 +228,5 @@ export default class WebSocketComponent {
             this._authToken = null;
         }
         this._reConnect();
-    }
-
-    _getStreamName(stream) {
-        return Array.isArray(stream) ? stream[0] : stream;
     }
 }

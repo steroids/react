@@ -1,11 +1,8 @@
-import * as React from 'react';
 import _isArray from 'lodash-es/isArray';
-import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import {getEnumLabels} from '../../../reducers/fields';
-import {components, connect} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useComponents, useDataProvider} from '@steroidsjs/core/hooks';
+import {DataProviderItems} from '@steroidsjs/core/hooks/useDataProvider';
 
 export interface IEnumFormatterProps {
 
@@ -14,9 +11,7 @@ export interface IEnumFormatterProps {
      * 1) Может быть строкой вида: `app.geo.enums.Cities`
      * 2) Массивом: [{id: 1, label: "London"}]
      */
-    items?: string
-        | {id: number | string, label: string}[]
-        | {getLabel: () => string | any};
+    items?: DataProviderItems;
 
     /**
      * Уникальный идентификатор элемента из `items`
@@ -24,6 +19,7 @@ export interface IEnumFormatterProps {
      */
     value?: number | string,
     view?: CustomView;
+
     [key: string]: any;
 }
 
@@ -45,17 +41,11 @@ export const getLabel = (items, id) => {
     return null;
 };
 
-@connect((state, props) => ({
-    items: _isString(props.items)
-        ? getEnumLabels(state, props.items)
-        : props.items
-}))
-@components('ui')
-export default class EnumFormatter extends React.Component<IEnumFormatterProps & IComponentsHocOutput> {
-    render() {
-        const EnumFormatterView = this.props.view || this.props.ui.getView('format.DefaultFormatterView');
-        return <EnumFormatterView
-            value={getLabel(this.props.items, this.props.value)}
-        />;
-    }
+export default function EnumFormatter(props: IEnumFormatterProps) {
+    const components = useComponents();
+    const items = useDataProvider({items: props.items});
+
+    return components.ui.renderView(props.view || 'format.DefaultFormatterView', {
+        value: getLabel(items, props.value),
+    });
 }

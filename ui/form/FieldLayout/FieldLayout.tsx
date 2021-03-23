@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useMemo} from 'react';
-import {mergeLayoutProp} from '../../../hoc/form';
 import {useComponents} from '../../../hooks';
+import {mergeLayoutProp} from '../../../utils/form';
 
 export interface IFieldLayoutProps {
 
@@ -39,11 +39,18 @@ export interface IFieldLayoutViewProps {
     children?: React.ReactNode
 }
 
+const defaultProps = {
+    layout: {
+        layout: 'default',
+        cols: [3, 6],
+    },
+};
+
 function FieldLayout(props: IFieldLayoutProps) {
     const components = useComponents();
     const FieldLayoutView = props.layoutView || components.ui.getView('form.FieldLayoutView');
 
-    const layout = useMemo(() => mergeLayoutProp(FieldLayout.defaultProps.layout, props.layout), [props.layout]);
+    const layout = useMemo(() => mergeLayoutProp(defaultProps.layout, props.layout), [props.layout]);
     if (layout === false) {
         return props.children;
     }
@@ -57,14 +64,5 @@ function FieldLayout(props: IFieldLayoutProps) {
         </FieldLayoutView>
     );
 }
-
-FieldLayout.defaultProps = {
-    layout: {
-        layout: 'default',
-        cols: [3, 6],
-    },
-    required: false,
-    className: '',
-};
 
 export default React.memo(FieldLayout);

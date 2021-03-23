@@ -4,11 +4,12 @@ import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
-import {IComponentsHookOutput} from './components';
+import {IComponents} from './useComponents';
+import Router, {IRouteItem} from '../ui/nav/Router/Router';
 
 declare global {
     interface Window {
-        SteroidsComponents: IComponentsHookOutput,
+        SteroidsComponents: IComponents,
     }
 }
 
@@ -24,16 +25,20 @@ export interface IApplicationHookConfig {
             [key: string]: any,
         } | any,
     }
-    onInit?: (components: IComponentsHookOutput) => void,
+    onInit?: (components: IComponents) => void,
     useGlobal?: boolean,
+    reducers?: any,
+    routes?: IRouteItem,
+    layoutView?: CustomView,
+    layoutProps?: Record<string, unknown>,
 }
 
 export interface IApplicationHookResult {
-    renderApplication: (children: any) => JSX.Element,
-    components: IComponentsHookOutput,
+    renderApplication: (children?: any) => JSX.Element,
+    components: IComponents,
 }
 
-export const ComponentsContext = React.createContext({} as IComponentsHookOutput);
+export const ComponentsContext = React.createContext({} as IComponents);
 
 const defaultComponents = {
     //clientStorage: {
@@ -60,7 +65,7 @@ const defaultComponents = {
 };
 
 export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {
-    let components: IComponentsHookOutput;
+    let components: IComponents;
 
     // Store global (in global mode)
     const useGlobal = config.useGlobal !== false && typeof window !== 'undefined';
@@ -75,6 +80,12 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         const componentsConfig = _merge({}, defaultComponents, config.components);
         Object.keys(componentsConfig).forEach(name => {
             const {className, ...componentConfig} = componentsConfig[name];
+
+            // Append reducers to store
+            if (name === 'store' && config.reducers) {
+                componentConfig.reducers = config.reducers;
+            }
+
             // eslint-disable-next-line new-cap
             components[name] = new className(components, componentConfig);
         });
@@ -90,21 +101,34 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     }
 
     // Application wrapper
-    const renderApplication = useCallback((children) => {
-        const content = useGlobal
-            ? children
-            : (
+    const renderApplication = useCallback((children = null) => {
+        let content = children;
+
+        // Wrap in routes
+        if (config.routes) {
+            content = (
+                <Router
+                    routes={config.routes}
+                    wrapperView={config.layoutView}
+                    wrapperProps={config.layoutProps}
+                />
+            );
+        }
+
+        if (!useGlobal) {
+            content = (
                 <ComponentsContext.Provider value={components}>
-                    {children}
+                    {content}
                 </ComponentsContext.Provider>
             );
+        }
 
         return (
             <Provider store={components.store.store}>
                 {content}
             </Provider>
         );
-    }, [components, useGlobal]);
+    }, [components, config.layoutProps, config.layoutView, config.routes, useGlobal]);
 
     return {renderApplication, components};
 }

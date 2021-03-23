@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { useMemo } from 'react';
-import {IFieldHocInput} from '../../../hoc/field';
 import {IInputFieldProps} from '../InputField/InputField';
 import { useComponents } from '../../../hooks';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * NumberField
  * Числовое поле ввода
  */
-export interface INumberFieldProps extends IInputFieldProps, IFieldHocInput {
+export interface INumberFieldProps extends IInputFieldProps, IFieldWrapperInputProps {
     /**
      * Минимальное значение
      * @example 1
@@ -31,7 +30,7 @@ export interface INumberFieldProps extends IInputFieldProps, IFieldHocInput {
     [key: string]: any;
 }
 
-export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperProps {
+export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         type: string,
         name: string,
@@ -45,7 +44,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperP
     },
 }
 
-function NumberField(props: INumberFieldProps & IFieldWrapperProps) {
+function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
     props.inputProps = useMemo(() => ({
@@ -75,4 +74,4 @@ NumberField.defaultProps = {
     errors: [],
 };
 
-export default fieldWrapper('NumberField')(NumberField);
+export default fieldWrapper('NumberField', NumberField);

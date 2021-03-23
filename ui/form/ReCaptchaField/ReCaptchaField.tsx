@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { useMemo } from 'react';
-import {IFieldHocInput} from '../../../hoc/field';
 import { useComponents } from '../../../hooks';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-export interface IReCaptchaFieldProps extends IFieldHocInput {
+export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
     action?: any;
     view?: CustomView;
     [key: string]: any;
 }
 
-export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWrapperProps {
+export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWrapperOutputProps {
     reCaptchaProps: any,
 }
 
-function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperProps) {
+function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
     const reCaptchaProps = useMemo(() => ({
@@ -29,4 +28,4 @@ function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperProps) {
     });
 }
 
-export default fieldWrapper('ReCaptchaField')(ReCaptchaField);
+export default fieldWrapper('ReCaptchaField', ReCaptchaField);

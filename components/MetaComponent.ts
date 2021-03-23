@@ -31,10 +31,12 @@ export interface ModelAttribute {
  * Компонент для работы с мета-данными моделей и типами приложения (appType)
  */
 export default class MetaComponent {
-
     defaultPrimaryKey: string;
+
     defaultAttributeType: string;
+
     models: any;
+
     types: any;
 
     _components: any;
@@ -71,7 +73,7 @@ export default class MetaComponent {
         return name.replace(/\\/g, '.').replace(/^\./, '');
     }
 
-    normalizeModel(inputModel: Model, defaultModel: Model = null) {
+    normalizeModel(inputModel: Model, defaultModel: Model | any = null) {
         if (!inputModel && !defaultModel) {
             return null;
         }
@@ -86,7 +88,6 @@ export default class MetaComponent {
             }
         });
 
-
         // Normalize attributes config
         const attributes = [].concat(inputModel.attributes || []).map(item => {
             if (typeof item === 'string') {
@@ -96,7 +97,7 @@ export default class MetaComponent {
                     attribute: parts[0],
                     type: parts[1] || null,
                     label: parts[2] || null,
-                }
+                };
             }
 
             return {
@@ -222,5 +223,4 @@ export default class MetaComponent {
             },
         };
     }
-
 }

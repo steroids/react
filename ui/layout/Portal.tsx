@@ -1,31 +1,28 @@
-import * as React from 'react';
 import {createPortal} from 'react-dom';
-import {components} from '../../hoc';
-import {IComponentsHocOutput} from '../../hoc/components';
+import {useRef} from 'react';
+import {useMount, useUnmount} from 'react-use';
+import {useComponents} from '@steroidsjs/core/hooks';
 
+export default function Portal() {
+    const components = useComponents();
+    const elementRef = useRef(null);
 
-@components('ui')
-export default class Portal extends React.PureComponent<IComponentsHocOutput> {
-    el: HTMLDivElement;
-
-    constructor(props) {
-        super(props);
-
-        this.el = document.createElement('div');
-        this.el.className = 'Portal';
+    if (!elementRef.current) {
+        elementRef.current = document.createElement('div');
+        elementRef.current.className = 'Portal';
     }
 
-    componentDidMount() {
-        document.body.appendChild(this.el);
-        this.props.ui.setPortalElement(this.el);
-    }
+    useMount(() => {
+        document.body.appendChild(elementRef.current);
+        components.ui.setPortalElement(elementRef.current);
+    });
 
-    componentWillUnmount() {
-        this.props.ui.setPortalElement(null);
-        document.body.removeChild(this.el);
-    }
+    useUnmount(() => {
+        if (elementRef.current) {
+            components.ui.setPortalElement(null);
+            document.body.removeChild(elementRef.current);
+        }
+    });
 
-    render() {
-        return createPortal(this.props.children, this.el);
-    }
+    return createPortal(this.props.children, elementRef.current);
 }

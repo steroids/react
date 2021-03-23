@@ -1,6 +1,4 @@
-import * as React from 'react';
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
+import {useComponents} from '@steroidsjs/core/hooks';
 
 export interface IDateFormatterProps {
 
@@ -20,21 +18,17 @@ export interface IDateFormatterProps {
     [key: string]: any;
 }
 
-@components('locale','ui')
-export default class DateFormatter extends React.Component<IDateFormatterProps & IComponentsHocOutput> {
+const defaultProps = {
+    format: 'LL',
+};
 
-    static defaultProps = {
-        format: 'LL'
-    };
+export default function DateFormatter(props: IDateFormatterProps) {
+    const components = useComponents();
 
-    render() {
-        if (!this.props.value) {
-            return null;
-        }
-        const DateFormatterView = this.props.view || this.props.ui.getView('format.DefaultFormatterView');
-        return <DateFormatterView
-            value={this.props.locale.moment(this.props.value).format(this.props.format)}
-        />;
+    if (!props.value) {
+        return null;
     }
-
+    return components.ui.renderView(props.view || 'format.DefaultFormatterView', {
+        value: components.locale.moment(props.value).format(props.format || defaultProps.format),
+    });
 }

@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-import {components} from '../../../hoc';
-import {IComponentsHocOutput} from '../../../hoc/components';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
+import {useComponents} from '@steroidsjs/core/hooks';
 
 /**
  * Install the latest free version of Font Awesome via yarn:
@@ -23,7 +22,7 @@ import _isString from 'lodash-es/isString';
  *
  * That get the icon used <Icon name={'icon-name'} />
  */
-export interface IIconProps extends IComponentsHocOutput {
+export interface IIconProps {
     /**
      * Имя иконки (латиницей). Импорт иконок происходит на старте приложения.
      * @example create
@@ -56,43 +55,38 @@ export interface IIconViewProps extends IIconProps {
     icon: string,
 }
 
-@components('ui')
-export default class Icon extends React.PureComponent<IIconProps> {
+export default function Icon(props: IIconProps) {
+    const components = useComponents();
 
-    render() {
-        const IconView = this.props.view || this.props.ui.getView('icon.IconView');
-        const name = this.props.name;
-        let icon;
+    const name = props.name;
+    let icon;
 
-        if (process.env.PLATFORM === 'mobile') {
-            icon = this.props.ui.getIcon(name) || name;
-        } else {
-            icon = name.indexOf('<svg') === 0 || name.indexOf('http') === 0
-                ? name
-                : this.props.ui.getIcon(this.props.name);
+    if (process.env.PLATFORM === 'mobile') {
+        icon = components.ui.getIcon(name) || name;
+    } else {
+        icon = name.indexOf('<svg') === 0 || name.indexOf('http') === 0
+            ? name
+            : components.ui.getIcon(name);
 
-            if (_isObject(icon) && _isString(icon.default)) {
-                icon = icon.default;
-            }
+        if (_isObject(icon) && _isString(icon.default)) {
+            icon = icon.default;
+        }
 
-            // Fix width attribute in icon
-            if (_isString(icon) && icon.indexOf('<svg') === 0) {
-                const match = icon.match(/<svg([^>]+)/);
-                if (match && match[0].indexOf('width') === -1) {
-                    icon = icon.replace(match[0], match[0] + ' width=16');
-                }
-            }
-
-            if (!icon) {
-                throw new Error('Not found icon with name "' + name + '"');
+        // Fix width attribute in icon
+        if (_isString(icon) && icon.indexOf('<svg') === 0) {
+            const match = icon.match(/<svg([^>]+)/);
+            if (match && match[0].indexOf('width') === -1) {
+                icon = icon.replace(match[0], match[0] + ' width=16');
             }
         }
 
-        return (
-            <IconView
-                {...this.props}
-                icon={icon}
-            />
-        );
+        if (!icon) {
+            throw new Error('Not found icon with name "' + name + '"');
+        }
     }
+
+    return components.ui.renderView(props.view || 'icon.IconView', {
+        ...props,
+        icon,
+    });
 }

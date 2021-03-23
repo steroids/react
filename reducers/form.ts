@@ -4,8 +4,17 @@ import _cloneDeep from 'lodash-es/cloneDeep';
 import {
     FORM_INITIALIZE,
     FORM_CHANGE,
+    FORM_SET_ERRORS,
     FORM_RESET,
 } from '../actions/form';
+
+export const reducerInitialState = {
+    values: {},
+    initialValues: {},
+    errors: {},
+    isInvalid: false,
+    isSubmitting: false,
+};
 
 /**
  * Редьюрес для одной формы. Используется как для Redux, так и для React Reducer
@@ -17,15 +26,20 @@ export function reducerItem(state, action) {
         case FORM_INITIALIZE:
             return {
                 ...state,
-                values: _cloneDeep(action.values || {}),
-                initialValues: action.values,
                 errors: {},
                 isInvalid: false,
                 isSubmitting: false,
+                ...state,
+                values: _cloneDeep(action.values || {}),
+                initialValues: action.values,
             };
 
         case FORM_CHANGE:
             _set(state, ['values'].concat(action.name).join('.'), action.value);
+            return {...state};
+
+        case FORM_SET_ERRORS:
+            _set(state, 'errors', action.errors);
             return {...state};
 
         case FORM_RESET:

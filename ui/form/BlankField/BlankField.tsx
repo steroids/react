@@ -1,15 +1,14 @@
 import * as React from 'react';
 
-import {IFieldHocInput} from '../../../hoc/field';
-import {fieldWrapper, IFieldWrapperProps} from '../../../hooks/form';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-interface IBlankFieldProps extends IFieldHocInput {
+interface IBlankFieldProps extends IFieldWrapperInputProps {
     text?: string | React.ReactNode;
     children?: React.ReactNode;
 }
 
-function BlankField(props: IBlankFieldProps & IFieldWrapperProps) {
+function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps) {
     return <span>{props.text || props.children}</span>;
 }
 
-export default fieldWrapper('BlankField')(BlankField);
+export default fieldWrapper('BlankField', BlankField);

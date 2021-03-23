@@ -219,7 +219,9 @@ const reducerMap = {
         },
     }),
 };
-export default (state = initialState, action) => reducerMap[action] ? reducerMap[action](state, action) : state;
+export default (state = initialState, action) => reducerMap[action.type]
+    ? reducerMap[action.type](state, action)
+    : state;
 
 export const isRouterInitialized = state => !!state.router.routesTree;
 export const getRouterParams = state => _get(state.router, 'params');

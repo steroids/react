@@ -172,7 +172,7 @@ function Router(props: IRouterProps) {
     const components = useComponents();
 
     const {isInitialized, pathname, route, routeParams, activePath, activeRouteIds} = useSelector(state => ({
-        isRouterInitialized: isRouterInitialized(state),
+        isInitialized: isRouterInitialized(state),
         pathname: _get(state, 'router.location.pathname'),
         route: getRoute(state),
         routeParams: state.router.params,

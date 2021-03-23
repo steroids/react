@@ -173,9 +173,10 @@ export default (): any => WrappedComponent =>
                     }
 
                     UNSAFE_componentWillReceiveProps(nextProps) {
+                        const sourceItems = normalizeItems(nextProps.items);
+
                         // Refresh normalized source items on change items from props
                         if (this.props.items !== nextProps.items) {
-                            const sourceItems = normalizeItems(nextProps.items);
                             this.setState({
                                 sourceItems,
                                 items: sourceItems
@@ -189,9 +190,25 @@ export default (): any => WrappedComponent =>
                                 this._onItemClick(sourceItems[0]);
                             }
                         }
+
+                        // update selected value when props changed
+                        this.setState({
+                            selectedItems: this._findSelectedItems(
+                                _uniqBy(
+                                    [].concat(
+                                        sourceItems,
+                                        this.state.items,
+                                        this.state.sourceItems,
+                                        this.state.selectedItems
+                                    ),
+                                    'id'
+                                ),
+                                nextProps.input.value
+                            )
+                        });
+
                         // Store selected items in state on change value
                         if (this.props.input.value !== nextProps.input.value) {
-                            const sourceItems = normalizeItems(nextProps.items);
                             this.setState({
                                 selectedItems: this._findSelectedItems(
                                     _uniqBy(

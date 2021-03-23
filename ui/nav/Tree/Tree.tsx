@@ -3,7 +3,7 @@ import _isString from 'lodash-es/isString';
 import _omit from 'lodash-es/omit';
 import _isEqual from 'lodash-es/isEqual';
 import _keys from 'lodash-es/keys';
-import {components, connect, normalize} from '../../../hoc';
+import {components, connect} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
@@ -64,34 +64,35 @@ interface TreeState {
         routerParams: getRouterParams(state),
     }),
 )
-@normalize(
-    {
-        fromKey: 'items',
-        toKey: '_items',
-        normalizer: (items, props) => {
-            if (props.routes) {
-                const routeToItem = (route: IRouteItem) => {
-                    const items = (
-                        Array.isArray(route.items)
-                            ? route.items.map(r => routeToItem(r))
-                            : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
-                    ).filter(r => r.visible);
-
-                    return {
-                        id: route.id,
-                        label: route.label || route.title,
-                        visible: route.isNavVisible !== false,
-                        toRoute: items.length === 0 ? route.id : null,
-                        toRouteParams: items.length === 0 ? props.routerParams : null,
-                        items,
-                    };
-                };
-                return props.routes.map(route => routeToItem(route)).filter(r => r.visible);
-            }
-            return items || [];
-        },
-    },
-)
+// TODO remove normalize hoc
+// @normalize(
+//     {
+//         fromKey: 'items',
+//         toKey: '_items',
+//         normalizer: (items, props) => {
+//             if (props.routes) {
+//                 const routeToItem = (route: IRouteItem) => {
+//                     const items = (
+//                         Array.isArray(route.items)
+//                             ? route.items.map(r => routeToItem(r))
+//                             : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
+//                     ).filter(r => r.visible);
+//
+//                     return {
+//                         id: route.id,
+//                         label: route.label || route.title,
+//                         visible: route.isNavVisible !== false,
+//                         toRoute: items.length === 0 ? route.id : null,
+//                         toRouteParams: items.length === 0 ? props.routerParams : null,
+//                         items,
+//                     };
+//                 };
+//                 return props.routes.map(route => routeToItem(route)).filter(r => r.visible);
+//             }
+//             return items || [];
+//         },
+//     },
+// )
 @components('ui', 'clientStorage')
 export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateProps, TreeState> {
     static STORAGE_KEY_PREFIX = 'tree_';

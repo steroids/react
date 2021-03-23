@@ -3,8 +3,8 @@ import Form from '../Form';
 import FieldSet from '../../FieldSet';
 import TextField from '../../TextField';
 import InputField from '../../InputField';
-import DateField from '../../DateField';
-import DateTimeField from '../../DateTimeField';
+// import DateField from '../../DateField';
+// import DateTimeField from '../../DateTimeField';
 
 export default () => (
     <>
@@ -13,28 +13,28 @@ export default () => (
         >
             <FieldSet
                 prefix='user'
-                label={'label'}
+                label="label"
                 fields={[
                     {
                         component: 'InputField',
                         attribute: 'email',
-                        label: 'Email'
+                        label: 'Email',
                     },
                     {
                         component: 'TextField',
                         attribute: 'message',
-                        label: 'Message'
+                        label: 'Message',
                     },
-                    {
-                        component: 'DateField',
-                        attribute: 'date',
-                        label: 'Date'
-                    },
-                    {
-                        component: 'DateTimeField',
-                        attribute: 'startTime',
-                        label: 'Start time'
-                    },
+                    // {
+                    //     component: 'DateField',
+                    //     attribute: 'date',
+                    //     label: 'Date'
+                    // },
+                    // {
+                    //     component: 'DateTimeField',
+                    //     attribute: 'startTime',
+                    //     label: 'Start time'
+                    // },
                 ]}
             />
         </Form>

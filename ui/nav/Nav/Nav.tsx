@@ -34,6 +34,7 @@ export interface INavProps extends IThemeHocInput {
     className?: CssClassName;
     view?: any;
     onChange?: (...args: any[]) => any;
+    [key: string]: any;
 }
 
 export interface INavViewProps extends INavProps {

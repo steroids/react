@@ -6,6 +6,7 @@ import {IFieldHocInput, IFieldHocOutput} from '../../../hoc/field';
 export interface IReCaptchaFieldProps extends IFieldHocInput {
     action?: any;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface IReCaptchaFieldViewProps extends IFieldHocOutput {

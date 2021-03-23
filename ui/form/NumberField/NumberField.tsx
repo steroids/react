@@ -26,6 +26,8 @@ export interface INumberFieldProps extends IInputFieldProps, IFieldHocInput {
      * @example 5
      */
     step?: string | number;
+
+    [key: string]: any;
 }
 
 export interface INumberFieldViewProps extends IFieldHocOutput {

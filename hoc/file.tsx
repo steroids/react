@@ -316,6 +316,7 @@ export default (): any => WrappedComponent =>
 
             _onRemove(file) {
                 this._uploader.queue.remove([file]);
+                this.forceUpdate();
             }
         }
     )

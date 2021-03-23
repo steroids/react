@@ -16,6 +16,7 @@ export interface IHeaderProps extends IThemeHocInput {
         className?: CssClassName,
     };
     nav?: INavProps;
+    [key: string]: any;
 }
 
 export interface IHeaderViewProps extends IHeaderProps, IBemHocOutput {

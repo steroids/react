@@ -16,7 +16,7 @@ export default class SyncAddressBarHelper {
         formId,
         initialValues,
         forceRestore = false,
-        customizer
+        customizer = null
     ) {
         let newValues = {
             ...initialValues,

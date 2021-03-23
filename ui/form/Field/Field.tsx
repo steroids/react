@@ -10,6 +10,7 @@ import {IConnectHocOutput} from '../../../hoc/connect';
 import {getFieldPropsFromModel} from '../../../hoc/field';
 
 export interface IFieldProps {
+    [key: string]: any,
 }
 
 export interface IFieldPrivateProps extends IFormHocOutput, IConnectHocOutput, IComponentsHocOutput{

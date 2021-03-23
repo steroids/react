@@ -15,6 +15,7 @@ export interface IControlsColumnProps {
     controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
     item?: any;
     view?: any;
+    [key: string]: any;
 }
 
 export interface IControlsColumnViewProps {

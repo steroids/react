@@ -10,6 +10,7 @@ import dataProvider, {IDataProviderHocOutput} from '../../../hoc/dataProvider';
  */
 export interface INavFieldProps extends IFieldHocInput {
     navProps: INavProps,
+    [key: string]: any,
 
 }
 

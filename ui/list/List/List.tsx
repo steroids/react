@@ -10,6 +10,7 @@ export interface IListProps extends IListHocInput {
     view?: React.ComponentType;
     className?: CssClassName;
     contentClassName?: string;
+    [key: string]: any;
 }
 
 export interface IListViewProps extends IListProps, IListHocOutput {

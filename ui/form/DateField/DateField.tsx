@@ -34,6 +34,8 @@ export interface IDateFieldProps extends IFieldHocInput {
      * @example calendar-day
      */
     icon?: boolean | string;
+
+    [key: string]: any;
 }
 
 export interface IDateFieldState {

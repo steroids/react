@@ -169,12 +169,18 @@ export default class Router extends React.Component<IRouterProps & IRouterPrivat
             }
 
             const activeRoute = this.state.routes.find(r => r.id === activeRouteId);
-            if (activeRoute.component) {
-                children = this._renderComponent(activeRoute, {...props, children});
-            }
+            children = this._renderComponent(activeRoute, {...props, children}) || children;
             return false;
         });
 
+        const result = this._renderComponent(route, {...props, children});
+        if (!result) {
+            console.error('Not found component for route:', route)
+        }
+        return result;
+    }
+
+    _renderComponent(route: IRouteItem, props) {
         if (route.redirectTo && route.path === this.props.activePath) {
             const to = this._findRedirectPathRecursive(route);
             if (to === null) {
@@ -195,14 +201,9 @@ export default class Router extends React.Component<IRouterProps & IRouterPrivat
         }
 
         if (!route.component) {
-            console.error('Not found component for route:', route)
             return null;
         }
 
-        return this._renderComponent(route, {...props, children});
-    }
-
-    _renderComponent(route: IRouteItem, props) {
         let Component = route.component;
         if (route.fetch) {
             Component = fetch(route.fetch)(Component);

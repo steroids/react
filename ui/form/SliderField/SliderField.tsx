@@ -9,6 +9,7 @@ export interface ISliderFieldProps extends IFieldHocInput {
     view?: CustomView;
     min?: number;
     max?: number;
+    [key: string]: any;
 }
 
 export interface ISliderFieldViewProps extends IFieldHocOutput {

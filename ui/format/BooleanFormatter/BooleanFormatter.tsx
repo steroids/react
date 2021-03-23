@@ -5,6 +5,7 @@ import {IComponentsHocOutput} from '../../../hoc/components';
 export interface IBooleanFormatterProps {
     value?: string | number | boolean;
     view?: CustomView;
+    [key: string]: any;
 }
 
 export interface IBooleanFormatterPropsView {

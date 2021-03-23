@@ -26,6 +26,7 @@ export interface IMoneyFormatterProps {
 
     view?: CustomView;
     value?: any;
+    [key: string]: any;
 }
 
 export const moneyFormat = (amount, currency, scale) => {

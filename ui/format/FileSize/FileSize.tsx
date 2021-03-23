@@ -17,6 +17,8 @@ export interface IFileSizeFormatterProps {
      * @example 6920
      */
     value?: any;
+
+    [key: string]: any;
 }
 
 @components('ui')

@@ -10,7 +10,7 @@ export interface IEmptyProps {
 }
 
 export interface IEmptyViewProps extends IEmptyProps{
-
+    [key: string]: any,
 }
 
 interface IEmptyPrivateProps extends IComponentsHocOutput {
@@ -18,7 +18,7 @@ interface IEmptyPrivateProps extends IComponentsHocOutput {
 }
 
 @components('ui')
-export default class Empty extends React.PureComponent<IEmptyProps & IEmptyPrivateProps> {
+export default class Empty extends React.PureComponent<IEmptyViewProps & IEmptyPrivateProps> {
     render() {
         const EmptyView = this.props.view || this.props.ui.getView('list.EmptyView');
         return (

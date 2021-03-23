@@ -178,6 +178,8 @@ export interface IButtonProps extends IThemeHocInput {
     tag?: 'button' | 'a',
 
     textColor?: any;
+
+    [key: string]: any;
 }
 
 export interface IButtonViewProps extends IButtonProps {

@@ -21,6 +21,7 @@ interface IHttpHocPrivateProps extends IComponentsHocInput {
 
 interface IHttpHocState {
     data?: any,
+    isLoading: boolean,
 }
 
 export default (requestFunc): any => WrappedComponent =>
@@ -39,6 +40,7 @@ export default (requestFunc): any => WrappedComponent =>
 
                 this.state = {
                     data: null,
+                    isLoading: true,
                 };
             }
 
@@ -66,6 +68,7 @@ export default (requestFunc): any => WrappedComponent =>
                         {...this.props}
                         {...this.state.data}
                         {...outputProps}
+                        isLoading={this.state.isLoading}
                     />
                 );
             }
@@ -77,24 +80,32 @@ export default (requestFunc): any => WrappedComponent =>
             }
 
             _fetch(params = {}) {
-                const result = requestFunc({
-                    ...this.props,
-                    ...params,
-                    createCancelToken: this._createCancelToken
-                });
-                if (_isObject(result)) {
-                    if (_isFunction(result.then)) {
-                        return result.then(data => {
-                            if (this._isRendered) {
-                                this.setState({data});
-                            }
-                            return data;
-                        });
-                    } else {
-                        this.setState({data: result});
+                this.setState({isLoading: true}, () => {
+                    const result = requestFunc({
+                        ...this.props,
+                        ...params,
+                        createCancelToken: this._createCancelToken
+                    });
+                    if (_isObject(result)) {
+                        if (_isFunction(result.then)) {
+                            return result.then(data => {
+                                if (this._isRendered) {
+                                    this.setState({
+                                        data,
+                                        isLoading: false,
+                                    });
+                                }
+                                return data;
+                            });
+                        } else {
+                            this.setState({
+                                data: result,
+                                isLoading: false,
+                            });
+                        }
                     }
-                }
-                return result;
+                    return result;
+                })
             }
         }
     )

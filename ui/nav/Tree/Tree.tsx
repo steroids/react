@@ -3,7 +3,9 @@ import _isString from 'lodash-es/isString';
 import _omit from 'lodash-es/omit';
 import _isEqual from 'lodash-es/isEqual';
 import _keys from 'lodash-es/keys';
-import {components, connect} from '../../../hoc';
+import {useComponents, useSelector} from '@steroidsjs/core/hooks';
+import {useEffectOnce} from 'react-use';
+import {useState} from 'react';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
@@ -45,118 +47,154 @@ export interface ITreeViewProps extends ITreeProps {
 
 interface ITreePrivateProps extends IComponentsHocOutput {
     activeRouteIds?: string[],
-    routerParams?: object,
+    routerParams?: any,
     routes?: IRouteItem[],
     _items?: ITreeItem[] | string;
 }
 
-interface TreeState {
-    opened?: any,
-    selectedUniqId?: any,
-    activeTab?: any
-}
+const resolveId = (item, index, parentId) => (parentId ? parentId + '.' : '') + String(item.id || index);
 
-@connect(
-    (state, props) => ({
+function Tree(props: ITreeProps & ITreePrivateProps) {
+    const components = useComponents();
+    const STORAGE_KEY_PREFIX = 'tree_';
+
+    //State
+    const [selectedUniqId, setSelectedUniqId] = useState<string>(null);
+    const [openedItems, setOpenedItems] = useState<{ [key: string] : boolean }>({});
+
+    //Redux connection
+    const {routes, selectedItemId, activeRouteIds, routerParams} = useSelector(state => ({
         routes: _isString(props.items) ? getNavItems(state, props.items) : null,
         selectedItemId: _isString(props.items) ? getRouteId(state) : props.selectedItemId,
         activeRouteIds: getActiveRouteIds(state),
         routerParams: getRouterParams(state),
-    }),
-)
-// TODO remove normalize hoc
-// @normalize(
-//     {
-//         fromKey: 'items',
-//         toKey: '_items',
-//         normalizer: (items, props) => {
-//             if (props.routes) {
-//                 const routeToItem = (route: IRouteItem) => {
-//                     const items = (
-//                         Array.isArray(route.items)
-//                             ? route.items.map(r => routeToItem(r))
-//                             : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
-//                     ).filter(r => r.visible);
-//
-//                     return {
-//                         id: route.id,
-//                         label: route.label || route.title,
-//                         visible: route.isNavVisible !== false,
-//                         toRoute: items.length === 0 ? route.id : null,
-//                         toRouteParams: items.length === 0 ? props.routerParams : null,
-//                         items,
-//                     };
-//                 };
-//                 return props.routes.map(route => routeToItem(route)).filter(r => r.visible);
-//             }
-//             return items || [];
-//         },
-//     },
-// )
-@components('ui', 'clientStorage')
-export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateProps, TreeState> {
-    static STORAGE_KEY_PREFIX = 'tree_';
+    }));
 
-    static defaultProps = {
-        itemsKey: 'items',
-        autoOpenLevels: 1,
-        autoSave: false,
-        level: 0,
+    //TODO - items normalization
+
+    // const itemsArray = () => {
+    //     if (props.routes) {
+    //         const routeToItem = (route: IRouteItem) => {
+    //             const items = (
+    //                 Array.isArray(route.items)
+    //                     ? route.items.map(r => routeToItem(r))
+    //                     : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
+    //             ).filter(r => r.visible);
+    //
+    //             return {
+    //                 id: route.id,
+    //                 label: route.label || route.title,
+    //                 visible: route.isNavVisible !== false,
+    //                 toRoute: items.length === 0 ? route.id : null,
+    //                 toRouteParams: items.length === 0 ? props.routerParams : null,
+    //                 items,
+    //             };
+    //         };
+    //         return props.routes.map(route => routeToItem(route)).filter(r => r.visible);
+    //     }
+    //     return items || [];
+    // };
+
+    const findChildById = (items: ITreeItem[], itemId: string, parentId = '', level = 1) => {
+        let finedItem = null;
+        if (_isString(items)) {
+            return null;
+        }
+
+        (items || []).forEach((item, index) => {
+            const uniqId = resolveId(item, index, parentId);
+            if (!finedItem && (item.id === itemId || uniqId === itemId)) {
+                finedItem = {
+                    ...item,
+                    uniqId,
+                    level,
+                };
+            }
+            if (!finedItem) {
+                finedItem = findChildById(
+                    item[props.itemsKey],
+                    itemId,
+                    uniqId,
+                    level + 1,
+                );
+            }
+        });
+        return finedItem;
     };
 
-    constructor(props) {
-        super(props);
-        this._onItemClick = this._onItemClick.bind(this);
-        this.state = this._initState();
-    }
+    const autoOpen = (items: ITreeItem[], parentId = '', level = 1) => {
+        let opened = {};
 
-    componentDidUpdate(prevProps) {
-        if (
-            !_isEqual(prevProps._items, this.props._items)
-            || prevProps.selectedItemId !== this.props.selectedItemId
-        ) {
-            this.setState(this._initState());
+        (items || []).forEach((item, index) => {
+            const uniqId = resolveId(item, index, parentId);
+            if (props.autoOpenLevels >= level) {
+                opened[uniqId] = true;
+            }
+
+            if (selectedItemId === item.id) {
+                opened[uniqId] = true;
+            }
+
+            if (selectedItemId) {
+                const finedItem = findChildById(
+                    item[props.itemsKey],
+                    selectedItemId,
+                );
+                if (finedItem) {
+                    opened[uniqId] = true;
+                }
+            }
+            opened = {
+                ...opened,
+                ...autoOpen(item[props.itemsKey], uniqId, level + 1),
+            };
+        });
+        return opened;
+    };
+
+    // Initial opened items
+    useEffectOnce(() => {
+        // TODO add  clientStorage
+        // const key = STORAGE_KEY_PREFIX + props.id;
+        // const opened = !this.state && this.props.clientStorage.get(key) && this.props.autoSave
+        //     ? JSON.parse(this.props.clientStorage.get(key))
+        //     : this._autoOpen(this.props._items);
+
+        const opened = autoOpen(props.items as ITreeItem[]);
+        const selectedItem = findChildById(props.items as ITreeItem[], props.selectedItemId);
+        setOpenedItems(opened);
+        setSelectedUniqId(selectedItem ? selectedItemId.uniqId : null);
+    });
+
+    const onItemClick = (e, uniqId, item) => {
+        e.preventDefault();
+        if (props.onItemClick) {
+            props.onItemClick(e, item);
         }
-    }
 
-    render() {
-        const TreeView = this.props.view || this.props.ui.getView('nav.TreeView');
-        return (
-            <TreeView
-                {...this.props}
-                items={this._getItems(this.props._items)}
-            />
-        );
-    }
+        setSelectedUniqId(selectedUniqId === uniqId ? null : uniqId);
 
-    _initState() {
-        // Initial opened items
-        const key = Tree.STORAGE_KEY_PREFIX + this.props.id;
-        const opened = !this.state && this.props.clientStorage.get(key) && this.props.autoSave
-            ? JSON.parse(this.props.clientStorage.get(key))
-            : this._autoOpen(this.props._items);
-        const selectedItem = this._findChildById(
-            this.props._items,
-            this.props.selectedItemId,
-        );
-        return {
-            opened,
-            selectedUniqId: selectedItem ? selectedItem.uniqId : null,
-        };
-    }
+        if (item.items?.length > 0) {
+            const newItems = {...openedItems, [uniqId]: !openedItems[uniqId]};
+            setOpenedItems(newItems);
+            // TODO add  clientStorage
+            // const key = STORAGE_KEY_PREFIX + this.props.id;
+            // this.props.clientStorage.set(key, JSON.stringify(this.state.opened));
+        }
+    };
 
-    _getItems(items, parentId = '', level = 0) {
+    const getItems = (items: ITreeItem, parentId = '', level = 0) => {
         let result = [];
-        if (this.props.level && level == this.props.level) {
+        if (props.level && level === props.level) {
             return [];
         }
 
         (items || []).forEach((item, index) => {
-            const uniqId = this._resolveId(item, index, parentId);
-            const isOpened = !!this.state.opened[uniqId];
-            let hasItems = item[this.props.itemsKey] && item[this.props.itemsKey].length > 0;
+            const uniqId = resolveId(item, index, parentId);
+            const isOpened = !!openedItems[uniqId];
+            let hasItems = item[props.itemsKey] && item[props.itemsKey].length > 0;
 
-            if (this.props.level && (level == this.props.level - 1)) {
+            if (props.level && (level === props.level - 1)) {
                 hasItems = false;
             }
 
@@ -166,108 +204,36 @@ export default class Tree extends React.PureComponent<ITreeProps & ITreePrivateP
                 index,
                 level,
                 isOpened,
-                isSelected: this.state.selectedUniqId === uniqId
+                isSelected: selectedUniqId === uniqId
                     || (
-                        this.props.activeRouteIds.includes(item.toRoute)
-                        && _isEqual(item.toRouteParams || {}, _omit(this.props.routerParams, _keys(item.toRouteParams)))
+                        activeRouteIds.includes(item.toRoute)
+                        && _isEqual(item.toRouteParams || {}, _omit(routerParams, _keys(item.toRouteParams)))
                     ),
                 hasItems,
-                onClick: e => this._onItemClick(e, uniqId, item),
+                onClick: e => onItemClick(e, uniqId, item),
             });
             if (isOpened) {
                 result = result.concat(
-                    this._getItems(item[this.props.itemsKey], uniqId, level + 1),
+                    getItems(item[props.itemsKey], uniqId, level + 1),
                 ).filter(Boolean);
             }
         });
         return result;
-    }
+    };
 
-    _autoOpen(items, parentId = '', level = 1) {
-        let opened = {};
+    const items = getItems(props.items as ITreeItem[]);
 
-        (items || []).forEach((item, index) => {
-            const uniqId = this._resolveId(item, index, parentId);
-            if (this.props.autoOpenLevels >= level) {
-                opened[uniqId] = true;
-            }
-
-            if (this.props.selectedItemId === item.id) {
-                opened[uniqId] = true;
-            }
-
-            if (this.props.selectedItemId) {
-                const finedItem = this._findChildById(
-                    item[this.props.itemsKey],
-                    this.props.selectedItemId,
-                );
-                if (finedItem) {
-                    opened[uniqId] = true;
-                }
-            }
-            opened = {
-                ...opened,
-                ...this._autoOpen(item[this.props.itemsKey], uniqId, level + 1),
-            };
-        });
-        return opened;
-    }
-
-    _findChildById(items, itemId, parentId = '', level = 1) {
-        let finedItem = null;
-        if (_isString(items)) {
-            return null;
-        }
-
-        (items || []).forEach((item, index) => {
-            const uniqId = this._resolveId(item, index, parentId);
-            if (!finedItem && (item.id === itemId || uniqId === itemId)) {
-                finedItem = {
-                    ...item,
-                    uniqId,
-                    level,
-                };
-            }
-            if (!finedItem) {
-                finedItem = this._findChildById(
-                    item[this.props.itemsKey],
-                    itemId,
-                    uniqId,
-                    level + 1,
-                );
-            }
-        });
-        return finedItem;
-    }
-
-    _resolveId(item, index, parentId) {
-        return (parentId ? parentId + '.' : '') + String(item.id || index);
-    }
-
-    _onItemClick(e, uniqId, item) {
-        e.preventDefault();
-        if (this.props.onItemClick) {
-            this.props.onItemClick(e, item);
-        }
-        const newState = {
-            selectedUniqId: this.state.selectedUniqId === uniqId ? null : uniqId,
-        };
-        if (item.items) {
-            this.setState(
-                {
-                    ...newState,
-                    opened: {
-                        ...this.state.opened,
-                        [uniqId]: !this.state.opened[uniqId],
-                    },
-                },
-                () => {
-                    const key = Tree.STORAGE_KEY_PREFIX + this.props.id;
-                    this.props.clientStorage.set(key, JSON.stringify(this.state.opened));
-                },
-            );
-        } else {
-            this.setState(newState);
-        }
-    }
+    return components.ui.renderView(props.view || 'nav.TreeView', {
+        ...props,
+        items,
+    });
 }
+
+Tree.defaultProps = {
+    itemsKey: 'items',
+    autoOpenLevels: 1,
+    autoSave: false,
+    level: 0,
+};
+
+export default Tree;

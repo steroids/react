@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Provider} from 'react-redux';
 import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
+import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
@@ -42,9 +43,9 @@ export interface IApplicationHookResult {
 export const ComponentsContext = React.createContext({} as IComponents);
 
 const defaultComponents = {
-    //clientStorage: {
-    //    className: ClientStorageComponent,
-    //},
+    clientStorage: {
+        className: ClientStorageComponent,
+    },
     html: {
         className: HtmlComponent,
     },

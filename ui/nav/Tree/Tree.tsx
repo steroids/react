@@ -5,7 +5,7 @@ import _isEqual from 'lodash-es/isEqual';
 import _keys from 'lodash-es/keys';
 import {useComponents, useSelector} from '@steroidsjs/core/hooks';
 import {useEffectOnce} from 'react-use';
-import {useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
@@ -45,16 +45,9 @@ export interface ITreeViewProps extends ITreeProps {
     levelPadding?: number
 }
 
-interface ITreePrivateProps extends IComponentsHocOutput {
-    activeRouteIds?: string[],
-    routerParams?: any,
-    routes?: IRouteItem[],
-    _items?: ITreeItem[] | string;
-}
-
 const resolveId = (item, index, parentId) => (parentId ? parentId + '.' : '') + String(item.id || index);
 
-function Tree(props: ITreeProps & ITreePrivateProps) {
+function Tree(props: ITreeProps) {
     const components = useComponents();
     const STORAGE_KEY_PREFIX = 'tree_';
 
@@ -70,38 +63,40 @@ function Tree(props: ITreeProps & ITreePrivateProps) {
         routerParams: getRouterParams(state),
     }));
 
-    //TODO - items normalization
+    const items = useMemo(() => {
+        if (routes) {
+            const routeToItem = (route: IRouteItem) => {
+                const routeItems = (
+                    Array.isArray(route.items)
+                        ? route.items.map(r => routeToItem(r))
+                        : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
+                ).filter(r => r.visible);
 
-    // const itemsArray = () => {
-    //     if (props.routes) {
-    //         const routeToItem = (route: IRouteItem) => {
-    //             const items = (
-    //                 Array.isArray(route.items)
-    //                     ? route.items.map(r => routeToItem(r))
-    //                     : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
-    //             ).filter(r => r.visible);
-    //
-    //             return {
-    //                 id: route.id,
-    //                 label: route.label || route.title,
-    //                 visible: route.isNavVisible !== false,
-    //                 toRoute: items.length === 0 ? route.id : null,
-    //                 toRouteParams: items.length === 0 ? props.routerParams : null,
-    //                 items,
-    //             };
-    //         };
-    //         return props.routes.map(route => routeToItem(route)).filter(r => r.visible);
-    //     }
-    //     return items || [];
-    // };
+                return {
+                    id: route.id,
+                    label: route.label || route.title,
+                    visible: route.isNavVisible !== false,
+                    toRoute: routeItems.length === 0 ? route.id : null,
+                    toRouteParams: routeItems.length === 0 ? props.routerParams : null,
+                    items: routeItems,
+                };
+            };
+            return routes.map(route => routeToItem(route)).filter(r => r.visible);
+        }
 
-    const findChildById = (items: ITreeItem[], itemId: string, parentId = '', level = 1) => {
+        if (Array.isArray(props.items)) {
+            return props.items;
+        }
+        return [];
+    }, [props.items, props.routerParams, routes]);
+
+    const findChildById = (sourceItems: ITreeItem[], itemId: string, parentId = '', level = 1) => {
         let finedItem = null;
-        if (_isString(items)) {
+        if (_isString(sourceItems)) {
             return null;
         }
 
-        (items || []).forEach((item, index) => {
+        (sourceItems || []).forEach((item, index) => {
             const uniqId = resolveId(item, index, parentId);
             if (!finedItem && (item.id === itemId || uniqId === itemId)) {
                 finedItem = {
@@ -122,10 +117,10 @@ function Tree(props: ITreeProps & ITreePrivateProps) {
         return finedItem;
     };
 
-    const autoOpen = (items: ITreeItem[], parentId = '', level = 1) => {
+    const autoOpen = (sourceItems: ITreeItem[], parentId = '', level = 1) => {
         let opened = {};
 
-        (items || []).forEach((item, index) => {
+        (sourceItems || []).forEach((item, index) => {
             const uniqId = resolveId(item, index, parentId);
             if (props.autoOpenLevels >= level) {
                 opened[uniqId] = true;
@@ -160,16 +155,16 @@ function Tree(props: ITreeProps & ITreePrivateProps) {
         //     ? JSON.parse(this.props.clientStorage.get(key))
         //     : this._autoOpen(this.props._items);
 
-        const opened = autoOpen(props.items as ITreeItem[]);
-        const selectedItem = findChildById(props.items as ITreeItem[], props.selectedItemId);
+        const opened = autoOpen(items);
+        const selectedItem = findChildById(items as ITreeItem[], selectedItemId);
         setOpenedItems(opened);
         setSelectedUniqId(selectedItem ? selectedItemId.uniqId : null);
     });
 
-    const onItemClick = (e, uniqId, item) => {
+    const onItemClick = useCallback((e, uniqId, item) => {
         e.preventDefault();
         if (props.onItemClick) {
-            props.onItemClick(e, item);
+            props.onItemClick.call(null, e, item);
         }
 
         setSelectedUniqId(selectedUniqId === uniqId ? null : uniqId);
@@ -181,51 +176,53 @@ function Tree(props: ITreeProps & ITreePrivateProps) {
             // const key = STORAGE_KEY_PREFIX + this.props.id;
             // this.props.clientStorage.set(key, JSON.stringify(this.state.opened));
         }
-    };
+    }, [openedItems, props.onItemClick, selectedUniqId]);
 
-    const getItems = (items: ITreeItem, parentId = '', level = 0) => {
-        let result = [];
-        if (props.level && level === props.level) {
-            return [];
-        }
-
-        (items || []).forEach((item, index) => {
-            const uniqId = resolveId(item, index, parentId);
-            const isOpened = !!openedItems[uniqId];
-            let hasItems = item[props.itemsKey] && item[props.itemsKey].length > 0;
-
-            if (props.level && (level === props.level - 1)) {
-                hasItems = false;
+    const resultItems = useMemo(() => {
+        const getItems = (sourceItems: ITreeItem, parentId = '', level = 0) => {
+            let result = [];
+            if (props.level && level === props.level) {
+                return [];
             }
 
-            result.push({
-                ...item,
-                uniqId,
-                index,
-                level,
-                isOpened,
-                isSelected: selectedUniqId === uniqId
-                    || (
-                        activeRouteIds.includes(item.toRoute)
-                        && _isEqual(item.toRouteParams || {}, _omit(routerParams, _keys(item.toRouteParams)))
-                    ),
-                hasItems,
-                onClick: e => onItemClick(e, uniqId, item),
+            (sourceItems || []).forEach((item, index) => {
+                const uniqId = resolveId(item, index, parentId);
+                const isOpened = !!openedItems[uniqId];
+                let hasItems = item[props.itemsKey] && item[props.itemsKey].length > 0;
+
+                if (props.level && (level === props.level - 1)) {
+                    hasItems = false;
+                }
+
+                result.push({
+                    ...item,
+                    uniqId,
+                    index,
+                    level,
+                    isOpened,
+                    isSelected: selectedUniqId === uniqId
+                        || (
+                            activeRouteIds.includes(item.toRoute)
+                            && _isEqual(item.toRouteParams || {}, _omit(routerParams, _keys(item.toRouteParams)))
+                        ),
+                    hasItems,
+                    onClick: e => onItemClick(e, uniqId, item),
+                });
+                if (isOpened) {
+                    result = result.concat(
+                        getItems(item[props.itemsKey], uniqId, level + 1),
+                    ).filter(Boolean);
+                }
             });
-            if (isOpened) {
-                result = result.concat(
-                    getItems(item[props.itemsKey], uniqId, level + 1),
-                ).filter(Boolean);
-            }
-        });
-        return result;
-    };
+            return result;
+        };
 
-    const items = getItems(props.items as ITreeItem[]);
+        return getItems(items as ITreeItem[]);
+    }, [activeRouteIds, items, onItemClick, openedItems, props.itemsKey, props.level, routerParams, selectedUniqId]);
 
     return components.ui.renderView(props.view || 'nav.TreeView', {
         ...props,
-        items,
+        items: resultItems,
     });
 }
 

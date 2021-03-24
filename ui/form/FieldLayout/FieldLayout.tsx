@@ -48,21 +48,16 @@ const defaultProps = {
 
 function FieldLayout(props: IFieldLayoutProps) {
     const components = useComponents();
-    const FieldLayoutView = props.layoutView || components.ui.getView('form.FieldLayoutView');
 
     const layout = useMemo(() => mergeLayoutProp(defaultProps.layout, props.layout), [props.layout]);
     if (layout === false) {
         return props.children;
     }
 
-    return (
-        <FieldLayoutView
-            {...props}
-            layout={layout}
-        >
-            {props.children}
-        </FieldLayoutView>
-    );
+    return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
+        ...props,
+        layout,
+    });
 }
 
 export default React.memo(FieldLayout);

@@ -3,6 +3,6 @@ import InputField from '../../InputField';
 
 export default () => (
     <>
-        <InputField label='Default' layout='default'/>
+        <InputField label='Default' layout='default' />
     </>
 );

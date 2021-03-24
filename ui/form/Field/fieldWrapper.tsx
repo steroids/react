@@ -121,7 +121,7 @@ export default function fieldWrapper<T extends any>(componentId, Component: T, o
         if (layout) {
             return (
                 <FieldLayout
-                    {...layout}
+                    layout={layout}
                     required={_has(props, 'required') ? props.required : metaProps.required}
                     label={options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label)}
                     hint={_has(props, 'hint') ? props.hint : metaProps.hint}

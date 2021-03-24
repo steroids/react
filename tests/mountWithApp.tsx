@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {mount} from 'enzyme';
+import HtmlComponent from '@steroidsjs/core/components/HtmlComponent';
 import useApplication from '../hooks/useApplication';
-import {HtmlComponent} from '../components';
 
 function AppMock(props: any) {
     const {config, Component, ...childProps} = props;

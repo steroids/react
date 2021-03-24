@@ -13,7 +13,7 @@ export const normalizeLayout = layout => (typeof layout === 'object' ? layout : 
 export const mergeLayoutProp = (layout1, layout2) => {
     layout1 = layout1 ? normalizeLayout(layout1) : null;
     layout2 = layout2 ? normalizeLayout(layout2) : null;
-    return layout1 || layout2 ? {...layout2, ...layout1} : null;
+    return layout1 || layout2 ? {...layout1, ...layout2} : null;
 };
 
 export const cleanEmptyObject = object => {
@@ -118,8 +118,7 @@ export const providers = {
     // Local component state
     state: {
         useField: (initialValue) => {
-            const initialState = reducerItem({}, formInitialize(null, initialValue));
-            const [value, setValue] = useState(initialState); // eslint-disable-line react-hooks/rules-of-hooks
+            const [value, setValue] = useState(initialValue); // eslint-disable-line react-hooks/rules-of-hooks
             return {
                 error: null,
                 value,

@@ -35,6 +35,8 @@ export function reducerItem(state, action) {
             };
 
         case FORM_CHANGE:
+            // TODO Recursive update objects/arrays instances
+            //console.log(555, state?.values, action.name, action.value);
             _set(state, ['values'].concat(action.name).join('.'), action.value);
             return {...state};
 

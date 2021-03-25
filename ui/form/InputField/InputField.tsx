@@ -106,7 +106,6 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
 function InputField(props: IInputFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
-    console.log(9999, props.input);
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,

@@ -69,8 +69,8 @@ export const providers = {
             const dispatch = useDispatch(); // eslint-disable-line react-hooks/rules-of-hooks
             return {
                 ...useSelector(state => ({
-                    error: _get(state, ['form', formId, 'errors', name]),
-                    value: _get(state, ['form', formId, 'values', name]),
+                    error: _get(state, ['form', formId, 'errors'].concat(name.split('.'))),
+                    value: _get(state, ['form', formId, 'values'].concat(name.split('.'))),
                 })),
                 setValue: useCallback(
                     value => dispatch(formChange(formId, name, value)),
@@ -101,8 +101,8 @@ export const providers = {
         useField: (formId, name) => {
             const [state, dispatch] = useContext(FormReducerContext); // eslint-disable-line react-hooks/rules-of-hooks
             return {
-                error: _get(state, ['errors', name]),
-                value: _get(state, ['values', name]),
+                error: _get(state, ['errors'].concat(name.split('.'))),
+                value: _get(state, ['values'].concat(name.split('.'))),
                 setValue: useCallback(
                     value => dispatch(formChange(formId, name, value)),
                     [dispatch, formId, name],

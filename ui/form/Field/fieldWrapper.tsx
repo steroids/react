@@ -104,6 +104,7 @@ const createDynamicField = (componentId, Component) => {
         });
     };
     DynamicField.displayName = componentId;
+    DynamicField.defaultProps = Component.defaultProps;
     return DynamicField;
 };
 

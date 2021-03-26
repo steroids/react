@@ -1,0 +1,76 @@
+import React from 'react';
+import useComponents from '@steroidsjs/core/hooks/useComponents';
+import useFetch from '@steroidsjs/core/hooks/useFetch';
+import Modal from '../Modal';
+
+interface ITwoFactorModalProps {
+    view?: any;
+    providerName: string,
+    onClose?: any,
+}
+
+interface ITwoFactorModalPrivateProps extends ITwoFactorModalProps {
+    info?: {
+        providerName: string,
+        providerData: any,
+        createTime: string,
+        expireTime: string,
+        isConfirmed: string,
+    },
+}
+
+export interface ITwoFactorModalViewProps extends ITwoFactorModalPrivateProps {
+    description?: string,
+    formProps?: any,
+    [key: string]: any,
+}
+
+export default function TwoFactorModal(props: ITwoFactorModalProps) {
+    const components = useComponents();
+
+    // TODO set types
+    const {data} = useFetch({
+        method: 'post',
+        url: `/api/v1/auth/2fa/${props.providerName}/send`,
+    });
+
+    const getDescription = () => {
+        switch (props.providerName) {
+            case 'notifier':
+                if (data.providerData?.type === 'phone') {
+                    return __('Вам отправлен СМС код на номер {phone}, введите его в поле ниже', {
+                        phone: data.providerData?.value,
+                    });
+                }
+                if (data.providerData?.type === 'email') {
+                    return __('Вам отправлен код на почту {email}, введите его в поле ниже', {
+                        email: data.providerData?.value,
+                    });
+                }
+                return __('Для подтверждения операции вам отправлен код');
+
+            case 'google':
+                return __('Введите код подтверждения из мобильного приложения Google Authenticator');
+
+            default: return __('Введите код для подтверждения операции');
+        }
+    };
+
+    const TwoFactorModalView = props.view || components.ui.getView('modal.TwoFactorModalView');
+    return (
+        <Modal
+            {...props}
+            onClose={props.onClose}
+        >
+            <TwoFactorModalView
+                {...props}
+                formProps={{
+                    formId: 'TwoFactorModal',
+                    action: `/api/v1/auth/2fa/${props.providerName}/confirm`,
+                    onComplete: () => props.onClose(),
+                }}
+                description={getDescription()}
+            />
+        </Modal>
+    );
+}

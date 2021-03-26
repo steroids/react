@@ -3,8 +3,10 @@ import _isBoolean from 'lodash-es/isBoolean';
 import _range from 'lodash-es/range';
 import {useComponents} from '@steroidsjs/core/hooks';
 import {useEvent, useMount} from 'react-use';
-import {useCallback, useContext, useMemo, useRef} from 'react';
+import {useCallback, useContext, useEffect, useMemo, useRef} from 'react';
 import {FormContext} from '@steroidsjs/core/ui/form/Form/Form';
+import {providers} from '@steroidsjs/core/utils/form';
+import {formArrayAdd, formArrayRemove} from '@steroidsjs/core/actions/form';
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
@@ -48,18 +50,19 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
     [key: string]: any;
 }
 
-export interface IFieldListViewProps extends IFieldListProps {
+export interface IFieldListViewProps {
     items?: (IFieldListItem & {
         disabled?: boolean,
         size?: boolean,
     })[];
-    renderField?: (field: any, prefix: string) => any,
     onAdd?: () => void,
     showRemove?: boolean,
     showAdd?: boolean,
     children?: React.ReactNode,
     className?: string,
     forwardedRef?: any,
+    disabled?: boolean,
+    size?: Size,
 }
 
 export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
@@ -67,9 +70,9 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
         disabled?: boolean,
         size?: boolean,
     })[];
-    renderField?: (field: any, prefix: string) => any,
     onRemove?: (rowIndex: number) => void,
     prefix: string,
+    required?: boolean,
     rowIndex: number,
     showRemove: boolean,
 }
@@ -81,19 +84,15 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
     // Resolve model
     const modelFields = components.ui.getModel(props.model)?.fields;
 
+    const dispatch = context.provider.useDispatch();
+
     // Add and Remove handlers
     const onAdd = useCallback((rowsCount = 1) => {
-        const newValue = [].concat(props.input.value || []);
-        for (let i = 0; i < rowsCount; i += 1) {
-            newValue.push(props.initialValues);
-        }
-        props.input.onChange.call(null, newValue);
-    }, [props.initialValues, props.input.onChange, props.input.value]);
+        dispatch(formArrayAdd(context.formId, props.input.name, rowsCount, props.initialValues));
+    }, [context.formId, dispatch, props.initialValues, props.input.name]);
     const onRemove = useCallback((rowIndex) => {
-        const newItems = [].concat(props.input.value || []);
-        newItems.splice(rowIndex, 1);
-        props.input.onChange.call(null, newItems);
-    }, [props.input.onChange, props.input.value]);
+        dispatch(formArrayRemove(context.formId, props.input.name, rowIndex));
+    }, [context.formId, dispatch, props.input.name]);
 
     // Add initial rows
     useMount(() => {
@@ -105,15 +104,9 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
     // Keyboard navigation
     const nodeRef = useRef();
     const onKeyDown = useCallback((event) => {
-        if (!props.enableKeyboardNavigation) {
-            return;
+        if (props.enableKeyboardNavigation && isDescendant(nodeRef.current, event.target)) {
+            tableNavigationHandler(event, () => onAdd());
         }
-
-        if (!isDescendant(nodeRef.current, event.target)) {
-            return;
-        }
-
-        tableNavigationHandler(event, () => onAdd());
     }, [onAdd, props.enableKeyboardNavigation]);
     useEvent('keydown', onKeyDown);
 
@@ -130,33 +123,41 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
         [modelFields, props.disabled, props.items, props.size],
     );
 
+    const contextValue = useMemo(() => ({
+        formId: props.formId,
+        model: props.model,
+        prefix: props.prefix,
+        layout: props.layout,
+        provider: context.provider,
+        reducer: context.reducer,
+    }), [context.provider, context.reducer, props.formId, props.layout, props.model, props.prefix]);
+
+    const commonProps = {
+        showAdd: props.showAdd,
+        showRemove: props.showRemove,
+        size: props.size,
+        disabled: props.disabled,
+        required: props.required,
+        items,
+    };
+
     const FieldListView = props.view || components.ui.getView('form.FieldListView');
     const FieldListItemView = props.itemView || components.ui.getView('form.FieldListItemView');
     return (
-        <FormContext.Provider
-            value={{
-                formId: props.formId,
-                model: props.model,
-                prefix: props.prefix,
-                layout: props.layout,
-                globalState: context.globalState,
-            }}
-        >
+        <FormContext.Provider value={contextValue}>
             <FieldListView
-                {...props}
                 {...props.viewProps}
+                {...commonProps}
                 forwardedRef={nodeRef}
-                items={items}
                 onAdd={onAdd}
             >
-                {_range(props.input.value?.length || 0).map(index => (
+                {_range(props.input.value || 0).map(index => (
                     <FieldListItemView
-                        {...props}
                         {...props.itemViewProps}
+                        {...commonProps}
                         key={index}
-                        items={items}
-                        prefix={props.input.name + '.' + index}
                         onRemove={onRemove}
+                        prefix={props.input.name + '.' + index}
                         rowIndex={index}
                     />
                 ))}
@@ -176,4 +177,4 @@ FieldList.defaultProps = {
     enableKeyboardNavigation: true,
 };
 
-export default fieldWrapper('FieldList', FieldList);
+export default fieldWrapper('FieldList', FieldList, {list: true});

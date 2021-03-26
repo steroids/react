@@ -1,5 +1,5 @@
 import _has from 'lodash-es/has';
-import { useContext, useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import * as React from 'react';
 import {mergeLayoutProp, providers} from '../../../utils/form';
 import {FormContext} from '../Form/Form';
@@ -60,9 +60,10 @@ export interface IFieldWrapperOutputProps {
 
 interface IFieldWrapperOptions {
     label?: boolean,
+    list?: boolean,
 }
 
-const createDynamicField = (componentId, Component) => {
+const createDynamicField = (componentId, Component, isList) => {
     const DynamicField = (props: IFieldWrapperInputProps) => {
         const components = useComponents();
 
@@ -75,12 +76,9 @@ const createDynamicField = (componentId, Component) => {
         const model = props.model || context?.model || null;
 
         // Resolve data provider
-        const {error, value, setValue} = context?.globalState
-            ? providers.redux.useField(formId, name)
-            : (context?.reducer
-                ? providers.reducer.useField(formId, name)
-                : providers.state.useField(props.value)
-            );
+        const {error, value, setValue} = context?.provider
+            ? context?.provider.useField(formId, name, isList)
+            : providers.state.useField(props.value);
 
         // Input object
         const input = useMemo(() => ({
@@ -109,35 +107,45 @@ const createDynamicField = (componentId, Component) => {
 };
 
 // Field Wrapper
-export default function fieldWrapper<T extends any>(componentId, Component: T, options: IFieldWrapperOptions = {}) {
+export default function fieldWrapper<T extends React.FC>(
+    componentId,
+    Component: T | any,
+    options: IFieldWrapperOptions = {},
+) {
     const NewComponent = (props: IFieldWrapperInputProps): T | any => {
+        const components = useComponents();
+
         // Get UI props and create Field Class dynamically (for add field props - input, error, model, ...)
-        const metaProps = useComponents().ui.getFieldProps(componentId, props.model, props.attribute);
-        const DynamicField = createDynamicField(componentId, Component);
+        const metaProps = useMemo(
+            () => components.ui.getFieldProps(componentId, props.model, props.attribute),
+            [components.ui, props.attribute, props.model],
+        );
+        if (!Component.DynamicField) {
+            Component.DynamicField = createDynamicField(componentId, Component, options.list);
+        }
 
         // Resolve layout
         const context = useContext(FormContext);
         const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
         if (layout) {
-            return (
-                <FieldLayout
-                    layout={layout}
-                    required={_has(props, 'required') ? props.required : metaProps.required}
-                    label={options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label)}
-                    hint={_has(props, 'hint') ? props.hint : metaProps.hint}
-                    error={props.error}
-                >
-                    <DynamicField {...props} />
-                </FieldLayout>
-            );
+            return components.ui.renderView(FieldLayout, {
+                layout,
+                required: _has(props, 'required') ? props.required : metaProps.required,
+                label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
+                hint: _has(props, 'hint') ? props.hint : metaProps.hint,
+                error: props.error,
+                children: (
+                    <Component.DynamicField {...props} />
+                ),
+            });
         }
 
-        return (
-            <DynamicField {...props} />
-        );
+        return components.ui.renderView(Component.DynamicField, props);
     };
 
     NewComponent.WrappedComponent = Component;
+    NewComponent.displayName = componentId;
+    NewComponent.defaultProps = Component.defaultProps;
     return NewComponent;
 }

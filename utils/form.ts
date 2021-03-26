@@ -1,12 +1,44 @@
-import {useSelector, useDispatch} from 'react-redux';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _isArray from 'lodash-es/isArray';
+import _isEqual from 'lodash-es/isEqual';
 import _get from 'lodash-es/get';
-import {useCallback, useContext, useReducer, useState} from 'react';
-import {useEffectOnce} from 'react-use';
+import {useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
+import {useEffectOnce, useLifecycles, useMountedState, usePrevious, useUpdate} from 'react-use';
+import useDispatch from '@steroidsjs/core/hooks/useDispatch';
+import {useSelector} from '@steroidsjs/core/hooks';
+import {FormContext} from '@steroidsjs/core/ui/form/Form/Form';
 import {formChange, formInitialize, formSetErrors} from '../actions/form';
 import {reducerItem} from '../reducers/form';
-import {FormReducerContext} from '../ui/form/Form/Form';
+
+export const setInWithPath = (state: any, value: any, path: string[], pathIndex = 0) => {
+    if (pathIndex >= path.length) {
+        return value;
+    }
+
+    const first = path[pathIndex];
+    const firstState = state && (Array.isArray(state) ? state[Number(first)] : state[first]);
+    const next = setInWithPath(firstState, value, path, pathIndex + 1);
+
+    if (!state) {
+        if (Number.isNaN(first)) {
+            return { [first]: next };
+        }
+        const initialized = [];
+        initialized[parseInt(first, 10)] = next;
+        return initialized;
+    }
+
+    if (Array.isArray(state)) {
+        const copy = [].concat(state);
+        copy[parseInt(first, 10)] = next;
+        return copy;
+    }
+
+    return {
+        ...state,
+        [first]: next,
+    };
+};
 
 export const normalizeLayout = layout => (typeof layout === 'object' ? layout : {layout});
 
@@ -65,19 +97,24 @@ export const providers = {
                 setState: null,
             };
         },
-        useField: (formId, name) => {
+        useField: (formId, name, isList) => {
             const dispatch = useDispatch(); // eslint-disable-line react-hooks/rules-of-hooks
             return {
-                ...useSelector(state => ({
-                    error: _get(state, ['form', formId, 'errors'].concat(name.split('.'))),
-                    value: _get(state, ['form', formId, 'values'].concat(name.split('.'))),
-                })),
+                ...useSelector(state => {
+                    const error = _get(state, ['form', formId, 'errors'].concat(name.split('.')));
+                    const value = _get(state, ['form', formId, 'values'].concat(name.split('.')));
+                    return {
+                        error,
+                        value: isList ? value?.length || 0 : value,
+                    };
+                }),
                 setValue: useCallback(
                     value => dispatch(formChange(formId, name, value)),
                     [dispatch, formId, name],
                 ),
             };
         },
+        useDispatch: () => useDispatch(),
         // eslint-disable-next-line react-hooks/rules-of-hooks
         select: (formId, selector) => useSelector(state => selector(_get(state, ['form', formId]))),
     },
@@ -86,8 +123,44 @@ export const providers = {
     reducer: {
         useForm: (formId, initialValues) => {
             const initialState = reducerItem({}, formInitialize(formId, initialValues));
-            const reducer = useReducer(reducerItem, initialState); // eslint-disable-line react-hooks/rules-of-hooks
-            const [state, dispatch] = reducer;
+            const [state, dispatch] = useReducer(reducerItem, initialState);
+
+            const subscribersRef = useRef([]);
+            useEffect(() => {
+                subscribersRef.current.forEach(callback => callback(state));
+            }, [state]);
+            const reducer = useMemo(() => ({
+                dispatch,
+                select: selector => {
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    const forceUpdate = useUpdate();
+
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    const valueRef = useRef(selector.call(null, state));
+
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    const callback = useCallback((newSstate) => {
+                        const newValue2 = selector.call(null, newSstate);
+                        if (!_isEqual(valueRef.current, newValue2)) {
+                            valueRef.current = newValue2;
+                            forceUpdate();
+                        }
+                    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    useLifecycles(
+                        () => subscribersRef.current.push(callback),
+                        () => {
+                            const index = subscribersRef.current.indexOf(callback);
+                            if (index !== -1) {
+                                subscribersRef.current.splice(index, 1);
+                            }
+                        },
+                    );
+
+                    return valueRef.current;
+                },
+            }), []); // eslint-disable-line react-hooks/exhaustive-deps
+
             return {
                 ...state,
                 setErrors: useCallback(
@@ -98,21 +171,22 @@ export const providers = {
                 setState: null,
             };
         },
-        useField: (formId, name) => {
-            const [state, dispatch] = useContext(FormReducerContext); // eslint-disable-line react-hooks/rules-of-hooks
+        useField: (formId, name, isList) => {
+            const {reducer} = useContext(FormContext); // eslint-disable-line react-hooks/rules-of-hooks
+            const value = reducer.select(state => _get(state, 'values.' + name));
+
             return {
-                error: _get(state, ['errors'].concat(name.split('.'))),
-                value: _get(state, ['values'].concat(name.split('.'))),
+                error: reducer.select(state => _get(state, 'errors.' + name)),
+                value: isList ? value?.length || 0 : value,
                 setValue: useCallback(
-                    value => dispatch(formChange(formId, name, value)),
-                    [dispatch, formId, name],
+                    newValue => reducer.dispatch(formChange(formId, name, newValue)),
+                    [reducer, formId, name],
                 ),
             };
         },
-        select: (formId, selector) => {
-            const reducer = useContext(FormReducerContext); // eslint-disable-line react-hooks/rules-of-hooks
-            return reducer ? selector(reducer[0]) : null;
-        },
+        useDispatch: () => useContext(FormContext).reducer.dispatch,
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        select: (formId, selector) => useContext(FormContext).reducer.select(selector),
     },
 
     // Local component state

@@ -7,7 +7,7 @@ import NumberField from '../../NumberField';
 
 export default () => (
     <>
-        <Form formId='FieldListForm' globalState>
+        <Form formId='FieldListForm'>
             <FieldList
                 attribute='items'
                 label='Items'

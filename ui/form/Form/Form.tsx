@@ -93,7 +93,7 @@ export interface IFormProps {
      * Использовать для данных глобальное хранилище (redux)
      * @example true
      */
-    globalState?: boolean,
+    useRedux?: boolean,
 
     /**
      * Надпись на конпке отправки формы
@@ -136,25 +136,19 @@ export interface IFormContext {
     model?: any;
     prefix?: string | boolean;
     layout?: FormLayout;
-    globalState?: boolean,
-    reducer?: any,
+    provider?: any,
+    reducer?: {dispatch: React.Dispatch<any>, select: any},
 }
 
 export const FormContext = React.createContext<IFormContext>({});
-export const FormReducerContext = React.createContext<[IFormReducerState, React.Dispatch<any>]>(null);
 
-const defaultProps = {
-    actionMethod: 'POST',
-    autoStartTwoFactor: true,
-};
-
-export default function Form(props: IFormProps) {
-    // Dev validation. You cannot change data provider (formId, globalState)
+function Form(props: IFormProps) {
+    // Dev validation. You cannot change data provider (formId, useRedux)
     if (process.env.NODE_ENV !== 'production') {
         const prevFormId = usePrevious(props.formId); // eslint-disable-line react-hooks/rules-of-hooks
-        const prevGlobalState = usePrevious(props.globalState); // eslint-disable-line react-hooks/rules-of-hooks
-        if ((prevFormId && props.formId !== prevFormId) || (prevGlobalState && props.globalState !== prevGlobalState)) {
-            throw new Error('Props formId and globalState cannot be changed dynamically! Its related to data provider');
+        const prevUseRedux = usePrevious(props.useRedux); // eslint-disable-line react-hooks/rules-of-hooks
+        if ((prevFormId && props.formId !== prevFormId) || (prevUseRedux && props.useRedux !== prevUseRedux)) {
+            throw new Error('Props formId and useRedux cannot be changed dynamically! Its related to data provider');
         }
     }
 
@@ -189,8 +183,8 @@ export default function Form(props: IFormProps) {
     }
 
     // Init data provider
-    const formProvider = props.globalState ? providers.redux : providers.reducer;
-    const {values, isInvalid, isSubmitting, setErrors, reducer} = formProvider.useForm(props.formId, initialValues);
+    const provider = props.useRedux ? providers.redux : providers.reducer;
+    const {values, isInvalid, isSubmitting, setErrors, reducer} = provider.useForm(props.formId, initialValues);
 
     // Sync with address bar
     useUpdateEffect(() => {
@@ -235,7 +229,7 @@ export default function Form(props: IFormProps) {
         if (props.onChange) {
             props.onChange(values);
         }
-    }, [values]);
+    }, [props, values]);
 
     // OnSubmit handler
     const onSubmit = useCallback(async () => {
@@ -309,17 +303,18 @@ export default function Form(props: IFormProps) {
     }, [components.ui, props.formId, props.onAfterSubmit, props.onBeforeSubmit, props.onSubmit,
         props.validators, setErrors, values]);
 
+    const formContextValue = useMemo(() => ({
+        formId: props.formId,
+        model: props.model,
+        prefix: props.prefix,
+        layout: props.layout,
+        provider,
+        reducer,
+    }), [props.formId, props.model, props.prefix, props.layout, provider, reducer]);
+
     // Render context and form
-    let content = useMemo(() => (
-        <FormContext.Provider
-            value={{
-                formId: props.formId,
-                model: props.model,
-                prefix: props.prefix,
-                layout: props.layout,
-                globalState: props.globalState,
-            }}
-        >
+    const content = useMemo(() => (
+        <FormContext.Provider value={formContextValue}>
             {components.ui.renderView(props.view || 'form.FormView', {
                 isInvalid,
                 isSubmitting,
@@ -328,16 +323,22 @@ export default function Form(props: IFormProps) {
                 children: props.children,
             })}
         </FormContext.Provider>
-    ), [props.formId, props.model, props.prefix, props.layout, props.globalState, props.view, props.children,
-        components.ui, isInvalid, isSubmitting, layout, onSubmit]);
+    ), [formContextValue, components.ui, props.view, props.children, isInvalid, isSubmitting, layout, onSubmit]);
 
     // Wrap with reducer provider, if need
-    if (!props.globalState) {
+    /*if (!props.useRedux) {
         content = (
             <FormReducerContext.Provider value={reducer}>
                 {content}
             </FormReducerContext.Provider>
         );
-    }
+    }*/
     return content;
 }
+
+Form.defaultProps = {
+    actionMethod: 'POST',
+    autoStartTwoFactor: true,
+};
+
+export default Form;

@@ -5,7 +5,7 @@ import CheckboxField from './CheckboxField';
 //import CheckboxListField from './CheckboxListField';
 //import DateField from './DateField';
 //import DateTimeField from './DateTimeField';
-// import DropDownField from './DropDownField';
+import DropDownField from './DropDownField';
 import Field from './Field';
 import FieldLayout from './FieldLayout';
 //import FieldList from './FieldList';
@@ -33,7 +33,7 @@ export {
     //CheckboxListField,
     //DateField,
     //DateTimeField,
-    // DropDownField,
+    DropDownField,
     Field,
     FieldLayout,
     //FieldList,
@@ -62,7 +62,7 @@ export default {
     // CheckboxListField,
     // DateField,
     // DateTimeField,
-    // DropDownField,
+    DropDownField,
     Field,
     FieldLayout,
     // FieldList,

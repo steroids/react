@@ -3,7 +3,7 @@ import _isArray from 'lodash-es/isArray';
 import _remove from 'lodash-es/remove';
 import _includes from 'lodash-es/includes';
 
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
 export interface IDataSelectConfig {
@@ -14,8 +14,6 @@ export interface IDataSelectConfig {
         [key: string]: unknown,
     }[],
     selectFirst?: any;
-    onSelect?: any;
-    onClose?: any;
     selectedIds: any,
     primaryKey?: string,
 }
@@ -28,7 +26,7 @@ export interface IDataSelectResult {
     hoveredId: PrimaryKey,
     setHoveredId: (id: PrimaryKey) => void,
     selectedIds: PrimaryKey[],
-    setSelectedIds: (ids: PrimaryKey | PrimaryKey[], skipToggle: boolean) => void,
+    setSelectedIds: (ids: PrimaryKey | PrimaryKey[], skipToggle?: boolean) => void,
 }
 
 const defaultProps = {
@@ -40,11 +38,15 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     const primaryKey = config.primaryKey || defaultProps.primaryKey;
 
     // Initial select
-    const initialSelectedIds = config.selectedIds || (
-        config.selectFirst && config.items.length > 0
+    const initialSelectedIds = useMemo(() => {
+        if (config.selectedIds) {
+            return [].concat(config.selectedIds || []);
+        }
+
+        return config.selectFirst && config.items.length > 0
             ? [config.items[0][primaryKey]]
-            : []
-    );
+            : [];
+    }, [config.items, config.selectFirst, config.selectedIds, primaryKey]);
 
     // State
     const [isOpened, setIsOpened] = useState(false);
@@ -76,12 +78,10 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 if (selectedIds.length !== 1 || selectedIds[0] !== id) {
                     setSelectedIdsInternal([id]);
                 }
-                if (config.onClose) {
-                    config.onClose.call(null);
-                }
+                setIsOpened(false);
             }
         }
-    }, [config.multiple, config.onClose, selectedIds]);
+    }, [config.multiple, selectedIds]);
 
     // Select first after fetch data
     const prevItemsLength = usePrevious(config.items.length);
@@ -118,9 +118,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         // Keys: tab, esc
         if ([9, 27].includes(e.which)) {
             e.preventDefault();
-            if (config.onClose) {
-                config.onClose.call(null);
-            }
+            setIsOpened(false);
             return;
         }
 
@@ -170,7 +168,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setHoveredId(keys[newIndex]);
             }
         }
-    }, [config.items, config.onClose, hoveredId, isFocused, isOpened, setSelectedIds, selectedIds]);
+    }, [config.items, hoveredId, isFocused, isOpened, setSelectedIds, selectedIds]);
     useEvent('keydown', onKeyDown);
 
     return {

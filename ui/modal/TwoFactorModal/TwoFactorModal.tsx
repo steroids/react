@@ -33,18 +33,19 @@ export default function TwoFactorModal(props: ITwoFactorModalProps) {
         method: 'post',
         url: `/api/v1/auth/2fa/${props.providerName}/send`,
     });
+    const providerData: any = data.providerData;
 
     const getDescription = () => {
         switch (props.providerName) {
             case 'notifier':
-                if (data.providerData?.type === 'phone') {
+                if (providerData?.type === 'phone') {
                     return __('Вам отправлен СМС код на номер {phone}, введите его в поле ниже', {
-                        phone: data.providerData?.value,
+                        phone: providerData?.value,
                     });
                 }
-                if (data.providerData?.type === 'email') {
+                if (providerData?.type === 'email') {
                     return __('Вам отправлен код на почту {email}, введите его в поле ниже', {
-                        email: data.providerData?.value,
+                        email: providerData?.value,
                     });
                 }
                 return __('Для подтверждения операции вам отправлен код');

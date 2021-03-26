@@ -9,7 +9,7 @@ import Enum from '../base/Enum';
 import {getEnumLabels} from '../reducers/fields';
 import {smartSearch} from '../utils/text';
 
-interface AutoCompleteConfig {
+export interface AutoCompleteConfig {
     enable?: boolean,
     minLength?: number,
     delay?: number,
@@ -43,6 +43,7 @@ export interface IDataProviderResult {
         [key: string]: unknown,
     }[];
     isLoading?: boolean,
+    isAutoComplete?: boolean,
 }
 
 const defaultProps = {
@@ -115,9 +116,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
 
         if (!config.dataProvider) {
             // Client-side search on static items
-            if (config.query) {
-                setItems(smartSearch(config.query, sourceItems));
-            }
+            setItems(config.query ? smartSearch(config.query, sourceItems) : sourceItems);
         } else if (config.autoFetch && isAutoFetchedRef.current === false) {
             isAutoFetchedRef.current = true;
             fetchRemote();
@@ -132,8 +131,13 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.query,
-        dataProvider, dataProvider.action, dataProvider.onSearch, sourceItems]);
+    }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.query, dataProvider,
+        dataProvider.action, dataProvider.onSearch, sourceItems]);
 
-    return {sourceItems, items, isLoading};
+    return {
+        sourceItems,
+        items,
+        isLoading,
+        isAutoComplete: autoComplete.enable,
+    };
 }

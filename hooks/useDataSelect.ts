@@ -92,7 +92,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     }, [config.items, config.selectFirst, prevItemsLength, primaryKey]);
 
     // Update selected items on change value
-    const prevConfigSelectedIds = usePrevious(config.selectedIds);
+    const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
     useUpdateEffect(() => {
         // console.log(config.selectedIds, prevConfigSelectedIds);
         const newSelectedIds = config.selectedIds && config.selectedIds.length > 0

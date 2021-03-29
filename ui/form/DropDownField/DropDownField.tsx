@@ -136,8 +136,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps) {
 
     // Sync with form
     useEffect(() => {
-        props.input.onChange.call(null, props.multiple ? selectedIds : (selectedIds[0] || null));
-    }, [props.input.onChange, props.multiple, selectedIds]);
+        props.input.onChange.call(null, props.multiple ? selectedIds : (selectedIds[0] ?? null));
+    }, [selectedIds]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,

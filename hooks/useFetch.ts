@@ -15,7 +15,13 @@ export interface IFetchConfig {
 }
 
 export interface IFetchResult {
-    data?: Record<string, unknown>,
+    data?: {
+        providerData?: {
+            type: string,
+            value: string
+        },
+        [key: string]: unknown
+    },
     isLoading: boolean,
     fetch?: (newParams?: Record<string, unknown>) => void,
 }

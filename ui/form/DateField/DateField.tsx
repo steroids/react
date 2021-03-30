@@ -70,7 +70,6 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
      * Convert date from string to Date object
      * @param {string | Date} date
      * @returns {Date|undefined}
-     * @private
      */
     const parseDate = useCallback(date => {
         const format = [props.displayFormat, props.valueFormat].find(
@@ -89,7 +88,6 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
      * Convert Date to display format
      * @param {string | Date} date
      * @returns {string}
-     * @private
      */
     const formatDate = useCallback(date => {
         if (!date) {

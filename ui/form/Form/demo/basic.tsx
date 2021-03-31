@@ -10,6 +10,7 @@ export default () => (
     <>
         <Form
             formId='TestForm'
+            useRedux
         >
             <FieldSet
                 prefix='user'

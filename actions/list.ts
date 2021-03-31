@@ -1,10 +1,12 @@
-import {getFormValues, change} from 'redux-form';
 import _get from 'lodash-es/get';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
 import _orderBy from 'lodash-es/orderBy';
 import _trimStart from 'lodash-es/trimStart';
 import _isFunction from 'lodash-es/isFunction';
+import _isEqual from 'lodash-es/isEqual';
+import {formSelector} from '@steroidsjs/core/reducers/form';
+import {formChange} from '@steroidsjs/core/actions/form';
 import {filterItems} from '../utils/data';
 
 export interface IList {
@@ -28,17 +30,19 @@ export interface IList {
     meta?: any,
     isFetched?: boolean,
     isLoading?: boolean,
+    layoutName?: null,
 }
 
-export const LIST_INIT = 'LIST_INIT';
-export const LIST_BEFORE_FETCH = 'LIST_BEFORE_FETCH';
-export const LIST_AFTER_FETCH = 'LIST_AFTER_FETCH';
-export const LIST_ITEM_ADD = 'LIST_ITEM_ADD';
-export const LIST_ITEM_UPDATE = 'LIST_ITEM_UPDATE';
-export const LIST_DESTROY = 'LIST_DESTROY';
-export const LIST_TOGGLE_ITEM = 'LIST_TOGGLE_ITEM';
-export const LIST_TOGGLE_ALL = 'LIST_TOGGLE_ALL';
-export const LIST_SET_LAYOUT = 'LIST_SET_LAYOUT';
+export const LIST_INIT = '@list/init';
+export const LIST_SET_ITEMS = '@list/set_items';
+export const LIST_BEFORE_FETCH = '@list/before_fetch';
+export const LIST_AFTER_FETCH = '@list/after_fetch';
+export const LIST_ITEM_ADD = '@list/item_add';
+export const LIST_ITEM_UPDATE = '@list/item_update';
+export const LIST_DESTROY = '@list/destroy';
+export const LIST_TOGGLE_ITEM = '@list/toggle_item';
+export const LIST_TOGGLE_ALL = '@list/toggle_all';
+export const LIST_SET_LAYOUT = '@list/set_layout';
 
 //const STORAGE_LAYOUT_KEY_PREFIX = 'listLayout_';
 
@@ -129,6 +133,10 @@ export const localFetchHandler = (list: IList, query: Record<string, unknown>) =
         );
     }
 
+    if (_isEqual(list.items, items)) {
+        items = list.items;
+    }
+
     return {
         items,
         total,
@@ -138,11 +146,22 @@ export const localFetchHandler = (list: IList, query: Record<string, unknown>) =
 /**
  * Init list
  * @param listId
- * @param props
+ * @param payload
  */
-export const listInit = (listId, props) => ({
-    payload: createList(listId, props),
+export const listInit = (listId, payload) => ({
     type: LIST_INIT,
+    payload,
+});
+
+export const listSetItems = (listId, items) => ({
+    type: LIST_SET_ITEMS,
+    items,
+});
+
+export const listSetLayout = (listId, layoutName) => ({
+    type: LIST_SET_LAYOUT,
+    listId,
+    layoutName,
 });
 
 /*export const initSSR = (listId, props) => (dispatch, getState, {http, clientStorage}) => {
@@ -185,13 +204,13 @@ export const listFetch = (listId: string, query: any = {}) => (dispatch, getStat
     }
 
     const toDispatch = [];
-    const formValues = getFormValues(list.formId)(state) || {};
+    const formValues = formSelector(state, list.formId, ({values}) => values) || {};
     const onFetch = list.onFetch || (list.isRemote ? httpFetchHandler : localFetchHandler);
 
     // Change query
     Object.keys(query || {}).forEach(key => {
         formValues[key] = query[key];
-        toDispatch.push(change(list.formId, key, query[key]));
+        toDispatch.push(formChange(list.formId, key, query[key]));
     });
 
     if (list.isRemote) {

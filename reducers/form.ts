@@ -32,7 +32,7 @@ export function reducerItem(state, action) {
                 isSubmitting: false,
                 ...state,
                 values: state?.values || _cloneDeep(action.values || {}),
-                initialValues: action.values || null,
+                initialValues: action.values || state?.values || null,
             };
 
         case FORM_CHANGE:
@@ -78,3 +78,5 @@ export default (state = initialState, action) => {
     }
     return state;
 };
+
+export const formSelector = (state, formId, selector) => selector(state.form?.[formId] || {});

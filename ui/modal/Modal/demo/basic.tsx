@@ -7,11 +7,15 @@ import {openModal} from '../../../../actions/modal';
 import Modal from '../Modal';
 
 interface IMyModalProps {
+    nextId: number,
     isClosing: boolean;
     onClose: (...args: any[]) => any;
 }
 
+// TODO test sub modals
+
 function MyModal(props: IMyModalProps) {
+    const dispatch = useDispatch();
     return (
         <Modal
             title='Open modal'
@@ -19,6 +23,18 @@ function MyModal(props: IMyModalProps) {
             onClose={props.onClose}
         >
             Demo text
+            {' '}
+            {props.nextId}
+            <Button
+                label='Open sub modal'
+                onClick={e => {
+                    e.preventDefault();
+                    dispatch(openModal(MyModal, {
+                        modalId: 'test' + props.nextId,
+                        nextId: props.nextId + 1,
+                    }));
+                }}
+            />
         </Modal>
     );
 }
@@ -30,9 +46,13 @@ export default () => {
             <ModalPortal />
             <Button
                 label='Open modal'
-                onClick={() => dispatch(
-                    openModal(MyModal),
-                )}
+                onClick={e => {
+                    e.preventDefault();
+                    dispatch(openModal(MyModal, {
+                        modalId: 'test0',
+                        nextId: 1,
+                    }));
+                }}
             />
         </>
     );

@@ -1,6 +1,8 @@
 import * as React from 'react';
+import _orderBy from 'lodash-es/orderBy';
 import {useSelector} from '@steroidsjs/core/hooks';
 import useDispatch from '@steroidsjs/core/hooks/useDispatch';
+import {useCallback} from 'react';
 import {closeModal, modalMarkClosing} from '../../../actions/modal';
 import {getOpened, MODAL_DEFAULT_GROUP} from '../../../reducers/modal';
 import {IModalProps} from '../Modal/Modal';
@@ -10,40 +12,33 @@ export interface IModalPortalProps {
     group?: string,
 }
 
-interface IOpenedModal {
-    modal?: any,
-    props?: any,
-}
-
 function ModalPortal(props: IModalPortalProps) {
     const dispatch = useDispatch();
 
-    // TODO add types for opened
-    const {opened} = useSelector(state => ({
-        opened: getOpened(state, props.group || ModalPortal.defaultProps.group),
-    }));
+    const group = props.group || ModalPortal.defaultProps.group;
+    const opened = useSelector(state => getOpened(state, group));
 
-    const closeInternal = (item) => {
+    const closeInternal = useCallback((item) => {
         if (item.props && item.props.onClose) {
             item.props.onClose();
         }
         dispatch(closeModal(item.id, props.group));
-    };
+    }, [dispatch, props.group]);
 
-    const onClose = (item) => {
+    const onClose = useCallback((item) => {
         if (props.animationDelayMc || props.animationDelayMc === 0) {
             dispatch(modalMarkClosing(item.id, props.group));
             setTimeout(() => closeInternal(item), props.animationDelayMc);
         } else {
             closeInternal(item);
         }
-    };
+    }, [closeInternal, dispatch, props.animationDelayMc, props.group]);
 
-    return (opened || []).map((item, index) => {
+    return _orderBy(opened, 'id').map((item, index) => {
         const ModalComponent = item.modal;
         const modalProps = {
             index,
-            group: item.group,
+            group,
             isClosing: item.isClosing,
             onClose: () => onClose(item),
         } as IModalProps;

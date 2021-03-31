@@ -6,8 +6,7 @@ import _keys from 'lodash-es/keys';
 import {useComponents, useSelector} from '@steroidsjs/core/hooks';
 import {useEffectOnce} from 'react-use';
 import {useCallback, useMemo, useState} from 'react';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
+import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
 import {IButtonProps} from '../../form/Button/Button';
 

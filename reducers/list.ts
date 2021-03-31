@@ -4,6 +4,7 @@ import _every from 'lodash-es/every';
 import _extend from 'lodash-es/extend';
 import {
     LIST_INIT,
+    LIST_SET_ITEMS,
     LIST_BEFORE_FETCH,
     LIST_AFTER_FETCH,
     LIST_ITEM_ADD,
@@ -33,6 +34,15 @@ const reducerMap = {
             },
         },
     }),
+    [LIST_SET_ITEMS]: (state, action) => ({
+        ...state,
+        lists: {
+            ...state.lists,
+            [action.listId]: {
+                items: action.items,
+            },
+        },
+    }),
     [LIST_BEFORE_FETCH]: (state, action) => ({
         ...state,
         lists: {
@@ -46,7 +56,10 @@ const reducerMap = {
     [LIST_AFTER_FETCH]: (state, action) => {
         let items;
         const list = state.lists[action.listId];
-        if (list && list.items && list.loadMore && action.page > 1) {
+        if (list.items === action.items) {
+            // No changes
+            items = list.items;
+        } else if (list && list.items && list.loadMore && action.page > 1) {
             items = [].concat(list.items);
             action.items.forEach((entry, i) => {
                 const index = (action.page - 1) * action.pageSize + i;
@@ -158,7 +171,9 @@ const reducerMap = {
     }),
 };
 
-export default (state = initialState, action) => reducerMap[action] ? reducerMap[action](state, action) : state;
+export default (state = initialState, action) => reducerMap[action.type]
+    ? reducerMap[action.type](state, action)
+    : state;
 
 export const isListInitialized = (state, listId) => !!_get(state, ['list', 'lists', listId]);
 export const getList = (state, listId) => _get(state, ['list', 'lists', listId]) || null;

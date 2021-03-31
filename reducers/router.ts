@@ -228,7 +228,7 @@ export const getRouterParams = state => _get(state.router, 'params');
 export const getActiveRouteIds = state => _get(state.router, 'activeIds') || null;
 export const getRoutesMap = state => _get(state.router, 'routesMap') || null;
 export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
-export const getRoute = (state, routeId = null) => _get(
+export const getRoute = (state, routeId = null): IRoute => _get(
     state.router, ['routesMap', routeId || getRouteId(state)],
 ) || null;
 export const getRouteProp = (state, routeId = null, param) => _get(getRoute(state, routeId), param) || null;

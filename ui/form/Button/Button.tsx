@@ -5,7 +5,7 @@ import {useUpdateEffect} from 'react-use';
 import FieldLayout from '../FieldLayout';
 import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
-import {useComponents, useFormSelector} from '../../../hooks';
+import {useComponents, useForm} from '../../../hooks';
 import {FormContext, IFormContext} from '../Form/Form';
 import {mergeLayoutProp} from '../../../utils/form';
 
@@ -226,9 +226,10 @@ function Button(props: IButtonProps) {
 
     // Form submitting
     const context: IFormContext = useContext(FormContext);
-    let submitting = useFormSelector(state => state.isSubmitting);
-    if (!context.formId) {
-        submitting = !!props.submitting;
+    const form = useForm();
+    let submitting = !!props.submitting;
+    if (form) {
+        submitting = form.formSelector(state => state.isSubmitting);
     }
 
     const disabled = submitting || props.disabled || isLoading;

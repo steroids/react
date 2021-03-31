@@ -1,5 +1,7 @@
-import {useSelector as useReduxSelector, shallowEqual} from 'react-redux';
+import {useSelector as useReduxSelector, shallowEqual, DefaultRootState} from 'react-redux';
 
-export default function useSelector(selector) {
-    return useReduxSelector(selector, shallowEqual);
+export default function useSelector<TState = any, TSelected = any>(
+    selector: (state: TState) => TSelected,
+): TSelected {
+    return useReduxSelector<TState, TSelected>(selector, shallowEqual);
 }

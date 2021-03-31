@@ -95,11 +95,12 @@ function Nav(props: INavProps) {
 
     const onClick = useCallback((item, index) => {
         const newActiveTab = _has(item, 'id') ? item.id : index;
-        setActiveTab(newActiveTab);
         if (props.onChange) {
-            props.onChange(newActiveTab);
+            props.onChange.call(null, newActiveTab);
+        } else {
+            setActiveTab(newActiveTab);
         }
-    }, [props]);
+    }, [props.onChange]);
 
     const items = useMemo(() => (
         Array.isArray(props.items)

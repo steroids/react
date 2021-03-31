@@ -3,8 +3,15 @@ import {MODAL_OPEN, MODAL_CLOSE, MODAL_MARK_CLOSING} from '../actions/modal';
 
 export const MODAL_DEFAULT_GROUP = 'modal';
 
+export interface IModal {
+    id: number,
+    modal: any,
+    props: any,
+    isClosing: boolean,
+}
+
 const initialState = {
-    opened: {},
+    opened: {} as Record<string, IModal[]>,
 };
 
 export default (state = initialState, action) => {
@@ -76,4 +83,7 @@ export default (state = initialState, action) => {
     }
 };
 
-export const getOpened = (state, group = MODAL_DEFAULT_GROUP) => _get(state, ['modal', 'opened', group]) || null;
+export const getOpened = (
+    state,
+    group = MODAL_DEFAULT_GROUP,
+): IModal[] => _get(state, ['modal', 'opened', group]) || null;

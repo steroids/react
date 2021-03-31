@@ -138,6 +138,7 @@ export interface IFormContext {
     layout?: FormLayout;
     provider?: any,
     reducer?: {dispatch: React.Dispatch<any>, select: any},
+    dispatch?: any,
 }
 
 export const FormContext = React.createContext<IFormContext>({});
@@ -184,7 +185,7 @@ function Form(props: IFormProps) {
 
     // Init data provider
     const provider = props.useRedux ? providers.redux : providers.reducer;
-    const {values, isInvalid, isSubmitting, setErrors, reducer} = provider.useForm(props.formId, initialValues);
+    const {values, isInvalid, isSubmitting, setErrors, reducer, dispatch} = provider.useForm(props.formId, initialValues);
 
     // Sync with address bar
     useUpdateEffect(() => {
@@ -310,30 +311,28 @@ function Form(props: IFormProps) {
         layout: props.layout,
         provider,
         reducer,
-    }), [props.formId, props.model, props.prefix, props.layout, provider, reducer]);
+        dispatch,
+    }), [props.formId, props.model, props.prefix, props.layout, provider, reducer, dispatch]);
+
+    // Wait initialization (only for redux)
+    if (values === undefined) {
+        return null;
+    }
 
     // Render context and form
-    const content = useMemo(() => (
+    return (
         <FormContext.Provider value={formContextValue}>
-            {components.ui.renderView(props.view || 'form.FormView', {
-                isInvalid,
-                isSubmitting,
-                layout,
-                onSubmit,
-                children: props.children,
-            })}
+            {props.view !== false
+                ? components.ui.renderView(props.view || 'form.FormView', {
+                    isInvalid,
+                    isSubmitting,
+                    layout,
+                    onSubmit,
+                    children: props.children,
+                })
+                : props.children}
         </FormContext.Provider>
-    ), [formContextValue, components.ui, props.view, props.children, isInvalid, isSubmitting, layout, onSubmit]);
-
-    // Wrap with reducer provider, if need
-    /*if (!props.useRedux) {
-        content = (
-            <FormReducerContext.Provider value={reducer}>
-                {content}
-            </FormReducerContext.Provider>
-        );
-    }*/
-    return content;
+    );
 }
 
 Form.defaultProps = {

@@ -95,6 +95,7 @@ export const providers = {
                 ),
                 reducer: null,
                 setState: null,
+                dispatch,
             };
         },
         useField: (formId, name, isList) => {
@@ -169,6 +170,7 @@ export const providers = {
                 ),
                 reducer,
                 setState: null,
+                dispatch,
             };
         },
         useField: (formId, name, isList) => {

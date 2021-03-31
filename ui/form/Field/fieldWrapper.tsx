@@ -96,9 +96,9 @@ const createDynamicField = (componentId, Component, isList) => {
         };
 
         return components.ui.renderView(Component, {
-            ...props,
             ...components.ui.getFieldProps(componentId, model, props.attribute),
             ...wrapperProps,
+            ...props,
         });
     };
     DynamicField.displayName = componentId;

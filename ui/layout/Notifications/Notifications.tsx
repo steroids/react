@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _orderBy from 'lodash-es/orderBy';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useMount, useUpdateEffect} from 'react-use';
 import useDispatch from '@steroidsjs/core/hooks/useDispatch';
 import {useComponents, useSelector} from '@steroidsjs/core/hooks';
@@ -57,7 +57,7 @@ function Notifications(props:INotificationsProps) {
     }));
 
     const components = useComponents();
-    const [innerNotifications, setInnerNotifications] = useState(props.notifications);
+    const [innerNotifications, setInnerNotifications] = useState(props.notifications || []);
     const [closing, setClosing] = useState([]);
 
     const dispatch = useDispatch();
@@ -86,7 +86,7 @@ function Notifications(props:INotificationsProps) {
         if (toClose.length > 0) {
             setTimeout(() => setClosing(closing.filter(item => !toClose.includes(item))), props.closeTimeoutMs);
         }
-    }, [closing, innerNotifications, notifications, props.closeTimeoutMs]);
+    }, [notifications, props.closeTimeoutMs]);
 
     const onClose = useCallback(
         notificationId => dispatch(closeNotification(notificationId)),
@@ -94,19 +94,21 @@ function Notifications(props:INotificationsProps) {
     );
 
     const closingIds = closing.map(item => item.id);
-    const items = useMemo(
-        () => _orderBy([].concat(innerNotifications).concat(closing), ['id'], 'asc')
+
+    const items = useMemo(() => (
+        _orderBy([].concat(innerNotifications).concat(closing), ['id'], 'asc')
             .map(item => ({
                 ...item,
                 isClosing: closingIds.includes(item.id),
                 onClose: () => onClose(item.id),
-            })),
-        [closing, closingIds, innerNotifications, onClose],
-    );
+            }))
+    ),
+    [notifications, closing, onClose]);
 
-    const NotificationsItemView = props.itemView || props.ui.getView('layout.NotificationsItemView');
+    const NotificationsItemView = props.itemView || components.ui.getView('layout.NotificationsItemView');
     return components.ui.renderView(props.view || 'layout.NotificationsView', {
         ...props,
+        position: position || '',
         children: items.map(item => (
             <NotificationsItemView
                 key={item.id}

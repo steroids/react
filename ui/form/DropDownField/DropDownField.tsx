@@ -1,9 +1,10 @@
 import {useComponents, useDataProvider, useDataSelect} from '@steroidsjs/core/hooks';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useClickAway} from 'react-use';
+import {useClickAway, usePrevious} from 'react-use';
 import {IDataProviderConfig} from '@steroidsjs/core/hooks/useDataProvider';
 import {IDataSelectConfig} from '@steroidsjs/core/hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import _isEqual from 'lodash-es/isEqual';
 
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     IDataProviderConfig,
@@ -135,9 +136,12 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps) {
     }), [props]);
 
     // Sync with form
+    const prevSelectedIds = usePrevious(selectedIds);
     useEffect(() => {
-        props.input.onChange.call(null, props.multiple ? selectedIds : (selectedIds[0] || null));
-    }, [props.input.onChange, props.multiple, selectedIds]);
+        if (!_isEqual(prevSelectedIds, selectedIds)) {
+            props.input.onChange.call(null, props.multiple ? selectedIds : (selectedIds[0] ?? null));
+        }
+    }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,

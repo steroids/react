@@ -1,43 +1,79 @@
 import * as React from 'react';
-import fieldWrapper from '@steroidsjs/core/ui/form/Field/fieldWrapper';
+import fieldWrapper, {
+    IFieldWrapperInputProps,
+    IFieldWrapperOutputProps,
+} from '@steroidsjs/core/ui/form/Field/fieldWrapper';
 import {useComponents} from '@steroidsjs/core/hooks';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo} from 'react';
+import {useMount} from 'react-use';
 
-interface IRateFieldProps {
-    itemsCount?: number,
-    defaultValue?: number,
-    view?: CustomView,
-    className?: CssClassName,
+interface IRateFieldItem {
+    id: number,
+    value: number,
 }
 
-export interface IRateFieldViewProps extends IRateFieldProps {
-    items: {
-        id: number,
-    }[],
+interface IRateFieldProps extends IFieldWrapperInputProps {
+    itemsCount?: number,
+    defaultValue?: number,
+    allowClear?: boolean,
+    view?: CustomView,
+    className?: CssClassName,
+
+    inputProps: {
+        value: number,
+        disabled?: boolean,
+        onChange: (value: string | React.ChangeEvent) => void,
+    },
+}
+
+export interface IRateFieldViewProps extends IRateFieldProps, IFieldWrapperOutputProps {
+    items: IRateFieldItem[],
+    selectedIds: (PrimaryKey | any)[],
+    onItemSelect: (id: number) => void,
+
     value: number,
-    handleItemClick: (value: number) => void,
+    onItemClick: (item: IRateFieldItem) => void,
 }
 
 function RateField(props: IRateFieldProps) {
     const components = useComponents();
 
-    const [value, setValue] = useState<number>(props.defaultValue || 0);
+    const items = useMemo(() => [...Array(props.itemsCount || 5)]
+        .map((item, index) => ({
+            id: index,
+            value: index + 1,
+        })),
+    [props.itemsCount]);
 
-    const items = useMemo(() => [...Array(props.itemsCount || 5)].map((item, index) => ({id: index + 1})),
-        [props.itemsCount]);
+    useMount(() => props.input.onChange(props.defaultValue || 0));
 
-    const handleItemClick = useCallback(newValue => setValue(newValue), []);
+    const onItemClick = useCallback((item) => {
+        let value = item.value;
+        if (props.allowClear && props.input.value === item.value) {
+            value = 0;
+        }
+        props.input.onChange(value);
+    }, [props.allowClear, props.input]);
+
+    const inputProps = useMemo(() => ({
+        name: props.input.name,
+        value: props.input.value,
+        disabled: props.disabled,
+        ...props.inputProps,
+    }), [props.disabled, props.input, props.inputProps]);
 
     return components.ui.renderView(props.view || 'form.RateFieldView', {
         ...props,
+        inputProps,
+        onItemClick,
         items,
-        value,
-        handleItemClick,
     });
 }
 
 RateField.defaultProps = {
+    allowClear: false,
     itemsCount: 5,
+    disabled: false,
 };
 
 export default fieldWrapper('RateField', RateField);

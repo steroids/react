@@ -3,7 +3,7 @@ import {useRef} from 'react';
 import {useMount, useUnmount} from 'react-use';
 import {useComponents} from '@steroidsjs/core/hooks';
 
-export default function Portal() {
+export default function Portal(props) {
     const components = useComponents();
     const elementRef = useRef(null);
 
@@ -24,5 +24,5 @@ export default function Portal() {
         }
     });
 
-    return createPortal(this.props.children, elementRef.current);
+    return createPortal(props.children, elementRef.current);
 }

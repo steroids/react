@@ -125,7 +125,7 @@ function Tooltip(props: ITooltipProps) {
         const result = calculate(
             props.gap,
             positionRef.current,
-            childRef.current.getBoundingClientRect(),
+            childRef.current,
             tooltipSize,
             arrowSize,
         );

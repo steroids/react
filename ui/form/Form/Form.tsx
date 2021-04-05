@@ -233,12 +233,13 @@ function Form(props: IFormProps) {
     }, [props, values]);
 
     // OnSubmit handler
-    const onSubmit = useCallback(async () => {
+    const onSubmit = useCallback(async (e) => {
         // TODO
+        e.preventDefault();
 
         // Append non touched fields to values object
         if (props.formId) {
-            Object.keys(components.ui.getRegisteredFields(props.formId).formRegisteredFields || {}).forEach(key => {
+            Object.keys(components.ui.getRegisteredFields(props.formId)?.formRegisteredFields || {}).forEach(key => {
                 const registeredName = this.props.formRegisteredFields[key].name;
                 if (_isUndefined(_get(values, registeredName))) {
                     _set(values, registeredName, null);
@@ -329,6 +330,8 @@ function Form(props: IFormProps) {
                     layout,
                     onSubmit,
                     children: props.children,
+                    submitLabel: props.submitLabel,
+                    fields: props.fields
                 })
                 : props.children}
         </FormContext.Provider>
@@ -338,6 +341,7 @@ function Form(props: IFormProps) {
 Form.defaultProps = {
     actionMethod: 'POST',
     autoStartTwoFactor: true,
+    layout: 'default'
 };
 
 export default Form;

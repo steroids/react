@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import {useContext, useMemo} from 'react';
 import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 
@@ -19,18 +19,34 @@ export default function Field(props: IFieldProps) {
 
     // Get model
     const context = useContext(FormContext);
-    const model = props.model || context.model;
+    const fieldModel = useMemo(() => {
+        const model = props.model || context.model;
+        const result = (components.ui.getModel(model)?.attributes || [])
+            .find(field => field.attribute === props.attribute);
 
-    // Get component
+        return result || {};
+    }, [components, props.model, context.model, props.attribute]);
+
+
     const component = props.component
-        || components.ui.getModel(model)?.fields?.[props.attribute]?.component
+        || fieldModel.searchField
+        || fieldModel.field
         || 'InputField';
+
     const ComponentField = _isString(component)
         ? components.ui.getField(`form.${component}`)
         : component;
 
+
+    const componentProps = {
+        ...fieldModel,
+        ...props,
+        ...fieldModel.fieldProps,
+        ...fieldModel.searchFieldProps
+    }
+
     // Render
     return _isFunction(ComponentField)
-        ? ComponentField(props)
-        : <ComponentField {...props} />;
+        ? ComponentField(componentProps)
+        : <ComponentField {...componentProps} />;
 }

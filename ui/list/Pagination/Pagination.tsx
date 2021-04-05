@@ -6,6 +6,7 @@ import {formChange} from '@steroidsjs/core/actions/form';
 import * as React from 'react';
 import {ListControlPosition} from '../../../hooks/useList';
 import {IButtonProps} from '../../form/Button/Button';
+import {IList} from '@steroidsjs/core/actions/list';
 
 export interface IPaginationProps {
     attribute?: string,
@@ -17,7 +18,6 @@ export interface IPaginationProps {
     buttonProps?: IButtonProps,
     view?: CustomView,
     onChange?: (value: number) => void,
-
     /**
      * Размер
      */
@@ -62,11 +62,20 @@ export const generatePages = (page, totalPages, aroundCount = 3) => {
 function Pagination(props: IPaginationProps) {
     const components = useComponents();
 
+    if (!props.list) {
+        return null;
+    }
+
+    const initialValues = {
+        page: props.list[props.attribute],
+        pageSize: props.list[props.sizeAttribute]
+    };
+
     const {formId, formDispatch, formSelector} = useForm();
     const {page, pageSize} = formSelector(({values}) => ({
         page: _get(values, props.attribute),
         pageSize: _get(values, props.sizeAttribute),
-    }));
+    })) || initialValues;
 
     const totalPages = Math.ceil((props.list.total || 0) / (pageSize || 1));
 
@@ -74,23 +83,23 @@ function Pagination(props: IPaginationProps) {
         () => generatePages(page, totalPages, props.aroundCount).map(pageItem => ({
             page: pageItem !== '...' ? pageItem : null,
             label: pageItem,
-            isActive: props.list.page === pageItem,
+            isActive: page === pageItem,
         })),
-        [page, props.aroundCount, props.list.page, totalPages],
+        [page, props.aroundCount, totalPages],
     );
 
     const onSelect = useCallback((newPage) => {
-        formDispatch(formChange(formId, props.attribute, newPage));
+        formDispatch && formDispatch(formChange(formId, props.attribute, newPage));
         if (props.onChange && newPage) {
             props.onChange.call(null, newPage);
         }
     }, [formDispatch, formId, props.attribute, props.onChange]);
 
     const onSelectNext = useCallback(() => {
-        onSelect(props.list.page + 1);
-    }, [onSelect, props.list.page]);
+        onSelect(page + 1);
+    }, [onSelect, page]);
 
-    if (!page || !pageSize || !props.list.items || props.list.total <= pageSize) {
+    if (!page || !pageSize || props.list.total <= pageSize) {
         return null;
     }
 
@@ -115,6 +124,7 @@ Pagination.defaultProps = {
     defaultValue: 1,
     loadMore: false,
     position: 'bottom',
+    sizeAttribute: 'pageSize',
 };
 
 export const normalizePaginationProps = props => ({

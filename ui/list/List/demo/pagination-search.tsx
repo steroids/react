@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import List from '../List';
 import {demoItems} from './basic';
+import {items as dropDownFieldItems} from '../../../form/DropDownField/demo/auto-complete';
 
 /**
  * Pagination with search form, address bar and custom pagination
@@ -12,22 +13,25 @@ export default () => (
     <List
         listId='ListDemoPaginationSearch'
         items={demoItems}
-        model={{
-            attributes: [
-                'title:string:Название',
-                {
-                    attribute: 'category',
-                    label: 'Категория',
-                    searchField: 'DropDownField',
-                },
-            ],
-        }}
         searchForm={{
             layout: 'horizontal',
             fields: [
                 'title',
                 'category',
             ],
+            model: {
+                attributes: [
+                    'title:string:Название',
+                    {
+                        attribute: 'category',
+                        label: 'Категория',
+                        searchField: 'DropDownField',
+                        searchFieldProps: {
+                            items: dropDownFieldItems
+                        }
+                    },
+                ],
+            }
         }}
         paginationSize={{
             attribute: 'ps',

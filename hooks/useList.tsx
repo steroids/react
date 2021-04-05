@@ -108,7 +108,12 @@ export default function useList(config: IListConfig): IListOutput {
     // Pagination size
     const PaginationSize = require('../ui/list/PaginationSize').default;
     const paginationSizeProps = normalizePaginationSizeProps(config.paginationSize);
-    const renderPaginationSize = () => <PaginationSize list={list} {...paginationSizeProps} />;
+    const renderPaginationSize = () => (
+        <PaginationSize
+            list={list}
+            {...paginationSizeProps}
+        />
+    );
 
     // Pagination
     const Pagination = require('../ui/list/Pagination').default;
@@ -116,8 +121,8 @@ export default function useList(config: IListConfig): IListOutput {
     const renderPagination = () => (
         <Pagination
             list={list}
-            sizeAttribute={paginationSizeProps.attribute}
             {...paginationProps}
+            sizeAttribute={paginationSizeProps.attribute}
         />
     );
 
@@ -131,12 +136,12 @@ export default function useList(config: IListConfig): IListOutput {
     const searchModel = useModel(config.searchForm?.model, {
         attributes: [ // default attributes
             paginationProps.enable && {
-                type: 'integer',
+                type: 'number',
                 attribute: paginationProps.attribute,
                 defaultValue: paginationProps.defaultValue,
             },
             paginationSizeProps.enable && {
-                type: 'integer',
+                type: 'number',
                 attribute: paginationSizeProps.attribute,
                 defaultValue: paginationSizeProps.defaultValue,
             },
@@ -163,11 +168,21 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Outside search form
     const SearchForm = require('../ui/list/SearchForm').default;
+    const initialValuesSearchForm = useMemo(() => {
+        return (config.searchForm?.fields || []).reduce((acc, field) => {
+            const attribute = typeof field === 'string' ? field : field.attribute;
+            acc[attribute] = initialQuery?.[attribute];
+            return acc;
+        }, {})
+    }, [config.searchForm?.fields, initialQuery]);
+
     const searchFormProps = {
         listId: config.listId,
-        model: searchModel,
         ...config.searchForm,
+        model: searchModel,
+        initialValues: initialValuesSearchForm
     };
+
     const renderSearchForm = () => <SearchForm {...searchFormProps} />;
 
     // Form id
@@ -185,6 +200,7 @@ export default function useList(config: IListConfig): IListOutput {
         ...initialQuery, // Address bar
         ...config.query, // Query from props
     }));
+
     const renderList = useCallback((children: any) => {
         const Form = require('../ui/form/Form').default;
         return (
@@ -224,21 +240,24 @@ export default function useList(config: IListConfig): IListOutput {
     // Check form values change
     const formValues = useSelector(state => formSelector(state, formId, ({values}) => values));
     const prevFormValues = usePrevious(formValues);
+
     useUpdateEffect(() => {
-        // Has changes (but not page) -> reset page
-        const attribute = paginationProps.attribute;
-        if (prevFormValues?.[attribute] === formValues[attribute] && formValues[attribute] > 1) {
-            formValues[attribute] = paginationProps.defaultValue;
-            dispatch(formChange(formId, attribute, formValues[attribute]));
+        if (!_isEqual(formValues, prevFormValues)) {
+            // Has changes (but not page) -> reset page
+            const attribute = paginationProps.attribute;
+
+            if (prevFormValues?.[attribute] === formValues[attribute] && formValues[attribute] > 1) {
+                formValues[attribute] = paginationProps.defaultValue;
+                dispatch(formChange(formId, attribute, formValues[attribute]));
+            }
+
+            // Sync with address bar
+            updateQuery(formValues);
+
+            // Send request
+            dispatch(listLazyFetch(config.listId));
         }
     }, [dispatch, formId, formValues, paginationProps.attribute, paginationProps.defaultValue, prevFormValues]);
-    useUpdateEffect(() => {
-        // Sync with address bar
-        updateQuery(formValues);
-
-        // Send request
-        dispatch(listLazyFetch(config.listId));
-    }, [config.listId, dispatch, formValues, updateQuery]);
 
     // Check change query
     const prevQuery = usePrevious(config.query);

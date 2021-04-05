@@ -8,6 +8,7 @@ import _isEqual from 'lodash-es/isEqual';
 import {formSelector} from '@steroidsjs/core/reducers/form';
 import {formChange} from '@steroidsjs/core/actions/form';
 import {filterItems} from '../utils/data';
+import _isNil from 'lodash-es/isNil';
 
 export interface IList {
     action?: string,
@@ -99,9 +100,9 @@ export const localFetchHandler = (list: IList, query: Record<string, unknown>) =
 
     let items = [].concat(list.sourceItems || []);
 
-    // Remove null values from query
+    // Remove null or undefined values from query
     Object.keys(query).forEach(key => {
-        if (query[key] === null) {
+        if (_isNil(query[key])) {
             delete query[key];
         }
     });
@@ -197,6 +198,7 @@ export const listSetLayout = (listId, layoutName) => ({
  */
 export const listFetch = (listId: string, query: any = {}) => (dispatch, getState, components) => {
     const state = getState();
+
     const list = _get(state, ['list', 'lists', listId]) as IList;
 
     if (!list || (list.isRemote && !list.action && list.action !== '')) {

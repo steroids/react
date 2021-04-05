@@ -6,6 +6,7 @@ import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
+import MetaComponent from '@steroidsjs/core/components/MetaComponent';
 import {IComponents} from './useComponents';
 import Router, {IRouteItem} from '../ui/nav/Router/Router';
 
@@ -55,9 +56,9 @@ const defaultComponents = {
     //locale: {
     //    className: LocaleComponent,
     //},
-    //meta: {
-    //    className: MetaComponent,
-    //},
+    meta: {
+        className: MetaComponent,
+    },
     store: {
         className: StoreComponent,
     },

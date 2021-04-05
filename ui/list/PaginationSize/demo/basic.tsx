@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import PaginationSize from '../PaginationSize';
+import {demoItems} from '@steroidsjs/core/ui/list/List/demo/basic';
 
 const sizes = {
     sm: 'Small',
@@ -21,6 +22,7 @@ export default () => (
                             page: 2,
                             pageSize: 20,
                             total: 100,
+                            items: demoItems
                         }}
                         size={size}
                     />

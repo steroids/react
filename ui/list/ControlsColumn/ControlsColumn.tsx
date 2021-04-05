@@ -26,16 +26,18 @@ export default function ControlsColumn(props: IControlsColumnProps) {
     const components = useComponents();
 
     const items = useMemo(
-        () => (
-            typeof props.controls === 'function'
+        () => {
+            const controls = typeof props.controls === 'function'
                 ? props.controls(props.item, props.primaryKey)
                 : props.controls
-        ).map(control => ({
-            ...control,
-            position: 'left',
-            visible: control.visible !== false && this.props.item['can' + _upperFirst(control.id)] !== false,
-        })),
-        [props],
+
+            return controls.map(control => ({
+                ...control,
+                position: 'left',
+                visible: control.visible !== false && this.props.item['can' + _upperFirst(control.id)] !== false,
+            }))
+        },
+        [props]
     );
 
     return components.ui.renderView(props.view || 'list.ControlsColumnView', {

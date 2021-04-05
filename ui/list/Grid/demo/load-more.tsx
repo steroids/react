@@ -3,6 +3,7 @@ import * as React from 'react';
 import Grid from '../Grid';
 //import DateField from '../../../form/DateField/DateField';
 import InputField from '../../../form/InputField/InputField';
+import List from '@steroidsjs/core/ui/list/List';
 
 export const searchForm = {
     fields: [
@@ -64,7 +65,8 @@ export default () => (
                 loadMore: true,
             }}
             paginationSize={{
-                defaultValue: 10,
+                defaultValue: 3,
+                sizes: [2, 3, 4],
             }}
         />
     </>

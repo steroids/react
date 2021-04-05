@@ -79,7 +79,8 @@ export const queryRestore = (model: Model, location, useHash) => {
     model.attributes.forEach(item => {
         if (typeof item !== 'string') {
             const converter = item.fromStringConverter || defaultFromStringConverter;
-            const value = converter(String(values[item.attribute]), item.type, item);
+            const value = converter(values[item.attribute], item.type, item);
+
             if (value !== null || item.defaultValue !== null) {
                 result[item.attribute] = value !== null ? value : item.defaultValue;
             }
@@ -126,7 +127,6 @@ export const queryReplace = (model: Model, location, values, useHash) => {
 export default function useAddressBar(config: IAddressBarConfig): IAddressBarOutput {
     // Get location from redux
     const location = useSelector(state => _get(state, 'router.location') || null);
-
     // Initial query
     const initialQueryRef = useRef(null);
     if (config.enable && !initialQueryRef.current) {

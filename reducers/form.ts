@@ -1,6 +1,6 @@
-import _set from 'lodash-es/set';
 import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import {set as _set, delete as _delete} from 'dot-prop-immutable';
 
 import {
     FORM_INITIALIZE,
@@ -36,19 +36,13 @@ export function reducerItem(state, action) {
             };
 
         case FORM_CHANGE:
-            // TODO Recursive update objects/arrays instances
-            //console.log(555, state?.values, action.name, action.value);
-            _set(state, 'values.' + action.name, action.value);
-            //return setInWithPath(state, action.value, ['values'].concat(action.name.split('.')));
-            return {...state};
+            return _set(state, 'values.' + action.name, action.value);
 
         case FORM_SET_ERRORS:
-            state.errors = action.errors;
-            return state;
+            return _set(state, 'errors', action.errors);
 
         case FORM_RESET:
-            _set(state, 'values.' + action.name, _cloneDeep(state.initialValues || {}));
-            return {...state};
+            return _set(state, 'values.' + action.name, _cloneDeep(state.initialValues || {}));
 
         case FORM_ARRAY_ADD:
             // eslint-disable-next-line no-case-declarations
@@ -56,15 +50,10 @@ export function reducerItem(state, action) {
             for (let i = 0; i < action.rowsCount; i += 1) {
                 newValue.push(_cloneDeep(action.initialValues || {}));
             }
-            _set(state, 'values.' + action.name, newValue);
-            return {...state};
+            return _set(state, 'values.' + action.name, newValue);
 
         case FORM_ARRAY_REMOVE:
-            // eslint-disable-next-line no-case-declarations
-            const newItems = [].concat(_get(state, 'values.' + action.name) || []);
-            newItems.splice(action.index, 1);
-            _set(state, 'values.' + action.name, newItems);
-            return {...state};
+            return _delete(state, 'values.' + action.name + '.' + action.index);
 
         default:
             return state;

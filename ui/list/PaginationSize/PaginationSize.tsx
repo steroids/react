@@ -30,6 +30,10 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
 function PaginationSize(props: IPaginationSizeProps) {
     const components = useComponents();
 
+    if (!props.list) {
+        return null;
+    }
+
     const items = useMemo(() => props.sizes.map(size => ({
         size,
         label: size,
@@ -38,7 +42,7 @@ function PaginationSize(props: IPaginationSizeProps) {
 
     const {formId, formDispatch} = useForm();
     const onSelect = useCallback((newPage) => {
-        formDispatch(formChange(formId, props.attribute, newPage));
+        formDispatch && formDispatch(formChange(formId, props.attribute, newPage));
         if (props.onChange && newPage) {
             props.onChange.call(null, newPage);
         }

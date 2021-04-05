@@ -17,9 +17,11 @@ export default () => (
                 </h6>
                 <Pagination
                     aroundCount={3}
-                    page={2}
-                    pageSize={20}
-                    total={100}
+                    list={{
+                        total: 100,
+                        page: 2,
+                        pageSize: 20
+                    }}
                     size={size}
                 />
             </div>

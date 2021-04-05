@@ -44,7 +44,7 @@ export interface IGridViewProps extends Omit<IGridProps, 'onFetch'> {
     paginationPosition: ListControlPosition,
     paginationSizePosition: ListControlPosition,
     layoutNamesPosition: ListControlPosition,
-    renderList: (children: ReactChildren) => any,
+    renderList: (children: any) => any,
     renderEmpty: () => any,
     renderPagination: () => any,
     renderPaginationSize: () => any,
@@ -58,6 +58,7 @@ export interface IGridViewProps extends Omit<IGridProps, 'onFetch'> {
 export default function Grid(props: IGridProps) {
     const components = useComponents();
     const {
+        list,
         model,
         searchModel,
         paginationPosition,
@@ -121,22 +122,25 @@ export default function Grid(props: IGridProps) {
                 <ValueView
                     {...column}
                     {...column.valueProps}
-                    listId={this.props.listId}
-                    primaryKey={this.props.primaryKey}
+                    listId={props.listId}
+                    primaryKey={props.primaryKey}
                     item={item}
                 />
             );
         }
-        return <Format item={item} model={this.props.model} {...column} />;
-    }, []);
+
+        return <Format item={item} model={props.model} {...column} />;
+    }, [props.listId, props.model, props.primaryKey]);
 
     // Columns
     const columns = useMemo(
         () => []
             .concat({
                 label: __('№'),
-                valueView: ({index}) => index + 1,
-                visible: props.itemsIndexing,
+                valueView: ({item}) => {
+                    return item.index + 1
+                },
+                visible: !!props.itemsIndexing,
             })
             .concat(props.columns)
             .concat({
@@ -169,5 +173,6 @@ export default function Grid(props: IGridProps) {
         columns,
         onFetch,
         onSort,
+        items: list?.items || []
     });
 }

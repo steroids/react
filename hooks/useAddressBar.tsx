@@ -79,7 +79,7 @@ export const queryRestore = (model: Model, location, useHash) => {
     model.attributes.forEach(item => {
         if (typeof item !== 'string') {
             const converter = item.fromStringConverter || defaultFromStringConverter;
-            const value = converter(values[item.attribute], item.type, item);
+            const value = converter(values[item.attribute] as string, item.type, item);
 
             if (value !== null || item.defaultValue !== null) {
                 result[item.attribute] = value !== null ? value : item.defaultValue;

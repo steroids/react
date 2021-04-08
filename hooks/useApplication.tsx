@@ -9,6 +9,7 @@ import UiComponent from '../components/UiComponent';
 import MetaComponent from '@steroidsjs/core/components/MetaComponent';
 import {IComponents} from './useComponents';
 import Router, {IRouteItem} from '../ui/nav/Router/Router';
+import MetricsComponent from '@steroidsjs/core/components/MetricsComponent';
 
 declare global {
     interface Window {
@@ -65,6 +66,9 @@ const defaultComponents = {
     ui: {
         className: UiComponent,
     },
+    metrics: {
+        className: MetricsComponent
+    }
 };
 
 export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {

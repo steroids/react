@@ -3,7 +3,13 @@ import _upperFirst from 'lodash-es/upperFirst';
 import _isEmpty from 'lodash-es/isEmpty';
 
 type ConfigType = {
-    counters?: Record<string, any>,
+    counters?: {
+        yandexMetrika?: any,
+        googleTagManager?: any,
+        googleAnalytics?: any,
+        vkRetargeting?: any,
+        facebookAnalytics?: any,
+    },
     enable?: boolean
 }
 
@@ -12,14 +18,8 @@ export default class MetricsComponent {
     _prevUrl: string;
     _isMetricsInitialized: boolean;
     _config: any;
-
-    enable: boolean;
-
-    yandexMetrika: any;
-    googleTagManager: any;
-    googleAnalytics: any;
-    vkRetargeting: any;
-    facebookAnalytics: any;
+    _enable: boolean;
+    _yandexMetrika: any;
 
     unsubscribe: () => void;
     unlisten: () => void;
@@ -28,16 +28,9 @@ export default class MetricsComponent {
         this._components = components;
         this._isMetricsInitialized = false;
         this._config = config;
-
-        this.enable = config.enable === undefined
+        this._enable = config.enable === undefined
             ? process.env.APP_ENV === 'prod'
             : !!config.enable;
-
-        this.yandexMetrika = null;
-        this.googleTagManager = null;
-        this.googleAnalytics = null;
-        this.vkRetargeting = null;
-        this.facebookAnalytics = null;
 
         this._init();
     }
@@ -54,7 +47,7 @@ export default class MetricsComponent {
             this.unsubscribe();
             this.setCounters(this._config.counters);
 
-            if (this.enable && this.yandexMetrika) {
+            if (this._enable && this._yandexMetrika) {
                 this.unlisten = store.history.listen(({pathname, search, hash}) => {
                     this._changePageViewHandler(pathname + search + hash);
                 });
@@ -63,14 +56,14 @@ export default class MetricsComponent {
     }
 
     setCounters(values) {
-        if (!this.enable || _isEmpty(values) || this._isMetricsInitialized) {
+        if (!this._enable || _isEmpty(values) || this._isMetricsInitialized) {
             return;
         }
 
         Object.entries(values).forEach(([counterName, counterValue]) => {
             if (counterValue) {
                 this._isMetricsInitialized = true;
-                this[counterName] = counterValue;
+                this['_' + counterName] = counterValue;
                 const setter = '_set' + _upperFirst(counterName);
                 this[setter](counterValue);
             }
@@ -168,7 +161,7 @@ export default class MetricsComponent {
 
     _changePageViewHandler(url) {
         if (this._prevUrl !== url) {
-            window['ym'](this.yandexMetrika, 'hit', url);
+            window['ym'](this._yandexMetrika, 'hit', url);
             this._prevUrl = url;
         }
     }

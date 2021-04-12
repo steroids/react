@@ -1,7 +1,16 @@
-/* eslint-disable */
+import {isInitialized} from '@steroidsjs/core/reducers/auth';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isEmpty from 'lodash-es/isEmpty';
-import {isInitialized} from '../reducers/auth';
+
+declare global {
+    interface Window {
+        ym: any;
+        dataLayer: any;
+        VK: any;
+        fbq: any;
+        _fbq: any;
+    }
+}
 
 type ConfigType = {
     counters?: {
@@ -79,8 +88,8 @@ export default class MetricsComponent {
 
     _setYandexMetrika(value) {
         (function (m, e, t, r, i, k, a) {
-            m[i] = m[i] || function () {
-                (m[i].a = m[i].a || []).push(arguments);
+            m[i] = m[i] || function (...args) {
+                (m[i].a = m[i].a || []).push(args);
             };
             m[i].l = Date.now();
             k = e.createElement(t);
@@ -90,7 +99,7 @@ export default class MetricsComponent {
             a.parentNode.insertBefore(k, a);
         }(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym'));
 
-        window['ym'](value, 'init', {
+        window.ym(value, 'init', {
             defer: true,
             clickmap: true,
             trackLinks: true,
@@ -120,11 +129,11 @@ export default class MetricsComponent {
         googleLoad.src = `https://www.googletagmanager.com/gtag/js?id=${value}`;
         document.body.appendChild(googleLoad);
 
-        window['dataLayer'] = window['dataLayer'] || [];
+        window.dataLayer = window.dataLayer || [];
 
         function gtag(...args: any[]): any;
-        function gtag() {
-            window['dataLayer'].push(arguments);
+        function gtag(...args) {
+            window.dataLayer.push(args);
         }
 
         gtag('js', new Date());
@@ -137,20 +146,21 @@ export default class MetricsComponent {
         t.async = !0;
         t.src = 'https://vk.com/js/api/openapi.js?168';
         t.onload = function () {
-            window['VK'].Retargeting.Init(value);
-            window['VK'].Retargeting.Hit();
+            window.VK.Retargeting.Init(value);
+            window.VK.Retargeting.Hit();
         };
         document.head.appendChild(t);
     }
 
     _setFacebookAnalytics(value) {
         (function (f, b, e, v, n, t, s) {
-            if (f['fbq']) { return; }
-            n = f['fbq'] = function () {
-                n.callMethod
-                    ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+            if (f.fbq) { return; }
+            n = function (...args) {
+                // eslint-disable-next-line no-unused-expressions
+                n.callMethod ? n.callMethod(...args) : n.queue.push(args);
             };
-            if (!f['_fbq']) { f['_fbq'] = n; }
+            f.fbq = n;
+            if (!f._fbq) { f._fbq = n; }
             n.push = n;
             n.loaded = !0;
             n.version = '2.0';
@@ -162,13 +172,13 @@ export default class MetricsComponent {
             s.parentNode.insertBefore(t, s);
         }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js'));
 
-        window['fbq']('init', value);
-        window['fbq']('track', 'PageView');
+        window.fbq('init', value);
+        window.fbq('track', 'PageView');
     }
 
     _changePageViewHandler(url) {
         if (this._prevUrl !== url) {
-            window['ym'](this._yandexMetrika, 'hit', url);
+            window.ym(this._yandexMetrika, 'hit', url);
             this._prevUrl = url;
         }
     }

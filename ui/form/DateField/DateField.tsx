@@ -113,13 +113,14 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
                 locale={this.props.locale}
                 localeUtils={MomentLocaleUtils}
                 pickerProps={{
+                    onYearMonthChange: this._handleYearMonthChange,
+                    ...this.props.pickerProps,
                     dayPickerProps: {
                         month: this.state.month,
                         fromMonth: this.fromMonth,
                         toMonth: this.toMonth,
+                        ...this.props.pickerProps.dayPickerProps
                     },
-                    onYearMonthChange: this._handleYearMonthChange,
-                    ...this.props.pickerProps
                 }}
             />
         );

@@ -119,7 +119,7 @@ export default class DateField extends React.PureComponent<IDateFieldProps & IDa
                         month: this.state.month,
                         fromMonth: this.fromMonth,
                         toMonth: this.toMonth,
-                        ...this.props.pickerProps.dayPickerProps
+                        ...this.props.pickerProps?.dayPickerProps
                     },
                 }}
             />

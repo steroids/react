@@ -31,7 +31,9 @@ export default () => {
                             key={level}
                             color={level}
                             label={__(`Уведомление типа "${level}"`)}
-                            onClick={() => dispatch(showNotification(message, level, {timeOut: 2000}))}
+                            onClick={() => {
+                                dispatch(showNotification(message, level, {timeOut: 2000}));
+                            }}
                             style={{ margin: '10px 0' }}
                         />
                     ))

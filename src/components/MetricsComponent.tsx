@@ -1,6 +1,6 @@
-import {isInitialized} from '@steroidsjs/core/reducers/auth';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isEmpty from 'lodash-es/isEmpty';
+import {isInitialized} from '../reducers/auth';
 
 declare global {
     interface Window {

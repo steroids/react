@@ -1,12 +1,10 @@
-import * as pathToRegexp from 'path-to-regexp';
+import {compile} from 'path-to-regexp';
 import * as queryString from 'qs';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import _isBoolean from 'lodash-es/isBoolean';
-import _isEqual from 'lodash-es/isEqual';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isFunction from 'lodash-es/isFunction';
-import {initialize} from 'redux-form';
 import {push} from 'connected-react-router';
 import {getRoute, getRouteParams} from '../../../reducers/router';
 
@@ -57,7 +55,7 @@ export default class SyncAddressBarHelper {
         if (_isEmpty(values)) {
             if (currentRoute) {
                 store.dispatch(
-                    push(pathToRegexp.compile(currentRoute.path)(params)),
+                    push(compile(currentRoute.path)(params)),
                 );
             } else {
                 location.hash = null;
@@ -65,7 +63,7 @@ export default class SyncAddressBarHelper {
         } else if (currentRoute) {
             store.dispatch(
                 push(
-                    pathToRegexp.compile(currentRoute.path)(params)
+                    compile(currentRoute.path)(params)
                     + querySeparator
                     + queryString.stringify(values),
                 ),

@@ -3,7 +3,7 @@
 /tests
 /.idea
 /.npmignore
-/jest..config.js
+/jest.config.js
 /tsconfig.test.json
 *.test.ts
 *.test.tsx

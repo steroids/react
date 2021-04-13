@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useClickAway, usePrevious} from 'react-use';
+import {useClickAway} from 'react-use';
+import moment from 'moment';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -9,6 +10,19 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
  * Поле ввода текста
  */
 export interface ITimeFieldProps extends IFieldWrapperInputProps {
+
+    /**
+     * Включить возможность сброса значения
+     * @example 'true'
+     */
+    showRemove?: boolean,
+
+    /**
+     * Отключить border вокруг элемента
+     * @example 'true'
+     */
+    noBorder?: boolean,
+
     /**
      * Placeholder подсказка
      * @example Your text...
@@ -20,7 +34,6 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
-    className?: CssClassName;
 
     /**
      * Переопределение view React компонента для кастомизациии отображения
@@ -28,32 +41,23 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
      */
     view?: any;
 
+    className?: CssClassName;
+
     /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
     style?: any;
 
-    /**
-     * Формат отображения времени
-     * @example 'HH:mm'
-     */
-    timeFormat?: string,
-
-    /**
-     * Объект, который будет передан в props внутреннего компонента используемого для выбора времени.
-     */
-    pickerProps?: any;
-
     [key: string]: any;
 }
 
 export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutputProps {
+    forwardedRef: any,
     style?: any,
     isInvalid?: boolean,
-    errors?: any,
     placeholder?: string,
-    timeFormat?: string,
+    type: any,
     inputProps: {
         type: string,
         name: string,
@@ -62,11 +66,12 @@ export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: string,
     },
-    pickerProps: any,
-    type: any,
     showDropDown: boolean,
     openDropDown: () => void,
-    forwardedRef: any,
+    onBlur: () => void,
+    clearInput: () => void,
+    setNow: () => void,
+    errors?: any,
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps) {
@@ -74,52 +79,91 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps) {
 
     const [hours, setHours] = useState<string>(null);
     const [minutes, setMinutes] = useState<string>(null);
+    const [innerInput, setInnerInput] = useState<string>(null);
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
-    const onChange = useCallback((value) => {
-        props.input.onChange.call(null, value);
-        if (props.onChange) {
-            props.onChange.call(null, value);
+    const calculatedValue = useCallback((newTime, part = '') => {
+        let inputValue = props.input.value ? props.input.value.split(':') : '';
+        if (part === 'HOUR') {
+            inputValue = `${newTime}:${inputValue[1] || '00'}`;
+        } else if (part === 'MIN') {
+            inputValue = `${inputValue[0] || '00'}:${newTime}`;
         }
-    }, [props.input.onChange, props.onChange]);
+        setInnerInput(inputValue);
+        return inputValue;
+    }, [props.input.value]);
 
-    const changeHours = useCallback((value) => {
-        setHours(value);
-    }, []);
+    const changeHours = useCallback((newHour) => {
+        if (newHour !== hours) {
+            setHours(newHour);
+            props.input.onChange.call(null, calculatedValue(newHour, 'HOUR'));
+        }
+    }, [calculatedValue, hours, props.input.onChange]);
 
-    const changeMinutes = useCallback((value) => {
-        setMinutes(value);
-    }, []);
+    const changeMinutes = useCallback((newMinute) => {
+        if (newMinute !== minutes) {
+            setMinutes(newMinute);
+            props.input.onChange.call(null, calculatedValue(newMinute, 'MIN'));
+        }
+    }, [calculatedValue, minutes, props.input.onChange]);
+
+    const onChange = useCallback((value) => {
+        setInnerInput(value);
+        const matchedValue = value.match(/(\d{2}):(\d{2})/);
+        if (matchedValue?.length > 0) {
+            const newHours = matchedValue[1];
+            const newMinutes = matchedValue[2];
+            const isHourChanged = newHours !== hours && newHours <= 23;
+            const isMinutesChanged = newMinutes !== minutes && newMinutes <= 59;
+            if (isHourChanged && isMinutesChanged) {
+                setHours(newHours);
+                setMinutes(newMinutes);
+                props.input.onChange.call(null, value);
+            } else {
+                if (isHourChanged) {
+                    changeHours(newHours);
+                }
+                if (isMinutesChanged) {
+                    changeMinutes(newMinutes);
+                }
+            }
+        }
+    }, [changeHours, changeMinutes, hours, minutes, props.input.onChange]);
+
+    const setNow = useCallback(() => {
+        const timeNow = moment().format('hh:mm');
+        onChange.call(null, timeNow);
+    }, [onChange]);
+
+    const clearInput = useCallback(() => {
+        setInnerInput(null);
+        setHours(null);
+        setMinutes(null);
+        setShowDropDown(false);
+        props.input.onChange.call(null, null);
+    }, [props.input.onChange]);
+
+    const onBlur = useCallback(() => {
+        if (props.input.value !== innerInput) {
+            setInnerInput(props.input.value);
+        }
+    }, [innerInput, props.input.value]);
 
     const openDropDown = useCallback(() => {
-        setShowDropDown(true);
-    }, []);
+        if (!showDropDown) {
+            setShowDropDown(true);
+        }
+    }, [showDropDown]);
 
     const closeDropDown = useCallback(() => {
-        setShowDropDown(false);
-    }, []);
+        if (showDropDown) {
+            setShowDropDown(false);
+        }
+    }, [showDropDown]);
 
     // Outside click -> close
     const forwardedRef = useRef(null);
     useClickAway(forwardedRef, closeDropDown);
-
-    const calculatedValue = useCallback(() => {
-        let newValue = props.input.value ? props.input.value.split(':') : '';
-        if (hours || minutes) {
-            newValue = `${hours || newValue[0] || '00'}:${minutes || newValue[1] || '00'}`;
-        } else if (newValue) {
-            newValue = newValue.join(':');
-        }
-        return newValue;
-    }, [hours, minutes, props.input.value]);
-
-    const previousCalculatedValue = usePrevious(calculatedValue());
-    useEffect(() => {
-        const newValue = calculatedValue();
-        if (previousCalculatedValue !== newValue) {
-            props.input.onChange.call(null, newValue);
-        }
-    }, [calculatedValue, previousCalculatedValue, props.input.onChange, props.input.value]);
 
     const inputProps = useMemo(() => ({
         type: props.type,
@@ -127,10 +171,9 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps) {
         placeholder: props.placeholder,
         disabled: props.disabled,
         ...props.inputProps,
-        value: props.input.value || '',
+        value: innerInput || '',
         onChange,
-    }), [onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder,
-        props.type]);
+    }), [innerInput, onChange, props.disabled, props.input.name, props.inputProps, props.placeholder, props.type]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', {
         ...props,
@@ -140,13 +183,17 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps) {
         changeMinutes,
         showDropDown,
         openDropDown,
+        onBlur,
+        clearInput,
+        setNow,
     });
 }
 
 TimeField.defaultProps = {
     disabled: false,
     required: false,
-    timeFormat: 'HH:mm',
+    noBorder: false,
+    showRemove: true,
     placeholder: 'Select time',
     type: 'text',
 };

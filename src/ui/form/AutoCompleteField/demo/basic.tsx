@@ -1,6 +1,20 @@
 import * as React from 'react';
-
 import AutoCompleteField from '../AutoCompleteField';
+
+export const items = [
+    {
+        id: '1',
+        label: 'Moscow',
+    },
+    {
+        id: '2',
+        label: 'Krasnoyarsk',
+    },
+    {
+        id: '3',
+        label: 'Krasnodar',
+    },
+];
 
 /**
  * Basic
@@ -11,20 +25,8 @@ export default () => (
     <>
         <AutoCompleteField
             label='Write city'
-            items={[
-                {
-                    id: '1',
-                    label: 'Moscow',
-                },
-                {
-                    id: '2',
-                    label: 'Krasnoyarsk',
-                },
-                {
-                    id: '3',
-                    label: 'Krasnodar',
-                },
-            ]}
+            items={items}
+            searchOnFocus
         />
     </>
 );

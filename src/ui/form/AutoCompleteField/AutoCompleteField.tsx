@@ -2,10 +2,7 @@ import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
 import useComponents from '../../../hooks/useComponents';
-import fieldWrapper, {
-    IFieldWrapperInputProps,
-    IFieldWrapperOutputProps,
-} from '../../../ui/form/Field/fieldWrapper';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../../../ui/form/Field/fieldWrapper';
 import {useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
@@ -15,13 +12,14 @@ import {IInputFieldProps} from '../InputField/InputField';
  * AutoComplete
  * Поле ввода текста с подсказками (auto-complete)
  */
-export interface IAutoCompleteFieldProps extends IInputFieldProps, IFieldWrapperInputProps,
-    IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
-    view?: any;
-    inputProps?: any;
-    style?: any,
-    className?: CssClassName;
+export interface IAutoCompleteFieldProps extends IInputFieldProps, IDataProviderConfig,
+    Omit<IDataSelectConfig, 'items'> {
+    /**
+     * При фокусировке на поле ввода будет запускаться поиск
+     * @example true
+     */
     searchOnFocus?: boolean,
+
     [key: string]: any,
 }
 
@@ -54,7 +52,10 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
     const [query, setQuery] = useState('');
 
     // Data provider
-    const {items, isLoading} = useDataProvider({
+    const {
+        items,
+        isLoading
+    } = useDataProvider({
         items: props.items,
         dataProvider: props.dataProvider,
         autoComplete: props.autoComplete,

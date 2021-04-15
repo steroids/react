@@ -17,8 +17,15 @@ export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
      */
     inputProps?: any;
 
+    /**
+     * Дополнительный CSS-класс для элемента \<input /\>
+     */
     className?: CssClassName;
 
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
 
     [key: string]: any,

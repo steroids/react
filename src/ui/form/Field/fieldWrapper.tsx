@@ -50,7 +50,7 @@ export interface IFieldWrapperInputProps {
 export interface IFieldWrapperOutputProps {
     formId?: string,
     componentId?: string,
-    error?: any,
+    errors?: any,
     input?: {
         name?: string,
         value?: any,
@@ -76,7 +76,7 @@ const createDynamicField = (componentId, Component, isList) => {
         const model = props.model || context?.model || null;
 
         // Resolve data provider
-        const {error, value, setValue} = context?.provider
+        const {errors, value, setValue} = context?.provider
             ? context?.provider.useField(formId, name, isList)
             : providers.state.useField(props.value);
 
@@ -91,7 +91,7 @@ const createDynamicField = (componentId, Component, isList) => {
         const wrapperProps: IFieldWrapperOutputProps = {
             componentId,
             formId,
-            error,
+            errors,
             input,
         };
 
@@ -128,13 +128,13 @@ export default function fieldWrapper<T extends React.FC>(
         const context = useContext(FormContext);
         const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
-        if (layout) {
+        if (layout !== false) {
             return components.ui.renderView(FieldLayout, {
                 layout,
                 required: _has(props, 'required') ? props.required : metaProps.required,
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,
-                error: props.error,
+                errors: props.errors,
                 children: (
                     <Component.DynamicField {...props} />
                 ),

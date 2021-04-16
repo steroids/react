@@ -14,6 +14,10 @@ import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form'
 import validate from '../validate';
 
 export interface IFormProps {
+    /**
+     * Идентификатор формы
+     * @example BookingForm
+     */
     formId?: string;
     prefix?: string;
     model?: string | ((...args: any[]) => any) | any;

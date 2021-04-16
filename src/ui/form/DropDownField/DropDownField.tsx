@@ -6,6 +6,10 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
+/**
+ * DropDownField
+ * Выпадающий список для выбора одного или нескольких значений
+ */
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     IDataProviderConfig,
     Omit<IDataSelectConfig, 'items'> {
@@ -15,9 +19,24 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * @example Your text...
      */
     searchPlaceholder?: string;
+
     inputProps?: any;
+
+    /**
+     * Дополнительный CSS-класс
+     */
     className?: CssClassName;
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
     style?: any,
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: any;
 
     /**

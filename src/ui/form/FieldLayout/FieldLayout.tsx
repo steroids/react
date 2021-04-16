@@ -3,6 +3,10 @@ import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import {mergeLayoutProp} from '../../../utils/form';
 
+/**
+ * FieldLayout
+ * Специальный шаблон для поля, который настраивает его расположение внутри формы, рендерит лейбл, подсказки и ошибки
+ */
 export interface IFieldLayoutProps {
 
     /**
@@ -10,6 +14,11 @@ export interface IFieldLayoutProps {
      * @example Visible
      */
     label?: string | boolean | any;
+
+    /**
+     * Подсказка, которая отображается, когда в поле нет ошибок и layout !== 'inline'
+     * @example Save
+     */
     hint?: string | boolean;
 
     /**
@@ -18,9 +27,25 @@ export interface IFieldLayoutProps {
      * @example true
      */
     required?: boolean;
+
+    /**
+     * Выбор шаблона для расположения поля. Если false, то поле будет отрендерено без шаблона
+     * @example inline
+     */
     layout?: FormLayout;
+
+    /**
+     * Ошибки в поле
+     * @example Field is required
+     */
     errors?: string | string[];
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     layoutView?: CustomView;
+
     [key: string]: any;
 }
 

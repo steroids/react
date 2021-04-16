@@ -9,6 +9,10 @@ import {formArrayAdd, formArrayRemove} from '../../../actions/form';
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
+/**
+ * FieldList
+ * Создает список из сгруппированных полей формы
+ */
 interface IFieldListItem extends IFieldWrapperInputProps {
 
     /**
@@ -16,6 +20,11 @@ interface IFieldListItem extends IFieldWrapperInputProps {
      * @example true
      */
     visible?: boolean,
+
+    /**
+     * Какой компонент для item использовать?
+     * @example NumberField
+     */
     component?: any,
 
     /**
@@ -23,9 +32,23 @@ interface IFieldListItem extends IFieldWrapperInputProps {
      * @example Your text...
      */
     placeholder?: string,
+
+    /**
+     * Дополнительный CSS-класс для item
+     */
     className?: CssClassName,
+
+    /**
+     * Дополнительный CSS-класс для заголовка
+     */
     headerClassName?: CssClassName,
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения item
+     * @example MyCustomView
+     */
     view?: CustomView,
+
     [key: string]: any,
 }
 
@@ -34,18 +57,66 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
      * Начальные значения в полях
      * @example {name: 'Ivan', amount: 5}
      */
-    initialValues?: {[key: string]: any}
+    initialValues?: { [key: string]: any }
+
+    /**
+     * Список с полями формы
+     */
     items?: IFieldListItem[];
     fields?: any;
+
+    /**
+     * Изначальное количество групп с полями
+     * @example 2
+     */
     initialRowsCount?: number;
+
+    /**
+     * Отображение кнопки для добавления ещё одной группы с полями
+     * @example true
+     */
     showAdd?: boolean;
+
+    /**
+     * Возможность удаления группы с полями (добавляет крестик справа от группы)
+     * @example true
+     */
     showRemove?: boolean;
+
+    /**
+     * Дополнительный CSS-класс для списка с группами полей
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения списка с группами полей
+     * @example MyCustomView
+     */
     view?: any;
+
+    /**
+     * Пропсы для компонента отображения списка с группами полей - FieldListView
+     */
     viewProps?: any;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения группы полей
+     * @example MyCustomView
+     */
     itemView?: any;
+
+    /**
+     * Пропсы для компонента отображения группы полей - FieldListItemView
+     */
     itemViewProps?: any;
+
+    /**
+     * При фокусировке на одном из элементов формы и нажатию на клавиши стрелок вверх/вниз + Shift
+     * происходит добавление группы полей сверху или снизу соответственно
+     * @example true
+     */
     enableKeyboardNavigation?: boolean;
+
     [key: string]: any;
 }
 
@@ -150,16 +221,17 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
                 forwardedRef={nodeRef}
                 onAdd={onAdd}
             >
-                {_range(props.input.value || 0).map(index => (
-                    <FieldListItemView
-                        {...props.itemViewProps}
-                        {...commonProps}
-                        key={index}
-                        onRemove={onRemove}
-                        prefix={props.input.name + '.' + index}
-                        rowIndex={index}
-                    />
-                ))}
+                {_range(props.input.value || 0)
+                    .map(index => (
+                        <FieldListItemView
+                            {...props.itemViewProps}
+                            {...commonProps}
+                            key={index}
+                            onRemove={onRemove}
+                            prefix={props.input.name + '.' + index}
+                            rowIndex={index}
+                        />
+                    ))}
             </FieldListView>
         </FormContext.Provider>
     );

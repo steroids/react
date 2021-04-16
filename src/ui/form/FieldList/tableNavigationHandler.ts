@@ -2,6 +2,7 @@ export default (e, addHandler) => {
     if (!e.shiftKey || [38, 40].indexOf(e.keyCode) === -1) {
         return;
     }
+
     e.preventDefault();
     const names = e.target.name.split('.');
     const inputName = names[names.length - 1];

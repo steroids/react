@@ -7,20 +7,33 @@ import {IFieldProps} from '../Field/Field';
 import {FormContext, IFormContext} from '../Form/Form';
 import {mergeLayoutProp} from '../../../utils/form';
 
+/**
+ * FieldSet
+ * Компонент для группировки полей формы с помощью тега <fieldset>...</fieldset> и заголовка <legend>...</legend>
+ */
 export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
-
     /**
      * Конфигурационный массив с полями формы
      */
     fields?: IFieldProps[],
 
     /**
-     * Название поля
+     * Заголовок для группы полей в форме
      * @example Save
      */
     label?: any,
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
+
+    /**
+     * Дополнительный CSS-класс для <fieldset>...</fieldset>
+     */
     className?: CssClassName,
+
     [key: string]: any,
 }
 

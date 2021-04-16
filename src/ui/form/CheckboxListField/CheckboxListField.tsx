@@ -8,6 +8,10 @@ import fieldWrapper, {
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 
+/**
+ * CheckboxListField
+ * Список с чекбоксами. Используется в формах для выбора нескольких значений.
+ */
 export interface ICheckboxListFieldProps extends IFieldWrapperInputProps, IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
 
     /**
@@ -15,8 +19,18 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps, IDataP
      * @example {onKeyDown: ...}
      */
     inputProps?: any,
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName,
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
+
     [key: string]: any,
 }
 

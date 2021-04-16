@@ -18,7 +18,7 @@ interface IButtonBadge {
 
 /**
  * Button
- * Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику onClick),
+ * Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику (onClick),
  * смена страницы в рамках роутинга (goToRoute), переход по внешней ссылке (url) или отправки формы (submit form)
  */
 export interface IButtonProps {
@@ -136,6 +136,9 @@ export interface IButtonProps {
      */
     style?: any;
 
+    /**
+     * Дополнительный CSS-класс для кнопки или ссылки
+     */
     className?: CssClassName;
 
     /**
@@ -172,6 +175,10 @@ export interface IButtonProps {
      */
     formId?: string | boolean,
 
+    /**
+     * Выбор html-тэга, который будет вставлен в DOM
+     * @example button
+     */
     tag?: 'button' | 'a',
 
     /**
@@ -184,6 +191,9 @@ export interface IButtonProps {
      */
     dark?: boolean,
 
+    /**
+     * Цвет текста кнопки или ссылки
+     */
     textColor?: any,
 
     [key: string]: any;

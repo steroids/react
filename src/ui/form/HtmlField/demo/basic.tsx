@@ -5,8 +5,8 @@ export default () => (
     <>
         <HtmlField
             label='Article content'
-            uploadUrl="/api/v1/file-test"
-            uploadImagesProcessor="original"
+            uploadUrl='/api/v1/file-test'
+            uploadImagesProcessor='original'
         />
     </>
 );

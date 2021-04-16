@@ -6,6 +6,10 @@ import {useComponents} from '../../../hooks';
 import DateField from '../../form/DateField';
 import TimeField from '../../form/TimeField';
 
+/**
+ * DateTimeField
+ * Поля ввода с выпадающими списками для выбора даты и времени
+ */
 export interface IDateTimeFieldProps extends IFieldWrapperInputProps {
 
     /**
@@ -25,10 +29,34 @@ export interface IDateTimeFieldProps extends IFieldWrapperInputProps {
      * @example HH:mm
      */
     timeFormat?: string;
+
+    /**
+     * Пропсы для компонента DateField
+     * @example {placeholder: 'Your date...'}
+     */
     dateProps?: any;
+
+    /**
+     * Пропсы для компонента TimeField
+     * @example {placeholder: 'Your time...'}
+     */
     timeProps?: any;
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
     style?: any;
+
+    /**
+     * Дополнительный CSS-класс
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
     [key: string]: any;
 }
@@ -55,15 +83,15 @@ function DateTimeField(props: IDateTimeFieldProps) {
         return format ? moment(date, format) : null;
     }, [props.displayDateFormat, props.timeFormat, props.valueDateFormat]);
 
-    const parseToState = useCallback(props => {
+    const parseToState = useCallback(() => {
         const momentDate = parseDate(props.input.value);
         return {
             date: momentDate ? momentDate.format(props.valueDateFormat) : null,
             time: (momentDate || moment().startOf('day')).format(props.timeFormat),
         };
-    }, [parseDate]);
+    }, [parseDate, props.valueDateFormat, props.timeFormat, props.input.value]);
 
-    const [state, setState] = useState(parseToState(props));
+    const [state, setState] = useState(parseToState());
     const stateCbRef = useRef(null);
 
     const onChange = useCallback(data => {
@@ -82,8 +110,8 @@ function DateTimeField(props: IDateTimeFieldProps) {
     }, [parseDate, props.valueDateFormat, props.timeFormat, props.input]);
 
     useEffect(() => {
-        setState(parseToState(props));
-    }, [parseToState, props.input.value, props.valueDateFormat, props.timeFormat, props]);
+        setState(parseToState());
+    }, [parseToState]);
 
     const DateFieldInternal = DateField.WrappedComponent;
     const TimeFieldInternal = TimeField.WrappedComponent;

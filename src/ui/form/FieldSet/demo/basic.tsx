@@ -7,7 +7,7 @@ import DropDownField from '../../DropDownField';
 
 export default () => (
     <>
-        <Form formId='FieldListForm'>
+        <Form formId='FieldSetForm' useRedux>
             <FieldSet
                 fields={[
                     {
@@ -22,7 +22,7 @@ export default () => (
                         items: ['Novosibirsk', 'Krasnoyarsk', 'Tomsk'],
                     },
                 ]}
-                label='Your personal data'
+                label='Label'
             />
         </Form>
     </>

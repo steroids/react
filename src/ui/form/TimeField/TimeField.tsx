@@ -6,8 +6,8 @@ import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
- * InputField
- * Поле ввода текста
+ * TimeField
+ * Поле для выбора времени
  */
 export interface ITimeFieldProps extends IFieldWrapperInputProps {
 

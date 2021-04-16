@@ -5,6 +5,11 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 
 export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
     action?: any;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
     [key: string]: any;
 }
@@ -16,11 +21,12 @@ export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWr
 function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
+    const googleCaptchaSiteKey = components.resource?.googleCaptchaSiteKey;
     const reCaptchaProps = useMemo(() => ({
-        sitekey: components.resource?.googleCaptchaSiteKey,
+        sitekey: googleCaptchaSiteKey,
         action: props.action,
         verifyCallback: value => props.input.onChange(value),
-    }), [components.resource.googleCaptchaSiteKey, props.action, props.input]);
+    }), [googleCaptchaSiteKey, props.action, props.input]);
 
     return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', {
         ...props,

@@ -7,12 +7,20 @@ import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../Field/fieldWrapper';
 
+/**
+ * HtmlField
+ * Компонент для создания HTML-разметки, использующий WYSIWYG-реадактор
+ */
 export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps {
 
     /**
      * Конфигурация wysiwyg реадактора
      */
     editorProps?: any,
+
+    /**
+     * Дополнительный CSS-класс
+     */
     className?: CssClassName,
 
     /**
@@ -27,6 +35,11 @@ export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperO
      * @example origin
      */
     uploadImagesProcessor?: string,
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
 
     /**
@@ -38,7 +51,6 @@ export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperO
     /**
      * Обработчик события при снятии фокуса с редактора
      * @param event
-     * @param editorState
      */
     onBlur?: (event: any) => any,
 

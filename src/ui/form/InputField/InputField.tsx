@@ -29,6 +29,10 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
 
     /**

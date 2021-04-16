@@ -1,12 +1,10 @@
 import * as React from 'react';
-import RadioListField from '../RadioListField';
-import {items} from './basic';
+import TimeField from '../TimeField';
 
 export default () => (
     <>
-        <RadioListField
+        <TimeField
             label='Required'
-            items={items}
             required
         />
     </>

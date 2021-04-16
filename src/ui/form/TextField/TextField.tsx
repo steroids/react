@@ -5,6 +5,10 @@ import {useDispatch} from 'react-redux';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
+/**
+ * TextField
+ * Поле для ввода нескольких строк теста
+ */
 export interface ITextFieldProps extends IFieldWrapperInputProps {
     /**
      * Placeholder подсказка
@@ -17,8 +21,22 @@ export interface ITextFieldProps extends IFieldWrapperInputProps {
      * @example true
      */
     submitOnEnter?: boolean;
+
+    /**
+     * Свойства для элемента \<input /\>
+     * @example {onKeyDown: ...}
+     */
     inputProps?: any;
+
+    /**
+     * Дополнительный CSS-класс для тега <textarea>
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
 
     [key: string]: any;

@@ -4,11 +4,37 @@ import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
+/**
+ * SliderField
+ * Компонент с ползунком для выбора числового значения в пределах указанного промежутка
+ */
 export interface ISliderFieldProps extends IFieldWrapperInputProps {
+    /**
+     * Свойства для компонента слайдера
+     */
     sliderProps?: any;
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
+
+    /**
+     * Минимальное значение в слайдере
+     * @example 0
+     */
     min?: number;
+
+    /**
+     * Максимальное значение в слайдере
+     * @example 100
+     */
     max?: number;
 
     [key: string]: any;

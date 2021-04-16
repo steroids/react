@@ -1,10 +1,10 @@
 import * as React from 'react';
-import RadioListField from '../RadioListField';
+import CheckboxListField from '../CheckboxListField';
 import {items} from './basic';
 
 export default () => (
     <>
-        <RadioListField
+        <CheckboxListField
             label='Required'
             items={items}
             required

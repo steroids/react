@@ -1,13 +1,13 @@
+import SwitcherField from '@steroidsjs/core/ui/form/SwitcherField/SwitcherField';
 import * as React from 'react';
-import RadioListField from '../RadioListField';
 import {items} from './basic';
 
 export default () => (
     <>
-        <RadioListField
+        <SwitcherField
             label='Errors'
-            errors={['Error 1 text', 'Error 2 text']}
             items={items}
+            errors={['Error 1 text', 'Error 2 text']}
         />
     </>
 );

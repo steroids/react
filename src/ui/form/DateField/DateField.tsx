@@ -8,7 +8,15 @@ import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
 
+/**
+ * DateField
+ * Поле ввода с выпадающим календарём для выбора даты
+ */
 export interface IDateFieldProps extends IFieldWrapperInputProps {
+    /**
+     * Свойства для компонента DayPickerInput
+     * @example {dayPickerProps: {showWeekNumbers: true}}
+     */
     pickerProps?: any;
 
     /**
@@ -22,7 +30,16 @@ export interface IDateFieldProps extends IFieldWrapperInputProps {
      * @example YYYY-MM-DD
      */
     valueFormat?: string;
+
+    /**
+     * Дополнительный CSS-класс
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
 
     /**
@@ -30,6 +47,11 @@ export interface IDateFieldProps extends IFieldWrapperInputProps {
      * @example Your text...
      */
     placeholder?: any;
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
     style?: any;
 
     /**
@@ -55,7 +77,10 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
 
-    const {fromMonth, toMonth} = useMemo(() => ({
+    const {
+        fromMonth,
+        toMonth
+    } = useMemo(() => ({
         fromMonth: new Date(currentYear - 100, 0),
         toMonth: new Date(currentYear + 50, 11),
     }), [currentYear]);
@@ -75,11 +100,13 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
         const format = [props.displayFormat, props.valueFormat].find(
             format => (
                 date
-                    && date.length === format.length
-                    && moment(date, format).isValid()
+                && date.length === format.length
+                && moment(date, format)
+                    .isValid()
             ),
         );
-        return format ? moment(date, format).toDate() : undefined;
+        return format ? moment(date, format)
+            .toDate() : undefined;
     }, [props.displayFormat, props.valueFormat]);
 
     /**
@@ -92,12 +119,14 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
             return date;
         }
 
-        return moment(date).format(props.displayFormat);
+        return moment(date)
+            .format(props.displayFormat);
     }, [props.displayFormat]);
 
     const onChange = useCallback(value => {
         if (value) {
-            const date = moment(value).format(props.valueFormat);
+            const date = moment(value)
+                .format(props.valueFormat);
             props.input.onChange(date);
             if (props.onChange) {
                 props.onChange(date);
@@ -119,13 +148,14 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
         locale: components.locale,
         localeUtils: MomentLocaleUtils,
         pickerProps: {
+            ...props.pickerProps,
             dayPickerProps: {
+                ...(props.pickerProps?.dayPickerProps || {}),
                 month,
                 fromMonth,
                 toMonth,
             },
             onYearMonthChange: handleYearMonthChange,
-            ...props.pickerProps,
         },
     });
 }

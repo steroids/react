@@ -8,10 +8,27 @@ import fieldWrapper, {
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 
+/**
+ * RadioListField
+ * Список с радиокнопками. Используется в формах для выбора одного значения.
+ */
 export interface IRadioListFieldProps extends IFieldWrapperInputProps, IDataProviderConfig,
  Omit<IDataSelectConfig, 'items'> {
+    /**
+     * Свойства для элемента \<input /\>
+     * @example {onKeyDown: ...}
+     */
     inputProps?: any;
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
 }
 

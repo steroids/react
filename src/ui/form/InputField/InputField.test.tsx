@@ -1,7 +1,8 @@
+import 'jest-enzyme';
 import React from 'react';
 import InputFieldView from '@steroidsjs/bootstrap/form/InputField/InputFieldView';
 import InputField from './InputField';
-import mountWithApp from '../../../tests/mountWithApp';
+import mountWithApp from '../../../../tests/mountWithApp';
 
 describe('InputField tests', () => {
     it('should render something without props', () => {

@@ -13,9 +13,23 @@ import {useComponents} from '../../../hooks';
 import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form';
 import validate from '../validate';
 
+/**
+ * Form
+ * Компонент для создания формы
+ */
 export interface IFormProps {
+    /**
+     * Идентификатор формы
+     * @example BookingForm
+     */
     formId?: string;
+
     prefix?: string;
+
+    /**
+     * Модель с полями формы
+     * @example {attributes: [{attribute: 'category', field: 'DropDownField'}]}
+     */
     model?: string | ((...args: any[]) => any) | any;
 
     /**
@@ -29,6 +43,11 @@ export interface IFormProps {
      * @example POST
      */
     actionMethod?: string;
+
+    /**
+     * Шаблон для полей в форме
+     * @example horizontal
+     */
     layout?: FormLayout;
 
     /**
@@ -36,6 +55,12 @@ export interface IFormProps {
      * @param args
      */
     onSubmit?: (...args: any[]) => any;
+
+    /**
+     * Набор с правилами для проверки соответствия значений полей формы определенному формату.
+     * Проверка запускается в момент отправки формы (в обработчике onSubmit).
+     * @example [['name', 'required'], ['age', 'integer']]
+     */
     validators?: any[];
 
     /**
@@ -72,12 +97,20 @@ export interface IFormProps {
      */
     onTwoFactor?: (providerName: string, info?: any) => Promise<any> | any | void,
 
+    /**
+     * Сохраняет значения полей формы в LocalStorage
+     * @example true
+     */
     autoSave?: boolean,
 
     /**
      * Начальные значения формы
      */
     initialValues?: any | any[];
+
+    /**
+     * Дополнительный CSS-класс для <form>...</form>
+     */
     className?: CssClassName;
 
     /**
@@ -86,7 +119,16 @@ export interface IFormProps {
      */
     style?: any;
 
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
+
+    /**
+     * Поля, которые необходимо поместить в форму
+     * @example [{attribute: 'category', component: 'DropDownField'}]
+     */
     fields?: (string | IFieldProps)[],
 
     /**
@@ -100,9 +142,27 @@ export interface IFormProps {
      * @example Submit
      */
     submitLabel?: string;
+
+    /**
+     * Значения полей формы будут подставляться в качестве query-параметров в адресную строку
+     * @example true
+     */
     syncWithAddressBar?: boolean;
+
+    /**
+     * Обработчик, который используется для форматирования значений из адресной строки в валидные значения формы
+     */
     restoreCustomizer?: (...args: any[]) => any; // TODO Refactor it!
+
+    /**
+     * Указывает, что в качестве сепаратора для параметров формы в адресной строке нужно использовать '#', а не '?'
+     */
     useHash?: boolean; // TODO Refactor it!
+
+    /**
+     * Если в форме есть элементы <input>, то произойдет автоматическая фокусировка на первом из них
+     * @example true
+     */
     autoFocus?: boolean;
 
     [key: string]: any;
@@ -137,7 +197,7 @@ export interface IFormContext {
     prefix?: string | boolean;
     layout?: FormLayout;
     provider?: any,
-    reducer?: {dispatch: React.Dispatch<any>, select: any},
+    reducer?: { dispatch: React.Dispatch<any>, select: any },
     dispatch?: any,
 }
 
@@ -185,7 +245,14 @@ function Form(props: IFormProps) {
 
     // Init data provider
     const provider = props.useRedux ? providers.redux : providers.reducer;
-    const {values, isInvalid, isSubmitting, setErrors, reducer, dispatch} = provider.useForm(props.formId, initialValues);
+    const {
+        values,
+        isInvalid,
+        isSubmitting,
+        setErrors,
+        reducer,
+        dispatch
+    } = provider.useForm(props.formId, initialValues);
 
     // Sync with address bar
     useUpdateEffect(() => {
@@ -239,12 +306,13 @@ function Form(props: IFormProps) {
 
         // Append non touched fields to values object
         if (props.formId) {
-            Object.keys(components.ui.getRegisteredFields(props.formId)?.formRegisteredFields || {}).forEach(key => {
-                const registeredName = this.props.formRegisteredFields[key].name;
-                if (_isUndefined(_get(values, registeredName))) {
-                    _set(values, registeredName, null);
-                }
-            });
+            Object.keys(components.ui.getRegisteredFields(props.formId)?.formRegisteredFields || {})
+                .forEach(key => {
+                    const registeredName = this.props.formRegisteredFields[key].name;
+                    if (_isUndefined(_get(values, registeredName))) {
+                        _set(values, registeredName, null);
+                    }
+                });
         }
 
         const cleanedValues = cleanEmptyObject(values);

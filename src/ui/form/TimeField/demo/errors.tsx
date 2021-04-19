@@ -1,8 +1,8 @@
 import * as React from 'react';
-import TimeField from "../TimeField";
+import TimeField from '../TimeField';
 
 export default () => (
     <>
-        <TimeField label='Disabled' disabled/>
+        <TimeField label='Errors' errors={['Error 1 text', 'Error 2 text']} />
     </>
 );

@@ -10,10 +10,29 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 
-export interface ISwitcherFieldProps extends IFieldWrapperInputProps, IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
+/**
+ * SwitcherField
+ * Список с кнопками. Используется для выбора одного значения.
+ */
+export interface ISwitcherFieldProps extends IFieldWrapperInputProps,
+    IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
+
+    /**
+     * Свойства для компонента Button
+     */
     buttonProps?: any;
+
     [key: string]: any;
 }
 

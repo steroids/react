@@ -167,12 +167,13 @@ export default function useList(config: IListConfig): IListOutput {
     });
 
     // Outside search form
+    const searchFormFields = config.searchForm?.fields;
     const SearchForm = require('../ui/list/SearchForm').default;
-    const initialValuesSearchForm = useMemo(() => (config.searchForm?.fields || []).reduce((acc, field) => {
+    const initialValuesSearchForm = useMemo(() => (searchFormFields || []).reduce((acc, field) => {
         const attribute = typeof field === 'string' ? field : field.attribute;
         acc[attribute] = initialQuery?.[attribute];
         return acc;
-    }, {}), [config.searchForm.fields, initialQuery]);
+    }, {}), [searchFormFields, initialQuery]);
 
     const searchFormProps = {
         listId: config.listId,

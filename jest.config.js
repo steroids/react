@@ -10,8 +10,8 @@ module.exports = {
     ],
     moduleNameMapper: {
         'lodash-es/(.*)': 'lodash/$1',
-        '@steroidsjs/bootstrap/(.*)': isLocal ? '<rootDir>/react-bootstrap/$1' : '<rootDir>/../react-bootstrap/$1',
-        '@steroidsjs/core/(.*)': '<rootDir>/$1',
+        '@steroidsjs/bootstrap/(.*)': isLocal ? '<rootDir>/react-bootstrap/src/$1' : '<rootDir>/../react-bootstrap/src$1',
+        '@steroidsjs/core/(.*)': '<rootDir>/src/$1',
     },
     globals: {
         'ts-jest': {
@@ -21,10 +21,10 @@ module.exports = {
                 esModuleInterop: true,
                 paths: {
                     '@steroidsjs/core/*': [
-                        './*',
+                        './src/*',
                     ],
                     '@steroidsjs/bootstrap/*': [
-                        isLocal ? 'react-bootstrap/*' : '<rootDir>/../react-bootstrap/*',
+                        isLocal ? 'react-bootstrap/src/*' : '<rootDir>/../react-bootstrap/src*',
                     ],
                 },
             },

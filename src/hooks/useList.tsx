@@ -286,8 +286,8 @@ export default function useList(config: IListConfig): IListOutput {
     });
 
     // Outside search form
-    const SearchForm = require('../ui/list/SearchForm').default;
     const searchFormFields = config.searchForm?.fields;
+    const SearchForm = require('../ui/list/SearchForm').default;
     const initialValuesSearchForm = useMemo(() => (searchFormFields || []).reduce((acc, field) => {
         const attribute = typeof field === 'string' ? field : field.attribute;
         acc[attribute] = initialQuery?.[attribute];

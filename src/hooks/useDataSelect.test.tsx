@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {act} from 'react-dom/test-utils';
-import mountWithApp from '../tests/mountWithApp';
+import mountWithApp from '../../tests/mountWithApp';
 import useDataSelect, {IDataSelectConfig} from './useDataSelect';
 
 const MockResultComponent = (props: any) => (

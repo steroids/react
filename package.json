@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.0.0-rc.3",
+  "version": "2.0.0-rc.4",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -67,6 +67,7 @@
     "@types/react": "^17.0.2",
     "@types/react-color": "^3.0.4",
     "@types/react-redux": "^7.1.16",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/react-syntax-highlighter": "^13.5.0",
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.15.0",

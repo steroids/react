@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import List from '../List';
 import {demoItems} from './basic';
-import {items as dropDownFieldItems} from '../../../form/DropDownField/demo/auto-complete';
+import {items as dropDownFieldItems} from '../../../form/DropDownField/demo/basic';
 
 /**
  * Pagination with search form, address bar and custom pagination
@@ -27,8 +27,8 @@ export default () => (
                         label: 'Категория',
                         searchField: 'DropDownField',
                         searchFieldProps: {
-                            items: dropDownFieldItems
-                        }
+                            items: dropDownFieldItems,
+                        },
                     },
                 ],
             }

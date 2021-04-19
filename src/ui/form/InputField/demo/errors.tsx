@@ -9,6 +9,6 @@ import InputField from '../InputField';
  */
 export default () => (
     <>
-        <InputField label='Errors' errors={['Error 1 text', 'Error 2 text']}/>
+        <InputField label='Errors' errors={['Error 1 text', 'Error 2 text']} />
     </>
 );

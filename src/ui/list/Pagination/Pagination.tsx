@@ -7,16 +7,62 @@ import {formChange} from '../../../actions/form';
 import {ListControlPosition} from '../../../hooks/useList';
 import {IButtonProps} from '../../form/Button/Button';
 
+/**
+ * Pagination
+ * Компонент с пагинацией страниц.
+ */
 export interface IPaginationProps {
+    /**
+     * Аттрибут (название) в форме для поля пагинации
+     * @example page
+     */
     attribute?: string,
+
+    /**
+     * Аттрибут (название) в форме для поля с количеством элементов на странице
+     * @example pageSize
+     */
     sizeAttribute?: string,
+
+    /**
+     * Указывает, какое количество кнопок с номерами страниц будет доступно до и после выбранной страницы,
+     * включая выбранную. Остальные будут спрятаны в элемент "..."
+     * @example 5
+     */
     aroundCount?: number;
+
+    /**
+     * Вместо списка с номерами страниц будет кнопка "Загрузить еще"
+     * @example true
+     */
     loadMore?: boolean,
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Расположение пагинации
+     * @example 'both'
+     */
     position?: ListControlPosition,
+
     buttonProps?: IButtonProps,
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
+
+    /**
+     * Обработчик, который вызывается после смены страницы
+     * @param {number} value
+     * @return {void}
+     */
     onChange?: (value: number) => void,
+
     /**
      * Размер
      */
@@ -66,8 +112,16 @@ function Pagination(props: IPaginationProps) {
         pageSize: props.list[props.sizeAttribute],
     };
 
-    const {formId, formDispatch, formSelector} = useForm();
-    const {page, pageSize} = formSelector(({values}) => ({
+    const {
+        formId,
+        formDispatch,
+        formSelector,
+    } = useForm();
+
+    const {
+        page,
+        pageSize,
+    } = formSelector(({values}) => ({
         page: _get(values, props.attribute),
         pageSize: _get(values, props.sizeAttribute),
     })) || initialValues;
@@ -75,11 +129,12 @@ function Pagination(props: IPaginationProps) {
     const totalPages = Math.ceil((props.list.total || 0) / (pageSize || 1));
 
     const pages = useMemo(
-        () => generatePages(page, totalPages, props.aroundCount).map(pageItem => ({
-            page: pageItem !== '...' ? pageItem : null,
-            label: pageItem,
-            isActive: page === pageItem,
-        })),
+        () => generatePages(page, totalPages, props.aroundCount)
+            .map(pageItem => ({
+                page: pageItem !== '...' ? pageItem : null,
+                label: pageItem,
+                isActive: page === pageItem,
+            })),
         [page, props.aroundCount, totalPages],
     );
 
@@ -96,11 +151,7 @@ function Pagination(props: IPaginationProps) {
         onSelect(page + 1);
     }, [onSelect, page]);
 
-    if (!props.list) {
-        return null;
-    }
-
-    if (!page || !pageSize || props.list.total <= pageSize) {
+    if (!props.list || !page || !pageSize || props.list.total <= pageSize) {
         return null;
     }
 

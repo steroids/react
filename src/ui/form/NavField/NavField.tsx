@@ -14,7 +14,11 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
  * Навигация как часть формы
  */
 export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IDataProviderConfig {
+    /**
+     * Свойства для компонента Nav
+     */
     navProps: INavProps,
+
     [key: string]: any,
 }
 

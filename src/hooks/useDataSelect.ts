@@ -7,14 +7,38 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
 export interface IDataSelectConfig {
+    /**
+     * Возможность множественного выбора
+     * @example true
+     */
     multiple?: boolean;
+
+    /**
+     * Список с элементами
+     * @example [{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]
+     */
     items: {
         id: number | string | boolean,
         label?: string,
         [key: string]: unknown,
     }[],
+
+    /**
+     * Сделать активным первый элемент в списке
+     * @example true
+     */
     selectFirst?: any;
+
+    /**
+     * Список с идентификаторами выбранных элементов
+     * @example [1, 4]
+     */
     selectedIds: any,
+
+    /**
+     * Первичный ключ для item
+     * @example id
+     */
     primaryKey?: string,
 }
 

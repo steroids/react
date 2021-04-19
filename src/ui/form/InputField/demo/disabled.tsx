@@ -9,6 +9,6 @@ import InputField from '../InputField';
  */
 export default () => (
     <>
-        <InputField label='Disabled' disabled/>
+        <InputField label='Disabled' disabled />
     </>
 );

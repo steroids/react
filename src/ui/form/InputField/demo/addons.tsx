@@ -9,6 +9,6 @@ import InputField from '../InputField';
  */
 export default () => (
     <>
-        <InputField addonBefore='http://' addonAfter='.com' label='AddonBefore and AddonAfter'/>
+        <InputField addonBefore='http://' addonAfter='.com' label='AddonBefore and AddonAfter' />
     </>
 );

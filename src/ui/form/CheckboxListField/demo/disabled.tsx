@@ -11,6 +11,7 @@ import {items} from './basic';
 export default () => (
     <>
         <CheckboxListField
+            label='Disabled'
             items={items}
             disabled
         />

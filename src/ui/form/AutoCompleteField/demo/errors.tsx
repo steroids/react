@@ -1,12 +1,13 @@
 import * as React from 'react';
-import DateField from '../DateField';
+import AutoCompleteField from '../AutoCompleteField';
+import {items} from './basic';
 
 export default () => (
     <>
-        <DateField
+        <AutoCompleteField
             label='Errors'
+            items={items}
             errors={['Error 1 text', 'Error 2 text']}
-            layout
         />
     </>
 );

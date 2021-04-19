@@ -10,6 +10,6 @@ import CheckboxField from '../CheckboxField';
  */
 export default () => (
     <>
-        <CheckboxField label='Required' required/>
+        <CheckboxField label='Required' required />
     </>
 );

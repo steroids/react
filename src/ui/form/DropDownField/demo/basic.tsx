@@ -1,5 +1,5 @@
+import DropDownField from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
 import * as React from 'react';
-import SwitcherField from '../SwitcherField';
 
 export const items = [
     {
@@ -22,7 +22,7 @@ export const items = [
 
 export default () => (
     <>
-        <SwitcherField
+        <DropDownField
             label='Basic'
             items={items}
         />

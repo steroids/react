@@ -9,6 +9,6 @@ import InputField from '../InputField';
  */
 export default () => (
     <>
-        <InputField textBefore='http://' textAfter='.com' label='TextBefore and TextAfter'/>
+        <InputField textBefore='http://' textAfter='.com' label='TextBefore and TextAfter' />
     </>
 );

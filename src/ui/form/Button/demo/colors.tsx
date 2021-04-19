@@ -27,7 +27,7 @@ export default () => (
                 label={colors[color]}
             />
         ))}
-        <br/>
+        <br />
         {Object.keys(colors).map(color => (
             <Button
                 key={color}

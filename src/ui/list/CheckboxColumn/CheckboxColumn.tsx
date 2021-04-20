@@ -7,12 +7,12 @@ import {isChecked, isCheckedAll} from '../../../reducers/list';
 export interface ICheckboxColumnProps {
     fieldProps?: any;
     view?: any;
+
     [key: string]: any,
 }
 
 export interface ICheckboxColumnViewProps {
-    fieldProps: {
-    },
+    fieldProps: Record<string, any>,
     input: {
         name: string,
         value: any,

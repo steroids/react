@@ -109,6 +109,7 @@ export const localFetchHandler = (list: IList, query: Record<string, unknown>) =
 
     // Filter items
     if (!_isEmpty(query)) {
+        console.log(query);
         items = filterItems(
             items,
             list.condition

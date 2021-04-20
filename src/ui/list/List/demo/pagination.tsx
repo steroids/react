@@ -6,11 +6,11 @@ import {demoItems} from './basic';
 /**
  * Pagination with page numbers and custom position (show both: top and bottom)
  * @order 2
- * @col 4
+ * @col 6
  */
 export default () => (
     <List
-        listId='ListDemoPaginationPages'
+        listId='ListDemoPagination'
         items={demoItems}
         pagination={{
             loadMore: false,

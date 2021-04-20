@@ -129,7 +129,7 @@ export default function useAddressBar(config: IAddressBarConfig): IAddressBarOut
     const location = useSelector(state => _get(state, 'router.location') || null);
     // Initial query
     const initialQueryRef = useRef(null);
-    if (config.enable && !initialQueryRef.current) {
+    if (!initialQueryRef.current) {
         initialQueryRef.current = queryRestore(config.model, location, config.useHash);
     }
 

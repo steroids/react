@@ -108,8 +108,8 @@ function Pagination(props: IPaginationProps) {
     const components = useComponents();
 
     const initialValues = {
-        page: props.list[props.attribute],
-        pageSize: props.list[props.sizeAttribute],
+        page: props.list?.[props.attribute],
+        pageSize: props.list?.[props.sizeAttribute],
     };
 
     const {
@@ -126,7 +126,7 @@ function Pagination(props: IPaginationProps) {
         pageSize: _get(values, props.sizeAttribute),
     })) || initialValues;
 
-    const totalPages = Math.ceil((props.list.total || 0) / (pageSize || 1));
+    const totalPages = Math.ceil((props.list?.total || 0) / (pageSize || 1));
 
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)

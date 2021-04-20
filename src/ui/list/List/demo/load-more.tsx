@@ -4,13 +4,13 @@ import List from '../List';
 import {demoItems} from './basic';
 
 /**
- * Pagination with load more and show sizes switcher
+ * List with load more and show sizes switcher
  * @order 4
  * @col 6
  */
 export default () => (
     <List
-        listId='ListDemoPaginationMore'
+        listId='ListDemoLoadMore'
         items={demoItems}
         pagination={{
             loadMore: true,

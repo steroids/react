@@ -4,13 +4,13 @@ import List from '../List';
 import {demoItems} from './basic';
 
 /**
- * Pagination with layout switcher
+ * List with layout switcher
  * @order 5
  * @col 6
  */
 export default () => (
     <List
-        listId='ListDemoPaginationLayout'
+        listId='ListDemoLayout'
         items={demoItems}
         layout={{
             items: [

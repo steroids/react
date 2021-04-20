@@ -11,13 +11,13 @@ export interface IFieldLayoutProps {
 
     /**
      * Название поля либо отмена отображение поля (false)
-     * @example Visible
+     * @example 'Visible'
      */
     label?: string | boolean | any;
 
     /**
      * Подсказка, которая отображается, когда в поле нет ошибок и layout !== 'inline'
-     * @example Save
+     * @example 'Save'
      */
     hint?: string | boolean;
 
@@ -30,13 +30,13 @@ export interface IFieldLayoutProps {
 
     /**
      * Выбор шаблона для расположения поля. Если false, то поле будет отрендерено без шаблона
-     * @example inline
+     * @example 'inline'
      */
     layout?: FormLayout;
 
     /**
      * Ошибки в поле
-     * @example Field is required
+     * @example 'Field is required'
      */
     errors?: string | string[];
 

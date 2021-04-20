@@ -24,7 +24,7 @@ export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
 interface ISortProps {
     /**
-     * Включить сортировку?
+     * Включить сортировку
      * @example false
      */
     enable?: boolean,
@@ -36,15 +36,16 @@ interface ISortProps {
     attribute?: string,
 
     /**
-     * Значение сортировки по умолчанию
-     * @example startDate
+     * Значение сортировки по умолчанию. Нужно указать название свойства, по которому items будут сортироваться,
+     * а с помощью знака "-" задать тип сортировки (со знаком минус - сортировать по убыванию, иначе по возрастанию).
+     * @example -price
      */
     defaultValue?: string | string[] | null,
 }
 
 interface IAddressBar {
     /**
-     * Подключить синхронизацию значений формы списка с адресной строкой?
+     * Подключить синхронизацию значений формы списка с адресной строкой
      * @example false
      */
     enable?: boolean,
@@ -125,7 +126,7 @@ export interface IListConfig {
     autoDestroy?: boolean,
 
     /**
-     * Обработчик для подгрузки новых элементов списка при изменении значений формы
+     * Обработчик, который вызывается при изменении значений формы, и нужен для подгрузки новых элементов списка
      * @param {IList} list
      * @param {Object} query
      * @param {*} http
@@ -134,9 +135,9 @@ export interface IListConfig {
     onFetch?: (list: IList, query: Record<string, unknown>, http: any) => Promise<any>,
 
     /**
-     * Обработчик, который составляет список условий для фильтрации элементов коллекции
+     * Обработчик, который составляет список условий для локальной фильтрации элементов коллекции
      * @param {Object} query
-     * @return {array}
+     * @return {Array} ['>=', 'age', 18]
      */
     condition?: (query: Record<string, unknown>) => any[],
 
@@ -149,7 +150,8 @@ export interface IListConfig {
     scope?: string[],
 
     /**
-     * Дополнительные параметры, значения которых нужно передать в форму списка
+     * Дополнительные параметры, значения которых нужно передавать в запросе для получения данных
+     * @example {tagName: 'MarketReviews'}
      */
     query?: Record<string, unknown>,
 

@@ -16,20 +16,48 @@ export interface IGridColumn {
         | {
         component?: string | ((...args: any[]) => any)
     },
+
+    /**
+     * Наименование колонки
+     * @example Name
+     */
     label?: React.ReactNode,
     hint?: React.ReactNode,
     headerClassName?: CssClassName,
+
+    /**
+     * Скрыть или показать колонку
+     * @example true
+     */
     visible?: boolean,
     headerView?: any,
     headerProps?: any,
+
+    /**
+     * Отображение значения в таблице
+     * @example MyCustomView
+     */
     valueView?: any,
     valueProps?: any,
+
+    /**
+     * CSS-класс для элемента отображения
+     */
     className?: CssClassName,
     sortable?: boolean,
 }
 
 export interface IGridProps extends IListConfig {
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: any;
+
+    /**
+     * Коллекция с наименованиями и свойствами колонок в таблице
+     * @example MyCustomView
+     */
     columns: (string | IGridColumn)[];
     controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
     itemsIndexing?: any;

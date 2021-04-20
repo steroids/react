@@ -73,7 +73,6 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
 function PaginationSize(props: IPaginationSizeProps) {
     const components = useComponents();
 
-    console.log(props);
     const pageSize = props.list?.pageSize;
     const items = useMemo(() => props.sizes.map(size => ({
         size,

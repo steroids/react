@@ -41,6 +41,9 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
      */
     view?: any;
 
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
 
     /**

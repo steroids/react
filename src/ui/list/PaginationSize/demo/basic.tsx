@@ -12,22 +12,28 @@ const sizes = {
 export default () => (
     <>
         <div className='row'>
-            {Object.keys(sizes).map(size => (
-                <div className='col' key={size}>
-                    <h6>
-                        {sizes[size]}
-                    </h6>
-                    <PaginationSize
-                        list={{
-                            page: 2,
-                            pageSize: 20,
-                            total: 100,
-                            items: demoItems,
-                        }}
-                        size={size}
-                    />
-                </div>
-            ))}
+            {Object.keys(sizes)
+                .map(size => (
+                    <div className='col' key={size}>
+                        <h6>
+                            {sizes[size]}
+                        </h6>
+                        <PaginationSize
+                            list={{
+                                page: 2,
+                                pageSize: 3,
+                                total: 100,
+                                items: demoItems,
+                            }}
+                            enable
+                            attribute='pageSize'
+                            sizes={[3, 6, 9]}
+                            defaultValue={3}
+                            size={size}
+                            position='top'
+                        />
+                    </div>
+                ))}
         </div>
     </>
 );

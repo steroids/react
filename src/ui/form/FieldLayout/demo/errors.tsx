@@ -3,6 +3,6 @@ import InputField from '../../InputField';
 
 export default () => (
     <>
-        <InputField errors='The field is filled incorrectly' />
+        <InputField errors={['The field is filled incorrectly']} />
     </>
 );

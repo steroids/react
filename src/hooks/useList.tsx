@@ -23,42 +23,152 @@ import {Model} from '../components/MetaComponent';
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
 interface ISortProps {
+    /**
+     * Включить сортировку?
+     * @example false
+     */
     enable?: boolean,
+
+    /**
+     * Аттрибут (название) поля сортировки в форме
+     * @example sort
+     */
     attribute?: string,
+
+    /**
+     * Значение сортировки по умолчанию
+     * @example startDate
+     */
     defaultValue?: string | string[] | null,
 }
 
 interface IAddressBar {
+    /**
+     * Подключить синхронизацию значений формы списка с адресной строкой?
+     * @example false
+     */
     enable?: boolean,
+
+    /**
+     * Указывает, что в качестве сепаратора для параметров формы в адресной строке нужно использовать '#', а не '?'
+     */
     useHash?: boolean,
 }
 
 export interface IListConfig {
+    /**
+     * Идентификатор списка
+     * @example ArticlesList
+     */
     listId?: string,
+
+    /**
+     * Первичный ключ для item
+     * @example id
+     */
     primaryKey?: string,
+
+    /**
+     * Url, который вернет коллекцию элементов
+     * @example api/v1/articles
+     */
     action?: string,
+
+    /**
+     * Тип HTTP запроса (GET | POST | PUT | DELETE)
+     * @example GET
+     */
     actionMethod?: HttpMethod,
+
+    /**
+     * Подключение пагинации
+     * @example {loadMore: true}
+     */
     pagination?: boolean | IPaginationProps,
+
+    /**
+     * Переключение количества элементов в списке
+     * @example {sizes: [3, 6, 9], defaultValue: 3}
+     */
     paginationSize?: boolean | IPaginationSizeProps,
+
+    /**
+     * Подключение сортировки
+     * @example {enable: true, defaultSort: 'startDate'}
+     */
     sort?: boolean | ISortProps,
+
+    /**
+     * Варианты расположения элементов в списке
+     * @example {items: [{id: 'list', label: 'List'}, {id: 'grid', label: 'Grid'}]}
+     */
     layout?: boolean | ILayoutNamesProps,
+
+    /**
+     * Заглушка в случае отсутствия элементов в списке
+     * @example {text: 'Записи не найдены'}
+     */
     empty?: boolean | string | IEmptyProps,
+
+    /**
+     * Форма для поиска элементов
+     * @example {fields: ['title'], model: {attributes: ['title:string:Название']}}
+     */
     searchForm?: Omit<IFormProps, 'formId'> & {
         formId?: string,
     },
+
+    /**
+     * Удаление данных списка из хранилища Redux при размонтировании компонента
+     * @example true
+     */
     autoDestroy?: boolean,
+
+    /**
+     * Обработчик для подгрузки новых элементов списка при изменении значений формы
+     * @param {IList} list
+     * @param {Object} query
+     * @param {*} http
+     * @return {Promise}
+     */
     onFetch?: (list: IList, query: Record<string, unknown>, http: any) => Promise<any>,
+
+    /**
+     * Обработчик, который составляет список условий для фильтрации элементов коллекции
+     * @param {Object} query
+     * @return {array}
+     */
     condition?: (query: Record<string, unknown>) => any[],
+
+    /**
+     * Синхронизация значений формы списка с адресной строкой
+     * @example true
+     */
     addressBar?: boolean | IAddressBar,
+
     scope?: string[],
+
+    /**
+     * Дополнительные параметры, значения которых нужно передать в форму списка
+     */
     query?: Record<string, unknown>,
+
     model?: Model,
+
+    /**
+     * Модель для синхронизации значений формы списка с адресной строкой
+     * @example {attributes: [{attribute: 'isMilesAvailable', type: boolean}]}
+     */
     searchModel?: Model,
+
+    /**
+     * Элементы коллекции
+     */
     items?: Array<any>,
 }
 
 export interface IListOutput {
-    list : IList,
+    list: IList,
     model: Model,
     searchModel: Model,
     paginationPosition: ListControlPosition,
@@ -89,6 +199,12 @@ const defaultConfig = {
     },
 };
 
+/**
+ * useList
+ * Добавляет массу возможностей для взаимодействия с коллекциями. Коллекции можно получать как с бекенда,
+ * так и передавать статичным массивом. В обоих случаях поддерживается пагинация, сортировка, фильтрация данных.
+ * Выбранные фильтры синхронизируются с адресной строкой.
+ */
 export default function useList(config: IListConfig): IListOutput {
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
@@ -133,7 +249,7 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Models
     const model = useModel(config.model);
-    const searchModel = useModel(config.searchForm?.model, {
+    const searchModel = useModel(config.searchModel || config.searchForm?.model, {
         attributes: [ // default attributes
             paginationProps.enable && {
                 type: 'number',
@@ -160,15 +276,18 @@ export default function useList(config: IListConfig): IListOutput {
     });
 
     // Address bar synchronization
-    const {initialQuery, updateQuery} = useAddressBar({
+    const {
+        initialQuery,
+        updateQuery,
+    } = useAddressBar({
         enable: !!config.addressBar,
         model: searchModel,
         ...(typeof config.addressBar === 'boolean' ? {enable: config.addressBar} : config.addressBar),
     });
 
     // Outside search form
-    const SearchForm = require('../ui/list/SearchForm').default;
     const searchFormFields = config.searchForm?.fields;
+    const SearchForm = require('../ui/list/SearchForm').default;
     const initialValuesSearchForm = useMemo(() => (searchFormFields || []).reduce((acc, field) => {
         const attribute = typeof field === 'string' ? field : field.attribute;
         acc[attribute] = initialQuery?.[attribute];
@@ -262,11 +381,12 @@ export default function useList(config: IListConfig): IListOutput {
     // Check change query
     const prevQuery = usePrevious(config.query);
     useUpdateEffect(() => {
-        _union(Object.keys(prevQuery), Object.keys(config.query)).forEach(key => {
-            if (_isEqual(prevQuery[key], config.query[key])) {
-                dispatch(formChange(formId, key, config.query[key]));
-            }
-        });
+        _union(Object.keys(prevQuery), Object.keys(config.query))
+            .forEach(key => {
+                if (_isEqual(prevQuery[key], config.query[key])) {
+                    dispatch(formChange(formId, key, config.query[key]));
+                }
+            });
     }, [formId, prevQuery, config.query, dispatch]);
 
     // Check change items
@@ -279,7 +399,8 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Destroy
     useUnmount(() => {
-        if (config.autoDestroy) {
+        const autoDestroy = typeof config.autoDestroy === 'boolean' ? config.autoDestroy : defaultConfig.autoDestroy;
+        if (autoDestroy) {
             dispatch(listDestroy(config.listId));
         }
     });

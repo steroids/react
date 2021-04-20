@@ -10,8 +10,22 @@ import {getEnumLabels} from '../reducers/fields';
 import {smartSearch} from '../utils/text';
 
 export interface AutoCompleteConfig {
+    /**
+     * Подключить autocomplete?
+     * @example true
+     */
     enable?: boolean,
+
+    /**
+     * Минимальная длина запроса
+     * @example 2
+     */
     minLength?: number,
+
+    /**
+     * Задержка в миллисекундах перед осуществлением запроса
+     * @example 100
+     */
     delay?: number,
 }
 
@@ -20,14 +34,56 @@ export type DataProviderItems = string
     | (string | number | { id: string | number | boolean, label: string | any })[];
 
 export interface IDataProviderConfig {
+    /**
+     * Коллекция элементов
+     * @example [{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]
+     */
     items?: DataProviderItems,
+
+    /**
+     * Конфигурация для подгрузки данных извне.
+     * Если dataProvider не передан, то поиск данных по запросу происходит локально.
+     */
     dataProvider?: {
+        /**
+         * URL для подгрузки новой коллекции данных
+         * @example '/api/v1/search'
+         */
         action?: string,
+
+        /**
+         * Параметры запроса
+         * @example {pageSize: 3}
+         */
         params?: Record<string, unknown>,
+
+        /**
+         * Обработчик, который вызывается для подгрузки данных.
+         * Если обработчик не передан, то по умолчанию отправится post-запрос.
+         * @param {string} action
+         * @param {Object} params
+         * @return {Promise<Array> | Array}
+         */
         onSearch?: (action: string, params: Record<string, unknown>) => Array<unknown> | Promise<Array<unknown>>,
     },
+
+    /**
+     * Текст запроса
+     * @example 'some text'
+     */
     query?: string,
+
+    /**
+     * Настройки поиска
+     * @example {enable: true, minLength: 2, delay: 100}
+     */
     autoComplete?: boolean | AutoCompleteConfig,
+
+    /**
+     * Загрузка данных после любого изменения запроса.
+     * Если включен autoFetch, то настройки autoComplete не применятся.
+     * @example true
+     */
     autoFetch?: any,
 }
 
@@ -58,7 +114,7 @@ const defaultProps = {
  * Data Provider
  * Подготавливает коллекции данных для полей форм. Используется в выпадающих списках, чекбоксах, автокомплитах и т.п.
  * Позволяет передать данные несколькими видами (enum, list, object, data provider), а на выход предоставит единый вид
- * данных. Поддерживает загрузку данных из вне (при autocomplete), поиск по данным.
+ * данных. Поддерживает загрузку данных извне (при autocomplete), поиск по данным.
  */
 export default function useDataProvider(config: IDataProviderConfig): IDataProviderResult {
     const components = useComponents();

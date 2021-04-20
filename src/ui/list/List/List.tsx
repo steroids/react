@@ -2,12 +2,38 @@ import * as React from 'react';
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, IListOutput} from '../../../hooks/useList';
 
+/**
+ * List
+ * Компонент для рендеринга коллекций в виде списка.
+ */
 export interface IListProps extends IListConfig {
+    /**
+     * Переопределение view React компонента для кастомизациии отображения элемента коллекции
+     * @example MyCustomView
+     */
     itemView?: React.ComponentType;
+
+    /**
+     * Свойства для элемента коллекции
+     */
     itemProps?: Record<string, unknown>;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: React.ComponentType;
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Дополнительный CSS-класс для элемента с контентом
+     */
     contentClassName?: string;
+
     [key: string]: any;
 }
 

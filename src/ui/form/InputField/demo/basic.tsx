@@ -9,6 +9,6 @@ import InputField from '../InputField';
  */
 export default () => (
     <>
-        <InputField label='Input'/>
+        <InputField label='Input' />
     </>
 );

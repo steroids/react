@@ -29,7 +29,7 @@ export default () => (
             searchForm={searchForm}
             paginationSize={{
                 enable: true,
-                defaultValue: 10,
+                defaultValue: 30,
             }}
             pagination={{
                 enable: true,

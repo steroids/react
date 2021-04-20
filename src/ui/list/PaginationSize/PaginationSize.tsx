@@ -6,15 +6,58 @@ import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
 import {ListControlPosition} from '../../../hooks/useList';
 
+/**
+ * PaginationSize
+ * Компонент для выбора количества элементов в списке
+ */
 export interface IPaginationSizeProps {
+    /**
+     * Подключить выбор количества элементов
+     * @example true
+     */
     enable?: boolean,
+
+    /**
+     * Аттрибут (название) поля в форме
+     * @example pageSize
+     */
     attribute?: string,
+
+    /**
+     * Список с количествами элементов на странице
+     * @example [2, 3, 4]
+     */
     sizes?: number[];
+
+    /**
+     * Расположение элемента в списке
+     * @example 'both'
+     */
     position?: ListControlPosition,
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Размер
+     */
     size?: Size;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
+
+    /**
+     * Обработчик, который вызывается после смены страницы
+     * @param {number} value
+     * @return {void}
+     */
     onChange?: (value: number) => void,
+
     [key: string]: any,
 }
 
@@ -30,25 +73,26 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
 function PaginationSize(props: IPaginationSizeProps) {
     const components = useComponents();
 
-    if (!props.list) {
-        return null;
-    }
-
+    console.log(props);
+    const pageSize = props.list?.pageSize;
     const items = useMemo(() => props.sizes.map(size => ({
         size,
         label: size,
-        isActive: props.list.pageSize === size,
-    })), [props.list.pageSize, props.sizes]);
+        isActive: pageSize === size,
+    })), [pageSize, props.sizes]);
 
     const {formId, formDispatch} = useForm();
     const onSelect = useCallback((newPage) => {
-        formDispatch && formDispatch(formChange(formId, props.attribute, newPage));
+        if (formDispatch) {
+            formDispatch(formChange(formId, props.attribute, newPage));
+        }
+
         if (props.onChange && newPage) {
             props.onChange.call(null, newPage);
         }
     }, [formDispatch, formId, props.attribute, props.onChange]);
 
-    if (!props.list.items?.length) {
+    if (!props.list?.items?.length) {
         return null;
     }
 

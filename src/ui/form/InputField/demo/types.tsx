@@ -16,10 +16,10 @@ const types = {
  * @col 12
  */
 export default () => (
-    <div className={'row'}>
+    <div className='row'>
         {Object.keys(types).map(type => (
             <div className='col' key={type}>
-                <InputField label={type} type={type}/>
+                <InputField label={type} type={type} />
             </div>
         ))}
     </div>

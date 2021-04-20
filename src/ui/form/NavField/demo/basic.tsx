@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SwitcherField from '../SwitcherField';
+import NavField from '../NavField';
 
 export const items = [
     {
@@ -22,9 +22,9 @@ export const items = [
 
 export default () => (
     <>
-        <SwitcherField
-            label='Basic'
+        <NavField
             items={items}
+            label='Basic'
         />
     </>
 );

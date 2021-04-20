@@ -1,0 +1,13 @@
+import NavField from '@steroidsjs/core/ui/form/NavField/NavField';
+import * as React from 'react';
+import {items} from '@steroidsjs/core/ui/form/NavField/demo/basic';
+
+export default () => (
+    <>
+        <NavField
+            items={items}
+            label='Disabled'
+            disabled
+        />
+    </>
+);

@@ -10,9 +10,9 @@ import InputField from '../InputField';
 export default () => (
     <>
         <InputField
-            label='Mask'
+            label="Mask"
             maskProps={{
-                mask: '+7 (999) 999-99-99'
+                mask: '+7 (999) 999-99-99',
             }}
         />
     </>

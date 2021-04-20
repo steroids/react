@@ -1,10 +1,32 @@
 import * as React from 'react';
 import {useComponents} from '../../../hooks';
 
+/**
+ * Empty
+ * Компонент используется в качестве заглушки в случае, когда пришла пустая коллекция данных.
+ */
 export interface IEmptyProps {
+    /**
+     * Показывать заглушку?
+     * @example true
+     */
     enable?: boolean,
+
+    /**
+     * Текст заглушки
+     * @example 'Записи не найдены'
+     */
     text?: string | React.ReactNode;
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизациии отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
     [key: string]: any,
 }

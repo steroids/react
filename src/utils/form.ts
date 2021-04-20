@@ -102,10 +102,10 @@ export const providers = {
             const dispatch = useDispatch(); // eslint-disable-line react-hooks/rules-of-hooks
             return {
                 ...useSelector(state => {
-                    const errors = _get(state, ['form', formId, 'errors'].concat(name.split('.')));
+                    const error = _get(state, ['form', formId, 'errors'].concat(name.split('.')));
                     const value = _get(state, ['form', formId, 'values'].concat(name.split('.')));
                     return {
-                        errors,
+                        error,
                         value: isList ? value?.length || 0 : value,
                     };
                 }),
@@ -178,7 +178,7 @@ export const providers = {
             const value = reducer.select(state => _get(state, 'values.' + name));
 
             return {
-                errors: reducer.select(state => _get(state, 'errors.' + name)),
+                error: reducer.select(state => _get(state, 'errors.' + name)),
                 value: isList ? value?.length || 0 : value,
                 setValue: useCallback(
                     newValue => reducer.dispatch(formChange(formId, name, newValue)),

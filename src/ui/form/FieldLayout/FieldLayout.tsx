@@ -85,7 +85,7 @@ function FieldLayout(props: IFieldLayoutProps) {
 
     return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
         ...props,
-        error: props.error || error,
+        errors: props.error || error,
         layout,
     });
 }

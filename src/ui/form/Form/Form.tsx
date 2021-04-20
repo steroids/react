@@ -308,7 +308,7 @@ function Form(props: IFormProps) {
         if (props.formId) {
             Object.keys(components.ui.getRegisteredFields(props.formId)?.formRegisteredFields || {})
                 .forEach(key => {
-                    const registeredName = this.props.formRegisteredFields[key].name;
+                    const registeredName = props.formRegisteredFields[key].name;
                     if (_isUndefined(_get(values, registeredName))) {
                         _set(values, registeredName, null);
                     }
@@ -329,17 +329,17 @@ function Form(props: IFormProps) {
         }
 
         // Send request
-        const response = await this.props.http.send(
-            this.props.actionMethod,
-            this.props.action || window.location.pathname,
+        const response = await components.http.send(
+            props.actionMethod,
+            props.action || window.location.pathname,
             cleanedValues,
             {
-                onTwoFactor: this.props.onTwoFactor
+                onTwoFactor: props.onTwoFactor
                     ? async (providerName) => {
-                        const info = this.props.autoStartTwoFactor
-                            ? await this.props.http.post(`/api/v1/auth/2fa/${providerName}/send`)
+                        const info = props.autoStartTwoFactor
+                            ? await components.http.post(`/api/v1/auth/2fa/${providerName}/send`)
                             : null;
-                        this.props.onTwoFactor(providerName, info);
+                        props.onTwoFactor(providerName, info);
                     }
                     : undefined,
             },
@@ -356,17 +356,18 @@ function Form(props: IFormProps) {
         if (props.onAfterSubmit && props.onAfterSubmit.call(null, cleanedValues, data, response) === false) {
             return null;
         }
+
         if (data.errors) {
-            setErrors(props.formId, data.errors);
+            setErrors(data.errors);
             return null;
         }
-        if (this.props.onComplete) {
-            this.props.onComplete.call(null, cleanedValues, data, response);
+        if (props.onComplete) {
+            props.onComplete.call(null, cleanedValues, data, response);
         }
-        if (this.props.autoSave) {
+        if (props.autoSave) {
             // TODO
             //const AutoSaveHelper = require('../ui/form/Form/AutoSaveHelper').default;
-            //AutoSaveHelper.remove(this.props.clientStorage, this.props.formId);
+            //AutoSaveHelper.remove(props.clientStorage, props.formId);
         }
 
         return null;

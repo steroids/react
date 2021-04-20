@@ -1,6 +1,7 @@
 import * as React from 'react';
+import _get from 'lodash-es/get';
 import {useMemo} from 'react';
-import {useComponents} from '../../../hooks';
+import {useComponents, useForm} from '../../../hooks';
 import {mergeLayoutProp} from '../../../utils/form';
 
 /**
@@ -38,7 +39,7 @@ export interface IFieldLayoutProps {
      * Ошибки в поле
      * @example 'Field is required'
      */
-    errors?: string | string[];
+    error?: string | string[];
 
     /**
      * Переопределение view React компонента для кастомизациии отображения
@@ -79,8 +80,12 @@ function FieldLayout(props: IFieldLayoutProps) {
         return props.children;
     }
 
+    // Error from state
+    const error = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
+
     return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
         ...props,
+        errors: props.error || error,
         layout,
     });
 }

@@ -4,8 +4,22 @@ import {IButtonProps} from '../../form/Button/Button';
 import {INavProps} from '../Nav/Nav';
 
 export interface IControlItem extends IButtonProps {
+    /**
+     * Идентификатор элемента управления
+     * @example 'create'
+     */
     id?: string,
+
+    /**
+     * Скрыть или показать элемент
+     * @example true
+     */
     visible?: boolean,
+
+    /**
+     * Расположение элемента
+     * @example 'left'
+     */
     position?: 'left' | 'right',
 }
 

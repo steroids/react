@@ -120,7 +120,7 @@ export interface IFormProps {
     style?: any;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView;
@@ -371,8 +371,7 @@ function Form(props: IFormProps) {
         }
 
         return null;
-    }, [components.ui, props.formId, props.onAfterSubmit, props.onBeforeSubmit, props.onSubmit,
-        props.validators, setErrors, values]);
+    }, [components.http, components.ui, props, setErrors, values]);
 
     const formContextValue = useMemo(() => ({
         formId: props.formId,

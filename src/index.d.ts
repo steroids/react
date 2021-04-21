@@ -78,7 +78,7 @@ declare type FormInputType = {
 declare type CssClassName = string;
 
 /**
- * Переопределение view React компонента для кастомизациии отображения
+ * Переопределение view React компонента для кастомизации отображения
  * @example MyCustomView
  */
 declare type CustomView = React.ReactNode;

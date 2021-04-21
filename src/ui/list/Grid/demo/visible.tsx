@@ -1,36 +1,26 @@
 import * as React from 'react';
 
 import Grid from '../Grid';
-import {searchForm, items} from './load-more';
+import {columns, items} from './basic';
 
+/**
+ * Grid with invisible column (column Work - visible: false)
+ * @order 10
+ * @col 8
+ */
 export default () => (
     <>
-        <h6>
-            Visible (column Work - visible: false)
-        </h6>
         <Grid
-            listId='ListStoryReverse'
+            listId='GridVisibleDemo'
             items={items}
-            columns={[
-                {
-                    label: 'Name',
-                    attribute: 'name',
-                },
-                {
-                    label: __('Second name'),
-                    attribute: 'secondName',
-                },
-                {
-                    label: 'Work',
-                    attribute: 'work',
-                    visible: false,
-                },
-            ]}
+            columns={columns.map(column => ({
+                ...column,
+                visible: column.attribute !== 'work',
+            }))}
             paginationSize={{
                 enable: true,
                 defaultValue: 30,
             }}
-            searchForm={searchForm}
         />
     </>
 );

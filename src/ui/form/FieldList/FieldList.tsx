@@ -44,7 +44,7 @@ interface IFieldListItem extends IFieldWrapperInputProps {
     headerClassName?: CssClassName,
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения item
+     * Переопределение view React компонента для кастомизации отображения item
      * @example MyCustomView
      */
     view?: CustomView,
@@ -89,7 +89,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
     className?: CssClassName;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения списка с группами полей
+     * Переопределение view React компонента для кастомизации отображения списка с группами полей
      * @example MyCustomView
      */
     view?: any;
@@ -100,7 +100,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
     viewProps?: any;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения группы полей
+     * Переопределение view React компонента для кастомизации отображения группы полей
      * @example MyCustomView
      */
     itemView?: any;

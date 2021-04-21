@@ -9,20 +9,38 @@ import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';
 
+/**
+ * Grid
+ * Компонент для представления данных коллекции в виде таблицы.
+ */
 export interface IGridColumn {
+    /**
+     * Атрибут колонки, по которому происходит поиск нужного свойства в items и нужного поля в SearchForm
+     * @example 'Name'
+     */
     attribute?: string,
-    format?:
-        | string
-        | {
-        component?: string | ((...args: any[]) => any)
-    },
 
     /**
-     * Наименование колонки
-     * @example Name
+     * Свойства для компонента форматирования
+     * @example {component: DateFormatter, format: 'DD MMMM'}
+     */
+    formatter?: Record<string, any>,
+
+    /**
+     * Заголовок колонки
+     * @example 'Name'
      */
     label?: React.ReactNode,
+
+    /**
+     * Подсказка
+     * @example 'Some text'
+     */
     hint?: React.ReactNode,
+
+    /**
+     * CSS-класс для ячейки с заголовком колонки <th>...</th>
+     */
     headerClassName?: CssClassName,
 
     /**
@@ -30,37 +48,67 @@ export interface IGridColumn {
      * @example true
      */
     visible?: boolean,
+
+    /**
+     * Компонент для кастомизации отображения заголовка колонки
+     * @example MyCustomView
+     */
     headerView?: any,
+
+    /**
+     * Свойства для компонента отображения заголовка колонки
+     */
     headerProps?: any,
 
     /**
-     * Отображение значения в таблице
+     * Компонент для кастомизации отображения значения в ячейке
      * @example MyCustomView
      */
     valueView?: any,
+
+    /**
+     * Свойства для компонента отображения значения в ячейке
+     */
     valueProps?: any,
 
     /**
-     * CSS-класс для элемента отображения
+     * CSS-класс для ячейки со значением
      */
     className?: CssClassName,
+
+    /**
+     * Включить возможность сортировки по данным в колонке
+     * @example true
+     */
     sortable?: boolean,
 }
 
 export interface IGridProps extends IListConfig {
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: any;
 
     /**
      * Коллекция с наименованиями и свойствами колонок в таблице
-     * @example MyCustomView
+     * @example [{label: 'Name', attribute: 'name'}, {label: 'Work', attribute: 'work'}]
      */
     columns: (string | IGridColumn)[];
+
+    /**
+     * Коллекция с элементами управления. Данная коллекция отобразится в колонке рядом с каждой записью в таблице.
+     * Например, кнопки для удаления и детального просмотра записи.
+     * @example [{id: 'delete'}, {id: 'view', position: 'left'}]
+     */
     controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
+
+    /**
+     * Нужно ли отображать колонку с порядковым номером элемента? Если да, то для каждого элемента в коллекции items
+     * должно быть задано свойство index
+     */
     itemsIndexing?: any;
+
     [key: string]: any;
 }
 
@@ -157,7 +205,7 @@ export default function Grid(props: IGridProps) {
             );
         }
 
-        return <Format item={item} model={props.model} {...column} />;
+        return <Format item={item} model={props.model} {...column} {...(column.formatter || {})} />;
     }, [props.listId, props.model, props.primaryKey]);
 
     // Columns
@@ -186,6 +234,7 @@ export default function Grid(props: IGridProps) {
     );
 
     return components.ui.renderView(props.view || 'list.GridView', {
+        ...props,
         paginationPosition,
         paginationSizePosition,
         layoutNamesPosition,

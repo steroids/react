@@ -23,7 +23,7 @@ export interface ISwitcherFieldProps extends IFieldWrapperInputProps,
     className?: CssClassName;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView;

@@ -7,7 +7,7 @@ export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
     action?: any;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView;

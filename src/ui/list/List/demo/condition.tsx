@@ -59,7 +59,7 @@ export default () => (
             },
         }}
         condition={(query) => {
-            if (typeof query?.isAdult === 'boolean') {
+            if (query?.isAdult) {
                 return ['>=', 'age', 18];
             }
 

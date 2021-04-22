@@ -23,6 +23,7 @@ import {useComponents, useSelector} from '@steroidsjs/core/hooks';
 import useFetch from '@steroidsjs/core/hooks/useFetch';
 import {usePrevious} from 'react-use';
 import useDispatch from '@steroidsjs/core/hooks/useDispatch';
+import {Model} from '@steroidsjs/core/components/MetaComponent';
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
     title?: string,
@@ -190,37 +191,38 @@ function Crud(props: ICrudProps) {
 
     // Normalize items
     const items = useMemo(() => {
+        let normalizedItems = {};
         // Array -> Object
         if (Array.isArray(props.items)) {
-            props.items = props.items.reduce((obj, item: ICrudItem) => {
+            normalizedItems = props.items.reduce((obj, item: ICrudItem) => {
                 obj[item.id] = {
                     ...item,
                 };
                 return obj;
             }, {});
-        } else if (!props.items) {
-            props.items = {};
+        } else if (props.items) {
+            normalizedItems = props.items;
         }
 
         // Merge with defaults
         Object.keys(defaultItems).forEach(id => {
-            props.items[id] = {
+            normalizedItems[id] = {
                 id,
                 ...defaultItems[id],
-                ...props.items[id],
+                ...normalizedItems[id],
                 ...(typeof props[id] === 'object' ? props[id] : null),
             };
             if (props[id] === false) {
-                props.items[id].visible = false;
+                normalizedItems[id].visible = false;
             }
         });
 
         // Object -> Array + defaults
-        return Object.keys(props.items).map(id => ({
+        return Object.keys(normalizedItems).map(id => ({
             id,
             actionName: id,
             pkRequired: true,
-            ...props.items[id],
+            ...normalizedItems[id],
         }));
     }, []);
 
@@ -241,7 +243,7 @@ function Crud(props: ICrudProps) {
         let itemId = _get(routeParams, queryKey + 'Action') ? _get(routeParams, queryKey) : null;
 
         let action = routeAction;
-        const crudItem = props._items.find(item => item.actionName === action);
+        const crudItem = items.find(item => item.actionName === action);
         const mode = crudItem && crudItem.mode || props.mode || DEFAULT_MODE;
         if (mode === MODE_MODAL && !isModal) {
             action = CRUD_ACTION_INDEX;

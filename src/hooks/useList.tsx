@@ -155,13 +155,13 @@ export interface IListConfig {
      */
     query?: Record<string, unknown>,
 
-    model?: Model,
+    model?: string,
 
     /**
      * Модель для синхронизации значений формы с адресной строкой
      * @example {attributes: [{attribute: 'isMilesAvailable', type: boolean}]}
      */
-    searchModel?: Model,
+    searchModel?: string,
 
     /**
      * Элементы коллекции

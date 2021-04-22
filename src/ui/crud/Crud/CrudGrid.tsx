@@ -5,18 +5,18 @@ import {getCrudGridId, ICrudChildrenProps} from './Crud';
 export default function CrudGrid(props: ICrudChildrenProps) {
     return (
         <Grid
-            listId={getCrudGridId(this.props)}
-            action={this.props.restUrl}
+            listId={getCrudGridId(props)}
+            action={props.restUrl}
             scope={['model', 'permission']}
-            primaryKey={this.props.primaryKey}
-            model={this.props.model}
-            //searchModel={this.props.searchModel}
-            controls={this.props.controlsGetter}
-            columns={[this.props.primaryKey]}
+            primaryKey={props.primaryKey}
+            model={props.model}
+            //searchModel={props.searchModel}
+            controls={props.controlsGetter}
+            columns={[props.primaryKey]}
             pagination={{
                 loadMore: false,
             }}
-            {...this.props.grid}
+            {...props.grid}
         />
     );
 }

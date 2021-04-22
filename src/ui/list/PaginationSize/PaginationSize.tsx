@@ -46,7 +46,7 @@ export interface IPaginationSizeProps {
     size?: Size;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView,
@@ -73,7 +73,6 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
 function PaginationSize(props: IPaginationSizeProps) {
     const components = useComponents();
 
-    console.log(props);
     const pageSize = props.list?.pageSize;
     const items = useMemo(() => props.sizes.map(size => ({
         size,

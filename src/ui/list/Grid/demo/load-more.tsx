@@ -1,69 +1,24 @@
 import * as React from 'react';
 
 import Grid from '../Grid';
-import InputField from '../../../form/InputField/InputField';
+import {columns, items} from './basic';
 
-export const searchForm = {
-    fields: [
-        {
-            label: 'Input',
-            attribute: 'input',
-            component: InputField,
-        },
-        {
-            label: 'Date',
-            attribute: 'date',
-            component: InputField,
-        },
-    ],
-};
-
-export const items = [
-    {
-        name: 'Ivan',
-        secondName: 'Ivanov',
-        work: 'development',
-    },
-    {
-        name: 'Petr',
-        secondName: 'Petrov',
-        work: 'manager',
-    },
-    {
-        name: 'Jhon',
-        secondName: 'Doe',
-        work: 'designer',
-    },
-];
-
+/**
+ * Grid with load more
+ * @order 4
+ * @col 8
+ */
 export default () => (
     <>
-        <h6>
-            Load more
-        </h6>
         <Grid
-            listId='ListStoryLoadMore'
+            listId='GridLoadMoreDemo'
             items={items}
-            columns={[
-                {
-                    label: 'Name',
-                    attribute: 'name',
-                },
-                {
-                    label: __('Second name'),
-                    attribute: 'secondName',
-                },
-                {
-                    label: 'Work',
-                    attribute: 'work',
-                },
-            ]}
-            searchForm={searchForm}
+            columns={columns}
             pagination={{
                 loadMore: true,
             }}
             paginationSize={{
-                defaultValue: 3,
+                defaultValue: 2,
                 sizes: [2, 3, 4],
             }}
         />

@@ -28,7 +28,7 @@ export const demoItems = [
 /**
  * Basic
  * @order 1
- * @col 4
+ * @col 6
  */
 export default () => (
     <List

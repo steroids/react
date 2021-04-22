@@ -5,7 +5,7 @@ import List from '../List';
 /**
  * Empty view with custom text when no items
  * @order 3
- * @col 4
+ * @col 6
  */
 export default () => (
     <List

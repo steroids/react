@@ -4,15 +4,34 @@ import useDispatch from '../../../hooks/useDispatch';
 import {toggleAll, toggleItem} from '../../../actions/list';
 import {isChecked, isCheckedAll} from '../../../reducers/list';
 
+/**
+ * CheckboxColumn
+ * Колонка с чекбоксом, которая позволяет выбирать одну или все записи в таблице.
+ */
 export interface ICheckboxColumnProps {
+    /**
+     * Первичный ключ для доступа к идентификатору item
+     */
+    primaryKey?: string,
+
+    /**
+     * Элемент коллекции item
+     */
+    item?: any,
+
     fieldProps?: any;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
     view?: any;
+
     [key: string]: any,
 }
 
 export interface ICheckboxColumnViewProps {
-    fieldProps: {
-    },
+    fieldProps: Record<string, any>,
     input: {
         name: string,
         value: any,
@@ -22,14 +41,15 @@ export interface ICheckboxColumnViewProps {
 
 export default function CheckboxColumn(props: ICheckboxColumnProps) {
     const components = useComponents();
-    const itemId = props.item[props.primaryKey];
+
+    const itemId = props.item?.[props.primaryKey];
 
     const dispatch = useDispatch();
-    const value = useSelector(state => ({
-        isChecked: props.item
+    const value = useSelector(state => (
+        props.item
             ? isChecked(state, props.listId, itemId)
-            : isCheckedAll(state, props.listId),
-    }));
+            : isCheckedAll(state, props.listId)
+    ));
 
     const onChange = useCallback(() => {
         dispatch(props.item ? toggleItem(props.listId, itemId) : toggleAll(props.listId));
@@ -45,3 +65,7 @@ export default function CheckboxColumn(props: ICheckboxColumnProps) {
         input,
     });
 }
+
+CheckboxColumn.defaultProps = {
+    primaryKey: 'id',
+};

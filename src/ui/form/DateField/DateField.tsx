@@ -37,7 +37,7 @@ export interface IDateFieldProps extends IFieldWrapperInputProps {
     className?: CssClassName;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView;
@@ -79,7 +79,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
 
     const {
         fromMonth,
-        toMonth
+        toMonth,
     } = useMemo(() => ({
         fromMonth: new Date(currentYear - 100, 0),
         toMonth: new Date(currentYear + 50, 11),

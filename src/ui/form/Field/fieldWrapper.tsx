@@ -7,21 +7,33 @@ import FieldLayout from '../FieldLayout/FieldLayout';
 import {useComponents} from '../../../hooks';
 
 export interface IFieldWrapperInputProps {
-
+    /**
+     * Префикс, который добавится к аттрибуту (названию) поля в форме
+     */
     prefix?: string | boolean;
 
     /**
      * Название поля либо отмена отображение поля (false)
-     * @example Visible
+     * @example 'Visible'
      */
     label?: string | boolean | any;
 
     /**
      * Аттрибут (название) поля в форме
-     * @example isVisible
+     * @example 'isVisible'
      */
     attribute?: string;
+
+    /**
+     * Модель с полями формы
+     * @example {attributes: [{attribute: 'category', field: 'DropDownField'}]}
+     */
     model?: string | ((...args: any[]) => any) | any;
+
+    /**
+     * Подсказка, которая отобразится рядом с полем
+     * @example 'Only english letters'
+     */
     hint?: string;
 
     /**
@@ -36,12 +48,32 @@ export interface IFieldWrapperInputProps {
      * @example true
      */
     disabled?: boolean;
+
+    /**
+     * Шаблон для поля, который настраивает его расположение внутри формы.
+     * Если false, то поле будет отрендерено без шаблона.
+     * @example 'horizontal'
+     */
     layout?: FormLayout;
+
     onChange?: (...args: any[]) => any;
+
+    /**
+     * Ошибки в поле
+     * @example ['Error text']
+     */
     error?: any;
+
     date?: any;
 
+    /**
+     * Темная тема
+     */
     dark?: boolean,
+
+    /**
+     * Размер поля
+     */
     size?: Size,
 
     [key: string]: any,

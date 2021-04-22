@@ -120,7 +120,7 @@ export interface IFormProps {
     style?: any;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView;
@@ -138,7 +138,7 @@ export interface IFormProps {
     useRedux?: boolean,
 
     /**
-     * Надпись на конпке отправки формы
+     * Надпись на кнопке отправки формы
      * @example Submit
      */
     submitLabel?: string;
@@ -251,7 +251,7 @@ function Form(props: IFormProps) {
         isSubmitting,
         setErrors,
         reducer,
-        dispatch
+        dispatch,
     } = provider.useForm(props.formId, initialValues);
 
     // Sync with address bar
@@ -371,8 +371,7 @@ function Form(props: IFormProps) {
         }
 
         return null;
-    }, [components.ui, props.formId, props.onAfterSubmit, props.onBeforeSubmit, props.onSubmit,
-        props.validators, setErrors, values]);
+    }, [components.http, components.ui, props, setErrors, values]);
 
     const formContextValue = useMemo(() => ({
         formId: props.formId,
@@ -400,7 +399,7 @@ function Form(props: IFormProps) {
                     onSubmit,
                     children: props.children,
                     submitLabel: props.submitLabel,
-                    fields: props.fields
+                    fields: props.fields,
                 })
                 : props.children}
         </FormContext.Provider>
@@ -410,7 +409,7 @@ function Form(props: IFormProps) {
 Form.defaultProps = {
     actionMethod: 'POST',
     autoStartTwoFactor: true,
-    layout: 'default'
+    layout: 'default',
 };
 
 export default Form;

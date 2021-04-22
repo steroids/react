@@ -37,7 +37,7 @@
     "@typescript-eslint/no-use-before-define": ["error"],
     "no-nested-ternary": "off",
     "no-param-reassign": "off",
-    "jsx-quotes": ["off", "prefer-single"],
+    "jsx-quotes": ["error", "prefer-single"],
     "@typescript-eslint/no-var-requires": "off",
     "global-require": "off",
     "no-underscore-dangle": "off",
@@ -75,8 +75,7 @@
         "tabWidth": 4
       }
     ],
-    "linebreak-style": ["error", "windows"],
-    "quotes": ["off", "single"]
+    "linebreak-style": ["error", "windows"]
   },
   "parserOptions": {
     "ecmaFeatures": {

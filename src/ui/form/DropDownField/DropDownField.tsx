@@ -34,7 +34,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     style?: any,
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: any;
@@ -160,7 +160,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps) {
         if (!_isEqual(prevSelectedIds, selectedIds)) {
             props.input.onChange.call(null, props.multiple ? selectedIds : (selectedIds[0] ?? null));
         }
-    }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds]);
+    }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds, props.attribute]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,

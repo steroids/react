@@ -1,0 +1,22 @@
+import * as React from 'react';
+import Grid from '../../list/Grid';
+import {getCrudGridId, ICrudChildrenProps} from './Crud';
+
+export default function CrudGrid(props: ICrudChildrenProps) {
+    return (
+        <Grid
+            listId={getCrudGridId(this.props)}
+            action={this.props.restUrl}
+            scope={['model', 'permission']}
+            primaryKey={this.props.primaryKey}
+            model={this.props.model}
+            //searchModel={this.props.searchModel}
+            controls={this.props.controlsGetter}
+            columns={[this.props.primaryKey]}
+            pagination={{
+                loadMore: false,
+            }}
+            {...this.props.grid}
+        />
+    );
+}

@@ -18,13 +18,14 @@ function MyModal(props: IMyModalProps) {
     const dispatch = useDispatch();
     return (
         <Modal
-            title='Open modal'
+            title='Hello!'
             isClosing={props.isClosing}
             onClose={props.onClose}
+            controls={[{label: __(('OK')), onClick: () => props.onClose()}]}
         >
-            Demo text
-            {' '}
-            {props.nextId}
+            <div className='mb-3'>
+                This is your modal window.
+            </div>
             <Button
                 label='Open sub modal'
                 onClick={e => {
@@ -39,6 +40,11 @@ function MyModal(props: IMyModalProps) {
     );
 }
 
+/**
+ * Basic
+ * @order 1
+ * @col 6
+ */
 export default () => {
     const dispatch = useDispatch();
     return (

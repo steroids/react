@@ -14,14 +14,17 @@ export default () => (
             listId='GridFormatterDemo'
             items={[
                 {
+                    id: 1,
                     date: '2021-09-11',
                     route: 'Krasnoyarsk - Moscow',
                 },
                 {
+                    id: 2,
                     date: '2021-09-15',
                     route: 'Krasnoyarsk - Krasnodar',
                 },
                 {
+                    id: 3,
                     date: '2021-09-20',
                     route: 'Krasnoyarsk - Tomsk',
                 },

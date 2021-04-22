@@ -12,25 +12,100 @@ import {
 } from '../../../reducers/router';
 import {IButtonProps} from '../../form/Button/Button';
 
+/**
+ * Nav
+ * Компонент навигации
+ */
 export interface INavItem extends IButtonProps {
+    /**
+     * Идентификатор элемента
+     */
     id?: number | string,
+
+    /**
+     * Текст элемента
+     * @example 'Отзывы'
+     */
     label?: string | any,
+
+    /**
+     * Ссылка на внешнюю страницу
+     * @example https://ya.ru
+     */
     url?: string,
+
+    /**
+     * Обработчик события нажатия
+     * @param args
+     */
     onClick?: (...args: any[]) => any,
+
+    /**
+     * CSS-класс для элемента отображения
+     */
     className?: CssClassName,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения элемента
+     * @example MyCustomView
+     */
     view?: any,
+
+    /**
+     * Видимость элемента
+     * @example true
+     */
     visible?: boolean,
+
+    /**
+     * Контент, который отобразиться, если элемент навигации будет активен
+     * @example ContentComponent
+     */
     content?: any,
+
+    /**
+     * Свойства для компонента с контентом
+     * @example {content: 'Some text'}
+     */
     contentProps?: any,
 }
 
 export interface INavProps {
+    /**
+     * Шаблон отображения элементов навигации
+     * @example 'link'
+     */
     layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list' | string;
+
+    /**
+     * Коллекция с элементами навигации
+     * @example [{id: 1, label: 'One'}, {id: 2, label: 'Two'}]
+     */
     items?: string | INavItem[];
+
     routes?: IRoute[],
+
+    /**
+     * Идентификатор активного элемента
+     * @example 1
+     */
     activeTab?: number | string;
+
+    /**
+     * CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения элемента
+     * @example MyCustomView
+     */
     view?: any;
+
+    /**
+     * Обработчик, который вызывается при смене активного элемента навигации
+     * @param args
+     */
     onChange?: (...args: any[]) => any;
 
     /**

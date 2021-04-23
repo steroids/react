@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useMemo, useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
 import moment from 'moment';
-import {useComponents} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {useComponents} from '@steroidsjs/core/hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '@steroidsjs/core/ui/form/Field/fieldWrapper';
 
 /**
  * TimeField

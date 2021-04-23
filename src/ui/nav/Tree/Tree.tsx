@@ -78,6 +78,7 @@ function Tree(props: ITreeProps) {
                     toRoute: routeItems.length === 0 ? route.id : null,
                     toRouteParams: routeItems.length === 0 ? props.routerParams : null,
                     items: routeItems,
+                    icon: route.icon,
                 };
             };
             return routes.map(route => routeToItem(route)).filter(r => r.visible);

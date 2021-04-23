@@ -4,11 +4,11 @@ import useList, {IListConfig, IListOutput} from '../../../hooks/useList';
 
 /**
  * List
- * Компонент для рендеринга коллекций в виде списка.
+ * Компонент для представления коллекции в виде списка.
  */
 export interface IListProps extends IListConfig {
     /**
-     * Переопределение view React компонента для кастомизациии отображения элемента коллекции
+     * Переопределение view React компонента для кастомизации отображения элемента коллекции
      * @example MyCustomView
      */
     itemView?: React.ComponentType;
@@ -19,7 +19,7 @@ export interface IListProps extends IListConfig {
     itemProps?: Record<string, unknown>;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: React.ComponentType;
@@ -109,6 +109,7 @@ export default function List(props: IListProps) {
     ));
 
     return components.ui.renderView(props.view || 'list.ListView', {
+        ...props,
         list,
         paginationPosition,
         paginationSizePosition,

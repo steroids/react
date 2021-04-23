@@ -1,40 +1,24 @@
 import * as React from 'react';
 
 import Grid from '../Grid';
-import {searchForm, items} from './load-more';
+import {items, columns} from './basic';
 
+/**
+ * Grid with page numbers
+ * @order 3
+ * @col 8
+ */
 export default () => (
     <>
-        <h6>
-            Pagination
-        </h6>
         <Grid
-            listId='ListStoryPagination'
+            listId='GridPaginationDemo'
             items={items}
-            columns={[
-                {
-                    label: 'Name',
-                    attribute: 'name',
-                    // visible: false,
-                },
-                {
-                    label: __('Second name'),
-                    attribute: 'secondName',
-                },
-                {
-                    label: 'Work',
-                    attribute: 'work',
-                },
-            ]}
-            searchForm={searchForm}
+            columns={columns}
             paginationSize={{
-                enable: true,
-                defaultValue: 30,
+                defaultValue: 2,
+                sizes: [2, 3, 4],
             }}
-            pagination={{
-                enable: true,
-                loadMore: false,
-            }}
+            pagination
         />
     </>
 );

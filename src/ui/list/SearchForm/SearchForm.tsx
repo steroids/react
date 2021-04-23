@@ -5,6 +5,12 @@ import useForm from '../../../hooks/useForm';
 import {IFormProps} from '../../../ui/form/Form/Form';
 import {formChange} from '../../../actions/form';
 
+/**
+ * SearchForm
+ * Форма для поиска элементов в коллекциях list-компонентов.
+ * Форма хранит значения в локальном состоянии, а на onSubmit отправляет их в хранилище Redux,
+ * после чего в list-компонент подгружаются новые элементы коллекции.
+ */
 interface ISearchFormProps extends IFormProps {
     listId?: string,
 }

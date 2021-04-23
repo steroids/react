@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useMount} from 'react-use';
 import {useMemo} from 'react';
-import {useDispatch} from 'react-redux';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
@@ -23,7 +22,7 @@ export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
     className?: CssClassName;
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView;
@@ -43,15 +42,14 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
 
 function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
-    const dispatch = useDispatch();
 
     useMount(() => {
         if (props.input.value === undefined) {
-            dispatch(props.input.onChange(false));
+            props.input.onChange(false);
         }
     });
 
-    props.inputProps = useMemo(() => ({
+    const inputProps = useMemo(() => ({
         name: props.input.name,
         type: 'checkbox',
         checked: !!props.input.value,
@@ -60,13 +58,14 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps) {
         ...props.inputProps,
     }), [props.disabled, props.input, props.inputProps]);
 
-    return components.ui.renderView(props.view || 'form.CheckboxFieldView', props);
+    return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props, inputProps});
 }
 
 CheckboxField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
+    inputProps: {},
 };
 
 export default fieldWrapper('CheckboxField', CheckboxField, {label: false});

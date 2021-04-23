@@ -34,7 +34,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     style?: any,
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: any;

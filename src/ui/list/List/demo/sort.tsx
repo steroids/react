@@ -1,6 +1,33 @@
 import List from '@steroidsjs/core/ui/list/List';
 import * as React from 'react';
 
+export const items = [
+    {
+        id: 1,
+        price: 50,
+        title: 'Jeans',
+    },
+    {
+        id: 2,
+        price: 125,
+        title: 'Coat',
+    },
+    {
+        id: 3,
+        price: 18,
+        title: 'Shirt',
+    },
+    {
+        id: 4,
+        price: 62,
+        title: 'Dress',
+    },
+    {
+        price: 100,
+        title: 'Boots',
+    },
+];
+
 /**
  * List with sorting
  * @order 8
@@ -9,32 +36,7 @@ import * as React from 'react';
 export default () => (
     <List
         listId='ListDemoSort'
-        items={[
-            {
-                id: 1,
-                price: 50,
-                title: 'Jeans',
-            },
-            {
-                id: 2,
-                price: 125,
-                title: 'Coat',
-            },
-            {
-                id: 3,
-                price: 18,
-                title: 'Shirt',
-            },
-            {
-                id: 4,
-                price: 62,
-                title: 'Dress',
-            },
-            {
-                price: 100,
-                title: 'Boots',
-            },
-        ]}
+        items={items}
         className='list-group'
         searchForm={{
             layout: 'horizontal',

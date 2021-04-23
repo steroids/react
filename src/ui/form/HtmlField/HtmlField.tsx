@@ -37,7 +37,7 @@ export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperO
     uploadImagesProcessor?: string,
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView,

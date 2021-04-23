@@ -1,4 +1,5 @@
 import _get from 'lodash-es/get';
+import {set as _set, delete as _delete} from 'dot-prop-immutable';
 import {MODAL_OPEN, MODAL_CLOSE, MODAL_MARK_CLOSING} from '../actions/modal';
 
 export const MODAL_DEFAULT_GROUP = 'modal';
@@ -22,25 +23,21 @@ export default (state = initialState, action) => {
                 const items = _get(state, ['opened', group]) || [];
                 const index = items.findIndex(item => item.id === action.id);
                 if (index !== -1) {
-                    items[index].props = {
+                    return _set(state, `opened.${group}.${index}.props`, {
                         ...items[index].props,
                         ...action.props,
-                    };
-                } else {
-                    items.push({
+                    });
+                }
+
+                return _set(state, `opened.${group}`, [
+                    ...items,
+                    {
                         id: action.id,
                         modal: action.modal,
                         props: action.props,
                         isClosing: false,
-                    });
-                }
-
-                return {
-                    opened: {
-                        ...state.opened,
-                        [group]: [].concat(items),
                     },
-                };
+                ]);
             })();
 
         case MODAL_MARK_CLOSING:
@@ -49,17 +46,9 @@ export default (state = initialState, action) => {
                 const items = _get(state, ['opened', group]) || [];
                 const index = items.findIndex(item => item.id === action.id);
                 if (index !== -1) {
-                    items[index] = {
-                        ...items[index],
-                        isClosing: true,
-                    };
+                    return _set(state, `opened.${group}.${index}.isClosing`, true);
                 }
-                return {
-                    opened: {
-                        ...state.opened,
-                        [group]: [].concat(items),
-                    },
-                };
+                return state;
             })();
 
         case MODAL_CLOSE:
@@ -68,14 +57,9 @@ export default (state = initialState, action) => {
                 const items = _get(state, ['opened', group]) || [];
                 const index = items.findIndex(item => item.id === action.id);
                 if (index !== -1) {
-                    items.splice(index, 1);
+                    return _delete(state, `opened.${group}.${index}`);
                 }
-                return {
-                    opened: {
-                        ...state.opened,
-                        [group]: [].concat(items),
-                    },
-                };
+                return state;
             })();
 
         default:

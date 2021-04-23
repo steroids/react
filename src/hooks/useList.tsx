@@ -100,13 +100,13 @@ export interface IListConfig {
     sort?: boolean | ISortProps,
 
     /**
-     * Варианты расположения элементов в списке
+     * Варианты расположения элементов коллекции
      * @example {items: [{id: 'list', label: 'List'}, {id: 'grid', label: 'Grid'}]}
      */
     layout?: boolean | ILayoutNamesProps,
 
     /**
-     * Заглушка в случае отсутствия элементов в списке
+     * Заглушка в случае отсутствия элементов
      * @example {text: 'Записи не найдены'}
      */
     empty?: boolean | string | IEmptyProps,
@@ -126,7 +126,7 @@ export interface IListConfig {
     autoDestroy?: boolean,
 
     /**
-     * Обработчик, который вызывается при изменении значений формы, и нужен для подгрузки новых элементов списка
+     * Обработчик, который вызывается при изменении значений формы, и нужен для подгрузки новых элементов коллекции
      * @param {IList} list
      * @param {Object} query
      * @param {*} http
@@ -155,13 +155,13 @@ export interface IListConfig {
      */
     query?: Record<string, unknown>,
 
-    model?: Model,
+    model?: string,
 
     /**
-     * Модель для синхронизации значений формы списка с адресной строкой
+     * Модель для синхронизации значений формы с адресной строкой
      * @example {attributes: [{attribute: 'isMilesAvailable', type: boolean}]}
      */
-    searchModel?: Model,
+    searchModel?: string,
 
     /**
      * Элементы коллекции
@@ -347,7 +347,7 @@ export default function useList(config: IListConfig): IListOutput {
             items: null,
             sourceItems: config.items || null,
             isRemote: !config.items,
-            primaryKey: config.primaryKey,
+            primaryKey: config.primaryKey || defaultConfig.primaryKey,
             formId,
             loadMore: paginationProps.loadMore,
             pageAttribute: paginationProps.attribute || null,

@@ -51,7 +51,7 @@ export interface IPaginationProps {
     buttonProps?: IButtonProps,
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView,

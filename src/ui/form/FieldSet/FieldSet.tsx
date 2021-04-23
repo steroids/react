@@ -24,7 +24,7 @@ export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
     label?: any,
 
     /**
-     * Переопределение view React компонента для кастомизациии отображения
+     * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView,

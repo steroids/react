@@ -7,13 +7,51 @@ import {ListControlPosition} from '../../../hooks/useList';
 import {IList, listSetLayout} from '../../../actions/list';
 import useDispatch from '../../../hooks/useDispatch';
 
+/**
+ * LayoutNames
+ * Переключает варианты расположения элементов коллекции.
+ * Сохраняет выбранный пользователем шаблон в LocalStorage.
+ */
 export interface ILayoutNamesProps {
+    /**
+     * Данные списка
+     */
     list?: IList,
+
+    /**
+     * Отобразить переключатель
+     * @example false
+     */
     enable?: boolean,
+
+    /**
+     * Название ключа под которым в LocalStorage сохранится значение выбранного шаблона
+     * @example 'layout'
+     */
     attribute?: string,
+
+    /**
+     * Шаблон по умолчанию
+     * @example 'list'
+     */
     defaultValue?: string,
+
+    /**
+     * Расположение переключателя
+     * @example 'bottom'
+     */
     position?: ListControlPosition,
+
+    /**
+     * Коллекция с шаблонами
+     * @example [{id: 'list', label: 'List'}, {id: 'grid', label: 'Grid'}]
+     */
     items?: INavItem[],
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
 }
 

@@ -9,8 +9,9 @@ jobs:
         with:
           node-version: 10
       - run: yarn
-      - run: yarn build
-      - run: npm test
+      - run: yarn tsc
+      - run: cp ./{package.json,LICENSE,README.md} dist/
+      - run: cp src/index.d.ts dist/
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dist/package.json

@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.0.0-rc.4",
+  "version": "2.0.0-rc.5",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -20,7 +20,7 @@
   "scripts": {
     "docs": "typedoc --ignoreCompilerErrors --json typedoc.json .",
     "test": "jest",
-    "build": "tsc && cp ./{package.json,LICENSE,README.md} dist/ && cp src/index.d.ts dist/"
+    "build": "pwd && tsc && cp ./{package.json,LICENSE,README.md} dist/ && cp src/index.d.ts dist/"
   },
   "dependencies": {
     "axios": "^0.21.1",

@@ -63,6 +63,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
      * Список с полями формы
      */
     items?: IFieldListItem[];
+
     fields?: any;
 
     /**

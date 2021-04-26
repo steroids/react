@@ -1,11 +1,36 @@
 import {useComponents, useSelector} from '../../../hooks';
-import {getRouteBreadcrumbs} from '../../../reducers/router';
+import {getRouteBreadcrumbs, IRoute} from '../../../reducers/router';
 
+/**
+ * Breadcrumbs
+ * Хлебные крошки
+ */
 export interface IBreadcrumbsProps {
-    items?: any[];
+    /**
+     * Коллекция элементов навигационной цепочки
+     * @example [{id: 'root', title: 'Home'}, {id: 'catalog', title: 'Catalog'}
+     */
+    items?: IRoute[];
+
+    /**
+     * Вместо items можно передать идентификатор текущего роута, от которого компонент самостоятельно построит
+     * навигационную цепочку
+     * @example 'catalog'
+     */
     pageId?: string;
+
+    /**
+     * Заголовок текущей страницы. Если заголовок не задан, то подставится item.title
+     * @example 'Каталог'
+     */
     pageTitle?: string;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
     view?: any;
+
     [key: string]: any;
 }
 

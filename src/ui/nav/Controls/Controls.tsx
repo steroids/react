@@ -3,31 +3,57 @@ import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../../form/Button/Button';
 import {INavProps} from '../Nav/Nav';
 
+/**
+ * Controls
+ * Коллекция с контролами. Можно передавать список с кастомными контролами, а можно использовать стандарные контролы
+ * компонента. Стандартные контролы подходят для CRUD-операций, все что нужно для их использования - передать
+ * соответствующий id и обработчик - внешний вид (иконка и название) отобразятся автоматом.
+ */
 export interface IControlItem extends IButtonProps {
     /**
-     * Идентификатор элемента управления
+     * Идентификатор контрола
      * @example 'create'
      */
     id?: string,
 
     /**
-     * Скрыть или показать элемент
+     * Скрыть или показать контрол
      * @example true
      */
     visible?: boolean,
 
     /**
-     * Расположение элемента
+     * Расположение контрола
      * @example 'left'
      */
     position?: 'left' | 'right',
 }
 
 export interface IControlsProps {
+    /**
+     * Коллекция контролов
+     * @example [{id: 'delete', onClick: () => alert("It's deleted")}]
+     */
     items?: IControlItem[],
+
+    /**
+     * Пропсы для компонента Nav, в который передаются контролы в качестве items
+     * @example {layout: 'link'}
+     */
     navProps?: INavProps,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
     view?: any,
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     * @example MyCustomView
+     */
     className?: string,
+
     [key: string]: any,
 }
 

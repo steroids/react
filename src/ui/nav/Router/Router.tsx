@@ -16,39 +16,147 @@ import {getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducer
 import {SsrProviderContext} from './SsrProvider';
 import {IFetchHocConfigFunc} from '../../../hoc/fetch';
 
+/**
+ * Router
+ * Маршрутизатор.
+ * Компонент получает общий для приложения шаблон и дерево роутов. Из дерева роутов посредством React Router
+ * образуется switch-конструкция, которая в зависимости от текущего пути рендерит соответствующий компонент страницы.
+ * Или осуществляет редирект на другую страницу. Все страницы оборачиваются в переданный шаблон.
+ */
 export interface IRouteItem {
+    /**
+     * Идентификатор роута
+     * @example 'catalog'
+     */
     id?: string,
+
+    /**
+     * Текст, который отобразится на кнопке навигации для данного роута
+     * @example 'Каталог'
+     */
     label?: string,
+
+    /**
+     * Заголовок страницы
+     * @example 'Каталог'
+     */
     title?: string,
+
+    /**
+     * Путь до роута
+     * @example '/catalog'
+     */
     path?: string,
+
+    /**
+     * Если true, то путь должен точно соответствовать location.pathname
+     * @example '/catalog'
+     */
     exact?: boolean,
+
+    /**
+     * В свойстве можно передать как путь, на который осуществится редирект, так и булево значение.
+     * Если свойство равно true - то редирект произойдет на первый из вложенных роутов.
+     * @example true
+     */
     redirectTo?: boolean | string,
+
+    /**
+     * Компонент страницы, который отобразится, если путь будет соответствовать location.pathname
+     * @example CatalogPage
+     */
     component?: any,
+
+    /**
+     * Свойства для компонента страницы
+     */
     componentProps?: any,
+
+    /**
+     * Тип шаблона для данного роута
+     * @example 'dark'
+     */
     layout?: string,
+
+    /**
+     * Отображать или показывать роут
+     * @example true
+     */
     isVisible?: boolean,
+
+    /**
+     * Отображать ссылку или кнопку в навигации для перехода на данный роут
+     * @example false
+     */
     isNavVisible?: boolean,
+
+    /**
+     * Название или список с названиями моделей, полученных с бэкенда
+     */
     models?: string | string[],
+
+    /**
+     * Название или список с названиями перечислений, полученных с бэкенда
+     */
     enums?: string | string[],
+
+    /**
+     * Список с ролями, который показывает, кому из пользователей будет доступен просмотр страницы
+     * @example ['user', 'admin']
+     */
     roles?: string[],
+
+    /**
+     * Обработчик, который возвращает конфигурацию для осуществления HTTP-запроса. Запрос происходит каждый раз
+     * перед рендерингом страницы, чтобы получить для неё все необходимые данные
+     * @param {*} props
+     * @return {Object} Например, {url: '/api/v1/some-data', key: 'someData'}
+     */
     fetch?: IFetchHocConfigFunc,
+
+    /**
+     * Вложенные роуты
+     */
     items?: IRouteItem[] | {[key: string]: IRouteItem};
+
     [key: string]: any,
 }
 
 export interface IRouterProps {
+    /**
+     * Общий шаблон, который оборачивает страницы приложения
+     * @example Layout
+     */
     wrapperView?: any;
+
+    /**
+     * Свойства шаблона
+     */
     wrapperProps?: any;
+
+    /**
+     * Дерево роутов
+     * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
+     */
     routes?: IRouteItem[] | {[key: string]: IRouteItem};
-    pathname?: string;
-    routeId?: string;
-    activeRouteIds?: string[];
+
+    /**
+     * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент
+     * на соответствующей странице, то подставится стандартный список с ролями
+     * @example [null, 'user', 'admin']
+     */
     defaultRoles?: string[];
+
+    /**
+     * Прокрутить страницу к началу при смене url
+     * @example true
+     */
     autoScrollTop?: boolean;
-    history?: any;
-    store?: any;
-    basename?: any;
-    activePath?: string;
+
+    /**
+     * Контент, который отобразится под каждой страницей приложения
+     * @example SomeComponent
+     */
     children?: React.ReactNode,
 }
 

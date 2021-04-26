@@ -3,6 +3,12 @@ import _get from 'lodash-es/get';
 import _isString from 'lodash-es/isString';
 import _isEmpty from 'lodash-es/isEmpty';
 import _omit from 'lodash-es/omit';
+import {ReactNode, useCallback, useEffect, useMemo} from 'react';
+import {useComponents, useSelector} from '@steroidsjs/core/hooks';
+import useFetch from '@steroidsjs/core/hooks/useFetch';
+import {usePrevious} from 'react-use';
+import useDispatch from '@steroidsjs/core/hooks/useDispatch';
+import {Model} from '@steroidsjs/core/components/MetaComponent';
 import {getRouteId, getRouteParams, getRouteProp} from '../../../reducers/router';
 import {goToRoute} from '../../../actions/router';
 import {IComponentsHocOutput} from '../../../hoc/components';
@@ -18,12 +24,6 @@ import {closeModal, openModal} from '../../../actions/modal';
 import Modal from '../../modal/Modal';
 import {getOpened} from '../../../reducers/modal';
 import {listRefresh} from '../../../actions/list';
-import {ReactNode, useCallback, useEffect, useMemo} from 'react';
-import {useComponents, useSelector} from '@steroidsjs/core/hooks';
-import useFetch from '@steroidsjs/core/hooks/useFetch';
-import {usePrevious} from 'react-use';
-import useDispatch from '@steroidsjs/core/hooks/useDispatch';
-import {Model} from '@steroidsjs/core/components/MetaComponent';
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
     title?: string,
@@ -102,7 +102,7 @@ export const getCrudModalId = (props: ICrudProps) => getCrudId(props);
 export const getCrudGridId = (props: ICrudProps) => getCrudId(props);
 export const getCrudFormId = (
     props: ICrudProps,
-    suffix = null
+    suffix = null,
 ) => [getCrudId(props), props.itemId, suffix].filter(Boolean).join('_');
 
 const defaultItems: ({ [key: string]: ICrudItem }) = {
@@ -150,7 +150,7 @@ const resolveVisible = (
     crudItem: ICrudItem,
     itemId: PrimaryKey,
     isGrid: boolean,
-    hasModal: boolean
+    hasModal: boolean,
 ) => {
     // Force disable visible
     if (crudItem.visible === false) {
@@ -183,7 +183,7 @@ const resolveVisible = (
     }
 
     return !crudItem.pkRequired === !itemId;
-}
+};
 
 function Crud(props: ICrudProps) {
     const components = useComponents();
@@ -224,7 +224,7 @@ function Crud(props: ICrudProps) {
             pkRequired: true,
             ...normalizedItems[id],
         }));
-    }, []);
+    }, [props]);
 
     const {
         routeId,
@@ -261,13 +261,13 @@ function Crud(props: ICrudProps) {
         };
     });
 
-
     const restUrl = typeof props.restUrl === 'function' ? props.restUrl(props) : props.restUrl;
     const fetchConfig = useMemo(() => itemId && restUrl && ({
         method: 'get',
         id: getCrudId(props) + '_' + itemId,
         url: `${restUrl}/${itemId}`,
-    }), [])
+    }), [itemId, props, restUrl]);
+
     const {data, isLoading, fetch} = useFetch(fetchConfig);
 
     const onModalClose = useCallback(() => {
@@ -279,9 +279,10 @@ function Crud(props: ICrudProps) {
                 [props.queryKey + 'Action']: null,
             }),
         ]);
-    }, []);
+    }, [dispatch, props, routeId, routeParams]);
 
-    const prevAction = usePrevious(props.prevAction || null);
+    const prevAction = usePrevious(routeAction || null);
+
     useEffect(() => {
         const crudItem = items.find(item => item.actionName === routeAction);
         const mode = crudItem && crudItem.mode || props.mode;
@@ -289,7 +290,7 @@ function Crud(props: ICrudProps) {
 
         if (mode !== MODE_MODAL) {
             if (isModal) {
-                props.dispatch(closeModal(getCrudModalId(props)));
+                dispatch(closeModal(getCrudModalId(props)));
             }
             return;
         }
@@ -301,20 +302,22 @@ function Crud(props: ICrudProps) {
         const nextAction = routeAction;
         if (prevAction !== nextAction) {
             if (prevAction === CRUD_ACTION_INDEX) {
-                props.dispatch(closeModal(getCrudModalId(props)));
+                dispatch(closeModal(getCrudModalId(props)));
             }
             if (nextAction !== CRUD_ACTION_INDEX) {
-                props.dispatch(openModal(Modal, {
+                dispatch(openModal(Modal, {
                     modalId: getCrudModalId(props),
                     size: 'lg',
                     title: crudItem.title || crudItem.label || null,
                     onClose: onModalClose,
                     component: Crud,
-                    componentProps: props,
+                    componentProps: {
+                        form: props.form,
+                    },
                 }));
             }
         }
-    }, []);
+    }, [dispatch, items, onModalClose, prevAction, props, routeAction]);
 
     const onComplete = useCallback(() => {
         const crudItem = items.find(item => item.actionName === routeAction);
@@ -329,7 +332,7 @@ function Crud(props: ICrudProps) {
                 [props.queryKey + 'Action']: null,
             }));
         }
-    }, []);
+    }, [dispatch, items, onModalClose, props, routeAction, routeId, routeParams]);
 
     const onClick = useCallback((e, currentItemId: PrimaryKey, item: any, crudItem: ICrudItem) => {
         // Custom confirm
@@ -342,7 +345,7 @@ function Crud(props: ICrudProps) {
             }
         }
         crudItem.onClick(e, currentItemId, item, props);
-    }, []);
+    }, [props]);
 
     const getControls = useCallback((item = null) => {
         let currentAction;
@@ -350,7 +353,7 @@ function Crud(props: ICrudProps) {
         const isGrid = !!item;
 
         if (hasModal && !props.modalId) {
-            currentAction = CRUD_ACTION_INDEX
+            currentAction = CRUD_ACTION_INDEX;
         } else {
             currentItemId = item && item[props.primaryKey];
 
@@ -386,7 +389,8 @@ function Crud(props: ICrudProps) {
 
             return button;
         });
-    }, []);
+    }, [action, hasModal, itemId, items, onClick, props.modalId, props.primaryKey, props.queryKey, routeId, routeParams]);
+    // items, routeParams
 
     let crudItem = items.find(item => item.actionName === action);
     const mode = crudItem && crudItem.mode || props.mode;
@@ -432,7 +436,6 @@ function Crud(props: ICrudProps) {
             )}
         </CrudView>
     );
-
 }
 
 Crud.defaultProps = {

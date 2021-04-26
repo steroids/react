@@ -32,7 +32,7 @@ export interface IApplicationHookConfig {
     onInit?: (components: IComponents) => void,
     useGlobal?: boolean,
     reducers?: any,
-    routes?: IRouteItem,
+    routes?: () => IRouteItem,
     layoutView?: CustomView,
     layoutProps?: Record<string, unknown>,
 }
@@ -115,7 +115,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         if (config.routes) {
             content = (
                 <Router
-                    routes={config.routes}
+                    routes={config.routes()}
                     wrapperView={config.layoutView}
                     wrapperProps={config.layoutProps}
                 />

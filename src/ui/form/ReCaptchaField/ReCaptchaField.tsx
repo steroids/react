@@ -3,7 +3,15 @@ import { useMemo } from 'react';
 import { useComponents } from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
+/**
+ * ReCaptchaField
+ * Компонент для использования ReCAPTCHA v3 от Google
+ */
 export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
+    /**
+     * Контекст действия
+     * @example 'addComment'
+     */
     action?: any;
 
     /**
@@ -11,6 +19,7 @@ export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
      * @example MyCustomView
      */
     view?: CustomView;
+
     [key: string]: any;
 }
 
@@ -22,6 +31,7 @@ function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps) 
     const components = useComponents();
 
     const googleCaptchaSiteKey = components.resource?.googleCaptchaSiteKey;
+
     const reCaptchaProps = useMemo(() => ({
         sitekey: googleCaptchaSiteKey,
         action: props.action,

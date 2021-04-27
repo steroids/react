@@ -3,8 +3,8 @@ import * as React from 'react';
 import Button from '../Button';
 
 /**
- * Hint
- * @order 8
+ * Button with hint
+ * @order 7
  * @col 4
  */
 export default () => (

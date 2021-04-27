@@ -3472,7 +3472,7 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
                     "type": "React.ComponentType",
                     "example": "MyCustomView"
@@ -3732,7 +3732,7 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
                     "type": "React.ComponentType",
                     "example": "MyCustomView"
@@ -5648,7 +5648,7 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
@@ -6478,7 +6478,7 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
@@ -7000,7 +7000,7 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
                     "type": "React.ComponentType",
                     "example": "MyCustomView"
@@ -7053,7 +7053,7 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизациии отображения",
+                    "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
                     "type": "React.ComponentType",
                     "example": "MyCustomView"
@@ -10313,7 +10313,7 @@
         "CustomView": {
             "name": "CustomView",
             "decorators": [],
-            "description": "Переопределение view React компонента для кастомизациии отображения",
+            "description": "Переопределение view React компонента для кастомизации отображения",
             "required": true,
             "type": "React.ReactNode",
             "example": "MyCustomView"

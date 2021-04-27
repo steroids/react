@@ -3,7 +3,7 @@ import * as React from 'react';
 import Link from '../Link';
 
 /**
- * Button with icon
+ * Link with icon
  * @order 6
  * @col 4
  */

@@ -10,8 +10,8 @@ const sizes = {
 
 /**
  * Sizes
- * @order 2
- * @col 4
+ * @order 10
+ * @col 8
  */
 export default () => (
     <>

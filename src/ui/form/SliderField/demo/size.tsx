@@ -7,11 +7,16 @@ const sizes = {
     lg: 'Large',
 };
 
+/**
+ * Sizes
+ * @order 5
+ * @col 8
+ */
 export default () => (
     <div className='row'>
         {Object.keys(sizes).map(size => (
             <div className='col' key={size}>
-                <SliderField label={size} size={size} />
+                <SliderField label={sizes[size]} size={size} />
             </div>
         ))}
     </div>

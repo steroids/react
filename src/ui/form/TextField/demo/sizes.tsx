@@ -7,12 +7,19 @@ const sizes = {
     lg: 'Large',
 };
 
+/**
+ * Sizes
+ * @order 6
+ * @col 12
+ */
 export default () => (
     <>
-        {Object.keys(sizes).map(size => (
-            <div className='col' key={size}>
-                <TextField label={size} size={size}/>
-            </div>
-        ))}
+        <div className='row'>
+            {Object.keys(sizes).map(size => (
+                <div className='col' key={size}>
+                    <TextField label={sizes[size]} size={size} />
+                </div>
+            ))}
+        </div>
     </>
 );

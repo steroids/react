@@ -2,6 +2,11 @@ import * as React from 'react';
 
 import Pagination from '../Pagination';
 
+/**
+ * Basic
+ * @order 1
+ * @col 4
+ */
 export default () => (
     <>
         <Pagination

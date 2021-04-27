@@ -6,36 +6,16 @@ import ModalPortal from '../../ModalPortal';
 import {openModal} from '../../../../actions/modal';
 import Modal from '../Modal';
 
-interface IMyModalProps {
-    nextId: number,
-    isClosing: boolean;
-    onClose: (...args: any[]) => any;
-}
-
-// TODO test sub modals
-
-function MyModal(props: IMyModalProps) {
-    const dispatch = useDispatch();
+function DemoModal(props: any) {
     return (
         <Modal
-            title='Hello!'
-            isClosing={props.isClosing}
+            title='Title'
             onClose={props.onClose}
-            controls={[{label: __(('OK')), onClick: () => props.onClose()}]}
+            controls={[{label: __(('Control')), onClick: () => props.onClose()}]}
         >
             <div className='mb-3'>
                 This is your modal window.
             </div>
-            <Button
-                label='Open sub modal'
-                onClick={e => {
-                    e.preventDefault();
-                    dispatch(openModal(MyModal, {
-                        modalId: 'test' + props.nextId,
-                        nextId: props.nextId + 1,
-                    }));
-                }}
-            />
         </Modal>
     );
 }
@@ -54,9 +34,8 @@ export default () => {
                 label='Open modal'
                 onClick={e => {
                     e.preventDefault();
-                    dispatch(openModal(MyModal, {
-                        modalId: 'test0',
-                        nextId: 1,
+                    dispatch(openModal(DemoModal, {
+                        modalId: 'demo',
                     }));
                 }}
             />

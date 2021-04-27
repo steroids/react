@@ -3,8 +3,8 @@ import * as React from 'react';
 import Button from '../Button';
 
 /**
- * Confirm
- * @order 4
+ * Button with confirm
+ * @order 6
  * @col 4
  */
 export default () => (

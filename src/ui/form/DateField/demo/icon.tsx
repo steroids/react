@@ -2,6 +2,11 @@ import * as React from 'react';
 
 import DateField from '../DateField';
 
+/**
+ * Icons
+ * @order 5
+ * @col 6
+ */
 export default () => (
     <>
         <DateField label='Default' icon />

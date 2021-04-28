@@ -1,6 +1,6 @@
-import NavField from '@steroidsjs/core/ui/form/NavField/NavField';
+import NavField from '../NavField';
 import * as React from 'react';
-import {items} from '@steroidsjs/core/ui/form/NavField/demo/basic';
+import {items} from './basic';
 
 export default () => (
     <>

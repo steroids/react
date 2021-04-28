@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ControlsColumn from '@steroidsjs/core/ui/list/ControlsColumn';
+import ControlsColumn from '../ControlsColumn';
 
 /**
  * Basic

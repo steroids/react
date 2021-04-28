@@ -9,9 +9,10 @@ import _isNil from 'lodash-es/isNil';
 import {formSelector} from '../reducers/form';
 import {formChange} from '../actions/form';
 import {filterItems} from '../utils/data';
+import {IApiMethod} from '../components/ApiComponent';
 
 export interface IList {
-    action?: string,
+    action?: string | IApiMethod,
     actionMethod?: string,
     onFetch?: (list: IList, query: Record<string, unknown>, components: any) => Promise<any>,
     condition?: (query: Record<string, unknown>) => any,
@@ -69,7 +70,15 @@ const createList = (listId: string, props: any) => ({
     layoutAttribute: _get(props, '_layout.attribute') || null,
 });
 
-export const httpFetchHandler = (list: IList, query, {http}) => {
+export const httpFetchHandler = (list: IList, query, {api, http}) => {
+    if (typeof list.action === 'function') {
+        const params = {...query};
+        if (list.scope) {
+            params.scope = list.scope.join(',');
+        }
+        return list.action(api, params);
+    }
+
     let url = list.action;
     if (list.scope) {
         url

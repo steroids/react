@@ -6,6 +6,7 @@ import _set from 'lodash-es/set';
 import * as queryString from 'qs';
 import {useCallback, useMemo} from 'react';
 import {useFirstMountState, useMount, usePrevious, useUpdateEffect} from 'react-use';
+import {IApiMethod} from '../../../components/ApiComponent';
 import AutoSaveHelper from './AutoSaveHelper';
 import SyncAddressBarHelper from './SyncAddressBarHelper';
 import {IFieldProps} from '../Field/Field';
@@ -36,7 +37,7 @@ export interface IFormProps {
      * Url на который будет отправлена форма
      * @example api/v1/handle-form
      */
-    action?: string;
+    action?: string | IApiMethod;
 
     /**
      * Тип HTTP запроса (GET | POST | PUT | DELETE)
@@ -329,21 +330,24 @@ function Form(props: IFormProps) {
         }
 
         // Send request
-        const response = await components.http.send(
-            props.actionMethod,
-            props.action || window.location.pathname,
-            cleanedValues,
-            {
-                onTwoFactor: props.onTwoFactor
-                    ? async (providerName) => {
-                        const info = props.autoStartTwoFactor
-                            ? await components.http.post(`/api/v1/auth/2fa/${providerName}/send`)
-                            : null;
-                        props.onTwoFactor(providerName, info);
-                    }
-                    : undefined,
-            },
-        );
+        const options = {
+            onTwoFactor: props.onTwoFactor
+                ? async (providerName) => {
+                    const info = props.autoStartTwoFactor
+                        ? await components.http.post(`/api/v1/auth/2fa/${providerName}/send`)
+                        : null;
+                    props.onTwoFactor(providerName, info);
+                }
+                : undefined,
+        };
+        const response = typeof props.action === 'function'
+            ? props.action(components.api, cleanedValues, options)
+            : await components.http.send(
+                props.actionMethod,
+                props.action || window.location.pathname,
+                cleanedValues,
+                options,
+            );
 
         // Skip on 2fa
         if (response.twoFactor) {
@@ -371,7 +375,7 @@ function Form(props: IFormProps) {
         }
 
         return null;
-    }, [components.http, components.ui, props, setErrors, values]);
+    }, [components.api, components.http, components.ui, props, setErrors, values]);
 
     const formContextValue = useMemo(() => ({
         formId: props.formId,

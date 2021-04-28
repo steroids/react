@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import InputField from '@steroidsjs/core/ui/form/InputField/InputField';
+import InputField from '../../../form/InputField/InputField';
 import Grid from '../Grid';
 import {items, columns} from './basic';
 

@@ -1,4 +1,4 @@
-import List from '@steroidsjs/core/ui/list/List';
+import List from '../List';
 import * as React from 'react';
 
 /**

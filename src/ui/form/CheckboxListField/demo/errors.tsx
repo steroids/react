@@ -2,6 +2,11 @@ import * as React from 'react';
 import CheckboxListField from '../CheckboxListField';
 import {items} from './basic';
 
+/**
+ * Errors
+ * @order 4
+ * @col 6
+ */
 export default () => (
     <>
         <CheckboxListField

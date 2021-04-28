@@ -20,6 +20,11 @@ export const items = [
     },
 ];
 
+/**
+ * Basic
+ * @order 1
+ * @col 6
+ */
 export default () => (
     <>
         <SwitcherField

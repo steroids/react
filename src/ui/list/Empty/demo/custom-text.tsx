@@ -2,6 +2,11 @@ import * as React from 'react';
 
 import Empty from '../Empty';
 
+/**
+ * With custom view
+ * @order 2
+ * @col 6
+ */
 export default () => (
     <>
         <Empty

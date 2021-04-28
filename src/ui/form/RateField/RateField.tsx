@@ -7,22 +7,47 @@ import fieldWrapper, {
 } from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
+/**
+ * RateField
+ * Поле для проставления рейтинга
+ */
 interface IRateFieldItem {
     id: number,
     value: number,
 }
 
 interface IRateFieldProps extends IFieldWrapperInputProps {
+    /**
+     * Максимальное количество звезд
+     * @example 5
+     */
     itemsCount?: number,
+
+    /**
+     * Количество звезд по умолчанию
+     * @example 4
+     */
     defaultValue?: number,
+
+    /**
+     * Возможность полностью сбрасывать рейтинг, при повторном нажатии на звезду
+     * @example false
+     */
     allowClear?: boolean,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
     view?: CustomView,
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
     className?: CssClassName,
 
     inputProps: {
-        value: number,
-        disabled?: boolean,
-        onChange: (value: string | React.ChangeEvent) => void,
+        [key: string]: any,
     },
 }
 

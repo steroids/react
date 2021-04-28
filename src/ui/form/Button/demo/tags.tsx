@@ -4,8 +4,8 @@ import Button from '../Button';
 
 /**
  * Tags
- * @order 8
- * @col 4
+ * @order 11
+ * @col 6
  */
 export default () => (
     <>

@@ -8,17 +8,22 @@ const sizes = {
     lg: 'Large',
 };
 
+/**
+ * Sizes
+ * @order 5
+ * @col 6
+ */
 export default () => (
     <div className='row'>
         {Object.keys(sizes)
             .map(size => (
                 <div className='col' key={size}>
                     <SwitcherField
-                        label={size}
+                        label={sizes[size]}
                         items={items}
                         key={size}
                         size={size}
-                        className="float-left mr-2"
+                        className='float-left mr-2'
                     />
                 </div>
             ))}

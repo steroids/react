@@ -2,6 +2,11 @@ import NavField from '../NavField';
 import * as React from 'react';
 import {items} from './basic';
 
+/**
+ * Errors
+ * @order 4
+ * @col 8
+ */
 export default () => (
     <>
         <NavField

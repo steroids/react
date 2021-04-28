@@ -4,7 +4,7 @@ import Button from '../Button';
 
 /**
  * Link
- * @order 5
+ * @order 9
  * @col 4
  */
 export default () => (

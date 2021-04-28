@@ -255,11 +255,14 @@ function Button(props: IButtonProps) {
             return;
         }
 
-        if (props.toRoute) {
+        if (tag === 'a' && (props.toRoute || props.onClick)) {
             if (!e.ctrlKey && !e.shiftKey && !e.metaKey) {
                 e.preventDefault();
-                dispatch(goToRoute(props.toRoute, props.toRouteParams));
             }
+        }
+
+        if (props.toRoute) {
+            dispatch(goToRoute(props.toRoute, props.toRouteParams));
         }
 
         if (props.onClick) {
@@ -302,7 +305,7 @@ function Button(props: IButtonProps) {
                     });
             }
         }
-    }, [dispatch, props]);
+    }, [dispatch, props, tag]);
 
     const button = components.ui.renderView(props.view || 'form.ButtonView', {
         ...props,

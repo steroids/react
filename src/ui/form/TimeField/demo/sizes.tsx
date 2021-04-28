@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TimeField from "../TimeField";
+import TimeField from '../TimeField';
 
 const sizes = {
     sm: 'Small',
@@ -7,12 +7,19 @@ const sizes = {
     lg: 'Large',
 };
 
+/**
+ * Sizes
+ * @order 5
+ * @col 12
+ */
 export default () => (
     <>
-        {Object.keys(sizes).map(size => (
-            <div className='col' key={size}>
-                <TimeField label={size} size={size}/>
-            </div>
-        ))}
+        <div className='row'>
+            {Object.keys(sizes).map(size => (
+                <div className='col' key={size}>
+                    <TimeField label={sizes[size]} size={size} />
+                </div>
+            ))}
+        </div>
     </>
 );

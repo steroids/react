@@ -20,6 +20,11 @@ export const items = [
     },
 ];
 
+/**
+ * Basic
+ * @order 1
+ * @col 8
+ */
 export default () => (
     <>
         <NavField

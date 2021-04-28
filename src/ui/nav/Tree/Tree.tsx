@@ -10,23 +10,90 @@ import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../..
 import {IRouteItem} from '../Router/Router';
 import {IButtonProps} from '../../form/Button/Button';
 
+/**
+ * Tree
+ * Компонент, который представляет в виде дерева список с иерархической структурой данных
+ */
 export interface ITreeItem extends IButtonProps {
+    /**
+     * Идентификатор узла
+     */
     id?: string | number,
+
+    /**
+     * Вложенные элементы
+     * [{id: 2, label: 'Nested element', items: [...]}]
+     */
     items?: any[],
+
+    /**
+     * Скрыть или показать узел
+     * @example true
+     */
     visible?: boolean
 }
 
 export interface ITreeProps {
+    /**
+     * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами
+     * @example 'exampleTree'
+     */
     id?: string;
+
+    /**
+     * Коллекция с узлами. Также можно передать идентификатор роута, тогда компонент найдет все
+     * вложенные роуты и отобразит их в виде дерева.
+     * @example [{id: 1, label: 'Root', items: [...]}] | 'root'
+     */
     items?: ITreeItem[] | string;
+
+    /**
+     * Ограничивает максимальный уровень вложенности дерева
+     * @example 2
+     */
     level?: number;
+
+    /**
+     * Ключ для доступа к вложенным элементам узла
+     * @example 'items'
+     */
     itemsKey?: string;
-    selectedItemId?: string;
+
+    /**
+     * Идентификатор узла, которой нужно отобразить в раскрытом виде
+     * @example 2
+     */
+    selectedItemId?: string | number;
+
+    /**
+     * CSS-класс для элемента отображения
+     */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения элемента
+     * @example MyCustomView
+     */
     view?: any;
+
+    /**
+     * Максимальный уровень вложенности, до которого все узлы будут отображаться в развёрнутом виде
+     * @example 1
+     */
     autoOpenLevels?: number;
+
+    /**
+     * Обработчик на клик по элементу
+     * @param args
+     */
     onItemClick?: (...args: any[]) => any;
+
+    /**
+     * Отображать раскрытыми узлы из LocalStorage
+     * @example true
+     */
     autoSave?: boolean;
+
     [key: string]: any;
 }
 

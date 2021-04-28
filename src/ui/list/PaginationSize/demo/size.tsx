@@ -9,6 +9,11 @@ const sizes = {
     lg: 'Large',
 };
 
+/**
+ * Sizes
+ * @order 1
+ * @col 3
+ */
 export default () => (
     <>
         <div className='row'>

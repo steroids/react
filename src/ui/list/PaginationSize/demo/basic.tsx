@@ -3,6 +3,11 @@ import * as React from 'react';
 import PaginationSize from '../PaginationSize';
 import {demoItems} from '../../../../ui/list/List/demo/basic';
 
+/**
+ * Basic
+ * @order 1
+ * @col 3
+ */
 export default () => (
     <>
         <PaginationSize

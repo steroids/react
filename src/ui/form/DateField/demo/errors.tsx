@@ -1,6 +1,11 @@
 import * as React from 'react';
 import DateField from '../DateField';
 
+/**
+ * Errors
+ * @order 4
+ * @col 6
+ */
 export default () => (
     <>
         <DateField

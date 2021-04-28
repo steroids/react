@@ -2,6 +2,11 @@ import SwitcherField from '../SwitcherField';
 import * as React from 'react';
 import {items} from './basic';
 
+/**
+ * Errors
+ * @order 4
+ * @col 6
+ */
 export default () => (
     <>
         <SwitcherField

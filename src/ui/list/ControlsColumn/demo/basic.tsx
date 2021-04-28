@@ -1,5 +1,6 @@
 import * as React from 'react';
-import ControlsColumn from '../ControlsColumn';
+import ControlsColumn from '@steroidsjs/core/ui/list/ControlsColumn';
+import {controls} from '../../../nav/Controls/demo/basic';
 
 /**
  * Basic
@@ -9,8 +10,8 @@ import ControlsColumn from '../ControlsColumn';
 export default () => (
     <>
         <ControlsColumn
-            controls={['back', 'create', 'view', 'update', 'delete'].map(id => ({
-                id,
+            controls={controls.map(item => ({
+                ...item,
                 visible: true,
             }))}
             item={{}}

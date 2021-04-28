@@ -15,8 +15,8 @@ const colors = {
 
 /**
  * Colors
- * @order 1
- * @col 8
+ * @order 5
+ * @col 12
  */
 export default () => (
     <>

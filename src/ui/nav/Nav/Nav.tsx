@@ -8,7 +8,6 @@ import {useComponents, useSelector} from '../../../hooks';
 import {
     getActiveRouteIds, getNavItems,
     getRouterParams,
-    IRoute,
 } from '../../../reducers/router';
 import {IButtonProps} from '../../form/Button/Button';
 
@@ -78,15 +77,14 @@ export interface INavProps {
     layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list' | string;
 
     /**
-     * Коллекция с элементами навигации
-     * @example [{id: 1, label: 'One'}, {id: 2, label: 'Two'}]
+     * Коллекция с элементами навигации. Также можно передать идентификатор роута, тогда компонент найдет все
+     * вложенные роуты и отобразит их в навигации.
+     * @example [{id: 1, label: 'One'}, {id: 2, label: 'Two'}] | 'root'
      */
     items?: string | INavItem[];
 
-    routes?: IRoute[],
-
     /**
-     * Идентификатор активного элемента
+     * Идентификатор активного элемента. По умолчанию будет активен первый элемент.
      * @example 1
      */
     activeTab?: number | string;

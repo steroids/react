@@ -1,16 +1,17 @@
 import * as React from 'react';
 import Field from '../Field';
+import DateField from '../../DateField';
 
 /**
- * Basic
- * @order 1
+ * Field with component
+ * @order 3
  * @col 6
  */
 export default () => (
     <>
         <Field
-            attribute='field'
-            label='Basic'
+            component={DateField}
+            label='Date'
         />
     </>
 );

@@ -1,20 +1,38 @@
 import * as queryString from 'qs';
 import _isArray from 'lodash-es/isArray';
 
+declare global {
+    interface Window {
+        grecaptcha: {
+            ready: (...args: any[]) => void,
+            execute: (...args: any[]) => Promise<string>
+        };
+    }
+}
 /**
  * Resource Component
  * Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...
  */
 export default class ResourceComponent {
     _callbacks: any;
+
     _components: any;
+
     googleApiKey: string;
+
     googleCaptchaSiteKey: string;
+
     language: string;
+
     static RESOURCE_GOOGLE_MAP_API = '//maps.googleapis.com/maps/api/js';
+
     static RESOURCE_YANDEX_MAP_API = 'https://api-maps.yandex.ru/2.1/';
+
     static RESOURCE_TWITTER_WIDGET = 'https://platform.twitter.com/widgets.js';
+
     static RESOURCE_GEETEST_API = '//static.geetest.com/static/tools/gt.js';
+
+    static RESOURCE_GOOGLE_CAPTCHA = 'https://www.google.com/recaptcha/api.js';
 
     constructor(components, config) {
         this.googleApiKey = config.googleApiKey || '';
@@ -22,6 +40,18 @@ export default class ResourceComponent {
         this.language = config.language || '';
         this._callbacks = {};
         this._components = components;
+    }
+
+    loadGoogleCaptcha() {
+        if (window.grecaptcha) {
+            return Promise.resolve(window.grecaptcha);
+        }
+
+        return this.loadScript(
+            ResourceComponent.RESOURCE_GOOGLE_CAPTCHA,
+            {render: this.googleCaptchaSiteKey},
+            () => window.grecaptcha,
+        );
     }
 
     loadGoogleMapApi() {
@@ -39,7 +69,7 @@ export default class ResourceComponent {
                 language: this.language || locale.language,
             },
             // @ts-ignore
-            () => window.google.maps
+            () => window.google.maps,
         );
     }
 
@@ -49,16 +79,15 @@ export default class ResourceComponent {
         if (window.ymaps) {
             return new Promise(resolve =>
                 // @ts-ignore
-                window.ymaps.ready(() => resolve(window.ymaps))
-            );
+                window.ymaps.ready(() => resolve(window.ymaps)));
         }
         return this.loadScript(
             ResourceComponent.RESOURCE_YANDEX_MAP_API,
             {
-                lang: this.language || locale.language
+                lang: this.language || locale.language,
             },
             // @ts-ignore
-            () => new Promise(resolve => window.ymaps.ready(() => resolve(window.ymaps)))
+            () => new Promise(resolve => window.ymaps.ready(() => resolve(window.ymaps))),
         );
     }
 
@@ -72,7 +101,7 @@ export default class ResourceComponent {
             ResourceComponent.RESOURCE_TWITTER_WIDGET,
             {},
             // @ts-ignore
-            () => new Promise(resolve => window.twttr.ready(() => resolve(window.twttr)))
+            () => new Promise(resolve => window.twttr.ready(() => resolve(window.twttr))),
         );
     }
 
@@ -86,7 +115,7 @@ export default class ResourceComponent {
             ResourceComponent.RESOURCE_GEETEST_API + '?_t=' + new Date().getTime(),
             {},
             // @ts-ignore
-            () => window.initGeetest
+            () => window.initGeetest,
         );
     }
 
@@ -102,7 +131,7 @@ export default class ResourceComponent {
         this._callbacks[url] = [];
         // Append script to page
         return new Promise((resolve, reject) => {
-            let script = document.createElement('script');
+            const script = document.createElement('script');
             script.async = true;
             script.onload = () => {
                 setTimeout(() => {

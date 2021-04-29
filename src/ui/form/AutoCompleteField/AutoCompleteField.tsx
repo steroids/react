@@ -54,7 +54,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
     // Data provider
     const {
         items,
-        isLoading
+        isLoading,
     } = useDataProvider({
         items: props.items,
         dataProvider: props.dataProvider,
@@ -76,6 +76,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         selectedIds: props.selectedIds,
         primaryKey: props.primaryKey,
         items,
+        inputValue: props.input.value,
     });
 
     const onOpen = useCallback(() => {

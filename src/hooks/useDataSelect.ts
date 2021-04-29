@@ -2,6 +2,7 @@ import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _remove from 'lodash-es/remove';
 import _includes from 'lodash-es/includes';
+import _isNil from 'lodash-es/isNil';
 
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
@@ -40,6 +41,11 @@ export interface IDataSelectConfig {
      * @example id
      */
     primaryKey?: string,
+
+    /**
+     * Значение поля в форме
+     */
+    inputValue: any
 }
 
 export interface IDataSelectResult {
@@ -67,10 +73,14 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             return [].concat(config.selectedIds || []);
         }
 
+        if (!_isNil(config.inputValue)) {
+            return [].concat(_isArray(config.inputValue) ? config.inputValue : [config.inputValue]);
+        }
+
         return config.selectFirst && config.items.length > 0
             ? [config.items[0][primaryKey]]
             : [];
-    }, [config.items, config.selectFirst, config.selectedIds, primaryKey]);
+    }, [config.items, config.selectFirst, config.selectedIds, primaryKey, config.inputValue]);
 
     // State
     const [isOpened, setIsOpened] = useState(false);

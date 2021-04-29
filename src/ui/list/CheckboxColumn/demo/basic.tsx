@@ -1,6 +1,6 @@
-import Grid from '@steroidsjs/core/ui/list/Grid';
+import Grid from '../../Grid';
 import * as React from 'react';
-import CheckboxColumn from '@steroidsjs/core/ui/list/CheckboxColumn';
+import CheckboxColumn from '../CheckboxColumn';
 import {columns, items} from '../../Grid/demo/basic';
 
 /**

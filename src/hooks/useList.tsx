@@ -226,23 +226,27 @@ export default function useList(config: IListConfig): IListOutput {
     // Pagination size
     const PaginationSize = require('../ui/list/PaginationSize').default;
     const paginationSizeProps = normalizePaginationSizeProps(config.paginationSize);
-    const renderPaginationSize = () => (
-        <PaginationSize
-            list={list}
-            {...paginationSizeProps}
-        />
-    );
+    const renderPaginationSize = () => paginationSizeProps.enable
+        ? (
+            <PaginationSize
+                list={list}
+                {...paginationSizeProps}
+            />
+        )
+        : null;
 
     // Pagination
     const Pagination = require('../ui/list/Pagination').default;
     const paginationProps = normalizePaginationProps(config.pagination);
-    const renderPagination = () => (
-        <Pagination
-            list={list}
-            {...paginationProps}
-            sizeAttribute={paginationSizeProps.attribute}
-        />
-    );
+    const renderPagination = () => paginationProps.enable
+        ? (
+            <Pagination
+                list={list}
+                {...paginationProps}
+                sizeAttribute={paginationSizeProps.attribute}
+            />
+        )
+        : null;
 
     // Layout switcher
     const LayoutNames = require('../ui/list/LayoutNames').default;
@@ -339,7 +343,7 @@ export default function useList(config: IListConfig): IListOutput {
     useMount(() => {
         dispatch(listInit(config.listId, {
             listId: config.listId,
-            action: config.action || null,
+            action: config.action || config.action === '' ? config.action : null,
             actionMethod: config.actionMethod || defaultConfig.actionMethod,
             onFetch: config.onFetch,
             condition: config.condition,

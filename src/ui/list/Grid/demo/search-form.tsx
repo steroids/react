@@ -1,7 +1,7 @@
-import Grid from '@steroidsjs/core/ui/list/Grid';
-import {columns, items} from '@steroidsjs/core/ui/list/Grid/demo/basic';
+import Grid from '../Grid';
+import {columns, items} from './basic';
 import * as React from 'react';
-import {searchForm} from '@steroidsjs/core/ui/list/Grid/demo/inner-search-form';
+import {searchForm} from './inner-search-form';
 
 /**
  * Grid with search form

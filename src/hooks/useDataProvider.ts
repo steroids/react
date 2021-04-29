@@ -3,6 +3,7 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 
 import {useEffect, useMemo, useRef, useState} from 'react';
+import {IApiMethod} from '../components/ApiComponent';
 import {normalizeItems} from '../utils/data';
 import {useComponents} from './index';
 import Enum from '../base/Enum';
@@ -49,7 +50,7 @@ export interface IDataProviderConfig {
          * URL для подгрузки новой коллекции данных
          * @example '/api/v1/search'
          */
-        action?: string,
+        action?: string | IApiMethod,
 
         /**
          * Параметры запроса
@@ -148,7 +149,11 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     const isAutoFetchedRef = useRef(false);
     useEffect(() => {
         const fetchRemote = async () => {
-            const searchHandler = dataProvider.onSearch || components.http.post.bind(components.http);
+            const searchHandler = dataProvider.onSearch || (
+                typeof dataProvider.action === 'function'
+                    ? (method: any, params) => method(components.api, params)
+                    : components.http.post.bind(components.http)
+            );
             const result = searchHandler(dataProvider.action, {
                 query: config.query,
                 ...config.dataProvider.params,
@@ -187,8 +192,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.query, dataProvider,
-        dataProvider.action, dataProvider.onSearch, sourceItems]);
+    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.query,
+        dataProvider, dataProvider.action, dataProvider.onSearch, sourceItems]);
 
     return {
         sourceItems,

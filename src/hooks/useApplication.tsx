@@ -28,7 +28,7 @@ export interface IApplicationHookConfig {
             className: any,
             [key: string]: any,
         } | any,
-    }
+    } | any
     onInit?: (components: IComponents) => void,
     useGlobal?: boolean,
     reducers?: any,
@@ -86,6 +86,10 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
 
         const componentsConfig = _merge({}, defaultComponents, config.components);
         Object.keys(componentsConfig).forEach(name => {
+            if (typeof componentsConfig[name] === 'function') {
+                componentsConfig[name] = {className: componentsConfig[name]};
+            }
+
             const {className, ...componentConfig} = componentsConfig[name];
 
             // Append reducers to store
@@ -135,7 +139,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 {content}
             </Provider>
         );
-    }, [components, config.layoutProps, config.layoutView, config.routes, useGlobal]);
+    }, [components, config, useGlobal]);
 
     return {renderApplication, components};
 }

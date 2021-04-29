@@ -1,6 +1,6 @@
-import Grid from '@steroidsjs/core/ui/list/Grid';
+import Grid from '../Grid';
 import * as React from 'react';
-import {columns} from '@steroidsjs/core/ui/list/Grid/demo/basic';
+import {columns} from './basic';
 
 /**
  * Grid with empty data

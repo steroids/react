@@ -1,4 +1,4 @@
-import DropDownField from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
+import DropDownField from '../DropDownField';
 import * as React from 'react';
 
 export const items = [

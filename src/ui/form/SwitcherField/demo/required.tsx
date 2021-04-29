@@ -1,4 +1,4 @@
-import SwitcherField from '@steroidsjs/core/ui/form/SwitcherField/SwitcherField';
+import SwitcherField from '../SwitcherField';
 import * as React from 'react';
 import {items} from './basic';
 

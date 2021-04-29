@@ -1,12 +1,12 @@
-import {useComponents} from '@steroidsjs/core/hooks';
+import {useComponents} from '../../../hooks';
 import * as React from 'react';
 import {useCallback, useRef} from 'react';
 import {useClickAway, usePrevious} from 'react-use';
-import TooltipInnerPortal from '@steroidsjs/core/ui/layout/Tooltip/TooltipPortalInner';
+import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
 import useAbsolutePositioning, {
     IAbsolutePositioningInputProps,
     IAbsolutePositioningOutputProps,
-} from '@steroidsjs/core/hooks/useAbsolutePositioning';
+} from '../../../hooks/useAbsolutePositioning';
 
 export interface IDropDownProps extends IAbsolutePositioningInputProps {
     /**

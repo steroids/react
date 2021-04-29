@@ -2,7 +2,8 @@ import _trimEnd from 'lodash-es/trimEnd';
 
 import Crud from './Crud';
 import {IRouteItem} from '../nav/Router/Router';
-import {DEFAULT_QUERY_KEY, ICrudProps} from './Crud/Crud';
+import {ICrudProps} from './Crud/Crud';
+import {DEFAULT_QUERY_KEY} from './Crud/utils';
 
 export interface ICrudGeneratorProps extends ICrudProps {
     path?: string,
@@ -12,7 +13,12 @@ export interface ICrudGeneratorProps extends ICrudProps {
     route?: IRouteItem,
 }
 
+export interface ICrudGeneratorRouteProps extends IRouteItem {
+    queryKey?: 'id' | string,
+}
+
 export {Crud};
+
 export const generateCrud = (routeId: string, props: ICrudGeneratorProps) => {
     const queryKey = props.queryKey || DEFAULT_QUERY_KEY;
     return {

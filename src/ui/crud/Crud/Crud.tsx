@@ -1,29 +1,31 @@
 import * as React from 'react';
 import _get from 'lodash-es/get';
-import _isString from 'lodash-es/isString';
-import _isEmpty from 'lodash-es/isEmpty';
 import _omit from 'lodash-es/omit';
 import {ReactNode, useCallback, useEffect, useMemo} from 'react';
-import {useComponents, useSelector} from '@steroidsjs/core/hooks';
-import useFetch from '@steroidsjs/core/hooks/useFetch';
-import {usePrevious} from 'react-use';
-import useDispatch from '@steroidsjs/core/hooks/useDispatch';
-import {Model} from '@steroidsjs/core/components/MetaComponent';
-import {getRouteId, getRouteParams, getRouteProp} from '../../../reducers/router';
+import {useUpdateEffect} from 'react-use';
+import {IApiRest} from '../../../components/ApiComponent';
+import CrudModal from './CrudModal';
+import {listRefresh} from '../../../actions/list';
+import {closeModal, openModal} from '../../../actions/modal';
 import {goToRoute} from '../../../actions/router';
+import {IComponents} from '../../../hooks/useComponents';
+import useFetch from '../../../hooks/useFetch';
+import CrudContent from './CrudContent';
+import {
+    CRUD_ACTION_INDEX,
+    DEFAULT_PRIMARY_KEY,
+    DEFAULT_QUERY_KEY,
+    normalizeItems,
+    pageControlsMap,
+    routeInfoSelector,
+} from './utils';
+import {useComponents, useSelector} from '../../../hooks';
+import useDispatch from '../../../hooks/useDispatch';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {IConnectHocOutput} from '../../../hoc/connect';
 import {IFormProps} from '../../form/Form/Form';
 import {IGridProps} from '../../list/Grid/Grid';
-import CrudGrid from './CrudGrid';
 import {IControlItem} from '../../nav/Controls/Controls';
-//TODO import {IDetailProps} from '../../list/Detail/Detail';
-import CrudForm from './CrudForm';
-import CrudDetail from './CrudDetail';
-import {closeModal, openModal} from '../../../actions/modal';
-import Modal from '../../modal/Modal';
-import {getOpened} from '../../../reducers/modal';
-import {listRefresh} from '../../../actions/list';
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
     title?: string,
@@ -35,22 +37,31 @@ export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'o
     controlsInclude?: string[],
     controlsExclude?: string[],
     visible?: boolean | ((item: any, crudItem: ICrudItem, isGrid: boolean) => boolean),
-    confirm?: string | ((e: any, itemId: PrimaryKey, item: any, props: ICrudClickProps) => any),
-    onClick?: (e: Event | React.MouseEvent, itemId: PrimaryKey, item: any, props: ICrudClickProps) => any,
+    confirm?: string | ((e: any, props: ICrudClickProps) => any),
+    onClick?: (e: Event | React.MouseEvent, props: ICrudClickProps) => any,
 }
 
-export interface ICrudClickProps extends ICrudProps, IConnectHocOutput, IComponentsHocOutput {
+export interface ICrudClickProps {
+    crudId?: string;
+    mode?: 'page' | 'modal',
+    restUrl?: string,
+    restApi?: IApiRest,
+    primaryKey?: 'id' | string,
+    queryKey?: 'id' | string,
     routeId?: string,
+    routeAction?: string,
     routeParams?: any,
-    item?: any,
-    itemId?: PrimaryKey,
-    action?: string,
+    recordId?: PrimaryKey,
+    record?: Record<string, unknown>,
+    components: IComponents,
+    goToAction: (nextAction: string) => any,
 }
 
 export interface ICrudProps {
     crudId?: string;
     mode?: 'page' | 'modal',
-    restUrl?: string | ((props: ICrudClickProps) => string),
+    restUrl?: string,
+    restApi?: IApiRest,
     primaryKey?: 'id' | string,
     queryKey?: 'id' | string,
     model?: string,
@@ -61,22 +72,22 @@ export interface ICrudProps {
     view?: boolean | ICrudItem,
     delete?: boolean | ICrudItem,
     items?: ICrudItem[] | { [key: string]: ICrudItem };
-    grid?: IGridProps | ((props: ICrudClickProps) => IGridProps),
-    gridComponent?: any,
-    form?: IFormProps | ((props: ICrudClickProps) => IFormProps),
-    formComponent?: any,
+    grid?: IGridProps | React.ReactNode,
+    form?: IFormProps | React.ReactNode,
     detail?: any, //TODO IDetailProps,
-    detailComponent?: any,
+    crudView?: CustomView,
+
     [key: string]: any,
 }
 
 export interface ICrudChildrenProps extends ICrudProps, IConnectHocOutput, IComponentsHocOutput {
     item?: any,
-    itemId?: PrimaryKey,
+    recordId?: PrimaryKey,
     action?: string,
     routeId?: string,
     controlsGetter?: any,
     restUrl?: string,
+    restApi?: IApiRest,
     onComplete?: () => void,
     form?: IFormProps,
     grid?: IGridProps,
@@ -85,11 +96,6 @@ export interface ICrudChildrenProps extends ICrudProps, IConnectHocOutput, IComp
 const MODE_PAGE = 'page';
 const MODE_MODAL = 'modal';
 
-export const DEFAULT_PRIMARY_KEY = 'id';
-export const DEFAULT_QUERY_KEY = 'id';
-export const DEFAULT_MODE = MODE_PAGE;
-export const CRUD_ACTION_INDEX = 'index';
-
 export interface ICrudViewProps {
     className?: CssClassName,
     controls?: IControlItem[],
@@ -97,351 +103,182 @@ export interface ICrudViewProps {
     children?: ReactNode,
 }
 
-export const getCrudId = (props: ICrudProps) => props.crudId || props.routeId;
-export const getCrudModalId = (props: ICrudProps) => getCrudId(props);
-export const getCrudGridId = (props: ICrudProps) => getCrudId(props);
-export const getCrudFormId = (
-    props: ICrudProps,
-    suffix = null,
-) => [getCrudId(props), props.itemId, suffix].filter(Boolean).join('_');
-
-const defaultItems: ({ [key: string]: ICrudItem }) = {
-    index: {
-        component: CrudGrid,
-        pkRequired: false,
-    },
-    create: {
-        title: __('Добавление'),
-        component: CrudForm,
-        pkRequired: false,
-    },
-    update: {
-        title: __('Редактирование'),
-        component: CrudForm,
-        controlsInclude: ['create', 'delete', 'view'],
-    },
-    view: {
-        title: __('Просмотр'),
-        component: CrudDetail,
-        controlsInclude: ['update', 'delete'],
-    },
-    delete: {
-        position: 'right',
-        confirm: (e, id) => __('Удалить запись {id}?', {id}),
-        onClick: async (e, itemId, item, props: ICrudClickProps) => {
-            const restUrl = typeof props.restUrl === 'function' ? props.restUrl(props) : props.restUrl;
-            await props.http.delete(`${restUrl}/${itemId}`);
-
-            if (props.action === CRUD_ACTION_INDEX) {
-                props.dispatch(listRefresh(getCrudGridId(props)));
-            } else {
-                props.dispatch(goToRoute(props.routeId, {
-                    ...props.routeParams,
-                    [props.queryKey]: null,
-                    [props.queryKey + 'Action']: null,
-                }));
-            }
-        },
-    },
-};
-
-const resolveVisible = (
-    currentCrudItem: ICrudItem,
-    crudItem: ICrudItem,
-    itemId: PrimaryKey,
-    isGrid: boolean,
-    hasModal: boolean,
-) => {
-    // Force disable visible
-    if (crudItem.visible === false) {
-        return false;
-    }
-
-    // No render control on self page
-    if (currentCrudItem.actionName === crudItem.actionName) {
-        return false;
-    }
-
-    // Grid render only "pkRequired" actions
-    if (isGrid) {
-        return !!crudItem.pkRequired;
-    }
-
-    // Always show index action in page mode
-    if (crudItem.actionName === CRUD_ACTION_INDEX) {
-        return !hasModal;
-    }
-
-    // Check includes
-    if (currentCrudItem.controlsInclude && !currentCrudItem.controlsInclude.includes(crudItem.id)) {
-        return false;
-    }
-
-    // Check excludes
-    if (currentCrudItem.controlsExclude && currentCrudItem.controlsExclude.includes(crudItem.id)) {
-        return false;
-    }
-
-    return !crudItem.pkRequired === !itemId;
-};
-
 function Crud(props: ICrudProps) {
     const components = useComponents();
     const dispatch = useDispatch();
-
-    // Normalize items
-    const items = useMemo(() => {
-        let normalizedItems = {};
-        // Array -> Object
-        if (Array.isArray(props.items)) {
-            normalizedItems = props.items.reduce((obj, item: ICrudItem) => {
-                obj[item.id] = {
-                    ...item,
-                };
-                return obj;
-            }, {});
-        } else if (props.items) {
-            normalizedItems = props.items;
-        }
-
-        // Merge with defaults
-        Object.keys(defaultItems).forEach(id => {
-            normalizedItems[id] = {
-                id,
-                ...defaultItems[id],
-                ...normalizedItems[id],
-                ...(typeof props[id] === 'object' ? props[id] : null),
-            };
-            if (props[id] === false) {
-                normalizedItems[id].visible = false;
-            }
-        });
-
-        // Object -> Array + defaults
-        return Object.keys(normalizedItems).map(id => ({
-            id,
-            actionName: id,
-            pkRequired: true,
-            ...normalizedItems[id],
-        }));
-    }, [props]);
 
     const {
         routeId,
         routeTitle,
         routeAction,
-        action,
-        itemId,
         routeParams,
-        hasModal,
-    } = useSelector(state => {
-        const routeParams = getRouteParams(state);
-        const queryKey = props.queryKey || DEFAULT_QUERY_KEY;
-        const isModal = !!props.modalId;
+        recordId,
+    } = useSelector(state => routeInfoSelector(state, props.queryKey));
 
-        const routeAction = _get(routeParams, queryKey + 'Action') || _get(routeParams, queryKey) || CRUD_ACTION_INDEX;
-        let itemId = _get(routeParams, queryKey + 'Action') ? _get(routeParams, queryKey) : null;
+    // Normalize items
+    const items = useMemo(
+        () => normalizeItems(props.items, {
+            index: props.index || props.grid,
+            create: props.create || props.form,
+            update: props.update || props.form,
+            view: props.view,
+            delete: props.delete,
+        }),
+        [props.create, props.delete, props.form, props.grid, props.index, props.items, props.update, props.view],
+    );
 
-        let action = routeAction;
-        const crudItem = items.find(item => item.actionName === action);
-        const mode = crudItem && crudItem.mode || props.mode || DEFAULT_MODE;
-        if (mode === MODE_MODAL && !isModal) {
-            action = CRUD_ACTION_INDEX;
-            itemId = null;
+    // Get crud id and mode
+    const crudId = props.crudId || routeId;
+    const mode = _get(items.find(item => item.actionName === routeAction), 'mode') || props.mode;
+
+    const goToAction = useCallback((nextAction) => {
+        if (nextAction === CRUD_ACTION_INDEX) {
+            dispatch(listRefresh(crudId));
         }
-
-        return {
-            routeId: getRouteId(state),
-            routeTitle: getRouteProp(state, null, 'title') || getRouteProp(state, null, 'label'),
-            routeAction,
-            action,
-            itemId,
-            routeParams,
-            hasModal: !_isEmpty(getOpened(state)),
-        };
-    });
-
-    const restUrl = typeof props.restUrl === 'function' ? props.restUrl(props) : props.restUrl;
-    const fetchConfig = useMemo(() => itemId && restUrl && ({
-        method: 'get',
-        id: getCrudId(props) + '_' + itemId,
-        url: `${restUrl}/${itemId}`,
-    }), [itemId, props, restUrl]);
-
-    const {data, isLoading, fetch} = useFetch(fetchConfig);
-
-    const onModalClose = useCallback(() => {
-        dispatch([
-            listRefresh(getCrudGridId(props)),
-            goToRoute(routeId, {
-                ...routeParams,
-                [props.queryKey]: null,
-                [props.queryKey + 'Action']: null,
-            }),
-        ]);
-    }, [dispatch, props, routeId, routeParams]);
-
-    const prevAction = usePrevious(routeAction || null);
-
-    useEffect(() => {
-        const crudItem = items.find(item => item.actionName === routeAction);
-        const mode = crudItem && crudItem.mode || props.mode;
-        const isModal = !!props.modalId;
-
-        if (mode !== MODE_MODAL) {
-            if (isModal) {
-                dispatch(closeModal(getCrudModalId(props)));
+        if (routeAction !== nextAction) {
+            if (mode === MODE_MODAL) {
+                dispatch(closeModal(crudId));
             }
-            return;
-        }
-
-        if (isModal) {
-            return;
-        }
-
-        const nextAction = routeAction;
-        if (prevAction !== nextAction) {
-            if (prevAction === CRUD_ACTION_INDEX) {
-                dispatch(closeModal(getCrudModalId(props)));
-            }
-            if (nextAction !== CRUD_ACTION_INDEX) {
-                dispatch(openModal(Modal, {
-                    modalId: getCrudModalId(props),
-                    size: 'lg',
-                    title: crudItem.title || crudItem.label || null,
-                    onClose: onModalClose,
-                    component: Crud,
-                    componentProps: {
-                        form: props.form,
-                    },
-                }));
-            }
-        }
-    }, [dispatch, items, onModalClose, prevAction, props, routeAction]);
-
-    const onComplete = useCallback(() => {
-        const crudItem = items.find(item => item.actionName === routeAction);
-        const mode = crudItem && crudItem.mode || props.mode;
-        if (mode === MODE_MODAL) {
-            dispatch(closeModal(getCrudModalId(props)));
-            onModalClose();
-        } else {
             dispatch(goToRoute(routeId, {
                 ...routeParams,
                 [props.queryKey]: null,
                 [props.queryKey + 'Action']: null,
             }));
         }
-    }, [dispatch, items, onModalClose, props, routeAction, routeId, routeParams]);
+    }, [crudId, dispatch, mode, props.queryKey, routeAction, routeId, routeParams]);
 
-    const onClick = useCallback((e, currentItemId: PrimaryKey, item: any, crudItem: ICrudItem) => {
-        // Custom confirm
-        if (typeof crudItem.confirm === 'function') {
-            const value = crudItem.confirm(e, currentItemId, item, props);
-            const result = _isString(value) ? confirm(value) : !!value;
-            if (!result) {
-                e.preventDefault();
-                return;
-            }
-        }
-        crudItem.onClick(e, currentItemId, item, props);
-    }, [props]);
+    // Fetch record
+    const {data: record, isLoading} = useFetch(
+        useMemo(
+            () => recordId && props.restUrl && ({
+                method: 'get',
+                id: crudId + '_' + recordId,
+                url: props.restUrl + '/' + recordId,
+            }),
+            [crudId, recordId, props.restUrl],
+        ),
+    );
 
-    const getControls = useCallback((item = null) => {
-        let currentAction;
-        let currentItemId;
-        const isGrid = !!item;
+    // Props for click/confirm handlers
+    const clickProps: ICrudClickProps = useMemo(() => ({
+        crudId: props.crudId,
+        mode: props.mode,
+        restUrl: props.restUrl,
+        restApi: props.restApi,
+        primaryKey: props.primaryKey,
+        queryKey: props.queryKey,
+        routeId,
+        routeAction,
+        routeParams,
+        recordId,
+        record,
+        components,
+        goToAction,
+    }), [components, goToAction, props.crudId, props.mode, props.primaryKey, props.queryKey,
+        props.restApi, props.restUrl, record, recordId, routeAction, routeId, routeParams]);
 
-        if (hasModal && !props.modalId) {
-            currentAction = CRUD_ACTION_INDEX;
-        } else {
-            currentItemId = item && item[props.primaryKey];
-
-            // Try get item id from route params
-            if (!isGrid && !currentItemId) {
-                currentItemId = itemId;
-            }
-        }
-
-        const currentCrudItem = items.find(i => i.actionName === action);
-
-        return (items || []).map((crudItem: ICrudItem) => {
-            let visible = resolveVisible(currentCrudItem, crudItem, currentItemId, isGrid, hasModal);
-            if (visible && typeof crudItem.visible === 'function') {
-                visible = !!crudItem.visible(item, crudItem, isGrid);
-            }
-
+    // Handler for convert control item to props for button
+    const itemsToControls = useCallback((localRecord, localRecordId, sourceItems) => (sourceItems || [])
+        .map((crudItem: ICrudItem) => {
             const button: IControlItem = {
-                ..._omit(crudItem, ['actionName', 'pkRequired', 'component', 'componentProps', 'visible', 'confirm', 'onClick']),
+                ..._omit(crudItem, ['actionName', 'pkRequired', 'component', 'componentProps', 'visible', 'onClick']),
                 confirm: typeof crudItem.confirm === 'string' ? crudItem.confirm : null,
-                visible,
             };
+            const localClickProps: ICrudClickProps = {
+                ...localRecord,
+                record: localRecord || clickProps.record,
+                recordId: localRecordId || clickProps.recordId,
+            };
+
             if (crudItem.onClick) {
-                button.onClick = e => onClick(e, currentItemId, item, crudItem);
+                button.onClick = e => {
+                    // Custom confirm
+                    if (typeof crudItem.confirm === 'function') {
+                        const value = crudItem.confirm(e, localClickProps);
+                        if (value === false || window.confirm(value)) {
+                            e.preventDefault();
+                            return;
+                        }
+                    }
+
+                    crudItem.onClick(e, localClickProps);
+                };
             } else {
                 button.toRoute = routeId;
                 button.toRouteParams = {
                     ...routeParams,
-                    [props.queryKey]: crudItem.pkRequired ? currentItemId : undefined,
-                    [props.queryKey + 'Action']: crudItem.actionName !== CRUD_ACTION_INDEX ? crudItem.actionName : undefined,
+                    [props.queryKey]: crudItem.pkRequired ? localClickProps.recordId : undefined,
+                    [props.queryKey + 'Action']: crudItem.actionName !== CRUD_ACTION_INDEX
+                        ? crudItem.actionName
+                        : undefined,
                 };
             }
 
             return button;
-        });
-    }, [action, hasModal, itemId, items, onClick, props.modalId, props.primaryKey, props.queryKey, routeId, routeParams]);
-    // items, routeParams
+        }), [clickProps, props.queryKey, routeId, routeParams]);
 
-    let crudItem = items.find(item => item.actionName === action);
-    const mode = crudItem && crudItem.mode || props.mode;
-    const isModal = !!props.modalId;
+    // Props for CrudContent component
+    const contentProps = useMemo(() => ({
+        crudId,
+        queryKey: props.queryKey,
+        primaryKey: props.primaryKey,
+        model: props.model,
+        restUrl: props.restUrl,
+        restApi: props.restApi,
+        goToAction,
+        items,
+        itemsToControls,
+        record,
+        recordId,
+    }), [crudId, goToAction, items, itemsToControls, props.model, props.primaryKey,
+        props.queryKey, props.restUrl, props.restApi, record, recordId]);
 
-    // In modal mode always render index on page
-    if (mode === MODE_MODAL && !isModal) {
-        crudItem = items.find(item => item.actionName === CRUD_ACTION_INDEX);
-    }
+    // Open modal on route change
+    useEffect(() => {
+        if (mode === MODE_MODAL && routeAction !== CRUD_ACTION_INDEX) {
+            dispatch(openModal(CrudModal, {
+                modalId: crudId,
+                action: routeAction,
+                ...contentProps,
+            }));
+        }
+    }, [contentProps, crudId, dispatch, mode, routeAction]);
 
-    // No crud
-    if (!crudItem) {
-        return props.children;
-    }
+    // Close modal on change mode
+    useUpdateEffect(() => {
+        if (mode !== MODE_MODAL) {
+            dispatch(closeModal(crudId));
+        }
+    }, [crudId, dispatch, mode]);
 
-    // No render index in modal
-    if (isModal && action === CRUD_ACTION_INDEX) {
-        return null;
-    }
+    // Get page controls
+    const controlsAction = mode === MODE_MODAL ? CRUD_ACTION_INDEX : routeAction;
+    const controls = useMemo(() => itemsToControls(
+        record,
+        recordId,
+        items
+            .filter(crudItem => crudItem.visible !== false)
+            .filter(crudItem => pageControlsMap[controlsAction]
+                ? pageControlsMap[controlsAction].includes(crudItem.actionName)
+                : controlsAction === CRUD_ACTION_INDEX && !crudItem.pkRequired),
+    ), [items, itemsToControls, record, recordId, controlsAction]);
 
-    const ItemComponent = crudItem.component;
-    const CrudView = /* TODO props.view || */components.ui.getView('crud.CrudView');
-    const form = typeof props.form === 'function' ? props.form(props) : props.form;
-    const grid = typeof props.grid === 'function' ? props.grid(props) : props.grid;
-    return (
-        <CrudView
-            {...props}
-            title={routeTitle}
-            controls={getControls()}
-        >
-            {ItemComponent && (
-                <ItemComponent
-                    {...props}
-                    restUrl={restUrl}
-                    form={form}
-                    grid={grid}
-                    mode={mode}
-                    routeId={routeId}
-                    controlsGetter={getControls}
-                    onComplete={onComplete}
-                    {...crudItem.componentProps}
-                />
-            )}
-        </CrudView>
-    );
+    return components.ui.renderView(props.crudView || 'crud.CrudView', {
+        title: routeTitle,
+        controls,
+        children: !isLoading && (
+            <CrudContent
+                {...contentProps}
+                action={controlsAction}
+            />
+        ),
+    });
 }
 
 Crud.defaultProps = {
     primaryKey: DEFAULT_PRIMARY_KEY,
     queryKey: DEFAULT_QUERY_KEY,
-    mode: DEFAULT_MODE,
+    mode: MODE_PAGE,
 };
 
 export default Crud;

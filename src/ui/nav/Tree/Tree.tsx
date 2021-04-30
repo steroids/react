@@ -83,7 +83,7 @@ export interface ITreeProps {
     autoOpenLevels?: number;
 
     /**
-     * Обработчик на клик по элементу
+     * Обработчик на клик по узлу
      * @param args
      */
     onItemClick?: (...args: any[]) => any;

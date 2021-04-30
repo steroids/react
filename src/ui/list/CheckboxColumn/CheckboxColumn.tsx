@@ -19,6 +19,9 @@ export interface ICheckboxColumnProps {
      */
     item?: any,
 
+    /**
+     * Свойства для CheckboxField
+     */
     fieldProps?: any;
 
     /**

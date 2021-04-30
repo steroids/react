@@ -64,6 +64,7 @@ function SwitcherField(props: ISwitcherFieldProps) {
         selectedIds: props.selectedIds,
         primaryKey: props.primaryKey,
         items,
+        inputValue: props.input.value,
     });
 
     const onItemHover = useCallback((id) => {

@@ -1,19 +1,18 @@
-import * as React from 'react';
-import { useMemo } from 'react';
 import { useComponents } from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * ReCaptchaField
- * Компонент для использования ReCAPTCHA v3 от Google
+ * Компонент для использования ReCAPTCHA v3 от Google: https://developers.google.com/recaptcha/docs/v3
+ * Чтобы добавить ReCAPTCHA в форму необходимо:
+ * 1) Передать siteKey в ResourceComponent.
+ * 2) В начале работы приложения вызвать метод экземпляра ResourceComponent для загрузки скрипта от Google
+ * (скрипт анализирует поведение пользователя).
+ * 3) Разместить ReCaptchaField внутри компонента Form. На onSubmit в Google отправится запрос для получения
+ * токена. Далее этот токен с остальными данными формы отправится на бэкенд.
+ * Сам компонент отображает ссылки на политику конфиденциальности и условия использования сервисов Google.
  */
 export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
-    /**
-     * Контекст действия
-     * @example 'addComment'
-     */
-    action?: any;
-
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
@@ -23,24 +22,13 @@ export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
     [key: string]: any;
 }
 
-export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWrapperOutputProps {
-    reCaptchaProps: any,
-}
+export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWrapperOutputProps {}
 
 function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
 
-    const googleCaptchaSiteKey = components.resource?.googleCaptchaSiteKey;
-
-    const reCaptchaProps = useMemo(() => ({
-        sitekey: googleCaptchaSiteKey,
-        action: props.action,
-        verifyCallback: value => props.input.onChange(value),
-    }), [googleCaptchaSiteKey, props.action, props.input]);
-
     return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', {
         ...props,
-        reCaptchaProps,
     });
 }
 

@@ -107,6 +107,9 @@ const createDynamicField = (componentId, Component, isList) => {
         const formId = props.formId || context?.formId || null;
         const model = props.model || context?.model || null;
 
+        // Register field
+        components.ui.registerField(formId, name, componentId);
+
         // Resolve data provider
         const {error, value, setValue} = context?.provider
             ? context?.provider.useField(formId, name, isList)

@@ -71,6 +71,7 @@ function CheckboxListField(props: ICheckboxListFieldProps) {
         selectedIds: props.selectedIds,
         primaryKey: props.primaryKey,
         items,
+        inputValue: props.input.value,
     });
 
     const onItemSelect = useCallback((id) => {

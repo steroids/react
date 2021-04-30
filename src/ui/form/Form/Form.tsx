@@ -166,6 +166,13 @@ export interface IFormProps {
      */
     autoFocus?: boolean;
 
+    /**
+     * Название действия, которое передаётся в API Google reCAPTCHA v3, для более детального анализа
+     * поведения пользователя (https://developers.google.com/recaptcha/docs/v3)
+     * @example 'addComment'
+     */
+    captchaActionName?: string;
+
     [key: string]: any;
 }
 
@@ -203,6 +210,22 @@ export interface IFormContext {
 }
 
 export const FormContext = React.createContext<IFormContext>({});
+
+interface ICaptchaParams {
+    googleCaptcha: Record<string, any>,
+    siteKey: string
+    actionName: string
+}
+
+const getCaptchaToken = (params:ICaptchaParams):Promise<string> => {
+    const {googleCaptcha, siteKey, actionName = 'submit'} = params;
+
+    return new Promise(resolve => {
+        googleCaptcha.ready(() => {
+            googleCaptcha.execute(siteKey, {action: actionName}).then(token => resolve(token));
+        });
+    });
+};
 
 function Form(props: IFormProps) {
     // Dev validation. You cannot change data provider (formId, useRedux)
@@ -307,16 +330,15 @@ function Form(props: IFormProps) {
 
         // Append non touched fields to values object
         if (props.formId) {
-            Object.keys(components.ui.getRegisteredFields(props.formId)?.formRegisteredFields || {})
+            Object.keys(components.ui.getRegisteredFields(props.formId) || {})
                 .forEach(key => {
-                    const registeredName = props.formRegisteredFields[key].name;
-                    if (_isUndefined(_get(values, registeredName))) {
-                        _set(values, registeredName, null);
+                    if (_isUndefined(_get(values, key))) {
+                        _set(values, key, null);
                     }
                 });
         }
 
-        const cleanedValues = cleanEmptyObject(values);
+        let cleanedValues = cleanEmptyObject(values);
 
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {
@@ -327,6 +349,28 @@ function Form(props: IFormProps) {
         }
         if (props.onSubmit) {
             return props.onSubmit.call(null, cleanedValues);
+        }
+
+        // Add captcha token
+        let captchaAttribute = null;
+        Object.entries(components.ui.getRegisteredFields(props.formId) || {}).forEach(([attribute, fieldType]) => {
+            if (fieldType === 'ReCaptchaField') {
+                captchaAttribute = attribute;
+            }
+        });
+
+        if (captchaAttribute && components.resource.googleCaptchaSiteKey) {
+            const googleCaptcha = await components.resource.loadGoogleCaptcha();
+            const captchaToken = await getCaptchaToken({
+                googleCaptcha,
+                siteKey: components.resource.googleCaptchaSiteKey,
+                actionName: props.captchaActionName,
+            });
+
+            cleanedValues = {
+                ...cleanedValues,
+                [captchaAttribute]: captchaToken,
+            };
         }
 
         // Send request
@@ -375,7 +419,7 @@ function Form(props: IFormProps) {
         }
 
         return null;
-    }, [components.api, components.http, components.ui, props, setErrors, values]);
+    }, [components.api, components.http, components.resource, components.ui, props, setErrors, values]);
 
     const formContextValue = useMemo(() => ({
         formId: props.formId,
@@ -414,6 +458,7 @@ Form.defaultProps = {
     actionMethod: 'POST',
     autoStartTwoFactor: true,
     layout: 'default',
+    captchaActionName: 'submit',
 };
 
 export default Form;

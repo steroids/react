@@ -112,6 +112,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps) {
         selectedIds: props.selectedIds,
         primaryKey: props.primaryKey,
         items,
+        inputValue: props.input.value,
     });
 
     const onOpen = useCallback(() => {

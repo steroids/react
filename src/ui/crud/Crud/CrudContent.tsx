@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 import {CRUD_ACTION_CREATE, CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE} from './utils';
 import {showNotification} from '../../../actions/notifications';
 import useDispatch from '../../../hooks/useDispatch';
@@ -40,6 +40,18 @@ export default function CrudContent(props: ICrudContentProps) {
             ? props.items.filter(item => item.visible !== false && item.pkRequired)
             : [],
     ), [props.action, props.items, props.itemsToControls]);
+
+    const formInitialValues = useMemo(() => props.action === CRUD_ACTION_UPDATE
+        ? {...props.record, [props.primaryKey]: props.record?.[props.primaryKey] || props.recordId}
+        : undefined,
+    [props.action, props.primaryKey, props.record, props.recordId]);
+
+    const onFormComplete = useCallback(() => {
+        window.scrollTo(0, 0);
+        dispatch(showNotification(__('Запись успешно обновлена.')));
+
+        props.goToAction.call(null, CRUD_ACTION_INDEX);
+    }, [dispatch, props.goToAction]);
 
     // Render content by action
     let ItemComponent = crudItem.component;
@@ -85,15 +97,8 @@ export default function CrudContent(props: ICrudContentProps) {
                     autoFocus
                     submitLabel={props.recordId ? __('Сохранить') : __('Добавить')}
                     layout='horizontal'
-                    onComplete={() => {
-                        window.scrollTo(0, 0);
-                        dispatch(showNotification(__('Запись успешно обновлена.')));
-
-                        props.goToAction(CRUD_ACTION_INDEX);
-                    }}
-                    initialValues={props.action === CRUD_ACTION_UPDATE
-                        ? {...props.record, [props.primaryKey]: props.record[props.primaryKey]}
-                        : undefined}
+                    onComplete={onFormComplete}
+                    initialValues={formInitialValues}
                 />
             );
 

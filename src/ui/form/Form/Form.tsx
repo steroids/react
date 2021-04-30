@@ -328,17 +328,19 @@ function Form(props: IFormProps) {
         // TODO
         e.preventDefault();
 
+        const submitValues = provider.select(props.formId, state => state.values);
+
         // Append non touched fields to values object
         if (props.formId) {
             Object.keys(components.ui.getRegisteredFields(props.formId) || {})
                 .forEach(key => {
-                    if (_isUndefined(_get(values, key))) {
-                        _set(values, key, null);
+                    if (_isUndefined(_get(submitValues, key))) {
+                        _set(submitValues, key, null);
                     }
                 });
         }
 
-        let cleanedValues = cleanEmptyObject(values);
+        let cleanedValues = cleanEmptyObject(submitValues);
 
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {
@@ -385,7 +387,7 @@ function Form(props: IFormProps) {
                 : undefined,
         };
         const response = typeof props.action === 'function'
-            ? props.action(components.api, cleanedValues, options)
+            ? await props.action(components.api, cleanedValues, options)
             : await components.http.send(
                 props.actionMethod,
                 props.action || window.location.pathname,
@@ -419,7 +421,7 @@ function Form(props: IFormProps) {
         }
 
         return null;
-    }, [components.api, components.http, components.resource, components.ui, props, setErrors, values]);
+    }, [components.api, components.http, components.resource, components.ui, props, provider, setErrors]);
 
     const formContextValue = useMemo(() => ({
         formId: props.formId,

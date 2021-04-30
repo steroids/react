@@ -86,7 +86,7 @@ function Notifications(props:INotificationsProps) {
         if (toClose.length > 0) {
             setTimeout(() => setClosing(closing.filter(item => !toClose.includes(item))), props.closeTimeoutMs);
         }
-    }, [closing, innerNotifications, notifications, props.closeTimeoutMs]);
+    }, [notifications, props.closeTimeoutMs]);
 
     const onClose = useCallback(
         notificationId => dispatch(closeNotification(notificationId)),

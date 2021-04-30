@@ -195,7 +195,7 @@ function Crud(props: ICrudProps) {
                     // Custom confirm
                     if (typeof crudItem.confirm === 'function') {
                         const value = crudItem.confirm(e, localClickProps);
-                        if (value === false || window.confirm(value)) {
+                        if (value === false || !window.confirm(value)) {
                             e.preventDefault();
                             return;
                         }

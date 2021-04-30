@@ -36,7 +36,7 @@ export interface IFieldProps extends IFieldWrapperInputProps {
     [key: string]: any,
 }
 
-export default function Field(props: IFieldProps) {
+function Field(props: IFieldProps) {
     const components = useComponents();
 
     // Get model
@@ -70,3 +70,5 @@ export default function Field(props: IFieldProps) {
         ? ComponentField(componentProps)
         : <ComponentField {...componentProps} />;
 }
+
+export default React.memo(Field);

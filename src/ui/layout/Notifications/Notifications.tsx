@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _orderBy from 'lodash-es/orderBy';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useMount, useUpdateEffect} from 'react-use';
+import {useMount, usePrevious, useUpdateEffect} from 'react-use';
 import useDispatch from '../../../hooks/useDispatch';
 import {useComponents, useSelector} from '../../../hooks';
 import {setFlashes, closeNotification} from '../../../actions/notifications';
@@ -76,17 +76,20 @@ function Notifications(props:INotificationsProps) {
         }
     });
 
+    const prevNotifications = usePrevious(notifications);
     useUpdateEffect(() => {
-        const propsIds: number[] = notifications.map(item => item.id);
-        const toClose: INotificationItem[] = innerNotifications.filter(item => !propsIds.includes(item.id));
+        if (prevNotifications !== notifications) {
+            const propsIds: number[] = notifications.map(item => item.id);
+            const toClose: INotificationItem[] = innerNotifications.filter(item => !propsIds.includes(item.id));
 
-        setInnerNotifications([].concat(notifications));
-        setClosing(closing.concat(innerNotifications.filter(item => !propsIds.includes(item.id))));
+            setInnerNotifications([].concat(notifications));
+            setClosing(closing.concat(innerNotifications.filter(item => !propsIds.includes(item.id))));
 
-        if (toClose.length > 0) {
-            setTimeout(() => setClosing(closing.filter(item => !toClose.includes(item))), props.closeTimeoutMs);
+            if (toClose.length > 0) {
+                setTimeout(() => setClosing(closing.filter(item => !toClose.includes(item))), props.closeTimeoutMs);
+            }
         }
-    }, [notifications, props.closeTimeoutMs]);
+    }, [closing, innerNotifications, notifications, prevNotifications, props.closeTimeoutMs]);
 
     const onClose = useCallback(
         notificationId => dispatch(closeNotification(notificationId)),

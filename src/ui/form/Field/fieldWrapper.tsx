@@ -150,17 +150,20 @@ export default function fieldWrapper<T extends React.FC>(
     const NewComponent = (props: IFieldWrapperInputProps): T | any => {
         const components = useComponents();
 
+        // Get context, formId
+        const context = useContext(FormContext);
+        const model = props.model || context?.model || null;
+
         // Get UI props and create Field Class dynamically (for add field props - input, error, model, ...)
         const metaProps = useMemo(
-            () => components.ui.getFieldProps(componentId, props.model, props.attribute),
-            [components.ui, props.attribute, props.model],
+            () => components.ui.getFieldProps(componentId, model, props.attribute),
+            [components.ui, props.attribute, model],
         );
         if (!Component.DynamicField) {
             Component.DynamicField = createDynamicField(componentId, Component, options.list);
         }
 
         // Resolve layout
-        const context = useContext(FormContext);
         const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
         if (layout !== false) {

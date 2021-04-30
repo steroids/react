@@ -153,7 +153,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
     const context = useContext(FormContext);
 
     // Resolve model
-    const modelFields = components.ui.getModel(props.model)?.fields;
+    const modelAttributes = components.meta.getModel(props.model)?.attributes;
 
     const dispatch = context.provider.useDispatch();
 
@@ -186,12 +186,12 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
         () => (props.items || [])
             .filter(field => field.visible !== false)
             .map(field => ({
-                ...modelFields?.[field.attribute],
+                ...modelAttributes?.[field.attribute],
                 ...field,
                 disabled: _isBoolean(field.disabled) ? field.disabled : props.disabled,
                 size: field.size || props.size,
             })),
-        [modelFields, props.disabled, props.items, props.size],
+        [modelAttributes, props.disabled, props.items, props.size],
     );
 
     const contextValue = useMemo(() => ({

@@ -86,10 +86,19 @@ export default function useLayout(initAction: any = null): ILayout {
                 const resultUser = result.user;
                 delete result.user;
                 delete result.meta;
+
+                if (resultMeta) {
+                    Object.keys(resultMeta).forEach(modelName => {
+                        if (resultMeta[modelName].attributes) {
+                            components.meta.setModel(modelName, resultMeta[modelName]);
+                        }
+                    });
+                }
+
                 dispatch(
                     [
                         // Meta models & enums
-                        Boolean(resultMeta) && setMeta(resultMeta),
+                        Boolean(resultMeta) && setMeta(resultMeta), // TODO skip models
                         // User auth
                         setData(result),
                         // User auth

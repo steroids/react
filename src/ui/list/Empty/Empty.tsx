@@ -34,13 +34,7 @@ export interface IEmptyProps {
 export type IEmptyViewProps = IEmptyProps
 
 function Empty(props: IEmptyProps) {
-    const components = useComponents();
-
-    if (!props.enable || props.list?.isLoading || props.list?.items?.length > 0) {
-        return null;
-    }
-
-    return components.ui.renderView(props.view || 'list.EmptyView', props);
+    return useComponents().ui.renderView(props.view || 'list.EmptyView', props);
 }
 
 Empty.defaultProps = {

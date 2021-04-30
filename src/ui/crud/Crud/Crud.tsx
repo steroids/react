@@ -150,12 +150,27 @@ function Crud(props: ICrudProps) {
     // Fetch record
     const {data: record, isLoading} = useFetch(
         useMemo(
-            () => recordId && props.restUrl && ({
-                method: 'get',
-                id: crudId + '_' + recordId,
-                url: props.restUrl + '/' + recordId,
-            }),
-            [crudId, recordId, props.restUrl],
+            () => {
+                if (recordId && props.restUrl) {
+                    return {
+                        method: 'get',
+                        id: crudId + '_' + recordId,
+                        url: props.restUrl + '/' + recordId,
+                    };
+                }
+                if (recordId && props.restApi?.view) {
+                    return {
+                        id: crudId + '_' + recordId,
+                        url: props.restApi.view,
+                        params: {
+                            [props.primaryKey]: recordId,
+                        },
+                    };
+                }
+
+                return null;
+            },
+            [recordId, props.restUrl, props.restApi, props.primaryKey, crudId],
         ),
     );
 
@@ -266,7 +281,7 @@ function Crud(props: ICrudProps) {
     return components.ui.renderView(props.crudView || 'crud.CrudView', {
         title: routeTitle,
         controls,
-        children: !isLoading && (
+        children: (controlsAction === CRUD_ACTION_INDEX || !isLoading) && (
             <CrudContent
                 {...contentProps}
                 action={controlsAction}

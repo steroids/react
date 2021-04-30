@@ -19,6 +19,7 @@ import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/Pag
 import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Model} from '../components/MetaComponent';
+import {useComponents} from '../hooks/index';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -208,6 +209,8 @@ const defaultConfig = {
  * Выбранные фильтры синхронизируются с адресной строкой.
  */
 export default function useList(config: IListConfig): IListOutput {
+    const components = useComponents();
+
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
 
@@ -221,7 +224,14 @@ export default function useList(config: IListConfig): IListOutput {
     // Empty
     const Empty = require('../ui/list/Empty').default;
     const emptyProps = normalizeEmptyProps(config.empty);
-    const renderEmpty = () => <Empty list={list} {...emptyProps} />;
+    const renderEmpty = () => {
+        if (!emptyProps.enable || list?.isLoading || list?.items?.length > 0) {
+            return null;
+        }
+        return (
+            <Empty list={list} {...emptyProps} />
+        );
+    };
 
     // Pagination size
     const PaginationSize = require('../ui/list/PaginationSize').default;

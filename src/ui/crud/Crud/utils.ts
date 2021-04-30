@@ -42,8 +42,7 @@ export const normalizeItems = (sourceItems: ICrudItem[] | { [key: string]: ICrud
         },
         delete: {
             position: 'right',
-            //todo windows.confirm не принимает jsx
-            confirm: (e, id) => __('Удалить запись {id}?', {id: id}),
+            confirm: (e, props) => __('Удалить запись {id}?', {id: props.recordId}),
             onClick: async (e, props) => {
                 if (props.restApi) {
                     await props.restApi.delete(props.components.api, {[props.primaryKey]: props.recordId});

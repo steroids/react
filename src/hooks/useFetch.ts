@@ -1,14 +1,13 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect} from 'react-use';
-import _trim from 'lodash/trim';
-import _uniqueId from 'lodash/uniqueId';
 import axios from 'axios';
 import {useComponents} from './index';
 import {IComponents} from './useComponents';
+import {IApiMethod} from '../components/ApiComponent';
 
 export interface IFetchConfig {
     id?: string | number,
-    url?: string,
+    url?: string | IApiMethod,
     method?: 'get' | 'post' | string,
     params?: Record<string, unknown>,
     onFetch?: (config: IFetchConfig, components: IComponents, addCancelToken: (token: any) => any) => any,
@@ -33,6 +32,7 @@ const normalizeConfig = config => (
             url: '',
             method: 'get',
             params: {},
+            options: null,
             onFetch: null,
             ...config,
         }
@@ -42,8 +42,12 @@ const defaultFetchHandler = (config, components, addCancelToken) => {
     const cancelToken = new axios.CancelToken(cancel => {
         addCancelToken(cancel);
     });
+
+    if (typeof config.url === 'function') {
+        return config.url(components.api, config.params, config.options);
+    }
     return components.http
-        .send(config.method, config.url, config.params, {cancelToken})
+        .send(config.method, config.url, config.params, {...config.options, cancelToken})
         .then(result => result.data);
 };
 
@@ -70,8 +74,8 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
 
     // Resolve config id
     // TODO Get initial state from HttpComponent (for SSR) by configId
-    const idRef = useRef(_uniqueId('fetch'));
-    const configId = config ? _trim(config.id || config.url || idRef.current, '/') : null;
+    //const idRef = useRef(_uniqueId('fetch'));
+    //const configId = config ? _trim(config.id || config.url || idRef.current, '/') : null;
 
     // State for data and loading flag
     const [data, setData] = useState(null);
@@ -104,6 +108,7 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
     // Fetch data on config update
     useEffect(() => {
         const fetchData = async () => {
+            setData(null);
             if (config) {
                 setIsLoading(true);
                 setData(await (config.onFetch || defaultFetchHandler).call(null, config, components, addCancelToken));

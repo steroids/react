@@ -27,7 +27,7 @@ export default function CrudContent(props: ICrudContentProps) {
     const dispatch = useDispatch();
 
     // Resolve ids
-    const formId = [props.crudId, props.recordId].filter(Boolean).join('_');
+    const formId = [props.crudId, 'form', props.recordId].filter(Boolean).join('_');
 
     // Get current crud item
     const crudItem = props.items.find(item => item.actionName === props.action);
@@ -50,7 +50,7 @@ export default function CrudContent(props: ICrudContentProps) {
             }
             return (
                 <ItemComponent // Grid
-                    key={props.crudId + '_' + props.action}
+                    key={props.crudId}
                     listId={props.crudId}
                     action={props.restApi ? props.restApi.index : props.restUrl}
                     scope={['model', 'permission']}
@@ -70,9 +70,13 @@ export default function CrudContent(props: ICrudContentProps) {
             if (!ItemComponent) {
                 ItemComponent = Form;
             }
+            if (props.action === CRUD_ACTION_UPDATE && !props.record) {
+                return null;
+            }
+
             return (
                 <ItemComponent // Form
-                    key={props.crudId + '_' + props.action}
+                    key={formId}
                     formId={formId}
                     action={props.restApi
                         ? (props.recordId ? props.restApi.update : props.restApi.create)
@@ -87,7 +91,9 @@ export default function CrudContent(props: ICrudContentProps) {
 
                         props.goToAction(CRUD_ACTION_INDEX);
                     }}
-                    initialValues={props.action === CRUD_ACTION_CREATE ? {...props.record} : undefined}
+                    initialValues={props.action === CRUD_ACTION_UPDATE
+                        ? {...props.record, [props.primaryKey]: props.record[props.primaryKey]}
+                        : undefined}
                 />
             );
 

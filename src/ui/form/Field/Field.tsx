@@ -43,7 +43,7 @@ export default function Field(props: IFieldProps) {
     const context = useContext(FormContext);
     const fieldModel = useMemo(() => {
         const model = props.model || context.model;
-        const result = (components.ui.getModel(model)?.attributes || [])
+        const result = (components.meta.getModel(model)?.attributes || [])
             .find(field => field.attribute === props.attribute);
 
         return result || {};

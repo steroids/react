@@ -118,8 +118,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
             props.input.onChange(
                 []
                     .concat(props.input.value || [])
-                    // eslint-disable-next-line radix
-                    .filter(id => toRemove.indexOf(parseInt(id)) === -1),
+                    .filter(id => toRemove.indexOf(Number(id)) === -1),
             );
         } else if (toRemove.indexOf(props.input.value) !== -1) {
             props.input.onChange(null);
@@ -190,6 +189,8 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
 
     // Check remove keys from value
     const prevInputValue = usePrevious(props.input.value);
+
+    //todo refactoring
     useEffect(() => {
         if (!_isEqual(prevInputValue !== props.input.value)) {
             const toRemove = _difference(
@@ -205,7 +206,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.input.value]);
+    }, [prevInputValue]);
 
     /**
      * Show browse dialog in user browser

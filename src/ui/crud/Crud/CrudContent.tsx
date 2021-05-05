@@ -103,6 +103,16 @@ export default function CrudContent(props: ICrudContentProps) {
             );
 
         default:
+            if (ItemComponent) {
+                return (
+                    <ItemComponent
+                        key={props.crudId + '_' + props.action}
+                        {...props}
+                        {...crudItem.componentProps}
+                    />
+                );
+            }
+
             return null;
     }
 }

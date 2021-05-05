@@ -62,7 +62,7 @@ export interface IFieldWrapperInputProps {
      * Ошибки в поле
      * @example ['Error text']
      */
-    error?: any;
+    errors?: string[];
 
     date?: any;
 
@@ -82,7 +82,7 @@ export interface IFieldWrapperInputProps {
 export interface IFieldWrapperOutputProps {
     formId?: string,
     componentId?: string,
-    error?: any,
+    errors?: string[],
     input?: {
         name?: string,
         value?: any,
@@ -111,7 +111,7 @@ const createDynamicField = (componentId, Component, isList) => {
         components.ui.registerField(formId, name, componentId);
 
         // Resolve data provider
-        const {error, value, setValue} = context?.provider
+        const {errors, value, setValue} = context?.provider
             ? context?.provider.useField(formId, name, isList)
             : providers.state.useField(props.value);
 
@@ -126,14 +126,14 @@ const createDynamicField = (componentId, Component, isList) => {
         const wrapperProps: IFieldWrapperOutputProps = {
             componentId,
             formId,
-            error,
+            errors,
             input,
         };
 
         return components.ui.renderView(Component, {
             ...components.ui.getFieldProps(componentId, model, props.attribute),
-            ...wrapperProps,
             ...props,
+            ...wrapperProps,
         });
     };
     DynamicField.displayName = componentId;
@@ -154,7 +154,7 @@ export default function fieldWrapper<T extends React.FC>(
         const context = useContext(FormContext);
         const model = props.model || context?.model || null;
 
-        // Get UI props and create Field Class dynamically (for add field props - input, error, model, ...)
+        // Get UI props and create Field Class dynamically (for add field props - input, errors, model, ...)
         const metaProps = useMemo(
             () => components.ui.getFieldProps(componentId, model, props.attribute),
             [components.ui, props.attribute, model],
@@ -166,14 +166,14 @@ export default function fieldWrapper<T extends React.FC>(
         // Resolve layout
         const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
-        if (layout !== false) {
+        if (layout !== null) {
             return components.ui.renderView(FieldLayout, {
                 layout,
                 attribute: props.attribute,
                 required: _has(props, 'required') ? props.required : metaProps.required,
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,
-                error: props.error,
+                errors: props.errors,
                 children: (
                     <Component.DynamicField {...props} />
                 ),

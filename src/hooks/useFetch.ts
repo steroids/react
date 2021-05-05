@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect} from 'react-use';
 import axios from 'axios';
 import {useComponents} from './index';
@@ -44,7 +44,7 @@ const defaultFetchHandler = (config, components, addCancelToken) => {
     });
 
     if (typeof config.url === 'function') {
-        return config.url(components.api, config.params, config.options);
+        return config.url(components.api, config.params, config.options).then(result => result.data);
     }
     return components.http
         .send(config.method, config.url, config.params, {...config.options, cancelToken})
@@ -79,7 +79,7 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
 
     // State for data and loading flag
     const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(!!config);
 
     // Cancel tokens
     const cancelTokens = useRef([]);
@@ -106,7 +106,7 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
     }, [components, config]);
 
     // Fetch data on config update
-    useEffect(() => {
+    useLayoutEffect(() => {
         const fetchData = async () => {
             setData(null);
             if (config) {

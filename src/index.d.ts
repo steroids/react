@@ -55,8 +55,9 @@ declare type FormLayoutName = 'default' | 'horizontal' | 'inline' | string;
  * Свойства для настройки макета формы
  */
 declare type FormLayout = FormLayoutName | boolean | {
-    layout: FormLayoutName | boolean,
+    layout?: FormLayoutName | boolean,
     className?: string,
+    style?: any,
     label?: boolean,
     cols?: number[],
     [key: string]: any,

@@ -35,7 +35,6 @@ export default class ApiComponent {
             return value;
         });
 
-        return this._components.http.send(method, url, params)
-            .then(response => response.data);
+        return this._components.http.send(method, url, params);
     }
 }

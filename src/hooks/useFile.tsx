@@ -37,12 +37,18 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
         },
     }));
 
+    /**
+     * Force component update when file status or progress changes
+     * @private
+     */
+    const forceUpdate = useUpdate();
+
     // Check for initial files
     const form = useForm();
     let initialFiles = props.initialFiles;
     if (!initialFiles) {
         // Find in form values
-        initialFiles = form.formSelector(state => props.input.name.replace(/Ids?$/, ''));
+        initialFiles = form.formSelector(state => _get(state, ['values', props.input.name.replace(/Ids?$/, '')]));
     }
     useEffect(() => {
         if (initialFiles) {
@@ -65,15 +71,10 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
                         }),
                     ),
             );
+            forceUpdate();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialFiles]);
-
-    /**
-     * Force component update when file status or progress changes
-     * @private
-     */
-    const forceUpdate = useUpdate();
 
     /**
      * Trigger by queue when file is uploaded or error

@@ -39,7 +39,7 @@ export interface IFieldLayoutProps {
      * Ошибки в поле
      * @example 'Field is required'
      */
-    error?: string | string[];
+    errors?: string[];
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -57,7 +57,8 @@ export interface IFieldLayoutViewProps {
     errors: string | string[],
     layout?: {
         layout: FormLayoutName | boolean,
-        className: string,
+        className?: string,
+        style?: any,
         label: boolean,
         cols: number[],
         [key: string]: any,
@@ -75,17 +76,17 @@ const defaultProps = {
 function FieldLayout(props: IFieldLayoutProps) {
     const components = useComponents();
 
+    // Error from state
+    const errors = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
+
     const layout = useMemo(() => mergeLayoutProp(defaultProps.layout, props.layout), [props.layout]);
     if (layout === false) {
         return props.children;
     }
 
-    // Error from state
-    const error = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
-
     return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
         ...props,
-        errors: props.error || error,
+        errors: props.errors || errors,
         layout,
     });
 }

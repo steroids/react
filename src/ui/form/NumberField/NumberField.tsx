@@ -71,7 +71,7 @@ NumberField.defaultProps = {
     min: null,
     max: null,
     step: null,
-    errors: [],
+    errors: null,
 };
 
 export default fieldWrapper('NumberField', NumberField);

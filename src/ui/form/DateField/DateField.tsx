@@ -87,8 +87,8 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
 
     const [month, setMonth] = useState(new Date(currentYear, currentMonth));
 
-    const handleYearMonthChange = useCallback(month => {
-        setMonth(month);
+    const handleYearMonthChange = useCallback(month2 => {
+        setMonth(month2);
     }, []);
 
     /**
@@ -98,10 +98,10 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
      */
     const parseDate = useCallback(date => {
         const format = [props.displayFormat, props.valueFormat].find(
-            format => (
+            format2 => (
                 date
-                && date.length === format.length
-                && moment(date, format)
+                && date.length === format2.length
+                && moment(date, format2)
                     .isValid()
             ),
         );
@@ -161,6 +161,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
 }
 
 DateField.defaultProps = {
+    size: 'md',
     disabled: false,
     required: false,
     className: '',

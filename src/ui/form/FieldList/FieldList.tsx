@@ -64,8 +64,6 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
      */
     items?: IFieldListItem[];
 
-    fields?: any;
-
     /**
      * Изначальное количество групп с полями
      * @example 2
@@ -131,6 +129,7 @@ export interface IFieldListViewProps {
     showAdd?: boolean,
     children?: React.ReactNode,
     className?: string,
+    style?: any,
     forwardedRef?: any,
     disabled?: boolean,
     size?: Size,
@@ -167,7 +166,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
 
     // Add initial rows
     useMount(() => {
-        if (!props.input.value?.length) {
+        if (!props.input.value) {
             onAdd(props.initialRowsCount);
         }
     });
@@ -185,12 +184,18 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
     const items = useMemo(
         () => (props.items || [])
             .filter(field => field.visible !== false)
-            .map(field => ({
-                ...modelAttributes?.[field.attribute],
-                ...field,
-                disabled: _isBoolean(field.disabled) ? field.disabled : props.disabled,
-                size: field.size || props.size,
-            })),
+            .map(field => {
+                if (typeof field === 'string') {
+                    field = {attribute: field};
+                }
+
+                return {
+                    ...(modelAttributes || []).find(attributeItem => attributeItem.attribute === field.attribute),
+                    ...field,
+                    disabled: _isBoolean(field.disabled) ? field.disabled : props.disabled,
+                    size: field.size || props.size,
+                };
+            }),
         [modelAttributes, props.disabled, props.items, props.size],
     );
 

@@ -58,7 +58,7 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
 export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutputProps {
     forwardedRef: any,
     style?: any,
-    isInvalid?: boolean,
+    errors?: string[],
     placeholder?: string,
     type: any,
     inputProps: {
@@ -74,7 +74,6 @@ export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutpu
     onBlur: () => void,
     clearInput: () => void,
     setNow: () => void,
-    errors?: any,
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps) {

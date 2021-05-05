@@ -127,6 +127,11 @@ export interface IFormProps {
     view?: CustomView;
 
     /**
+     * @example {className: 'foo'}
+     */
+    viewProps?: any;
+
+    /**
      * Поля, которые необходимо поместить в форму
      * @example [{attribute: 'category', component: 'DropDownField'}]
      */
@@ -181,6 +186,7 @@ export interface IFormViewProps {
     fields?: (string | IFieldProps)[],
     onSubmit: any,
     className?: CssClassName,
+    style?: any,
     layout?: {
         layout: FormLayoutName | boolean,
         className: CssClassName,
@@ -441,6 +447,7 @@ function Form(props: IFormProps) {
         <FormContext.Provider value={formContextValue}>
             {props.view !== false
                 ? components.ui.renderView(props.view || 'form.FormView', {
+                    ...props.viewProps,
                     isInvalid,
                     isSubmitting,
                     layout,

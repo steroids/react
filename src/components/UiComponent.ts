@@ -47,6 +47,9 @@ export default class UiComponent {
             Component = this._getComponent('views', Component);
         }
         if (!forceNode && _isFunction(Component)) {
+            if (Component.defaultProps) {
+                return Component({...Component.defaultProps, ...props});
+            }
             return Component(props);
         }
         return React.createElement(Component, props);

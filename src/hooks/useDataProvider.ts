@@ -85,7 +85,7 @@ export interface IDataProviderConfig {
      * Если включен autoFetch, то настройки autoComplete не применятся.
      * @example true
      */
-    autoFetch?: any,
+    autoFetch?: boolean,
 }
 
 export interface IDataProviderResult {
@@ -139,6 +139,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
 
     const dataProvider = useMemo(() => ({
         action: '',
+        actionMethod: 'get',
         params: null,
         onSearch: null,
         ...config.dataProvider,
@@ -151,8 +152,9 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         const fetchRemote = async () => {
             const searchHandler = dataProvider.onSearch || (
                 typeof dataProvider.action === 'function'
-                    ? (method: any, params) => method(components.api, params)
-                    : components.http.post.bind(components.http)
+                    ? (method: any, params) => method(components.api, params).then(response => response.data)
+                    : (method: any, params) => components.http.send(dataProvider.actionMethod, method, params)
+                        .then(response => response.data)
             );
             const result = searchHandler(dataProvider.action, {
                 query: config.query,

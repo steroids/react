@@ -127,7 +127,7 @@ function DateTimeField(props: IDateTimeFieldProps) {
         ...props,
         dateField: (
             <DateFieldInternal
-                isInvalid={props.isInvalid}
+                errors={props.errors}
                 required={props.required}
                 disabled={props.disabled}
                 displayFormat={props.displayDateFormat}
@@ -143,7 +143,7 @@ function DateTimeField(props: IDateTimeFieldProps) {
         ),
         timeField: (
             <TimeFieldInternal
-                isInvalid={props.isInvalid}
+                errors={props.errors}
                 required={props.required}
                 disabled={props.disabled}
                 timeFormat={props.timeFormat}

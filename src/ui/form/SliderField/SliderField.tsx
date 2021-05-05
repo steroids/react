@@ -78,7 +78,7 @@ SliderField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    errors: [],
+    errors: null,
     min: 0,
     max: 100,
 };

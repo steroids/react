@@ -42,6 +42,10 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
     view?: any;
 
     /**
+     */
+    viewProps?: any;
+
+    /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
@@ -82,8 +86,7 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
     style?: any,
-    isInvalid?: boolean,
-    errors?: any,
+    errors?: string[],
     placeholder?: string,
     type?: string,
     inputProps: {
@@ -151,6 +154,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps) {
 
     return components.ui.renderView(props.view || 'form.InputFieldView', {
         ...props,
+        ...props.viewProps,
         inputProps,
     });
 }
@@ -161,7 +165,7 @@ InputField.defaultProps = {
     required: false,
     className: '',
     placeholder: '',
-    errors: [],
+    errors: null,
     textBefore: null,
     textAfter: null,
     addonBefore: null,

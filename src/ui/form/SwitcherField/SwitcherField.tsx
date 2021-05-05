@@ -98,7 +98,7 @@ SwitcherField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    errors: [],
+    errors: null,
 };
 
 export default fieldWrapper('SwitcherField', SwitcherField);

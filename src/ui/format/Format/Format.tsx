@@ -1,8 +1,8 @@
 import _get from 'lodash-es/get';
 import _isObject from 'lodash-es/isObject';
-import _isFunction from 'lodash-es/isFunction';
 import _isString from 'lodash-es/isString';
 import {useContext} from 'react';
+import useModel from '../../../hooks/useModel';
 import {useComponents} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
 
@@ -22,13 +22,9 @@ export function getFormatterPropsFromModel(model, attribute) {
     if (!model || !attribute) {
         return null;
     }
-    if (_isFunction(model.formatters)) {
-        return model.formatters()[attribute] || null;
-    }
-    if (_isObject(model.formatters)) {
-        return model.formatters[attribute] || null;
-    }
-    return null;
+
+    const attributeMeta = model?.attributes.find(item => item.attribute === attribute);
+    return attributeMeta?.formatter || null;
 }
 
 export default function Format(props: IFormatProps) {
@@ -36,14 +32,11 @@ export default function Format(props: IFormatProps) {
     const components = useComponents();
 
     // Get field config from model
-    const model = props.model || context?.model;
-    props = {
-        ...getFormatterPropsFromModel(model, props.attribute),
-        ...props,
-    };
-    const component = _isString(props.component)
-        ? components.getFormatter('format.' + props.component)
-        : props.component;
+    const model = useModel(props.model || context?.model);
+    let component = props.component || getFormatterPropsFromModel(model, props.attribute);
+    if (_isString(component)) {
+        component = components.ui.getFormatter('format.' + component);
+    }
 
     return components.ui.renderView(component || 'format.DefaultFormatterView', {
         ...props,

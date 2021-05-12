@@ -77,7 +77,7 @@ export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutpu
     setNow: () => void,
 }
 
-function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps) {
+function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     const [hours, setHours] = useState<string>(null);

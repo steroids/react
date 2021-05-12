@@ -11,10 +11,6 @@ import {
 } from '../../../reducers/router';
 import {IButtonProps} from '../../form/Button/Button';
 
-/**
- * Nav
- * Компонент навигации
- */
 export interface INavItem extends IButtonProps {
     /**
      * Идентификатор элемента
@@ -69,6 +65,10 @@ export interface INavItem extends IButtonProps {
     contentProps?: any,
 }
 
+/**
+ * Nav
+ * Компонент навигации
+ */
 export interface INavProps {
     /**
      * Шаблон отображения элементов навигации
@@ -136,7 +136,7 @@ const defaultViewMap = {
     list: 'nav.NavListView',
 };
 
-function Nav(props: INavProps) {
+function Nav(props: INavProps): JSX.Element {
     const components = useComponents();
 
     const {routes, activeRouteIds, routerParams} = useSelector(state => ({

@@ -7,7 +7,7 @@ interface IBlankFieldProps extends IFieldWrapperInputProps {
     children?: React.ReactNode;
 }
 
-function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps) {
+function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps): JSX.Element {
     return <span>{props.text || props.children}</span>;
 }
 

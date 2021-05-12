@@ -49,7 +49,7 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
     onItemSelect: (id: PrimaryKey | any) => void,
 }
 
-function RadioListField(props: IRadioListFieldProps) {
+function RadioListField(props: IRadioListFieldProps): JSX.Element {
     const components = useComponents();
 
     // Data provider

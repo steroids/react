@@ -41,7 +41,7 @@ export const getLabel = (items, id) => {
     return null;
 };
 
-export default function EnumFormatter(props: IEnumFormatterProps) {
+export default function EnumFormatter(props: IEnumFormatterProps): JSX.Element {
     const components = useComponents();
     const items = useDataProvider({items: props.items});
 

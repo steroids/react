@@ -9,7 +9,7 @@ import {mergeLayoutProp} from '../../../utils/form';
 
 /**
  * FieldSet
- * Компонент для группировки полей формы с помощью тега <fieldset>...</fieldset> и заголовка <legend>...</legend>
+ * Компонент для группировки полей формы
  */
 export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
     /**
@@ -30,7 +30,7 @@ export interface IFieldSetProps extends IFormContext, IComponentsHocOutput {
     view?: CustomView,
 
     /**
-     * Дополнительный CSS-класс для <fieldset>...</fieldset>
+     * Дополнительный CSS-класс для \<fieldset\>...\<\/fieldset\>
      */
     className?: CssClassName,
 

@@ -55,7 +55,7 @@ export interface IIconViewProps extends IIconProps {
     icon: string,
 }
 
-export default function Icon(props: IIconProps) {
+export default function Icon(props: IIconProps): JSX.Element {
     const components = useComponents();
 
     const name = props.name;

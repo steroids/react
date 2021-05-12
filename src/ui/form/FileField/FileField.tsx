@@ -105,7 +105,7 @@ export interface IFileFieldViewProps extends IFileFieldProps {
     items: IFileFieldItemViewProps[]
 }
 
-function FileField(props: IFileFieldProps & IFieldWrapperOutputProps) {
+function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const {files, onBrowse, onRemove} = useFile(props);
 

@@ -27,7 +27,7 @@ export function getFormatterPropsFromModel(model, attribute) {
     return attributeMeta?.formatter || null;
 }
 
-export default function Format(props: IFormatProps) {
+export default function Format(props: IFormatProps): JSX.Element {
     const context = useContext(FormContext);
     const components = useComponents();
 

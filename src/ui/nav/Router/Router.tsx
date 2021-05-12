@@ -276,7 +276,7 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
 };
 
 // TODO @navigationHoc()
-function Router(props: IRouterProps) {
+function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
 
     const {isInitialized, pathname, route, routeParams, activePath, activeRouteIds} = useSelector(state => ({

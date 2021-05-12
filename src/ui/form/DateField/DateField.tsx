@@ -71,7 +71,7 @@ export interface IDateFieldViewProps extends IDateFieldProps {
     localeUtils: any,
 }
 
-function DateField(props: IDateFieldProps & IFieldWrapperOutputProps) {
+function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     const currentYear = new Date().getFullYear();

@@ -70,7 +70,7 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
     onSelect: (size: number) => void,
 }
 
-function PaginationSize(props: IPaginationSizeProps) {
+function PaginationSize(props: IPaginationSizeProps): JSX.Element {
     const components = useComponents();
 
     const pageSize = props.list?.pageSize;

@@ -33,7 +33,7 @@ export interface IEmptyProps {
 
 export type IEmptyViewProps = IEmptyProps
 
-function Empty(props: IEmptyProps) {
+function Empty(props: IEmptyProps): JSX.Element {
     return useComponents().ui.renderView(props.view || 'list.EmptyView', props);
 }
 

@@ -110,7 +110,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     onMouseDown?: (e: Event | React.MouseEvent) => void;
 }
 
-function InputField(props: IInputFieldProps & IFieldWrapperOutputProps) {
+function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     const inputProps = useMemo(() => ({

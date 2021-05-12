@@ -11,12 +11,12 @@ import {useComponents} from '../../../hooks';
  * RateField
  * Поле для проставления рейтинга
  */
-interface IRateFieldItem {
+export interface IRateFieldItem {
     id: number,
     value: number,
 }
 
-interface IRateFieldProps extends IFieldWrapperInputProps {
+export interface IRateFieldProps extends IFieldWrapperInputProps {
     /**
      * Максимальное количество звезд
      * @example 5
@@ -60,7 +60,7 @@ export interface IRateFieldViewProps extends IRateFieldProps, IFieldWrapperOutpu
     onItemClick: (item: IRateFieldItem) => void,
 }
 
-function RateField(props: IRateFieldProps) {
+function RateField(props: IRateFieldProps): JSX.Element {
     const components = useComponents();
 
     const items = useMemo(() => [...Array(props.itemsCount || 5)]

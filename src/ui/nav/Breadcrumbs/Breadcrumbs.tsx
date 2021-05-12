@@ -36,7 +36,7 @@ export interface IBreadcrumbsProps {
 
 export type IBreadcrumbsViewProps = IBreadcrumbsProps;
 
-export default function Breadcrumbs(props: IBreadcrumbsProps) {
+export default function Breadcrumbs(props: IBreadcrumbsProps): JSX.Element {
     const components = useComponents();
     const routeItems = useSelector(state => props.pageId ? getRouteBreadcrumbs(state, props.pageId) : null);
     const items = props.items || routeItems;

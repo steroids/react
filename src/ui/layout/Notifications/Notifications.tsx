@@ -50,7 +50,7 @@ export interface INotificationsItemViewProps extends INotificationItem {
     position: string;
 }
 
-function Notifications(props:INotificationsProps) {
+function Notifications(props:INotificationsProps): JSX.Element {
     const {notifications, position} = useSelector(state => ({
         notifications: getNotifications(state),
         position: getPosition(state),

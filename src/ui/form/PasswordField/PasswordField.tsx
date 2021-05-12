@@ -64,7 +64,7 @@ export const checkPassword = password => {
     return 'danger';
 };
 
-function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps) {
+function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const [type, setType] = useState('password');
 
     const components = useComponents();

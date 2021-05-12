@@ -73,7 +73,7 @@ const defaultProps = {
     },
 };
 
-function FieldLayout(props: IFieldLayoutProps) {
+function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     const components = useComponents();
 
     // Error from state

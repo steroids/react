@@ -45,7 +45,7 @@ export const asHumanFileSize = (bytes, showZero) => {
     return bytes.toFixed(1) + ' ' + units[u];
 };
 
-export default function FileSize(props: IFileSizeFormatterProps) {
+export default function FileSize(props: IFileSizeFormatterProps): JSX.Element {
     return useComponents().ui.renderView(props.view || 'format.DefaultFormatterView', {
         value: asHumanFileSize(props.value, this.props.showZero),
     });

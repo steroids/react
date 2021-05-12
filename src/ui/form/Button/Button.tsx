@@ -210,7 +210,7 @@ export interface IButtonViewProps extends IButtonProps {
     showLabelOnLoading: boolean,
 }
 
-function Button(props: IButtonProps) {
+function Button(props: IButtonProps): JSX.Element {
     const components = useComponents();
     const dispatch = useDispatch();
 

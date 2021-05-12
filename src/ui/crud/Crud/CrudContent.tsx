@@ -23,7 +23,7 @@ export interface ICrudContentProps {
     action?: string,
 }
 
-export default function CrudContent(props: ICrudContentProps) {
+export default function CrudContent(props: ICrudContentProps): JSX.Element {
     const dispatch = useDispatch();
 
     // Resolve ids

@@ -12,7 +12,7 @@ export interface ILinkProps extends IButtonProps {
 
 export type ILinkViewProps = IButtonViewProps
 
-export default function Link(props: ILinkProps) {
+export default function Link(props: ILinkProps): JSX.Element {
     return (
         <Button
             tag='a'

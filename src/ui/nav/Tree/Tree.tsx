@@ -10,10 +10,6 @@ import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../..
 import {IRouteItem} from '../Router/Router';
 import {IButtonProps} from '../../form/Button/Button';
 
-/**
- * Tree
- * Компонент, который представляет в виде дерева список с иерархической структурой данных
- */
 export interface ITreeItem extends IButtonProps {
     /**
      * Идентификатор узла
@@ -33,6 +29,10 @@ export interface ITreeItem extends IButtonProps {
     visible?: boolean
 }
 
+/**
+ * Tree
+ * Компонент, который представляет в виде дерева список с иерархической структурой данных
+ */
 export interface ITreeProps {
     /**
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами

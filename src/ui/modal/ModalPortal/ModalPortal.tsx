@@ -12,7 +12,7 @@ export interface IModalPortalProps {
     group?: string,
 }
 
-function ModalPortal(props: IModalPortalProps) {
+function ModalPortal(props: IModalPortalProps): JSX.Element {
     const dispatch = useDispatch();
 
     const group = props.group || ModalPortal.defaultProps.group;

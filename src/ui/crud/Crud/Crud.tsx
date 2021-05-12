@@ -103,7 +103,7 @@ export interface ICrudViewProps {
     children?: ReactNode,
 }
 
-function Crud(props: ICrudProps) {
+function Crud(props: ICrudProps): JSX.Element {
     const components = useComponents();
     const dispatch = useDispatch();
 

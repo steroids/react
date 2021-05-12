@@ -42,7 +42,7 @@ export interface ICheckboxColumnViewProps {
     },
 }
 
-export default function CheckboxColumn(props: ICheckboxColumnProps) {
+export default function CheckboxColumn(props: ICheckboxColumnProps): JSX.Element {
     const components = useComponents();
 
     const itemId = props.item?.[props.primaryKey];

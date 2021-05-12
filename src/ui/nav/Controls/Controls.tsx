@@ -3,12 +3,6 @@ import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../../form/Button/Button';
 import {INavProps} from '../Nav/Nav';
 
-/**
- * Controls
- * Коллекция с контролами. Можно передавать список с кастомными контролами, а можно использовать стандарные контролы
- * компонента. Стандартные контролы подходят для CRUD-операций, все что нужно для их использования - передать
- * соответствующий id и обработчик - внешний вид (иконка и название) отобразятся автоматом.
- */
 export interface IControlItem extends IButtonProps {
     /**
      * Идентификатор контрола
@@ -29,6 +23,12 @@ export interface IControlItem extends IButtonProps {
     position?: 'left' | 'right',
 }
 
+/**
+ * Controls
+ * Коллекция с контролами. Можно передавать список с кастомными контролами, а можно использовать стандарные контролы
+ * компонента. Стандартные контролы подходят для CRUD-операций, все что нужно для их использования - передать
+ * соответствующий id и обработчик - внешний вид (иконка и название) отобразятся автоматом.
+ */
 export interface IControlsProps {
     /**
      * Коллекция контролов
@@ -69,7 +69,7 @@ export interface IControlsViewProps extends IControlsProps {
     })[],
 }
 
-export default function Controls(props: IControlsProps) {
+export default function Controls(props: IControlsProps): JSX.Element {
     const defaultItems = {
         index: {
             icon: 'back',

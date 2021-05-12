@@ -38,7 +38,7 @@ export const moneyFormat = (amount, currency, scale) => {
     });
 };
 
-function MoneyFormatter(props: IMoneyFormatterProps) {
+function MoneyFormatter(props: IMoneyFormatterProps): JSX.Element {
     const value = props.precision > 0
         ? props.value / 10 ** props.precision
         : props.value;

@@ -54,7 +54,7 @@ export interface IListItemViewProps {
     layoutSelected?: PrimaryKey;
 }
 
-export default function List(props: IListProps) {
+export default function List(props: IListProps): JSX.Element {
     const components = useComponents();
     const {
         list,

@@ -36,7 +36,7 @@ export interface IFieldProps extends IFieldWrapperInputProps {
     [key: string]: any,
 }
 
-function Field(props: IFieldProps) {
+function Field(props: IFieldProps): JSX.Element {
     const components = useComponents();
 
     // Get model

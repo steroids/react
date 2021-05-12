@@ -45,7 +45,7 @@ export interface ISwitcherFieldViewProps extends IFieldWrapperOutputProps, Omit<
     buttonProps?: any,
 }
 
-function SwitcherField(props: ISwitcherFieldProps) {
+function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
     const components = useComponents();
 
     // Data Provider

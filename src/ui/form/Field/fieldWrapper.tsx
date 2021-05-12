@@ -95,6 +95,13 @@ interface IFieldWrapperOptions {
     list?: boolean,
 }
 
+type FieldWrapperComponent = {
+    (props: IFieldWrapperInputProps): JSX.Element;
+    WrappedComponent: any;
+    displayName: any;
+    defaultProps: any;
+}
+
 const createDynamicField = (componentId, Component, isList) => {
     const DynamicField = (props: IFieldWrapperInputProps) => {
         const components = useComponents();
@@ -142,12 +149,12 @@ const createDynamicField = (componentId, Component, isList) => {
 };
 
 // Field Wrapper
-export default function fieldWrapper<T extends React.FC>(
+export default function fieldWrapper(
     componentId,
-    Component: T | any,
+    Component: any,
     options: IFieldWrapperOptions = {},
-) {
-    const NewComponent = (props: IFieldWrapperInputProps): T | any => {
+): FieldWrapperComponent {
+    const NewComponent = (props: IFieldWrapperInputProps):JSX.Element => {
         const components = useComponents();
 
         // Get context, formId

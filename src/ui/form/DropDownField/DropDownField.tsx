@@ -82,7 +82,7 @@ export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'item
     searchAutoFocus?: any,
 }
 
-function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps) {
+function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     // Query state

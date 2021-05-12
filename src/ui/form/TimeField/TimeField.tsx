@@ -82,7 +82,7 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     const [hours, setHours] = useState<string>(null);
     const [minutes, setMinutes] = useState<string>(null);
-    const [innerInput, setInnerInput] = useState<string>(null);
+    const [innerInput, setInnerInput] = useState<string>('');
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
     const calculatedValue = useCallback((newTime, part = '') => {
@@ -174,9 +174,9 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         placeholder: props.placeholder,
         disabled: props.disabled,
         ...props.inputProps,
-        value: innerInput || '',
+        value: innerInput || props.input.value,
         onChange,
-    }), [innerInput, onChange, props.disabled, props.input.name, props.inputProps, props.placeholder, props.type]);
+    }), [innerInput, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', {
         ...props,

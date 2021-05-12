@@ -55,7 +55,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
 }
 
 export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'items'> {
-    isInvalid?: boolean,
+    errors?: string[],
     items: Record<string, unknown>[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
@@ -165,7 +165,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,
-        isInvalid: !!props.error,
         isAutoComplete,
         items,
         hoveredId,

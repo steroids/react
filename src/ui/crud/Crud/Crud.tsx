@@ -150,12 +150,27 @@ function Crud(props: ICrudProps): JSX.Element {
     // Fetch record
     const {data: record, isLoading} = useFetch(
         useMemo(
-            () => recordId && props.restUrl && ({
-                method: 'get',
-                id: crudId + '_' + recordId,
-                url: props.restUrl + '/' + recordId,
-            }),
-            [crudId, recordId, props.restUrl],
+            () => {
+                if (recordId && props.restUrl) {
+                    return {
+                        method: 'get',
+                        id: crudId + '_' + recordId,
+                        url: props.restUrl + '/' + recordId,
+                    };
+                }
+                if (recordId && props.restApi?.view) {
+                    return {
+                        id: crudId + '_' + recordId,
+                        url: props.restApi.view,
+                        params: {
+                            [props.primaryKey]: recordId,
+                        },
+                    };
+                }
+
+                return null;
+            },
+            [recordId, props.restUrl, props.restApi, props.primaryKey, crudId],
         ),
     );
 
@@ -195,7 +210,7 @@ function Crud(props: ICrudProps): JSX.Element {
                     // Custom confirm
                     if (typeof crudItem.confirm === 'function') {
                         const value = crudItem.confirm(e, localClickProps);
-                        if (value === false || window.confirm(value)) {
+                        if (value === false || !window.confirm(value)) {
                             e.preventDefault();
                             return;
                         }
@@ -266,7 +281,7 @@ function Crud(props: ICrudProps): JSX.Element {
     return components.ui.renderView(props.crudView || 'crud.CrudView', {
         title: routeTitle,
         controls,
-        children: !isLoading && (
+        children: (controlsAction === CRUD_ACTION_INDEX || !isLoading) && (
             <CrudContent
                 {...contentProps}
                 action={controlsAction}

@@ -76,7 +76,7 @@ export const httpFetchHandler = (list: IList, query, {api, http}) => {
         if (list.scope) {
             params.scope = list.scope.join(',');
         }
-        return list.action(api, params);
+        return list.action(api, params).then(response => response.data);
     }
 
     let url = list.action;

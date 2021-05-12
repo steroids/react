@@ -29,7 +29,7 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         disabled: boolean,
     },
     security?: boolean,
-    isInvalid?: boolean,
+    errors?: string[],
     className?: CssClassName,
     securityLevel?: 'success' | 'warning' | 'danger',
     onShowPassword: () => void,
@@ -91,7 +91,7 @@ PasswordField.defaultProps = {
     required: false,
     className: '',
     placeholder: '',
-    errors: [],
+    errors: null,
 };
 
 export default fieldWrapper('PasswordField', PasswordField);

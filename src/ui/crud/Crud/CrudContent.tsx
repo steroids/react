@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 import {CRUD_ACTION_CREATE, CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE} from './utils';
 import {showNotification} from '../../../actions/notifications';
 import useDispatch from '../../../hooks/useDispatch';
@@ -27,7 +27,7 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
     const dispatch = useDispatch();
 
     // Resolve ids
-    const formId = [props.crudId, props.recordId].filter(Boolean).join('_');
+    const formId = [props.crudId, 'form', props.recordId].filter(Boolean).join('_');
 
     // Get current crud item
     const crudItem = props.items.find(item => item.actionName === props.action);
@@ -41,6 +41,18 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
             : [],
     ), [props.action, props.items, props.itemsToControls]);
 
+    const formInitialValues = useMemo(() => props.action === CRUD_ACTION_UPDATE
+        ? {...props.record, [props.primaryKey]: props.record?.[props.primaryKey] || props.recordId}
+        : undefined,
+    [props.action, props.primaryKey, props.record, props.recordId]);
+
+    const onFormComplete = useCallback(() => {
+        window.scrollTo(0, 0);
+        dispatch(showNotification(__('Запись успешно обновлена.')));
+
+        props.goToAction.call(null, CRUD_ACTION_INDEX);
+    }, [dispatch, props.goToAction]);
+
     // Render content by action
     let ItemComponent = crudItem.component;
     switch (props.action) {
@@ -50,7 +62,7 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
             }
             return (
                 <ItemComponent // Grid
-                    key={props.crudId + '_' + props.action}
+                    key={props.crudId}
                     listId={props.crudId}
                     action={props.restApi ? props.restApi.index : props.restUrl}
                     scope={['model', 'permission']}
@@ -70,9 +82,13 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
             if (!ItemComponent) {
                 ItemComponent = Form;
             }
+            if (props.action === CRUD_ACTION_UPDATE && !props.record) {
+                return null;
+            }
+
             return (
                 <ItemComponent // Form
-                    key={props.crudId + '_' + props.action}
+                    key={formId}
                     formId={formId}
                     action={props.restApi
                         ? (props.recordId ? props.restApi.update : props.restApi.create)
@@ -81,17 +97,22 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
                     autoFocus
                     submitLabel={props.recordId ? __('Сохранить') : __('Добавить')}
                     layout='horizontal'
-                    onComplete={() => {
-                        window.scrollTo(0, 0);
-                        dispatch(showNotification(__('Запись успешно обновлена.')));
-
-                        props.goToAction(CRUD_ACTION_INDEX);
-                    }}
-                    initialValues={props.action === CRUD_ACTION_CREATE ? {...props.record} : undefined}
+                    onComplete={onFormComplete}
+                    initialValues={formInitialValues}
                 />
             );
 
         default:
+            if (ItemComponent) {
+                return (
+                    <ItemComponent
+                        key={props.crudId + '_' + props.action}
+                        {...props}
+                        {...crudItem.componentProps}
+                    />
+                );
+            }
+
             return null;
     }
 }

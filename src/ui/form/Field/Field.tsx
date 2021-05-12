@@ -36,14 +36,14 @@ export interface IFieldProps extends IFieldWrapperInputProps {
     [key: string]: any,
 }
 
-export default function Field(props: IFieldProps): JSX.Element {
+function Field(props: IFieldProps): JSX.Element {
     const components = useComponents();
 
     // Get model
     const context = useContext(FormContext);
     const fieldModel = useMemo(() => {
         const model = props.model || context.model;
-        const result = (components.ui.getModel(model)?.attributes || [])
+        const result = (components.meta.getModel(model)?.attributes || [])
             .find(field => field.attribute === props.attribute);
 
         return result || {};
@@ -70,3 +70,5 @@ export default function Field(props: IFieldProps): JSX.Element {
         ? ComponentField(componentProps)
         : <ComponentField {...componentProps} />;
 }
+
+export default React.memo(Field);

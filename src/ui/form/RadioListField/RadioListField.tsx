@@ -97,7 +97,7 @@ RadioListField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    errors: [],
+    errors: null,
 };
 
 export default fieldWrapper('RadioListField', RadioListField);

@@ -97,7 +97,7 @@ TextField.defaultProps = {
     className: '',
     placeholder: '',
     submitOnEnter: false,
-    errors: [],
+    errors: null,
 };
 
 export default fieldWrapper('TextField', TextField);

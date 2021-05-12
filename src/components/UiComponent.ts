@@ -4,12 +4,15 @@ import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
 import {ReactNode} from 'react';
+import {IComponents} from '../hooks/useComponents';
 
 /**
  * Ui Component
  * Компонент для подгрузки и конфигурации UI компонентов приложения
  */
 export default class UiComponent {
+    components: IComponents;
+
     _components: any;
 
     _models: any;
@@ -24,7 +27,8 @@ export default class UiComponent {
 
     _portalElement: HTMLDivElement;
 
-    constructor() {
+    constructor(components) {
+        this.components = components;
         this.icons = {};
         this.fields = {};
         this.formatters = {};
@@ -43,6 +47,9 @@ export default class UiComponent {
             Component = this._getComponent('views', Component);
         }
         if (!forceNode && _isFunction(Component)) {
+            if (Component.defaultProps) {
+                return Component({...Component.defaultProps, ...props});
+            }
             return Component(props);
         }
         return React.createElement(Component, props);
@@ -63,7 +70,7 @@ export default class UiComponent {
     getFieldProps(path, model = null, attribute = null) {
         return {
             ...this._getPropsConfig('fields', path),
-            ...this.getModel(model)?.fields?.[attribute],
+            ...this.components.meta.getModel(model)?.attributes?.[attribute],
         };
     }
 
@@ -94,7 +101,7 @@ export default class UiComponent {
         this._models = {...this._models, ...models};
     }
 
-    getModel(name) {
+    /*getModel(name) {
         if (_isString(name)) {
             name = name.replace(/\\/g, '.').replace(/^\./, '');
 
@@ -105,7 +112,7 @@ export default class UiComponent {
             return model;
         }
         return name || null;
-    }
+    }*/
 
     registerField(formId, attribute, type) {
         if (!this._registeredFields[formId]) {

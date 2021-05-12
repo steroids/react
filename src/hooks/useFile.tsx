@@ -37,12 +37,18 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
         },
     }));
 
+    /**
+     * Force component update when file status or progress changes
+     * @private
+     */
+    const forceUpdate = useUpdate();
+
     // Check for initial files
     const form = useForm();
     let initialFiles = props.initialFiles;
     if (!initialFiles) {
         // Find in form values
-        initialFiles = form.formSelector(state => props.input.name.replace(/Ids?$/, ''));
+        initialFiles = form.formSelector(state => _get(state, ['values', props.input.name.replace(/Ids?$/, '')]));
     }
     useEffect(() => {
         if (initialFiles) {
@@ -65,15 +71,10 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
                         }),
                     ),
             );
+            forceUpdate();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialFiles]);
-
-    /**
-     * Force component update when file status or progress changes
-     * @private
-     */
-    const forceUpdate = useUpdate();
 
     /**
      * Trigger by queue when file is uploaded or error
@@ -118,8 +119,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
             props.input.onChange(
                 []
                     .concat(props.input.value || [])
-                    // eslint-disable-next-line radix
-                    .filter(id => toRemove.indexOf(parseInt(id)) === -1),
+                    .filter(id => toRemove.indexOf(Number(id)) === -1),
             );
         } else if (toRemove.indexOf(props.input.value) !== -1) {
             props.input.onChange(null);
@@ -190,6 +190,8 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
 
     // Check remove keys from value
     const prevInputValue = usePrevious(props.input.value);
+
+    //todo refactoring
     useEffect(() => {
         if (!_isEqual(prevInputValue !== props.input.value)) {
             const toRemove = _difference(
@@ -205,7 +207,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.input.value]);
+    }, [prevInputValue]);
 
     /**
      * Show browse dialog in user browser

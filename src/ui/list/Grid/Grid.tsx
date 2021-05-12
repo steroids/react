@@ -185,8 +185,10 @@ export default function Grid(props: IGridProps): JSX.Element {
             return column.label;
         }
 
-        const attributeMeta = _get(model, 'formatters' + column.attribute)
-            || _get(searchModel, 'formatters' + column.attribute);
+        const attributeMeta = []
+            .concat(model?.attributes || [])
+            .concat(searchModel?.attributes || [])
+            .find(item => column.attribute && item.attribute === column.attribute);
         return attributeMeta ? attributeMeta.label : _upperFirst(column.attribute);
     }, [model, props.listId, searchModel]);
 

@@ -43,6 +43,9 @@ export const setInWithPath = (state: any, value: any, path: string[], pathIndex 
 export const normalizeLayout = layout => (typeof layout === 'object' ? layout : {layout});
 
 export const mergeLayoutProp = (layout1, layout2) => {
+    if (layout2 === false) {
+        return null;
+    }
     layout1 = layout1 ? normalizeLayout(layout1) : null;
     layout2 = layout2 ? normalizeLayout(layout2) : null;
     return layout1 || layout2 ? {...layout1, ...layout2} : null;
@@ -102,10 +105,10 @@ export const providers = {
             const dispatch = useDispatch(); // eslint-disable-line react-hooks/rules-of-hooks
             return {
                 ...useSelector(state => {
-                    const error = _get(state, ['form', formId, 'errors'].concat(name.split('.')));
+                    const errors = _get(state, ['form', formId, 'errors'].concat(name.split('.')));
                     const value = _get(state, ['form', formId, 'values'].concat(name.split('.')));
                     return {
-                        error,
+                        errors,
                         value: isList ? value?.length || 0 : value,
                     };
                 }),
@@ -178,7 +181,7 @@ export const providers = {
             const value = reducer.select(state => _get(state, 'values.' + name));
 
             return {
-                error: reducer.select(state => _get(state, 'errors.' + name)),
+                errors: reducer.select(state => _get(state, 'errors.' + name)),
                 value: isList ? value?.length || 0 : value,
                 setValue: useCallback(
                     newValue => reducer.dispatch(formChange(formId, name, newValue)),
@@ -196,7 +199,7 @@ export const providers = {
         useField: (initialValue) => {
             const [value, setValue] = useState(initialValue); // eslint-disable-line react-hooks/rules-of-hooks
             return {
-                error: null,
+                errors: null,
                 value,
                 setValue,
             };

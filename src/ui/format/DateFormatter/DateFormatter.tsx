@@ -22,7 +22,7 @@ const defaultProps = {
     format: 'LL',
 };
 
-export default function DateFormatter(props: IDateFormatterProps) {
+export default function DateFormatter(props: IDateFormatterProps): JSX.Element {
     const components = useComponents();
 
     if (!props.value) {

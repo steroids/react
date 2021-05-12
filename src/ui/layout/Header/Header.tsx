@@ -27,6 +27,6 @@ export interface IHeaderProps {
 
 export type IHeaderViewProps = IHeaderProps
 
-export default function Header(props:IHeaderProps) {
+export default function Header(props:IHeaderProps): JSX.Element {
     return useComponents().ui.renderView(props.view || 'layout.HeaderView', props);
 }

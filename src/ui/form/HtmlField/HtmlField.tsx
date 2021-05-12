@@ -61,7 +61,7 @@ export interface IHtmlFieldViewProps extends IHtmlFieldProps {
     onChange: (event: any, editor: any) => void,
 }
 
-function HtmlField(props: IHtmlFieldProps) {
+function HtmlField(props: IHtmlFieldProps): JSX.Element {
     const components = useComponents();
 
     const onFocus = useCallback((event) => {

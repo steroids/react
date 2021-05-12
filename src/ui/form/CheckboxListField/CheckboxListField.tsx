@@ -52,7 +52,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
     onItemHover: (id: PrimaryKey | any) => void,
 }
 
-function CheckboxListField(props: ICheckboxListFieldProps) {
+function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     const components = useComponents();
 
     // Data Provider

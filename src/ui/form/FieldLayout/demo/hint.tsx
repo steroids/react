@@ -3,7 +3,7 @@ import InputField from '../../InputField';
 
 /**
  * Hint
- * @order 7
+ * @order 4
  * @col 6
  */
 export default () => (

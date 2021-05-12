@@ -80,7 +80,7 @@ export interface IModalViewProps extends IModalProps {
     isClosing?: boolean,
 }
 
-function Modal(props: IModalProps) {
+function Modal(props: IModalProps): JSX.Element {
     const components = useComponents();
 
     const ModalView = props.view || components.ui.getView('modal.ModalView');

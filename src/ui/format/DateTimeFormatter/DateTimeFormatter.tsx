@@ -25,7 +25,7 @@ export interface IDateTimeFormatterProps {
     [key: string]: any;
 }
 
-function DateTimeFormatter(props: IDateFormatterProps) {
+function DateTimeFormatter(props: IDateFormatterProps): JSX.Element {
     const components = useComponents();
 
     if (!props.value) {

@@ -45,7 +45,7 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
     onItemHover: (id: PrimaryKey | any) => void,
 }
 
-function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputProps) {
+function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     // Query state

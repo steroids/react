@@ -104,7 +104,7 @@ export const generatePages = (page, totalPages, aroundCount = 3) => {
     return pages;
 };
 
-function Pagination(props: IPaginationProps) {
+function Pagination(props: IPaginationProps): JSX.Element {
     const components = useComponents();
 
     const initialValues = {

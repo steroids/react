@@ -1,7 +1,7 @@
-import {useComponents} from '../../../hooks';
 import * as React from 'react';
 import {useCallback, useRef} from 'react';
 import {useClickAway, usePrevious} from 'react-use';
+import {useComponents} from '../../../hooks';
 import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
 import useAbsolutePositioning, {
     IAbsolutePositioningInputProps,
@@ -39,7 +39,7 @@ export interface IDropDownViewProps extends IDropDownProps, IAbsolutePositioning
     forwardedRef: any,
 }
 
-function DropDown(props: IDropDownProps) {
+function DropDown(props: IDropDownProps): JSX.Element {
     const components = useComponents();
     const {
         isComponentExist,

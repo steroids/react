@@ -148,7 +148,7 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
     showRemove: boolean,
 }
 
-function FieldList(props: IFieldListProps & IFieldWrapperOutputProps) {
+function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const context = useContext(FormContext);
 

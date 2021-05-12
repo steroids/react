@@ -4,15 +4,15 @@ import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../../form/Button/Button';
 import {IControlItem} from '../../nav/Controls/Controls';
 
-/**
- * ControlsColumn
- * Колонка для контролов
- */
 export interface IControlsColumnItem extends IButtonProps {
     rule?: 'view' | 'update' | 'delete' | string,
     visible?: boolean,
 }
 
+/**
+ * ControlsColumn
+ * Колонка для контролов
+ */
 export interface IControlsColumnProps {
     /**
      * Первичный ключ
@@ -45,7 +45,7 @@ export interface IControlsColumnViewProps {
     items: IControlsColumnItem[],
 }
 
-export default function ControlsColumn(props: IControlsColumnProps) {
+export default function ControlsColumn(props: IControlsColumnProps): JSX.Element {
     const components = useComponents();
 
     const items = useMemo(

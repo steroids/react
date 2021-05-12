@@ -11,11 +11,11 @@ import {formChange} from '../../../actions/form';
  * Форма хранит значения в локальном состоянии, а на onSubmit отправляет их в хранилище Redux,
  * после чего в list-компонент подгружаются новые элементы коллекции.
  */
-interface ISearchFormProps extends IFormProps {
+export interface ISearchFormProps extends IFormProps {
     listId?: string,
 }
 
-export default React.memo((props: ISearchFormProps) => {
+export default React.memo((props: ISearchFormProps): JSX.Element => {
     const {formId} = useForm();
 
     const dispatch = useDispatch();

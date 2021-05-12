@@ -53,7 +53,7 @@ export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperO
 
 const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
-function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps) {
+function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     const slider = useMemo(() => ({

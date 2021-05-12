@@ -25,7 +25,7 @@ export interface ITwoFactorModalViewProps extends ITwoFactorModalPrivateProps {
     [key: string]: any,
 }
 
-export default function TwoFactorModal(props: ITwoFactorModalProps) {
+export default function TwoFactorModal(props: ITwoFactorModalProps): JSX.Element {
     const components = useComponents();
 
     // TODO set types

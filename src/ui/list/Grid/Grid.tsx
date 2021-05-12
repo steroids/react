@@ -9,10 +9,6 @@ import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';
 
-/**
- * Grid
- * Компонент для представления данных коллекции в виде таблицы.
- */
 export interface IGridColumn {
     /**
      * Атрибут колонки, по которому происходит поиск нужного свойства в items и нужного поля в SearchForm
@@ -83,6 +79,10 @@ export interface IGridColumn {
     sortable?: boolean,
 }
 
+/**
+ * Grid
+ * Компонент для представления данных коллекции в виде таблицы.
+ */
 export interface IGridProps extends IListConfig {
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -131,7 +131,7 @@ export interface IGridViewProps extends Omit<IGridProps, 'onFetch'> {
     onSort: (value: any) => void,
 }
 
-export default function Grid(props: IGridProps) {
+export default function Grid(props: IGridProps): JSX.Element {
     const components = useComponents();
     const {
         list,

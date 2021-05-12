@@ -44,7 +44,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
     },
 }
 
-function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps) {
+function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     props.inputProps = useMemo(() => ({

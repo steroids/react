@@ -13,7 +13,7 @@ export interface IBooleanFormatterPropsView {
     children?: React.ReactNode,
 }
 
-export default function BooleanFormatter(props: IBooleanFormatterProps) {
+export default function BooleanFormatter(props: IBooleanFormatterProps): JSX.Element {
     return useComponents().ui.renderView(props.view || 'format.BooleanFormatterView', {
         value: props.value,
     });

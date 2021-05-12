@@ -72,7 +72,7 @@ const defaultProps = {
     },
 };
 
-function FieldLayout(props: IFieldLayoutProps) {
+function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     const components = useComponents();
 
     const layout = useMemo(() => mergeLayoutProp(defaultProps.layout, props.layout), [props.layout]);

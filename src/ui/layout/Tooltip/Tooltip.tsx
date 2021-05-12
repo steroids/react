@@ -80,7 +80,7 @@ export interface ITooltipViewProps extends ITooltipProps {
 *       - refactor code
 * */
 
-function Tooltip(props: ITooltipProps) {
+function Tooltip(props: ITooltipProps): JSX.Element {
     const components = useComponents();
 
     const [isComponentExist, setIsComponentExist] = useState(false);

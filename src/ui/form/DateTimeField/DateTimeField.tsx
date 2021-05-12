@@ -67,7 +67,7 @@ export interface IDateTimeFieldViewProps extends IDateTimeFieldProps, IFieldWrap
     style?: any
 }
 
-function DateTimeField(props: IDateTimeFieldProps) {
+function DateTimeField(props: IDateTimeFieldProps): JSX.Element {
     const components = useComponents();
 
     const parseDate = useCallback(date => {

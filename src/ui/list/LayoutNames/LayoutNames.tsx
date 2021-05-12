@@ -25,7 +25,7 @@ export interface ILayoutNamesProps {
     enable?: boolean,
 
     /**
-     * Название ключа под которым в LocalStorage сохранится значение выбранного шаблона
+     * Название ключа, под которым в LocalStorage сохранится значение выбранного шаблона
      * @example 'layout'
      */
     attribute?: string,
@@ -57,7 +57,7 @@ export interface ILayoutNamesProps {
 
 export type ILayoutNamesViewProps = ILayoutNamesProps;
 
-function LayoutNames(props: ILayoutNamesProps) {
+function LayoutNames(props: ILayoutNamesProps): JSX.Element {
     const components = useComponents();
 
     const dispatch = useDispatch();

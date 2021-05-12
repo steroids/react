@@ -11,7 +11,7 @@ const sizes = {
 /**
  * Sizes
  * @order 5
- * @col 6
+ * @col 12
  */
 export default () => (
     <div className='row'>

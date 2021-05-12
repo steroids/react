@@ -22,7 +22,7 @@ export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOu
     [key: string]: any,
 }
 
-function NavField(props: INavFieldProps) {
+function NavField(props: INavFieldProps): JSX.Element {
     const {items} = useDataProvider({
         items: props.items,
     });

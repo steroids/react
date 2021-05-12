@@ -2,44 +2,48 @@ const path = require('path');
 const typedocModule = require('typedoc');
 const _ = require('lodash');
 const fs = require('fs');
-const {getInfo, getProperty, typeToObject, typeToString} = require('./helpers');
+const {getInfo, getProperty, isComponent} = require('./helpers');
 
 const app = new typedocModule.Application();
-const {inputFiles} = app.bootstrap({
-    ignoreCompilerErrors: true,
-    includeDeclarations: true,
-    excludeExternals: true,
-    inputFiles: [
-        path.resolve(__dirname, '../hoc'),
-        path.resolve(__dirname, '../ui'),
-        path.resolve(__dirname, '..'),
+
+app.options.addReader(new typedocModule.TSConfigReader());
+
+app.bootstrap({
+    entryPoints: [
+        path.resolve(__dirname, '../src/hooks'),
+        path.resolve(__dirname, '../src/ui'),
+        path.resolve(__dirname, '../src'),
     ],
+    exclude: ['**/*.test.tsx', '**/*.test.ts', '**/*.story.js'],
     tsconfig: path.resolve(__dirname, '../tsconfig.json'),
+    excludeExternals: true,
 });
 
-const src = app.expandInputFiles(inputFiles);
-//src.push(path.resolve(__dirname, '../index.d.ts'));filesMap
-//console.log(src);
-const project = app.convert(src);
+const project = app.convert();
 const filesMap = {};
+
 project.files.forEach(file => {
     filesMap[file.fileName] = file.fullFileName;
-})
+});
 
 const json = project ? app.serializer.projectToObject(project) : null;
+
 if (!json || app.logger.hasErrors()) {
     return;
 }
+
 fs.writeFileSync(path.resolve(__dirname, 'docs-autogen-raw.json'), JSON.stringify(json, null, '    '));
 //const json = JSON.parse(require('fs').readFileSync(__dirname + '/docs-autogen-raw.json'));
 
 // Store components by file path
+const demoPattern = /ui\/(.+?)\/demo\/(.*)/;
 const components = {};
 json.children.forEach(moduleItem => {
-    if (moduleItem.kindString === 'Module' && moduleItem.flags && moduleItem.flags.isExported === true) {
+    if (moduleItem.kindString === 'Module' && !demoPattern.test(moduleItem.name)) {
         (moduleItem.children || []).forEach(item => {
-            const moduleName = JSON.parse(moduleItem.name);
-            if (item.kindString === 'Class' && moduleItem.flags && moduleItem.flags.isExported === true) {
+            const moduleName = moduleItem.name;
+
+            if (isComponent(item)) {
                 components[moduleName] = getInfo(filesMap, moduleItem, item);
             }
         });
@@ -55,28 +59,27 @@ const docs = {
 };
 json.children.forEach(file => {
     (file.children || []).forEach(item => {
-        if (item.flags && item.flags.isExported === true) {
-            if (item.kindString === 'Interface') {
-                docs.interfaces[item.name] = getInfo(filesMap, file, item);
-            }
-            if (item.kindString === 'Type alias') {
-                docs.declarations[item.name] = getProperty(item);
-            }
+        if (item.kindString === 'Interface') {
+            docs.interfaces[item.name] = getInfo(filesMap, file, item);
+        }
+        if (item.kindString === 'Type alias') {
+            docs.declarations[item.name] = getProperty(item);
         }
     });
 
-    const demoMatch = file.name.match(/ui\/(.+)\/demo\/([^\/]+)\"$/);
-    if (demoMatch) {
-        const path = demoMatch[1].split('\/');
-        const name = demoMatch[2];
+    const demoMatch = file.name.match(demoPattern);
 
-        if (!file.children) {
+    if (demoMatch) {
+        const demoPath = demoMatch[1].split('\/');
+        const demoName = demoMatch[2];
+
+        if (file.children) {
             let order = 0;
             let col = null;
             let description = null;
-            let title = null;
+            const title = null;
 
-            const fileContents = fs.readFileSync(file.originalName).toString();
+            const fileContents = fs.readFileSync(path.resolve(__dirname, '../' + file.sources[0].fileName)).toString();
 
             const matchOrderTagPattern = /@order\s(.*)$/gmi;
             const matchColTagPattern = /@col\s(.*)$/gmi;
@@ -94,12 +97,12 @@ json.children.forEach(file => {
 
             const commentMatch = fileContents.match(matchCommentPattern);
             if (commentMatch) {
-                description = commentMatch.map(cm => cm.replace('*', '').trim()).join('\n')
+                description = commentMatch.map(cm => cm.replace('*', '').trim()).join('\n');
             }
 
             // Store, if not empty
             if (order > 0 || title || description) {
-                _.set(docs.demos, path.concat(name), {
+                _.set(docs.demos, demoPath.concat(demoName), {
                     order,
                     col,
                     title,
@@ -111,7 +114,7 @@ json.children.forEach(file => {
         // Store title, ..
         /*const {title, description, tags} = findClassDocs(file.children);
         if (title || description) {
-            _.set(docs.demos, path.concat(name), {
+            _.set(docs.demos, demoPath.concat(demoName), {
                 order: _.toInteger(tags['order']),
                 col: _.toInteger(tags['col']),
                 title,

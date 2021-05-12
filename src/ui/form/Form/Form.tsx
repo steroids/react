@@ -161,7 +161,7 @@ export interface IFormProps {
     useHash?: boolean; // TODO Refactor it!
 
     /**
-     * Если в форме есть элементы <input>, то произойдет автоматическая фокусировка на первом из них
+     * Если в форме есть элементы \<input\>, то произойдет автоматическая фокусировка на первом из них
      * @example true
      */
     autoFocus?: boolean;
@@ -227,7 +227,7 @@ const getCaptchaToken = (params:ICaptchaParams):Promise<string> => {
     });
 };
 
-function Form(props: IFormProps) {
+function Form(props: IFormProps): JSX.Element {
     // Dev validation. You cannot change data provider (formId, useRedux)
     if (process.env.NODE_ENV !== 'production') {
         const prevFormId = usePrevious(props.formId); // eslint-disable-line react-hooks/rules-of-hooks

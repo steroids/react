@@ -159,9 +159,13 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const prevSelectedIds = usePrevious(selectedIds);
     useEffect(() => {
         if (!_isEqual(prevSelectedIds, selectedIds)) {
-            props.input.onChange.call(null, props.multiple ? selectedIds : (selectedIds[0] ?? null));
+            const newValues = props.multiple ? selectedIds : (selectedIds[0] ?? null);
+            props.input.onChange.call(null, newValues);
+            if (props.onChange) {
+                props.onChange(newValues);
+            }
         }
-    }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds, props.attribute]);
+    }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds, props.attribute, props]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,

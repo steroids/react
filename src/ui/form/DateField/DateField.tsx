@@ -1,7 +1,6 @@
-import {useCallback, useMemo, useState} from 'react';
-import moment from 'moment';
-import MomentLocaleUtils from 'react-day-picker/moment';
 import * as React from 'react';
+import {useCallback, useMemo, useState} from 'react';
+import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/hooks/useDateAndTime';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -60,113 +59,131 @@ export interface IDateFieldProps extends IFieldWrapperInputProps {
      */
     icon?: boolean | string;
 
+    showRemove?: boolean,
+
     [key: string]: any;
 }
 
-export interface IDateFieldViewProps extends IDateFieldProps {
-    name: string,
-    parseDate: (date: string | Date) => Date | undefined,
-    formatDate: (date: string | Date) => string,
-    onChange: (day: string | Date) => void,
+export interface IDateFieldViewProps extends IFieldWrapperOutputProps, IDateFieldProps, IDateAndTimeOutput {
+    onBlur: () => void,
     localeUtils: any,
+    onInputChange: any,
+    isPanelOpen: boolean,
+    openPanel: any
+    inputProps: {
+        [key: string]: any,
+    },
+    closePanel: any,
+    onDayClick: any,
+    clearInput: any,
 }
 
 function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
-
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-
     const {
-        fromMonth,
-        toMonth,
-    } = useMemo(() => ({
-        fromMonth: new Date(currentYear - 100, 0),
-        toMonth: new Date(currentYear + 50, 11),
-    }), [currentYear]);
+        month,
+        toYear,
+        fromYear,
+        parseDate,
+        formatDate,
+        selectedDays,
+        handleDayClick,
+        handleYearMonthChange,
+    } = useDateAndTime({
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        formatsArray: [
+            props.displayFormat,
+            props.valueFormat,
+        ],
+    });
 
-    const [month, setMonth] = useState(new Date(currentYear, currentMonth));
-
-    const handleYearMonthChange = useCallback(month2 => {
-        setMonth(month2);
-    }, []);
-
-    /**
-     * Convert date from string to Date object
-     * @param {string | Date} date
-     * @returns {Date|undefined}
-     */
-    const parseDate = useCallback(date => {
-        const format = [props.displayFormat, props.valueFormat].find(
-            format2 => (
-                date
-                && date.length === format2.length
-                && moment(date, format2)
-                    .isValid()
-            ),
-        );
-        return format ? moment(date, format)
-            .toDate() : undefined;
-    }, [props.displayFormat, props.valueFormat]);
-
-    /**
-     * Convert Date to display format
-     * @param {string | Date} date
-     * @returns {string}
-     */
-    const formatDate = useCallback(date => {
-        if (!date) {
-            return date;
-        }
-
-        return moment(date)
-            .format(props.displayFormat);
-    }, [props.displayFormat]);
+    const [innerInput, setInnerInput] = useState<string>('');
+    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
 
     const onChange = useCallback(value => {
-        if (value) {
-            const date = moment(value)
-                .format(props.valueFormat);
-            props.input.onChange(date);
+        setInnerInput(value);
+        const parsedDate = parseDate(value);
+        if (parsedDate) {
+            handleDayClick(parsedDate);
+            const date = formatDate(value, props.valueFormat);
+            props.input.onChange.call(null, date);
             if (props.onChange) {
                 props.onChange(date);
             }
         }
-    }, [props]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    const value = useMemo(() => parseDate(props.input.value), [parseDate, props.input.value]);
+    const onDayClick = useCallback((day) => {
+        handleDayClick(day);
+        setInnerInput(formatDate(day, props.displayFormat));
+        props.input.onChange.call(null, formatDate(day, props.valueFormat));
+    }, [formatDate, handleDayClick, props.displayFormat, props.input.onChange, props.valueFormat]);
+
+    const openPanel = useCallback(() => {
+        if (!isPanelOpen) {
+            setIsPanelOpen(true);
+        }
+    }, [isPanelOpen]);
+
+    const closePanel = useCallback(() => {
+        if (isPanelOpen) {
+            setIsPanelOpen(false);
+        }
+    }, [isPanelOpen]);
+
+    const clearInput = useCallback(() => {
+        setInnerInput(null);
+        setIsPanelOpen(false);
+        handleDayClick(null);
+        props.input.onChange.call(null, null);
+    }, [handleDayClick, props.input.onChange]);
+
+    // TODO onBlur, clear garbage in input
+    const onBlur = useCallback(() => {}, []);
+
+    const inputProps = useMemo(() => ({
+        type: props.type,
+        name: props.input.name,
+        autoComplete: 'off',
+        disabled: props.disabled,
+        required: props.required,
+        placeholder: props.placeholder || props.displayFormat,
+        value: innerInput,
+        onChange,
+        ...props.inputProps,
+    }), [innerInput, onChange, props.disabled, props.displayFormat, props.input.name, props.inputProps, props.placeholder, props.required, props.type]);
 
     return components.ui.renderView(props.view || 'form.DateFieldView', {
         ...props,
-        name: props.input.name,
-        placeholder: props.placeholder || props.displayFormat,
-        value,
-        parseDate,
-        formatDate,
-        disabled: props.disabled,
+        month,
+        toYear,
+        onBlur,
+        fromYear,
         onChange,
+        openPanel,
+        parseDate,
+        clearInput,
+        closePanel,
+        formatDate,
+        inputProps,
+        onDayClick,
+        isPanelOpen,
+        selectedDays,
         locale: components.locale,
-        localeUtils: MomentLocaleUtils,
-        pickerProps: {
-            ...props.pickerProps,
-            dayPickerProps: {
-                ...(props.pickerProps?.dayPickerProps || {}),
-                month,
-                fromMonth,
-                toMonth,
-            },
-            onYearMonthChange: handleYearMonthChange,
-        },
+        handleYearMonthChange,
     });
 }
 
 DateField.defaultProps = {
-    size: 'md',
     disabled: false,
     required: false,
     className: '',
     displayFormat: 'DD.MM.YYYY',
     valueFormat: 'YYYY-MM-DD',
+    showRemove: true,
+    icon: true,
 };
 
 export default fieldWrapper('DateField', DateField);

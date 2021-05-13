@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useCallback, useRef} from 'react';
-import {useClickAway, usePrevious} from 'react-use';
+import {useClickAway} from 'react-use';
 import {useComponents} from '../../../hooks';
 import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
 import useAbsolutePositioning, {
@@ -61,7 +61,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
                 props.toggleVisibility(props.visible);
             }
         } else {
-            onHide();
+            // onHide();
         }
     });
 
@@ -74,19 +74,19 @@ function DropDown(props: IDropDownProps): JSX.Element {
     const childrenElement: any = typeof props.children === 'object'
         ? React.Children.only(props.children)
         : undefined;
-    const prevIsVisible = usePrevious(isComponentVisible);
+    const resultProps: any = {
+        ref: childRef,
+    };
+
+    if (!isManualControl) {
+        resultProps.onClick = () => {
+            onShow();
+        };
+    }
     return (
         <>
             {childrenElement
-                ? React.cloneElement(childrenElement, {
-                    ref: childRef,
-                    onClick: (e) => {
-                        if (isManualControl || (childRef.current.contains(e.target) && prevIsVisible)) {
-                            return;
-                        }
-                        onShow();
-                    },
-                })
+                ? React.cloneElement(childrenElement, resultProps)
                 : (
                     <span>
                         {props.children}

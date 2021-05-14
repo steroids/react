@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useCallback, useMemo, useState} from 'react';
-import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/hooks/useDateAndTime';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import useDateAndTime, {IDateAndTimeOutput} from './useDateAndTime';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -84,11 +84,11 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         month,
         toYear,
         fromYear,
+        dateFrom,
         parseDate,
         formatDate,
-        selectedDays,
-        handleDayClick,
-        handleYearMonthChange,
+        updateMonth,
+        updateDateFrom,
     } = useDateAndTime({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
@@ -101,25 +101,27 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     const [innerInput, setInnerInput] = useState<string>('');
     const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
 
+    const updateInputValue = useCallback((date: string) => {
+        props.input.onChange.call(null, date);
+        if (props.onChange) {
+            props.onChange(date);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const onChange = useCallback(value => {
         setInnerInput(value);
         const parsedDate = parseDate(value);
         if (parsedDate) {
-            handleDayClick(parsedDate);
-            const date = formatDate(value, props.valueFormat);
-            props.input.onChange.call(null, date);
-            if (props.onChange) {
-                props.onChange(date);
-            }
+            updateInputValue(formatDate(parsedDate, props.valueFormat));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onDayClick = useCallback((day) => {
-        handleDayClick(day);
-        setInnerInput(formatDate(day, props.displayFormat));
-        props.input.onChange.call(null, formatDate(day, props.valueFormat));
-    }, [formatDate, handleDayClick, props.displayFormat, props.input.onChange, props.valueFormat]);
+        updateInputValue(formatDate(day, props.valueFormat));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const openPanel = useCallback(() => {
         if (!isPanelOpen) {
@@ -134,26 +136,42 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     }, [isPanelOpen]);
 
     const clearInput = useCallback(() => {
-        setInnerInput(null);
         setIsPanelOpen(false);
-        handleDayClick(null);
+        setInnerInput('');
+        updateDateFrom(null);
         props.input.onChange.call(null, null);
-    }, [handleDayClick, props.input.onChange]);
+    }, [props.input.onChange, updateDateFrom]);
 
     // TODO onBlur, clear garbage in input
     const onBlur = useCallback(() => {}, []);
 
+    // Listen to input changes -> update state
+    useEffect(() => {
+        if (props.input.value) {
+            const valueAsDate = parseDate(props.input.value);
+            const valueAsString = formatDate(valueAsDate, props.displayFormat);
+            if (!innerInput || valueAsString !== innerInput) {
+                setInnerInput(valueAsString);
+            }
+            if (!dateFrom || valueAsDate !== dateFrom) {
+                updateDateFrom(valueAsDate);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.input.value]);
+
     const inputProps = useMemo(() => ({
-        type: props.type,
-        name: props.input.name,
         autoComplete: 'off',
         disabled: props.disabled,
-        required: props.required,
         placeholder: props.placeholder || props.displayFormat,
+        required: props.required,
+        name: props.input.name,
+        type: 'text',
         value: innerInput,
         onChange,
         ...props.inputProps,
-    }), [innerInput, onChange, props.disabled, props.displayFormat, props.input.name, props.inputProps, props.placeholder, props.required, props.type]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }), [innerInput, props.disabled, props.input.name, props.inputProps, props.placeholder, props.required]);
 
     return components.ui.renderView(props.view || 'form.DateFieldView', {
         ...props,
@@ -162,6 +180,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         onBlur,
         fromYear,
         onChange,
+        dateFrom,
         openPanel,
         parseDate,
         clearInput,
@@ -169,21 +188,18 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         formatDate,
         inputProps,
         onDayClick,
+        updateMonth,
         isPanelOpen,
-        selectedDays,
-        locale: components.locale,
-        handleYearMonthChange,
     });
 }
 
 DateField.defaultProps = {
     disabled: false,
-    required: false,
-    className: '',
     displayFormat: 'DD.MM.YYYY',
-    valueFormat: 'YYYY-MM-DD',
-    showRemove: true,
     icon: true,
+    required: false,
+    showRemove: true,
+    valueFormat: 'YYYY-MM-DD',
 };
 
 export default fieldWrapper('DateField', DateField);

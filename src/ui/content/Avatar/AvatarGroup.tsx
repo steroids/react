@@ -1,6 +1,6 @@
 import React from 'react';
-import { useComponents } from '@steroidsjs/core/hooks';
 import {Avatar} from '@steroidsjs/core/ui/content/Avatar';
+import { useComponents } from '../../../hooks';
 
 interface AvatarGroupProps{
     view?: any,
@@ -10,19 +10,17 @@ interface AvatarGroupProps{
     maxCount?: number,
 }
 
-export interface IAvatarGroupViewProps extends AvatarGroupProps {
-    
-}
+export type IAvatarGroupViewProps = AvatarGroupProps
 
-function AvatarGroup (props: AvatarGroupProps) {
-    const components = useComponents()
+function AvatarGroup(props: AvatarGroupProps) {
+    const components = useComponents();
     return components.ui.renderView(props.view || 'content.AvatarGroupView', {
-        ...props
+        ...props,
     });
 }
 
 AvatarGroup.defaultProps = {
 
-}
+};
 
 export default AvatarGroup;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useComponents } from '@steroidsjs/core/hooks';
+import { useComponents } from '../../../hooks';
 
 interface ICardProps {
     view?: any,
@@ -16,22 +16,20 @@ interface ICardProps {
     style?: React.CSSProperties,
 }
 
-export interface ICardViewProps extends ICardProps {
-    
-}
+export type ICardViewProps = ICardProps
 
 export type Size = 'large' | 'medium' | 'small';
 
-function Card (props: ICardProps) {
-    const components = useComponents()
+function Card(props: ICardProps) {
+    const components = useComponents();
     return components.ui.renderView(props.view || 'content.CardView', {
-        ...props
+        ...props,
     });
 }
 
 Card.defaultProps = {
     size: 'medium',
     shape: 'circle',
-}
+};
 
 export default Card;

@@ -1221,7 +1221,7 @@
                     "decorators": [],
                     "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": "true"
                 },
                 {
@@ -1473,7 +1473,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "string",
+                    "type": "string | IApiMethod",
                     "example": null
                 }
             ]
@@ -3457,7 +3457,7 @@
                     "decorators": [],
                     "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": "true"
                 },
                 {
@@ -3501,11 +3501,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -3699,6 +3699,14 @@
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -4336,11 +4344,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -4486,11 +4494,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -4626,7 +4634,7 @@
                     "decorators": [],
                     "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": "true"
                 },
                 {
@@ -4670,11 +4678,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -4835,11 +4843,11 @@
                     "example": null
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": null
                 },
                 {
@@ -4960,11 +4968,11 @@
                     "example": "DD.MM.YYYY"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -5141,11 +5149,11 @@
                     "example": "DD.MM.YYYY"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -5362,11 +5370,11 @@
                     "example": "DD.MM.YYYY"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -5560,11 +5568,11 @@
                     "example": "DD.MM.YYYY"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -5732,7 +5740,7 @@
                     "decorators": [],
                     "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": "true"
                 },
                 {
@@ -5776,11 +5784,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -5966,6 +5974,14 @@
             ],
             "properties": [
                 {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
                     "name": "forwardedRef",
                     "decorators": [],
                     "description": "",
@@ -5983,14 +5999,6 @@
                 },
                 {
                     "name": "isAutoComplete",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                },
-                {
-                    "name": "isInvalid",
                     "decorators": [],
                     "description": "",
                     "required": false,
@@ -6147,11 +6155,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -6262,11 +6270,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -6353,11 +6361,11 @@
                     "example": null
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": null
                 },
                 {
@@ -6388,11 +6396,11 @@
             "extends": [],
             "properties": [
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "string | string[]",
+                    "type": "string[]",
                     "example": "'Field is required'"
                 },
                 {
@@ -6483,7 +6491,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "{className: string, cols: number[], label: boolean, layout: string | boolean}",
+                    "type": "{className: string, cols: number[], label: boolean, layout: string | boolean, style: any}",
                     "example": null
                 },
                 {
@@ -6516,11 +6524,11 @@
                     "example": null
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": null
                 },
                 {
@@ -6649,20 +6657,12 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
-                },
-                {
-                    "name": "fields",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
                 },
                 {
                     "name": "hint",
@@ -6881,6 +6881,14 @@
                     "description": "",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
                     "example": null
                 }
             ]
@@ -7370,11 +7378,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -7639,11 +7647,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -8131,6 +8139,14 @@
                     "required": false,
                     "type": "ReactNode",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": "{className: 'foo'}"
                 }
             ]
         },
@@ -8235,6 +8251,14 @@
                     "example": null
                 },
                 {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
                     "name": "submitLabel",
                     "decorators": [],
                     "description": "",
@@ -8313,11 +8337,11 @@
                     "example": null
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -8510,11 +8534,11 @@
                     "example": null
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -8707,11 +8731,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -8841,6 +8865,14 @@
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -8921,19 +8953,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
-                    "example": "['Error text']"
-                },
-                {
-                    "name": "errors",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": null
                 },
                 {
@@ -8966,14 +8990,6 @@
                     "description": "Свойства для элемента \\<input /\\>",
                     "required": true,
                     "type": "{disabled: string, name: string, onChange: ChangeEventHandler, placeholder: string, type: string, value: string | number}",
-                    "example": null
-                },
-                {
-                    "name": "isInvalid",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -9111,6 +9127,14 @@
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -9148,7 +9172,7 @@
                     "decorators": [],
                     "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": "true"
                 },
                 {
@@ -9192,11 +9216,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -9374,11 +9398,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -9532,6 +9556,14 @@
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -9612,11 +9644,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -9786,6 +9818,14 @@
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -9857,11 +9897,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -9999,6 +10039,14 @@
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -10079,12 +10127,12 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
-                    "example": "['Error text']"
+                    "type": "string[]",
+                    "example": null
                 },
                 {
                     "name": "formId",
@@ -10116,14 +10164,6 @@
                     "description": "Свойства для элемента \\<input /\\>",
                     "required": true,
                     "type": "{disabled: boolean, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
-                    "example": null
-                },
-                {
-                    "name": "isInvalid",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -10269,6 +10309,14 @@
                     "required": false,
                     "type": "any",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -10307,7 +10355,7 @@
                     "decorators": [],
                     "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": "true"
                 },
                 {
@@ -10351,11 +10399,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -10516,11 +10564,11 @@
                     "example": null
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": null
                 },
                 {
@@ -10668,11 +10716,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -10842,11 +10890,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -11039,11 +11087,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -11173,11 +11221,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -11322,11 +11370,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -11488,11 +11536,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -11652,7 +11700,7 @@
                     "decorators": [],
                     "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
                     "required": false,
-                    "type": "any",
+                    "type": "boolean",
                     "example": "true"
                 },
                 {
@@ -11704,11 +11752,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -11871,11 +11919,11 @@
                     "example": null
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": null
                 },
                 {
@@ -11988,11 +12036,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -12154,11 +12202,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -12327,11 +12375,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": "['Error text']"
                 },
                 {
@@ -12517,19 +12565,11 @@
                     "example": "true"
                 },
                 {
-                    "name": "error",
+                    "name": "errors",
                     "decorators": [],
                     "description": "Ошибки в поле",
                     "required": false,
-                    "type": "any",
-                    "example": "['Error text']"
-                },
-                {
-                    "name": "errors",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "string[]",
                     "example": null
                 },
                 {
@@ -12570,14 +12610,6 @@
                     "description": "Свойства для элемента \\<input /\\>",
                     "required": true,
                     "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
-                    "example": null
-                },
-                {
-                    "name": "isInvalid",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -15564,6 +15596,14 @@
                     "required": false,
                     "type": "ReactNode",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": "{className: 'foo'}"
                 }
             ]
         },
@@ -17683,7 +17723,7 @@
             "decorators": [],
             "description": "Свойства для настройки макета формы",
             "required": true,
-            "type": "FormLayoutName | boolean | {className: string, cols: number[], label: boolean, layout: FormLayoutName | boolean}",
+            "type": "FormLayoutName | boolean | {className: string, cols: number[], label: boolean, layout: FormLayoutName | boolean, style: any}",
             "example": null
         },
         "FormLayoutName": {

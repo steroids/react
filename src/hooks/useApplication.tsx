@@ -126,7 +126,7 @@ export interface IApplicationHookConfig {
     useGlobal?: boolean,
     reducers?: any,
     routes?: () => IRouteItem,
-    layoutView?: CustomView,
+    layoutView?: () => CustomView,
     layoutProps?: Record<string, unknown>,
     screen?: boolean | Omit<IScreenProviderProps, 'children'>
 }
@@ -177,7 +177,6 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     // Create components
     if (!components) {
         components = {};
-
         const componentsConfig = _merge({}, defaultComponents, config.components);
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
@@ -214,7 +213,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
             content = (
                 <Router
                     routes={config.routes()}
-                    wrapperView={config.layoutView}
+                    wrapperView={config.layoutView()}
                     wrapperProps={config.layoutProps}
                 />
             );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useCallback, useMemo, useState} from 'react';
-import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/hooks/useDateAndTime';
+import useDateAndTime, {IDateAndTimeOutput} from '../../../hooks/useDateAndTime';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,

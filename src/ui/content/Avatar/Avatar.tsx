@@ -1,5 +1,5 @@
 import React from 'react';
-import { useComponents } from '@steroidsjs/core/hooks';
+import { useComponents } from '../../../hooks';
 // import { Size } from './SizeContext'
 
 interface IAvatarProps {
@@ -16,22 +16,20 @@ interface IAvatarProps {
     style?: React.CSSProperties,
 }
 
-export interface IAvatarViewProps extends IAvatarProps {
-    
-}
+export type IAvatarViewProps = IAvatarProps
 
 export type Size = 'large' | 'medium' | 'small' | number;
 
-function Avatar (props: IAvatarProps) {
-    const components = useComponents()
+function Avatar(props: IAvatarProps) {
+    const components = useComponents();
     return components.ui.renderView(props.view || 'content.AvatarView', {
-        ...props
+        ...props,
     });
 }
 
 Avatar.defaultProps = {
     size: 'medium',
     shape: 'circle',
-}
+};
 
 export default Avatar;

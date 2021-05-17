@@ -1,6 +1,6 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/hooks/useDateAndTime';
-import {useMount} from 'react-use';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {DateUtils} from 'react-day-picker';
+import useDateAndTime, {IDateAndTimeOutput} from '../DateField/useDateAndTime';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -71,19 +71,17 @@ export interface IDateRangeFieldProps extends IFieldWrapperInputProps {
 export interface IDateRangeFieldViewProps extends IFieldWrapperOutputProps, IDateRangeFieldProps, IDateAndTimeOutput {
     onBlur: () => void,
     localeUtils: any,
-    onInputChange: any,
     isPanelOpen: boolean,
     openPanel: any
-    inputProps: {
+    inputFromProps: {
+        [key: string]: any,
+    },
+    inputToProps: {
         [key: string]: any,
     },
     closePanel: any,
     onDayClick: any,
     clearInput: any,
-    state: {
-        to: string,
-        from: string,
-    },
 }
 
 function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) {
@@ -92,12 +90,13 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
         month,
         toYear,
         fromYear,
+        dateTo,
+        dateFrom,
         parseDate,
         formatDate,
-        selectedRange,
-        addDateToRange,
-        updateRange,
-        handleYearMonthChange,
+        updateMonth,
+        updateDateTo,
+        updateDateFrom,
     } = useDateAndTime({
         formatsArray: [
             props.displayFormat,
@@ -105,72 +104,57 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
         ],
     });
 
-    const parseToState = useCallback(() => {
-        const wrapperInputValue = props.input.value ? props.input.value.split(' ') : [];
-        return {
-            from: wrapperInputValue[0] || '',
-            to: wrapperInputValue[1] || '',
-        };
-    }, [props.input.value]);
-    const [state, setState] = useState<{from: string, to: string}>(parseToState());
+    const [inputTo, setInputTo] = useState<string>('');
+    const [inputFrom, setInputFrom] = useState<string>('');
     const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
 
-    // Set initial values for calendar (get from Form)
-    useMount(() => {
-        const wrapperInputValue = props.input.value ? props.input.value.split(' ') : [];
-        if (wrapperInputValue.length > 0) {
-            updateRange({
-                from: parseDate(wrapperInputValue[0]),
-                to: parseDate(wrapperInputValue[1]),
-            });
+    const updateInputValue = useCallback((range: {from: string, to: string}) => {
+        if (!!range.to && !!range.from) {
+            if (DateUtils.isDayAfter(parseDate(range.from), parseDate(range.to))) {
+                const bufferFrom = range.to;
+                range.to = range.from;
+                range.from = bufferFrom;
+            }
         }
-    });
-
-    const updateWrapperInput = useCallback((from: Date, to: Date) => {
-        const range = formatDate(from, props.valueFormat) + ' ' + formatDate(to, props.valueFormat);
         props.input.onChange.call(null, range);
         if (props.onChange) {
             props.onChange(range);
         }
-    }, [formatDate, props]);
+        /// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [parseDate, props]);
 
-    const stateCbRef = useRef(null);
-    const onChange = useCallback(value => {
-        stateCbRef.current = state => {
-            const parsedFrom = parseDate(state.from);
-            const parsedTo = parseDate(state.to);
-            if (parsedFrom && parsedTo) {
-                updateRange({
-                    from: parsedFrom,
-                    to: parsedTo,
-                });
-                updateWrapperInput(parsedFrom, parsedTo);
-            }
-        };
-        const newState = {...state, ...value};
-        setState(newState);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state]);
-
-    useEffect(() => {
-        if (stateCbRef.current) {
-            stateCbRef.current(state);
-            stateCbRef.current = null;
+    const onFromChange = useCallback(value => {
+        setInputFrom(value);
+        const parsedDate = parseDate(value);
+        if (parsedDate) {
+            updateInputValue({
+                from: formatDate(parsedDate, props.valueFormat),
+                to: props.input.value ? props.input.value.to : null,
+            });
         }
-    }, [state]);
+    }, [formatDate, parseDate, props.input.value, props.valueFormat, updateInputValue]);
+
+    const onToChange = useCallback(value => {
+        setInputTo(value);
+        const parsedDate = parseDate(value);
+        if (parsedDate) {
+            updateInputValue({
+                from: props.input.value ? props.input.value.from : null,
+                to: formatDate(parsedDate, props.valueFormat),
+            });
+        }
+    }, [formatDate, parseDate, props.input.value, props.valueFormat, updateInputValue]);
 
     const onDayClick = useCallback((day) => {
-        const newRange = updateRange(addDateToRange(day));
-        setState({
-            from: formatDate(newRange.from, props.displayFormat) || '',
-            to: formatDate(newRange.to, props.displayFormat) || '',
+        const range = DateUtils.addDayToRange(day, {
+            from: dateFrom,
+            to: dateTo,
         });
-        if (newRange.from && newRange.to) {
-            updateWrapperInput(newRange.from, newRange.to);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        updateInputValue({
+            from: formatDate(range.from, props.valueFormat),
+            to: formatDate(range.to, props.valueFormat),
+        });
+    }, [dateFrom, dateTo, formatDate, props.valueFormat, updateInputValue]);
 
     const openPanel = useCallback(() => {
         if (!isPanelOpen) {
@@ -186,8 +170,10 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
 
     const clearInput = useCallback(() => {
         setIsPanelOpen(false);
-        setState(parseToState());
-        updateRange({from: undefined, to: undefined});
+        setInputFrom('');
+        setInputTo('');
+        updateDateTo(null);
+        updateDateFrom(null);
         props.input.onChange.call(null, null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -195,34 +181,76 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
     // TODO onBlur, clear garbage in input
     const onBlur = useCallback(() => {}, []);
 
-    const inputProps = useMemo(() => ({
-        type: 'text',
-        name: props.input.name,
+    // Listen to input changes -> update state
+    useEffect(() => {
+        const inputValue = props.input.value;
+        if (inputValue) {
+            const valueAsDate = {
+                from: parseDate(inputValue.from),
+                to: parseDate(inputValue.to),
+            };
+            const valueAsString = {
+                from: formatDate(valueAsDate.from, props.displayFormat) || '',
+                to: formatDate(valueAsDate.to, props.displayFormat) || '',
+            };
+            if (!inputFrom || valueAsString.from !== inputFrom) {
+                setInputFrom(valueAsString.from);
+            }
+            if (!inputTo || valueAsString.to !== inputTo) {
+                setInputTo(valueAsString.to);
+            }
+            if (!dateFrom || valueAsDate.from !== dateFrom) {
+                updateDateFrom(valueAsDate.from);
+            }
+            if (!dateTo || valueAsDate.to !== dateTo) {
+                updateDateTo(valueAsDate.to);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.input.value]);
+
+    const inputFromProps = useMemo(() => ({
         autoComplete: 'off',
         disabled: props.disabled,
-        required: props.required,
         placeholder: props.placeholder || props.displayFormat,
-        onChange,
+        required: props.required,
+        name: props.input.name,
+        type: 'text',
+        value: inputFrom,
+        onChange: onFromChange,
         ...props.inputProps,
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }), [props.disabled, props.displayFormat, props.input.name, props.inputProps, props.placeholder, props.required, props.type]);
+    }), [inputFrom, props.disabled, props.input.name, props.inputProps, props.placeholder, props.required]);
+
+    const inputToProps = useMemo(() => ({
+        autoComplete: 'off',
+        disabled: props.disabled,
+        placeholder: props.placeholder || props.displayFormat,
+        required: props.required,
+        name: props.input.name,
+        type: 'text',
+        value: inputTo,
+        onChange: onToChange,
+        ...props.inputProps,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }), [inputTo, props.disabled, props.input.name, props.inputProps, props.placeholder, props.required]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', {
         ...props,
-        state,
         month,
         toYear,
         onBlur,
         fromYear,
-        onChange,
         openPanel,
         clearInput,
         closePanel,
-        inputProps,
+        inputFromProps,
+        inputToProps,
         onDayClick,
         isPanelOpen,
-        selectedRange,
-        handleYearMonthChange,
+        updateMonth,
+        dateFrom,
+        dateTo,
     });
 }
 

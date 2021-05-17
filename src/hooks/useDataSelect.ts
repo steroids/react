@@ -102,12 +102,11 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (config.multiple) {
                 if (selectedIds.indexOf(id) !== -1) {
                     if (!skipToggle) {
-                        _remove(selectedIds, itemValue => itemValue === id);
+                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id));
                     }
                 } else {
-                    selectedIds.push(id);
+                    setSelectedIdsInternal([...selectedIds, id]);
                 }
-                setSelectedIdsInternal(selectedIds);
             } else {
                 if (selectedIds.length !== 1 || selectedIds[0] !== id) {
                     setSelectedIdsInternal([id]);

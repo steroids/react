@@ -110,7 +110,7 @@ export interface IFormProps {
     initialValues?: any | any[];
 
     /**
-     * Дополнительный CSS-класс для <form>...</form>
+     * Дополнительный CSS-класс для \<form\>...\<\/form\>
      */
     className?: CssClassName;
 

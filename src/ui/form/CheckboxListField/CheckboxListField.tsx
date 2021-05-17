@@ -87,7 +87,6 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         type: 'checkbox',
         name: props.input.name,
         disabled: props.disabled,
-        onChange: () => props.input.onChange(!props.input.value),
     }), [props.disabled, props.input, props.inputProps]);
 
     // Sync with form

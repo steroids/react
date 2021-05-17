@@ -29,7 +29,7 @@ export interface ITextFieldProps extends IFieldWrapperInputProps {
     inputProps?: any;
 
     /**
-     * Дополнительный CSS-класс для тега <textarea>
+     * Дополнительный CSS-класс для тега \<textarea\>
      */
     className?: CssClassName;
 

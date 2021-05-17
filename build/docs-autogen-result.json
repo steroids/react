@@ -991,7 +991,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "ReactNode",
+                    "type": "{}",
                     "example": null
                 },
                 {
@@ -1016,6 +1016,14 @@
                     "description": "",
                     "required": false,
                     "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "screen",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean | Omit",
                     "example": null
                 },
                 {
@@ -1051,6 +1059,102 @@
                     "description": "",
                     "required": true,
                     "type": "{}",
+                    "example": null
+                }
+            ]
+        },
+        "IScreen": {
+            "name": "IScreen",
+            "moduleName": "hooks/useApplication",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "getDeviceType",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isDesktop",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isPhone",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isTablet",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "media",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Record",
+                    "example": null
+                },
+                {
+                    "name": "setMedia",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "width",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                }
+            ]
+        },
+        "IScreenProviderProps": {
+            "name": "IScreenProviderProps",
+            "moduleName": "hooks/useApplication",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "PropsWithChildren<any>"
+            ],
+            "properties": [
+                {
+                    "name": "media",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Record",
+                    "example": null
+                },
+                {
+                    "name": "skipTimeout",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
                     "example": null
                 }
             ]
@@ -1422,6 +1526,97 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
+                    "type": "{}",
+                    "example": null
+                }
+            ]
+        },
+        "IDateAndTimeOutput": {
+            "name": "IDateAndTimeOutput",
+            "moduleName": "ui/form/DateField/useDateAndTime",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "dateFrom",
+                    "decorators": [],
+                    "description": "Выбранный в календаре день",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "dateTo",
+                    "decorators": [],
+                    "description": "Выбранный диапазон дней",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "formatDate",
+                    "decorators": [],
+                    "description": "Конвертирует дату в строку определенного формата",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "fromYear",
+                    "decorators": [],
+                    "description": "Для диапазона с годами - задает начало",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "month",
+                    "decorators": [],
+                    "description": "Задает месяц для отображения в календаре",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "parseDate",
+                    "decorators": [],
+                    "description": "Конвертирует дату из string в Date",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "toYear",
+                    "decorators": [],
+                    "description": "Для диапазона с годами - задает конец",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "updateDateFrom",
+                    "decorators": [],
+                    "description": "Срабатывает при нажатии на день в календаре.\nОбновляет значение selectedDays",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "updateDateTo",
+                    "decorators": [],
+                    "description": "Обновление выбранного диапазона дат",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "updateMonth",
+                    "decorators": [],
+                    "description": "Срабатывает при изменении месяца или года в календаре.\nОбновляет значение month",
+                    "required": false,
                     "type": "{}",
                     "example": null
                 }
@@ -1996,6 +2191,261 @@
                     "description": "",
                     "required": false,
                     "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IAvatarViewProps": {
+            "name": "IAvatarViewProps",
+            "moduleName": "ui/content/Avatar/Avatar",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IAvatarProps"
+            ],
+            "properties": [
+                {
+                    "name": "alt",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "avatarUrl",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "shape",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"circle\" | \"square\"",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": null
+                },
+                {
+                    "name": "src",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "srcSet",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IAvatarGroupViewProps": {
+            "name": "IAvatarGroupViewProps",
+            "moduleName": "ui/content/Avatar/AvatarGroup",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "AvatarGroupProps"
+            ],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{Avatar: any}",
+                    "example": null
+                },
+                {
+                    "name": "maxCount",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "ICardViewProps": {
+            "name": "ICardViewProps",
+            "moduleName": "ui/content/Card/Card",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "ICardProps"
+            ],
+            "properties": [
+                {
+                    "name": "actions",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode[]",
+                    "example": null
+                },
+                {
+                    "name": "bordered",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean | CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "cover",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "more",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "shape",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"circle\" | \"square\"",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Size",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
                     "example": null
                 }
             ]
@@ -5056,6 +5506,14 @@
                     "example": "true"
                 },
                 {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "size",
                     "decorators": [],
                     "description": "Размер поля",
@@ -5097,7 +5555,374 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IDateFieldProps"
+                "IFieldWrapperOutputProps",
+                "IDateFieldProps",
+                "IDateAndTimeOutput"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "clearInput",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "closePanel",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "componentId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "dateFrom",
+                    "decorators": [],
+                    "description": "Выбранный в календаре день",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "dateTo",
+                    "decorators": [],
+                    "description": "Выбранный диапазон дней",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "displayFormat",
+                    "decorators": [],
+                    "description": "Формат даты показываемый пользователю",
+                    "required": false,
+                    "type": "string",
+                    "example": "DD.MM.YYYY"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "formatDate",
+                    "decorators": [],
+                    "description": "Конвертирует дату в строку определенного формата",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "fromYear",
+                    "decorators": [],
+                    "description": "Для диапазона с годами - задает начало",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": "calendar-day"
+                },
+                {
+                    "name": "input",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isPanelOpen",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "layout",
+                    "decorators": [],
+                    "description": "Шаблон для поля, который настраивает его расположение внутри формы.\nЕсли false, то поле будет отрендерено без шаблона.",
+                    "required": false,
+                    "type": "FormLayout",
+                    "example": "'horizontal'"
+                },
+                {
+                    "name": "localeUtils",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "month",
+                    "decorators": [],
+                    "description": "Задает месяц для отображения в календаре",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onDayClick",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "onInputChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "openPanel",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "parseDate",
+                    "decorators": [],
+                    "description": "Конвертирует дату из string в Date",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "pickerProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента DayPickerInput",
+                    "required": false,
+                    "type": "any",
+                    "example": "{dayPickerProps: {showWeekNumbers: true}}"
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Placeholder подсказка",
+                    "required": false,
+                    "type": "any",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "any",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "toYear",
+                    "decorators": [],
+                    "description": "Для диапазона с годами - задает конец",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "updateDateFrom",
+                    "decorators": [],
+                    "description": "Срабатывает при нажатии на день в календаре.\nОбновляет значение selectedDays",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "updateDateTo",
+                    "decorators": [],
+                    "description": "Обновление выбранного диапазона дат",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "updateMonth",
+                    "decorators": [],
+                    "description": "Срабатывает при изменении месяца или года в календаре.\nОбновляет значение month",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "valueFormat",
+                    "decorators": [],
+                    "description": "Формат даты отправляемый на сервер",
+                    "required": false,
+                    "type": "string",
+                    "example": "YYYY-MM-DD"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IDateRangeFieldProps": {
+            "name": "IDateRangeFieldProps",
+            "moduleName": "ui/form/DateRangeField/DateRangeField",
+            "title": "DateRangeField",
+            "description": "Поле ввода дипазона двух дат с выпадающим календарём",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFieldWrapperInputProps"
             ],
             "properties": [
                 {
@@ -5157,14 +5982,6 @@
                     "example": "['Error text']"
                 },
                 {
-                    "name": "formatDate",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
                     "name": "hint",
                     "decorators": [],
                     "description": "Подсказка, которая отобразится рядом с полем",
@@ -5197,14 +6014,6 @@
                     "example": "'horizontal'"
                 },
                 {
-                    "name": "localeUtils",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "any",
-                    "example": null
-                },
-                {
                     "name": "model",
                     "decorators": [],
                     "description": "Модель с полями формы",
@@ -5213,26 +6022,10 @@
                     "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
                 },
                 {
-                    "name": "name",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "string",
-                    "example": null
-                },
-                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "",
-                    "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "parseDate",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "{}",
                     "example": null
                 },
@@ -5269,6 +6062,14 @@
                     "example": "true"
                 },
                 {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "Отображение кнопки для сброса значения поля",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "size",
                     "decorators": [],
                     "description": "Размер поля",
@@ -5283,6 +6084,373 @@
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "valueFormat",
+                    "decorators": [],
+                    "description": "Формат даты отправляемый на сервер",
+                    "required": false,
+                    "type": "string",
+                    "example": "YYYY-MM-DD"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IDateRangeFieldViewProps": {
+            "name": "IDateRangeFieldViewProps",
+            "moduleName": "ui/form/DateRangeField/DateRangeField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFieldWrapperOutputProps",
+                "IDateRangeFieldProps",
+                "IDateAndTimeOutput"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "clearInput",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "closePanel",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "componentId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "dateFrom",
+                    "decorators": [],
+                    "description": "Выбранный в календаре день",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "dateTo",
+                    "decorators": [],
+                    "description": "Выбранный диапазон дней",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "displayFormat",
+                    "decorators": [],
+                    "description": "Формат даты показываемый пользователю",
+                    "required": false,
+                    "type": "string",
+                    "example": "DD.MM.YYYY"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "formatDate",
+                    "decorators": [],
+                    "description": "Конвертирует дату в строку определенного формата",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "fromYear",
+                    "decorators": [],
+                    "description": "Для диапазона с годами - задает начало",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": "calendar-day"
+                },
+                {
+                    "name": "input",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": null
+                },
+                {
+                    "name": "inputFromProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "inputToProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isPanelOpen",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "layout",
+                    "decorators": [],
+                    "description": "Шаблон для поля, который настраивает его расположение внутри формы.\nЕсли false, то поле будет отрендерено без шаблона.",
+                    "required": false,
+                    "type": "FormLayout",
+                    "example": "'horizontal'"
+                },
+                {
+                    "name": "localeUtils",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "month",
+                    "decorators": [],
+                    "description": "Задает месяц для отображения в календаре",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onDayClick",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "openPanel",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "parseDate",
+                    "decorators": [],
+                    "description": "Конвертирует дату из string в Date",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "pickerProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента DayPickerInput",
+                    "required": false,
+                    "type": "any",
+                    "example": "{dayPickerProps: {showWeekNumbers: true}}"
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Placeholder подсказка",
+                    "required": false,
+                    "type": "any",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "Отображение кнопки для сброса значения поля",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "any",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "toYear",
+                    "decorators": [],
+                    "description": "Для диапазона с годами - задает конец",
+                    "required": false,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "updateDateFrom",
+                    "decorators": [],
+                    "description": "Срабатывает при нажатии на день в календаре.\nОбновляет значение selectedDays",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "updateDateTo",
+                    "decorators": [],
+                    "description": "Обновление выбранного диапазона дат",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "updateMonth",
+                    "decorators": [],
+                    "description": "Срабатывает при изменении месяца или года в календаре.\nОбновляет значение month",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
                 },
                 {
                     "name": "valueFormat",
@@ -7975,7 +9143,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для <form>...</form>",
+                    "description": "Дополнительный CSS-класс для \\<form\\>...\\<\\/form\\>",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -12006,7 +13174,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для тега <textarea>",
+                    "description": "Дополнительный CSS-класс для тега \\<textarea\\>",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -12164,7 +13332,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для тега <textarea>",
+                    "description": "Дополнительный CSS-класс для тега \\<textarea\\>",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -12526,6 +13694,14 @@
                 },
                 {
                     "name": "clearInput",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "closeDropDown",
                     "decorators": [],
                     "description": "",
                     "required": true,
@@ -15424,7 +16600,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для <form>...</form>",
+                    "description": "Дополнительный CSS-класс для \\<form\\>...\\<\\/form\\>",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -17753,9 +18929,9 @@
         "Size": {
             "name": "Size",
             "decorators": [],
-            "description": "Размер элемента",
+            "description": "",
             "required": true,
-            "type": "\"sm\" | \"md\" | \"lg\" | string",
+            "type": "\"large\" | \"medium\" | \"small\"",
             "example": null
         },
         "IHeaderViewProps": {
@@ -19276,6 +20452,13 @@
         "ui/form/DateField/DateField": {
             "name": "default",
             "moduleName": "ui/form/DateField/DateField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/DateRangeField/DateRangeField": {
+            "name": "default",
+            "moduleName": "ui/form/DateRangeField/DateRangeField",
             "title": "",
             "description": "",
             "tags": {}

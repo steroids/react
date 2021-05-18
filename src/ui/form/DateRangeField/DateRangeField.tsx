@@ -87,16 +87,8 @@ export interface IDateRangeFieldViewProps extends IFieldWrapperOutputProps, IDat
 function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) {
     const components = useComponents();
     const {
-        month,
-        toYear,
-        fromYear,
-        dateTo,
-        dateFrom,
         parseDate,
         formatDate,
-        updateMonth,
-        updateDateTo,
-        updateDateFrom,
     } = useDateAndTime({
         formatsArray: [
             props.displayFormat,
@@ -147,14 +139,15 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
 
     const onDayClick = useCallback((day) => {
         const range = DateUtils.addDayToRange(day, {
-            from: dateFrom,
-            to: dateTo,
+            from: props.input.value ? props.input.value.from : null,
+            to: props.input.value ? props.input.value.to : null,
         });
+        console.log(range);
         updateInputValue({
             from: formatDate(range.from, props.valueFormat),
             to: formatDate(range.to, props.valueFormat),
         });
-    }, [dateFrom, dateTo, formatDate, props.valueFormat, updateInputValue]);
+    }, [formatDate, props.input.value, props.valueFormat, updateInputValue]);
 
     const openPanel = useCallback(() => {
         if (!isPanelOpen) {
@@ -172,8 +165,6 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
         setIsPanelOpen(false);
         setInputFrom('');
         setInputTo('');
-        updateDateTo(null);
-        updateDateFrom(null);
         props.input.onChange.call(null, null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -185,25 +176,15 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
     useEffect(() => {
         const inputValue = props.input.value;
         if (inputValue) {
-            const valueAsDate = {
-                from: parseDate(inputValue.from),
-                to: parseDate(inputValue.to),
-            };
             const valueAsString = {
-                from: formatDate(valueAsDate.from, props.displayFormat) || '',
-                to: formatDate(valueAsDate.to, props.displayFormat) || '',
+                from: formatDate(parseDate(inputValue.from), props.displayFormat) || '',
+                to: formatDate(parseDate(inputValue.to), props.displayFormat) || '',
             };
             if (!inputFrom || valueAsString.from !== inputFrom) {
                 setInputFrom(valueAsString.from);
             }
             if (!inputTo || valueAsString.to !== inputTo) {
                 setInputTo(valueAsString.to);
-            }
-            if (!dateFrom || valueAsDate.from !== dateFrom) {
-                updateDateFrom(valueAsDate.from);
-            }
-            if (!dateTo || valueAsDate.to !== dateTo) {
-                updateDateTo(valueAsDate.to);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -237,10 +218,7 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', {
         ...props,
-        month,
-        toYear,
         onBlur,
-        fromYear,
         openPanel,
         clearInput,
         closePanel,
@@ -248,9 +226,8 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
         inputToProps,
         onDayClick,
         isPanelOpen,
-        updateMonth,
-        dateFrom,
-        dateTo,
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
     });
 }
 

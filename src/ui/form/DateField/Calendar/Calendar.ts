@@ -16,21 +16,31 @@ interface ICalendarProps {
     valueFormat?: string,
 
     /**
+     * Свойства для компонента DayPickerInput
+     * @example {dayPickerProps: {showWeekNumbers: true}}
+     */
+    pickerProps?: any;
+
+    /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
     view?: CustomView;
     onDayChange?: any,
     value?: string,
+    range?: {
+        from: string,
+        to: string,
+    }
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
     onDayClick: any,
-    selectedDay: Date,
     month: Date,
     updateMonth: any,
     fromYear: any,
     toYear: any,
+    selectedDay: Date,
 }
 
 function Calendar(props: ICalendarProps) {

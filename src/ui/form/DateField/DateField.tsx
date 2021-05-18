@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import useDateAndTime, {IDateAndTimeOutput} from './useDateAndTime';
 import {useComponents} from '../../../hooks';
@@ -12,12 +11,6 @@ import fieldWrapper, {
  * Поле ввода с выпадающим календарём для выбора даты
  */
 export interface IDateFieldProps extends IFieldWrapperInputProps {
-    /**
-     * Свойства для компонента DayPickerInput
-     * @example {dayPickerProps: {showWeekNumbers: true}}
-     */
-    pickerProps?: any;
-
     /**
      * Формат даты показываемый пользователю
      * @example DD.MM.YYYY
@@ -67,7 +60,6 @@ export interface IDateFieldProps extends IFieldWrapperInputProps {
 export interface IDateFieldViewProps extends IFieldWrapperOutputProps, IDateFieldProps, IDateAndTimeOutput {
     onBlur: () => void,
     localeUtils: any,
-    onInputChange: any,
     isPanelOpen: boolean,
     openPanel: any
     inputProps: {
@@ -76,8 +68,6 @@ export interface IDateFieldViewProps extends IFieldWrapperOutputProps, IDateFiel
     closePanel: any,
     onDayClick: any,
     clearInput: any,
-    displayFormat: string,
-    valueFormat: string,
 }
 
 function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -141,8 +131,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     // Listen to input changes -> update state
     useEffect(() => {
         if (props.input.value) {
-            const valueAsDate = parseDate(props.input.value);
-            const valueAsString = formatDate(valueAsDate, props.displayFormat);
+            const valueAsString = formatDate(parseDate(props.input.value), props.displayFormat);
             if (!innerInput || valueAsString !== innerInput) {
                 setInnerInput(valueAsString);
             }
@@ -168,7 +157,6 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         onBlur,
         onChange,
         openPanel,
-        parseDate,
         clearInput,
         closePanel,
         formatDate,

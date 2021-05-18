@@ -3,18 +3,6 @@ import moment from 'moment';
 
 interface IDateAndTimeInput {
     /**
-     * Формат даты, показываемый пользователю
-     * @example DD.MM.YYYY
-     */
-    displayFormat?: string,
-
-    /**
-     * Формат даты, отправляемый на сервер
-     * @example YYYY-MM-DD
-     */
-    valueFormat?: string,
-
-    /**
      * Массив валидных форматов
      */
     formatsArray?: string[],
@@ -83,30 +71,6 @@ export interface IDateAndTimeOutput {
 }
 
 export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOutput {
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-
-    const {fromYear, toYear} = useMemo(() => ({
-        fromYear: new Date(currentYear - 100, 0),
-        toYear: new Date(currentYear + 50, 11),
-    }), [currentYear]);
-
-    const [month, setMonth] = useState<Date>(new Date(currentYear, currentMonth));
-    const [dateFrom, setDateFrom] = useState<Date>(null);
-    const [dateTo, setDateTo] = useState<Date>(null);
-
-    const updateMonth = useCallback(newMonth => {
-        setMonth(newMonth);
-    }, []);
-
-    const updateDateFrom = useCallback(newDate => {
-        setDateFrom(newDate);
-    }, []);
-
-    const updateDateTo = useCallback(newDate => {
-        setDateTo(newDate);
-    }, []);
-
     const parseDate = useCallback(date => {
         const validFormat = props.formatsArray.find(
             format => (
@@ -126,15 +90,7 @@ export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOu
     }, []);
 
     return {
-        month,
-        dateFrom,
-        dateTo,
-        toYear,
-        fromYear,
         parseDate,
         formatDate,
-        updateDateTo,
-        updateMonth,
-        updateDateFrom,
     };
 }

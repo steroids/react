@@ -76,22 +76,16 @@ export interface IDateFieldViewProps extends IFieldWrapperOutputProps, IDateFiel
     closePanel: any,
     onDayClick: any,
     clearInput: any,
+    displayFormat: string,
+    valueFormat: string,
 }
 
 function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const {
-        month,
-        toYear,
-        fromYear,
-        dateFrom,
         parseDate,
         formatDate,
-        updateMonth,
-        updateDateFrom,
     } = useDateAndTime({
-        displayFormat: props.displayFormat,
-        valueFormat: props.valueFormat,
         formatsArray: [
             props.displayFormat,
             props.valueFormat,
@@ -138,9 +132,8 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     const clearInput = useCallback(() => {
         setIsPanelOpen(false);
         setInnerInput('');
-        updateDateFrom(null);
         props.input.onChange.call(null, null);
-    }, [props.input.onChange, updateDateFrom]);
+    }, [props.input.onChange]);
 
     // TODO onBlur, clear garbage in input
     const onBlur = useCallback(() => {}, []);
@@ -152,9 +145,6 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
             const valueAsString = formatDate(valueAsDate, props.displayFormat);
             if (!innerInput || valueAsString !== innerInput) {
                 setInnerInput(valueAsString);
-            }
-            if (!dateFrom || valueAsDate !== dateFrom) {
-                updateDateFrom(valueAsDate);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -175,12 +165,8 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     return components.ui.renderView(props.view || 'form.DateFieldView', {
         ...props,
-        month,
-        toYear,
         onBlur,
-        fromYear,
         onChange,
-        dateFrom,
         openPanel,
         parseDate,
         clearInput,
@@ -188,8 +174,9 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         formatDate,
         inputProps,
         onDayClick,
-        updateMonth,
         isPanelOpen,
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
     });
 }
 

@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DateUtils} from 'react-day-picker';
 import useDateAndTime, {IDateAndTimeOutput} from '../DateField/useDateAndTime';
 import {useComponents} from '../../../hooks';
@@ -100,6 +100,7 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
     const [inputFrom, setInputFrom] = useState<string>('');
     const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
 
+    const valueRef = useRef(null);
     const updateInputValue = useCallback((range: {from: string, to: string}) => {
         if (!!range.to && !!range.from) {
             if (DateUtils.isDayAfter(parseDate(range.from), parseDate(range.to))) {
@@ -109,6 +110,7 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
             }
         }
         props.input.onChange.call(null, range);
+        valueRef.current = range;
         if (props.onChange) {
             props.onChange(range);
         }
@@ -121,33 +123,33 @@ function DateRangeField(props: IDateRangeFieldProps & IFieldWrapperOutputProps) 
         if (parsedDate) {
             updateInputValue({
                 from: formatDate(parsedDate, props.valueFormat),
-                to: props.input.value ? props.input.value.to : null,
+                to: valueRef.current ? valueRef.current.to : null,
             });
         }
-    }, [formatDate, parseDate, props.input.value, props.valueFormat, updateInputValue]);
+    }, [formatDate, parseDate, props.valueFormat, updateInputValue]);
 
     const onToChange = useCallback(value => {
         setInputTo(value);
         const parsedDate = parseDate(value);
         if (parsedDate) {
             updateInputValue({
-                from: props.input.value ? props.input.value.from : null,
+                from: valueRef.current ? valueRef.current.from : null,
                 to: formatDate(parsedDate, props.valueFormat),
             });
         }
-    }, [formatDate, parseDate, props.input.value, props.valueFormat, updateInputValue]);
+    }, [formatDate, parseDate, props.valueFormat, updateInputValue]);
 
     const onDayClick = useCallback((day) => {
         const range = DateUtils.addDayToRange(day, {
-            from: props.input.value ? props.input.value.from : null,
-            to: props.input.value ? props.input.value.to : null,
+            from: valueRef.current && parseDate(valueRef.current.from),
+            to: valueRef.current && parseDate(valueRef.current.to),
         });
-        console.log(range);
         updateInputValue({
             from: formatDate(range.from, props.valueFormat),
             to: formatDate(range.to, props.valueFormat),
         });
-    }, [formatDate, props.input.value, props.valueFormat, updateInputValue]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.input.value, props.valueFormat, updateInputValue]);
 
     const openPanel = useCallback(() => {
         if (!isPanelOpen) {

@@ -4,16 +4,21 @@ import useDateAndTime from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
 
 interface ICalendarProps {
     /**
-     * Формат даты, показываемый пользователю
-     * @example DD.MM.YYYY
+     * Значение задает выбранные в календаре дату или диапазон дат.
+     * Необходимо передать валидную дату в виде строки (массива строк)
      */
-    displayFormat?: string,
+    calendarValue: string | string[],
 
     /**
-     * Формат даты, отправляемый на сервер
-     * @example YYYY-MM-DD
+     * Массив валидных форматов дат
+     * @example ['DD.MM.YYYY']
      */
-    valueFormat?: string,
+    dateValidFormats: string[],
+
+    /**
+     * Функция возвращает выбранную в календаре дату
+     */
+    onDayChange?: (day: Date) => void,
 
     /**
      * Свойства для компонента DayPickerInput
@@ -26,60 +31,69 @@ interface ICalendarProps {
      * @example MyCustomView
      */
     view?: CustomView;
-    onDayChange?: any,
-    value?: string,
-    range?: {
-        from: string,
-        to: string,
-    }
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
-    onDayClick: any,
+    /**
+     * Текущий месяц календаря, также задает выбранный в календаре год
+     */
     month: Date,
-    updateMonth: any,
-    fromYear: any,
-    toYear: any,
-    selectedDay: Date,
+
+    /**
+     * Самый крайний год в прошлом
+     */
+    fromYear: Date,
+
+    /**
+     * Самый крайний год в будущем
+     */
+    toYear: Date,
+
+    /**
+     * Фукнция обновляет значение выбранного месяца
+     */
+    updateMonth: (newMonth: Date) => void,
+
+    /**
+     * Хранит выбранную дату или диапазон дат
+     */
+    selectedDays: Date[],
 }
 
 function Calendar(props: ICalendarProps) {
     const components = useComponents();
     const {parseDate} = useDateAndTime({
-        formatsArray: [
-            props.displayFormat,
-            props.valueFormat,
-        ],
+        formatsArray: props.dateValidFormats,
     });
 
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
-    const {fromYear, toYear} = useMemo(() => ({
-        fromYear: new Date(currentYear - 100, 0),
-        toYear: new Date(currentYear + 50, 11),
-    }), [currentYear]);
     const [month, setMonth] = useState<Date>(new Date(currentYear, currentMonth));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const selectedDay = useMemo(() => parseDate(props.value), [props.value]);
 
     const updateMonth = useCallback(newMonth => {
         setMonth(newMonth);
     }, []);
 
-    const onDayClick = useCallback((day: Date) => {
-        props.onDayChange(day);
+    const {fromYear, toYear} = useMemo(() => ({
+        fromYear: new Date(currentYear - 100, 0),
+        toYear: new Date(currentYear + 50, 11),
+    }), [currentYear]);
+
+    const selectedDays = useMemo(() => {
+        if (Array.isArray(props.calendarValue)) {
+            return props.calendarValue.map((str) => parseDate(str));
+        }
+        return [parseDate(props.calendarValue)];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [props.calendarValue]);
 
     return components.ui.renderView(props.view || 'form.CalendarView', {
         ...props,
         month,
-        fromYear,
         toYear,
-        onDayClick,
+        fromYear,
         updateMonth,
-        selectedDay,
+        selectedDays,
     });
 }
 

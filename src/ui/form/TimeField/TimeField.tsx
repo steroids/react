@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useMemo, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
 import moment from 'moment';
 import {useComponents} from '../../../hooks';
@@ -69,80 +68,43 @@ export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: string,
     },
-    showDropDown: boolean,
+    isPanelVisible: boolean,
     openDropDown: () => void,
     closeDropDown: () => void,
     onBlur: () => void,
     clearInput: () => void,
     setNow: () => void,
+    handlePanelClick: (newTime: string) => void,
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const [hours, setHours] = useState<string>(null);
-    const [minutes, setMinutes] = useState<string>(null);
     const [innerInput, setInnerInput] = useState<string>('');
-    const [showDropDown, setShowDropDown] = useState<boolean>(false);
-
-    const calculatedValue = useCallback((newTime, part = '') => {
-        let inputValue = props.input.value ? props.input.value.split(':') : '';
-        if (part === 'HOUR') {
-            inputValue = `${newTime}:${inputValue[1] || '00'}`;
-        } else if (part === 'MIN') {
-            inputValue = `${inputValue[0] || '00'}:${newTime}`;
-        }
-        setInnerInput(inputValue);
-        return inputValue;
-    }, [props.input.value]);
-
-    const changeHours = useCallback((newHour) => {
-        if (newHour !== hours) {
-            setHours(newHour);
-            props.input.onChange.call(null, calculatedValue(newHour, 'HOUR'));
-        }
-    }, [calculatedValue, hours, props.input.onChange]);
-
-    const changeMinutes = useCallback((newMinute) => {
-        if (newMinute !== minutes) {
-            setMinutes(newMinute);
-            props.input.onChange.call(null, calculatedValue(newMinute, 'MIN'));
-        }
-    }, [calculatedValue, minutes, props.input.onChange]);
+    const [isPanelVisible, setIsPanelVisible] = useState<boolean>(false);
 
     const onChange = useCallback((value) => {
         setInnerInput(value);
-        const matchedValue = value.match(/(\d{2}):(\d{2})/);
-        if (matchedValue?.length > 0) {
-            const newHours = matchedValue[1];
-            const newMinutes = matchedValue[2];
-            const isHourChanged = newHours !== hours && newHours <= 23;
-            const isMinutesChanged = newMinutes !== minutes && newMinutes <= 59;
-            if (isHourChanged && isMinutesChanged) {
-                setHours(newHours);
-                setMinutes(newMinutes);
-                props.input.onChange.call(null, value);
-            } else {
-                if (isHourChanged) {
-                    changeHours(newHours);
-                }
-                if (isMinutesChanged) {
-                    changeMinutes(newMinutes);
-                }
-            }
+        // Регулярка проверяет соответствие введенной строки формату 'hh:mm'
+        // Максимальная величина - 23:59
+        const matchedValue = value.match(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/);
+        if (matchedValue?.length > 0 && props.input.value !== value) {
+            props.input.onChange.call(null, value);
         }
-    }, [changeHours, changeMinutes, hours, minutes, props.input.onChange]);
+    }, [props.input.onChange, props.input.value]);
+
+    const handlePanelClick = useCallback((newTime) => {
+        props.input.onChange.call(null, newTime);
+    }, [props.input.onChange]);
 
     const setNow = useCallback(() => {
         const timeNow = moment().format('hh:mm');
-        onChange.call(null, timeNow);
-    }, [onChange]);
+        props.input.onChange.call(null, timeNow);
+    }, [props.input.onChange]);
 
     const clearInput = useCallback(() => {
-        setInnerInput(null);
-        setHours(null);
-        setMinutes(null);
-        setShowDropDown(false);
+        setInnerInput('');
+        setIsPanelVisible(false);
         props.input.onChange.call(null, null);
     }, [props.input.onChange]);
 
@@ -153,43 +115,49 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     }, [innerInput, props.input.value]);
 
     const openDropDown = useCallback(() => {
-        if (!showDropDown) {
-            setShowDropDown(true);
+        if (!isPanelVisible) {
+            setIsPanelVisible(true);
         }
-    }, [showDropDown]);
+    }, [isPanelVisible]);
 
     const closeDropDown = useCallback(() => {
-        if (showDropDown) {
-            setShowDropDown(false);
+        if (isPanelVisible) {
+            setIsPanelVisible(false);
         }
-    }, [showDropDown]);
+    }, [isPanelVisible]);
 
     // Outside click -> close
     const forwardedRef = useRef(null);
     useClickAway(forwardedRef, closeDropDown);
+
+    useEffect(() => {
+        if (props.input.value && innerInput !== props.input.value) {
+            setInnerInput(props.input.value);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.input.value]);
 
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
         placeholder: props.placeholder,
         disabled: props.disabled,
-        ...props.inputProps,
-        value: innerInput || props.input.value,
+        value: innerInput,
         onChange,
-    }), [innerInput, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
+        ...props.inputProps,
+    }), [innerInput, onChange, props.disabled, props.input.name, props.inputProps, props.placeholder, props.type]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', {
         ...props,
-        forwardedRef,
-        inputProps,
-        changeHours,
-        changeMinutes,
-        showDropDown,
-        openDropDown,
-        closeDropDown,
+        setNow,
         onBlur,
         clearInput,
-        setNow,
+        inputProps,
+        forwardedRef,
+        isPanelVisible,
+        openDropDown,
+        closeDropDown,
+        handlePanelClick,
     });
 }
 

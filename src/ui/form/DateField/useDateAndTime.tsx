@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback} from 'react';
 import moment from 'moment';
 
 interface IDateAndTimeInput {
@@ -68,6 +68,19 @@ export interface IDateAndTimeOutput {
      * @returns {string}
      */
     formatDate?: (date: Date | string, format: string) => string,
+
+    /**
+     * Проверяет, содержит ли переданная строка время в правильном формате
+     * @param {string} time
+     * @returns {boolean}
+     */
+    validateTime?: (time: string) => boolean,
+
+    /**
+     * Возвращает отметку времени (время берется в момент вызова функции) в виде строки
+     * @returns {string}
+     */
+    getNowTime?: () => string
 }
 
 export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOutput {
@@ -89,8 +102,19 @@ export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOu
         return moment(date).format(format);
     }, []);
 
+    const validateTime = useCallback((time: string) => {
+        // Регулярка проверяет соответствие введенной строки формату 'hh:mm'
+        // Максимальная величина - 23:59
+        const matchedValue = time.match(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/);
+        return Array.isArray(matchedValue) && matchedValue.length > 0;
+    }, []);
+
+    const getNowTime = useCallback(() => moment().format('hh:mm'), []);
+
     return {
         parseDate,
         formatDate,
+        getNowTime,
+        validateTime,
     };
 }

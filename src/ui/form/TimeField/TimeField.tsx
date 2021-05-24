@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
 import moment from 'moment';
+import useDateAndTime from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -55,80 +56,64 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
 }
 
 export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutputProps {
-    forwardedRef: any,
-    style?: any,
-    errors?: string[],
-    placeholder?: string,
-    type: any,
     inputProps: {
-        type: string,
-        name: string,
-        onChange: (value: string) => void,
-        value: string | number,
-        placeholder: string,
-        disabled: string,
+        [key: string]: any,
     },
     isPanelVisible: boolean,
-    openDropDown: () => void,
-    closeDropDown: () => void,
-    onBlur: () => void,
-    clearInput: () => void,
     setNow: () => void,
+    openPanel: () => void,
+    clearInput: () => void,
+    closePanel: () => void,
     handlePanelClick: (newTime: string) => void,
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
+    const {validateTime, getNowTime} = useDateAndTime({});
+
     const [innerInput, setInnerInput] = useState<string>('');
     const [isPanelVisible, setIsPanelVisible] = useState<boolean>(false);
 
     const onChange = useCallback((value) => {
         setInnerInput(value);
-        // Регулярка проверяет соответствие введенной строки формату 'hh:mm'
-        // Максимальная величина - 23:59
-        const matchedValue = value.match(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/);
-        if (matchedValue?.length > 0 && props.input.value !== value) {
+        if (validateTime(value) && props.input.value !== value) {
             props.input.onChange.call(null, value);
         }
-    }, [props.input.onChange, props.input.value]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.input.value]);
 
     const handlePanelClick = useCallback((newTime) => {
         props.input.onChange.call(null, newTime);
-    }, [props.input.onChange]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const setNow = useCallback(() => {
-        const timeNow = moment().format('hh:mm');
-        props.input.onChange.call(null, timeNow);
-    }, [props.input.onChange]);
+        props.input.onChange.call(null, getNowTime);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const clearInput = useCallback(() => {
         setInnerInput('');
         setIsPanelVisible(false);
         props.input.onChange.call(null, null);
-    }, [props.input.onChange]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    const onBlur = useCallback(() => {
-        if (props.input.value !== innerInput) {
-            setInnerInput(props.input.value);
-        }
-    }, [innerInput, props.input.value]);
-
-    const openDropDown = useCallback(() => {
+    const openPanel = useCallback(() => {
         if (!isPanelVisible) {
             setIsPanelVisible(true);
         }
     }, [isPanelVisible]);
 
-    const closeDropDown = useCallback(() => {
+    const closePanel = useCallback(() => {
         if (isPanelVisible) {
             setIsPanelVisible(false);
         }
-    }, [isPanelVisible]);
-
-    // Outside click -> close
-    const forwardedRef = useRef(null);
-    useClickAway(forwardedRef, closeDropDown);
+        if (props.input.value !== innerInput) {
+            setInnerInput(props.input.value || '');
+        }
+    }, [innerInput, isPanelVisible, props.input.value]);
 
     useEffect(() => {
         if (props.input.value && innerInput !== props.input.value) {
@@ -138,25 +123,25 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     }, [props.input.value]);
 
     const inputProps = useMemo(() => ({
-        type: props.type,
-        name: props.input.name,
-        placeholder: props.placeholder,
+        autoComplete: 'off',
         disabled: props.disabled,
+        placeholder: props.placeholder,
+        required: props.required,
+        name: props.input.name,
+        type: 'text',
         value: innerInput,
         onChange,
         ...props.inputProps,
-    }), [innerInput, onChange, props.disabled, props.input.name, props.inputProps, props.placeholder, props.type]);
+    }), [innerInput, onChange, props.disabled, props.input.name, props.inputProps, props.placeholder, props.required]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', {
         ...props,
         setNow,
-        onBlur,
+        openPanel,
+        closePanel,
         clearInput,
         inputProps,
-        forwardedRef,
         isPanelVisible,
-        openDropDown,
-        closeDropDown,
         handlePanelClick,
     });
 }

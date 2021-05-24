@@ -97,6 +97,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         query,
     });
 
+    const inputSelectedIds = useMemo(
+        () => props.selectedIds || [].concat(props.input.value || []),
+        [props.input.value, props.selectedIds]
+    );
+
     // Data select
     const {
         isOpened,
@@ -109,7 +114,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     } = useDataSelect({
         multiple: props.multiple,
         selectFirst: props.selectFirst,
-        selectedIds: props.selectedIds,
+        selectedIds: inputSelectedIds,
         primaryKey: props.primaryKey,
         items,
         inputValue: props.input.value,

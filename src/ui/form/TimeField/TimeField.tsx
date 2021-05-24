@@ -56,15 +56,15 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
 }
 
 export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutputProps {
-    inputProps: {
+    inputProps?: {
         [key: string]: any,
     },
-    isPanelVisible: boolean,
-    setNow: () => void,
-    openPanel: () => void,
-    clearInput: () => void,
-    closePanel: () => void,
-    handlePanelClick: (newTime: string) => void,
+    isPanelVisible?: boolean,
+    setNow?: () => void,
+    openPanel?: () => void,
+    clearInput?: () => void,
+    closePanel?: () => void,
+    handlePanelClick?: (newTime: string) => void,
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {

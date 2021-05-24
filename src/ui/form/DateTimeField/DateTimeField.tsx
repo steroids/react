@@ -1,11 +1,7 @@
-import * as React from 'react';
-import {useCallback, useEffect, useRef, useState} from 'react';
-import moment from 'moment';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import useDateAndTime from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
-import DateField from '../../form/DateField';
-import TimeField from '../../form/TimeField';
-
 /**
  * DateTimeField
  * Поля ввода с выпадающими списками для выбора даты и времени
@@ -62,100 +58,73 @@ export interface IDateTimeFieldProps extends IFieldWrapperInputProps {
 }
 
 export interface IDateTimeFieldViewProps extends IDateTimeFieldProps, IFieldWrapperOutputProps {
-    dateField: any,
-    timeField: any,
-    style?: any
+    innerInput: string,
+    isPanelOpen: boolean,
+    openPanel: () => void,
+    closePanel: () => void,
+    onTimePanelClick: () => void,
 }
 
-function DateTimeField(props: IDateTimeFieldProps): JSX.Element {
+function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
+    const {
+        parseDate,
+        formatDate,
+        validateTime,
+    } = useDateAndTime({
+        formatsArray: [
+            props.displayFormat,
+            props.valueFormat,
+        ],
+    });
 
-    const parseDate = useCallback(date => {
-        const formats = [
-            props.displayDateFormat + ' ' + props.timeFormat,
-            props.displayDateFormat + ' ' + props.timeFormat + ':ss',
-            props.valueDateFormat + ' ' + props.timeFormat,
-            props.valueDateFormat + ' ' + props.timeFormat + ':ss',
-        ];
-        const format = formats.find(format => (
-            date && date.length === format.length && moment(date, format).isValid()
-        ));
-        return format ? moment(date, format) : null;
-    }, [props.displayDateFormat, props.timeFormat, props.valueDateFormat]);
+    const [innerInput, setInnerInput] = useState('');
+    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
 
-    const parseToState = useCallback(() => {
-        const momentDate = parseDate(props.input.value);
-        return {
-            date: momentDate ? momentDate.format(props.valueDateFormat) : null,
-            time: (momentDate || moment().startOf('day')).format(props.timeFormat),
-        };
-    }, [parseDate, props.valueDateFormat, props.timeFormat, props.input.value]);
-
-    const [state, setState] = useState(parseToState());
-    const stateCbRef = useRef(null);
-
-    const onChange = useCallback(data => {
-        stateCbRef.current = state => {
-            const momentDate = parseDate(state.date + ' ' + state.time);
-            const format = props.valueDateFormat + ' ' + props.timeFormat;
-            if (momentDate) {
-                props.input.onChange(momentDate.format(format));
-            }
-        };
-
-        setState(state => ({
-            ...state,
-            ...data,
-        }));
-    }, [parseDate, props.valueDateFormat, props.timeFormat, props.input]);
-
-    useEffect(() => {
-        setState(parseToState());
-    }, [parseToState]);
-
-    const DateFieldInternal = DateField.WrappedComponent;
-    const TimeFieldInternal = TimeField.WrappedComponent;
-
-    useEffect(() => {
-        if (stateCbRef.current) {
-            stateCbRef.current(state);
-            stateCbRef.current = null;
+    const openPanel = useCallback(() => {
+        if (!isPanelOpen) {
+            setIsPanelOpen(true);
         }
-    }, [state]);
+    }, [isPanelOpen]);
+
+    const closePanel = useCallback(() => {
+        if (isPanelOpen) {
+            setIsPanelOpen(false);
+        }
+    }, [isPanelOpen]);
+
+    const onChange = useCallback(value => {
+        setInnerInput(value);
+    }, []);
+
+    const onTimePanelClick = useCallback((value) => {
+    }, []);
+
+    useEffect(() => {
+        if (props.input.value) {
+        }
+    }, [props.input.value]);
+
+    const inputProps = useMemo(() => ({
+        autoComplete: 'off',
+        disabled: props.disabled,
+        placeholder: props.placeholder || props.displayDateFormat,
+        required: props.required,
+        name: props.input.name,
+        type: 'text',
+        value: innerInput,
+        onChange,
+        ...props.inputProps,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }), [innerInput, props.disabled, props.input.name, props.inputProps, props.placeholder, props.required]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', {
         ...props,
-        dateField: (
-            <DateFieldInternal
-                errors={props.errors}
-                required={props.required}
-                disabled={props.disabled}
-                displayFormat={props.displayDateFormat}
-                valueFormat={props.valueDateFormat}
-                input={{
-                    name: '',
-                    value: state.date,
-                    onChange: value => onChange({date: value}),
-                }}
-                layout={false}
-                {...props.dateProps}
-            />
-        ),
-        timeField: (
-            <TimeFieldInternal
-                errors={props.errors}
-                required={props.required}
-                disabled={props.disabled}
-                timeFormat={props.timeFormat}
-                input={{
-                    name: '',
-                    value: state.time,
-                    onChange: value => onChange({time: value}),
-                }}
-                layout={false}
-                {...props.timeProps}
-            />
-        ),
+        openPanel,
+        closePanel,
+        inputProps,
+        isPanelOpen,
+        onTimePanelClick,
     });
 }
 

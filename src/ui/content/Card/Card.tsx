@@ -1,26 +1,28 @@
 import React from 'react';
 import { useComponents } from '@steroidsjs/core/hooks';
 
+type cardType = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' ;
+type borderType = 'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' ;
+
 interface ICardProps {
     view?: any,
     children?: React.ReactNode,
     title?: string,
-    more?: React.ReactNode,
-    bordered?: boolean | React.CSSProperties,
+    description?: string,
     className?: CssClassName,
-    description?: React.ReactNode,
-    cover?: React.ReactNode,
-    actions?: React.ReactNode[],
-    size?: Size,
+    cover?: string,
+    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal',
     shape?: 'square' | 'circle',
     style?: React.CSSProperties,
+    header?: string,
+    footer?: string,
+    cardStyle?: cardType,
+    borderStyle?: borderType | React.CSSProperties | boolean,
 }
 
 export interface ICardViewProps extends ICardProps {
     
 }
-
-export type Size = 'large' | 'medium' | 'small';
 
 function Card (props: ICardProps) {
     const components = useComponents()
@@ -30,8 +32,9 @@ function Card (props: ICardProps) {
 }
 
 Card.defaultProps = {
-    size: 'medium',
+    orientation: 'vertical',
     shape: 'circle',
+    borderStyle: 'default',
 }
 
 export default Card;

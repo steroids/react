@@ -1,4 +1,5 @@
 import _has from 'lodash-es/has';
+import _upperFirst from 'lodash-es/upperFirst';
 import {useContext, useMemo} from 'react';
 import * as React from 'react';
 import {mergeLayoutProp, providers} from '../../../utils/form';
@@ -93,6 +94,7 @@ export interface IFieldWrapperOutputProps {
 interface IFieldWrapperOptions {
     label?: boolean,
     list?: boolean,
+    attributeSuffixes?: string[],
 }
 
 type FieldWrapperComponent = {
@@ -102,40 +104,49 @@ type FieldWrapperComponent = {
     defaultProps: any;
 }
 
-const createDynamicField = (componentId, Component, isList) => {
+const getKey = (baseName, attribute) => baseName + _upperFirst(attribute || '');
+
+const createDynamicField = (componentId, Component, options: IFieldWrapperOptions) => {
     const DynamicField = (props: IFieldWrapperInputProps) => {
         const components = useComponents();
-
-        // Get full name (attribute with prefix)
-        const name = [props.prefix, props.attribute].filter(Boolean).join('.');
 
         // Get context, formId
         const context = useContext(FormContext);
         const formId = props.formId || context?.formId || null;
         const model = props.model || context?.model || null;
 
-        // Register field
-        components.ui.registerField(formId, name, componentId);
-
-        // Resolve data provider
-        const {errors, value, setValue} = context?.provider
-            ? context?.provider.useField(formId, name, isList)
-            : providers.state.useField(props.value);
-
-        // Input object
-        const input = useMemo(() => ({
-            name,
-            value,
-            onChange: setValue,
-        }), [name, setValue, value]);
-
         // Result wrapper props
         const wrapperProps: IFieldWrapperOutputProps = {
             componentId,
             formId,
-            errors,
-            input,
         };
+
+        options.attributeSuffixes.forEach(suffix => {
+            const attributeKey = getKey('attribute', suffix);
+            const inputKey = getKey('input', suffix);
+            const errorsKey = getKey('errors', suffix);
+
+            // Get full name (attribute with prefix)
+            const name = [props.prefix, props[attributeKey]].filter(Boolean).join('.');
+
+            // Register field
+            components.ui.registerField(formId, name, componentId);
+
+            // Resolve data provider
+            const {errors, value, setValue} = context?.provider
+                ? context?.provider.useField(formId, name, options.list)
+                : providers.state.useField(props.value);
+
+            // Set errors
+            wrapperProps[errorsKey] = errors;
+
+            // Input object
+            wrapperProps[inputKey] = useMemo(() => ({ // eslint-disable-line react-hooks/rules-of-hooks
+                name,
+                value,
+                onChange: setValue,
+            }), [name, setValue, value]);
+        });
 
         return components.ui.renderView(Component, {
             ...components.ui.getFieldProps(componentId, model, props.attribute),
@@ -152,7 +163,9 @@ const createDynamicField = (componentId, Component, isList) => {
 export default function fieldWrapper(
     componentId,
     Component: any,
-    options: IFieldWrapperOptions = {},
+    options: IFieldWrapperOptions = {
+        attributeSuffixes: [''],
+    },
 ): FieldWrapperComponent {
     const NewComponent = (props: IFieldWrapperInputProps):JSX.Element => {
         const components = useComponents();
@@ -161,13 +174,20 @@ export default function fieldWrapper(
         const context = useContext(FormContext);
         const model = props.model || context?.model || null;
 
+        const attributesProps = options.attributeSuffixes.reduce((obj, suffix) => {
+            const attributeKey = getKey('attribute', suffix);
+            obj[attributeKey] = props[attributeKey];
+            return obj;
+        }, {});
+        const attribute = Object.values(attributesProps)[0];
+
         // Get UI props and create Field Class dynamically (for add field props - input, errors, model, ...)
         const metaProps = useMemo(
-            () => components.ui.getFieldProps(componentId, model, props.attribute),
-            [components.ui, props.attribute, model],
+            () => components.ui.getFieldProps(componentId, model, attribute),
+            [components.ui, attribute, model],
         );
         if (!Component.DynamicField) {
-            Component.DynamicField = createDynamicField(componentId, Component, options.list);
+            Component.DynamicField = createDynamicField(componentId, Component, options);
         }
 
         // Resolve layout
@@ -175,8 +195,8 @@ export default function fieldWrapper(
 
         if (layout !== null) {
             return components.ui.renderView(FieldLayout, {
+                ...attributesProps,
                 layout,
-                attribute: props.attribute,
                 required: _has(props, 'required') ? props.required : metaProps.required,
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,

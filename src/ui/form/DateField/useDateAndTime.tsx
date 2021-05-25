@@ -1,120 +1,154 @@
-import {useCallback} from 'react';
+import {useCallback, useMemo, useState} from 'react';
+import {convertDate} from '@steroidsjs/core/utils/calendar';
+import {useUpdateEffect} from 'react-use';
 import moment from 'moment';
 
 interface IDateAndTimeInput {
+
     /**
-     * Массив валидных форматов
+     * Формат даты показываемый пользователю
+     * @example DD.MM.YYYY
      */
-    formatsArray?: string[],
+    displayFormat?: string;
+
+    /**
+     * Формат даты отправляемый на сервер
+     * @example YYYY-MM-DD
+     */
+    valueFormat?: string;
+
+    /**
+     * Переводит элемент в состояние "не активен"
+     * @example true
+     */
+    disabled?: boolean;
+
+    /**
+     * Обязательное ли поле? Если true, то к названию будет добавлен
+     * модификатор 'required' - красная звездочка (по умолчанию)
+     * @example true
+     */
+    required?: boolean;
+
+    /**
+     * Placeholder подсказка
+     * @example Your text...
+     */
+    placeholder?: any;
+
+    inputProps?: Record<string, unknown>,
+
+    input?: {
+        name?: string,
+        value?: any,
+        onChange: (value: any) => void,
+    },
+
+    onChange?: (...args: any[]) => any;
 }
 
 export interface IDateAndTimeOutput {
-    /**
-     * Задает месяц для отображения в календаре
-     */
-    month?: Date,
-
-    /**
-     * Выбранный в календаре день
-     */
-    dateFrom?: Date,
-
-    /**
-    * Выбранный диапазон дней
-    */
-    dateTo?: Date,
-
-    /**
-     * Для диапазона с годами - задает начало
-     */
-    fromYear?: Date,
-
-    /**
-     * Для диапазона с годами - задает конец
-     */
-    toYear?: Date,
-
-    /**
-     * Срабатывает при изменении месяца или года в календаре.
-     * Обновляет значение month
-     * @param {Date} newDate
-     */
-    updateMonth?: (newDate: Date) => void,
-
-    /**
-     * Срабатывает при нажатии на день в календаре.
-     * Обновляет значение selectedDays
-     * @param {string | Date} date
-     */
-    updateDateFrom?: (newDate: Date) => void,
-
-    /**
-     * Обновление выбранного диапазона дат
-     * @param {DatesRange} newRange
-     */
-    updateDateTo?: (newDate: Date) => void,
-
-    /**
-     * Конвертирует дату из string в Date
-     * @param {string | Date} date
-     * @returns {Date|undefined}
-     */
-    parseDate?: (date: Date | string) => Date | undefined,
-
-    /**
-     * Конвертирует дату в строку определенного формата
-     * @param {string | Date} date
-     * @param {string} format
-     * @returns {string}
-     */
-    formatDate?: (date: Date | string, format: string) => string,
-
-    /**
-     * Проверяет, содержит ли переданная строка время в правильном формате
-     * @param {string} time
-     * @returns {boolean}
-     */
-    validateTime?: (time: string) => boolean,
-
-    /**
-     * Возвращает отметку времени (время берется в момент вызова функции) в виде строки
-     * @returns {string}
-     */
-    getNowTime?: () => string
+    isOpened: boolean,
+    onClose: () => void,
+    onClear: () => void,
+    onNow: () => void,
+    inputProps: {
+        name?: string,
+        value?: any,
+        onChange: (value: any) => void,
+        [key:string]: any,
+    },
 }
 
 export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOutput {
-    const parseDate = useCallback(date => {
-        const validFormat = props.formatsArray.find(
-            format => (
-                date
-                && date.length === format.length
-                && moment(date, format).isValid()
-            ),
-        );
-        return validFormat ? moment(date, validFormat).toDate() : undefined;
-    }, [props.formatsArray]);
+    // Get props value
+    const propsDisplayValue = useMemo(
+        () => convertDate(
+            props.input.value,
+            [
+                props.valueFormat,
+                props.displayFormat,
+            ],
+            props.displayFormat,
+        ) || '',
+        [props.displayFormat, props.input.value, props.valueFormat],
+    );
 
-    const formatDate = useCallback((date, format) => {
-        if (!date) {
-            return date;
+    // Display value state
+    const [displayValue, setDisplayValue] = useState(propsDisplayValue);
+
+    // Update display value on update props input value
+    useUpdateEffect(() => {
+        if (displayValue !== propsDisplayValue) {
+            setDisplayValue(propsDisplayValue);
         }
-        return moment(date).format(format);
-    }, []);
+        // Subscribe on props value changed
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [propsDisplayValue]);
 
-    const validateTime = useCallback((time: string) => {
-        // Регулярка проверяет соответствие введенной строки формату 'hh:mm'
-        // Максимальная величина - 23:59
-        const matchedValue = time.match(/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/);
-        return Array.isArray(matchedValue) && matchedValue.length > 0;
-    }, []);
+    // Display input change handler
+    const onDisplayValueChange = useCallback(value => {
+        setDisplayValue(value);
 
-    const getNowTime = useCallback(() => moment().format('hh:mm'), []);
+        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat);
+        const newValue = parsedValue || !value ? parsedValue || null : false;
+        if (newValue !== false && newValue !== props.input.value) {
+            props.input.onChange.call(null, newValue);
+            if (props.onChange) {
+                props.onChange.call(null, newValue);
+            }
+        }
+    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat]);
+
+    // Dropdown opened state
+    const [isOpened, setIsOpened] = useState(false);
+
+    // Focus/blur handlers
+    const onFocus = useCallback(e => {
+        e.preventDefault();
+        setIsOpened(true);
+    }, [setIsOpened]);
+    const onBlur = useCallback(e => {
+        e.preventDefault();
+        //setIsOpened(false);
+    }, []);
+    const onClose = useCallback(() => {
+        setIsOpened(false);
+
+        if (propsDisplayValue !== displayValue) {
+            setDisplayValue(propsDisplayValue);
+        }
+    }, [displayValue, propsDisplayValue]);
+
+    const onClear = useCallback(() => {
+        onDisplayValueChange('');
+    }, [onDisplayValueChange]);
+
+    const onNow = useCallback(() => {
+        onDisplayValueChange(moment().format(props.displayFormat));
+    }, [onDisplayValueChange, props.displayFormat]);
+
+    // Display input props
+    const inputProps = useMemo(() => ({
+        value: displayValue,
+        onChange: onDisplayValueChange,
+        onFocus,
+        onBlur,
+        disabled: props.disabled,
+        placeholder: props.placeholder || props.displayFormat,
+        required: props.required,
+        name: props.input.name,
+        autoComplete: 'off',
+        type: 'text',
+        ...props.inputProps,
+    }), [displayValue, onBlur, onDisplayValueChange, onFocus, props.disabled, props.displayFormat,
+        props.input.name, props.inputProps, props.placeholder, props.required]);
 
     return {
-        parseDate,
-        formatDate,
-        getNowTime,
-        validateTime,
+        isOpened,
+        inputProps,
+        onClear,
+        onClose,
+        onNow,
     };
 }

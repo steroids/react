@@ -54,7 +54,7 @@ export interface IAbsolutePositioningInputProps {
      * Срабатывает в "ручном режиме", при клике за пределами компонента и целевого элемента.
      * Возвращает значение visible.
      */
-    toggleVisibility?: (visible: boolean) => void,
+    onClose?: () => void,
 }
 
 export interface IAbsolutePositioningOutputProps {

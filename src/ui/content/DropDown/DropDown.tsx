@@ -57,8 +57,8 @@ function DropDown(props: IDropDownProps): JSX.Element {
     const forwardedRef = useRef(null);
     useClickAway(forwardedRef, (event) => {
         if (isManualControl) {
-            if (!childRef.current.contains(event.target) && props.toggleVisibility) {
-                props.toggleVisibility(props.visible);
+            if (!childRef.current.contains(event.target) && props.onClose) {
+                props.onClose();
             }
         } else {
             // onHide();

@@ -1,7 +1,10 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import useDateAndTime from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
+import {useCallback, useMemo} from 'react';
+import moment from 'moment';
+import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
+import {convertDate} from '@steroidsjs/core/utils/calendar';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+
 /**
  * DateTimeField
  * Поля ввода с выпадающими списками для выбора даты и времени
@@ -9,34 +12,16 @@ import {useComponents} from '../../../hooks';
 export interface IDateTimeFieldProps extends IFieldWrapperInputProps {
 
     /**
-     * Формат даты показываемый пользователю
-     * @example DD.MM.YYYY
+     * Формат показываемый пользователю
+     * @example DD.MM.YYYY HH:mm
      */
-    displayDateFormat?: string;
+    displayFormat?: string;
 
     /**
-     * Формат даты отправляемый на сервер
-     * @example YYYY-MM-DD
+     * Формат отправляемый на сервер
+     * @example YYYY-MM-DD HH:mm
      */
-    valueDateFormat?: string;
-
-    /**
-     * Формат времени
-     * @example HH:mm
-     */
-    timeFormat?: string;
-
-    /**
-     * Пропсы для компонента DateField
-     * @example {placeholder: 'Your date...'}
-     */
-    dateProps?: any;
-
-    /**
-     * Пропсы для компонента TimeField
-     * @example {placeholder: 'Your time...'}
-     */
-    timeProps?: any;
+    valueFormat?: string;
 
     /**
      * Объект CSS стилей
@@ -54,77 +39,87 @@ export interface IDateTimeFieldProps extends IFieldWrapperInputProps {
      * @example MyCustomView
      */
     view?: CustomView;
+
     [key: string]: any;
 }
 
-export interface IDateTimeFieldViewProps extends IDateTimeFieldProps, IFieldWrapperOutputProps {
-    innerInput: string,
-    isPanelOpen: boolean,
-    openPanel: () => void,
-    closePanel: () => void,
-    onTimePanelClick: () => void,
+export interface IDateTimeFieldViewProps extends IDateAndTimeOutput {
+    dateValue: any,
+    timeValue: any,
+    onDateSelect: any,
+    onTimeSelect: any,
+    calendarProps: {
+        value: string,
+        valueFormat: string,
+        onChange: (value: string) => void,
+    },
 }
+
+const DATE_TIME_SEPARATOR = ' ';
 
 function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
+
     const {
-        parseDate,
-        formatDate,
-        validateTime,
+        isOpened,
+        onClose,
+        inputProps,
+        onClear,
+        onNow,
     } = useDateAndTime({
-        formatsArray: [
-            props.displayFormat,
-            props.valueFormat,
-        ],
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        input: props.input,
+        onChange: props.onChange,
+        disabled: props.disabled,
+        placeholder: props.placeholder,
+        required: props.required,
+        inputProps: props.inputProps,
     });
 
-    const [innerInput, setInnerInput] = useState('');
-    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
+    // Separate date and time values
+    const [dateValueFormat, timeValueFormat] = props.valueFormat.split(DATE_TIME_SEPARATOR);
+    const dateValue = convertDate(
+        props.input.value,
+        [props.valueFormat, props.displayFormat],
+        dateValueFormat,
+    );
+    const timeValue = convertDate(
+        props.input.value,
+        [props.valueFormat, props.displayFormat],
+        timeValueFormat,
+    );
 
-    const openPanel = useCallback(() => {
-        if (!isPanelOpen) {
-            setIsPanelOpen(true);
-        }
-    }, [isPanelOpen]);
+    // Handler for calendar and time picker changes
+    const onDateSelect = useCallback(date => {
+        props.input.onChange.call(null, date + DATE_TIME_SEPARATOR + (timeValue || '00:00'));
+    }, [props.input.onChange, timeValue]);
+    const onTimeSelect = useCallback(time => {
+        props.input.onChange.call(null, (dateValue || moment().format(dateValueFormat)) + DATE_TIME_SEPARATOR + time);
+    }, [dateValue, dateValueFormat, props.input.onChange]);
 
-    const closePanel = useCallback(() => {
-        if (isPanelOpen) {
-            setIsPanelOpen(false);
-        }
-    }, [isPanelOpen]);
-
-    const onChange = useCallback(value => {
-        setInnerInput(value);
-    }, []);
-
-    const onTimePanelClick = useCallback((value) => {
-    }, []);
-
-    useEffect(() => {
-        if (props.input.value) {
-        }
-    }, [props.input.value]);
-
-    const inputProps = useMemo(() => ({
-        autoComplete: 'off',
-        disabled: props.disabled,
-        placeholder: props.placeholder || props.displayDateFormat,
-        required: props.required,
-        name: props.input.name,
-        type: 'text',
-        value: innerInput,
-        onChange,
-        ...props.inputProps,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }), [innerInput, props.disabled, props.input.name, props.inputProps, props.placeholder, props.required]);
+    // Calendar props
+    const calendarProps = useMemo(() => ({
+        value: dateValue,
+        onChange: onDateSelect,
+        valueFormat: dateValueFormat,
+    }), [dateValue, dateValueFormat, onDateSelect]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', {
-        ...props,
-        openPanel,
-        closePanel,
+        ...props.viewProps,
+        isOpened,
+        onClose,
         inputProps,
-        isPanelOpen,
-        onTimePanelClick,
+        onClear,
+        onNow,
+        timeValue,
+        onTimeSelect,
+        calendarProps,
+        size: props.size,
+        icon: props.icon,
+        errors: props.errors,
+        showRemove: props.showRemove,
+        className: props.className,
     });
 }
 
@@ -132,9 +127,8 @@ DateTimeField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    displayDateFormat: 'DD.MM.YYYY',
-    valueDateFormat: 'YYYY-MM-DD',
-    timeFormat: 'HH:mm',
+    displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
+    valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
 };
 
 export default fieldWrapper('DateTimeField', DateTimeField);

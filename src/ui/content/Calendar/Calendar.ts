@@ -68,6 +68,16 @@ export interface ICalendarViewProps extends ICalendarProps {
      * Хранит выбранную дату или диапазон дат
      */
     selectedDates: Date[],
+
+    /**
+     * Отображает панель для выбора месяца/года
+     */
+    isCaptionPanelVisible: boolean,
+
+    /**
+     * Функция измения состояние отображения панели для выбора месяца/года
+     */
+    toggleCaptionPanel: () => void,
 }
 
 function Calendar(props: ICalendarProps) {
@@ -85,6 +95,7 @@ function Calendar(props: ICalendarProps) {
     );
 
     const [month, setMonth] = useState<Date>(selectedDates.length > 0 ? selectedDates[0] : new Date());
+    const [isCaptionPanelVisible, setIsCaptionPanelVisible] = useState<boolean>(false);
 
     useEffect(() => {
         if (selectedDates.length > 0) {
@@ -97,6 +108,10 @@ function Calendar(props: ICalendarProps) {
         [props.onChange, props.valueFormat],
     );
 
+    const toggleCaptionPanel = useCallback(() => {
+        setIsCaptionPanelVisible(!isCaptionPanelVisible);
+    }, [isCaptionPanelVisible]);
+
     const onMonthSelect = useCallback(newMonth => {
         setMonth(newMonth);
     }, []);
@@ -106,9 +121,11 @@ function Calendar(props: ICalendarProps) {
         month,
         toYear,
         fromYear,
-        selectedDates,
         onDaySelect,
         onMonthSelect,
+        selectedDates,
+        toggleCaptionPanel,
+        isCaptionPanelVisible,
     });
 }
 

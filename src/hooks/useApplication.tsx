@@ -176,7 +176,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     if (useGlobal) {
         components = window.SteroidsComponents || null;
     }
-    console.log('useApplication', components);
+
     // Create components
     if (!components) {
         components = {};

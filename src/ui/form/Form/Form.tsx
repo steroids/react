@@ -454,6 +454,7 @@ function Form(props: IFormProps): JSX.Element {
                     children: props.children,
                     submitLabel: props.submitLabel,
                     fields: props.fields,
+                    className: props.className,
                 })
                 : props.children}
         </FormContext.Provider>

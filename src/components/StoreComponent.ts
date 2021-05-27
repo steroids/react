@@ -88,7 +88,7 @@ export default class StoreComponent {
                 ..._get(initialState, 'config.store.history', {}),
                 ...config.history,
             });
-            console.log('history', config.history, this.history.location);
+
             // Add '?' for fix connected-react-router
             if (process.env.IS_SSR && !this.history.location.search && process.env.PLATFORM !== 'mobile') {
                 this.history.location.search = '?';

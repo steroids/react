@@ -36,6 +36,9 @@ interface ICalendarProps {
      * Пропсы для компонента отображения
      */
     viewProps?: any;
+
+    showFooter?: boolean,
+    numberOfMonths?: number,
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
@@ -126,11 +129,14 @@ function Calendar(props: ICalendarProps) {
         selectedDates,
         toggleCaptionPanel,
         isCaptionPanelVisible,
+        showFooter: props.showFooter,
+        numberOfMonths: props.numberOfMonths,
     });
 }
 
 Calendar.defaultProps = {
     valueFormat: 'YYYY-MM-DD',
+    showFooter: true,
 };
 
 export default Calendar;

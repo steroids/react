@@ -1,4 +1,6 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {usePrevious} from 'react-use';
+import useInitial from '@steroidsjs/core/hooks/useInitial';
 import useDateAndTime, {IDateAndTimeOutput} from '../DateField/useDateAndTime';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
@@ -152,6 +154,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps) {
     const [focus, setFocus] = useState('from');
 
     // Custom onFocus
+    const inputFromRef = useRef(null);
     const onFocusFrom = useCallback(e => {
         inputPropsFrom.onFocus.call(null, e);
         setFocus('from');
@@ -159,7 +162,10 @@ function DateRangeField(props: IDateRangeFieldPrivateProps) {
     const extendedInputPropsFrom = useMemo(() => ({
         ...inputPropsFrom,
         onFocus: onFocusFrom,
+        ref: inputFromRef,
     }), [inputPropsFrom, onFocusFrom]);
+
+    const inputToRef = useRef(null);
     const onFocusTo = useCallback(e => {
         inputPropsTo.onFocus.call(null, e);
         setFocus('to');
@@ -167,6 +173,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps) {
     const extendedInputPropsTo = useMemo(() => ({
         ...inputPropsTo,
         onFocus: onFocusTo,
+        ref: inputToRef,
     }), [inputPropsTo, onFocusTo]);
 
     // Calendar props

@@ -372,7 +372,6 @@ function Form(props: IFormProps): JSX.Element {
                 siteKey: components.resource.googleCaptchaSiteKey,
                 actionName: props.captchaActionName,
             });
-
             cleanedValues = {
                 ...cleanedValues,
                 [captchaAttribute]: captchaToken,

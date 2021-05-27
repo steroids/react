@@ -109,7 +109,7 @@ export const buildUrl = (path, params = null) => {
  */
 const checkIsActive = (state, item) => {
     // Check is active
-    const pathname = window.location.protocol === 'file:'
+    const pathname = !process.env.IS_SSR && window.location.protocol === 'file:'
         ? window.location.hash.replace(/^#/, '')
         : _get(state, 'location.pathname');
     const checkActive = (subPathname, subItem) => {

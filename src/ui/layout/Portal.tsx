@@ -24,5 +24,9 @@ export default function Portal(props) {
         }
     });
 
+    if (process.env.IS_SSR) {
+        return null;
+    }
+
     return createPortal(props.children, elementRef.current);
 }

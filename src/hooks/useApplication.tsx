@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import _merge from 'lodash-es/merge';
-import {useCallback, useMemo, useState, PropsWithChildren} from 'react';
+import {useCallback, useMemo, useState, PropsWithChildren, useContext} from 'react';
 import {useMount, useUnmount} from 'react-use';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
@@ -11,6 +11,7 @@ import MetaComponent from '../components/MetaComponent';
 import {IComponents} from './useComponents';
 import Router, {IRouteItem} from '../ui/nav/Router/Router';
 import MetricsComponent from '../components/MetricsComponent';
+import {SsrProviderContext} from '../ui/nav/Router/SsrProvider';
 
 export interface IScreen {
     width: number,
@@ -166,14 +167,16 @@ const defaultComponents = {
 };
 
 export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {
+    const ssrContextValue = useContext(SsrProviderContext);
+
     let components: IComponents;
 
     // Store global (in global mode)
-    const useGlobal = config.useGlobal !== false && typeof window !== 'undefined';
+    const useGlobal = config.useGlobal !== false && !process.env.IS_SSR && typeof window !== 'undefined';
     if (useGlobal) {
         components = window.SteroidsComponents || null;
     }
-
+    console.log('useApplication', components);
     // Create components
     if (!components) {
         components = {};
@@ -186,8 +189,18 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
             const {className, ...componentConfig} = componentsConfig[name];
 
             // Append reducers to store
-            if (name === 'store' && config.reducers) {
-                componentConfig.reducers = config.reducers;
+            if (name === 'store') {
+                if (config.reducers) {
+                    componentConfig.reducers = config.reducers;
+                }
+
+                if (process.env.IS_SSR) {
+                    componentConfig.history = ssrContextValue.history;
+                    componentConfig.initialState = {
+                        ...componentConfig.initialState,
+                        ...ssrContextValue.initialState,
+                    };
+                }
             }
 
             // eslint-disable-next-line new-cap

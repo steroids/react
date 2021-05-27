@@ -1,4 +1,5 @@
-//import {useContext} from 'react';
+import {useContext} from 'react';
+import {ComponentsContext} from '@steroidsjs/core/hooks/useApplication';
 
 export interface IComponents {
     api?: any,
@@ -16,10 +17,11 @@ export interface IComponents {
 }
 
 export default function useComponents(): IComponents {
+    const components = useContext(ComponentsContext);
+
     if (typeof window !== 'undefined' && window.SteroidsComponents) {
         return window.SteroidsComponents;
     }
-    // TODO Get components from context
-    //return useContext(ComponentsContext);
-    return null;
+
+    return components;
 }

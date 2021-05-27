@@ -1,32 +1,27 @@
 import * as React from 'react';
-import {Provider} from 'react-redux';
+import {PropsWithChildren} from 'react';
 
 interface ISsrProviderContext {
-    history?: any;
-    staticContext?: any;
+    history?: {
+        initialEntries: string[],
+    },
+    initialState?: any,
+    staticContext?: any,
 }
 
 export const SsrProviderContext = React.createContext<ISsrProviderContext>(null);
 
-interface ISsrProviderProps {
-    history?: any;
-    store?: any;
-    staticContext?: any;
-}
+interface ISsrProviderProps extends ISsrProviderContext, PropsWithChildren<any> {}
 
-export default class SsrProvider extends React.PureComponent<ISsrProviderProps> {
-    render() {
-        return (
-            <SsrProviderContext.Provider
-                value={{
-                    history: this.props.history,
-                    staticContext: this.props.staticContext,
-                }}
-            >
-                <Provider store={this.props.store}>
-                    {this.props.children}
-                </Provider>
-            </SsrProviderContext.Provider>
-        );
-    }
+export default function SsrProvider(props: ISsrProviderProps): JSX.Element {
+    return (
+        <SsrProviderContext.Provider value={{
+            history: props.history,
+            initialState: props.initialState,
+            staticContext: props.staticContext,
+        }}
+        >
+            {props.children}
+        </SsrProviderContext.Provider>
+    );
 }

@@ -2195,261 +2195,6 @@
                 }
             ]
         },
-        "IAvatarViewProps": {
-            "name": "IAvatarViewProps",
-            "moduleName": "ui/content/Avatar/Avatar",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [
-                "IAvatarProps"
-            ],
-            "properties": [
-                {
-                    "name": "alt",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "avatarUrl",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "children",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": null
-                },
-                {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "shape",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "\"circle\" | \"square\"",
-                    "example": null
-                },
-                {
-                    "name": "size",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "Size",
-                    "example": null
-                },
-                {
-                    "name": "src",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": null
-                },
-                {
-                    "name": "srcSet",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": null
-                },
-                {
-                    "name": "title",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "view",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                }
-            ]
-        },
-        "IAvatarGroupViewProps": {
-            "name": "IAvatarGroupViewProps",
-            "moduleName": "ui/content/Avatar/AvatarGroup",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [
-                "AvatarGroupProps"
-            ],
-            "properties": [
-                {
-                    "name": "children",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{Avatar: any}",
-                    "example": null
-                },
-                {
-                    "name": "maxCount",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "number",
-                    "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": null
-                },
-                {
-                    "name": "view",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                }
-            ]
-        },
-        "ICardViewProps": {
-            "name": "ICardViewProps",
-            "moduleName": "ui/content/Card/Card",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [
-                "ICardProps"
-            ],
-            "properties": [
-                {
-                    "name": "actions",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "ReactNode[]",
-                    "example": null
-                },
-                {
-                    "name": "bordered",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean | CSSProperties",
-                    "example": null
-                },
-                {
-                    "name": "children",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": null
-                },
-                {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "cover",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": null
-                },
-                {
-                    "name": "description",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": null
-                },
-                {
-                    "name": "more",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": null
-                },
-                {
-                    "name": "shape",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "\"circle\" | \"square\"",
-                    "example": null
-                },
-                {
-                    "name": "size",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "Size",
-                    "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": null
-                },
-                {
-                    "name": "title",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "view",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                }
-            ]
-        },
         "IDropDownProps": {
             "name": "IDropDownProps",
             "moduleName": "ui/content/DropDown/DropDown",
@@ -18934,6 +18679,30 @@
             "type": "\"large\" | \"medium\" | \"small\"",
             "example": null
         },
+        "IAvatarViewProps": {
+            "name": "IAvatarViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "IAvatarProps",
+            "example": null
+        },
+        "IAvatarGroupViewProps": {
+            "name": "IAvatarGroupViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "AvatarGroupProps",
+            "example": null
+        },
+        "ICardViewProps": {
+            "name": "ICardViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "ICardProps",
+            "example": null
+        },
         "IHeaderViewProps": {
             "name": "IHeaderViewProps",
             "decorators": [],
@@ -21105,19 +20874,7 @@
             "moduleName": "ui/nav/Router/SsrProvider",
             "title": "",
             "description": "",
-            "tags": {},
-            "properties": [],
-            "methods": [
-                {
-                    "name": "render",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "Element",
-                    "example": null,
-                    "parameters": []
-                }
-            ]
+            "tags": {}
         }
     }
 }

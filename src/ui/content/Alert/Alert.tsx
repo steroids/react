@@ -18,15 +18,14 @@ export interface IAlertViewProps extends IAlertProps {
     onClose: () => void,
 }
 
-function Alert (props: IAlertViewProps) {
+function Alert(props: IAlertProps): JSX.Element {
     const components = useComponents();
 
-    const [closed, setClosed] = useState(false)
+    const [closed, setClosed] = useState(false);
 
     const onClose = useCallback(() => {
-        setClosed(true)
-    }, [closed]);
-
+        setClosed(true);
+    }, []);
 
     return components.ui.renderView(props.view || 'content.AlertView', {
         ...props,

@@ -1,40 +1,94 @@
-import React from 'react';
 import { useComponents } from '@steroidsjs/core/hooks';
 
-type cardType = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' ;
-type borderType = 'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' ;
-
 interface ICardProps {
-    view?: any,
-    children?: React.ReactNode,
-    title?: string,
-    description?: string,
+    /**
+     * Цвет границы (если передать false, то граница будет скрыта)
+     * @example success
+     */
+    borderColor?: ColorName | 'default' | boolean,
+
+    /**
+     * Дополнительный CSS-класс
+     */
     className?: CssClassName,
+
+    /**
+     * Дочерние элементы
+     */
+    children?: CustomView,
+
+    /**
+     * Цвет состояния
+     * @example success
+     */
+    color?: ColorName,
+
+    /**
+     * Обложка для карточки, нужно передать ссылку на изображение
+     * @example 'https://cat/cat.png'
+     */
     cover?: string,
-    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal',
-    shape?: 'square' | 'circle',
-    style?: React.CSSProperties,
+
+    /**
+     * Описание карточки
+     * @example {'Scroll to see more...'}
+     */
+    description?: string,
+
+    /**
+     * Текст для header
+     */
     header?: string,
+
+    /**
+     * Текст для footer
+     */
     footer?: string,
-    cardStyle?: cardType,
-    borderStyle?: borderType | React.CSSProperties | boolean,
+
+    /**
+     * Ориентация карточки, горизонтальная и вертикальная
+     * @example {'vertical-reverse'}
+     */
+    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal',
+
+    /**
+     * Ориентация карточки, горизонтальная и вертикальная
+     * @example {'vertical-reverse'}
+     */
+    shape?: 'square' | 'circle',
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '30px'}
+     */
+    style?: CustomStyle,
+
+    /**
+     * Заголовок карточки
+     * @example {'Main card'}
+     */
+    title?: string,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
+    view?: CustomView;
 }
 
-export interface ICardViewProps extends ICardProps {
-    
-}
+export type ICardViewProps = ICardProps
 
-function Card (props: ICardProps) {
-    const components = useComponents()
+function Card(props: ICardProps) {
+    const components = useComponents();
     return components.ui.renderView(props.view || 'content.CardView', {
-        ...props
+        ...props,
     });
 }
 
 Card.defaultProps = {
+    borderColor: 'default',
     orientation: 'vertical',
     shape: 'circle',
-    borderStyle: 'default',
-}
+};
 
 export default Card;

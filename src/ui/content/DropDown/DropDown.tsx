@@ -61,7 +61,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
                 props.onClose();
             }
         } else {
-            // onHide();
+            onHide();
         }
     });
 

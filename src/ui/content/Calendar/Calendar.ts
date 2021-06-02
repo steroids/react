@@ -2,7 +2,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useComponents} from '@steroidsjs/core/hooks';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
 
-interface ICalendarProps {
+export interface ICalendarProps {
     /**
      * Значение задает выбранные в календаре дату или диапазон дат.
      * Необходимо передать валидную дату в виде строки (массива строк)
@@ -39,6 +39,7 @@ interface ICalendarProps {
 
     showFooter?: boolean,
     numberOfMonths?: number,
+    className?: CssClassName,
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
@@ -97,7 +98,11 @@ function Calendar(props: ICalendarProps) {
         [props.value, props.valueFormat],
     );
 
-    const [month, setMonth] = useState<Date>(selectedDates.length > 0 ? selectedDates[0] : new Date());
+    const [month, setMonth] = useState<Date>(
+        selectedDates.length > 0
+            ? selectedDates.filter(date => !!date)[0]
+            : new Date(),
+    );
     const [isCaptionPanelVisible, setIsCaptionPanelVisible] = useState<boolean>(false);
 
     useEffect(() => {
@@ -129,6 +134,7 @@ function Calendar(props: ICalendarProps) {
         selectedDates,
         toggleCaptionPanel,
         isCaptionPanelVisible,
+        className: props.className,
         showFooter: props.showFooter,
         numberOfMonths: props.numberOfMonths,
     });

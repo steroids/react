@@ -103,7 +103,7 @@ function Avatar(props: IAvatarProps) {
 }
 
 Avatar.defaultProps = {
-    size: 'md',
+    size: 'middle',
     shape: 'circle',
     status: false,
 };

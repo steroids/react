@@ -163,10 +163,15 @@ const createDynamicField = (componentId, Component, options: IFieldWrapperOption
 export default function fieldWrapper(
     componentId,
     Component: any,
-    options: IFieldWrapperOptions = {
+    optionsConfig: IFieldWrapperOptions = {
         attributeSuffixes: [''],
     },
 ): FieldWrapperComponent {
+    const options = {
+        ...optionsConfig,
+        attributeSuffixes: optionsConfig.attributeSuffixes || [''],
+    };
+
     const NewComponent = (props: IFieldWrapperInputProps):JSX.Element => {
         const components = useComponents();
 

@@ -81,6 +81,9 @@ export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOu
     useUpdateEffect(() => {
         if (displayValue !== propsDisplayValue) {
             setDisplayValue(propsDisplayValue);
+            if (props.onChange) {
+                props.onChange.call(null, propsDisplayValue);
+            }
         }
         // Subscribe on props value changed
         // eslint-disable-next-line react-hooks/exhaustive-deps

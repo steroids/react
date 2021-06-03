@@ -105,7 +105,7 @@ interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldW
     errorsTo?: string[],
 }
 
-function DateRangeField(props: IDateRangeFieldPrivateProps) {
+function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
 
     // Global onChange (from props)

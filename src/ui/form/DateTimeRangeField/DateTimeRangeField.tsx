@@ -1,33 +1,48 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import moment from 'moment';
 import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
+import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
+import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
+import {usePrevious} from 'react-use';
+import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
 /**
- * DateTimeField
- * Поля ввода с выпадающими списками для выбора даты и времени
+ * DateTimeRangeField
+ * Поле ввода дипазона двух дат со временем, с выпадающим календарём
  */
-export interface IDateTimeRangeFieldProps extends IFieldWrapperInputProps {
+export interface IDateTimeRangeFieldProps extends Omit<IFieldWrapperInputProps, 'attribute'> {
+    /**
+    * Аттрибут (название) поля в форме
+    * @example 'fromTime'
+    */
+    attributeFrom?: string;
 
     /**
-     * Формат показываемый пользователю
-     * @example DD.MM.YYYY HH:mm
+     * Аттрибут (название) поля в форме
+     * @example 'toTime'
+     */
+    attributeTo?: string;
+
+    /**
+     * Свойства для компонента DayPickerInput
+     * @example {dayPickerProps: {showWeekNumbers: true}}
+     */
+    pickerProps?: any;
+
+    /**
+     * Формат даты показываемый пользователю
+     * @example DD.MM.YYYY
      */
     displayFormat?: string;
 
     /**
-     * Формат отправляемый на сервер
-     * @example YYYY-MM-DD HH:mm
+     * Формат даты отправляемый на сервер
+     * @example YYYY-MM-DD
      */
     valueFormat?: string;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: any;
 
     /**
      * Дополнительный CSS-класс
@@ -40,86 +55,220 @@ export interface IDateTimeRangeFieldProps extends IFieldWrapperInputProps {
      */
     view?: CustomView;
 
+    /**
+     * Placeholder подсказка
+     * @example Your text...
+     */
+    placeholder?: any;
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
+    style?: any;
+
+    /**
+     * Иконка
+     * @example calendar-day
+     */
+    icon?: boolean | string;
+
+    /**
+     * Отображение кнопки для сброса значения поля
+     * @example true
+     */
+    showRemove?: boolean,
+
+    inputPropsFrom?: any,
+
+    inputPropsTo?: any,
+
     [key: string]: any;
 }
 
-export interface IDateTimeRangeFieldViewProps extends IDateAndTimeOutput {
-    dateValue: any,
-    timeValue: any,
-    onDateSelect: any,
-    onTimeSelect: any,
-    calendarProps: {
-        value: string,
-        valueFormat: string,
-        onChange: (value: string) => void,
+export interface IDateTimeRangeFieldViewProps extends
+    IDateTimeRangeFieldProps, IFieldWrapperOutputProps, IDateAndTimeOutput {
+    timePanelProps?: ITimePanelViewProps,
+    calendarProps?: ICalendarProps,
+}
+
+interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
+    Omit<IFieldWrapperOutputProps, 'input' | 'errors'> {
+    inputFrom?: {
+        name?: string,
+        value?: any,
+        onChange: (value: any) => void,
     },
+    inputTo?: {
+        name?: string,
+        value?: any,
+        onChange: (value: any) => void,
+    },
+    errorsFrom?: string[],
+    errorsTo?: string[],
 }
 
 const DATE_TIME_SEPARATOR = ' ';
 
-function DateTimeRangeField(props: IDateTimeRangeFieldProps & IFieldWrapperOutputProps): JSX.Element {
+function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
 
+    // Global onChange (from props)
+    const onChange = useCallback(() => {
+        if (props.onChange) {
+            props.onChange.call(null, {
+                [props.attributeFrom]: props.inputFrom.value,
+                [props.attributeTo]: props.inputTo.value,
+            });
+        }
+    }, [props.attributeFrom, props.attributeTo, props.inputFrom.value, props.inputTo.value, props.onChange]);
+
+    // Input 'from'
     const {
-        isOpened,
-        onClose,
-        inputProps,
-        onClear,
+        isOpened: isOpenedFrom,
+        onClose: onCloseFrom,
+        inputProps: inputPropsFrom,
+        onClear: onClearFrom,
         onNow,
     } = useDateAndTime({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
-        input: props.input,
-        onChange: props.onChange,
+        input: props.inputFrom,
         disabled: props.disabled,
         placeholder: props.placeholder,
         required: props.required,
-        inputProps: props.inputProps,
+        inputProps: props.inputPropsFrom,
+        onChange,
     });
 
-    // Separate date and time values
-    const [dateValueFormat, timeValueFormat] = props.valueFormat.split(DATE_TIME_SEPARATOR);
-    const dateValue = convertDate(
-        props.input.value,
-        [props.valueFormat, props.displayFormat],
-        dateValueFormat,
-    );
-    const timeValue = convertDate(
-        props.input.value,
-        [props.valueFormat, props.displayFormat],
-        timeValueFormat,
-    );
+    // Input 'to'
+    const {
+        isOpened: isOpenedTo,
+        onClose: onCloseTo,
+        inputProps: inputPropsTo,
+        onClear: onClearTo,
+    } = useDateAndTime({
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        input: props.inputTo,
+        disabled: props.disabled,
+        placeholder: props.placeholder,
+        required: props.required,
+        inputProps: props.inputPropsTo,
+        onChange,
+    });
 
-    // Handler for calendar and time picker changes
-    const onDateSelect = useCallback(date => {
-        props.input.onChange.call(null, date + DATE_TIME_SEPARATOR + (timeValue || '00:00'));
-    }, [props.input.onChange, timeValue]);
-    const onTimeSelect = useCallback(time => {
-        props.input.onChange.call(null, (dateValue || moment().format(dateValueFormat)) + DATE_TIME_SEPARATOR + time);
-    }, [dateValue, dateValueFormat, props.input.onChange]);
+    const {
+        dateValueFormat,
+        timeValueFormat,
+        dateValueTo,
+        dateValueFrom,
+        timeValueTo,
+        timeValueFrom,
+        onDateFromSelect,
+        onTimeFromSelect,
+        onDateToSelect,
+        onTimeToSelect,
+    } = useDateRange({
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        DATE_TIME_SEPARATOR,
+        inputTo: props.inputTo,
+        inputFrom: props.inputFrom,
+    });
+
+    // Tracking focus for input being edited
+    const [focus, setFocus] = useState<'from' | 'to'>('from');
+
+    // Local refs to handle auto-focus
+    const valueFromRef = useRef('');
+    const valueToRef = useRef('');
+
+    // Close handler
+    const onClose = useCallback(() => {
+        if (focus === 'from') {
+            onCloseFrom();
+        } else {
+            onCloseTo();
+        }
+        valueFromRef.current = '';
+        valueToRef.current = '';
+    }, [focus, onCloseFrom, onCloseTo]);
+
+    // Clear handler
+    const onClear = useCallback(() => {
+        onClearFrom();
+        onClearTo();
+    }, [onClearFrom, onClearTo]);
+
+    // Custom onFocus for inputFrom
+    const inputFromRef = useRef(null);
+    const onFocusFrom = useCallback(e => {
+        inputPropsFrom.onFocus.call(null, e);
+        setFocus('from');
+    }, [inputPropsFrom.onFocus]);
+    const extendedInputPropsFrom = useMemo(() => ({
+        ...inputPropsFrom,
+        onFocus: onFocusFrom,
+        ref: inputFromRef,
+    }), [inputPropsFrom, onFocusFrom]);
+
+    // Custom onFocus for inputTo
+    const inputToRef = useRef(null);
+    const onFocusTo = useCallback(e => {
+        inputPropsTo.onFocus.call(null, e);
+        setFocus('to');
+    }, [inputPropsTo.onFocus]);
+    const extendedInputPropsTo = useMemo(() => ({
+        ...inputPropsTo,
+        onFocus: onFocusTo,
+        ref: inputToRef,
+    }), [inputPropsTo, onFocusTo]);
 
     // Calendar props
-    const calendarProps = useMemo(() => ({
-        value: dateValue,
-        onChange: onDateSelect,
+    const calendarProps: ICalendarProps = useMemo(() => ({
+        value: [dateValueFrom, dateValueTo],
+        onChange: focus === 'from' ? onDateFromSelect : onDateToSelect,
         valueFormat: dateValueFormat,
-    }), [dateValue, dateValueFormat, onDateSelect]);
+    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect]);
+
+    // TimePanel props
+    const timePanelProps: ITimePanelViewProps = useMemo(() => ({
+        value: focus === 'from' ? timeValueFrom : timeValueTo,
+        onSelect: focus === 'from' ? onTimeFromSelect : onTimeToSelect,
+        valueFormat: timeValueFormat,
+        onNow,
+        onClose,
+    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, timeValueFormat, timeValueFrom, timeValueTo]);
+
+    const prevValueFrom = usePrevious(props.inputFrom.value);
+    const prevValueTo = usePrevious(props.inputTo.value);
+    useEffect(() => {
+        if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
+            valueFromRef.current = props.inputFrom.value;
+            inputToRef.current.focus();
+        }
+        if (focus === 'to' && !valueFromRef.current && prevValueTo !== props.inputTo.value) {
+            valueToRef.current = props.inputTo.value;
+            inputFromRef.current.focus();
+        }
+    }, [focus, inputPropsFrom.value, inputPropsTo.value, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat]);
 
     return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', {
         ...props.viewProps,
-        isOpened,
-        onClose,
-        inputProps,
         onClear,
-        onNow,
-        timeValue,
-        onTimeSelect,
+        onClose,
         calendarProps,
-        size: props.size,
+        timePanelProps,
         icon: props.icon,
-        errors: props.errors,
-        showRemove: props.showRemove,
+        size: props.size,
+        errorsTo: props.errorsTo,
         className: props.className,
+        showRemove: props.showRemove,
+        errorsFrom: props.errorsFrom,
+        inputPropsTo: extendedInputPropsTo,
+        inputPropsFrom: extendedInputPropsFrom,
+        isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
     });
 }
 
@@ -129,6 +278,8 @@ DateTimeRangeField.defaultProps = {
     className: '',
     displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
+    showRemove: true,
+    icon: true,
 };
 
-export default fieldWrapper('DateTimeRangeField', DateTimeRangeField);
+export default fieldWrapper('DateTimeRangeField', DateTimeRangeField, {attributeSuffixes: ['from', 'to']});

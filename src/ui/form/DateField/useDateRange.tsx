@@ -1,83 +1,86 @@
-import {useCallback} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import moment from 'moment';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
+import {usePrevious} from 'react-use';
 
 interface IUseDateRangeProps {
-    valueFormat: string,
-    displayFormat: string,
-    DATE_TIME_SEPARATOR: string,
-    inputFrom: {
-        name?: string,
-        value?: any,
-        onChange: (value: any) => void,
-    },
-    inputTo: {
-        name?: string,
-        value?: any,
-        onChange: (value: any) => void,
-    },
+    onCloseFrom: any,
+    onCloseTo: any,
+    onClearFrom: any,
+    onClearTo: any,
+    inputPropsFrom: any,
+    inputPropsTo: any,
+    inputTo: any,
+    inputFrom: any,
 }
 
 export default function useDateRange(props:IUseDateRangeProps) {
-    const {
-        DATE_TIME_SEPARATOR,
-        valueFormat,
-        inputFrom,
-        inputTo,
-    } = props;
+    // Tracking focus for input being edited
+    const [focus, setFocus] = useState<'from' | 'to'>('from');
 
-    // Separate 'from' date and time values
-    const [dateValueFormat, timeValueFormat] = valueFormat.split(DATE_TIME_SEPARATOR);
-    const dateValueFrom = convertDate(
-        inputFrom.value,
-        [props.valueFormat, props.displayFormat],
-        dateValueFormat,
-    );
-    const timeValueFrom = convertDate(
-        props.inputFrom.value,
-        [props.valueFormat, props.displayFormat],
-        timeValueFormat,
-    );
-    // Separate 'to' date and time values
-    const dateValueTo = convertDate(
-        inputTo.value,
-        [props.valueFormat, props.displayFormat],
-        dateValueFormat,
-    );
-    const timeValueTo = convertDate(
-        inputTo.value,
-        [props.valueFormat, props.displayFormat],
-        timeValueFormat,
-    );
+    // Local refs to handle auto-focus
+    const valueFromRef = useRef('');
+    const valueToRef = useRef('');
 
-    // Handler for 'from' calendar and time picker changes
-    const onDateFromSelect = useCallback(date => {
-        props.inputFrom.onChange.call(null, date + DATE_TIME_SEPARATOR + (timeValueFrom || '00:00'));
-    }, [DATE_TIME_SEPARATOR, props.inputFrom.onChange, timeValueFrom]);
-    const onTimeFromSelect = useCallback(time => {
-        props.inputFrom.onChange.call(null, (
-            dateValueFrom || moment().format(dateValueFormat)) + DATE_TIME_SEPARATOR + time);
-    }, [DATE_TIME_SEPARATOR, dateValueFormat, dateValueFrom, props.inputFrom.onChange]);
+    // Close handler
+    const onClose = useCallback(() => {
+        if (focus === 'from') {
+            props.onCloseFrom();
+        } else {
+            props.onCloseTo();
+        }
+        valueFromRef.current = '';
+        valueToRef.current = '';
+    }, [focus, props]);
 
-    // Handler for 'to' calendar and time picker changes
-    const onDateToSelect = useCallback(date => {
-        props.inputTo.onChange.call(null, date + DATE_TIME_SEPARATOR + (timeValueTo || '00:00'));
-    }, [DATE_TIME_SEPARATOR, props.inputTo.onChange, timeValueTo]);
-    const onTimeToSelect = useCallback(time => {
-        props.inputTo.onChange.call(null, (
-            dateValueTo || moment().format(dateValueFormat)) + DATE_TIME_SEPARATOR + time);
-    }, [DATE_TIME_SEPARATOR, dateValueFormat, dateValueTo, props.inputTo.onChange]);
+    // Clear handler
+    const onClear = useCallback(() => {
+        props.onClearFrom();
+        props.onClearTo();
+    }, [props]);
+
+    // Custom onFocus for inputFrom
+    const inputFromRef = useRef(null);
+    const onFocusFrom = useCallback(e => {
+        props.inputPropsFrom.onFocus.call(null, e);
+        setFocus('from');
+    }, [props.inputPropsFrom.onFocus]);
+    const extendedInputPropsFrom = useMemo(() => ({
+        ...props.inputPropsFrom,
+        onFocus: onFocusFrom,
+        ref: inputFromRef,
+    }), [onFocusFrom, props.inputPropsFrom]);
+
+    // Custom onFocus for inputTo
+    const inputToRef = useRef(null);
+    const onFocusTo = useCallback(e => {
+        props.inputPropsTo.onFocus.call(null, e);
+        setFocus('to');
+    }, [props.inputPropsTo.onFocus]);
+    const extendedInputPropsTo = useMemo(() => ({
+        ...props.inputPropsTo,
+        onFocus: onFocusTo,
+        ref: inputToRef,
+    }), [onFocusTo, props.inputPropsTo]);
+
+    const prevValueFrom = usePrevious(props.inputFrom.value);
+    const prevValueTo = usePrevious(props.inputTo.value);
+    useEffect(() => {
+        if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
+            valueFromRef.current = props.inputFrom.value;
+            inputToRef.current.focus();
+        }
+        if (focus === 'to' && !valueFromRef.current && prevValueTo !== props.inputTo.value) {
+            valueToRef.current = props.inputTo.value;
+            inputFromRef.current.focus();
+        }
+    }, [focus, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value]);
 
     return {
-        dateValueFormat,
-        timeValueFormat,
-        dateValueTo,
-        dateValueFrom,
-        timeValueTo,
-        timeValueFrom,
-        onDateFromSelect,
-        onTimeFromSelect,
-        onDateToSelect,
-        onTimeToSelect,
+        focus,
+        onClose,
+        onClear,
+        extendedInputPropsFrom,
+        extendedInputPropsTo,
     };
 }

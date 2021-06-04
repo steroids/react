@@ -1,6 +1,7 @@
 import { usePrevious } from 'react-use';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ICalendarProps } from '@steroidsjs/core/ui/content/Calendar/Calendar';
+import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
 import { useComponents } from '../../../hooks';
 import useDateAndTime, { IDateAndTimeOutput } from '../DateField/useDateAndTime';
 import fieldWrapper, {
@@ -152,36 +153,22 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         onChange,
     });
 
-    // State for current edited input
-    const [focus, setFocus] = useState<'from' | 'to'>('from');
-
-    // Custom onFocus for inputFrom
-    const inputFromRef = useRef(null);
-    const onFocusFrom = useCallback(e => {
-        inputPropsFrom.onFocus.call(null, e);
-        setFocus('from');
-    }, [inputPropsFrom.onFocus]);
-    const extendedInputPropsFrom = useMemo(() => ({
-        ...inputPropsFrom,
-        onFocus: onFocusFrom,
-        ref: inputFromRef,
-    }), [inputPropsFrom, onFocusFrom]);
-
-    // Custom onFocus for inputTo
-    const inputToRef = useRef(null);
-    const onFocusTo = useCallback(e => {
-        inputPropsTo.onFocus.call(null, e);
-        setFocus('to');
-    }, [inputPropsTo.onFocus]);
-    const extendedInputPropsTo = useMemo(() => ({
-        ...inputPropsTo,
-        onFocus: onFocusTo,
-        ref: inputToRef,
-    }), [inputPropsTo, onFocusTo]);
-
-    // Local refs to handle auto-focus
-    const valueFromRef = useRef('');
-    const valueToRef = useRef('');
+    const {
+        focus,
+        onClose,
+        onClear,
+        extendedInputPropsFrom,
+        extendedInputPropsTo,
+    } = useDateRange({
+        onClearFrom,
+        onCloseTo,
+        onCloseFrom,
+        onClearTo,
+        inputPropsFrom,
+        inputPropsTo,
+        inputFrom: props.inputFrom,
+        inputTo: props.inputTo,
+    });
 
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
@@ -189,36 +176,6 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         onChange: focus === 'from' ? props.inputFrom.onChange : props.inputTo.onChange,
         valueFormat: props.valueFormat,
     }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat]);
-
-    // Close handler
-    const onClose = useCallback(() => {
-        if (focus === 'from') {
-            onCloseFrom();
-        } else {
-            onCloseTo();
-        }
-        valueFromRef.current = '';
-        valueToRef.current = '';
-    }, [focus, onCloseFrom, onCloseTo]);
-
-    // Clear handler
-    const onClear = useCallback(() => {
-        onClearFrom();
-        onClearTo();
-    }, [onClearFrom, onClearTo]);
-
-    const prevValueFrom = usePrevious(props.inputFrom.value);
-    const prevValueTo = usePrevious(props.inputTo.value);
-    useEffect(() => {
-        if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
-            valueFromRef.current = props.inputFrom.value;
-            inputToRef.current.focus();
-        }
-        if (focus === 'to' && !valueFromRef.current && prevValueTo !== props.inputTo.value) {
-            valueToRef.current = props.inputTo.value;
-            inputFromRef.current.focus();
-        }
-    }, [focus, inputPropsFrom.value, inputPropsTo.value, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', {
         ...props.viewProps,

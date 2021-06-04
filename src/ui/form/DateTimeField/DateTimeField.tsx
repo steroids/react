@@ -2,6 +2,8 @@ import {useCallback, useMemo} from 'react';
 import moment from 'moment';
 import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
+import useDateTime from '@steroidsjs/core/ui/form/DateField/useDateTime';
+import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
@@ -53,6 +55,7 @@ export interface IDateTimeFieldViewProps extends IDateAndTimeOutput {
         valueFormat: string,
         onChange: (value: string) => void,
     },
+    timePanelProps: any,
 }
 
 const DATE_TIME_SEPARATOR = ' ';
@@ -77,26 +80,18 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         inputProps: props.inputProps,
     });
 
-    // Separate date and time values
-    const [dateValueFormat, timeValueFormat] = props.valueFormat.split(DATE_TIME_SEPARATOR);
-    const dateValue = convertDate(
-        props.input.value,
-        [props.valueFormat, props.displayFormat],
+    const {
         dateValueFormat,
-    );
-    const timeValue = convertDate(
-        props.input.value,
-        [props.valueFormat, props.displayFormat],
-        timeValueFormat,
-    );
-
-    // Handler for calendar and time picker changes
-    const onDateSelect = useCallback(date => {
-        props.input.onChange.call(null, date + DATE_TIME_SEPARATOR + (timeValue || '00:00'));
-    }, [props.input.onChange, timeValue]);
-    const onTimeSelect = useCallback(time => {
-        props.input.onChange.call(null, (dateValue || moment().format(dateValueFormat)) + DATE_TIME_SEPARATOR + time);
-    }, [dateValue, dateValueFormat, props.input.onChange]);
+        dateValue,
+        timeValue,
+        onDateSelect,
+        onTimeSelect,
+    } = useDateTime({
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        DATE_TIME_SEPARATOR,
+        input: props.input,
+    });
 
     // Calendar props
     const calendarProps = useMemo(() => ({
@@ -104,6 +99,14 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         onChange: onDateSelect,
         valueFormat: dateValueFormat,
     }), [dateValue, dateValueFormat, onDateSelect]);
+
+    // TimePanel props
+    const timePanelProps: ITimePanelViewProps = useMemo(() => ({
+        onNow,
+        onClose,
+        value: timeValue,
+        onSelect: onTimeSelect,
+    }), [onClose, onNow, onTimeSelect, timeValue]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', {
         ...props.viewProps,
@@ -115,6 +118,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         timeValue,
         onTimeSelect,
         calendarProps,
+        timePanelProps,
         size: props.size,
         icon: props.icon,
         errors: props.errors,

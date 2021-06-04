@@ -51,6 +51,10 @@ export interface IDateAndTimeOutput {
     isOpened: boolean,
     onClose: () => void,
     onClear: () => void,
+
+    /**
+     * Функция возвращает текущее значение времени (дата + время)
+     */
     onNow: () => void,
     inputProps: {
         name?: string,

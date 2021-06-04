@@ -6,6 +6,7 @@ import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePane
 import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
 import {usePrevious} from 'react-use';
 import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
+import useDateTime from '@steroidsjs/core/ui/form/DateField/useDateTime';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
@@ -160,70 +161,45 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
 
     const {
         dateValueFormat,
-        timeValueFormat,
-        dateValueTo,
-        dateValueFrom,
-        timeValueTo,
-        timeValueFrom,
-        onDateFromSelect,
-        onTimeFromSelect,
-        onDateToSelect,
-        onTimeToSelect,
-    } = useDateRange({
+        dateValue: dateValueFrom,
+        timeValue: timeValueFrom,
+        onDateSelect: onDateFromSelect,
+        onTimeSelect: onTimeFromSelect,
+    } = useDateTime({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
         DATE_TIME_SEPARATOR,
-        inputTo: props.inputTo,
-        inputFrom: props.inputFrom,
+        input: props.inputFrom,
     });
 
-    // Tracking focus for input being edited
-    const [focus, setFocus] = useState<'from' | 'to'>('from');
+    const {
+        dateValue: dateValueTo,
+        timeValue: timeValueTo,
+        onDateSelect: onDateToSelect,
+        onTimeSelect: onTimeToSelect,
+    } = useDateTime({
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        DATE_TIME_SEPARATOR,
+        input: props.inputTo,
+    });
 
-    // Local refs to handle auto-focus
-    const valueFromRef = useRef('');
-    const valueToRef = useRef('');
-
-    // Close handler
-    const onClose = useCallback(() => {
-        if (focus === 'from') {
-            onCloseFrom();
-        } else {
-            onCloseTo();
-        }
-        valueFromRef.current = '';
-        valueToRef.current = '';
-    }, [focus, onCloseFrom, onCloseTo]);
-
-    // Clear handler
-    const onClear = useCallback(() => {
-        onClearFrom();
-        onClearTo();
-    }, [onClearFrom, onClearTo]);
-
-    // Custom onFocus for inputFrom
-    const inputFromRef = useRef(null);
-    const onFocusFrom = useCallback(e => {
-        inputPropsFrom.onFocus.call(null, e);
-        setFocus('from');
-    }, [inputPropsFrom.onFocus]);
-    const extendedInputPropsFrom = useMemo(() => ({
-        ...inputPropsFrom,
-        onFocus: onFocusFrom,
-        ref: inputFromRef,
-    }), [inputPropsFrom, onFocusFrom]);
-
-    // Custom onFocus for inputTo
-    const inputToRef = useRef(null);
-    const onFocusTo = useCallback(e => {
-        inputPropsTo.onFocus.call(null, e);
-        setFocus('to');
-    }, [inputPropsTo.onFocus]);
-    const extendedInputPropsTo = useMemo(() => ({
-        ...inputPropsTo,
-        onFocus: onFocusTo,
-        ref: inputToRef,
-    }), [inputPropsTo, onFocusTo]);
+    const {
+        focus,
+        onClose,
+        onClear,
+        extendedInputPropsFrom,
+        extendedInputPropsTo,
+    } = useDateRange({
+        onClearFrom,
+        onCloseTo,
+        onCloseFrom,
+        onClearTo,
+        inputPropsFrom,
+        inputPropsTo,
+        inputFrom: props.inputFrom,
+        inputTo: props.inputTo,
+    });
 
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
@@ -236,23 +212,9 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
     const timePanelProps: ITimePanelViewProps = useMemo(() => ({
         value: focus === 'from' ? timeValueFrom : timeValueTo,
         onSelect: focus === 'from' ? onTimeFromSelect : onTimeToSelect,
-        valueFormat: timeValueFormat,
         onNow,
         onClose,
-    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, timeValueFormat, timeValueFrom, timeValueTo]);
-
-    const prevValueFrom = usePrevious(props.inputFrom.value);
-    const prevValueTo = usePrevious(props.inputTo.value);
-    useEffect(() => {
-        if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
-            valueFromRef.current = props.inputFrom.value;
-            inputToRef.current.focus();
-        }
-        if (focus === 'to' && !valueFromRef.current && prevValueTo !== props.inputTo.value) {
-            valueToRef.current = props.inputTo.value;
-            inputFromRef.current.focus();
-        }
-    }, [focus, inputPropsFrom.value, inputPropsTo.value, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat]);
+    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, timeValueFrom, timeValueTo]);
 
     return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', {
         ...props.viewProps,

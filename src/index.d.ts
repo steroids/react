@@ -26,7 +26,7 @@ declare function __(phrase: string, params?: any): string;
  * Название цвета, соответствующее ему состоянию
  */
 declare type ColorName =
-    'primary'
+    | 'primary'
     | 'secondary'
     | 'success'
     | 'info'
@@ -79,7 +79,7 @@ declare type FormInputType = {
 declare type CssClassName = string;
 
 /**
- * Дополнительные CSS классы
+ * Дополнительные стили
  * @example my-block
  */
 declare type CustomStyle = React.CSSProperties;

@@ -339,6 +339,7 @@ Button.defaultProps = {
     disabled: false,
     submitting: false,
     block: false,
+    size: 'md',
     className: '',
     resetFailedMs: 2000,
     showLabelOnLoading: true,

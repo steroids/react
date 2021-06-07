@@ -51,6 +51,12 @@ export interface IFieldWrapperInputProps {
     disabled?: boolean;
 
     /**
+     * Подсказка для поля
+     * @example Your text...
+     */
+    placeholder?: string;
+
+    /**
      * Шаблон для поля, который настраивает его расположение внутри формы.
      * Если false, то поле будет отрендерено без шаблона.
      * @example 'horizontal'

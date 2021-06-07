@@ -1,83 +1,75 @@
-import {useCallback, useMemo} from 'react';
-import moment from 'moment';
-import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
-import {convertDate} from '@steroidsjs/core/utils/calendar';
+import {useMemo} from 'react';
+import useDateInputState, {
+    IDateInputStateInput,
+    IDateInputStateOutput,
+} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
 import useDateTime from '@steroidsjs/core/ui/form/DateField/useDateTime';
 import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
+import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
+import {ITimeFieldProps} from '@steroidsjs/core/ui/form/TimeField/TimeField';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
-/**
- * DateTimeField
- * Поля ввода с выпадающими списками для выбора даты и времени
- */
-export interface IDateTimeFieldProps extends IFieldWrapperInputProps {
-
-    /**
-     * Формат показываемый пользователю
-     * @example DD.MM.YYYY HH:mm
-     */
-    displayFormat?: string;
-
-    /**
-     * Формат отправляемый на сервер
-     * @example YYYY-MM-DD HH:mm
-     */
-    valueFormat?: string;
-
+export interface IDateTimeFieldProps extends IDateInputStateInput {
     /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: any,
 
     /**
      * Дополнительный CSS-класс
      */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
+
+    /**
+     * Свойства для компонента Calendar
+     */
+    calendarProps?: ICalendarProps,
+
+    /**
+     * Свойства для компонента панели времени
+     */
+    timePanelViewProps?: ITimePanelViewProps,
 
     [key: string]: any;
 }
 
-export interface IDateTimeFieldViewProps extends IDateAndTimeOutput {
-    dateValue: any,
-    timeValue: any,
-    onDateSelect: any,
-    onTimeSelect: any,
-    calendarProps: {
-        value: string,
-        valueFormat: string,
-        onChange: (value: string) => void,
-    },
-    timePanelProps: any,
+export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
+    Pick<IDateTimeFieldProps, 'size' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'timePanelViewProps'>
+{
+    [key: string]: any;
 }
 
 const DATE_TIME_SEPARATOR = ' ';
 
+/**
+ * DateTimeField
+ * Поля ввода с выпадающими списками для выбора даты и времени
+ */
 function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     const {
-        isOpened,
-        onClose,
-        inputProps,
         onClear,
-        onNow,
-    } = useDateAndTime({
-        displayFormat: props.displayFormat,
-        valueFormat: props.valueFormat,
+        onClose,
+        isOpened,
+        inputProps,
+    } = useDateInputState({
         input: props.input,
-        onChange: props.onChange,
         disabled: props.disabled,
-        placeholder: props.placeholder,
+        onChange: props.onChange,
         required: props.required,
         inputProps: props.inputProps,
+        placeholder: props.placeholder,
+        valueFormat: props.valueFormat,
+        displayFormat: props.displayFormat,
     });
 
     const {
@@ -88,9 +80,9 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         onTimeSelect,
     } = useDateTime({
         displayFormat: props.displayFormat,
-        valueFormat: props.valueFormat,
-        DATE_TIME_SEPARATOR,
+        dateTimeSeparator: DATE_TIME_SEPARATOR,
         input: props.input,
+        valueFormat: props.valueFormat,
     });
 
     // Calendar props
@@ -101,29 +93,27 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
     }), [dateValue, dateValueFormat, onDateSelect]);
 
     // TimePanel props
-    const timePanelProps: ITimePanelViewProps = useMemo(() => ({
-        onNow,
+    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
         onClose,
+        showHeader: true,
+        showNow: false,
         value: timeValue,
         onSelect: onTimeSelect,
-    }), [onClose, onNow, onTimeSelect, timeValue]);
+    }), [onClose, onTimeSelect, timeValue]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', {
         ...props.viewProps,
         isOpened,
+        onClear,
         onClose,
         inputProps,
-        onClear,
-        onNow,
-        timeValue,
-        onTimeSelect,
         calendarProps,
-        timePanelProps,
+        timePanelViewProps,
         size: props.size,
         icon: props.icon,
         errors: props.errors,
-        showRemove: props.showRemove,
         className: props.className,
+        showRemove: props.showRemove,
     });
 }
 

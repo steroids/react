@@ -1,124 +1,101 @@
 import {useMemo} from 'react';
-import useDateAndTime, {IDateAndTimeOutput} from './useDateAndTime';
+import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
 import {useComponents} from '../../../hooks';
+import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
 import fieldWrapper, {
-    IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
 
-/**
- * DateField
- * Поле ввода с выпадающим календарём для выбора даты
- */
-export interface IDateFieldProps extends IFieldWrapperInputProps {
+export interface IDateFieldProps extends IDateInputStateInput {
     /**
-     * Формат даты показываемый пользователю
-     * @example DD.MM.YYYY
+     * Дополнительный CSS-класс для элемента отображения
      */
-    displayFormat?: string;
-
-    /**
-     * Формат даты отправляемый на сервер
-     * @example YYYY-MM-DD
-     */
-    valueFormat?: string;
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: any;
+    className?: CssClassName,
 
     /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: any,
 
     /**
-     * Иконка
-     * @example calendar-day
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
      */
-    icon?: string | boolean;
+    view?: CustomView,
 
-    showRemove?: boolean,
-
-    inputProps?: Record<string, unknown>,
+    /**
+     * Свойства для view компонента
+     */
     viewProps?: Record<string, unknown>,
 
-    [key: string]: any;
+    /**
+     * Свойства для компонента Calendar
+     */
+    calendarProps?: ICalendarProps,
+
+    [key: string]: any,
 }
 
-export interface IDateFieldViewProps extends IDateAndTimeOutput,
-    Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className'>
+export interface IDateFieldViewProps extends IDateInputStateOutput,
+    Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps'>
 {
-    calendarProps: {
-        value: string,
-        valueFormat: string,
-        onChange: (value: string) => void,
-    },
-    [key: string]: any;
+    [key: string]: any,
 }
 
+/**
+ * DateField
+ * Поле ввода с выпадающим календарём для выбора даты
+ */
 function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     const {
-        isOpened,
-        onClose,
-        inputProps,
         onClear,
-    } = useDateAndTime({
-        displayFormat: props.displayFormat,
-        valueFormat: props.valueFormat,
+        onClose,
+        isOpened,
+        inputProps,
+    } = useDateInputState({
         input: props.input,
-        onChange: props.onChange,
         disabled: props.disabled,
-        placeholder: props.placeholder,
+        onChange: props.onChange,
         required: props.required,
         inputProps: props.inputProps,
+        placeholder: props.placeholder,
+        valueFormat: props.valueFormat,
+        displayFormat: props.displayFormat,
     });
 
     // Calendar props
-    const calendarProps = useMemo(() => ({
+    const calendarProps: ICalendarProps = useMemo(() => ({
         value: props.input.value,
         onChange: props.input.onChange,
         valueFormat: props.valueFormat,
-    }), [props.input.onChange, props.input.value, props.valueFormat]);
+        ...props.calendarProps,
+    }), [props.calendarProps, props.input.onChange, props.input.value, props.valueFormat]);
 
     return components.ui.renderView(props.view || 'form.DateFieldView', {
         ...props.viewProps,
-        isOpened,
-        onClose,
-        inputProps,
         onClear,
+        onClose,
+        isOpened,
+        inputProps,
         calendarProps,
         size: props.size,
         icon: props.icon,
         errors: props.errors,
-        showRemove: props.showRemove,
         className: props.className,
+        showRemove: props.showRemove,
     });
 }
 
 DateField.defaultProps = {
     disabled: false,
     displayFormat: 'DD.MM.YYYY',
-    valueFormat: 'YYYY-MM-DD',
     icon: true,
     required: false,
     showRemove: true,
+    valueFormat: 'YYYY-MM-DD',
 };
 
 export default fieldWrapper('DateField', DateField);

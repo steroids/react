@@ -1,6 +1,4 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import moment from 'moment';
-import {convertDate} from '@steroidsjs/core/utils/calendar';
 import {usePrevious} from 'react-use';
 
 interface IUseDateRangeProps {
@@ -12,6 +10,7 @@ interface IUseDateRangeProps {
     inputPropsTo: any,
     inputTo: any,
     inputFrom: any,
+    useSmartFocus: boolean,
 }
 
 export default function useDateRange(props:IUseDateRangeProps) {
@@ -66,13 +65,15 @@ export default function useDateRange(props:IUseDateRangeProps) {
     const prevValueFrom = usePrevious(props.inputFrom.value);
     const prevValueTo = usePrevious(props.inputTo.value);
     useEffect(() => {
-        if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
-            valueFromRef.current = props.inputFrom.value;
-            inputToRef.current.focus();
-        }
-        if (focus === 'to' && !valueFromRef.current && prevValueTo !== props.inputTo.value) {
-            valueToRef.current = props.inputTo.value;
-            inputFromRef.current.focus();
+        if (props.useSmartFocus) {
+            if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
+                valueFromRef.current = props.inputFrom.value;
+                inputToRef.current.focus();
+            }
+            if (focus === 'to' && !valueFromRef.current && prevValueTo !== props.inputTo.value) {
+                valueToRef.current = props.inputTo.value;
+                inputFromRef.current.focus();
+            }
         }
     }, [focus, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value]);
 

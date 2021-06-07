@@ -1,6 +1,9 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import moment from 'moment';
-import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
+import useDateInputState, {
+    IDateInputStateInput,
+    IDateInputStateOutput,
+} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
 import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
 import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
@@ -14,7 +17,9 @@ import {useComponents} from '../../../hooks';
  * DateTimeRangeField
  * Поле ввода дипазона двух дат со временем, с выпадающим календарём
  */
-export interface IDateTimeRangeFieldProps extends Omit<IFieldWrapperInputProps, 'attribute'> {
+export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'inputProps' | 'input'>,
+    Omit<IFieldWrapperInputProps, 'attribute'>
+{
     /**
     * Аттрибут (название) поля в форме
     * @example 'fromTime'
@@ -34,18 +39,6 @@ export interface IDateTimeRangeFieldProps extends Omit<IFieldWrapperInputProps, 
     pickerProps?: any;
 
     /**
-     * Формат даты показываемый пользователю
-     * @example DD.MM.YYYY
-     */
-    displayFormat?: string;
-
-    /**
-     * Формат даты отправляемый на сервер
-     * @example YYYY-MM-DD
-     */
-    valueFormat?: string;
-
-    /**
      * Дополнительный CSS-класс
      */
     className?: CssClassName;
@@ -57,39 +50,37 @@ export interface IDateTimeRangeFieldProps extends Omit<IFieldWrapperInputProps, 
     view?: CustomView;
 
     /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: any;
-
-    /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
     style?: any;
 
     /**
-     * Иконка
-     * @example calendar-day
+     * Свойства для поля 'from'
      */
-    icon?: boolean | string;
+    inputPropsFrom?: Record<string, unknown>,
 
     /**
-     * Отображение кнопки для сброса значения поля
-     * @example true
+     * Свойства для поля 'to'
      */
-    showRemove?: boolean,
+    inputPropsTo?: Record<string, unknown>,
 
-    inputPropsFrom?: any,
+    /**
+     * Свойства для компонента панели времени
+     */
+    timePanelViewProps?: ITimePanelViewProps,
 
-    inputPropsTo?: any,
+    /**
+     * Свойства для компонента Calendar
+     */
+    calendarProps?: ICalendarProps,
 
     [key: string]: any;
 }
 
 export interface IDateTimeRangeFieldViewProps extends
-    IDateTimeRangeFieldProps, IFieldWrapperOutputProps, IDateAndTimeOutput {
-    timePanelProps?: ITimePanelViewProps,
+    IDateTimeRangeFieldProps, IFieldWrapperOutputProps, IDateInputStateOutput {
+    timePanelViewProps?: ITimePanelViewProps,
     calendarProps?: ICalendarProps,
 }
 
@@ -131,7 +122,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         inputProps: inputPropsFrom,
         onClear: onClearFrom,
         onNow,
-    } = useDateAndTime({
+    } = useDateInputState({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
         input: props.inputFrom,
@@ -148,7 +139,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         onClose: onCloseTo,
         inputProps: inputPropsTo,
         onClear: onClearTo,
-    } = useDateAndTime({
+    } = useDateInputState({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
         input: props.inputTo,
@@ -168,7 +159,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
     } = useDateTime({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
-        DATE_TIME_SEPARATOR,
+        dateTimeSeparator: DATE_TIME_SEPARATOR,
         input: props.inputFrom,
     });
 
@@ -180,7 +171,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
     } = useDateTime({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
-        DATE_TIME_SEPARATOR,
+        dateTimeSeparator: DATE_TIME_SEPARATOR,
         input: props.inputTo,
     });
 
@@ -199,6 +190,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         inputPropsTo,
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
+        useSmartFocus: false,
     });
 
     // Calendar props
@@ -206,22 +198,26 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         value: [dateValueFrom, dateValueTo],
         onChange: focus === 'from' ? onDateFromSelect : onDateToSelect,
         valueFormat: dateValueFormat,
-    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect]);
+        ...props.calendarProps,
+    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect, props.calendarProps]);
 
     // TimePanel props
-    const timePanelProps: ITimePanelViewProps = useMemo(() => ({
+    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
         value: focus === 'from' ? timeValueFrom : timeValueTo,
         onSelect: focus === 'from' ? onTimeFromSelect : onTimeToSelect,
         onNow,
         onClose,
-    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, timeValueFrom, timeValueTo]);
+        showNow: false,
+        showHeader: true,
+        ...props.timePanelViewProps,
+    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, props.timePanelViewProps, timeValueFrom, timeValueTo]);
 
     return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', {
         ...props.viewProps,
         onClear,
         onClose,
         calendarProps,
-        timePanelProps,
+        timePanelViewProps,
         icon: props.icon,
         size: props.size,
         errorsTo: props.errorsTo,

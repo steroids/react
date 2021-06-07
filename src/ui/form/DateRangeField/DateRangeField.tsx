@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ICalendarProps } from '@steroidsjs/core/ui/content/Calendar/Calendar';
 import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
 import { useComponents } from '../../../hooks';
-import useDateAndTime, { IDateAndTimeOutput } from '../DateField/useDateAndTime';
+import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
@@ -13,7 +13,9 @@ import fieldWrapper, {
  * DateRangeField
  * Поле ввода дипазона двух дат с выпадающим календарём
  */
-export interface IDateRangeFieldProps extends Omit<IFieldWrapperInputProps, 'attribute'> {
+export interface IDateRangeFieldProps extends IDateInputStateInput,
+    Omit<IFieldWrapperInputProps, 'attribute'>
+{
     /**
      * Аттрибут (название) поля в форме
      * @example 'fromTime'
@@ -83,10 +85,15 @@ export interface IDateRangeFieldProps extends Omit<IFieldWrapperInputProps, 'att
 
     inputPropsTo?: any,
 
+    /**
+     * Свойства для компонента Calendar
+     */
+    calendarProps?: ICalendarProps,
+
     [key: string]: any;
 }
 
-export interface IDateRangeFieldViewProps extends IFieldWrapperOutputProps, IDateRangeFieldProps, IDateAndTimeOutput {
+export interface IDateRangeFieldViewProps extends IDateRangeFieldProps, IFieldWrapperOutputProps {
     inputPropsFrom?: any,
     inputPropsTo?: any,
 }
@@ -125,7 +132,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         onClose: onCloseFrom,
         inputProps: inputPropsFrom,
         onClear: onClearFrom,
-    } = useDateAndTime({
+    } = useDateInputState({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
         input: props.inputFrom,
@@ -142,7 +149,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         onClose: onCloseTo,
         inputProps: inputPropsTo,
         onClear: onClearTo,
-    } = useDateAndTime({
+    } = useDateInputState({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
         input: props.inputTo,
@@ -168,6 +175,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputPropsTo,
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
+        useSmartFocus: true,
     });
 
     // Calendar props
@@ -175,6 +183,8 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         value: [props.inputFrom.value, props.inputTo.value],
         onChange: focus === 'from' ? props.inputFrom.onChange : props.inputTo.onChange,
         valueFormat: props.valueFormat,
+        numberOfMonths: 2,
+        showFooter: false,
     }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', {

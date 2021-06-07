@@ -2,8 +2,9 @@ import {useCallback, useMemo, useState} from 'react';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
 import {useUpdateEffect} from 'react-use';
 import moment from 'moment';
+import {IFieldWrapperInputProps} from '@steroidsjs/core/ui/form/Field/fieldWrapper';
 
-interface IDateAndTimeInput {
+export interface IDateInputStateInput extends IFieldWrapperInputProps {
 
     /**
      * Формат даты показываемый пользователю
@@ -12,50 +13,67 @@ interface IDateAndTimeInput {
     displayFormat?: string;
 
     /**
-     * Формат даты отправляемый на сервер
-     * @example YYYY-MM-DD
+     * Иконка, отображаемая в правой части поля
+     * @example calendar-day
      */
-    valueFormat?: string;
+    icon?: string | boolean;
 
     /**
-     * Переводит элемент в состояние "не активен"
-     * @example true
+     * Свойства поля props.input
      */
-    disabled?: boolean;
-
-    /**
-     * Обязательное ли поле? Если true, то к названию будет добавлен
-     * модификатор 'required' - красная звездочка (по умолчанию)
-     * @example true
-     */
-    required?: boolean;
-
-    /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: any;
-
-    inputProps?: Record<string, unknown>,
-
     input?: {
         name?: string,
         value?: any,
         onChange: (value: any) => void,
     },
 
+    /**
+     * Свойства, передаваемые для поля во view
+     */
+    inputProps?: Record<string, unknown>,
+
+    /**
+     * Дополнительная функция, срабатывающая при изменении props.input
+     */
     onChange?: (...args: any[]) => any;
+
+    /**
+     * Показывать при наведении на поле иконку для сброса значения поля в начальное состояние
+     */
+    showRemove?: boolean,
+
+    /**
+     * Формат даты отправляемый на сервер
+     * @example YYYY-MM-DD
+     */
+    valueFormat?: string;
 }
 
-export interface IDateAndTimeOutput {
-    isOpened: boolean,
-    onClose: () => void,
-    onClear: () => void,
+export interface IDateInputStateOutput {
+
+    /**
+     * Показать или скрыть выпадающую панель
+     */
+    isOpened?: boolean,
+
+    /**
+     * Функция закрывает выпадающую панель
+     */
+    onClose?: () => void,
+
+    /**
+     * Функция очищает значение поля
+     */
+    onClear?: () => void,
 
     /**
      * Функция возвращает текущее значение времени (дата + время)
      */
-    onNow: () => void,
+    onNow?: () => void,
+
+    /**
+     * Свойства для поля во view
+     */
     inputProps: {
         name?: string,
         value?: any,
@@ -64,7 +82,7 @@ export interface IDateAndTimeOutput {
     },
 }
 
-export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOutput {
+export default function useDateInputState(props: IDateInputStateInput): IDateInputStateOutput {
     // Get props value
     const propsDisplayValue = useMemo(
         () => convertDate(
@@ -96,7 +114,6 @@ export default function useDateAndTime(props: IDateAndTimeInput): IDateAndTimeOu
     // Display input change handler
     const onDisplayValueChange = useCallback(value => {
         setDisplayValue(value);
-
         const parsedValue = convertDate(value, props.displayFormat, props.valueFormat);
         const newValue = parsedValue || !value ? parsedValue || null : false;
         if (newValue !== false && newValue !== props.input.value) {

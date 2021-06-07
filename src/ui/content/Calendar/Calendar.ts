@@ -13,7 +13,7 @@ export interface ICalendarProps {
      * Формат даты отправляемый на сервер
      * @example YYYY-MM-DD
      */
-    valueFormat?: string;
+    valueFormat?: string,
 
     /**
      * Функция возвращает выбранную в календаре дату
@@ -24,21 +24,33 @@ export interface ICalendarProps {
      * Свойства для компонента DayPickerInput
      * @example {dayPickerProps: {showWeekNumbers: true}}
      */
-    pickerProps?: any;
+    pickerProps?: any,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Пропсы для компонента отображения
      */
-    viewProps?: any;
+    viewProps?: any,
 
+    /**
+     * Отображать Footer для календаря (содержит todayButton)
+     */
     showFooter?: boolean,
+
+    /**
+     * Количество отображаемых за раз месяцев
+     * @example 1
+     */
     numberOfMonths?: number,
+
+    /**
+     * Дополнительный CSS-класс
+     */
     className?: CssClassName,
 }
 
@@ -141,8 +153,9 @@ function Calendar(props: ICalendarProps) {
 }
 
 Calendar.defaultProps = {
-    valueFormat: 'YYYY-MM-DD',
+    numberOfMonths: 1,
     showFooter: true,
+    valueFormat: 'YYYY-MM-DD',
 };
 
 export default Calendar;

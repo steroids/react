@@ -1,32 +1,17 @@
-import {useCallback} from 'react';
-import moment from 'moment';
-import useDateAndTime, {IDateAndTimeOutput} from '@steroidsjs/core/ui/form/DateField/useDateAndTime';
+import useDateInputState, {
+    IDateInputStateInput,
+    IDateInputStateOutput,
+} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
+import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
+import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * TimeField
  * Поле для выбора времени
  */
-export interface ITimeFieldProps extends IFieldWrapperInputProps {
-    /**
-     * Формат времени, показываемый пользователю
-     * @example mm:hh
-     */
-    displayFormat?: string;
-
-    /**
-     * Формат времени, отправляемый на сервер
-     * @example mm:hh
-     */
-    valueFormat?: string;
-
-    /**
-     * Включить возможность сброса значения
-     * @example 'true'
-     */
-    showRemove?: boolean,
-
+export interface ITimeFieldProps extends IDateInputStateInput {
     /**
      * Отключить border вокруг элемента
      * @example 'true'
@@ -34,22 +19,10 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
     noBorder?: boolean,
 
     /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: string;
-
-    /**
-     * Свойства для элемента \<input /\>
-     * @example {onKeyDown: ...}
-     */
-    inputProps?: any;
-
-    /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      * Дополнительный CSS-класс для элемента отображения
@@ -63,18 +36,21 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
     style?: any;
 
     /**
-     * Иконка
-     * @example times-circle
+     * Свойства для view компонента
      */
-    icon?: string | boolean;
+    viewProps?: Record<string, unknown>,
+
+    /**
+     * Свойства для компонента панели времени
+     */
+    timePanelViewProps?: ITimePanelViewProps,
 
     [key: string]: any;
 }
 
-export interface ITimeFieldViewProps extends IDateAndTimeOutput,
-    Pick<ITimeFieldProps, 'size' | 'errors' | 'showRemove' | 'noBorder' | 'className'>
+export interface ITimeFieldViewProps extends IDateInputStateOutput,
+    Pick<ITimeFieldProps, 'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps'>
 {
-    onSelect: any,
     [key: string]: any;
 }
 
@@ -82,46 +58,55 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     const components = useComponents();
 
     const {
-        isOpened,
-        onClose,
-        inputProps,
-        onClear,
         onNow,
-    } = useDateAndTime({
-        displayFormat: props.displayFormat,
-        valueFormat: props.valueFormat,
+        onClear,
+        onClose,
+        isOpened,
+        inputProps,
+    } = useDateInputState({
         input: props.input,
-        onChange: props.onChange,
         disabled: props.disabled,
-        placeholder: props.placeholder,
+        onChange: props.onChange,
         required: props.required,
         inputProps: props.inputProps,
+        placeholder: props.placeholder,
+        valueFormat: props.valueFormat,
+        displayFormat: props.displayFormat,
     });
+
+    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
+        onNow,
+        onClose,
+        value: inputProps.value,
+        onSelect: inputProps.onChange,
+        ...props.timePanelViewProps,
+    }), [inputProps.onChange, inputProps.value, onClose, onNow, props.timePanelViewProps]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', {
         ...props.viewProps,
-        isOpened,
-        inputProps,
         onNow,
         onClear,
         onClose,
+        isOpened,
+        inputProps,
+        timePanelViewProps,
         size: props.size,
         icon: props.icon,
         errors: props.errors,
-        showRemove: props.showRemove,
         noBorder: props.noBorder,
         className: props.className,
+        showRemove: props.showRemove,
     });
 }
 
 TimeField.defaultProps = {
     disabled: false,
+    displayFormat: 'HH:mm',
     required: false,
+    placeholder: 'Select time',
     noBorder: false,
     showRemove: true,
-    placeholder: 'Select time',
     type: 'text',
-    displayFormat: 'HH:mm',
     valueFormat: 'HH:mm',
 };
 

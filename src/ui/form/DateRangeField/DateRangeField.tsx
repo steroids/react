@@ -1,5 +1,4 @@
-import { usePrevious } from 'react-use';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { ICalendarProps } from '@steroidsjs/core/ui/content/Calendar/Calendar';
 import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
 import { useComponents } from '../../../hooks';
@@ -90,12 +89,25 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      */
     calendarProps?: ICalendarProps,
 
+    /**
+     * Отключить border вокруг элемента
+     * @example 'true'
+     */
+    noBorder?: boolean,
+
     [key: string]: any;
 }
 
-export interface IDateRangeFieldViewProps extends IDateRangeFieldProps, IFieldWrapperOutputProps {
+export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
+    Omit<IFieldWrapperOutputProps, 'input'>,
+    Pick<IDateRangeFieldProps,
+        'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
+        | 'noBorder' | 'style'>
+{
     inputPropsFrom?: any,
     inputPropsTo?: any,
+    errorsFrom?: string[],
+    errorsTo?: string[],
 }
 
 interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldWrapperOutputProps, 'input' | 'errors'> {
@@ -194,6 +206,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         calendarProps,
         icon: props.icon,
         size: props.size,
+        noBorder: props.noBorder,
         errorsTo: props.errorsTo,
         className: props.className,
         showRemove: props.showRemove,
@@ -212,6 +225,7 @@ DateRangeField.defaultProps = {
     valueFormat: 'YYYY-MM-DD',
     showRemove: true,
     icon: true,
+    noBorder: false,
 };
 
 export default fieldWrapper('DateRangeField', DateRangeField, {attributeSuffixes: ['from', 'to']});

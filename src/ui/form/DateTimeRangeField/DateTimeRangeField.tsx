@@ -10,6 +10,7 @@ import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
 import {usePrevious} from 'react-use';
 import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
 import useDateTime from '@steroidsjs/core/ui/form/DateField/useDateTime';
+import {IDateRangeFieldProps} from '@steroidsjs/core/ui/form/DateRangeField/DateRangeField';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
@@ -75,13 +76,27 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      */
     calendarProps?: ICalendarProps,
 
+    /**
+     * Отключить border вокруг элемента
+     * @example 'true'
+     */
+    noBorder?: boolean,
+
     [key: string]: any;
 }
 
-export interface IDateTimeRangeFieldViewProps extends
-    IDateTimeRangeFieldProps, IFieldWrapperOutputProps, IDateInputStateOutput {
+export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
+    Omit<IFieldWrapperOutputProps, 'input'>,
+    Pick<IDateRangeFieldProps,
+        'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
+        | 'noBorder' | 'style'>
+{
     timePanelViewProps?: ITimePanelViewProps,
     calendarProps?: ICalendarProps,
+    inputPropsFrom?: any,
+    inputPropsTo?: any,
+    errorsFrom?: any,
+    errorsTo?: any,
 }
 
 interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,

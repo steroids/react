@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import moment from 'moment';
-import {convertDate} from '@steroidsjs/core/utils/calendar';
-import {IDateInputStateInput} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
+import {convertDate} from '../../../utils/calendar';
+import {IDateInputStateInput} from '../../form/DateField/useDateInputState';
 
 interface IUseDateTimeProps extends
     Pick<IDateInputStateInput, 'displayFormat' | 'valueFormat' | 'input'>

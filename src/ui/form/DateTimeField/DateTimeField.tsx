@@ -1,11 +1,11 @@
 import {useMemo} from 'react';
+import useDateTime from '../DateField/useDateTime';
+import {ICalendarProps} from '../../content/Calendar/Calendar';
+import {ITimePanelViewProps} from '../TimeField/TimeField';
 import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
-} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
-import useDateTime from '@steroidsjs/core/ui/form/DateField/useDateTime';
-import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
-import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
+} from '../../form/DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 

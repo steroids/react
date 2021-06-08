@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { ICalendarProps } from '@steroidsjs/core/ui/content/Calendar/Calendar';
-import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
+import { ICalendarProps } from '../../content/Calendar/Calendar';
+import useDateRange from '../../form/DateField/useDateRange';
 import { useComponents } from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
 import fieldWrapper, {

@@ -1,5 +1,5 @@
 import {useMemo} from 'react';
-import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
+import {ICalendarProps} from '../../content/Calendar/Calendar';
 import {useComponents} from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
 import fieldWrapper, {

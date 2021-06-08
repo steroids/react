@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useComponents} from '@steroidsjs/core/hooks';
-import {convertDate} from '@steroidsjs/core/utils/calendar';
+import {useComponents} from '../../../hooks';
+import {convertDate} from '../../../utils/calendar';
 
 export interface ICalendarProps {
     /**

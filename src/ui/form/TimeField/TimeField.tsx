@@ -1,11 +1,17 @@
+import {useMemo} from 'react';
 import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
-} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
-import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
-import {useMemo} from 'react';
+} from '../../form/DateField/useDateInputState';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+
+export interface ITimePanelViewProps extends Pick<ITimeFieldViewProps,
+    'value' | 'onClose' | 'onNow' | 'onSelect' | 'className'>
+{
+    showHeader?: boolean,
+    showNow?: boolean,
+}
 
 /**
  * TimeField

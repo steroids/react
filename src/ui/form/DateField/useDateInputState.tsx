@@ -1,8 +1,8 @@
 import {useCallback, useMemo, useState} from 'react';
-import {convertDate} from '@steroidsjs/core/utils/calendar';
 import {useUpdateEffect} from 'react-use';
 import moment from 'moment';
-import {IFieldWrapperInputProps} from '@steroidsjs/core/ui/form/Field/fieldWrapper';
+import {convertDate} from '../../../utils/calendar';
+import {IFieldWrapperInputProps} from '../../form/Field/fieldWrapper';
 
 export interface IDateInputStateInput extends IFieldWrapperInputProps {
 

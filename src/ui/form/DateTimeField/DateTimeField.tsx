@@ -35,7 +35,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput {
     /**
      * Свойства для компонента панели времени
      */
-    timePanelViewProps?: ITimePanelViewProps,
+    timePanelViewProps?: any,
 
     [key: string]: any;
 }
@@ -92,7 +92,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
     }), [dateValue, dateValueFormat, onDateSelect]);
 
     // TimePanel props
-    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
+    const timePanelViewProps = useMemo(() => ({
         onClose,
         showHeader: true,
         showNow: false,

@@ -88,8 +88,8 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         () => convertDate(
             props.input.value,
             [
-                props.valueFormat,
                 props.displayFormat,
+                props.valueFormat,
             ],
             props.displayFormat,
         ) || '',

@@ -49,7 +49,7 @@ export interface ITimeFieldProps extends IDateInputStateInput {
     /**
      * Свойства для компонента панели времени
      */
-    timePanelViewProps?: ITimePanelViewProps,
+    timePanelViewProps?: any,
 
     [key: string]: any;
 }
@@ -80,7 +80,7 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         displayFormat: props.displayFormat,
     });
 
-    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
+    const timePanelViewProps = useMemo(() => ({
         onNow,
         onClose,
         value: inputProps.value,

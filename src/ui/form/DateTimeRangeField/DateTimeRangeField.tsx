@@ -3,7 +3,6 @@ import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
 } from '@steroidsjs/core/ui/form/DateField/useDateInputState';
-import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
 import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
 import useDateRange from '@steroidsjs/core/ui/form/DateField/useDateRange';
 import useDateTime from '@steroidsjs/core/ui/form/DateField/useDateTime';
@@ -66,7 +65,7 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
     /**
      * Свойства для компонента панели времени
      */
-    timePanelViewProps?: ITimePanelViewProps,
+    timePanelViewProps?: any,
 
     /**
      * Свойства для компонента Calendar
@@ -88,7 +87,7 @@ export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
         | 'noBorder' | 'style'>
 {
-    timePanelViewProps?: ITimePanelViewProps,
+    timePanelViewProps?: any,
     calendarProps?: ICalendarProps,
     inputPropsFrom?: any,
     inputPropsTo?: any,
@@ -214,7 +213,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
     }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect, props.calendarProps]);
 
     // TimePanel props
-    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
+    const timePanelViewProps = useMemo(() => ({
         value: focus === 'from' ? timeValueFrom : timeValueTo,
         onSelect: focus === 'from' ? onTimeFromSelect : onTimeToSelect,
         onNow,

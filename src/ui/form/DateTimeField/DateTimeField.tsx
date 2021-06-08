@@ -4,7 +4,6 @@ import useDateInputState, {
     IDateInputStateOutput,
 } from '@steroidsjs/core/ui/form/DateField/useDateInputState';
 import useDateTime from '@steroidsjs/core/ui/form/DateField/useDateTime';
-import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
 import {ICalendarProps} from '@steroidsjs/core/ui/content/Calendar/Calendar';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
@@ -35,7 +34,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput {
     /**
      * Свойства для компонента панели времени
      */
-    timePanelViewProps?: ITimePanelViewProps,
+    timePanelViewProps?: any,
 
     [key: string]: any;
 }
@@ -92,7 +91,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
     }), [dateValue, dateValueFormat, onDateSelect]);
 
     // TimePanel props
-    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
+    const timePanelViewProps = useMemo(() => ({
         onClose,
         showHeader: true,
         showNow: false,

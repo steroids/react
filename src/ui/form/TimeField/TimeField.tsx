@@ -2,7 +2,6 @@ import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
 } from '@steroidsjs/core/ui/form/DateField/useDateInputState';
-import {ITimePanelViewProps} from '@steroidsjs/bootstrap/form/TimeField/TimePanelView';
 import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -43,7 +42,7 @@ export interface ITimeFieldProps extends IDateInputStateInput {
     /**
      * Свойства для компонента панели времени
      */
-    timePanelViewProps?: ITimePanelViewProps,
+    timePanelViewProps?: any,
 
     [key: string]: any;
 }
@@ -74,7 +73,7 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         displayFormat: props.displayFormat,
     });
 
-    const timePanelViewProps: ITimePanelViewProps = useMemo(() => ({
+    const timePanelViewProps = useMemo(() => ({
         onNow,
         onClose,
         value: inputProps.value,

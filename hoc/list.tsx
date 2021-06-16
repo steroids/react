@@ -368,6 +368,7 @@ export default (): any => WrappedComponent =>
                         // Check change items
                         if (prevProps.items !== this.props.items) {
                             toDispatch.push(listInit(this.props.listId, this.props));
+                            this.props.dispatch(listLazyFetch(this.props.listId));
                         }
 
                         this.props.dispatch(toDispatch);

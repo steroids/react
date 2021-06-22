@@ -131,7 +131,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         const newSelectedIds = config.selectedIds && config.selectedIds.length > 0
             ? config.items.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];
-        if (!_isEqual(prevConfigSelectedIds, newSelectedIds)) {
+        if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
     }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds]);

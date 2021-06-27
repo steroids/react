@@ -1,5 +1,7 @@
 const isLocal = require('fs').existsSync(require('path').resolve(__dirname, 'react-bootstrap'));
 
+console.log('Jest, isLocal: ' + isLocal);
+
 module.exports = {
     verbose: true,
     transform: {

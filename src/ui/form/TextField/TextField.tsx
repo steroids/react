@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useCallback, useMemo} from 'react';
-import {submit} from 'redux-form';
 import {useDispatch} from 'react-redux';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -66,7 +65,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         ) {
             e.preventDefault();
             // TODO This is not worked in redux... =(
-            dispatch(submit(props.formId));
+            // dispatch(submit(props.formId));
         }
     }, [dispatch, props.formId, props.submitOnEnter]);
 

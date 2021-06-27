@@ -2,6 +2,29 @@
   "compilerOptions": {
     "jsx": "react",
     "experimentalDecorators": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "isolatedModules": true,
+    "outDir": "./dist",
+    "paths": {
+      "@steroidsjs/core/*": [
+        "../react/src/*"
+      ],
+      "@steroidsjs/bootstrap/*": [
+        "../react-bootstrap/src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/ui/layout/Notifications/demo/*",
+    "src/ui/icon/Icon/demo/*",
+    "src/components/MetricsComponent.tsx"
+  ]
 }

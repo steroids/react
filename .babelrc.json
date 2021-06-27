@@ -1,0 +1,34 @@
+{
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-transform-modules-commonjs",
+    "@babel/plugin-transform-runtime"
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": "last 2 versions, Android >= 4, safari >= 7, ios_saf >= 8, chrome >= 52"
+        },
+        "corejs": "^3.0.1",
+        "useBuiltIns": "entry"
+      }
+    ],
+    "@babel/preset-react",
+    [
+      "@babel/preset-typescript",
+      {
+        "isTSX": true,
+        "allExtensions": true
+      }
+    ]
+  ]
+}

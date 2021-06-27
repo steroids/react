@@ -15,7 +15,7 @@ const typeToString = (type) => {
         case 'unknown':
             return type.name;
 
-        case 'stringLiteral':
+        case 'literal':
             return JSON.stringify(type.value);
 
         case 'array':
@@ -71,17 +71,15 @@ const typeToObject = type => {
     throw new Error('Unknown type on convert to object: ' + JSON.stringify(type));
 };
 
-const getComment = item => {
-    return typeof item.comment === 'string'
-        ? item.comment
-        : [
-            _.get(item, 'comment.shortText'),
-            _.get(item, 'comment.text'),
-        ].filter(Boolean).join('\n\n');
-}
+const getComment = item => typeof item.comment === 'string'
+    ? item.comment
+    : [
+        _.get(item, 'comment.shortText'),
+        _.get(item, 'comment.text'),
+    ].filter(Boolean).join('\n\n');
 
 const getTags = item => {
-    let tags = {};
+    const tags = {};
     _.get(item, 'comment.tags', []).forEach(tag => {
         tags[tag.tag] = tag.text.trim();
     });
@@ -119,14 +117,14 @@ const getProperty = property => ({
     required: !property.flags.isOptional,
     type: typeToString(property.type),
     example: getTags(property).example || null,
-})
+});
 
 const getInfo = (filesMap, moduleItem, item) => {
-    if (!['Class', 'Interface', 'Type alias'].includes(item.kindString)) {
+    if (!['Class', 'Interface', 'Type alias', 'Function', 'Property'].includes(item.kindString)) {
         return null;
     }
 
-    const moduleName = JSON.parse(moduleItem.name);
+    const moduleName = moduleItem.name;
     const commentLines = getComment(item).split('\n');
     const info = {
         name: item.name,
@@ -268,9 +266,22 @@ const getInfo = (filesMap, moduleItem, item) => {
     return info;
 };
 
+const isComponent = (item) => {
+    if (item.name !== 'default') {
+        return false;
+    }
+
+    const {kindString, type} = item;
+
+    return kindString === 'Class'
+        || (kindString === 'Function' && _.get(item, 'signatures.0.type.name') === 'JSX.Element')
+        || (kindString === 'Property' && (type.name === 'MemoExoticComponent' || type.name === 'FieldWrapperComponent'));
+};
+
 module.exports = {
     getInfo,
     getProperty,
     typeToObject,
     typeToString,
+    isComponent,
 };

@@ -1,0 +1,3 @@
+{
+  "extends": "@steroidsjs/eslint-config"
+}

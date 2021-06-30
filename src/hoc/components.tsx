@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {useComponents} from '../hooks';
-import {IComponents} from '../hooks/useComponents';
+import {IComponents} from '../providers/ComponentsProvider';
 
 export interface IComponentsHocOutput extends IComponents {
     components?: IComponents,
@@ -11,7 +11,7 @@ const exportComponents = (components, names) => {
     const props = {};
     names.forEach(items => {
         [].concat(items).forEach(name => {
-            props[name] = window.SteroidsComponents[name];
+            props[name] = components[name];
         });
     });
     return props;

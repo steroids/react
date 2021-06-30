@@ -36,7 +36,7 @@ export default (
             {...props}
             fetchRefresh={fetchRefresh}
             fetchUpdate={fetchUpdate}
-            {...{[config.key]: data}}
+            {...({[config.key]: data})}
         />
     );
 };

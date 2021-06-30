@@ -8,14 +8,13 @@ export default class ClientStorageComponent {
     STORAGE_COOKIE: string;
     STORAGE_LOCAL: any;
     STORAGE_SESSION: any;
-    cookieAvailable: any;
     localStorageAvailable: boolean;
     sessionStorageAvailable: boolean;
+    private _ssrCookie: Record<string, any>
 
-    constructor(components) {
+    constructor(components, config) {
         this.localStorageAvailable = !process.env.IS_SSR;
         this.sessionStorageAvailable = !process.env.IS_SSR;
-        this.cookieAvailable = !process.env.IS_SSR;
         this.STORAGE_SESSION = 'session';
         this.STORAGE_LOCAL = 'local';
         this.STORAGE_COOKIE = 'cookie';
@@ -37,6 +36,8 @@ export default class ClientStorageComponent {
                 this.sessionStorageAvailable = false;
             }
         }
+
+        this._ssrCookie = config?.ssrCookie;
     }
 
     /**
@@ -53,10 +54,9 @@ export default class ClientStorageComponent {
             storageName === this.STORAGE_SESSION
         ) {
             return window.sessionStorage.getItem(name);
-        } else if (this.cookieAvailable) {
-            return cookie.get(name);
+        } else {
+            return process.env.IS_SSR ? this._ssrCookie.get(name) : cookie.get(name);
         }
-        return null;
     }
 
     /**
@@ -74,11 +74,12 @@ export default class ClientStorageComponent {
             storageName === this.STORAGE_SESSION
         ) {
             window.sessionStorage.setItem(name, value);
-        } else if (this.cookieAvailable) {
-            cookie.set(name, value, {
+        } else {
+            const options = {
                 expires,
                 domain: this._getDomain()
-            });
+            };
+            process.env.IS_SSR ? this._ssrCookie.set(name, value, options) : cookie.set(name, value, options);
         }
     }
 
@@ -96,10 +97,11 @@ export default class ClientStorageComponent {
             storageName === this.STORAGE_SESSION
         ) {
             window.sessionStorage.removeItem(name);
-        } else if (this.cookieAvailable) {
-            cookie.remove(name, {
+        } else {
+            const options = {
                 domain: this._getDomain()
-            });
+            };
+            process.env.IS_SSR ? this._ssrCookie.remove(name, options) : cookie.remove(name, options);
         }
     }
 

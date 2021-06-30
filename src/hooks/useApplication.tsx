@@ -1,115 +1,17 @@
 import * as React from 'react';
 import {Provider} from 'react-redux';
 import _merge from 'lodash-es/merge';
-import {useCallback, useMemo, useState, PropsWithChildren, useContext} from 'react';
-import {useMount, useUnmount} from 'react-use';
+import {useCallback} from 'react';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
 import MetaComponent from '../components/MetaComponent';
-import {IComponents} from './useComponents';
+import {IComponents} from '../providers/ComponentsProvider';
 import Router, {IRouteItem} from '../ui/nav/Router/Router';
 import MetricsComponent from '../components/MetricsComponent';
-import {SsrProviderContext} from '../ui/nav/Router/SsrProvider';
-
-export interface IScreen {
-    width: number,
-    media: Record<string, any>,
-    setMedia: any,
-    isPhone: () => boolean,
-    isTablet: () => boolean,
-    isDesktop: () => boolean,
-    getDeviceType: () => string
-}
-
-export const ScreenContext = React.createContext({} as IScreen);
-
-export interface IScreenProviderProps extends PropsWithChildren<any> {
-    media?: Record<string, any>,
-    skipTimeout?: boolean
-}
-
-export const SCREEN_PHONE = 'phone';
-export const SCREEN_TABLET = 'tablet';
-export const SCREEN_DESKTOP = 'desktop';
-
-function ScreenProvider(props: IScreenProviderProps): JSX.Element {
-    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1280);
-    const [media, setMedia] = useState(props.media || {
-        [SCREEN_PHONE]: 320,
-        [SCREEN_TABLET]: 768,
-        [SCREEN_DESKTOP]: 1024,
-    });
-
-    let timer = null;
-    const onResize = () => {
-        if (timer) {
-            clearTimeout(timer);
-        }
-        if (props.skipTimeout) {
-            setWidth(window.innerWidth);
-        } else {
-            timer = setTimeout(() => setWidth(window.innerWidth), 100);
-        }
-    };
-
-    useMount(() => {
-        if (typeof window !== 'undefined') {
-            window.addEventListener('resize', onResize, false);
-        }
-    });
-
-    useUnmount(() => {
-        if (typeof window !== 'undefined') {
-            window.removeEventListener('resize', onResize);
-        }
-    });
-
-    const getDeviceType = useCallback(() => {
-        if (width < media[SCREEN_TABLET]) {
-            return SCREEN_PHONE;
-        }
-        if (width < media[SCREEN_DESKTOP]) {
-            return SCREEN_TABLET;
-        }
-        return SCREEN_DESKTOP;
-    }, [width, media]);
-
-    const isPhone = useCallback(() => getDeviceType() === SCREEN_PHONE, [getDeviceType]);
-    const isTablet = useCallback(() => getDeviceType() === SCREEN_TABLET, [getDeviceType]);
-    const isDesktop = useCallback(() => getDeviceType() === SCREEN_DESKTOP, [getDeviceType]);
-
-    const value = useMemo(() => ({
-        width,
-        media,
-        setMedia,
-        isPhone,
-        isTablet,
-        isDesktop,
-        getDeviceType,
-    }), [
-        width,
-        media,
-        setMedia,
-        isPhone,
-        isTablet,
-        isDesktop,
-        getDeviceType,
-    ]);
-
-    return (
-        <ScreenContext.Provider value={value as IScreen}>
-            {props.children}
-        </ScreenContext.Provider>
-    );
-}
-
-declare global {
-    interface Window {
-        SteroidsComponents: IComponents,
-    }
-}
+import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider';
+import useComponents from './useComponents';
 
 /**
  * Application HOC
@@ -136,8 +38,6 @@ export interface IApplicationHookResult {
     renderApplication: (children?: any) => JSX.Element,
     components: IComponents,
 }
-
-export const ComponentsContext = React.createContext({} as IComponents);
 
 const defaultComponents = {
     clientStorage: {
@@ -167,13 +67,13 @@ const defaultComponents = {
 };
 
 export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {
-    const ssrContextValue = useContext(SsrProviderContext);
+    const componentsContext = useComponents();
 
     let components: IComponents;
 
-    // Store global (in global mode)
-    const useGlobal = config.useGlobal !== false && !process.env.IS_SSR && typeof window !== 'undefined';
-    if (useGlobal) {
+    if (process.env.IS_SSR) {
+        components = componentsContext;
+    } else {
         components = window.SteroidsComponents || null;
     }
 
@@ -193,23 +93,13 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 if (config.reducers) {
                     componentConfig.reducers = config.reducers;
                 }
-
-                if (process.env.IS_SSR) {
-                    componentConfig.history = ssrContextValue.history;
-                    componentConfig.initialState = {
-                        ...componentConfig.initialState,
-                        ...ssrContextValue.initialState,
-                    };
-                }
             }
 
             // eslint-disable-next-line new-cap
             components[name] = new className(components, componentConfig);
         });
 
-        if (useGlobal) {
-            window.SteroidsComponents = components;
-        }
+        window.SteroidsComponents = components;
 
         // Init callback
         if (config.onInit) {
@@ -240,20 +130,12 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
             );
         }
 
-        if (!useGlobal) {
-            content = (
-                <ComponentsContext.Provider value={components}>
-                    {content}
-                </ComponentsContext.Provider>
-            );
-        }
-
         return (
             <Provider store={components.store.store}>
                 {content}
             </Provider>
         );
-    }, [components, config, useGlobal]);
+    }, [components, config]);
 
     return {renderApplication, components};
 }

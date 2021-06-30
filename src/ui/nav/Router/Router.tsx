@@ -13,7 +13,7 @@ import {fetch} from '../../../hoc';
 import {initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
 import {getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducers/router';
-import {SsrProviderContext} from './SsrProvider';
+import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {IFetchHocConfigFunc} from '../../../hoc/fetch';
 
 /**

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {bem} from '@steroidsjs/core/hoc/bem';
+import bem from '@steroidsjs/core/hoc/bem';
 import {IBemHocOutput} from '@steroidsjs/core/hoc/bem';
 
 export interface IAvatarProps extends IBemHocOutput {
@@ -21,7 +21,6 @@ export default class Avatar extends React.PureComponent<IAvatarProps> {
     };
 
     render() {
-        const bem2 = useBem();
         const bem = this.props.bem;
         return (
             <img

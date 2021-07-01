@@ -7,7 +7,7 @@ import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
 import MetaComponent from '../components/MetaComponent';
-import {IComponents} from '../providers/ComponentsProvider';
+import ComponentsProvider, {IComponents} from '../providers/ComponentsProvider';
 import Router, {IRouteItem} from '../ui/nav/Router/Router';
 import MetricsComponent from '../components/MetricsComponent';
 import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider';
@@ -67,13 +67,11 @@ const defaultComponents = {
 };
 
 export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {
-    const componentsContext = useComponents();
+    const useGlobal = config.useGlobal !== false;
 
-    let components: IComponents;
+    let components: IComponents = useComponents();
 
-    if (process.env.IS_SSR) {
-        components = componentsContext;
-    } else {
+    if (useGlobal && !process.env.IS_SSR) {
         components = window.SteroidsComponents || null;
     }
 
@@ -127,6 +125,14 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 <ScreenProvider {...config.screen}>
                     {content}
                 </ScreenProvider>
+            );
+        }
+
+        if (!(useGlobal || process.env.IS_SSR)) {
+            content = (
+                <ComponentsProvider components={components}>
+                    {content}
+                </ComponentsProvider>
             );
         }
 

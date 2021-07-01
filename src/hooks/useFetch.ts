@@ -2,7 +2,7 @@ import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect} from 'react-use';
 import axios from 'axios';
 import {useComponents} from './index';
-import {IComponents} from './useComponents';
+import {IComponents} from '../providers/ComponentsProvider';
 import {IApiMethod} from '../components/ApiComponent';
 
 export interface IFetchConfig {

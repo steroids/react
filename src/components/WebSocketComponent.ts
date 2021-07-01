@@ -3,7 +3,7 @@
  * Компонент, обеспечивающий постоянное web-socket соединение с сервером. Поддерживает подписку на каналы, обработку
  * ответов и токен авторизации
  */
-import {IComponents} from '../hooks/useComponents';
+import {IComponents} from '../providers/ComponentsProvider';
 
 const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;
 

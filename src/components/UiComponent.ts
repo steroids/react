@@ -4,7 +4,7 @@ import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
 import {ReactNode} from 'react';
-import {IComponents} from '../hooks/useComponents';
+import {IComponents} from '../providers/ComponentsProvider';
 
 /**
  * Ui Component

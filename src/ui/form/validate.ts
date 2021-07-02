@@ -6,7 +6,6 @@ import _isEmpty from 'lodash-es/isEmpty';
 import _size from 'lodash-es/size';
 import _isFunction from 'lodash-es/isFunction';
 import moment from 'moment';
-import {SubmissionError} from 'redux-form';
 
 const validate = function (data, rules) {
     const errors = {};
@@ -79,12 +78,14 @@ const validate = function (data, rules) {
         });
     });
     if (!_isEmpty(errors)) {
-        throw new SubmissionError(errors);
+        // TODO
+        // throw new SubmissionError(errors);
     }
 };
 validate.error = (attribute, message) => {
-    throw new SubmissionError({
-        [attribute]: message
-    });
+    // TODO
+    // throw new SubmissionError({
+    //     [attribute]: message
+    // });
 };
 export default validate;

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {items} from '@steroidsjs/core/ui/nav/Nav/demo/basic';
 import _startCase from 'lodash-es/startCase';
+import {items} from '../../../nav/Nav/demo/basic';
 import Nav from '../Nav';
 
 const layouts = ['button', 'icon', 'link', 'tabs', 'navbar', 'list'];

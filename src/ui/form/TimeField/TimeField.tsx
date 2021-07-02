@@ -1,22 +1,23 @@
-import * as React from 'react';
-import {useCallback, useMemo, useRef, useState} from 'react';
-import {useClickAway} from 'react-use';
-import moment from 'moment';
+import {useMemo} from 'react';
+import useDateInputState, {
+    IDateInputStateInput,
+    IDateInputStateOutput,
+} from '../../form/DateField/useDateInputState';
 import {useComponents} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+
+export interface ITimePanelViewProps extends Pick<ITimeFieldViewProps,
+    'value' | 'onClose' | 'onNow' | 'onSelect' | 'className'>
+{
+    showHeader?: boolean,
+    showNow?: boolean,
+}
 
 /**
  * TimeField
  * Поле для выбора времени
  */
-export interface ITimeFieldProps extends IFieldWrapperInputProps {
-
-    /**
-     * Включить возможность сброса значения
-     * @example 'true'
-     */
-    showRemove?: boolean,
-
+export interface ITimeFieldProps extends IDateInputStateInput {
     /**
      * Отключить border вокруг элемента
      * @example 'true'
@@ -24,22 +25,10 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
     noBorder?: boolean,
 
     /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: string;
-
-    /**
-     * Свойства для элемента \<input /\>
-     * @example {onKeyDown: ...}
-     */
-    inputProps?: any;
-
-    /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      * Дополнительный CSS-класс для элемента отображения
@@ -52,154 +41,79 @@ export interface ITimeFieldProps extends IFieldWrapperInputProps {
      */
     style?: any;
 
+    /**
+     * Свойства для view компонента
+     */
+    viewProps?: Record<string, unknown>,
+
+    /**
+     * Свойства для компонента панели времени
+     */
+    timePanelViewProps?: any,
+
     [key: string]: any;
 }
 
-export interface ITimeFieldViewProps extends ITimeFieldProps, IFieldWrapperOutputProps {
-    forwardedRef: any,
-    style?: any,
-    errors?: string[],
-    placeholder?: string,
-    type: any,
-    inputProps: {
-        type: string,
-        name: string,
-        onChange: (value: string) => void,
-        value: string | number,
-        placeholder: string,
-        disabled: string,
-    },
-    showDropDown: boolean,
-    openDropDown: () => void,
-    closeDropDown: () => void,
-    onBlur: () => void,
-    clearInput: () => void,
-    setNow: () => void,
+export interface ITimeFieldViewProps extends IDateInputStateOutput,
+    Pick<ITimeFieldProps, 'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps'>
+{
+    [key: string]: any;
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const [hours, setHours] = useState<string>(null);
-    const [minutes, setMinutes] = useState<string>(null);
-    const [innerInput, setInnerInput] = useState<string>('');
-    const [showDropDown, setShowDropDown] = useState<boolean>(false);
-
-    const calculatedValue = useCallback((newTime, part = '') => {
-        let inputValue = props.input.value ? props.input.value.split(':') : '';
-        if (part === 'HOUR') {
-            inputValue = `${newTime}:${inputValue[1] || '00'}`;
-        } else if (part === 'MIN') {
-            inputValue = `${inputValue[0] || '00'}:${newTime}`;
-        }
-        setInnerInput(inputValue);
-        return inputValue;
-    }, [props.input.value]);
-
-    const changeHours = useCallback((newHour) => {
-        if (newHour !== hours) {
-            setHours(newHour);
-            props.input.onChange.call(null, calculatedValue(newHour, 'HOUR'));
-        }
-    }, [calculatedValue, hours, props.input.onChange]);
-
-    const changeMinutes = useCallback((newMinute) => {
-        if (newMinute !== minutes) {
-            setMinutes(newMinute);
-            props.input.onChange.call(null, calculatedValue(newMinute, 'MIN'));
-        }
-    }, [calculatedValue, minutes, props.input.onChange]);
-
-    const onChange = useCallback((value) => {
-        setInnerInput(value);
-        const matchedValue = value.match(/(\d{2}):(\d{2})/);
-        if (matchedValue?.length > 0) {
-            const newHours = matchedValue[1];
-            const newMinutes = matchedValue[2];
-            const isHourChanged = newHours !== hours && newHours <= 23;
-            const isMinutesChanged = newMinutes !== minutes && newMinutes <= 59;
-            if (isHourChanged && isMinutesChanged) {
-                setHours(newHours);
-                setMinutes(newMinutes);
-                props.input.onChange.call(null, value);
-            } else {
-                if (isHourChanged) {
-                    changeHours(newHours);
-                }
-                if (isMinutesChanged) {
-                    changeMinutes(newMinutes);
-                }
-            }
-        }
-    }, [changeHours, changeMinutes, hours, minutes, props.input.onChange]);
-
-    const setNow = useCallback(() => {
-        const timeNow = moment().format('hh:mm');
-        onChange.call(null, timeNow);
-    }, [onChange]);
-
-    const clearInput = useCallback(() => {
-        setInnerInput(null);
-        setHours(null);
-        setMinutes(null);
-        setShowDropDown(false);
-        props.input.onChange.call(null, null);
-    }, [props.input.onChange]);
-
-    const onBlur = useCallback(() => {
-        if (props.input.value !== innerInput) {
-            setInnerInput(props.input.value);
-        }
-    }, [innerInput, props.input.value]);
-
-    const openDropDown = useCallback(() => {
-        if (!showDropDown) {
-            setShowDropDown(true);
-        }
-    }, [showDropDown]);
-
-    const closeDropDown = useCallback(() => {
-        if (showDropDown) {
-            setShowDropDown(false);
-        }
-    }, [showDropDown]);
-
-    // Outside click -> close
-    const forwardedRef = useRef(null);
-    useClickAway(forwardedRef, closeDropDown);
-
-    const inputProps = useMemo(() => ({
-        type: props.type,
-        name: props.input.name,
-        placeholder: props.placeholder,
+    const {
+        onNow,
+        onClear,
+        onClose,
+        isOpened,
+        inputProps,
+    } = useDateInputState({
+        input: props.input,
         disabled: props.disabled,
-        ...props.inputProps,
-        value: innerInput || props.input.value,
-        onChange,
-    }), [innerInput, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
+        onChange: props.onChange,
+        required: props.required,
+        inputProps: props.inputProps,
+        placeholder: props.placeholder,
+        valueFormat: props.valueFormat,
+        displayFormat: props.displayFormat,
+    });
+
+    const timePanelViewProps = useMemo(() => ({
+        onNow,
+        onClose,
+        value: inputProps.value,
+        onSelect: inputProps.onChange,
+        ...props.timePanelViewProps,
+    }), [inputProps.onChange, inputProps.value, onClose, onNow, props.timePanelViewProps]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', {
-        ...props,
-        forwardedRef,
+        ...props.viewProps,
+        onNow,
+        onClear,
+        onClose,
+        isOpened,
         inputProps,
-        changeHours,
-        changeMinutes,
-        showDropDown,
-        openDropDown,
-        closeDropDown,
-        onBlur,
-        clearInput,
-        setNow,
+        timePanelViewProps,
+        size: props.size,
+        icon: props.icon,
+        errors: props.errors,
+        noBorder: props.noBorder,
+        className: props.className,
+        showRemove: props.showRemove,
     });
 }
 
 TimeField.defaultProps = {
     disabled: false,
+    displayFormat: 'HH:mm',
     required: false,
+    placeholder: 'Select time',
     noBorder: false,
     showRemove: true,
-    placeholder: 'Select time',
     type: 'text',
+    valueFormat: 'HH:mm',
 };
 
 export default fieldWrapper('TimeField', TimeField);

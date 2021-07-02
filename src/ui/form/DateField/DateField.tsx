@@ -1,195 +1,91 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import useDateAndTime, {IDateAndTimeOutput} from './useDateAndTime';
+import {useMemo} from 'react';
+import {ICalendarProps} from '../../content/Calendar/Calendar';
 import {useComponents} from '../../../hooks';
+import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
 import fieldWrapper, {
-    IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
 
-/**
- * DateField
- * Поле ввода с выпадающим календарём для выбора даты
- */
-export interface IDateFieldProps extends IFieldWrapperInputProps {
+export interface IDateFieldProps extends IDateInputStateInput {
     /**
-     * Свойства для компонента DayPickerInput
-     * @example {dayPickerProps: {showWeekNumbers: true}}
+     * Дополнительный CSS-класс для элемента отображения
      */
-    pickerProps?: any;
-
-    /**
-     * Формат даты показываемый пользователю
-     * @example DD.MM.YYYY
-     */
-    displayFormat?: string;
-
-    /**
-     * Формат даты отправляемый на сервер
-     * @example YYYY-MM-DD
-     */
-    valueFormat?: string;
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: any;
+    className?: CssClassName,
 
     /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: any,
 
     /**
-     * Иконка
-     * @example calendar-day
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
      */
-    icon?: boolean | string;
+    view?: CustomView,
 
-    showRemove?: boolean,
+    /**
+     * Свойства для view компонента
+     */
+    viewProps?: Record<string, unknown>,
 
-    [key: string]: any;
+    /**
+     * Свойства для компонента Calendar
+     */
+    calendarProps?: ICalendarProps,
+
+    [key: string]: any,
 }
 
-export interface IDateFieldViewProps extends IFieldWrapperOutputProps, IDateFieldProps, IDateAndTimeOutput {
-    onBlur: () => void,
-    localeUtils: any,
-    onInputChange: any,
-    isPanelOpen: boolean,
-    openPanel: any
-    inputProps: {
-        [key: string]: any,
-    },
-    closePanel: any,
-    onDayClick: any,
-    clearInput: any,
+export interface IDateFieldViewProps extends IDateInputStateOutput,
+    Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps'>
+{
+    [key: string]: any,
 }
 
+/**
+ * DateField
+ * Поле ввода с выпадающим календарём для выбора даты
+ */
 function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
+
     const {
-        month,
-        toYear,
-        fromYear,
-        dateFrom,
-        parseDate,
-        formatDate,
-        updateMonth,
-        updateDateFrom,
-    } = useDateAndTime({
-        displayFormat: props.displayFormat,
+        onClear,
+        onClose,
+        isOpened,
+        inputProps,
+    } = useDateInputState({
+        input: props.input,
+        disabled: props.disabled,
+        onChange: props.onChange,
+        required: props.required,
+        inputProps: props.inputProps,
+        placeholder: props.placeholder,
         valueFormat: props.valueFormat,
-        formatsArray: [
-            props.displayFormat,
-            props.valueFormat,
-        ],
+        displayFormat: props.displayFormat,
     });
 
-    const [innerInput, setInnerInput] = useState<string>('');
-    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
-
-    const updateInputValue = useCallback((date: string) => {
-        props.input.onChange.call(null, date);
-        if (props.onChange) {
-            props.onChange(date);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const onChange = useCallback(value => {
-        setInnerInput(value);
-        const parsedDate = parseDate(value);
-        if (parsedDate) {
-            updateInputValue(formatDate(parsedDate, props.valueFormat));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const onDayClick = useCallback((day) => {
-        updateInputValue(formatDate(day, props.valueFormat));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const openPanel = useCallback(() => {
-        if (!isPanelOpen) {
-            setIsPanelOpen(true);
-        }
-    }, [isPanelOpen]);
-
-    const closePanel = useCallback(() => {
-        if (isPanelOpen) {
-            setIsPanelOpen(false);
-        }
-    }, [isPanelOpen]);
-
-    const clearInput = useCallback(() => {
-        setIsPanelOpen(false);
-        setInnerInput('');
-        updateDateFrom(null);
-        props.input.onChange.call(null, null);
-    }, [props.input.onChange, updateDateFrom]);
-
-    // TODO onBlur, clear garbage in input
-    const onBlur = useCallback(() => {}, []);
-
-    // Listen to input changes -> update state
-    useEffect(() => {
-        if (props.input.value) {
-            const valueAsDate = parseDate(props.input.value);
-            const valueAsString = formatDate(valueAsDate, props.displayFormat);
-            if (!innerInput || valueAsString !== innerInput) {
-                setInnerInput(valueAsString);
-            }
-            if (!dateFrom || valueAsDate !== dateFrom) {
-                updateDateFrom(valueAsDate);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.input.value]);
-
-    const inputProps = useMemo(() => ({
-        autoComplete: 'off',
-        disabled: props.disabled,
-        placeholder: props.placeholder || props.displayFormat,
-        required: props.required,
-        name: props.input.name,
-        type: 'text',
-        value: innerInput,
-        onChange,
-        ...props.inputProps,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }), [innerInput, props.disabled, props.input.name, props.inputProps, props.placeholder, props.required]);
+    // Calendar props
+    const calendarProps: ICalendarProps = useMemo(() => ({
+        value: props.input.value,
+        onChange: props.input.onChange,
+        valueFormat: props.valueFormat,
+        ...props.calendarProps,
+    }), [props.calendarProps, props.input.onChange, props.input.value, props.valueFormat]);
 
     return components.ui.renderView(props.view || 'form.DateFieldView', {
-        ...props,
-        month,
-        toYear,
-        onBlur,
-        fromYear,
-        onChange,
-        dateFrom,
-        openPanel,
-        parseDate,
-        clearInput,
-        closePanel,
-        formatDate,
+        ...props.viewProps,
+        onClear,
+        onClose,
+        isOpened,
         inputProps,
-        onDayClick,
-        updateMonth,
-        isPanelOpen,
+        calendarProps,
+        size: props.size,
+        icon: props.icon,
+        errors: props.errors,
+        className: props.className,
+        showRemove: props.showRemove,
     });
 }
 

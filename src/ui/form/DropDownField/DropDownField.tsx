@@ -170,6 +170,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
                 props.onChange(newValues);
             }
         }
+
+        //if form reset
+        if (props.input.value === undefined && selectedIds.length > 0) {
+            onReset();
+        }
     }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds, props.attribute, props]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {

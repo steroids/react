@@ -1,5 +1,4 @@
 import React from 'react';
-import {Avatar} from '@steroidsjs/core/ui/content/Avatar';
 import { useComponents } from '../../../hooks';
 
 interface AvatarGroupProps{

@@ -39,7 +39,7 @@ export interface IApplicationHookResult {
     components: IComponents,
 }
 
-const defaultComponents = {
+export const defaultComponents = {
     clientStorage: {
         className: ClientStorageComponent,
     },

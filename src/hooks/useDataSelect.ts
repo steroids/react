@@ -69,7 +69,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
 
     // Initial select
     const initialSelectedIds = useMemo(() => {
-        if (config.selectedIds) {
+        if (config.selectedIds?.length > 0) {
             return [].concat(config.selectedIds || []);
         }
 
@@ -81,6 +81,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             ? [config.items[0][primaryKey]]
             : [];
     }, [config.items, config.selectFirst, config.selectedIds, primaryKey, config.inputValue]);
+
+    // console.log(initialSelectedIds);
 
     // State
     const [isOpened, setIsOpened] = useState(false);

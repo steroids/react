@@ -13,6 +13,7 @@ import {init, setData, setUser} from '../actions/auth';
 import useDispatch from './useDispatch';
 import {setMeta} from '../actions/fields';
 import {goToRoute} from '../actions/router';
+import useSsr from '@steroidsjs/core/hooks/useSsr';
 
 export interface ILayout {
     status?: string,
@@ -26,6 +27,14 @@ export const STATUS_RENDER_ERROR = 'render_error';
 export const STATUS_HTTP_ERROR = 'render_error';
 export const STATUS_ACCESS_DENIED = 'access_denied';
 export const STATUS_OK = 'ok';
+
+export const HTTP_STATUS_CODES = {
+    [STATUS_NOT_FOUND]: 404,
+    [STATUS_ACCESS_DENIED]: 403,
+    [STATUS_OK]: 200,
+    [STATUS_RENDER_ERROR]: 500,
+    [STATUS_HTTP_ERROR]: 500,
+};
 
 export default function useLayout(initAction: any = null): ILayout {
     const {route, user, data, isInitialized, initializeCounter, redirectPageId} = useSelector(state => ({
@@ -140,6 +149,12 @@ export default function useLayout(initAction: any = null): ILayout {
                 );
             }
         }
+    }
+
+    //save status code for ssr
+    const ssrContextValue = useSsr();
+    if (process.env.IS_SSR) {
+        ssrContextValue.staticContext.statusCode = HTTP_STATUS_CODES[status];
     }
 
     return {

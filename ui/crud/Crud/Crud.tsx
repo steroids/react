@@ -46,6 +46,7 @@ export interface ICrudClickProps extends ICrudProps, IConnectHocOutput, ICompone
 
 export interface ICrudProps {
     crudId?: string;
+    title?: string,
     mode?: 'page' | 'modal',
     restUrl?: string | ((props: ICrudClickProps) => string),
     primaryKey?: 'id' | string,
@@ -277,8 +278,8 @@ export default class Crud extends React.PureComponent<ICrudProps & ICrudPrivateP
         const grid = typeof this.props.grid === 'function' ? this.props.grid(this.props) : this.props.grid;
         return (
             <CrudView
-                {...this.props}
                 title={this.props.routeTitle}
+                {...this.props}
                 controls={this._getControls()}
             >
                 {ItemComponent && (

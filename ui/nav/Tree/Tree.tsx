@@ -3,12 +3,14 @@ import _isString from 'lodash-es/isString';
 import _omit from 'lodash-es/omit';
 import _isEqual from 'lodash-es/isEqual';
 import _keys from 'lodash-es/keys';
+import _intersection from 'lodash-es/intersection';
 import {components, connect, normalize} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams, IRoute} from '../../../reducers/router';
 import {IThemeHocOutput} from '../../../hoc/theme';
 import {IRouteItem} from '../Router/Router';
 import {IButtonProps} from '../../form/Button/Button';
+import {getUser} from '@steroidsjs/core/reducers/auth';
 
 export interface ITreeItem extends IButtonProps {
     id?: string | number,
@@ -63,6 +65,7 @@ interface TreeState {
         selectedItemId: _isString(props.items) ? getRouteId(state) : props.selectedItemId,
         activeRouteIds: getActiveRouteIds(state),
         routerParams: getRouterParams(state),
+        user: getUser(state),
     })
 )
 @normalize(
@@ -78,10 +81,13 @@ interface TreeState {
                             : Object.keys(route.items || {}).map(id => routeToItem(route.items[id]))
                     ).filter(r => r.visible);
 
+                    const userRoles = [].concat(props.user?.roles || props.user?.role || []);
+                    const hasAccess = _intersection(route.roles, userRoles).length > 0;
+
                     return {
                         id: route.id,
                         label: route.label || route.title,
-                        visible: route.isNavVisible !== false,
+                        visible: hasAccess && route.isNavVisible !== false,
                         toRoute: items.length === 0 ? route.id : null,
                         toRouteParams: items.length === 0 ? props.routerParams : null,
                         items,

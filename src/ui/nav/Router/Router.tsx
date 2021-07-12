@@ -8,6 +8,7 @@ import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {useEffect, useState} from 'react';
 import {useEffectOnce, usePrevious, useUpdateEffect} from 'react-use';
+import {IFetchConfig} from '@steroidsjs/core/hooks/useFetch';
 import {useComponents, useSelector} from '../../../hooks';
 import {fetch} from '../../../hoc';
 import {initParams, initRoutes} from '../../../actions/router';
@@ -118,6 +119,16 @@ export interface IRouteItem {
      * Вложенные роуты
      */
     items?: IRouteItem[] | {[key: string]: IRouteItem};
+
+    /**
+     * Обработчик, который принимает параметры URL и возвращает массив с конфигурациями HTTP-запросов.
+     * Функция запускается перед рендерингом приложения в режиме SSR и используется для предварительной
+     * загрузки данных, необходимых на текущей странице.
+     * Хук useFetch не будет делать запрос, если существуют подгруженные данные.
+     * @param {*} match
+     * @return {Array} Например, [{url: '/api/v1/some-data', key: 'someData'}]
+     */
+    preloadData?: (match: any) => IFetchConfig[],
 
     [key: string]: any,
 }

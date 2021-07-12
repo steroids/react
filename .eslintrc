@@ -1,3 +1,6 @@
 {
-  "extends": "@steroidsjs/eslint-config"
+  "extends": "@steroidsjs/eslint-config",
+  "rules": {
+    "linebreak-style": 0
+  }
 }

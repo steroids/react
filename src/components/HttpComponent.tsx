@@ -36,7 +36,7 @@ export default class HttpComponent {
 
         this.apiUrl = config.apiUrl
             //|| process.env.APP_BACKEND_URL
-            || (typeof window !== 'undefined' ? window.location.protocol + '//' + window.location.host : '');
+            || (!process.env.IS_SSR ? window.location.protocol + '//' + window.location.host : '');
         this.accessTokenKey = config.accessTokenKey || 'accessToken';
 
         this._lazyRequests = {};
@@ -146,7 +146,7 @@ export default class HttpComponent {
     }
 
     getUrl(method) {
-        if (method === null && typeof window !== 'undefined') {
+        if (method === null && !process.env.IS_SSR) {
             method = window.location.pathname;
         }
         if (method.indexOf('://') === -1) {

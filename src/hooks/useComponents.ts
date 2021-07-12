@@ -1,6 +1,5 @@
 import {useContext} from 'react';
-import {ComponentsContext} from '../providers/ComponentsProvider';
-import {IComponents} from '../providers/ComponentsProvider';
+import {ComponentsContext, IComponents} from '../providers/ComponentsProvider';
 
 export default function useComponents(): IComponents {
     const components = useContext(ComponentsContext);

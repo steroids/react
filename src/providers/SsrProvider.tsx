@@ -1,11 +1,17 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
+import {StaticRouterContext} from 'react-router';
+
+export interface IPreloadedData {
+    [configId: string]: any
+}
 
 export interface ISsr {
     history?: {
         initialEntries: string[],
     },
-    staticContext?: any,
+    staticContext?: StaticRouterContext,
+    preloadedData?: IPreloadedData
 }
 
 export const SsrProviderContext = React.createContext<ISsr>(null);
@@ -17,7 +23,9 @@ export default function SsrProvider(props: ISsrProviderProps): JSX.Element {
         <SsrProviderContext.Provider value={{
             history: props.history,
             staticContext: props.staticContext,
-        }}>
+            preloadedData: props.preloadedData,
+        }}
+        >
             {props.children}
         </SsrProviderContext.Provider>
     );

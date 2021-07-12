@@ -24,7 +24,7 @@ export const SCREEN_TABLET = 'tablet';
 export const SCREEN_DESKTOP = 'desktop';
 
 export default function ScreenProvider(props: IScreenProviderProps): JSX.Element {
-    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1280);
+    const [width, setWidth] = useState(!process.env.IS_SSR ? window.innerWidth : 1280);
     const [media, setMedia] = useState(props.media || {
         [SCREEN_PHONE]: 320,
         [SCREEN_TABLET]: 768,
@@ -44,15 +44,11 @@ export default function ScreenProvider(props: IScreenProviderProps): JSX.Element
     };
 
     useMount(() => {
-        if (typeof window !== 'undefined') {
-            window.addEventListener('resize', onResize, false);
-        }
+        window.addEventListener('resize', onResize, false);
     });
 
     useUnmount(() => {
-        if (typeof window !== 'undefined') {
-            window.removeEventListener('resize', onResize);
-        }
+        window.removeEventListener('resize', onResize);
     });
 
     const getDeviceType = useCallback(() => {

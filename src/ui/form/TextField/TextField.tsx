@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback, useMemo} from 'react';
+import {KeyboardEventHandler, useCallback, useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -45,7 +45,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
     inputProps: {
         name: string,
         onChange: (value: string | React.ChangeEvent) => void,
-        onKeyUp: (e: Event | React.KeyboardEvent) => void,
+        onKeyUp: KeyboardEventHandler<HTMLTextAreaElement>,
         value: string | number,
         placeholder: string,
         disabled: boolean,
@@ -67,7 +67,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
             // TODO This is not worked in redux... =(
             // dispatch(submit(props.formId));
         }
-    }, [dispatch, props.formId, props.submitOnEnter]);
+    }, [props.formId, props.submitOnEnter]);
 
     const onChange = useCallback(
         e => props.input.onChange.call(null, e.target ? e.target.value : e.nativeEvent.text),

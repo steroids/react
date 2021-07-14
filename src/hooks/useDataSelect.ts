@@ -7,6 +7,13 @@ import _isNil from 'lodash-es/isNil';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
+interface IDataSelectItem {
+    id: number | string | boolean,
+    label?: string,
+
+    [key: string]: unknown,
+}
+
 export interface IDataSelectConfig {
     /**
      * Возможность множественного выбора
@@ -15,14 +22,10 @@ export interface IDataSelectConfig {
     multiple?: boolean;
 
     /**
-     * Список с элементами
+     * Список с видимыми элементами
      * @example [{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]
      */
-    items: {
-        id: number | string | boolean,
-        label?: string,
-        [key: string]: unknown,
-    }[],
+    items: IDataSelectItem[],
 
     /**
      * Сделать активным первый элемент в списке
@@ -46,6 +49,11 @@ export interface IDataSelectConfig {
      * Значение поля в форме
      */
     inputValue: any
+
+    /**
+     *  Список со всеми элементами
+     */
+    sourceItems?: IDataSelectItem[],
 }
 
 export interface IDataSelectResult {
@@ -89,7 +97,6 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     const [isFocused, setIsFocused] = useState(false);
     const [hoveredId, setHoveredId] = useState(null);
     const [selectedIds, setSelectedIdsInternal] = useState(initialSelectedIds);
-    const [wasHandledDelete, setWasHandledDelete] = useState(false);
 
     // Handler for select/toggle item by id
     const setSelectedIds = useCallback((ids, skipToggle = false) => {
@@ -117,7 +124,6 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setIsOpened(false);
             }
         }
-        setWasHandledDelete(true);
     }, [config.multiple, selectedIds]);
 
     // Select first after fetch data
@@ -131,17 +137,14 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // Update selected items on change value
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
     useUpdateEffect(() => {
-        if (!wasHandledDelete) {
-            return
-        }
+        const itemsForSelect = config.sourceItems || config.items;
 
         const newSelectedIds = config.selectedIds && config.selectedIds.length > 0
-            ? config.items.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
+            ? itemsForSelect.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];
         if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
-        setWasHandledDelete(false);
     }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds]);
 
     // Global key down handler for navigate on items

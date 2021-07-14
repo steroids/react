@@ -89,7 +89,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const [query, setQuery] = useState('');
 
     // Data provider
-    const {items, isLoading, isAutoComplete} = useDataProvider({
+    const {items, isLoading, isAutoComplete, sourceItems} = useDataProvider({
         items: props.items,
         dataProvider: props.dataProvider,
         autoComplete: props.autoComplete,
@@ -117,6 +117,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         selectedIds: inputSelectedIds,
         primaryKey: props.primaryKey,
         items,
+        sourceItems,
         inputValue: props.input.value,
     });
 

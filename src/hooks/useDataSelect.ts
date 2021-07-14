@@ -89,6 +89,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     const [isFocused, setIsFocused] = useState(false);
     const [hoveredId, setHoveredId] = useState(null);
     const [selectedIds, setSelectedIdsInternal] = useState(initialSelectedIds);
+    const [wasHandledDelete, setWasHandledDelete] = useState(false);
 
     // Handler for select/toggle item by id
     const setSelectedIds = useCallback((ids, skipToggle = false) => {
@@ -116,6 +117,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setIsOpened(false);
             }
         }
+        setWasHandledDelete(true);
     }, [config.multiple, selectedIds]);
 
     // Select first after fetch data
@@ -129,13 +131,17 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // Update selected items on change value
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
     useUpdateEffect(() => {
-        // console.log(config.selectedIds, prevConfigSelectedIds);
+        if (!wasHandledDelete) {
+            return
+        }
+
         const newSelectedIds = config.selectedIds && config.selectedIds.length > 0
             ? config.items.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];
         if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
+        setWasHandledDelete(false);
     }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds]);
 
     // Global key down handler for navigate on items

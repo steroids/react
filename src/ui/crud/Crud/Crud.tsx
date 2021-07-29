@@ -216,7 +216,7 @@ function Crud(props: ICrudProps): JSX.Element {
                         }
                     }
 
-                    crudItem.onClick(e, localClickProps);
+                    crudItem.onClick(e, {...clickProps, ...localClickProps});
                 };
             } else {
                 button.toRoute = routeId;

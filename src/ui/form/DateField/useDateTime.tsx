@@ -15,7 +15,7 @@ interface IUseDateTimeProps extends
  * Возвращает значения и обработчики для передачи в Calendar и TimePanel
  */
 export default function useDateTime(props:IUseDateTimeProps) {
-    const [dateValueFormat, timeValueFormat] = props.displayFormat.split(props.dateTimeSeparator);
+    const [dateValueFormat, timeValueFormat] = props.valueFormat.split(props.dateTimeSeparator);
     const dateValue = convertDate(
         props.input.value,
         [props.displayFormat, props.valueFormat],

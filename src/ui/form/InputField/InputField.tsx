@@ -2,6 +2,7 @@ import * as React from 'react';
 import {ChangeEventHandler, ReactNode, useMemo} from 'react';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+import InputMask from 'react-input-mask';
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
@@ -129,28 +130,23 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     }
 
     // react-input-mask HOC for mask
-    // TODO
-    /*if (props.maskProps) {
+    if (props.maskProps) {
+        const maskOnChange = e => props.input.onChange(e.target.value)
         return (
             <InputMask
-                {...props}
+                {...inputProps}
                 {...props.maskProps}
-                value={props.input.value || ''}
-                onChange={e => props.input.onChange(e.target.value)}
+                onChange={maskOnChange}
             >
-                <InputFieldView
-                    {...this.props}
-                    inputProps={{
-                        type: this.props.type,
-                        name: this.props.input.name,
-                        placeholder: this.props.placeholder,
-                        disabled: this.props.disabled,
-                        ...this.props.inputProps
-                    }}
-                />
+                {components.ui.renderView(props.view || 'form.InputFieldView', {
+                    ...props,
+                    ...props.viewProps,
+                    inputProps,
+                    onChange: maskOnChange,
+                })}
             </InputMask>
         );
-    }*/
+    }
 
     return components.ui.renderView(props.view || 'form.InputFieldView', {
         ...props,

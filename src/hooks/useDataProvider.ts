@@ -9,6 +9,7 @@ import {useComponents} from './index';
 import Enum from '../base/Enum';
 import {getEnumLabels} from '../reducers/fields';
 import {smartSearch} from '../utils/text';
+import {usePrevious} from "react-use";
 
 export interface AutoCompleteConfig {
     /**
@@ -148,6 +149,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     // Fetch data
     const delayTimerRef = useRef(null);
     const isAutoFetchedRef = useRef(false);
+    const prevQuery = usePrevious(config.query);
     useEffect(() => {
         const fetchRemote = async () => {
             const searchHandler = dataProvider.onSearch || (
@@ -188,8 +190,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 clearTimeout(delayTimerRef.current);
             }
 
-            // Min length query logic
-            if (config.query && config.query.length >= autoComplete.minLength) {
+            // Changed query logic
+            if (prevQuery !== config.query) {
                 // Search with delay
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }

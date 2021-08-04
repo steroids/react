@@ -11,7 +11,7 @@ export interface ISsr {
         initialEntries: string[],
     },
     staticContext?: StaticRouterContext,
-    preloadedData?: IPreloadedData
+    preloadedData?: IPreloadedData,
 }
 
 export const SsrProviderContext = React.createContext<ISsr>(null);

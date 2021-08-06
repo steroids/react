@@ -141,7 +141,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 {content}
             </Provider>
         );
-    }, [components, config]);
+    }, [components, config, useGlobal]);
 
     return {renderApplication, components};
 }

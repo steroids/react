@@ -63,7 +63,7 @@ export function reducerItem(state, action) {
 const initialState = {};
 export default (state = initialState, action) => {
     if (action.formId) {
-        state[action.formId] = reducerItem(state[action.formId], action);
+        return _set(state, action.formId, reducerItem(state[action.formId], action));
     }
     return state;
 };

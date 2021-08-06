@@ -19,7 +19,6 @@ import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/Pag
 import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Model} from '../components/MetaComponent';
-import {useComponents} from '../hooks/index';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -187,7 +186,7 @@ export interface IListOutput {
     onSort: (value: any) => void,
 }
 
-const defaultConfig = {
+export const defaultConfig = {
     actionMethod: 'get',
     primaryKey: 'id',
     autoDestroy: true,
@@ -209,8 +208,6 @@ const defaultConfig = {
  * Выбранные фильтры синхронизируются с адресной строкой.
  */
 export default function useList(config: IListConfig): IListOutput {
-    const components = useComponents();
-
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
 
@@ -351,24 +348,32 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Init list in redux store
     useMount(() => {
-        dispatch(listInit(config.listId, {
-            listId: config.listId,
-            action: config.action || config.action === '' ? config.action : null,
-            actionMethod: config.actionMethod || defaultConfig.actionMethod,
-            onFetch: config.onFetch,
-            condition: config.condition,
-            scope: config.scope,
-            items: null,
-            sourceItems: config.items || null,
-            isRemote: !config.items,
-            primaryKey: config.primaryKey || defaultConfig.primaryKey,
-            formId,
-            loadMore: paginationProps.loadMore,
-            pageAttribute: paginationProps.attribute || null,
-            pageSizeAttribute: paginationSizeProps.attribute || null,
-            sortAttribute: sort.attribute || null,
-            layoutAttribute: layoutNamesProps.attribute || null,
-        }));
+        if (!list) {
+            const toDispatch = [
+                listInit(config.listId, {
+                    listId: config.listId,
+                    action: config.action || config.action === '' ? config.action : null,
+                    actionMethod: config.actionMethod || defaultConfig.actionMethod,
+                    onFetch: config.onFetch,
+                    condition: config.condition,
+                    scope: config.scope,
+                    items: null,
+                    sourceItems: config.items || null,
+                    isRemote: !config.items,
+                    primaryKey: config.primaryKey || defaultConfig.primaryKey,
+                    formId,
+                    loadMore: paginationProps.loadMore,
+                    pageAttribute: paginationProps.attribute || null,
+                    pageSizeAttribute: paginationSizeProps.attribute || null,
+                    sortAttribute: sort.attribute || null,
+                    layoutAttribute: layoutNamesProps.attribute || null,
+                }),
+                listSetItems(config.listId, config.items),
+                listLazyFetch(config.listId),
+            ];
+
+            dispatch(toDispatch);
+        }
     });
 
     // Check form values change
@@ -406,7 +411,7 @@ export default function useList(config: IListConfig): IListOutput {
     }, [formId, prevQuery, config.query, dispatch]);
 
     // Check change items
-    useEffect(() => {
+    useUpdateEffect(() => {
         dispatch([
             listSetItems(config.listId, config.items),
             listLazyFetch(config.listId),

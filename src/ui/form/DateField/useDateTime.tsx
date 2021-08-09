@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 import moment from 'moment';
 import {convertDate} from '../../../utils/calendar';
 import {IDateInputStateInput} from '../../form/DateField/useDateInputState';
@@ -16,25 +16,34 @@ interface IUseDateTimeProps extends
  */
 export default function useDateTime(props:IUseDateTimeProps) {
     const [dateValueFormat, timeValueFormat] = props.valueFormat.split(props.dateTimeSeparator);
-    const dateValue = convertDate(
+
+    const dateValue = useMemo(() => convertDate(
         props.input.value,
         [props.displayFormat, props.valueFormat],
         dateValueFormat,
-    );
-    const timeValue = convertDate(
+    ), [dateValueFormat, props.displayFormat, props.input.value, props.valueFormat]);
+
+    const timeValue = useMemo(() => convertDate(
         props.input.value,
         [props.displayFormat, props.valueFormat],
         timeValueFormat,
-    );
+    ), [props.displayFormat, props.input.value, props.valueFormat, timeValueFormat]);
 
     // Handler for calendar and time picker changes
     const onDateSelect = useCallback(date => {
-        props.input.onChange.call(null, date + props.dateTimeSeparator + (timeValue || '00:00'));
-    }, [props.dateTimeSeparator, props.input.onChange, timeValue]);
+        const result = date + props.dateTimeSeparator + (timeValue || '00:00');
+        props.input.onChange.call(
+            null,
+            convertDate(result, props.valueFormat, props.valueFormat, true),
+        );
+    }, [props.dateTimeSeparator, props.input.onChange, props.valueFormat, timeValue]);
     const onTimeSelect = useCallback(time => {
-        props.input.onChange.call(null, (
-            dateValue || moment().format(dateValueFormat)) + props.dateTimeSeparator + time);
-    }, [dateValue, dateValueFormat, props.dateTimeSeparator, props.input.onChange]);
+        const result = (dateValue || moment().format(dateValueFormat)) + props.dateTimeSeparator + time;
+        props.input.onChange.call(
+            null,
+            convertDate(result, props.valueFormat, props.valueFormat, true),
+        );
+    }, [dateValue, dateValueFormat, props.dateTimeSeparator, props.input.onChange, props.valueFormat]);
 
     return {
         dateValue,

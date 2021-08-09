@@ -47,6 +47,12 @@ export interface IDateInputStateInput extends IFieldWrapperInputProps {
      * @example YYYY-MM-DD
      */
     valueFormat?: string;
+
+    /**
+     * Использовать всемирное время (UTC) вместо местного для даты, отправляемой на сервер
+     * @example YYYY-MM-DD
+     */
+    useUTC?: boolean;
 }
 
 export interface IDateInputStateOutput {
@@ -114,15 +120,15 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
     // Display input change handler
     const onDisplayValueChange = useCallback(value => {
         setDisplayValue(value);
-        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat);
+        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC);
         const newValue = parsedValue || !value ? parsedValue || null : false;
         if (newValue !== false && newValue !== props.input.value) {
             props.input.onChange.call(null, newValue);
             if (props.onChange) {
-                props.onChange.call(null, newValue);
+                props.onChange.call(null, value);
             }
         }
-    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat]);
+    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.useUTC, props.valueFormat]);
 
     // Dropdown opened state
     const [isOpened, setIsOpened] = useState(false);

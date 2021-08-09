@@ -69,6 +69,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         placeholder: props.placeholder,
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
+        useUTC: true,
     });
 
     const {

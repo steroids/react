@@ -1,6 +1,11 @@
 import moment from 'moment';
 
-export const convertDate = (date: string | Date, fromFormats: string | string[], toFormat: string = null) => {
+export const convertDate = (
+    date: string | Date,
+    fromFormats: string | string[],
+    toFormat: string = null,
+    utc = false,
+) => {
     if (!date) {
         return null;
     }
@@ -23,6 +28,12 @@ export const convertDate = (date: string | Date, fromFormats: string | string[],
 
     if (!momentDate) {
         return null;
+    }
+
+    if (utc) {
+        momentDate = momentDate.utc();
+    } else {
+        momentDate = momentDate.utc(true).local();
     }
 
     return toFormat ? momentDate.format(toFormat) : momentDate.toDate();

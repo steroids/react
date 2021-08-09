@@ -50,7 +50,6 @@ export interface IDateInputStateInput extends IFieldWrapperInputProps {
 
     /**
      * Использовать всемирное время (UTC) вместо местного для даты, отправляемой на сервер
-     * @example YYYY-MM-DD
      */
     useUTC?: boolean;
 }

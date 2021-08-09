@@ -122,14 +122,16 @@ export interface IRouteItem {
     items?: IRouteItem[] | {[key: string]: IRouteItem};
 
     /**
-     * Обработчик, который принимает параметры URL и возвращает массив с конфигурациями HTTP-запросов.
+     * Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента
+     * List.
      * Функция запускается перед рендерингом приложения в режиме SSR и используется для предварительной
-     * загрузки данных, необходимых на текущей странице.
-     * Хук useFetch не будет делать запрос, если существуют подгруженные данные.
+     * загрузки данных, которые ожидаются на странице.
+     * Хук useFetch и компонент List не будут повторно инициализироваться и делать запросы на клиенте,
+     * если подгруженные данные существуют.
      * @param {Object} match
-     * @return {Array} Например, [{url: '/api/v1/some-data', key: 'someData'}]
+     * @return {Array} Например, [{url: '/api/v1/some-data'}, {listId: 'someList', action: '/api/v1/some-list'}]
      */
-    preloadData?: (match: Record<string, any>) => IFetchConfig[],
+    preloadData?: (match: Record<string, any>) => (IFetchConfig | IListProps)[],
 
     [key: string]: any,
 }

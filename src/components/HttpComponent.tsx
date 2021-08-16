@@ -1,6 +1,8 @@
 import * as React from 'react';
 import _trimStart from 'lodash-es/trimStart';
 import _trimEnd from 'lodash-es/trimEnd';
+import _isEmpty from 'lodash-es/isEmpty';
+import setCookie from 'set-cookie-parser';
 import axios from 'axios';
 import {setFlashes} from '../actions/notifications';
 
@@ -43,7 +45,6 @@ export default class HttpComponent {
         this._axios = null;
         this._csrfToken = null;
         this._accessToken = false;
-        this._promises = [];
     }
 
     async getAxiosConfig() {
@@ -205,6 +206,19 @@ export default class HttpComponent {
             ...config,
             url: this.getUrl(method),
         };
+        // Manual send cookies for preload data in ssr
+        if (process.env.IS_SSR && axiosConfig.url.indexOf(this.apiUrl) !== -1) {
+            const {clientStorage} = this._components;
+            axiosConfig.headers = {
+                ...axiosConfig.headers,
+                Cookie: Object
+                    .entries(clientStorage.get(null, clientStorage.STORAGE_COOKIE) || {})
+                    .map(([key, value]) => `${key}=${value}`)
+                    .concat([axiosConfig.headers?.Cookie])
+                    .filter(Boolean)
+                    .join(';'),
+            };
+        }
         if (options.cancelToken) {
             axiosConfig.cancelToken = options.cancelToken;
         }
@@ -227,23 +241,25 @@ export default class HttpComponent {
     }
 
     _sendAxios(config, options: IHttpRequestOptions) {
-        const promise = this.getAxiosInstance()
+        return this.getAxiosInstance()
             .then(instance => instance(config))
             .then(response => this.afterRequest(response, config, options).then(newResponse => newResponse || response))
             .catch(error => {
                 console.error('Error, request/response: ', config, String(error)); // eslint-disable-line no-console
                 throw error;
             });
-
-        // Store promises for SSR
-        if (process.env.IS_SSR) {
-            this._promises.push(promise);
-        }
-        return promise;
     }
 
     async afterRequest(response, config, options: IHttpRequestOptions) {
-        const store = this._components.store;
+        const {store, clientStorage} = this._components;
+
+        // Manual set cookies for ssr
+        const cookie = response.headers['set-cookie'];
+        if (process.env.IS_SSR && config.url.indexOf(this.apiUrl) !== -1 && !_isEmpty(cookie)) {
+            setCookie.parse(cookie).forEach(({name, value, expires}) => (
+                clientStorage.set(name, value, clientStorage.STORAGE_COOKIE, expires)
+            ));
+        }
 
         // Flash
         if (response.data.flashes) {

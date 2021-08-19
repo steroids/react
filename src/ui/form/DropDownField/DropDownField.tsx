@@ -89,13 +89,18 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const [query, setQuery] = useState('');
 
     // Data provider
-    const {items, isLoading, isAutoComplete} = useDataProvider({
+    const {items, isLoading, isAutoComplete, sourceItems} = useDataProvider({
         items: props.items,
         dataProvider: props.dataProvider,
         autoComplete: props.autoComplete,
         autoFetch: props.autoFetch,
         query,
     });
+
+    const inputSelectedIds = useMemo(
+        () => props.selectedIds || [].concat(props.input.value || []),
+        [props.input.value, props.selectedIds]
+    );
 
     // Data select
     const {
@@ -109,9 +114,10 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     } = useDataSelect({
         multiple: props.multiple,
         selectFirst: props.selectFirst,
-        selectedIds: props.selectedIds,
+        selectedIds: inputSelectedIds,
         primaryKey: props.primaryKey,
         items,
+        sourceItems,
         inputValue: props.input.value,
     });
 
@@ -164,6 +170,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
             if (props.onChange) {
                 props.onChange(newValues);
             }
+        }
+
+        //if form reset
+        if (props.input.value === undefined && selectedIds.length > 0) {
+            onReset();
         }
     }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds, props.attribute, props]);
 

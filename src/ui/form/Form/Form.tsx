@@ -110,7 +110,7 @@ export interface IFormProps {
     initialValues?: any | any[];
 
     /**
-     * Дополнительный CSS-класс для <form>...</form>
+     * Дополнительный CSS-класс для \<form\>...\<\/form\>
      */
     className?: CssClassName;
 
@@ -455,6 +455,7 @@ function Form(props: IFormProps): JSX.Element {
                     children: props.children,
                     submitLabel: props.submitLabel,
                     fields: props.fields,
+                    className: props.className,
                 })
                 : props.children}
         </FormContext.Provider>

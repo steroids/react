@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.0.0-rc.18",
+  "version": "2.1.0-beta.10",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "conditional-decorator": "^0.1.7",
     "connected-react-router": "^6.9.1",
     "domready": "^1.0.8",
     "dot-prop-immutable": "^2.1.0",
@@ -50,7 +49,6 @@
     "react-router-dom": "^5.2.0",
     "react-use": "^17.1.0",
     "redux": "^4.0.4",
-    "redux-form": "^8.2.6",
     "redux-mock-store": "^1.5.4"
   },
   "devDependencies": {
@@ -63,9 +61,8 @@
     "@types/jest": "^26.0.22",
     "@types/markdown-to-jsx": "^6.11.3",
     "@types/reach__router": "^1.3.7",
-    "@types/react": "^17.0.2",
+    "@types/react": "=17.0.3",
     "@types/react-color": "^3.0.4",
-    "@types/react-redux": "^7.1.16",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/react-syntax-highlighter": "^13.5.0",
     "@types/webpack-env": "^1.16.0",

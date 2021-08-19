@@ -1,24 +1,26 @@
-import { useCallback, useMemo } from 'react';
-import { ICalendarProps } from '../../content/Calendar/Calendar';
+import {useCallback, useMemo} from 'react';
+import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
-import { useComponents } from '../../../hooks';
-import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
-import fieldWrapper, {
-    IFieldWrapperInputProps,
-    IFieldWrapperOutputProps,
-} from '../../form/Field/fieldWrapper';
+import useDateTime from '../../form/DateField/useDateTime';
+import {IDateRangeFieldProps} from '../../form/DateRangeField/DateRangeField';
+import useDateInputState, {
+    IDateInputStateInput,
+    IDateInputStateOutput,
+} from '../../form/DateField/useDateInputState';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {useComponents} from '../../../hooks';
 
 /**
- * DateRangeField
- * Поле ввода дипазона двух дат с выпадающим календарём
+ * DateTimeRangeField
+ * Поле ввода дипазона двух дат со временем, с выпадающим календарём
  */
-export interface IDateRangeFieldProps extends IDateInputStateInput,
+export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'inputProps' | 'input'>,
     Omit<IFieldWrapperInputProps, 'attribute'>
 {
     /**
-     * Аттрибут (название) поля в форме
-     * @example 'fromTime'
-     */
+    * Аттрибут (название) поля в форме
+    * @example 'fromTime'
+    */
     attributeFrom?: string;
 
     /**
@@ -34,18 +36,6 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     pickerProps?: any;
 
     /**
-     * Формат даты показываемый пользователю
-     * @example DD.MM.YYYY
-     */
-    displayFormat?: string;
-
-    /**
-     * Формат даты отправляемый на сервер
-     * @example YYYY-MM-DD
-     */
-    valueFormat?: string;
-
-    /**
      * Дополнительный CSS-класс
      */
     className?: CssClassName;
@@ -57,32 +47,25 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     view?: CustomView;
 
     /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: any;
-
-    /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
     style?: any;
 
     /**
-     * Иконка
-     * @example calendar-day
+     * Свойства для поля 'from'
      */
-    icon?: boolean | string;
+    inputPropsFrom?: Record<string, unknown>,
 
     /**
-     * Отображение кнопки для сброса значения поля
-     * @example true
+     * Свойства для поля 'to'
      */
-    showRemove?: boolean,
+    inputPropsTo?: Record<string, unknown>,
 
-    inputPropsFrom?: any,
-
-    inputPropsTo?: any,
+    /**
+     * Свойства для компонента панели времени
+     */
+    timePanelViewProps?: any,
 
     /**
      * Свойства для компонента Calendar
@@ -98,19 +81,22 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     [key: string]: any;
 }
 
-export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
+export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
         | 'noBorder' | 'style'>
 {
+    timePanelViewProps?: any,
+    calendarProps?: ICalendarProps,
     inputPropsFrom?: any,
     inputPropsTo?: any,
-    errorsFrom?: string[],
-    errorsTo?: string[],
+    errorsFrom?: any,
+    errorsTo?: any,
 }
 
-interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldWrapperOutputProps, 'input' | 'errors'> {
+interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
+    Omit<IFieldWrapperOutputProps, 'input' | 'errors'> {
     inputFrom?: {
         name?: string,
         value?: any,
@@ -125,7 +111,9 @@ interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldW
     errorsTo?: string[],
 }
 
-function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
+const DATE_TIME_SEPARATOR = ' ';
+
+function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
 
     // Global onChange (from props)
@@ -144,6 +132,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         onClose: onCloseFrom,
         inputProps: inputPropsFrom,
         onClear: onClearFrom,
+        onNow,
     } = useDateInputState({
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
@@ -173,6 +162,31 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     });
 
     const {
+        dateValueFormat,
+        dateValue: dateValueFrom,
+        timeValue: timeValueFrom,
+        onDateSelect: onDateFromSelect,
+        onTimeSelect: onTimeFromSelect,
+    } = useDateTime({
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        dateTimeSeparator: DATE_TIME_SEPARATOR,
+        input: props.inputFrom,
+    });
+
+    const {
+        dateValue: dateValueTo,
+        timeValue: timeValueTo,
+        onDateSelect: onDateToSelect,
+        onTimeSelect: onTimeToSelect,
+    } = useDateTime({
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
+        dateTimeSeparator: DATE_TIME_SEPARATOR,
+        input: props.inputTo,
+    });
+
+    const {
         focus,
         onClose,
         onClear,
@@ -187,26 +201,36 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputPropsTo,
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
-        useSmartFocus: true,
+        useSmartFocus: false,
     });
 
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
-        value: [props.inputFrom.value, props.inputTo.value],
-        onChange: focus === 'from' ? props.inputFrom.onChange : props.inputTo.onChange,
-        valueFormat: props.valueFormat,
-        numberOfMonths: 2,
-        showFooter: false,
-    }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat]);
+        value: [dateValueFrom, dateValueTo],
+        onChange: focus === 'from' ? onDateFromSelect : onDateToSelect,
+        valueFormat: dateValueFormat,
+        ...props.calendarProps,
+    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect, props.calendarProps]);
 
-    return components.ui.renderView(props.view || 'form.DateRangeFieldView', {
+    // TimePanel props
+    const timePanelViewProps = useMemo(() => ({
+        value: focus === 'from' ? timeValueFrom : timeValueTo,
+        onSelect: focus === 'from' ? onTimeFromSelect : onTimeToSelect,
+        onNow,
+        onClose,
+        showNow: false,
+        showHeader: true,
+        ...props.timePanelViewProps,
+    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, props.timePanelViewProps, timeValueFrom, timeValueTo]);
+
+    return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', {
         ...props.viewProps,
         onClear,
         onClose,
         calendarProps,
+        timePanelViewProps,
         icon: props.icon,
         size: props.size,
-        noBorder: props.noBorder,
         errorsTo: props.errorsTo,
         className: props.className,
         showRemove: props.showRemove,
@@ -217,15 +241,14 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     });
 }
 
-DateRangeField.defaultProps = {
+DateTimeRangeField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    displayFormat: 'DD.MM.YYYY',
-    valueFormat: 'YYYY-MM-DD',
+    displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
+    valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     showRemove: true,
     icon: true,
-    noBorder: false,
 };
 
-export default fieldWrapper('DateRangeField', DateRangeField, {attributeSuffixes: ['from', 'to']});
+export default fieldWrapper('DateTimeRangeField', DateTimeRangeField, {attributeSuffixes: ['from', 'to']});

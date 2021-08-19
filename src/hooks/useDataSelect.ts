@@ -7,6 +7,13 @@ import _isNil from 'lodash-es/isNil';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
+interface IDataSelectItem {
+    id: number | string | boolean,
+    label?: string,
+
+    [key: string]: unknown,
+}
+
 export interface IDataSelectConfig {
     /**
      * Возможность множественного выбора
@@ -15,14 +22,10 @@ export interface IDataSelectConfig {
     multiple?: boolean;
 
     /**
-     * Список с элементами
+     * Список с видимыми элементами
      * @example [{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]
      */
-    items: {
-        id: number | string | boolean,
-        label?: string,
-        [key: string]: unknown,
-    }[],
+    items: IDataSelectItem[],
 
     /**
      * Сделать активным первый элемент в списке
@@ -46,6 +49,11 @@ export interface IDataSelectConfig {
      * Значение поля в форме
      */
     inputValue: any
+
+    /**
+     *  Список со всеми элементами
+     */
+    sourceItems?: IDataSelectItem[],
 }
 
 export interface IDataSelectResult {
@@ -69,7 +77,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
 
     // Initial select
     const initialSelectedIds = useMemo(() => {
-        if (config.selectedIds) {
+        if (config.selectedIds?.length > 0) {
             return [].concat(config.selectedIds || []);
         }
 
@@ -81,6 +89,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             ? [config.items[0][primaryKey]]
             : [];
     }, [config.items, config.selectFirst, config.selectedIds, primaryKey, config.inputValue]);
+
+    // console.log(initialSelectedIds);
 
     // State
     const [isOpened, setIsOpened] = useState(false);
@@ -102,12 +112,11 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (config.multiple) {
                 if (selectedIds.indexOf(id) !== -1) {
                     if (!skipToggle) {
-                        _remove(selectedIds, itemValue => itemValue === id);
+                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id));
                     }
                 } else {
-                    selectedIds.push(id);
+                    setSelectedIdsInternal([...selectedIds, id]);
                 }
-                setSelectedIdsInternal(selectedIds);
             } else {
                 if (selectedIds.length !== 1 || selectedIds[0] !== id) {
                     setSelectedIdsInternal([id]);
@@ -128,11 +137,12 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // Update selected items on change value
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
     useUpdateEffect(() => {
-        // console.log(config.selectedIds, prevConfigSelectedIds);
+        const itemsForSelect = config.sourceItems || config.items;
+
         const newSelectedIds = config.selectedIds && config.selectedIds.length > 0
-            ? config.items.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
+            ? itemsForSelect.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];
-        if (!_isEqual(prevConfigSelectedIds, newSelectedIds)) {
+        if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
     }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds]);

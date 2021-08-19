@@ -1,13 +1,11 @@
-import React from 'react';
+import {useState, useCallback, useMemo} from 'react';
 import { useComponents } from '@steroidsjs/core/hooks';
 
-type AvatarSizes = 'large' | 'medium' | 'small';
-
 interface IAvatarProps {
+
     /**
      * Альтернативный текст для изображения
      * @example {'default image'}
-     * @returns {string}
      */
     alt?: string,
 
@@ -19,27 +17,23 @@ interface IAvatarProps {
     /**
      * Дочерние элементы
      */
-    children?: React.ReactNode,
+    children?: CustomView,
 
-    //TODO - Adaptive sizes { xs: number, sm: number, ...}
     /**
      * Размер аватара
-     * @example {'medium'}
-     * @returns {AvatarSizes | number}
+     * @example {'md'}
      */
-    size?: AvatarSizes | number,
+    size?: Size | 'x-large' | number,
 
     /**
      * Форма аватара
      * @example {'circle'}
-     * @returns {'circle' | 'square' | string}
      */
     shape?: 'circle' | 'square' | string,
 
     /**
      * Ссылка на изображение для аватара
      * @example {'https://user/avatar.png'}
-     * @returns {string}
      */
     src?: string,
 
@@ -47,30 +41,71 @@ interface IAvatarProps {
     srcSet?: string;
 
     /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
+     * Статус онлайна
+     * @example {true}
      */
-    view?: CustomView;
+    status?: boolean,
 
     /**
      * Объект CSS стилей
      * @example {width: '30px'}
      */
-    style?: React.CSSProperties,
+    style?: CustomStyle,
+
+    /**
+     * Заголовок аватарки
+     * @example {'Avatar'}
+     */
+    title?: string,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
+    view?: CustomView;
 }
 
-export type IAvatarViewProps = IAvatarProps
+export interface IAvatarViewProps extends IAvatarProps {
+    isError: boolean,
+    onError: () => void,
+    formattedTitle: () => void,
+}
 
 function Avatar(props: IAvatarProps) {
     const components = useComponents();
+
+    const [isError, setIsError] = useState<boolean>(false);
+
+    const onError = useCallback(() => {
+        if (!isError) {
+            setIsError(true);
+        }
+    }, [isError]);
+
+    const formattedTitle = useMemo(() => {
+        let resultTitle = '';
+        if (props.title) {
+            const title = props.title.split(' ');
+            resultTitle = title[0][0].toUpperCase();
+            if (title.length > 1) {
+                resultTitle += title[1][0].toUpperCase();
+            }
+        }
+        return resultTitle;
+    }, [props.title]);
+
     return components.ui.renderView(props.view || 'content.AvatarView', {
         ...props,
+        isError,
+        onError,
+        formattedTitle,
     });
 }
 
 Avatar.defaultProps = {
-    size: 'medium',
+    size: 'middle',
     shape: 'circle',
+    status: false,
 };
 
 export default Avatar;

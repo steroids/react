@@ -46,6 +46,12 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
     viewProps?: any;
 
     /**
+     * Размер Innput
+     * @example 'large'
+     */
+    size?: Size;
+
+    /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
@@ -80,6 +86,9 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
      * @example { mask: '+7 (999) 999-99-99' }
      */
     maskProps?: any;
+
+    success?: boolean;
+    failed?: boolean;
 
     [key: string]: any;
 }
@@ -161,6 +170,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
 InputField.defaultProps = {
     type: 'text',
+    size: 'medium',
     disabled: false,
     required: false,
     className: '',

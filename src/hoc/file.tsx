@@ -43,6 +43,7 @@ export interface IFileHocOutput {
     files?: any[];
     onBrowse?: any;
     onRemove?: any;
+    onAdd?: any;
 }
 
 export default (): any => WrappedComponent => function FileHOC(props) {

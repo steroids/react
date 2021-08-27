@@ -2352,6 +2352,380 @@
                 }
             ]
         },
+        "IDetailItemOutputProps": {
+            "name": "IDetailItemOutputProps",
+            "moduleName": "ui/content/Detail/Detail",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IDetailItemProps"
+            ],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Значение",
+                    "required": true,
+                    "type": "ReactNode",
+                    "example": "'Cloud Database'"
+                },
+                {
+                    "name": "colspan",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "contentClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для ячейки со значением",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Наименование",
+                    "required": true,
+                    "type": "ReactNode",
+                    "example": "'Product'"
+                },
+                {
+                    "name": "labelClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для ячейки с наименованием",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "span",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент",
+                    "required": false,
+                    "type": "number",
+                    "example": "3"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IDetailMedia": {
+            "name": "IDetailMedia",
+            "moduleName": "ui/content/Detail/Detail",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "breakpoint",
+                    "decorators": [],
+                    "description": "Максимальная ширина таблицы в px",
+                    "required": true,
+                    "type": "number",
+                    "example": "600"
+                },
+                {
+                    "name": "column",
+                    "decorators": [],
+                    "description": "Количество колонок, которое будет применяться, начиная от указанной ширины и меньше",
+                    "required": true,
+                    "type": "number",
+                    "example": "2"
+                }
+            ]
+        },
+        "IDetailProps": {
+            "name": "IDetailProps",
+            "moduleName": "ui/content/Detail/Detail",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерние компоненты",
+                    "required": true,
+                    "type": "ReactNode | ReactNode[]",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для таблицы",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "column",
+                    "decorators": [],
+                    "description": "Максимальное количество колонок",
+                    "required": false,
+                    "type": "number",
+                    "example": "3"
+                },
+                {
+                    "name": "controls",
+                    "decorators": [],
+                    "description": "Контролы, которые нужно расположить рядом с таблицей",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": "[{label: __(('Edit')), onClick: () => props.onClick()}]"
+                },
+                {
+                    "name": "layout",
+                    "decorators": [],
+                    "description": "Вариант расположения ячеек \"ключ-значение\"",
+                    "required": false,
+                    "type": "DetailLayoutEnum",
+                    "example": "'horizontal'"
+                },
+                {
+                    "name": "responsive",
+                    "decorators": [],
+                    "description": "Перестраивать таблицу при ресайзе",
+                    "required": false,
+                    "type": "boolean | IDetailResponsive",
+                    "example": "{enable: true, media: [{breakpoint: 600, column: 2}]}"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер ячеек в таблице",
+                    "required": false,
+                    "type": "string",
+                    "example": "'sm'"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок таблицы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "'User info'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IDetailResponsive": {
+            "name": "IDetailResponsive",
+            "moduleName": "ui/content/Detail/Detail",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "enable",
+                    "decorators": [],
+                    "description": "Перестраивать таблицу при ресайзе",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "media",
+                    "decorators": [],
+                    "description": "Брейкпоинты",
+                    "required": true,
+                    "type": "IDetailMedia[]",
+                    "example": null
+                }
+            ]
+        },
+        "IDetailViewProps": {
+            "name": "IDetailViewProps",
+            "moduleName": "ui/content/Detail/Detail",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IDetailProps"
+            ],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерние компоненты",
+                    "required": true,
+                    "type": "ReactNode | ReactNode[]",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для таблицы",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "column",
+                    "decorators": [],
+                    "description": "Максимальное количество колонок",
+                    "required": false,
+                    "type": "number",
+                    "example": "3"
+                },
+                {
+                    "name": "controls",
+                    "decorators": [],
+                    "description": "Контролы, которые нужно расположить рядом с таблицей",
+                    "required": false,
+                    "type": "IControlItem[]",
+                    "example": "[{label: __(('Edit')), onClick: () => props.onClick()}]"
+                },
+                {
+                    "name": "layout",
+                    "decorators": [],
+                    "description": "Вариант расположения ячеек \"ключ-значение\"",
+                    "required": false,
+                    "type": "DetailLayoutEnum",
+                    "example": "'horizontal'"
+                },
+                {
+                    "name": "resizedNodeRef",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "responsive",
+                    "decorators": [],
+                    "description": "Перестраивать таблицу при ресайзе",
+                    "required": false,
+                    "type": "boolean | IDetailResponsive",
+                    "example": "{enable: true, media: [{breakpoint: 600, column: 2}]}"
+                },
+                {
+                    "name": "rows",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IDetailItemOutputProps[][]",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер ячеек в таблице",
+                    "required": false,
+                    "type": "string",
+                    "example": "'sm'"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок таблицы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "'User info'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IDetailItemProps": {
+            "name": "IDetailItemProps",
+            "moduleName": "ui/content/Detail/DetailItem",
+            "title": "DetailItem",
+            "description": "Элемент \"ключ-значение\" в таблице Detail",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Значение",
+                    "required": true,
+                    "type": "ReactNode",
+                    "example": "'Cloud Database'"
+                },
+                {
+                    "name": "contentClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для ячейки со значением",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Наименование",
+                    "required": true,
+                    "type": "ReactNode",
+                    "example": "'Product'"
+                },
+                {
+                    "name": "labelClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для ячейки с наименованием",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "span",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент",
+                    "required": false,
+                    "type": "number",
+                    "example": "3"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
         "IDropDownProps": {
             "name": "IDropDownProps",
             "moduleName": "ui/content/DropDown/DropDown",
@@ -19893,6 +20267,40 @@
         }
     },
     "demos": {
+        "content": {
+            "Detail": {
+                "basic": {
+                    "order": "1",
+                    "col": "8",
+                    "title": null,
+                    "description": "Basic table with title"
+                },
+                "controls": {
+                    "order": "3",
+                    "col": "8",
+                    "title": null,
+                    "description": "Table with controls"
+                },
+                "layout": {
+                    "order": "4",
+                    "col": "8",
+                    "title": null,
+                    "description": "Table with vertical layout"
+                },
+                "responsive": {
+                    "order": "4",
+                    "col": "8",
+                    "title": null,
+                    "description": "When the screen width resizes, the number of columns changes"
+                },
+                "sizes": {
+                    "order": "2",
+                    "col": "8",
+                    "title": null,
+                    "description": "Table with different cell's sizes"
+                }
+            }
+        },
         "crud": {
             "Crud": {
                 "default": {
@@ -21310,6 +21718,20 @@
             "tags": {},
             "properties": [],
             "methods": []
+        },
+        "ui/content/Detail/Detail": {
+            "name": "default",
+            "moduleName": "ui/content/Detail/Detail",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/content/Detail/DetailItem": {
+            "name": "default",
+            "moduleName": "ui/content/Detail/DetailItem",
+            "title": "",
+            "description": "",
+            "tags": {}
         },
         "ui/content/DropDown/DropDown": {
             "name": "default",

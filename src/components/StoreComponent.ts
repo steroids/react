@@ -79,7 +79,7 @@ export default class StoreComponent {
                 ...config.history,
             });
             // Add '?' for fix connected-react-router
-            if (process.env.IS_SSR && !this.history.location.search && process.env.PLATFORM !== 'mobile') {
+            if (process.env.IS_SSR && !this.history.location.search) {
                 this.history.location.search = '?';
             }
             this._routerReducer = connectRouter(this.history);

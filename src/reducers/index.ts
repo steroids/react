@@ -20,5 +20,5 @@ export default asyncReducers => combineReducers({
     modal,
     screen,
     ...asyncReducers,
-    router: (state, action) => router(asyncReducers.router(state, action), action),
+    router: (state, action) => router(asyncReducers.router ? asyncReducers.router(state, action) : {}, action),
 });

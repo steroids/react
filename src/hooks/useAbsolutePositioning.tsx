@@ -16,6 +16,12 @@ type Position = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bott
 
 export interface IAbsolutePositioningInputProps {
     /**
+     * Включает "умное" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом
+     * и краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.
+     */
+    autoPositioning?: boolean
+
+    /**
      * Дочерние элементы
      */
     children?: React.ReactNode,
@@ -86,11 +92,13 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
 
     const timerRef = useRef(null);
 
-    const calculateAbsolutePosition = useCallback((newPosition:Position = 'pos', childRef, componentSize) => {
+    const calculateAbsolutePosition = useCallback((newPosition:Position, childRef, componentSize) => {
         const newStyle: IStyleObj = { left: null, right: null, top: null };
         const {top, right, left, width, height} = childRef.getBoundingClientRect();
         const parentDimensions = {top, right, left, width, height};
         parentDimensions.top += window.scrollY;
+
+        const useAutoPositioning = props.autoPositioning;
 
         // eslint-disable-next-line default-case
         switch (newPosition) {
@@ -99,7 +107,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
             case 'topRight':
                 // Проверка - выходит ли tooltip за верхний край страницы?
                 // Если да - меняем позицию на bottom
-                if ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + props.gap)) {
+                if (useAutoPositioning && ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + props.gap))) {
                     newStyle.top = parentDimensions.top + parentDimensions.height;
                     newPosition = newPosition.replace('top', 'bottom');
                 } else {
@@ -110,9 +118,9 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
             case 'bottom':
             case 'bottomLeft':
             case 'bottomRight':
-                /// Проверка - выходит ли tooltip за нижний край страницы?
+                // Проверка - выходит ли tooltip за нижний край страницы?
                 // Если да - меняем позицию на top
-                if ((window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY))
+                if (useAutoPositioning && ((window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY)))
                     <= Math.round(componentSize.height + props.gap)
                 ) {
                     newStyle.top = parentDimensions.top - componentSize.height;
@@ -127,7 +135,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
             case 'leftBottom':
                 // Проверка - выходит ли tooltip за левый край страницы?
                 // Если да - меняем позицию на right
-                if (parentDimensions.left <= Math.round(componentSize.width + props.gap)) {
+                if (useAutoPositioning && (parentDimensions.left <= Math.round(componentSize.width + props.gap))) {
                     newStyle.left = parentDimensions.right;
                     newPosition = newPosition.replace('left', 'right');
                 } else {
@@ -141,7 +149,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
             case 'rightBottom':
                 // Проверка - выходит ли tooltip за правый край страницы?
                 // Если да - меняем позицию на left
-                if (document.body.clientWidth - parentDimensions.right <= Math.round(componentSize.width + props.gap)) {
+                if (useAutoPositioning && (document.body.clientWidth - parentDimensions.right <= Math.round(componentSize.width + props.gap))) {
                     newStyle.left = parentDimensions.left - componentSize.width;
                     newPosition = newPosition.replace('right', 'left');
                 } else {

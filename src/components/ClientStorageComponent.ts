@@ -1,4 +1,5 @@
 import * as cookie from 'js-cookie';
+import moment from 'moment';
 
 /**
  * Client Storage Component
@@ -6,10 +7,15 @@ import * as cookie from 'js-cookie';
  */
 export default class ClientStorageComponent {
     STORAGE_COOKIE: string;
+
     STORAGE_LOCAL: any;
+
     STORAGE_SESSION: any;
+
     localStorageAvailable: boolean;
+
     sessionStorageAvailable: boolean;
+
     private _ssrCookie: Record<string, any>
 
     constructor(components, config) {
@@ -49,14 +55,13 @@ export default class ClientStorageComponent {
         storageName = storageName || this.STORAGE_LOCAL;
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {
             return window.localStorage.getItem(name);
-        } else if (
-            this.sessionStorageAvailable &&
-            storageName === this.STORAGE_SESSION
+        } if (
+            this.sessionStorageAvailable
+            && storageName === this.STORAGE_SESSION
         ) {
             return window.sessionStorage.getItem(name);
-        } else {
-            return process.env.IS_SSR ? this._ssrCookie.get(name) : cookie.get(name);
         }
+        return process.env.IS_SSR ? this._ssrCookie.get(name) : cookie.get(name);
     }
 
     /**
@@ -70,15 +75,20 @@ export default class ClientStorageComponent {
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {
             window.localStorage.setItem(name, value);
         } else if (
-            this.sessionStorageAvailable &&
-            storageName === this.STORAGE_SESSION
+            this.sessionStorageAvailable
+            && storageName === this.STORAGE_SESSION
         ) {
             window.sessionStorage.setItem(name, value);
         } else {
             const options = {
                 expires,
-                domain: this._getDomain()
+                domain: this._getDomain(),
             };
+
+            if (expires && process.env.IS_SSR) {
+                options.expires = moment().add(options.expires).utc().toDate();
+            }
+
             process.env.IS_SSR ? this._ssrCookie.set(name, value, options) : cookie.set(name, value, options);
         }
     }
@@ -93,13 +103,13 @@ export default class ClientStorageComponent {
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {
             window.localStorage.removeItem(name);
         } else if (
-            this.sessionStorageAvailable &&
-            storageName === this.STORAGE_SESSION
+            this.sessionStorageAvailable
+            && storageName === this.STORAGE_SESSION
         ) {
             window.sessionStorage.removeItem(name);
         } else {
             const options = {
-                domain: this._getDomain()
+                domain: this._getDomain(),
             };
             process.env.IS_SSR ? this._ssrCookie.remove(name, options) : cookie.remove(name, options);
         }
@@ -108,12 +118,12 @@ export default class ClientStorageComponent {
     _getDomain() {
         const host = (typeof location !== 'undefined' && location.hostname) || '';
         return (
-            (!/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(host) &&
-                host
+            (!/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(host)
+                && host
                     .split('.')
                     .slice(-2)
-                    .join('.')) ||
-            host
+                    .join('.'))
+            || host
         );
     }
 }

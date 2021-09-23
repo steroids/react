@@ -4,7 +4,7 @@ import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import * as queryString from 'qs';
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useFirstMountState, useMount, usePrevious, useUpdateEffect} from 'react-use';
 import {IApiMethod} from '../../../components/ApiComponent';
 import AutoSaveHelper from './AutoSaveHelper';
@@ -277,6 +277,7 @@ function Form(props: IFormProps): JSX.Element {
     const provider = props.useRedux ? providers.redux : providers.reducer;
     const {
         values,
+        submitCounter,
         isInvalid,
         isSubmitting,
         setErrors,
@@ -330,9 +331,11 @@ function Form(props: IFormProps): JSX.Element {
     }, [props, values]);
 
     // OnSubmit handler
-    const onSubmit = useCallback(async (e) => {
+    const onSubmit = useCallback(async (e = null) => {
         // TODO
-        e.preventDefault();
+        if (e) {
+            e.preventDefault();
+        }
 
         // Append non touched fields to values object
         if (props.formId) {
@@ -391,7 +394,7 @@ function Form(props: IFormProps): JSX.Element {
                 : undefined,
         };
         const response = typeof props.action === 'function'
-            ? await props.action(components.api, cleanedValues, options)
+            ? await props.action.call(null, components.api, cleanedValues, options)
             : await components.http.send(
                 props.actionMethod,
                 props.action || window.location.pathname,
@@ -426,6 +429,14 @@ function Form(props: IFormProps): JSX.Element {
 
         return null;
     }, [components.api, components.http, components.resource, components.ui, props, setErrors, values]);
+
+    // Manual submit form by reducer action
+    const prevSubmitCounter = usePrevious(submitCounter);
+    useUpdateEffect(() => {
+        if (submitCounter > prevSubmitCounter) {
+            onSubmit.call(null);
+        }
+    }, [prevSubmitCounter, submitCounter, onSubmit]);
 
     const formContextValue = useMemo(() => ({
         formId: props.formId,

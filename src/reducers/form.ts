@@ -6,6 +6,7 @@ import {
     FORM_INITIALIZE,
     FORM_CHANGE,
     FORM_SET_ERRORS,
+    FORM_SUBMIT,
     FORM_RESET,
     FORM_ARRAY_ADD,
     FORM_ARRAY_REMOVE,
@@ -40,6 +41,9 @@ export function reducerItem(state, action) {
 
         case FORM_SET_ERRORS:
             return _set(state, 'errors', action.errors);
+
+        case FORM_SUBMIT:
+            return _set(state, 'submitCounter', (state.submitCounter || 0) + 1);
 
         case FORM_RESET:
             return _set(state, 'values', _cloneDeep(state.initialValues || {}));

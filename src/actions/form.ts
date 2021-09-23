@@ -2,6 +2,7 @@ export const FORM_INITIALIZE = '@form/initialize';
 export const FORM_CHANGE = '@form/change';
 export const FORM_RESET = '@form/reset';
 export const FORM_SET_ERRORS = '@form/set_errors';
+export const FORM_SUBMIT = '@form/submit';
 export const FORM_ARRAY_ADD = '@form/array_add';
 export const FORM_ARRAY_REMOVE = '@form/array_remove';
 
@@ -38,6 +39,15 @@ export const formSetErrors = (formId, errors) => ({
     type: FORM_SET_ERRORS,
     formId,
     errors,
+});
+
+/**
+ * Сабмит формы
+ * @param formId
+ */
+export const formSubmit = (formId) => ({
+    type: FORM_SUBMIT,
+    formId,
 });
 
 /**

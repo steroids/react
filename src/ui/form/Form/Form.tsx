@@ -433,7 +433,7 @@ function Form(props: IFormProps): JSX.Element {
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);
     useUpdateEffect(() => {
-        if (submitCounter > prevSubmitCounter) {
+        if (submitCounter !== prevSubmitCounter) {
             onSubmit.call(null);
         }
     }, [prevSubmitCounter, submitCounter, onSubmit]);

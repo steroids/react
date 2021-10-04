@@ -26,7 +26,7 @@ declare function __(phrase: string, params?: any): string;
  * Название цвета, соответствующее ему состоянию
  */
 declare type ColorName =
-    'primary'
+    | 'primary'
     | 'secondary'
     | 'success'
     | 'info'
@@ -44,7 +44,7 @@ declare type PrimaryKey = number | string;
 /**
  * Размер элемента
  */
-declare type Size = 'sm' | 'md' | 'lg' | string;
+declare type Size = 'small' | 'middle' | 'large' | string;
 
 /**
  * Макет формы или ее части, влияющий на расположение полей
@@ -77,6 +77,12 @@ declare type FormInputType = {
  * @example my-block
  */
 declare type CssClassName = string;
+
+/**
+ * Дополнительные стили
+ * @example my-block
+ */
+declare type CustomStyle = React.CSSProperties;
 
 /**
  * Переопределение view React компонента для кастомизации отображения

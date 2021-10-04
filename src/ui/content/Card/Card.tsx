@@ -1,24 +1,82 @@
-import React from 'react';
-import { useComponents } from '../../../hooks';
+import { useComponents } from '@steroidsjs/core/hooks';
 
 interface ICardProps {
-    view?: any,
-    children?: React.ReactNode,
-    title?: string,
-    more?: React.ReactNode,
-    bordered?: boolean | React.CSSProperties,
+    /**
+     * Цвет границы (если передать false, то граница будет скрыта)
+     * @example success
+     */
+    borderColor?: ColorName | 'default' | boolean,
+
+    /**
+     * Дополнительный CSS-класс
+     */
     className?: CssClassName,
-    description?: React.ReactNode,
-    cover?: React.ReactNode,
-    actions?: React.ReactNode[],
-    size?: Size,
+
+    /**
+     * Дочерние элементы
+     */
+    children?: CustomView,
+
+    /**
+     * Цвет состояния
+     * @example success
+     */
+    color?: ColorName,
+
+    /**
+     * Обложка для карточки, нужно передать ссылку на изображение
+     * @example 'https://cat/cat.png'
+     */
+    cover?: string,
+
+    /**
+     * Описание карточки
+     * @example {'Scroll to see more...'}
+     */
+    description?: string,
+
+    /**
+     * Текст для header
+     */
+    header?: string,
+
+    /**
+     * Текст для footer
+     */
+    footer?: string,
+
+    /**
+     * Ориентация карточки, горизонтальная и вертикальная
+     * @example {'vertical-reverse'}
+     */
+    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal',
+
+    /**
+     * Ориентация карточки, горизонтальная и вертикальная
+     * @example {'vertical-reverse'}
+     */
     shape?: 'square' | 'circle',
-    style?: React.CSSProperties,
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '30px'}
+     */
+    style?: CustomStyle,
+
+    /**
+     * Заголовок карточки
+     * @example {'Main card'}
+     */
+    title?: string,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
+    view?: CustomView;
 }
 
 export type ICardViewProps = ICardProps
-
-export type Size = 'large' | 'medium' | 'small';
 
 function Card(props: ICardProps) {
     const components = useComponents();
@@ -28,7 +86,8 @@ function Card(props: ICardProps) {
 }
 
 Card.defaultProps = {
-    size: 'medium',
+    borderColor: 'default',
+    orientation: 'vertical',
     shape: 'circle',
 };
 

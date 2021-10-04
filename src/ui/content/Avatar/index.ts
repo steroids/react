@@ -1,4 +1,12 @@
-import Avatar from './Avatar'
-import AvatarGroup from './AvatarGroup'
+import Avatar from './Avatar';
+import AvatarGroup from './AvatarGroup';
 
-export {Avatar, AvatarGroup};
+export {
+    Avatar,
+    AvatarGroup,
+};
+
+export default {
+    Avatar,
+    AvatarGroup,
+};

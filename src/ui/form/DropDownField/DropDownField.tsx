@@ -99,7 +99,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const inputSelectedIds = useMemo(
         () => props.selectedIds || [].concat(props.input.value || []),
-        [props.input.value, props.selectedIds]
+        [props.input.value, props.selectedIds],
     );
 
     // Data select
@@ -151,9 +151,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     // Outside click -> close
     const forwardedRef = useRef(null);
-	if (process.env.PLATFORM !== "mobile"){
-		useClickAway(forwardedRef, onClose);
-	}
+    if (process.env.PLATFORM !== 'mobile') {
+        useClickAway(forwardedRef, onClose);
+    }
 
     // Search input props
     const searchInputProps = useMemo(() => ({
@@ -178,7 +178,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         if (props.input.value === undefined && selectedIds.length > 0) {
             onReset();
         }
-    }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds, props.attribute, props]);
+    }, [selectedIds, props.input.onChange, props.multiple, prevSelectedIds, props.attribute, props, onReset]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,

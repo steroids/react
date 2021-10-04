@@ -151,7 +151,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     // Outside click -> close
     const forwardedRef = useRef(null);
-    useClickAway(forwardedRef, onClose);
+	if (process.env.PLATFORM !== "mobile"){
+		useClickAway(forwardedRef, onClose);
+	}
 
     // Search input props
     const searchInputProps = useMemo(() => ({

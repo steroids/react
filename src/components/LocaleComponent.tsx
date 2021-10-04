@@ -28,6 +28,7 @@ if (process.env.IS_SSR) {
  */
 export default class LocaleComponent {
     backendTimeDiff: null;
+
     backendTimeZone: any;
 
     /**
@@ -35,7 +36,9 @@ export default class LocaleComponent {
      * @example ru
      */
     language: string;
+
     sourceLanguage: string;
+
     translations: any;
 
     constructor(components, config) {
@@ -60,12 +63,12 @@ export default class LocaleComponent {
      */
     moment(date: string = undefined, format: string = undefined) {
         if (
-            this.backendTimeZone &&
-            date &&
-            date.length === 19 &&
-            moment(date, 'YYYY-MM-DD HH:mm:ss').isValid()
+            this.backendTimeZone
+            && date
+            && date.length === 19
+            && moment(date, 'YYYY-MM-DD HH:mm:ss').isValid()
         ) {
-            date = date + this.backendTimeZone;
+            date += this.backendTimeZone;
         }
         return moment(date, format).locale(this.language);
     }
@@ -108,8 +111,8 @@ export default class LocaleComponent {
             const index = message.indexOf(`!!${key}!!`);
             if (index !== -1) {
                 indexedComponents.push({
-                    index: index,
-                    component: components[key]
+                    index,
+                    component: components[key],
                 });
             }
             message = message.replace(`!!${key}!!`, '!!component!!');
@@ -117,7 +120,7 @@ export default class LocaleComponent {
         indexedComponents.sort((a, b) => {
             if (a.index < b.index) {
                 return -1;
-            } else if (a.index > b.index) {
+            } if (a.index > b.index) {
                 return 1;
             }
             return 0;
@@ -128,12 +131,12 @@ export default class LocaleComponent {
         for (let i = 0, j = 0; i < textParts.length; i++) {
             let isComponentAdded = false;
             if (
-                j === 0 &&
-                j < indexedComponents.length &&
-                indexedComponents[j].index === 0
+                j === 0
+                && j < indexedComponents.length
+                && indexedComponents[j].index === 0
             ) {
                 result.push(
-                    <span key={`element-${j}`}>{indexedComponents[j].component}</span>
+                    <span key={`element-${j}`}>{indexedComponents[j].component}</span>,
                 );
                 isComponentAdded = true;
                 j++;
@@ -141,7 +144,7 @@ export default class LocaleComponent {
             result.push(<span key={`text-${i}`}>{textParts[i]}</span>);
             if (!isComponentAdded && j < indexedComponents.length) {
                 result.push(
-                    <span key={`element${j}`}>{indexedComponents[j].component}</span>
+                    <span key={`element${j}`}>{indexedComponents[j].component}</span>,
                 );
                 j++;
             }

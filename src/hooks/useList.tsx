@@ -19,7 +19,6 @@ import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/Pag
 import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Model} from '../components/MetaComponent';
-import {useComponents} from '../hooks/index';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -187,7 +186,7 @@ export interface IListOutput {
     onSort: (value: any) => void,
 }
 
-const defaultConfig = {
+export const defaultConfig = {
     actionMethod: 'get',
     primaryKey: 'id',
     autoDestroy: true,
@@ -202,6 +201,61 @@ const defaultConfig = {
     },
 };
 
+export const normalizeSortProps = (props: IListConfig['sort']) => ({
+    ...defaultConfig.sort,
+    enable: !!props,
+    ...(typeof props === 'boolean' ? {enable: props} : props),
+});
+
+export const getDefaultSearchModel = ({
+    paginationProps,
+    paginationSizeProps,
+    sort,
+    layoutNamesProps,
+}) => ({
+    attributes: [ // default attributes
+        paginationProps.enable && {
+            type: 'number',
+            attribute: paginationProps.attribute,
+            defaultValue: paginationProps.defaultValue,
+        },
+        paginationSizeProps.enable && {
+            type: 'number',
+            attribute: paginationSizeProps.attribute,
+            defaultValue: paginationSizeProps.defaultValue,
+        },
+        sort.enable && {
+            type: 'string', // TODO Need list of strings
+            jsType: 'string[]',
+            attribute: sort.attribute,
+            defaultValue: sort.defaultValue,
+        },
+        layoutNamesProps.enable && {
+            type: 'string',
+            attribute: layoutNamesProps.attribute,
+            defaultValue: layoutNamesProps.defaultValue,
+        },
+    ].filter(Boolean),
+});
+
+export const createInitialValues = ({
+    paginationProps,
+    paginationSizeProps,
+    sort,
+    layoutNamesProps,
+    initialQuery,
+    configQuery,
+}) => ({
+    [paginationProps.attribute]: paginationProps.defaultValue,
+    [paginationSizeProps.attribute]: paginationSizeProps.defaultValue,
+    [sort.attribute]: sort.defaultValue,
+    [layoutNamesProps.attribute]: layoutNamesProps.defaultValue,
+    // TODO [this.props._layout.attribute]:
+    //  this.props.clientStorage.get(this.props._layout.attribute) || this.props._layout.defaultValue,
+    ...initialQuery, // Address bar
+    ...configQuery, // Query from props
+});
+
 /**
  * useList
  * Добавляет массу возможностей для взаимодействия с коллекциями. Коллекции можно получать как с бекенда,
@@ -209,17 +263,11 @@ const defaultConfig = {
  * Выбранные фильтры синхронизируются с адресной строкой.
  */
 export default function useList(config: IListConfig): IListOutput {
-    const components = useComponents();
-
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
 
     // Normalize sort config
-    const sort = useMemo(() => ({
-        ...defaultConfig.sort,
-        enable: !!config.sort,
-        ...(typeof config.sort === 'boolean' ? {enable: config.sort} : config.sort),
-    }), [config.sort]);
+    const sort = normalizeSortProps(config.sort);
 
     // Empty
     const Empty = require('../ui/list/Empty').default;
@@ -264,32 +312,14 @@ export default function useList(config: IListConfig): IListOutput {
     const renderLayoutNames = () => <LayoutNames list={list} {...layoutNamesProps} />;
 
     // Models
+    const defaultSearchModel = useMemo(() => getDefaultSearchModel({
+        paginationProps,
+        paginationSizeProps,
+        sort,
+        layoutNamesProps,
+    }), [layoutNamesProps, paginationProps, paginationSizeProps, sort]);
     const model = useModel(config.model);
-    const searchModel = useModel(config.searchModel || config.searchForm?.model, {
-        attributes: [ // default attributes
-            paginationProps.enable && {
-                type: 'number',
-                attribute: paginationProps.attribute,
-                defaultValue: paginationProps.defaultValue,
-            },
-            paginationSizeProps.enable && {
-                type: 'number',
-                attribute: paginationSizeProps.attribute,
-                defaultValue: paginationSizeProps.defaultValue,
-            },
-            sort.enable && {
-                type: 'string', // TODO Need list of strings
-                jsType: 'string[]',
-                attribute: sort.attribute,
-                defaultValue: sort.defaultValue,
-            },
-            layoutNamesProps.enable && {
-                type: 'string',
-                attribute: layoutNamesProps.attribute,
-                defaultValue: layoutNamesProps.defaultValue,
-            },
-        ].filter(Boolean),
-    });
+    const searchModel = useModel(config.searchModel || config.searchForm?.model, defaultSearchModel);
 
     // Address bar synchronization
     const {
@@ -324,16 +354,15 @@ export default function useList(config: IListConfig): IListOutput {
     const dispatch = useDispatch();
 
     // List wrapper (form context)
-    const initialValues = useInitial(() => ({
-        [paginationProps.attribute]: paginationProps.defaultValue,
-        [paginationSizeProps.attribute]: paginationSizeProps.defaultValue,
-        [sort.attribute]: sort.defaultValue,
-        [layoutNamesProps.attribute]: layoutNamesProps.defaultValue,
-        // TODO [this.props._layout.attribute]:
-        //  this.props.clientStorage.get(this.props._layout.attribute) || this.props._layout.defaultValue,
-        ...initialQuery, // Address bar
-        ...config.query, // Query from props
-    }));
+    const _initialValues = useMemo(() => createInitialValues({
+        paginationProps,
+        paginationSizeProps,
+        sort,
+        layoutNamesProps,
+        initialQuery,
+        configQuery: config.query,
+    }), [config.query, initialQuery, layoutNamesProps, paginationProps, paginationSizeProps, sort]);
+    const initialValues = useInitial(() => _initialValues);
 
     const renderList = useCallback((children: any) => {
         const Form = require('../ui/form/Form').default;
@@ -351,24 +380,32 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Init list in redux store
     useMount(() => {
-        dispatch(listInit(config.listId, {
-            listId: config.listId,
-            action: config.action || config.action === '' ? config.action : null,
-            actionMethod: config.actionMethod || defaultConfig.actionMethod,
-            onFetch: config.onFetch,
-            condition: config.condition,
-            scope: config.scope,
-            items: null,
-            sourceItems: config.items || null,
-            isRemote: !config.items,
-            primaryKey: config.primaryKey || defaultConfig.primaryKey,
-            formId,
-            loadMore: paginationProps.loadMore,
-            pageAttribute: paginationProps.attribute || null,
-            pageSizeAttribute: paginationSizeProps.attribute || null,
-            sortAttribute: sort.attribute || null,
-            layoutAttribute: layoutNamesProps.attribute || null,
-        }));
+        if (!list) {
+            const toDispatch = [
+                listInit(config.listId, {
+                    listId: config.listId,
+                    action: config.action || config.action === '' ? config.action : null,
+                    actionMethod: config.actionMethod || defaultConfig.actionMethod,
+                    onFetch: config.onFetch,
+                    condition: config.condition,
+                    scope: config.scope,
+                    items: null,
+                    sourceItems: config.items || null,
+                    isRemote: !config.items,
+                    primaryKey: config.primaryKey || defaultConfig.primaryKey,
+                    formId,
+                    loadMore: paginationProps.loadMore,
+                    pageAttribute: paginationProps.attribute || null,
+                    pageSizeAttribute: paginationSizeProps.attribute || null,
+                    sortAttribute: sort.attribute || null,
+                    layoutAttribute: layoutNamesProps.attribute || null,
+                }),
+                listSetItems(config.listId, config.items),
+                listLazyFetch(config.listId),
+            ];
+
+            dispatch(toDispatch);
+        }
     });
 
     // Check form values change
@@ -406,7 +443,7 @@ export default function useList(config: IListConfig): IListOutput {
     }, [formId, prevQuery, config.query, dispatch]);
 
     // Check change items
-    useEffect(() => {
+    useUpdateEffect(() => {
         dispatch([
             listSetItems(config.listId, config.items),
             listLazyFetch(config.listId),

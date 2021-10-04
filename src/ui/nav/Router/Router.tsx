@@ -8,12 +8,14 @@ import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {useEffect, useState} from 'react';
 import {useEffectOnce, usePrevious, useUpdateEffect} from 'react-use';
+import {IFetchConfig} from '@steroidsjs/core/hooks/useFetch';
+import {IListProps} from '@steroidsjs/core/ui/list/List/List';
 import {useComponents, useSelector} from '../../../hooks';
 import {fetch} from '../../../hoc';
 import {initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
 import {getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducers/router';
-import {SsrProviderContext} from './SsrProvider';
+import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {IFetchHocConfigFunc} from '../../../hoc/fetch';
 
 /**
@@ -118,6 +120,18 @@ export interface IRouteItem {
      * Вложенные роуты
      */
     items?: IRouteItem[] | {[key: string]: IRouteItem};
+
+    /**
+     * Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента
+     * List.
+     * Функция запускается перед рендерингом приложения в режиме SSR и используется для предварительной
+     * загрузки данных, необходимых на текущей странице.
+     * Хук useFetch и компонент List не будут повторно инициализироваться и делать запросы на клиенте,
+     * если подгруженные данные существуют.
+     * @param {Object} match
+     * @return {Array} Например, [{url: '/api/v1/some-data'}, {listId: 'someList', action: '/api/v1/some-list'}]
+     */
+    preloadData?: (match: Record<string, any>) => (IFetchConfig | IListProps)[],
 
     [key: string]: any,
 }

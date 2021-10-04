@@ -9,6 +9,13 @@ import _get from 'lodash-es/get';
 import _merge from 'lodash-es/merge';
 import _isPlainObject from 'lodash-es/isPlainObject';
 
+declare global {
+    interface Window {
+        APP_REDUX_PRELOAD_STATES?: any;
+        __REDUX_DEVTOOLS_EXTENSION__?: any;
+    }
+}
+
 interface IStoreComponentConfig {
     initialState: any,
     history: any,
@@ -50,7 +57,7 @@ export default class StoreComponent {
         this.subscribe = this.subscribe.bind(this);
 
         if (!lazyInit) {
-            this.initStore();
+            this.initStore(config);
         }
     }
 
@@ -62,11 +69,14 @@ export default class StoreComponent {
     initStore(config = {} as IStoreComponentConfig) {
         const initialState = {
             ...(process.env.IS_WEB
-                // @ts-ignore
                 ? _merge(...(window.APP_REDUX_PRELOAD_STATES || [{}]))
                 : {}),
             ...config.initialState,
         };
+
+        if (window?.APP_REDUX_PRELOAD_STATES) {
+            delete window.APP_REDUX_PRELOAD_STATES;
+        }
 
         if (process.env.PLATFORM !== 'mobile') {
             const createHistory: any = process.env.IS_SSR || typeof location === 'undefined'
@@ -78,6 +88,7 @@ export default class StoreComponent {
                 ..._get(initialState, 'config.store.history', {}),
                 ...config.history,
             });
+
             // Add '?' for fix connected-react-router
             if (process.env.IS_SSR && !this.history.location.search) {
                 this.history.location.search = '?';
@@ -96,9 +107,7 @@ export default class StoreComponent {
                 compose(
                     applyMiddleware(({getState}) => next => action => this._prepare(action, next, getState)),
                     applyMiddleware(routerMiddleware(this.history)),
-                    // @ts-ignore
                     !process.env.IS_SSR && window.__REDUX_DEVTOOLS_EXTENSION__ && process.env.PLATFORM !== 'mobile'
-                        // @ts-ignore
                         ? window.__REDUX_DEVTOOLS_EXTENSION__()
                         : f => f,
                 ),

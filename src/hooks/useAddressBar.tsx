@@ -86,7 +86,6 @@ export const queryRestore = (model: Model, location, useHash) => {
             }
         }
     });
-
     return result;
 };
 

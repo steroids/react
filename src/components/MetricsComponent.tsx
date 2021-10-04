@@ -48,7 +48,9 @@ export default class MetricsComponent {
             ? process.env.APP_ENV === 'prod'
             : !!config.enable;
 
-        this._init();
+        if (!process.env.IS_SSR) {
+            this._init();
+        }
     }
 
     _init() {

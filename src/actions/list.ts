@@ -165,6 +165,7 @@ export const listInit = (listId, payload) => ({
 
 export const listSetItems = (listId, items) => ({
     type: LIST_SET_ITEMS,
+    listId,
     items,
 });
 

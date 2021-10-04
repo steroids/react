@@ -1,6 +1,5 @@
 import {useContext} from 'react';
-import {ScreenContext} from '../hooks/useApplication';
-import {IScreen} from './useApplication';
+import {ScreenContext, IScreen} from '../providers/ScreenProvider';
 
 export default function useScreen(): IScreen {
     return useContext(ScreenContext);

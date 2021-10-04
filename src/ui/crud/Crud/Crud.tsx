@@ -8,7 +8,7 @@ import CrudModal from './CrudModal';
 import {listRefresh} from '../../../actions/list';
 import {closeModal, openModal} from '../../../actions/modal';
 import {goToRoute} from '../../../actions/router';
-import {IComponents} from '../../../hooks/useComponents';
+import {IComponents} from '../../../providers/ComponentsProvider';
 import useFetch from '../../../hooks/useFetch';
 import CrudContent from './CrudContent';
 import {

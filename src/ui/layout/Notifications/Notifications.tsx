@@ -66,7 +66,7 @@ function Notifications(props:INotificationsProps): JSX.Element {
             dispatch(setFlashes(props.initialFlashes));
 
             // Disable scroll or scroll to top on show notifications
-            if (typeof window !== 'undefined') {
+            if (!process.env.IS_SSR) {
                 if ('scrollRestoration' in window.history) {
                     window.history.scrollRestoration = 'manual';
                 } else {

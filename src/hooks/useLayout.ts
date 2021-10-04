@@ -5,6 +5,9 @@ import _upperFirst from 'lodash-es/upperFirst';
 import _merge from 'lodash-es/merge';
 import _intersection from 'lodash-es/intersection';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
+import useSsr from '@steroidsjs/core/hooks/useSsr';
+import {IComponents} from '@steroidsjs/core/providers/ComponentsProvider';
+import {Dispatch} from 'redux';
 import useComponents from './useComponents';
 import {getRoute} from '../reducers/router';
 import {getData, getInitializeCounter, getUser, isInitialized as getIsInitialized} from '../reducers/auth';
@@ -26,6 +29,71 @@ export const STATUS_RENDER_ERROR = 'render_error';
 export const STATUS_HTTP_ERROR = 'render_error';
 export const STATUS_ACCESS_DENIED = 'access_denied';
 export const STATUS_OK = 'ok';
+
+export const HTTP_STATUS_CODES = {
+    [STATUS_NOT_FOUND]: 404,
+    [STATUS_ACCESS_DENIED]: 403,
+    [STATUS_OK]: 200,
+    [STATUS_RENDER_ERROR]: 500,
+    [STATUS_HTTP_ERROR]: 500,
+};
+
+export const runInitAction = (
+    initAction: (...args: any[]) => Promise<any>,
+    components: IComponents,
+    dispatch: Dispatch<any>,
+) => (
+    initAction(null, dispatch, components)
+        .then(result => {
+            // Configure components
+            if (_isObject(result.config)) {
+                Object.keys(result.config).forEach(name => {
+                    if (!components[name]) {
+                        return;
+                    }
+
+                    Object.keys(result.config[name]).forEach(key => {
+                        const value = result.config[name][key];
+                        const setter = 'set' + _upperFirst(key);
+                        if (_isFunction(components[name][setter])) {
+                            components[name][setter](value);
+                        } else if (
+                            _isObject(components[name][key])
+                        && _isObject(value)
+                        ) {
+                            _merge(components[name][key], value);
+                        } else {
+                            components[name][key] = value;
+                        }
+                    });
+                });
+            }
+
+            const resultMeta = result.meta;
+            const resultUser = result.user;
+            delete result.user;
+            delete result.meta;
+
+            if (resultMeta) {
+                Object.keys(resultMeta).forEach(modelName => {
+                    if (resultMeta[modelName].attributes) {
+                        components.meta.setModel(modelName, resultMeta[modelName]);
+                    }
+                });
+            }
+
+            dispatch(
+                [
+                    // Meta models & enums
+                    Boolean(resultMeta) && setMeta(resultMeta), // TODO skip models
+                    // User auth
+                    setData(result),
+                    // User auth
+                    setUser(resultUser),
+                ].filter(Boolean),
+            );
+        })
+);
 
 export default function useLayout(initAction: any = null): ILayout {
     const {route, user, data, isInitialized, initializeCounter, redirectPageId} = useSelector(state => ({
@@ -51,61 +119,17 @@ export default function useLayout(initAction: any = null): ILayout {
     });
 
     const initializeCounterPrev = usePrevious(initializeCounter);
+
     useUpdateEffect(() => {
         if (!_isFunction(initAction) || initializeCounter <= initializeCounterPrev) {
             return;
         }
 
-        initAction(null, dispatch)
-            .then(result => {
-                // Configure components
-                if (_isObject(result.config)) {
-                    Object.keys(result.config).forEach(name => {
-                        if (!components[name]) {
-                            return;
-                        }
-
-                        Object.keys(result.config[name]).forEach(key => {
-                            const value = result.config[name][key];
-                            const setter = 'set' + _upperFirst(key);
-                            if (_isFunction(components[name][setter])) {
-                                components[name][setter](value);
-                            } else if (
-                                _isObject(components[name][key])
-                                        && _isObject(value)
-                            ) {
-                                _merge(components[name][key], value);
-                            } else {
-                                components[name][key] = value;
-                            }
-                        });
-                    });
+        runInitAction(initAction, components, dispatch)
+            .then(() => {
+                if (redirectPageId) {
+                    dispatch(goToRoute(redirectPageId));
                 }
-
-                const resultMeta = result.meta;
-                const resultUser = result.user;
-                delete result.user;
-                delete result.meta;
-
-                if (resultMeta) {
-                    Object.keys(resultMeta).forEach(modelName => {
-                        if (resultMeta[modelName].attributes) {
-                            components.meta.setModel(modelName, resultMeta[modelName]);
-                        }
-                    });
-                }
-
-                dispatch(
-                    [
-                        // Meta models & enums
-                        Boolean(resultMeta) && setMeta(resultMeta), // TODO skip models
-                        // User auth
-                        setData(result),
-                        // User auth
-                        setUser(resultUser),
-                        redirectPageId && goToRoute(redirectPageId),
-                    ].filter(Boolean),
-                );
             })
             .catch(e => {
                 setError(e);
@@ -140,6 +164,12 @@ export default function useLayout(initAction: any = null): ILayout {
                 );
             }
         }
+    }
+
+    //save status code for ssr
+    const ssrContextValue = useSsr();
+    if (process.env.IS_SSR) {
+        ssrContextValue.staticContext.statusCode = HTTP_STATUS_CODES[status];
     }
 
     return {

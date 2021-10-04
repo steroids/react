@@ -59,6 +59,10 @@ export default function Icon(props: IIconProps): JSX.Element {
     const components = useComponents();
 
     const name = props.name;
+    if (!_isString(name)) {
+        return null;
+    }
+
     let icon;
 
     if (process.env.PLATFORM === 'mobile') {

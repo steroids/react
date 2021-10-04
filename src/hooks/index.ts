@@ -4,6 +4,7 @@ import useDataProvider from './useDataProvider';
 import useDataSelect from './useDataSelect';
 import useSelector from './useSelector';
 import useForm from './useForm';
+import useSsr from './useSsr';
 
 export {
     useBem,
@@ -12,4 +13,5 @@ export {
     useDataSelect,
     useSelector,
     useForm,
+    useSsr,
 };

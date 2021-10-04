@@ -1,9 +1,17 @@
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {useUnmount, useUpdateEffect} from 'react-use';
+import {useCallback, useRef, useState} from 'react';
+import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
+import _trim from 'lodash-es/trim';
 import axios from 'axios';
+import {useSsr} from '@steroidsjs/core/hooks';
 import {useComponents} from './index';
-import {IComponents} from './useComponents';
+import {IComponents} from '../providers/ComponentsProvider';
 import {IApiMethod} from '../components/ApiComponent';
+
+declare global {
+    interface Window {
+        APP_PRELOADED_DATA: any
+    }
+}
 
 export interface IFetchConfig {
     id?: string | number,
@@ -25,7 +33,7 @@ export interface IFetchResult {
     fetch?: (newParams?: Record<string, unknown>) => void,
 }
 
-const normalizeConfig = config => (
+export const normalizeConfig = config => (
     config
         ? {
             id: null,
@@ -38,7 +46,17 @@ const normalizeConfig = config => (
         }
         : null
 );
-const defaultFetchHandler = (config, components, addCancelToken) => {
+
+export const getConfigId = config => {
+    const result = _trim(config.id || config.url, '/');
+    if (!result) {
+        // eslint-disable-next-line no-console
+        console.warn('Please set id for fetch config, it`s necessary for SSR to work properly');
+    }
+    return result;
+};
+
+export const defaultFetchHandler = (config, components, addCancelToken) => {
     const cancelToken = new axios.CancelToken(cancel => {
         addCancelToken(cancel);
     });
@@ -51,6 +69,10 @@ const defaultFetchHandler = (config, components, addCancelToken) => {
         .then(result => result.data);
 };
 
+export const fetchData = (config, components, addCancelToken) => (
+    (config.onFetch || defaultFetchHandler).call(null, config, components, addCancelToken)
+);
+
 /**
  * Fetch
  * Используется для подгрузки данных с бекенда перед рендером компонента, на котором он применяется.
@@ -58,8 +80,7 @@ const defaultFetchHandler = (config, components, addCancelToken) => {
  * которые описывают откуда нужно подтянуть данные.
  *
  * В процесс загрузки HOC будет отображать "Загрузка...", а после уже отрендерит компонент, передав данные в указанный
- * ключ `key`. Все данные сохраняются в Redux Store, что позволяет избежать дополнительных запросов при использовании
- * SSR.
+ * ключ `key`.
  */
 export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
     const components = useComponents();
@@ -72,14 +93,15 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
         setConfig(rawConfig);
     }, [rawConfig]);
 
-    // Resolve config id
-    // TODO Get initial state from HttpComponent (for SSR) by configId
-    //const idRef = useRef(_uniqueId('fetch'));
-    //const configId = config ? _trim(config.id || config.url || idRef.current, '/') : null;
+    // Get preloaded data
+    const configId = getConfigId(config);
+    const ssrValueContext = useSsr();
+    const preloadedData = process.env.IS_SSR ? ssrValueContext.preloadedData : window.APP_PRELOADED_DATA;
+    const preloadedDataByConfigId = (preloadedData && configId) ? preloadedData[configId] : null;
 
     // State for data and loading flag
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(!!config);
+    const [data, setData] = useState(preloadedDataByConfigId || null);
+    const [isLoading, setIsLoading] = useState(!!config && !data);
 
     // Cancel tokens
     const cancelTokens = useRef([]);
@@ -98,26 +120,26 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
                 },
             });
         }
+
+        setData(null);
+
         if (config) {
             setIsLoading(true);
-            setData(await (config.onFetch || defaultFetchHandler).call(null, config, components, addCancelToken));
+            setData(await fetchData(config, components, addCancelToken));
             setIsLoading(false);
         }
     }, [components, config]);
 
-    // Fetch data on config update
-    useLayoutEffect(() => {
-        const fetchData = async () => {
-            setData(null);
-            if (config) {
-                setIsLoading(true);
-                setData(await (config.onFetch || defaultFetchHandler).call(null, config, components, addCancelToken));
-                setIsLoading(false);
-            }
-        };
+    useEffectOnce(() => {
+        if (!data) {
+            fetch();
+        }
+    });
 
-        fetchData();
-    }, [components, config]);
+    // Fetch data on config update
+    useUpdateEffect(() => {
+        fetch();
+    }, [fetch]);
 
     return {data, isLoading, fetch};
 }

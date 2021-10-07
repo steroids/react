@@ -1,3 +1,4 @@
+import {Dispatch} from 'redux';
 import {useState} from 'react';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
@@ -5,9 +6,8 @@ import _upperFirst from 'lodash-es/upperFirst';
 import _merge from 'lodash-es/merge';
 import _intersection from 'lodash-es/intersection';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
-import useSsr from '@steroidsjs/core/hooks/useSsr';
-import {IComponents} from '@steroidsjs/core/providers/ComponentsProvider';
-import {Dispatch} from 'redux';
+import useSsr from './useSsr';
+import {IComponents} from '../providers/ComponentsProvider';
 import useComponents from './useComponents';
 import {getRoute} from '../reducers/router';
 import {getData, getInitializeCounter, getUser, isInitialized as getIsInitialized} from '../reducers/auth';

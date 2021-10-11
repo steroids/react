@@ -27,7 +27,7 @@ function AppMock(props: any) {
     });
 
     return renderApplication(
-        <Component {...childProps} />,
+            <Component {...childProps} />,
     );
 }
 

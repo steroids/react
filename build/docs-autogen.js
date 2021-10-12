@@ -70,7 +70,7 @@ json.children.forEach(file => {
     const demoMatch = file.name.match(demoPattern);
 
     if (demoMatch) {
-        const demoPath = demoMatch[1].split('\/');
+        const demoPath = demoMatch[1].split('/');
         const demoName = demoMatch[2];
 
         if (file.children) {
@@ -79,7 +79,9 @@ json.children.forEach(file => {
             let description = null;
             const title = null;
 
-            const fileContents = fs.readFileSync(path.resolve(__dirname, '../' + file.sources[0].fileName)).toString();
+            const fileContents = fs
+                .readFileSync(path.resolve(__dirname, '../../../' + file.sources[0].fileName))
+                .toString();
 
             const matchOrderTagPattern = /@order\s(.*)$/gmi;
             const matchColTagPattern = /@col\s(.*)$/gmi;

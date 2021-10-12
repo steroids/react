@@ -815,6 +815,14 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "autoPositioning",
+                    "decorators": [],
+                    "description": "Включает \"умное\" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом\nи краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "children",
                     "decorators": [],
                     "description": "Дочерние элементы",
@@ -1071,102 +1079,6 @@
                 }
             ]
         },
-        "IScreen": {
-            "name": "IScreen",
-            "moduleName": "hooks/useApplication",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": [
-                {
-                    "name": "getDeviceType",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "isDesktop",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "isPhone",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "isTablet",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "media",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "Record",
-                    "example": null
-                },
-                {
-                    "name": "setMedia",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "width",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "number",
-                    "example": null
-                }
-            ]
-        },
-        "IScreenProviderProps": {
-            "name": "IScreenProviderProps",
-            "moduleName": "hooks/useApplication",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [
-                "PropsWithChildren<any>"
-            ],
-            "properties": [
-                {
-                    "name": "media",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "Record",
-                    "example": null
-                },
-                {
-                    "name": "skipTimeout",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                }
-            ]
-        },
         "IBem": {
             "name": "IBem",
             "moduleName": "hooks/useBem",
@@ -1176,105 +1088,6 @@
             "defaultProps": null,
             "extends": [],
             "properties": []
-        },
-        "IComponents": {
-            "name": "IComponents",
-            "moduleName": "hooks/useComponents",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": [
-                {
-                    "name": "api",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "clientStorage",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "html",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "http",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "locale",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "meta",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "pushNotification",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "resource",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "store",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "ui",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "ws",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                }
-            ]
         },
         "AutoCompleteConfig": {
             "name": "AutoCompleteConfig",
@@ -1954,6 +1767,305 @@
                 }
             ]
         },
+        "IComponents": {
+            "name": "IComponents",
+            "moduleName": "providers/ComponentsProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "api",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "clientStorage",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "html",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "http",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "locale",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "meta",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "pushNotification",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "resource",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "store",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "ui",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "ws",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IComponentsProviderProps": {
+            "name": "IComponentsProviderProps",
+            "moduleName": "providers/ComponentsProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "PropsWithChildren<any>"
+            ],
+            "properties": [
+                {
+                    "name": "components",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IComponents",
+                    "example": null
+                }
+            ]
+        },
+        "IScreen": {
+            "name": "IScreen",
+            "moduleName": "providers/ScreenProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "getDeviceType",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isDesktop",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isPhone",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isTablet",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "media",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Record",
+                    "example": null
+                },
+                {
+                    "name": "setMedia",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "width",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                }
+            ]
+        },
+        "IScreenProviderProps": {
+            "name": "IScreenProviderProps",
+            "moduleName": "providers/ScreenProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "PropsWithChildren<any>"
+            ],
+            "properties": [
+                {
+                    "name": "media",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Record",
+                    "example": null
+                },
+                {
+                    "name": "skipTimeout",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                }
+            ]
+        },
+        "IPreloadedData": {
+            "name": "IPreloadedData",
+            "moduleName": "providers/SsrProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": []
+        },
+        "ISsr": {
+            "name": "ISsr",
+            "moduleName": "providers/SsrProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "history",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{initialEntries: string[]}",
+                    "example": null
+                },
+                {
+                    "name": "preloadedData",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IPreloadedData",
+                    "example": null
+                },
+                {
+                    "name": "staticContext",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "ISsrProviderProps": {
+            "name": "ISsrProviderProps",
+            "moduleName": "providers/SsrProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "ISsr",
+                "PropsWithChildren<any>"
+            ],
+            "properties": [
+                {
+                    "name": "history",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{initialEntries: string[]}",
+                    "example": null
+                },
+                {
+                    "name": "preloadedData",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IPreloadedData",
+                    "example": null
+                },
+                {
+                    "name": "staticContext",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
         "IModal": {
             "name": "IModal",
             "moduleName": "reducers/modal",
@@ -2117,6 +2229,264 @@
                     "required": false,
                     "type": "string",
                     "example": null
+                }
+            ]
+        },
+        "IAlertViewProps": {
+            "name": "IAlertViewProps",
+            "moduleName": "ui/content/Alert/Alert",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IAlertProps"
+            ],
+            "properties": [
+                {
+                    "name": "action",
+                    "decorators": [],
+                    "description": "Дочерние элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "animation",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "animationDuration",
+                    "decorators": [],
+                    "description": "Время анимации в миллисекундах",
+                    "required": false,
+                    "type": "number",
+                    "example": "{1000}"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "Дополнительное содрежание сообщения.",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Please, check your email.'}"
+                },
+                {
+                    "name": "isExist",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isVisible",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "message",
+                    "decorators": [],
+                    "description": "Основное сообщения Оповещения",
+                    "required": true,
+                    "type": "string",
+                    "example": "{'Sending is confirmed!'}"
+                },
+                {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "showClose",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "showIcon",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IAvatarViewProps": {
+            "name": "IAvatarViewProps",
+            "moduleName": "ui/content/Avatar/Avatar",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IAvatarProps"
+            ],
+            "properties": [
+                {
+                    "name": "alt",
+                    "decorators": [],
+                    "description": "Альтернативный текст для изображения",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'default image'}"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерние элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "formattedTitle",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "isError",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "onError",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "shape",
+                    "decorators": [],
+                    "description": "Форма аватара",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'circle'}"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер аватара",
+                    "required": false,
+                    "type": "string | number",
+                    "example": "{'md'}"
+                },
+                {
+                    "name": "src",
+                    "decorators": [],
+                    "description": "Ссылка на изображение для аватара",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'https://user/avatar.png'}"
+                },
+                {
+                    "name": "srcSet",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "Статус онлайна",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '30px'}"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок аватарки",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Avatar'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
                 }
             ]
         },
@@ -2346,6 +2716,296 @@
                     "name": "viewProps",
                     "decorators": [],
                     "description": "Пропсы для компонента отображения",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "ICollapseViewProps": {
+            "name": "ICollapseViewProps",
+            "moduleName": "ui/content/Collapse/Collapse",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "ICollapseProps"
+            ],
+            "properties": [
+                {
+                    "name": "activeKey",
+                    "decorators": [],
+                    "description": "Номер активного CollapseItem, который может меняться динамический или быть статичным",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "borderless",
+                    "decorators": [],
+                    "description": "Отключение внешних рамок",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "childIndex",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Кастомная иконка svg или название иконки",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "{'circle'}"
+                },
+                {
+                    "name": "iconPosition",
+                    "decorators": [],
+                    "description": "Позиция иконки-индикатора",
+                    "required": false,
+                    "type": "\"left\" | \"right\"",
+                    "example": "{'left'}"
+                },
+                {
+                    "name": "isAccordion",
+                    "decorators": [],
+                    "description": "Включает режим Аккордиона (только один CollapseItem может быть открыт)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "isShowMore",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Вызываемая функция при каждом изменении состояния",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{() => {console.log('success')}}"
+                },
+                {
+                    "name": "showIcon",
+                    "decorators": [],
+                    "description": "Показ иконки, которая показывает состояние CollapseItem. Поумолчанию включены.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{false}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "toggleAccordion",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "toggleCollapse",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "ICollapseItemViewProps": {
+            "name": "ICollapseItemViewProps",
+            "moduleName": "ui/content/Collapse/CollapseItem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "ICollapseItemProps"
+            ],
+            "properties": [
+                {
+                    "name": "activeKey",
+                    "decorators": [],
+                    "description": "Номер активного CollapseItem, который может меняться динамический или быть статичным",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "borderless",
+                    "decorators": [],
+                    "description": "Отключение внешних рамок",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "childIndex",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Кастомная иконка svg или название иконки",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "{'circle'}"
+                },
+                {
+                    "name": "iconPosition",
+                    "decorators": [],
+                    "description": "Позиция иконки-индикатора",
+                    "required": false,
+                    "type": "\"left\" | \"right\"",
+                    "example": "{'left'}"
+                },
+                {
+                    "name": "isAccordion",
+                    "decorators": [],
+                    "description": "Включает режим Аккордиона (только один CollapseItem может быть открыт)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "isShowMore",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Вызываемая функция при каждом изменении состояния",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{() => {console.log('success')}}"
+                },
+                {
+                    "name": "showIcon",
+                    "decorators": [],
+                    "description": "Показ иконки, которая показывает состояние CollapseItem. Поумолчанию включены.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{false}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Название CollapseItem",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Подробнее'}"
+                },
+                {
+                    "name": "toggleAccordion",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "toggleCollapse",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
                     "required": false,
                     "type": "any",
                     "example": null
@@ -2738,6 +3398,14 @@
             ],
             "properties": [
                 {
+                    "name": "autoPositioning",
+                    "decorators": [],
+                    "description": "Включает \"умное\" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом\nи краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "children",
                     "decorators": [],
                     "description": "Дочерние элементы",
@@ -2831,6 +3499,14 @@
                 "IAbsolutePositioningOutputProps"
             ],
             "properties": [
+                {
+                    "name": "autoPositioning",
+                    "decorators": [],
+                    "description": "Включает \"умное\" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом\nи краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
                 {
                     "name": "calculatePosition",
                     "decorators": [],
@@ -3264,6 +3940,14 @@
                     "required": false,
                     "type": "string",
                     "example": "'/catalog'"
+                },
+                {
+                    "name": "preloadData",
+                    "decorators": [],
+                    "description": "Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента\nList.\nФункция запускается перед рендерингом приложения в режиме SSR и используется для предварительной\nзагрузки данных, необходимых на текущей странице.\nХук useFetch и компонент List не будут повторно инициализироваться и делать запросы на клиенте,\nесли подгруженные данные существуют.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
                 },
                 {
                     "name": "queryKey",
@@ -4235,6 +4919,14 @@
                     "example": "['Error text']"
                 },
                 {
+                    "name": "failed",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "hint",
                     "decorators": [],
                     "description": "Подсказка, которая отобразится рядом с полем",
@@ -4381,10 +5073,10 @@
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер поля",
+                    "description": "Размер Innput",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "sourceItems",
@@ -4401,6 +5093,14 @@
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "success",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "textAfter",
@@ -11135,6 +11835,14 @@
                     "example": "['Error text']"
                 },
                 {
+                    "name": "failed",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "hint",
                     "decorators": [],
                     "description": "Подсказка, которая отобразится рядом с полем",
@@ -11217,10 +11925,10 @@
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер поля",
+                    "description": "Размер Innput",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "style",
@@ -11229,6 +11937,14 @@
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "success",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "textAfter",
@@ -11357,6 +12073,14 @@
                     "example": null
                 },
                 {
+                    "name": "failed",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "formId",
                     "decorators": [],
                     "description": "",
@@ -11479,10 +12203,10 @@
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер поля",
+                    "description": "Размер Innput",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "style",
@@ -11490,6 +12214,14 @@
                     "description": "Объект CSS стилей",
                     "required": false,
                     "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "success",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -11810,6 +12542,14 @@
                     "example": "['Error text']"
                 },
                 {
+                    "name": "failed",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "hint",
                     "decorators": [],
                     "description": "Подсказка, которая отобразится рядом с полем",
@@ -11908,10 +12648,10 @@
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер поля",
+                    "description": "Размер Innput",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "step",
@@ -11928,6 +12668,14 @@
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "success",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "textAfter",
@@ -12056,6 +12804,14 @@
                     "example": "['Error text']"
                 },
                 {
+                    "name": "failed",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "formId",
                     "decorators": [],
                     "description": "",
@@ -12170,10 +12926,10 @@
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер поля",
+                    "description": "Размер Innput",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "step",
@@ -12190,6 +12946,14 @@
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "success",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "textAfter",
@@ -12309,6 +13073,14 @@
                     "example": "['Error text']"
                 },
                 {
+                    "name": "failed",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "hint",
                     "decorators": [],
                     "description": "Подсказка, которая отобразится рядом с полем",
@@ -12399,10 +13171,10 @@
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер поля",
+                    "description": "Размер Innput",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "style",
@@ -12411,6 +13183,14 @@
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "success",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "textAfter",
@@ -12536,6 +13316,14 @@
                     "description": "Ошибки в поле",
                     "required": false,
                     "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "failed",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -12669,10 +13457,10 @@
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер поля",
+                    "description": "Размер Innput",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "style",
@@ -12681,6 +13469,14 @@
                     "required": false,
                     "type": "any",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "success",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "textAfter",
@@ -14722,7 +15518,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента \\<input /\\>",
                     "required": true,
-                    "type": "{disabled: boolean, name: string, onChange: {}, onKeyUp: {}, placeholder: string, value: string | number}",
+                    "type": "{disabled: boolean, name: string, onChange: {}, onKeyUp: KeyboardEventHandler, placeholder: string, value: string | number}",
                     "example": null
                 },
                 {
@@ -15870,6 +16666,108 @@
                     "description": "",
                     "required": true,
                     "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IProgressBarViewProps": {
+            "name": "IProgressBarViewProps",
+            "moduleName": "ui/layout/ProgressBar/ProgressBar",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "percent",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"small\" | \"large\" | \"medium\"",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"success\" | \"normal\" | \"exception\"",
+                    "example": null
+                }
+            ]
+        },
+        "ISkeletonViewProps": {
+            "name": "ISkeletonViewProps",
+            "moduleName": "ui/layout/Skeleton/Skeleton",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "animation",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"pulse\" | \"wave\"",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "height",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"circle\" | \"text\" | \"rect\"",
+                    "example": null
+                },
+                {
+                    "name": "width",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
                     "example": null
                 }
             ]
@@ -18050,6 +18948,143 @@
                 }
             ]
         },
+        "IStepItem": {
+            "name": "IStepItem",
+            "moduleName": "ui/list/Steps/Steps",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "isError",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "subtitle",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IStepItemViewProps": {
+            "name": "IStepItemViewProps",
+            "moduleName": "ui/list/Steps/Steps",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "stepItem",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IStepItem",
+                    "example": null
+                }
+            ]
+        },
+        "IStepsViewProps": {
+            "name": "IStepsViewProps",
+            "moduleName": "ui/list/Steps/Steps",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
         "IModalProps": {
             "name": "IModalProps",
             "moduleName": "ui/modal/Modal/Modal",
@@ -19542,6 +20577,14 @@
                     "example": "'/catalog'"
                 },
                 {
+                    "name": "preloadData",
+                    "decorators": [],
+                    "description": "Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента\nList.\nФункция запускается перед рендерингом приложения в режиме SSR и используется для предварительной\nзагрузки данных, необходимых на текущей странице.\nХук useFetch и компонент List не будут повторно инициализироваться и делать запросы на клиенте,\nесли подгруженные данные существуют.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "redirectTo",
                     "decorators": [],
                     "description": "В свойстве можно передать как путь, на который осуществится редирект, так и булево значение.\nЕсли свойство равно true - то редирект произойдет на первый из вложенных роутов.",
@@ -20145,6 +21188,14 @@
             "type": "string",
             "example": "my-block"
         },
+        "CustomStyle": {
+            "name": "CustomStyle",
+            "decorators": [],
+            "description": "Дополнительные стили",
+            "required": true,
+            "type": "React.CSSProperties",
+            "example": "my-block"
+        },
         "CustomView": {
             "name": "CustomView",
             "decorators": [],
@@ -20196,17 +21247,9 @@
         "Size": {
             "name": "Size",
             "decorators": [],
-            "description": "",
+            "description": "Размер элемента",
             "required": true,
-            "type": "\"large\" | \"medium\" | \"small\"",
-            "example": null
-        },
-        "IAvatarViewProps": {
-            "name": "IAvatarViewProps",
-            "decorators": [],
-            "description": "",
-            "required": true,
-            "type": "IAvatarProps",
+            "type": "\"small\" | \"middle\" | \"large\" | string",
             "example": null
         },
         "IAvatarGroupViewProps": {
@@ -20329,7 +21372,7 @@
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Errors"
                 },
                 "placeholder": {
                     "order": "5",
@@ -21719,6 +22762,34 @@
             "properties": [],
             "methods": []
         },
+        "providers/ComponentsProvider": {
+            "name": "default",
+            "moduleName": "providers/ComponentsProvider",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "providers/ScreenProvider": {
+            "name": "default",
+            "moduleName": "providers/ScreenProvider",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "providers/SsrProvider": {
+            "name": "default",
+            "moduleName": "providers/SsrProvider",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/content/Alert/Alert": {
+            "name": "default",
+            "moduleName": "ui/content/Alert/Alert",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
         "ui/content/Detail/Detail": {
             "name": "default",
             "moduleName": "ui/content/Detail/Detail",
@@ -22254,6 +23325,20 @@
             "description": "",
             "tags": {}
         },
+        "ui/layout/ProgressBar/ProgressBar": {
+            "name": "default",
+            "moduleName": "ui/layout/ProgressBar/ProgressBar",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/layout/Skeleton/Skeleton": {
+            "name": "default",
+            "moduleName": "ui/layout/Skeleton/Skeleton",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
         "ui/layout/Tooltip/Tooltip": {
             "name": "default",
             "moduleName": "ui/layout/Tooltip/Tooltip",
@@ -22348,6 +23433,13 @@
         "ui/list/SearchForm/SearchForm": {
             "name": "default",
             "moduleName": "ui/list/SearchForm/SearchForm",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/list/Steps/Steps": {
+            "name": "default",
+            "moduleName": "ui/list/Steps/Steps",
             "title": "",
             "description": "",
             "tags": {}
@@ -22460,25 +23552,6 @@
             "title": "",
             "description": "",
             "tags": {}
-        },
-        "ui/nav/Router/SsrProvider": {
-            "name": "default",
-            "moduleName": "ui/nav/Router/SsrProvider",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "properties": [],
-            "methods": [
-                {
-                    "name": "render",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "Element",
-                    "example": null,
-                    "parameters": []
-                }
-            ]
         }
     }
 }

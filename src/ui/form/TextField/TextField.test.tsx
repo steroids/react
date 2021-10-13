@@ -31,6 +31,9 @@ describe('TextField tests', () => {
         it('should have right external className', () => {
             expect(wrapper.find('textarea')).toHaveClassName(props.className);
         });
+        it('should be required', () => {
+            expect(wrapper.find('TextField')).toHaveProp('required', props.required);
+        });
         it('should be disabled', () => {
             expect(wrapper.find('textarea')).toBeDisabled();
         });

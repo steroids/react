@@ -38,6 +38,9 @@ describe('Password tests', ()=> {
         it('should have right external className', () => {
             expect(wrapper.find('PasswordField')).toHaveClassName(props.className);
         });
+        it('should be required', () => {
+            expect(wrapper.find('PasswordField')).toHaveProp('required', props.required);
+        });
         it('should be disabled ', () => {
             expect(wrapper.find('input')).toBeDisabled();
         });

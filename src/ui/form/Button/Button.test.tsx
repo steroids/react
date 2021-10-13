@@ -38,7 +38,7 @@ describe('Button tests', () => {
             expect(wrapper.find('button')).toHaveProp('type', props.type);
         });
         it('should have right color modifier', () => {
-            expect(wrapper.find('button')).toHaveClassName(`ButtonView_color_${props.color}`);
+            expect(wrapper.find('button')).toHaveClassName(`ButtonView_color_${props.color}`); /// TODO need fixed this moment. Mod ButtonView_outline_ used if outline: true
         });
         it('should have right outline modifier', () => {
             expect(wrapper.find('button')).toHaveClassName('ButtonView_outline');

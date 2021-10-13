@@ -80,7 +80,7 @@ json.children.forEach(file => {
             const title = null;
 
             const fileContents = fs
-                .readFileSync(path.resolve(__dirname, '../../../' + file.sources[0].fileName))
+                .readFileSync(path.resolve(__dirname, '../' + file.sources[0].fileName))
                 .toString();
 
             const matchOrderTagPattern = /@order\s(.*)$/gmi;

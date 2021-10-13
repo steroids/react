@@ -23,8 +23,5 @@
     "node_modules",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
-    "src/ui/layout/Notifications/demo/*",
-    "src/ui/icon/Icon/demo/*",
-    "src/components/MetricsComponent.tsx"
   ]
 }

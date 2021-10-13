@@ -1,7 +1,7 @@
 const path = require('path');
 const isLocal = require('fs').existsSync(path.resolve(__dirname, 'react-bootstrap'));
 
-const corePath = path.join(__dirname, isLocal ? '/react/src/' : '/../react/src/');
+const corePath = path.join(__dirname, '/src/');
 const bootstrapPath = path.join(__dirname, isLocal ? '/react-bootstrap/src/' : '/../react-bootstrap/src/');
 
 module.exports = {

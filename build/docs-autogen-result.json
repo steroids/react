@@ -2232,6 +2232,113 @@
                 }
             ]
         },
+        "IAlertProps": {
+            "name": "IAlertProps",
+            "moduleName": "ui/content/Alert/Alert",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "action",
+                    "decorators": [],
+                    "description": "Дочерние элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "animation",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "animationDuration",
+                    "decorators": [],
+                    "description": "Время анимации в миллисекундах",
+                    "required": false,
+                    "type": "number",
+                    "example": "{1000}"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "Дополнительное содрежание сообщения.",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Please, check your email.'}"
+                },
+                {
+                    "name": "message",
+                    "decorators": [],
+                    "description": "Основное сообщения Оповещения",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Sending is confirmed!'}"
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Callback функция вызываемая при нажатии на кнопку закрытия",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{() => console.log('this is callback')}"
+                },
+                {
+                    "name": "showClose",
+                    "decorators": [],
+                    "description": " Нужно ли отображать кнопку, чтобы закрыть Оповещение",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "showIcon",
+                    "decorators": [],
+                    "description": "Нужно ли отображать иконку, соответствующую типа Оповещения",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "Типы Оповещений",
+                    "required": true,
+                    "type": "string",
+                    "example": "{'info'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
         "IAlertViewProps": {
             "name": "IAlertViewProps",
             "moduleName": "ui/content/Alert/Alert",
@@ -2303,7 +2410,7 @@
                     "name": "message",
                     "decorators": [],
                     "description": "Основное сообщения Оповещения",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": "{'Sending is confirmed!'}"
                 },
@@ -2318,7 +2425,7 @@
                 {
                     "name": "onClose",
                     "decorators": [],
-                    "description": "",
+                    "description": "Callback функция вызываемая при нажатии на кнопку закрытия",
                     "required": true,
                     "type": "{}",
                     "example": null
@@ -2326,7 +2433,7 @@
                 {
                     "name": "showClose",
                     "decorators": [],
-                    "description": "",
+                    "description": " Нужно ли отображать кнопку, чтобы закрыть Оповещение",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -2334,10 +2441,10 @@
                 {
                     "name": "showIcon",
                     "decorators": [],
-                    "description": "",
+                    "description": "Нужно ли отображать иконку, соответствующую типа Оповещения",
                     "required": false,
-                    "type": "string | boolean",
-                    "example": null
+                    "type": "boolean",
+                    "example": "{true}"
                 },
                 {
                     "name": "style",
@@ -2350,10 +2457,10 @@
                 {
                     "name": "type",
                     "decorators": [],
-                    "description": "",
+                    "description": "Типы Оповещений",
                     "required": true,
                     "type": "string",
-                    "example": null
+                    "example": "{'info'}"
                 },
                 {
                     "name": "view",
@@ -2362,6 +2469,105 @@
                     "required": false,
                     "type": "any",
                     "example": null
+                }
+            ]
+        },
+        "IAvatarProps": {
+            "name": "IAvatarProps",
+            "moduleName": "ui/content/Avatar/Avatar",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "alt",
+                    "decorators": [],
+                    "description": "Альтернативный текст для изображения",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'default image'}"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерние элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "shape",
+                    "decorators": [],
+                    "description": "Форма аватара",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'circle'}"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер аватара",
+                    "required": false,
+                    "type": "string | number",
+                    "example": "{'md'}"
+                },
+                {
+                    "name": "src",
+                    "decorators": [],
+                    "description": "Ссылка на изображение для аватара",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'https://user/avatar.png'}"
+                },
+                {
+                    "name": "srcSet",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "Статус онлайна",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '30px'}"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок аватарки",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Avatar'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
                 }
             ]
         },
@@ -2487,6 +2693,49 @@
                     "required": false,
                     "type": "ReactNode",
                     "example": "MyCustomView"
+                }
+            ]
+        },
+        "AvatarGroupProps": {
+            "name": "AvatarGroupProps",
+            "moduleName": "ui/content/Avatar/AvatarGroup",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode[]",
+                    "example": null
+                },
+                {
+                    "name": "maxCount",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -2722,6 +2971,228 @@
                 }
             ]
         },
+        "ICardProps": {
+            "name": "ICardProps",
+            "moduleName": "ui/content/Card/Card",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "borderColor",
+                    "decorators": [],
+                    "description": "Цвет границы (если передать false, то граница будет скрыта)",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": "success"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерние элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "Цвет состояния",
+                    "required": false,
+                    "type": "string",
+                    "example": "success"
+                },
+                {
+                    "name": "cover",
+                    "decorators": [],
+                    "description": "Обложка для карточки, нужно передать ссылку на изображение",
+                    "required": false,
+                    "type": "string",
+                    "example": "'https://cat/cat.png'"
+                },
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "Описание карточки",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Scroll to see more...'}"
+                },
+                {
+                    "name": "footer",
+                    "decorators": [],
+                    "description": "Текст для footer",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "header",
+                    "decorators": [],
+                    "description": "Текст для header",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "orientation",
+                    "decorators": [],
+                    "description": "Ориентация карточки, горизонтальная и вертикальная",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'vertical-reverse'}"
+                },
+                {
+                    "name": "shape",
+                    "decorators": [],
+                    "description": "Ориентация карточки, горизонтальная и вертикальная",
+                    "required": false,
+                    "type": "\"circle\" | \"square\"",
+                    "example": "{'vertical-reverse'}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '30px'}"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок карточки",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Main card'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "ICollapseProps": {
+            "name": "ICollapseProps",
+            "moduleName": "ui/content/Collapse/Collapse",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "activeKey",
+                    "decorators": [],
+                    "description": "Номер активного CollapseItem, который может меняться динамический или быть статичным",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "borderless",
+                    "decorators": [],
+                    "description": "Отключение внешних рамок",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Кастомная иконка svg или название иконки",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "{'circle'}"
+                },
+                {
+                    "name": "iconPosition",
+                    "decorators": [],
+                    "description": "Позиция иконки-индикатора",
+                    "required": false,
+                    "type": "\"left\" | \"right\"",
+                    "example": "{'left'}"
+                },
+                {
+                    "name": "isAccordion",
+                    "decorators": [],
+                    "description": "Включает режим Аккордиона (только один CollapseItem может быть открыт)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Вызываемая функция при каждом изменении состояния",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{() => {console.log('success')}}"
+                },
+                {
+                    "name": "showIcon",
+                    "decorators": [],
+                    "description": "Показ иконки, которая показывает состояние CollapseItem. Поумолчанию включены.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{false}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
         "ICollapseViewProps": {
             "name": "ICollapseViewProps",
             "moduleName": "ui/content/Collapse/Collapse",
@@ -2852,6 +3323,121 @@
                     "required": true,
                     "type": "{}",
                     "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "ICollapseItemProps": {
+            "name": "ICollapseItemProps",
+            "moduleName": "ui/content/Collapse/CollapseItem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "activeKey",
+                    "decorators": [],
+                    "description": "Номер активного CollapseItem, который может меняться динамический или быть статичным",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "borderless",
+                    "decorators": [],
+                    "description": "Отключение внешних рамок",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Кастомная иконка svg или название иконки",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "{'circle'}"
+                },
+                {
+                    "name": "iconPosition",
+                    "decorators": [],
+                    "description": "Позиция иконки-индикатора",
+                    "required": false,
+                    "type": "\"left\" | \"right\"",
+                    "example": "{'left'}"
+                },
+                {
+                    "name": "isAccordion",
+                    "decorators": [],
+                    "description": "Включает режим Аккордиона (только один CollapseItem может быть открыт)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{true}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Вызываемая функция при каждом изменении состояния",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{() => {console.log('success')}}"
+                },
+                {
+                    "name": "showIcon",
+                    "decorators": [],
+                    "description": "Показ иконки, которая показывает состояние CollapseItem. Поумолчанию включены.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{false}"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Название CollapseItem",
+                    "required": false,
+                    "type": "string",
+                    "example": "{'Подробнее'}"
                 },
                 {
                     "name": "view",
@@ -21311,6 +21897,160 @@
     },
     "demos": {
         "content": {
+            "Alert": {
+                "description": {
+                    "order": "2",
+                    "col": "12",
+                    "title": null,
+                    "description": "Header+text with icon\nHeader+text without icon"
+                },
+                "icon": {
+                    "order": "1",
+                    "col": "12",
+                    "title": null,
+                    "description": "Header with icon and without icon"
+                },
+                "text": {
+                    "order": "3",
+                    "col": "12",
+                    "title": null,
+                    "description": "Text with icon and without icon"
+                }
+            },
+            "Avatar": {
+                "custome size": {
+                    "order": "4",
+                    "col": "3",
+                    "title": null,
+                    "description": "Custom size in numbers"
+                },
+                "group": {
+                    "order": "5",
+                    "col": "12",
+                    "title": null,
+                    "description": "Group of avatars"
+                },
+                "shape": {
+                    "order": "3",
+                    "col": "3",
+                    "title": null,
+                    "description": "Basic sizes with image source, online status and square shape"
+                },
+                "size": {
+                    "order": "1",
+                    "col": "3",
+                    "title": null,
+                    "description": "Basic sizes with image source and online status"
+                },
+                "title": {
+                    "order": "2",
+                    "col": "3",
+                    "title": null,
+                    "description": "Basic sizes with title and online status"
+                }
+            },
+            "Calendar": {
+                "basic": {
+                    "order": "1",
+                    "col": "5",
+                    "title": null,
+                    "description": "Basic"
+                }
+            },
+            "Card": {
+                "basic": {
+                    "order": "4",
+                    "col": "12",
+                    "title": null,
+                    "description": "Body"
+                },
+                "border color": {
+                    "order": "7",
+                    "col": "12",
+                    "title": null,
+                    "description": "Border color types"
+                },
+                "color": {
+                    "order": "6",
+                    "col": "12",
+                    "title": null,
+                    "description": "Color types"
+                },
+                "header": {
+                    "order": "3",
+                    "col": "12",
+                    "title": null,
+                    "description": "Header and footer"
+                },
+                "hover": {
+                    "order": "1",
+                    "col": "8",
+                    "title": null,
+                    "description": "Hover image"
+                },
+                "link": {
+                    "order": "2",
+                    "col": "4",
+                    "title": null,
+                    "description": "Titles, text, and links"
+                },
+                "orientation": {
+                    "order": "5",
+                    "col": "12",
+                    "title": null,
+                    "description": "Card with different orientation"
+                }
+            },
+            "Collapse": {
+                "accordion": {
+                    "order": "2",
+                    "col": "6",
+                    "title": null,
+                    "description": "Accordion mode"
+                },
+                "basic": {
+                    "order": "1",
+                    "col": "6",
+                    "title": null,
+                    "description": "Basic"
+                },
+                "borderless": {
+                    "order": "3",
+                    "col": "6",
+                    "title": null,
+                    "description": "Borderless mode"
+                },
+                "disable": {
+                    "order": "4",
+                    "col": "6",
+                    "title": null,
+                    "description": "Disable CollapseItem"
+                },
+                "icon": {
+                    "order": "5",
+                    "col": "12",
+                    "title": null,
+                    "description": "Custom icon"
+                },
+                "icon position": {
+                    "order": "7",
+                    "col": "6",
+                    "title": null,
+                    "description": "Icon position left or right"
+                },
+                "on change": {
+                    "order": "8",
+                    "col": "6",
+                    "title": null,
+                    "description": "Anonymous function every time you change state of Collapse"
+                },
+                "show icon": {
+                    "order": "6",
+                    "col": "6",
+                    "title": null,
+                    "description": "Show or hide icon"
+                }
+            },
             "Detail": {
                 "basic": {
                     "order": "1",
@@ -21398,7 +22138,7 @@
                     "order": "3",
                     "col": "4",
                     "title": null,
-                    "description": "Button with badge"
+                    "description": "Basic"
                 },
                 "basic": {
                     "order": "1",

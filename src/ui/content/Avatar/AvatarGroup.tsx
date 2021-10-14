@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import { useComponents } from '../../../hooks';
 
-interface AvatarGroupProps{
+export interface AvatarGroupProps{
     view?: any,
-    // children?: React.ReactNode,
-    children: {Avatar},
+    children?: CustomView[],
     style?: React.CSSProperties,
     maxCount?: number,
 }
@@ -12,10 +11,21 @@ interface AvatarGroupProps{
 export type IAvatarGroupViewProps = AvatarGroupProps
 
 function AvatarGroup(props: AvatarGroupProps) {
+    const childrenToRender = useMemo(() => {
+        if (props.maxCount < props.children.length) {
+            return props.children.slice(0, props.maxCount);
+        }
+        return props.children;
+    }, [props.children, props.maxCount]);
+
     const components = useComponents();
-    return components.ui.renderView(props.view || 'content.AvatarGroupView', {
-        ...props,
-    });
+    const AvatarGroupView = components.ui.getView(props.view || 'content.AvatarGroupView');
+
+    return (
+        <AvatarGroupView>
+            {childrenToRender}
+        </AvatarGroupView>
+    );
 }
 
 AvatarGroup.defaultProps = {

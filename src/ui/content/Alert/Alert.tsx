@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import { useComponents } from '@steroidsjs/core/hooks';
 
-interface IAlertProps {
+export interface IAlertProps {
     view?: any,
     className?: CssClassName,
 
@@ -10,14 +10,16 @@ interface IAlertProps {
     */
     action?: React.ReactNode,
 
-    /* Типы Оповещений
+    /**
+     * Типы Оповещений
+     * @example {'info'}
      */
     type: 'success' | 'info' | 'warning' | 'error' | string,
 
     /** Основное сообщения Оповещения
      * @example {'Sending is confirmed!'}
      */
-    message: string,
+    message?: string,
 
     /** Дополнительное содрежание сообщения.
      * @example {'Please, check your email.'}
@@ -26,15 +28,16 @@ interface IAlertProps {
 
     style?: React.CSSProperties,
 
-    /* Нужно ли отображать кнопку, чтобы закрыть Оповещение
+    /**
+     *  Нужно ли отображать кнопку, чтобы закрыть Оповещение
      */
     showClose?: boolean,
 
-    /*
+    /**
      * Нужно ли отображать иконку, соответствующую типа Оповещения
-     *
+     * @example {true}
      */
-    showIcon?: boolean | string, 
+    showIcon?: boolean,
 
     /**
      * Callback функция вызываемая при нажатии на кнопку закрытия
@@ -56,7 +59,7 @@ export interface IAlertViewProps extends IAlertProps {
     isExist: boolean,
     isVisible: boolean,
     onClose: () => void,
-    onClick?: (e: MouseEvent) => void	,
+    onClick?: (e: MouseEvent) => void,
 }
 
 function Alert(props: IAlertProps): JSX.Element {
@@ -71,7 +74,7 @@ function Alert(props: IAlertProps): JSX.Element {
         if (props.onClose) {
             props.onClose();
         }
-    }, []);
+    }, [props]);
 
     return components.ui.renderView(props.view || 'content.AlertView', {
         ...props,
@@ -83,7 +86,6 @@ function Alert(props: IAlertProps): JSX.Element {
 
 Alert.defaultProps = {
     type: 'success',
-    message: 'Message',
     showClose: false,
     showIcon: true,
     animation: false,

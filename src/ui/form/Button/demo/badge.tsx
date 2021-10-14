@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from '../Button';
 
 /**
- * Button with badge
+ * Basic
  * @order 3
  * @col 4
  */

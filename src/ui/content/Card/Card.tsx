@@ -1,6 +1,6 @@
 import { useComponents } from '@steroidsjs/core/hooks';
 
-interface ICardProps {
+export interface ICardProps {
     /**
      * Цвет границы (если передать false, то граница будет скрыта)
      * @example success
@@ -49,7 +49,7 @@ interface ICardProps {
      * Ориентация карточки, горизонтальная и вертикальная
      * @example {'vertical-reverse'}
      */
-    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal',
+    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal' | string,
 
     /**
      * Ориентация карточки, горизонтальная и вертикальная

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useComponents } from '@steroidsjs/core/hooks';
 
-interface ICollapseItemProps {
+export interface ICollapseItemProps {
     view?: any,
     style?: React.CSSProperties,
     children?: any,

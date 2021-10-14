@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useComponents } from '@steroidsjs/core/hooks';
 
-interface ICollapseProps {
+export interface ICollapseProps {
     view?: any,
     style?: React.CSSProperties,
     children?: any,
@@ -50,7 +50,7 @@ interface ICollapseProps {
      * Вызываемая функция при каждом изменении состояния
      * @example {() => {console.log('success')}}
      */
-    onChange?: () => void,
+    onChange?: (state) => void,
 
     /**
      * Отключение внешних рамок
@@ -69,7 +69,12 @@ export interface ICollapseViewProps extends ICollapseProps{
 function Collapse(props: ICollapseProps) {
     const [state, setState] = React.useState<number[]>([]);
 
-    React.useEffect(props.onChange, [state]);
+    React.useEffect(() => {
+        if (props.onChange) {
+            props.onChange(state);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state]);
 
     const toggleCollapse = (indexSelected) => {
         if (state.includes(indexSelected)) {
@@ -103,12 +108,14 @@ function Collapse(props: ICollapseProps) {
         >
             {
                 React.Children.map(props.children, (child: any, index) => React.cloneElement(child, {
+                    style: props.style,
                     activeKey: props.activeKey,
                     isAccordion: props.isAccordion,
                     childIndex: index,
                     toggleAccordion,
                     toggleCollapse,
                     isShowMore: (state || []).includes(index),
+                    icon: props.icon,
                     showIcon: props.showIcon,
                     iconPosition: props.iconPosition,
                     borderless: props.borderless,

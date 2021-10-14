@@ -1,7 +1,7 @@
 import {useState, useCallback, useMemo} from 'react';
 import { useComponents } from '@steroidsjs/core/hooks';
 
-interface IAvatarProps {
+export interface IAvatarProps {
 
     /**
      * Альтернативный текст для изображения

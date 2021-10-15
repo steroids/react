@@ -1,6 +1,5 @@
 import 'jest-enzyme';
 import React from "react";
-// import {act} from 'react-dom/test-utils';
 import CheckboxFieldView from '@steroidsjs/bootstrap/form/CheckboxField/CheckboxFieldView';
 import mountWithApp from '../../../../tests/mountWithApp';
 import {ICheckboxFieldProps} from "./CheckboxField";

@@ -1,6 +1,6 @@
 import 'jest-enzyme';
 import React from 'react';
-import PasswordFieldView from "@steroidsjs/bootstrap//form/PasswordField/PasswordFieldView";
+import PasswordFieldView from "@steroidsjs/bootstrap/form/PasswordField/PasswordFieldView";
 import PasswordField from "./PasswordField";
 import mountWithApp from '../../../../tests/mountWithApp';
 

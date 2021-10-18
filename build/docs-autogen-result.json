@@ -11717,18 +11717,26 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "CSS-класс для элемента отображения",
+                    "description": "Кастомный CSS-класс",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, через которое произойдет закрытие Modal.\nВ этот отрезок времени должны происходить все анимации закрытия компонента.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
                 },
                 {
                     "name": "component",
                     "decorators": [],
-                    "description": "Компонент, который отрендерится внутри модального окна",
+                    "description": "Компонент, который отрендерится внутри Modal",
                     "required": false,
-                    "type": "any",
-                    "example": "InnerModalComponent"
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
                 },
                 {
                     "name": "componentProps",
@@ -11741,10 +11749,10 @@
                 {
                     "name": "controls",
                     "decorators": [],
-                    "description": "Коллекция контролов, которая отобразится в модальном окне",
+                    "description": "Коллекция контролов, которая отобразится в Modal",
                     "required": false,
                     "type": "IControlItem[]",
-                    "example": "[{label: __(('Отлично')), onClick: () => props.onClose()}]"
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
                 },
                 {
                     "name": "crop",
@@ -11757,7 +11765,7 @@
                 {
                     "name": "group",
                     "decorators": [],
-                    "description": "Группа модального окна",
+                    "description": "Группа Modal",
                     "required": false,
                     "type": "string",
                     "example": "'modal'"
@@ -11773,7 +11781,7 @@
                 {
                     "name": "index",
                     "decorators": [],
-                    "description": "Порядковый номер модального окна",
+                    "description": "Порядковый номер Modal",
                     "required": false,
                     "type": "number",
                     "example": "0"
@@ -11781,7 +11789,7 @@
                 {
                     "name": "isClosing",
                     "decorators": [],
-                    "description": "Если для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем модального окна, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, модальное окно закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -11789,23 +11797,39 @@
                 {
                     "name": "onClose",
                     "decorators": [],
-                    "description": "Обработчик для закрытия модального окна",
+                    "description": "Обработчик срабатывает при закрытии Modal",
                     "required": false,
                     "type": "{}",
                     "example": null
                 },
                 {
+                    "name": "shouldCloseOnEsc",
+                    "decorators": [],
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "shouldCloseOnOverlayClick",
+                    "decorators": [],
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер",
+                    "description": "Размер Modal",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'middle'"
                 },
                 {
                     "name": "title",
                     "decorators": [],
-                    "description": "Заголовок модального окна",
+                    "description": "Заголовок Modal",
                     "required": false,
                     "type": "string",
                     "example": "'Заявка отправлена на модерацию'"
@@ -11813,9 +11837,9 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
                     "required": false,
-                    "type": "any",
+                    "type": "ReactNode",
                     "example": "MyCustomView"
                 }
             ]
@@ -19683,18 +19707,26 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "CSS-класс для элемента отображения",
+                    "description": "Кастомный CSS-класс",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, через которое произойдет закрытие Modal.\nВ этот отрезок времени должны происходить все анимации закрытия компонента.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
                 },
                 {
                     "name": "component",
                     "decorators": [],
-                    "description": "Компонент, который отрендерится внутри модального окна",
+                    "description": "Компонент, который отрендерится внутри Modal",
                     "required": false,
-                    "type": "any",
-                    "example": "InnerModalComponent"
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
                 },
                 {
                     "name": "componentProps",
@@ -19707,15 +19739,15 @@
                 {
                     "name": "controls",
                     "decorators": [],
-                    "description": "Коллекция контролов, которая отобразится в модальном окне",
+                    "description": "Коллекция контролов, которая отобразится в Modal",
                     "required": false,
                     "type": "IControlItem[]",
-                    "example": "[{label: __(('Отлично')), onClick: () => props.onClose()}]"
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
                 },
                 {
                     "name": "group",
                     "decorators": [],
-                    "description": "Группа модального окна",
+                    "description": "Группа Modal",
                     "required": false,
                     "type": "string",
                     "example": "'modal'"
@@ -19723,7 +19755,7 @@
                 {
                     "name": "index",
                     "decorators": [],
-                    "description": "Порядковый номер модального окна",
+                    "description": "Порядковый номер Modal",
                     "required": false,
                     "type": "number",
                     "example": "0"
@@ -19731,7 +19763,7 @@
                 {
                     "name": "isClosing",
                     "decorators": [],
-                    "description": "Если для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем модального окна, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, модальное окно закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -19739,124 +19771,39 @@
                 {
                     "name": "onClose",
                     "decorators": [],
-                    "description": "Обработчик для закрытия модального окна",
+                    "description": "Обработчик срабатывает при закрытии Modal",
                     "required": false,
                     "type": "{}",
                     "example": null
                 },
                 {
-                    "name": "size",
+                    "name": "shouldCloseOnEsc",
                     "decorators": [],
-                    "description": "Размер",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "title",
-                    "decorators": [],
-                    "description": "Заголовок модального окна",
-                    "required": false,
-                    "type": "string",
-                    "example": "'Заявка отправлена на модерацию'"
-                },
-                {
-                    "name": "view",
-                    "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизации отображения",
-                    "required": false,
-                    "type": "any",
-                    "example": "MyCustomView"
-                }
-            ]
-        },
-        "IModalViewProps": {
-            "name": "IModalViewProps",
-            "moduleName": "ui/modal/Modal/Modal",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [
-                "IModalProps"
-            ],
-            "properties": [
-                {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "CSS-класс для элемента отображения",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "component",
-                    "decorators": [],
-                    "description": "Компонент, который отрендерится внутри модального окна",
-                    "required": false,
-                    "type": "any",
-                    "example": "InnerModalComponent"
-                },
-                {
-                    "name": "componentProps",
-                    "decorators": [],
-                    "description": "Свойства для внутреннего компонента",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "controls",
-                    "decorators": [],
-                    "description": "Коллекция контролов, которая отобразится в модальном окне",
-                    "required": false,
-                    "type": "IControlItem[]",
-                    "example": "[{label: __(('Отлично')), onClick: () => props.onClose()}]"
-                },
-                {
-                    "name": "group",
-                    "decorators": [],
-                    "description": "Группа модального окна",
-                    "required": false,
-                    "type": "string",
-                    "example": "'modal'"
-                },
-                {
-                    "name": "index",
-                    "decorators": [],
-                    "description": "Порядковый номер модального окна",
-                    "required": false,
-                    "type": "number",
-                    "example": "0"
-                },
-                {
-                    "name": "isClosing",
-                    "decorators": [],
-                    "description": "Если для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем модального окна, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, модальное окно закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
                     "required": false,
                     "type": "boolean",
-                    "example": null
+                    "example": "true"
                 },
                 {
-                    "name": "onClose",
+                    "name": "shouldCloseOnOverlayClick",
                     "decorators": [],
-                    "description": "Обработчик для закрытия модального окна",
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
                     "required": false,
-                    "type": "{}",
-                    "example": null
+                    "type": "boolean",
+                    "example": "true"
                 },
                 {
                     "name": "size",
                     "decorators": [],
-                    "description": "Размер",
+                    "description": "Размер Modal",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'middle'"
                 },
                 {
                     "name": "title",
                     "decorators": [],
-                    "description": "Заголовок модального окна",
+                    "description": "Заголовок Modal",
                     "required": false,
                     "type": "string",
                     "example": "'Заявка отправлена на модерацию'"
@@ -19864,9 +19811,9 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
                     "required": false,
-                    "type": "any",
+                    "type": "ReactNode",
                     "example": "MyCustomView"
                 }
             ]
@@ -19883,18 +19830,18 @@
                 {
                     "name": "animationDelayMc",
                     "decorators": [],
-                    "description": "",
+                    "description": "Время, через которое произойдет закрытие Modal",
                     "required": false,
                     "type": "number",
-                    "example": null
+                    "example": "300"
                 },
                 {
                     "name": "group",
                     "decorators": [],
-                    "description": "",
+                    "description": "Группа Modal",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'modal'"
                 }
             ]
         },
@@ -21878,6 +21825,14 @@
             "type": "ILayoutNamesProps",
             "example": null
         },
+        "IModalViewProps": {
+            "name": "IModalViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "IModalProps",
+            "example": null
+        },
         "IBreadcrumbsViewProps": {
             "name": "IBreadcrumbsViewProps",
             "decorators": [],
@@ -22038,7 +21993,7 @@
                     "title": null,
                     "description": "Icon position left or right"
                 },
-                "on change": {
+                "onChange": {
                     "order": "8",
                     "col": "6",
                     "title": null,
@@ -23114,7 +23069,37 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Простой пример Modal, с заданным заголовком и контентом."
+                },
+                "closeTimeout": {
+                    "order": "5",
+                    "col": "6",
+                    "title": null,
+                    "description": "Настрока времени, через которое произойдет закрытие Modal."
+                },
+                "closing": {
+                    "order": "4",
+                    "col": "6",
+                    "title": null,
+                    "description": "Обработка закрытия Modal при помощи onClose.\nТакже это модальное окно не закроется при нажатии на клавишу 'ESC' или клике на overlay."
+                },
+                "component": {
+                    "order": "6",
+                    "col": "6",
+                    "title": null,
+                    "description": "Контент для Modal также можно задать через свойство component.\nПри этом, в action openModal необязательно передавать отдельный компонент, построенный на базе Modal.\nМожно передать сам Modal, контент настроить уже через свойства Modal."
+                },
+                "controls": {
+                    "order": "2",
+                    "col": "6",
+                    "title": null,
+                    "description": "Modal содержит набор контролов с привязанными обработчиками."
+                },
+                "size": {
+                    "order": "3",
+                    "col": "12",
+                    "title": null,
+                    "description": "По-умолчанию, Modal имеет 3 заданных размера."
                 }
             }
         },

@@ -7,7 +7,7 @@ import useDispatch from '../../../../hooks/useDispatch';
 function DemoModal(props: IModalProps) {
     return (
         <Modal
-            title='Basic Modal'
+            title='Modal with custom closing'
             onClose={props.onClose}
             {...props}
         >
@@ -19,8 +19,9 @@ function DemoModal(props: IModalProps) {
 }
 
 /**
- * Простой пример Modal, с заданным заголовком и контентом.
- * @order 1
+ * Обработка закрытия Modal при помощи onClose.
+ * Также это модальное окно не закроется при нажатии на клавишу 'ESC' или клике на overlay.
+ * @order 4
  * @col 6
  */
 export default () => {
@@ -33,6 +34,9 @@ export default () => {
                     e.preventDefault();
                     dispatch(openModal(DemoModal, {
                         modalId: 'demo',
+                        onClose: () => alert('Modal will be closed!'),
+                        shouldCloseOnOverlayClick: false,
+                        shouldCloseOnEsc: false,
                     }));
                 }}
             />

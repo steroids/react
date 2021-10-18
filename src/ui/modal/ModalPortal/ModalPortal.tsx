@@ -8,7 +8,16 @@ import {getOpened, MODAL_DEFAULT_GROUP} from '../../../reducers/modal';
 import {IModalProps} from '../Modal/Modal';
 
 export interface IModalPortalProps {
+    /**
+     * Время, через которое произойдет закрытие Modal
+     * @example 300
+     */
     animationDelayMc?: number,
+
+    /**
+     * Группа Modal
+     * @example 'modal'
+     */
     group?: string,
 }
 
@@ -26,9 +35,10 @@ function ModalPortal(props: IModalPortalProps): JSX.Element {
     }, [dispatch, props.group]);
 
     const onClose = useCallback((item) => {
-        if (props.animationDelayMc || props.animationDelayMc === 0) {
+        const animationDelayMc = item.props?.closeTimeoutMs ?? props.animationDelayMc;
+        if (animationDelayMc > 0) {
             dispatch(modalMarkClosing(item.id, props.group));
-            setTimeout(() => closeInternal(item), props.animationDelayMc);
+            setTimeout(() => closeInternal(item), animationDelayMc);
         } else {
             closeInternal(item);
         }
@@ -37,16 +47,17 @@ function ModalPortal(props: IModalPortalProps): JSX.Element {
     return _orderBy(opened, 'id').map((item, index) => {
         const ModalComponent = item.modal;
         const modalProps = {
+            ...item.props,
             index,
             group,
             isClosing: item.isClosing,
             onClose: () => onClose(item),
+            closeTimeoutMs: item.props.closeTimeoutMs || props.animationDelayMc,
         } as IModalProps;
 
         return (
             <ModalComponent
                 key={item.id}
-                {...item.props}
                 {...modalProps}
             />
         );

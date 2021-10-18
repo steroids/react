@@ -7,8 +7,12 @@ import useDispatch from '../../../../hooks/useDispatch';
 function DemoModal(props: IModalProps) {
     return (
         <Modal
-            title='Basic Modal'
+            title='Modal with controls'
             onClose={props.onClose}
+            controls={[
+                {label: 'Show Alert', onClick: () => alert('This is alert!')},
+                {label: 'Close', onClick: () => props.onClose()},
+            ]}
             {...props}
         >
             <div style={{ marginBottom: '20px' }}>
@@ -19,8 +23,8 @@ function DemoModal(props: IModalProps) {
 }
 
 /**
- * Простой пример Modal, с заданным заголовком и контентом.
- * @order 1
+ * Modal содержит набор контролов с привязанными обработчиками.
+ * @order 2
  * @col 6
  */
 export default () => {

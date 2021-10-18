@@ -7,78 +7,100 @@ import {IControlItem} from '../../nav/Controls/Controls';
  * Модальное окно
  */
 export interface IModalProps {
+
     /**
-     * Порядковый номер модального окна
+     * Кастомный CSS-класс
+     * @example 'CustomCssClassName'
+     */
+    className?: CssClassName,
+
+    /**
+     * Компонент, который отрендерится внутри Modal
+     * @example () => <InnerModalComponent />
+     */
+    component?: () => JSX.Element,
+
+    /**
+     * Свойства для внутреннего компонента
+     */
+    componentProps?: any,
+
+    /**
+     * Коллекция контролов, которая отобразится в Modal
+     * @example [{label: __(('Закрыть')), onClick: () => props.onClose()}]
+     */
+    controls?: IControlItem[],
+
+    /**
+     * Время, через которое произойдет закрытие Modal.
+     * В этот отрезок времени должны происходить все анимации закрытия компонента.
+     * Переопределяет отрезок времени, заданный в ModalPortal
+     * @example 300
+     */
+    closeTimeoutMs?: number,
+
+    /**
+     * Группа Modal
+     * @example 'modal'
+     */
+    group?: string,
+
+    /**
+     * Порядковый номер Modal
      * @example 0
      */
     index?: number,
 
     /**
-     * Обработчик для закрытия модального окна
-     * @param args
+     * Значение свойства отслеживается для показа/закрытия Modal.
+     * Если для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия
+     * пользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.
+     * В течение этого времени флаг isClosing будет равен true.
+     * Если задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.
+     * @example true
      */
-    onClose?: (...args: any[]) => any;
+    isClosing?: boolean,
 
     /**
-     * Заголовок модального окна
+     * Обработчик срабатывает при закрытии Modal
+     * @param args
+     */
+    onClose?: (...args: any[]) => void,
+
+    /**
+     * Размер Modal
+     * @example 'middle'
+     */
+    size?: Size,
+
+    /**
+     * Заголовок Modal
      * @example 'Заявка отправлена на модерацию'
      */
     title?: string,
 
     /**
-     * Размер
-     */
-    size?: Size,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: any;
-
-    /**
-     * CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
-
-    /**
-     * Если для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия
-     * пользователем модального окна, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.
-     * В течение этого времени флаг isClosing будет равен true.
-     * Если задержка не установлена, модальное окно закроется сразу же и флаг isClosing всегда будет равен false.
+     * Закрытие Modal при нажатии на клавишу 'ESC'
      * @example true
      */
-    isClosing?: boolean;
+    shouldCloseOnEsc?: boolean,
 
     /**
-     * Группа модального окна
-     * @example 'modal'
+     * Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)
+     * @example true
      */
-    group?: string;
+    shouldCloseOnOverlayClick?: boolean,
 
     /**
-     * Компонент, который отрендерится внутри модального окна
-     * @example InnerModalComponent
+     * Переопределение React-компонента для кастомизации view-отображения
+     * @example MyCustomView
      */
-    component?: any;
-
-    /**
-     * Свойства для внутреннего компонента
-     */
-    componentProps?: any;
-
-    /**
-     * Коллекция контролов, которая отобразится в модальном окне
-     * @example [{label: __(('Отлично')), onClick: () => props.onClose()}]
-     */
-    controls?: IControlItem[],
+    view?: CustomView,
 
     [key: string]: any,
 }
 
-export interface IModalViewProps extends IModalProps {
-    isClosing?: boolean,
-}
+export type IModalViewProps = IModalProps;
 
 function Modal(props: IModalProps): JSX.Element {
     const components = useComponents();
@@ -101,7 +123,9 @@ function Modal(props: IModalProps): JSX.Element {
 }
 
 Modal.defaultProps = {
-    size: 'md',
+    size: 'middle',
+    shouldCloseOnEsc: true,
+    shouldCloseOnOverlayClick: true,
 };
 
 export default Modal;

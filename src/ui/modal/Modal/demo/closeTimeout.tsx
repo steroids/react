@@ -7,7 +7,7 @@ import useDispatch from '../../../../hooks/useDispatch';
 function DemoModal(props: IModalProps) {
     return (
         <Modal
-            title='Basic Modal'
+            title='Custom closing time'
             onClose={props.onClose}
             {...props}
         >
@@ -19,8 +19,8 @@ function DemoModal(props: IModalProps) {
 }
 
 /**
- * Простой пример Modal, с заданным заголовком и контентом.
- * @order 1
+ * Настрока времени, через которое произойдет закрытие Modal.
+ * @order 5
  * @col 6
  */
 export default () => {
@@ -33,6 +33,7 @@ export default () => {
                     e.preventDefault();
                     dispatch(openModal(DemoModal, {
                         modalId: 'demo',
+                        closeTimeoutMs: 1000,
                     }));
                 }}
             />

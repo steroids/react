@@ -4,9 +4,10 @@ import InputField from '../InputField';
 
 /**
  * TextAddons
- * @order 9
- * @col 6
+ * @order 8
+ * @col 3
  */
+
 export default () => (
     <>
         <InputField textBefore='http://' textAfter='.com' label='TextBefore and TextAfter' />

@@ -2,20 +2,16 @@ import * as React from 'react';
 import DateTimeField from '../DateTimeField';
 
 /**
- * Placeholder
+ * Сообщение внутри импута
  * @order 6
  * @col 6
  */
+
 export default () => (
     <>
         <DateTimeField
             label='Placeholder'
-            dateProps={{
-                placeholder: 'Your date...',
-            }}
-            timeProps={{
-                placeholder: 'Your time...',
-            }}
+            placeholder='Введите удобную вам дату встречи'
         />
     </>
 );

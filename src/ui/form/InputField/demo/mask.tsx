@@ -4,7 +4,7 @@ import InputField from '../InputField';
 
 /**
  * Mask
- * @order 7
+ * @order 6
  * @col 3
  */
 export default () => (

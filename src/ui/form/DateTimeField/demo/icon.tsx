@@ -2,14 +2,15 @@ import * as React from 'react';
 import DateTimeField from '../DateTimeField';
 
 /**
- * Icon
+ * Справа в инпуте кастомная иконка
  * @order 5
  * @col 6
  */
 export default () => (
     <>
         <DateTimeField
-            label='Icon'
+            label='Custom icon'
+            icon='plane'
             dateProps={{
                 icon: true,
             }}

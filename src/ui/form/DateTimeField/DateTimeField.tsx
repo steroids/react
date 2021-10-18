@@ -1,7 +1,6 @@
 import {useMemo} from 'react';
 import useDateTime from '../DateField/useDateTime';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
-import {ITimePanelViewProps} from '../TimeField/TimeField';
 import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
@@ -114,6 +113,8 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         errors: props.errors,
         className: props.className,
         showRemove: props.showRemove,
+        isInvalid: props.isInvalid,
+        disabled: props.disabled,
     });
 }
 

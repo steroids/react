@@ -1,11 +1,11 @@
-import NavField from '../NavField';
 import * as React from 'react';
+import NavField from '../NavField';
 import {items} from './basic';
 
 /**
  * Disabled
  * @order 2
- * @col 8
+ * @col 3
  */
 export default () => (
     <>

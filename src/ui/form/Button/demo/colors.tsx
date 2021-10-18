@@ -20,21 +20,25 @@ const colors = {
  */
 export default () => (
     <>
-        {Object.keys(colors).map(color => (
-            <Button
-                key={color}
-                color={color}
-                label={colors[color]}
-            />
-        ))}
+        <div style={{display: 'flex', gridGap: '10px'}}>
+            {Object.keys(colors).map(color => (
+                <Button
+                    key={color}
+                    color={color}
+                    label={colors[color]}
+                />
+            ))}
+        </div>
         <br />
-        {Object.keys(colors).map(color => (
-            <Button
-                key={color}
-                color={color}
-                label={colors[color]}
-                outline
-            />
-        ))}
+        <div style={{display: 'flex', gridGap: '10px'}}>
+            {Object.keys(colors).map(color => (
+                <Button
+                    key={color}
+                    color={color}
+                    label={colors[color]}
+                    outline
+                />
+            ))}
+        </div>
     </>
 );

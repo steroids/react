@@ -109,6 +109,8 @@ interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
     },
     errorsFrom?: string[],
     errorsTo?: string[],
+    disabled?: boolean,
+
 }
 
 const DATE_TIME_SEPARATOR = ' ';
@@ -221,7 +223,16 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         showNow: false,
         showHeader: true,
         ...props.timePanelViewProps,
-    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, props.timePanelViewProps, timeValueFrom, timeValueTo]);
+    }), [
+        focus,
+        onClose,
+        onNow,
+        onTimeFromSelect,
+        onTimeToSelect,
+        props.timePanelViewProps,
+        timeValueFrom,
+        timeValueTo,
+    ]);
 
     return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', {
         ...props.viewProps,
@@ -238,6 +249,8 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         inputPropsTo: extendedInputPropsTo,
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
+        disabled: props.disabled,
+        noBorder: props.noBorder,
     });
 }
 

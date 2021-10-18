@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-interface IBlankFieldProps extends IFieldWrapperInputProps {
+export interface IBlankFieldProps extends IFieldWrapperInputProps {
     text?: string | React.ReactNode;
     children?: React.ReactNode;
 }

@@ -1,8 +1,8 @@
 import * as React from 'react';
+import InputMask from 'react-input-mask';
 import {ChangeEventHandler, ReactNode, useMemo} from 'react';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
-import InputMask from 'react-input-mask';
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
@@ -140,7 +140,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     // react-input-mask HOC for mask
     if (props.maskProps) {
-        const maskOnChange = e => props.input.onChange(e.target.value)
+        const maskOnChange = e => props.input.onChange(e.target.value);
         return (
             <InputMask
                 {...inputProps}

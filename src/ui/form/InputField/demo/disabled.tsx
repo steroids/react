@@ -7,8 +7,7 @@ import InputField from '../InputField';
  * @order 2
  * @col 3
  */
+
 export default () => (
-    <>
-        <InputField label='Disabled' disabled />
-    </>
+    <InputField label='Disabled' disabled />
 );

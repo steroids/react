@@ -198,6 +198,7 @@ function Nav(props: INavProps): JSX.Element {
         ...props,
         items,
         onClick,
+        disabled: props.disabled,
         children: renderContent(),
     });
 }

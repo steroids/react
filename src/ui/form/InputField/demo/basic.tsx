@@ -7,8 +7,7 @@ import InputField from '../InputField';
  * @order 1
  * @col 3
  */
+
 export default () => (
-    <>
-        <InputField label='Input' />
-    </>
+    <InputField label='Input' />
 );

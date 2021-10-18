@@ -5816,6 +5816,147 @@
                 }
             ]
         },
+        "IBlankFieldProps": {
+            "name": "IBlankFieldProps",
+            "moduleName": "ui/form/BlankField/BlankField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFieldWrapperInputProps"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "layout",
+                    "decorators": [],
+                    "description": "Шаблон для поля, который настраивает его расположение внутри формы.\nЕсли false, то поле будет отрендерено без шаблона.",
+                    "required": false,
+                    "type": "FormLayout",
+                    "example": "'horizontal'"
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Подсказка для поля",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "text",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                }
+            ]
+        },
         "IButtonProps": {
             "name": "IButtonProps",
             "moduleName": "ui/form/Button/Button",
@@ -22038,7 +22179,7 @@
                     "title": null,
                     "description": "Icon position left or right"
                 },
-                "on change": {
+                "onChange": {
                     "order": "8",
                     "col": "6",
                     "title": null,
@@ -22131,6 +22272,14 @@
                     "col": "12",
                     "title": null,
                     "description": "Sizes"
+                }
+            },
+            "BlankField": {
+                "basic": {
+                    "order": "1",
+                    "col": "6",
+                    "title": null,
+                    "description": "Basic"
                 }
             },
             "Button": {
@@ -22328,13 +22477,13 @@
                     "order": "5",
                     "col": "6",
                     "title": null,
-                    "description": "Icon"
+                    "description": "Справа в инпуте кастомная иконка"
                 },
                 "placeholder": {
                     "order": "6",
                     "col": "6",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "Сообщение внутри импута"
                 },
                 "required": {
                     "order": "3",
@@ -22342,11 +22491,31 @@
                     "title": null,
                     "description": "Required"
                 },
-                "sizes": {
+                "showRemove": {
                     "order": "7",
-                    "col": "12",
+                    "col": "6",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "После введения датты при наведении показывается кнопка, удалить содержание внутри инпута"
+                }
+            },
+            "DateTimeRangeField": {
+                "basic": {
+                    "order": "1",
+                    "col": "6",
+                    "title": null,
+                    "description": "Можно выбрать точную дату с какого по какое время происходит какое-то событие с точностью до минуты"
+                },
+                "disabled": {
+                    "order": "2",
+                    "col": "6",
+                    "title": null,
+                    "description": "Оключён и без рамок"
+                },
+                "icon": {
+                    "order": "3",
+                    "col": "6",
+                    "title": null,
+                    "description": "Кастомная иконка справа выбранная по контексту"
                 }
             },
             "DropDownField": {
@@ -22479,6 +22648,14 @@
                     "description": "Basic"
                 }
             },
+            "FileField": {
+                "basic": {
+                    "order": "1",
+                    "col": "6",
+                    "title": null,
+                    "description": "Базовый FileField"
+                }
+            },
             "Form": {
                 "basic": {
                     "order": "1",
@@ -22497,8 +22674,8 @@
             },
             "InputField": {
                 "addons": {
-                    "order": "8",
-                    "col": "6",
+                    "order": "7",
+                    "col": "3",
                     "title": null,
                     "description": "Addons"
                 },
@@ -22516,12 +22693,12 @@
                 },
                 "errors": {
                     "order": "5",
-                    "col": "6",
+                    "col": "3",
                     "title": null,
                     "description": "Errors"
                 },
                 "mask": {
-                    "order": "7",
+                    "order": "6",
                     "col": "3",
                     "title": null,
                     "description": "Mask"
@@ -22539,19 +22716,19 @@
                     "description": "Required"
                 },
                 "sizes": {
-                    "order": "10",
+                    "order": "9",
                     "col": "12",
                     "title": null,
                     "description": "Sizes"
                 },
                 "textAddons": {
-                    "order": "9",
-                    "col": "6",
+                    "order": "8",
+                    "col": "3",
                     "title": null,
                     "description": "TextAddons"
                 },
                 "types": {
-                    "order": "11",
+                    "order": "9",
                     "col": "12",
                     "title": null,
                     "description": "Types"
@@ -22560,25 +22737,25 @@
             "NavField": {
                 "basic": {
                     "order": "1",
-                    "col": "8",
+                    "col": "3",
                     "title": null,
                     "description": "Basic"
                 },
                 "disabled": {
                     "order": "2",
-                    "col": "8",
+                    "col": "3",
                     "title": null,
                     "description": "Disabled"
                 },
                 "errors": {
                     "order": "4",
-                    "col": "8",
+                    "col": "3",
                     "title": null,
                     "description": "Errors"
                 },
                 "required": {
                     "order": "3",
-                    "col": "8",
+                    "col": "3",
                     "title": null,
                     "description": "Required"
                 }
@@ -22805,12 +22982,6 @@
                     "col": "6",
                     "title": null,
                     "description": "Required"
-                },
-                "sizes": {
-                    "order": "5",
-                    "col": "12",
-                    "title": null,
-                    "description": "Sizes"
                 }
             },
             "TextField": {
@@ -22876,6 +23047,12 @@
                     "title": null,
                     "description": "Errors"
                 },
+                "icon": {
+                    "order": "5",
+                    "col": "3",
+                    "title": null,
+                    "description": "Кастомная иконка спрваа в инпуте для удаления значения"
+                },
                 "no-border": {
                     "order": "7",
                     "col": "3",
@@ -22899,12 +23076,6 @@
                     "col": "3",
                     "title": null,
                     "description": "Show remove"
-                },
-                "sizes": {
-                    "order": "5",
-                    "col": "12",
-                    "title": null,
-                    "description": "Sizes"
                 }
             }
         },

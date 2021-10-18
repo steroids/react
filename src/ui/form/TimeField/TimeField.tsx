@@ -100,6 +100,7 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         icon: props.icon,
         errors: props.errors,
         noBorder: props.noBorder,
+        disabled: props.disabled,
         className: props.className,
         showRemove: props.showRemove,
     });

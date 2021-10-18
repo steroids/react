@@ -27,7 +27,6 @@ function generateBackendUrl(props) {
 }
 
 export default function useFile(props: IFileHocInput): IFileHocOutput {
-    console.log(props.imagesOnly);
     const uploader = useInitial(() => new FileUp({
         dropArea: {},
         backendUrl: generateBackendUrl(props),

@@ -5,7 +5,7 @@ import InputField from '../InputField';
 /**
  * Errors
  * @order 5
- * @col 6
+ * @col 3
  */
 export default () => (
     <>

@@ -1,9 +1,8 @@
 import * as React from 'react';
-
 import InputField from '../InputField';
 
 /**
- * Disabled
+ * Выключенный или недоступный для использования.
  * @order 2
  * @col 3
  */

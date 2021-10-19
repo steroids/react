@@ -2,10 +2,11 @@ import * as React from 'react';
 import Field from '../Field';
 
 /**
- * Field with model
+ * Field с прокинутой моделью.
  * @order 2
  * @col 6
  */
+
 export default () => (
     <>
         <Field

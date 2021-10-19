@@ -1,14 +1,14 @@
 import * as React from 'react';
-import SliderField from '../SliderField';
+import DateRangeField from '../DateRangeField';
 
 /**
  * Как обязательное поле для заполнения.
  * @order 3
- * @col 4
+ * @col 6
  */
 
 export default () => (
-    <div style={{padding: '0 20px'}}>
-        <SliderField label='Required' required />
-    </div>
+    <>
+        <DateRangeField label='Required' required />
+    </>
 );

@@ -2,17 +2,18 @@ import * as React from 'react';
 
 import Button from '../Button';
 
+/**
+ * По-умлочанию Button имеет 3 заданных размера.
+ * @order 10
+ * @col 8
+ */
+
 const sizes = {
     sm: 'Small',
     md: 'Middle',
     lg: 'Large',
 };
 
-/**
- * Sizes
- * @order 10
- * @col 8
- */
 export default () => (
     <>
         {Object.keys(sizes).map(size => (

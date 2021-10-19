@@ -3,10 +3,11 @@ import RadioListField from '../RadioListField';
 import {items} from './basic';
 
 /**
- * Disabled
+ * Выключенный или недоступный для использования.
  * @order 2
  * @col 6
  */
+
 export default () => (
     <>
         <RadioListField

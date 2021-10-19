@@ -2,12 +2,13 @@ import * as React from 'react';
 import SliderField from '../SliderField';
 
 /**
- * Basic
+ * Обычный пример использования SliderField.
  * @order 1
  * @col 4
  */
+
 export default () => (
-    <>
-        <SliderField label='Basic' />
-    </>
+    <div style={{padding: '0 20px'}}>
+        <SliderField label='Basic' style={{padding: '0 10px'}} />
+    </div>
 );

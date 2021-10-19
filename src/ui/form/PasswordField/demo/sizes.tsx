@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import PasswordField from '../PasswordField';
 
 const sizes = {
@@ -9,15 +8,16 @@ const sizes = {
 };
 
 /**
- * Sizes
+ * По-умлочанию PasswordField имеет 3 заданных размера поля.
  * @order 5
- * @col 8
+ * @col 12
  */
+
 export default () => (
     <div className='row'>
         {Object.keys(sizes).map(size => (
             <div className='col' key={size}>
-                <PasswordField label={size} size={size}/>
+                <PasswordField label={size} size={size} />
             </div>
         ))}
     </div>

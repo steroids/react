@@ -3,12 +3,13 @@ import * as React from 'react';
 import NumberField from '../NumberField';
 
 /**
- * Basic
+ * Обычный пример использования NumberField.
  * @order 1
  * @col 3
  */
+
 export default () => (
     <>
-        <NumberField label='Amount'/>
+        <NumberField label='Amount' />
     </>
 );

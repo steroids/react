@@ -3,10 +3,11 @@ import DropDownField from '../DropDownField';
 import {items} from './basic';
 
 /**
- * No border
+ * Без полей и рамок.
  * @order 7
  * @col 6
  */
+
 export default () => (
     <div
         style={{width: '100px'}}

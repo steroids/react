@@ -2,10 +2,11 @@ import * as React from 'react';
 import Field from '../Field';
 
 /**
- * Basic
+ * Обычный пример использования Field.
  * @order 1
  * @col 6
  */
+
 export default () => (
     <>
         <Field

@@ -2,7 +2,7 @@ import * as React from 'react';
 import TimeField from '../TimeField';
 
 /**
- * Disabled
+ * Выключен или недоступен для использования.
  * @order 2
  * @col 3
  */

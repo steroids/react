@@ -1,17 +1,18 @@
 import * as React from 'react';
 import TextField from '../TextField';
 
+/**
+ * По-умлочанию TextField имеет 3 заданных размера.
+ * @order 7
+ * @col 12
+ */
+
 const sizes = {
     sm: 'Small',
     md: 'Middle',
     lg: 'Large',
 };
 
-/**
- * Sizes
- * @order 6
- * @col 12
- */
 export default () => (
     <>
         <div className='row'>

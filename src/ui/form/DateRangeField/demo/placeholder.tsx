@@ -1,5 +1,5 @@
 import * as React from 'react';
-import DateField from '../DateField';
+import DateRangeField from '../DateRangeField';
 
 /**
  * С сообщением для пользователя по контексту использования.
@@ -9,6 +9,6 @@ import DateField from '../DateField';
 
 export default () => (
     <>
-        <DateField label='Placeholder' placeholder='Your date...' />
+        <DateRangeField label='Placeholder' placeholder='Your date...' />
     </>
 );

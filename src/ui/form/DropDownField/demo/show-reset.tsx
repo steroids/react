@@ -3,10 +3,11 @@ import DropDownField from '../DropDownField';
 import {items} from './basic';
 
 /**
- * Show reset
+ * С кнопкой для удаления выбора.
  * @order 9
  * @col 6
  */
+
 export default () => (
     <>
         <DropDownField

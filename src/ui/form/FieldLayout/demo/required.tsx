@@ -1,16 +1,18 @@
 import * as React from 'react';
 import InputField from '../../InputField';
+import FieldLayout from '../FieldLayout';
 
 /**
- * Required
+ * Как обязательное поле для заполнения.
  * @order 2
  * @col 6
  */
+
 export default () => (
-    <>
+    <FieldLayout required>
         <InputField
             required
             label='Required'
         />
-    </>
+    </FieldLayout>
 );

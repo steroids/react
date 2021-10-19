@@ -3,10 +3,11 @@ import DropDownField from '../DropDownField';
 import {items} from './basic';
 
 /**
- * Required
+ * Как обязательное поле для заполнения.
  * @order 3
  * @col 6
  */
+
 export default () => (
     <>
         <DropDownField

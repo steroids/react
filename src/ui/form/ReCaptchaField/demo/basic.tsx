@@ -5,10 +5,11 @@ import Button from '../../Button';
 import ReCaptchaField from '../ReCaptchaField';
 
 /**
- * Basic
+ * Обычный пример использования ReCaptchaField в Form.
  * @order 1
  * @col 4
  */
+
 export default () => (
     <>
         <Form

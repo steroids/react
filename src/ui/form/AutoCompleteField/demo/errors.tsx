@@ -3,7 +3,7 @@ import AutoCompleteField from '../AutoCompleteField';
 import {items} from './basic';
 
 /**
- * Errors
+ * Пример обработки ошибок в поле.
  * @order 4
  * @col 6
  */

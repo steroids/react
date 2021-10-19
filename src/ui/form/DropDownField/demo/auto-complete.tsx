@@ -3,10 +3,11 @@ import DropDownField from '../DropDownField';
 import {items} from './basic';
 
 /**
- * Auto complete
+ * Использование свойства самозаполнения.
  * @order 5
  * @col 6
  */
+
 export default () => (
     <>
         <DropDownField

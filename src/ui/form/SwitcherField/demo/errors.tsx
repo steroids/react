@@ -1,12 +1,13 @@
-import SwitcherField from '../SwitcherField';
 import * as React from 'react';
+import SwitcherField from '../SwitcherField';
 import {items} from './basic';
 
 /**
- * Errors
+ * Обработка ошибок.
  * @order 4
  * @col 6
  */
+
 export default () => (
     <>
         <SwitcherField

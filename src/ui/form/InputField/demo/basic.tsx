@@ -3,7 +3,7 @@ import * as React from 'react';
 import InputField from '../InputField';
 
 /**
- * Basic
+ * Обычный пример использования InputField.
  * @order 1
  * @col 3
  */

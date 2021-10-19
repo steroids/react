@@ -6,10 +6,11 @@ import FieldSet from '../FieldSet';
 import DropDownField from '../../DropDownField';
 
 /**
- * Basic
+ * Обычный пример использования FieldSet.
  * @order 1
  * @col 12
  */
+
 export default () => (
     <>
         <Form formId='FieldSetForm' useRedux>

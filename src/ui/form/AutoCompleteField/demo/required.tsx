@@ -3,7 +3,7 @@ import AutoCompleteField from '../AutoCompleteField';
 import {items} from './basic';
 
 /**
- * Required
+ * Пример использования AutoCompleteField как обязательного поля для заполнения.
  * @order 3
  * @col 6
  */

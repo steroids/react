@@ -1,5 +1,6 @@
 import * as React from 'react';
 import InputField from '../../InputField';
+import FieldLayout from '../FieldLayout';
 
 const layouts = {
     inline: 'Inline',
@@ -8,16 +9,17 @@ const layouts = {
 };
 
 /**
- * Inline layout
+ * По-умлочанию FieldLayout имеет 3 заданных ориентации.
  * @order 5
  * @col 12
  */
+
 export default () => (
-    <div className='row'>
+    <div style={{display: 'grid', gridGap: '10px'}}>
         {Object.keys(layouts).map(layout => (
-            <div className='col-12 mb-4' key={layout}>
-                <InputField label={layouts[layout]} layout={layout} />
-            </div>
+            <FieldLayout className='col-12 mb-4' key={layout} layout={layout}>
+                <InputField label={layouts[layout]} />
+            </FieldLayout>
         ))}
     </div>
 );

@@ -9,10 +9,11 @@ const sizes = {
 };
 
 /**
- * Sizes
+ * По-умлочанию DropDownField имеет 3 заданных размера.
  * @order 10
  * @col 6
  */
+
 export default () => (
     <>
         <div className='row mb-4'>

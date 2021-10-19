@@ -1,5 +1,11 @@
-import DropDownField from '../DropDownField';
 import * as React from 'react';
+import DropDownField from '../DropDownField';
+
+/**
+ * Обычный пример использования DropDownField.
+ * @order 1
+ * @col 6
+ */
 
 export const items = [
     {
@@ -20,11 +26,6 @@ export const items = [
     },
 ];
 
-/**
- * Basic
- * @order 1
- * @col 6
- */
 export default () => (
     <>
         <DropDownField

@@ -8,7 +8,7 @@ const sizes = {
 };
 
 /**
- * Sizes
+ * По-умлочанию DateField имеет 3 заданных размера.
  * @order 7
  * @col 12
  */

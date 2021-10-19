@@ -3,10 +3,11 @@ import DropDownField from '../DropDownField';
 import {items} from './basic';
 
 /**
- * Errors
+ * Обработка ошибок.
  * @order 4
  * @col 6
  */
+
 export default () => (
     <>
         <DropDownField

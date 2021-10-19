@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from '../TextField';
 
 /**
- * Disabled
+ * Выключенный или недоступный для использования.
  * @order 2
  * @col 3
  */

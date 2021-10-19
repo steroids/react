@@ -1,6 +1,12 @@
 import * as React from 'react';
 import AutoCompleteField from '../AutoCompleteField';
 
+/**
+ * Простой пример использзования AutoAutoCompleteField с коллекцией элементов вложенных в {props.items} .
+ * @order 1
+ * @col 6
+ */
+
 export const items = [
     {
         id: '1',
@@ -16,11 +22,6 @@ export const items = [
     },
 ];
 
-/**
- * Basic
- * @order 1
- * @col 6
- */
 export default () => (
     <>
         <AutoCompleteField

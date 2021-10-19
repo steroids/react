@@ -2,7 +2,7 @@ import * as React from 'react';
 import RateField from '../RateField';
 
 /**
- * Required
+ * Как обязательное поле для заполнения.
  * @order 3
  * @col 6
  */

@@ -3,10 +3,11 @@ import * as React from 'react';
 import InputField from '../InputField';
 
 /**
- * Mask
+ * С использованием маски для ввода номера телефона
  * @order 6
  * @col 3
  */
+
 export default () => (
     <>
         <InputField

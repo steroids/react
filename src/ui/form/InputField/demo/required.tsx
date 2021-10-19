@@ -1,9 +1,8 @@
 import * as React from 'react';
-
 import InputField from '../InputField';
 
 /**
- * Required
+ * Как обязательное поле для заполнения.
  * @order 3
  * @col 3
  */

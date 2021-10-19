@@ -1,6 +1,12 @@
 import * as React from 'react';
 import RadioListField from '../RadioListField';
 
+/**
+ * Обычный пример использования RadioListField.
+ * @order 1
+ * @col 6
+ */
+
 export const items = [
     {
         id: 1,
@@ -20,11 +26,6 @@ export const items = [
     },
 ];
 
-/**
- * Basic
- * @order 1
- * @col 6
- */
 export default () => (
     <>
         <RadioListField

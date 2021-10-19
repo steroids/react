@@ -22196,37 +22196,37 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования DropDownField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Пример обработки ошибок в поле."
                 },
                 "placeholder": {
                     "order": "5",
                     "col": "6",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "Сообщение внутри AutoCompleteField по контексту использования."
                 },
                 "required": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Пример использования AutoCompleteField как обязательного поля для заполнения."
                 },
                 "sizes": {
                     "order": "6",
                     "col": "12",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию AutoCompleteField имеет 3 заданных размера."
                 }
             },
             "BlankField": {
@@ -22234,7 +22234,7 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Простой пример использзования BlankField."
                 }
             },
             "Button": {
@@ -22242,67 +22242,67 @@
                     "order": "3",
                     "col": "4",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Кнопка с бэйджом к примеру с количеством уведомолений."
                 },
                 "basic": {
                     "order": "1",
                     "col": "4",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Простой пример использзования Button с заданным лейблом."
                 },
                 "block": {
                     "order": "4",
                     "col": "4",
                     "title": null,
-                    "description": "Block button"
+                    "description": "Кнопка растянутая по ширине родительского блока."
                 },
                 "colors": {
                     "order": "5",
                     "col": "12",
                     "title": null,
-                    "description": "Colors"
+                    "description": "По-умлочанию кнопка имеет 8 видов цветов и так же режим outline к каждому из цветов."
                 },
                 "confirm": {
                     "order": "6",
                     "col": "4",
                     "title": null,
-                    "description": "Button with confirm"
+                    "description": "С вызовом Alert и текстом для подтверждения действий."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "4",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Пример выключенного компонента Button."
                 },
                 "hint": {
                     "order": "7",
                     "col": "4",
                     "title": null,
-                    "description": "Button with hint"
+                    "description": "С всплывающей подсказкой при наведении на кнопку."
                 },
                 "icon": {
                     "order": "8",
                     "col": "4",
                     "title": null,
-                    "description": "Button with icon"
+                    "description": "Обычное использования с иконокой."
                 },
                 "link": {
                     "order": "9",
                     "col": "4",
                     "title": null,
-                    "description": "Link"
+                    "description": "Использвание кнопки в качестве ссылки."
                 },
                 "sizes": {
                     "order": "10",
                     "col": "8",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию Button имеет 3 заданных размера."
                 },
                 "tags": {
                     "order": "11",
                     "col": "6",
                     "title": null,
-                    "description": "Tags"
+                    "description": "Пример выбора html-тэга, который будет использован в DOM"
                 }
             },
             "CheckboxField": {
@@ -22310,25 +22310,25 @@
                     "order": "1",
                     "col": "4",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования SliderField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "4",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "4",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "required": {
                     "order": "3",
                     "col": "4",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 }
             },
             "CheckboxListField": {
@@ -22336,25 +22336,25 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Простой пример использзования AutoAutoCompleteField с коллекцией элементов вложенных в {props.items} ."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный AutoCompleteField также выключает Input."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "required": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Список как обязательный для заполнения."
                 }
             },
             "DateField": {
@@ -22362,43 +22362,43 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования SwitcherField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "icon": {
                     "order": "5",
                     "col": "6",
                     "title": null,
-                    "description": "Icons"
+                    "description": "С использованием кастомной иконкой."
                 },
                 "placeholder": {
                     "order": "6",
                     "col": "6",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "С сообщением для пользователя по контексту использования."
                 },
                 "required": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
                 "sizes": {
                     "order": "7",
                     "col": "12",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию DateField имеет 3 заданных размера."
                 }
             },
             "DateRangeField": {
@@ -22406,7 +22406,37 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования DateRangeField."
+                },
+                "disabled": {
+                    "order": "2",
+                    "col": "6",
+                    "title": null,
+                    "description": "Выключенный или недоступный для использования."
+                },
+                "errors": {
+                    "order": "4",
+                    "col": "6",
+                    "title": null,
+                    "description": "Обработка ошибок."
+                },
+                "icon": {
+                    "order": "5",
+                    "col": "6",
+                    "title": null,
+                    "description": "С использованием кастомной иконкой."
+                },
+                "placeholder": {
+                    "order": "6",
+                    "col": "6",
+                    "title": null,
+                    "description": "С сообщением для пользователя по контексту использования."
+                },
+                "required": {
+                    "order": "3",
+                    "col": "6",
+                    "title": null,
+                    "description": "Как обязательное поле для заполнения."
                 }
             },
             "DateTimeField": {
@@ -22414,19 +22444,19 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования списка из CheckboxListField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Список с недоступными для заполнения полями."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "icon": {
                     "order": "5",
@@ -22444,7 +22474,7 @@
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
                 "showRemove": {
                     "order": "7",
@@ -22478,61 +22508,61 @@
                     "order": "5",
                     "col": "6",
                     "title": null,
-                    "description": "Auto complete"
+                    "description": "Использование свойства самозаполнения."
                 },
                 "basic": {
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный  пример использования DateField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "multiple": {
                     "order": "6",
                     "col": "6",
                     "title": null,
-                    "description": "Multiple"
+                    "description": "С возможность множественного выбора."
                 },
                 "no-border": {
                     "order": "7",
                     "col": "6",
                     "title": null,
-                    "description": "No border"
+                    "description": "Без полей и рамок."
                 },
                 "placeholder": {
                     "order": "8",
                     "col": "6",
                     "title": null,
-                    "description": "Search placeholder"
+                    "description": "С полем для поиска выбора из выпадающего списка."
                 },
                 "required": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
                 "show-reset": {
                     "order": "9",
                     "col": "6",
                     "title": null,
-                    "description": "Show reset"
+                    "description": "С кнопкой для удаления выбора."
                 },
                 "size": {
                     "order": "10",
                     "col": "6",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию DropDownField имеет 3 заданных размера."
                 }
             },
             "Field": {
@@ -22540,51 +22570,39 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования Field."
                 },
                 "component": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Field with component"
+                    "description": "Field с компонентом."
                 },
                 "model": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Field with model"
+                    "description": "Field с прокинутой моделью."
                 }
             },
             "FieldLayout": {
-                "basic": {
-                    "order": "1",
-                    "col": "6",
-                    "title": null,
-                    "description": "Basic"
-                },
                 "errors": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
-                },
-                "hint": {
-                    "order": "4",
-                    "col": "6",
-                    "title": null,
-                    "description": "Hint"
+                    "description": "Обработка ошибок."
                 },
                 "layouts": {
                     "order": "5",
                     "col": "12",
                     "title": null,
-                    "description": "Inline layout"
+                    "description": "По-умлочанию FieldLayout имеет 3 заданных ориентации."
                 },
                 "required": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 }
             },
             "FieldList": {
@@ -22592,7 +22610,13 @@
                     "order": "1",
                     "col": "12",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования FieldList."
+                },
+                "disabled": {
+                    "order": "2",
+                    "col": "12",
+                    "title": null,
+                    "description": "Выключенный или недоступный для использования."
                 }
             },
             "FieldSet": {
@@ -22600,7 +22624,7 @@
                     "order": "1",
                     "col": "12",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования FieldSet."
                 }
             },
             "FileField": {
@@ -22608,7 +22632,7 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Базовый FileField"
+                    "description": "Обычный пример использования FileField."
                 }
             },
             "Form": {
@@ -22616,7 +22640,7 @@
                     "order": "1",
                     "col": "12",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования Form."
                 }
             },
             "HtmlField": {
@@ -22624,7 +22648,7 @@
                     "order": "1",
                     "col": "12",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования HtmlField."
                 }
             },
             "InputField": {
@@ -22632,61 +22656,61 @@
                     "order": "7",
                     "col": "3",
                     "title": null,
-                    "description": "Addons"
+                    "description": "С дополнительным текстом с рамками слева и справа от поля ввода."
                 },
                 "basic": {
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования InputField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "5",
                     "col": "3",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "mask": {
                     "order": "6",
                     "col": "3",
                     "title": null,
-                    "description": "Mask"
+                    "description": "С использованием маски для ввода номера телефона"
                 },
                 "placeholder": {
                     "order": "4",
                     "col": "3",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "Сообщение пользователю для заполнения по контексту использования."
                 },
                 "required": {
                     "order": "3",
                     "col": "3",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
                 "sizes": {
                     "order": "9",
                     "col": "12",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию InputField имеет 3 заданных размера поля."
                 },
                 "textAddons": {
                     "order": "8",
                     "col": "3",
                     "title": null,
-                    "description": "TextAddons"
+                    "description": "С дополнительным текстом слева и справа от поля ввода."
                 },
                 "types": {
                     "order": "9",
                     "col": "12",
                     "title": null,
-                    "description": "Types"
+                    "description": "InputField может задавать требуемое содержание по типу."
                 }
             },
             "NavField": {
@@ -22694,25 +22718,25 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования TimeField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключен или недоступен для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "3",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "required": {
                     "order": "3",
                     "col": "3",
                     "title": null,
-                    "description": "Required"
+                    "description": "Обязательный для заполнения."
                 }
             },
             "NumberField": {
@@ -22720,37 +22744,37 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования TextField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "6",
                     "col": "4",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "placeholder": {
                     "order": "4",
                     "col": "3",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "Сообщение пользователю для заполнения по контексту использования."
                 },
                 "required": {
                     "order": "3",
                     "col": "3",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
                 "sizes": {
                     "order": "5",
                     "col": "8",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию NumberField имеет 3 заданных размера поля."
                 }
             },
             "PasswordField": {
@@ -22758,43 +22782,43 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования"
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "6",
                     "col": "4",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "placeholder": {
                     "order": "4",
                     "col": "3",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "Сообщение пользователю для заполнения по контексту использования."
                 },
                 "required": {
                     "order": "3",
                     "col": "3",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
                 "security": {
                     "order": "7",
                     "col": "3",
                     "title": null,
-                    "description": "Security"
+                    "description": "С кнопкой для просмотра содержания."
                 },
                 "sizes": {
                     "order": "5",
-                    "col": "8",
+                    "col": "12",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию PasswordField имеет 3 заданных размера поля."
                 }
             },
             "RadioListField": {
@@ -22802,25 +22826,25 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример испоьзования DateTimeField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок в списке."
                 },
                 "required": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 }
             },
             "RateField": {
@@ -22828,43 +22852,43 @@
                     "order": "5",
                     "col": "6",
                     "title": null,
-                    "description": "Clear value with twice click on the last active star"
+                    "description": "При двойном нажатии значение обнуляется."
                 },
                 "basic": {
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования RateField."
                 },
                 "default-value": {
                     "order": "6",
                     "col": "6",
                     "title": null,
-                    "description": "Default value is equal 3"
+                    "description": "По-умолчанию выставленное значение"
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "items-count": {
                     "order": "7",
                     "col": "6",
                     "title": null,
-                    "description": "Max count of items is equal 3"
+                    "description": "Максимаьное выставляемое значение RateField"
                 },
                 "required": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 }
             },
             "ReCaptchaField": {
@@ -22872,7 +22896,7 @@
                     "order": "1",
                     "col": "4",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования ReCaptchaField в Form."
                 }
             },
             "SliderField": {
@@ -22880,37 +22904,37 @@
                     "order": "1",
                     "col": "4",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования CheckboxField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "4",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный CheckboxField для заполнения."
                 },
                 "errors": {
                     "order": "4",
                     "col": "4",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "min-max": {
-                    "order": "6",
+                    "order": "5",
                     "col": "4",
                     "title": null,
-                    "description": "Set min and max values"
+                    "description": "Установлены рамки минамльного и максимального значения."
                 },
                 "required": {
                     "order": "3",
                     "col": "4",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
                 "size": {
-                    "order": "5",
+                    "order": "6",
                     "col": "12",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию SliderField имеет 3 заданных размера."
                 }
             },
             "SwitcherField": {
@@ -22918,25 +22942,25 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования RadioListField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "required": {
                     "order": "3",
                     "col": "6",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное для заполнения."
                 }
             },
             "TextField": {
@@ -22944,43 +22968,43 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования NumberField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный."
                 },
                 "errors": {
                     "order": "4",
                     "col": "3",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "placeholder": {
                     "order": "5",
                     "col": "3",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "Сообщение пользователю для заполнения по контексту использования."
                 },
                 "required": {
                     "order": "3",
                     "col": "3",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное для заполнения."
                 },
                 "sizes": {
-                    "order": "6",
+                    "order": "7",
                     "col": "12",
                     "title": null,
-                    "description": "Sizes"
+                    "description": "По-умлочанию TextField имеет 3 заданных размера."
                 },
                 "submit": {
-                    "order": "7",
+                    "order": "6",
                     "col": "3",
                     "title": null,
-                    "description": "Submit on enter"
+                    "description": "Чтобы подтвердить используется нажатие клавиши Enter"
                 }
             },
             "TimeField": {
@@ -22988,49 +23012,79 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Обычный пример использования PasswordField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Disabled"
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
                     "col": "3",
                     "title": null,
-                    "description": "Errors"
+                    "description": "Обработка ошибок."
                 },
                 "icon": {
                     "order": "5",
                     "col": "3",
                     "title": null,
-                    "description": "Кастомная иконка спрваа в инпуте для удаления значения"
+                    "description": "Кастомная иконка справа в инпуте для удаления значения"
                 },
-                "no-border": {
+                "noBorder": {
                     "order": "7",
                     "col": "3",
                     "title": null,
-                    "description": "Without border"
+                    "description": "Без рамок"
                 },
                 "placeholder": {
                     "order": "5",
                     "col": "3",
                     "title": null,
-                    "description": "Placeholder"
+                    "description": "Сообщение пользователю для заполнения по контексту использования."
                 },
                 "required": {
                     "order": "3",
                     "col": "3",
                     "title": null,
-                    "description": "Required"
+                    "description": "Как обязательное поле для заполнения."
                 },
-                "show-remove": {
+                "showRemove": {
                     "order": "8",
                     "col": "3",
                     "title": null,
-                    "description": "Show remove"
+                    "description": "После выбора времени при наведении на иконку иконка меняется на кнопку для очищении значения."
+                }
+            }
+        },
+        "layout": {
+            "Notifications": {
+                "basic": {
+                    "order": "1",
+                    "col": "6",
+                    "title": null,
+                    "description": "Все типы уведомлений"
+                },
+                "position": {
+                    "order": "3",
+                    "col": "12",
+                    "title": null,
+                    "description": "Все позиции уведомлений"
+                },
+                "timeOut": {
+                    "order": "2",
+                    "col": "6",
+                    "title": null,
+                    "description": "Время самостоятельного пропадания уведомления в милесекундах"
+                }
+            },
+            "Tooltip": {
+                "basic": {
+                    "order": "1",
+                    "col": "6",
+                    "title": null,
+                    "description": "Обычное использование Tooltip"
                 }
             }
         },
@@ -23342,7 +23396,7 @@
                 },
                 "sizes": {
                     "order": "5",
-                    "col": "8",
+                    "col": "12",
                     "title": null,
                     "description": "Sizes"
                 }

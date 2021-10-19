@@ -3,10 +3,11 @@ import * as React from 'react';
 import Button from '../Button';
 
 /**
- * Button with icon
+ * Обычное использования с иконокой.
  * @order 8
  * @col 4
  */
+
 export default () => (
     <>
         <Button

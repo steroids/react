@@ -2,7 +2,7 @@ import * as React from 'react';
 import FileField from '../FileField';
 
 /**
- * Базовый FileField
+ * Обычный пример использования FileField.
  * @order 1
  * @col 6
  */

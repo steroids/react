@@ -6,10 +6,11 @@ import TextField from '../../TextField';
 import InputField from '../../InputField';
 
 /**
- * Basic
+ * Обычный пример использования Form.
  * @order 1
  * @col 12
  */
+
 export default () => (
     <>
         <Form

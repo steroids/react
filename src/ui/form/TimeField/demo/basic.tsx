@@ -2,7 +2,7 @@ import * as React from 'react';
 import TimeField from '../TimeField';
 
 /**
- * Basic
+ * Обычный пример использования TimeField.
  * @order 1
  * @col 3
  */

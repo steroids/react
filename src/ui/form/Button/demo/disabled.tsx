@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from '../Button';
 
 /**
- * Disabled
+ * Пример выключенного компонента Button.
  * @order 2
  * @col 4
  */

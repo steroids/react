@@ -1,9 +1,8 @@
 import * as React from 'react';
-
 import InputField from '../InputField';
 
 /**
- * Sizes
+ * По-умлочанию InputField имеет 3 заданных размера поля.
  * @order 9
  * @col 12
  */

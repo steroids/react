@@ -1,14 +1,14 @@
 import * as React from 'react';
-
 import PasswordField from '../PasswordField';
 
 /**
- * Required
+ * Как обязательное поле для заполнения.
  * @order 3
  * @col 3
  */
+
 export default () => (
     <>
-        <PasswordField label='Required' required/>
+        <PasswordField label='Required' required />
     </>
 );

@@ -3,10 +3,11 @@ import DropDownField from '../DropDownField';
 import {items} from './basic';
 
 /**
- * Search placeholder
+ * С полем для поиска выбора из выпадающего списка.
  * @order 8
  * @col 6
  */
+
 export default () => (
     <>
         <DropDownField

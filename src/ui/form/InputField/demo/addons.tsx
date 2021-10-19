@@ -3,7 +3,7 @@ import * as React from 'react';
 import InputField from '../InputField';
 
 /**
- * Addons
+ * С дополнительным текстом с рамками слева и справа от поля ввода.
  * @order 7
  * @col 3
  */

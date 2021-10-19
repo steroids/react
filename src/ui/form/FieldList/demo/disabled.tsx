@@ -6,8 +6,8 @@ import InputField from '../../InputField';
 import NumberField from '../../NumberField';
 
 /**
- * Обычный пример использования FieldList.
- * @order 1
+ * Выключенный или недоступный для использования.
+ * @order 2
  * @col 12
  */
 
@@ -15,6 +15,7 @@ export default () => (
     <>
         <Form formId='FieldListForm'>
             <FieldList
+                disabled
                 attribute='items'
                 label='Items'
                 initialRowsCount={2}

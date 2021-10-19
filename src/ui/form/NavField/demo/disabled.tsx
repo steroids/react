@@ -3,10 +3,11 @@ import NavField from '../NavField';
 import {items} from './basic';
 
 /**
- * Disabled
+ * Выключенный.
  * @order 2
  * @col 3
  */
+
 export default () => (
     <>
         <NavField

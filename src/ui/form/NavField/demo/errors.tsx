@@ -3,10 +3,11 @@ import NavField from '../NavField';
 import {items} from './basic';
 
 /**
- * Errors
+ * Обработка ошибок.
  * @order 4
  * @col 3
  */
+
 export default () => (
     <>
         <NavField

@@ -3,7 +3,7 @@ import AutoCompleteField from '../AutoCompleteField';
 import {items} from './basic';
 
 /**
- * Placeholder
+ * Сообщение внутри AutoCompleteField по контексту использования.
  * @order 5
  * @col 6
  */

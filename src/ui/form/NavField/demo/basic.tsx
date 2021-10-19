@@ -1,6 +1,12 @@
 import * as React from 'react';
 import NavField from '../NavField';
 
+/**
+ * Обычный пример использования
+ * @order 1
+ * @col 3
+ */
+
 export const items = [
     {
         id: 1,
@@ -20,11 +26,6 @@ export const items = [
     },
 ];
 
-/**
- * Basic
- * @order 1
- * @col 3
- */
 export default () => (
     <div style={{display: 'flex'}}>
         <NavField

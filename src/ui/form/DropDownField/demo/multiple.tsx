@@ -3,10 +3,11 @@ import DropDownField from '../DropDownField';
 import {items} from './basic';
 
 /**
- * Multiple
+ * С возможность множественного выбора.
  * @order 6
  * @col 6
  */
+
 export default () => (
     <>
         <DropDownField

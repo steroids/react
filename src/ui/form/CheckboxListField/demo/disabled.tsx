@@ -4,10 +4,11 @@ import CheckboxListField from '../CheckboxListField';
 import {items} from './basic';
 
 /**
- * Disabled
+ * Список с недоступными для заполнения полями.
  * @order 2
  * @col 6
  */
+
 export default () => (
     <>
         <CheckboxListField

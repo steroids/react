@@ -1,6 +1,5 @@
 import * as React from 'react';
-import SwitcherField from '../SwitcherField';
-import {items} from './basic';
+import DateRangeField from '../DateRangeField';
 
 /**
  * Выключенный или недоступный для использования.
@@ -10,10 +9,6 @@ import {items} from './basic';
 
 export default () => (
     <>
-        <SwitcherField
-            label='Disabled'
-            items={items}
-            disabled
-        />
+        <DateRangeField label='Disabled' disabled />
     </>
 );

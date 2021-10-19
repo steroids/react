@@ -2,10 +2,11 @@ import * as React from 'react';
 import HtmlField from '../HtmlField';
 
 /**
- * Basic
+ * Обычный пример использования HtmlField.
  * @order 1
  * @col 12
  */
+
 export default () => (
     <>
         <HtmlField

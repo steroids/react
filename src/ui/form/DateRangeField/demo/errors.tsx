@@ -1,19 +1,18 @@
 import * as React from 'react';
-import CheckboxListField from '../CheckboxListField';
-import {items} from './basic';
+import DateRangeField from '../DateRangeField';
 
 /**
- * Обработка ошибок в списке.
+ * Обработка ошибок.
  * @order 4
  * @col 6
  */
 
 export default () => (
     <>
-        <CheckboxListField
+        <DateRangeField
             label='Errors'
             errors={['Error 1 text', 'Error 2 text']}
-            items={items}
+            layout
         />
     </>
 );

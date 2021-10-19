@@ -6,14 +6,12 @@ import {useMemo, useCallback, useState, useEffect} from 'react';
 import _uniqueId from 'lodash-es/uniqueId';
 import ReactCropProps, {Crop} from 'react-image-crop';
 import {useComponents} from '../../../hooks';
-import {IFileFieldItemViewProps} from '../FileField/FileField';
 import {IModalProps} from '../../modal/Modal/Modal';
 import useDispatch from '../../../hooks/useDispatch';
 import useFile from '../../../hooks/useFile';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
 import {openModal} from '../../../actions/modal';
-import {IButtonProps} from '../Button/Button';
 
 export interface ICropInputProps {
     /**
@@ -101,7 +99,7 @@ export interface IImageFieldViewProps extends IImageFieldProps {
             percent: number,
         },
     },
-    onClick: (e: Event) => void
+    onClick: () => void
 }
 
 function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Element {

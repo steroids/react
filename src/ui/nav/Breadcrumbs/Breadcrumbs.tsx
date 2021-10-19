@@ -7,31 +7,38 @@ import {getRouteBreadcrumbs, IRoute} from '../../../reducers/router';
  */
 export interface IBreadcrumbsProps {
     /**
-     * Коллекция элементов навигационной цепочки
-     * @example [{id: 'root', title: 'Home'}, {id: 'catalog', title: 'Catalog'}
+     * Кастомный CSS-класс
+     * @example 'CustomCssClassName'
      */
-    items?: IRoute[];
+    className?: CssClassName,
 
     /**
-     * Вместо items можно передать идентификатор текущего роута, от которого компонент самостоятельно построит
+     * Коллекция элементов навигационной цепочки
+     * @example [{id: 'root', title: 'Home'}, {id: 'catalog', title: 'Catalog'}]
+     */
+    items?: IRoute[],
+
+    /**
+     * Вместо items можно передать идентификатор роута, от которого компонент самостоятельно построит
      * навигационную цепочку
      * @example 'catalog'
      */
-    pageId?: string;
+    pageId?: string,
 
     /**
-     * Заголовок текущей страницы. Если заголовок не задан, то подставится item.title
+     * Заголовок последней в списке страницы (обычно, это текущая страница, на которой находится пользователь).
+     * Если заголовок не задан, то подставится item.title
      * @example 'Каталог'
      */
-    pageTitle?: string;
+    pageTitle?: string,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export type IBreadcrumbsViewProps = IBreadcrumbsProps;

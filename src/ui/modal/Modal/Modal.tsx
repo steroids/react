@@ -7,7 +7,6 @@ import {IControlItem} from '../../nav/Controls/Controls';
  * Модальное окно
  */
 export interface IModalProps {
-
     /**
      * Кастомный CSS-класс
      * @example 'CustomCssClassName'

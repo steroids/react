@@ -20057,17 +20057,25 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Кастомный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": "'CustomCssClassName'"
+                },
+                {
                     "name": "items",
                     "decorators": [],
                     "description": "Коллекция элементов навигационной цепочки",
                     "required": false,
                     "type": "IRoute[]",
-                    "example": "[{id: 'root', title: 'Home'}, {id: 'catalog', title: 'Catalog'}"
+                    "example": "[{id: 'root', title: 'Home'}, {id: 'catalog', title: 'Catalog'}]"
                 },
                 {
                     "name": "pageId",
                     "decorators": [],
-                    "description": "Вместо items можно передать идентификатор текущего роута, от которого компонент самостоятельно построит\nнавигационную цепочку",
+                    "description": "Вместо items можно передать идентификатор роута, от которого компонент самостоятельно построит\nнавигационную цепочку",
                     "required": false,
                     "type": "string",
                     "example": "'catalog'"
@@ -20075,7 +20083,7 @@
                 {
                     "name": "pageTitle",
                     "decorators": [],
-                    "description": "Заголовок текущей страницы. Если заголовок не задан, то подставится item.title",
+                    "description": "Заголовок последней в списке страницы (обычно, это текущая страница, на которой находится пользователь).\nЕсли заголовок не задан, то подставится item.title",
                     "required": false,
                     "type": "string",
                     "example": "'Каталог'"
@@ -20085,7 +20093,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "any",
+                    "type": "ReactNode",
                     "example": "MyCustomView"
                 }
             ]
@@ -23280,13 +23288,19 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Самый простой способ построить цепочку Breadcrumbs - передать id целевого роута."
+                },
+                "items": {
+                    "order": "3",
+                    "col": "12",
+                    "title": null,
+                    "description": "Передаем заданный массив роутов"
                 },
                 "page-title": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Basic"
+                    "description": "Изменяем заголовок последней в списке страницы"
                 }
             },
             "Controls": {

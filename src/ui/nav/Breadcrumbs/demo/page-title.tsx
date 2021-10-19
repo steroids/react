@@ -2,7 +2,7 @@ import * as React from 'react';
 import Breadcrumbs from '../Breadcrumbs';
 
 /**
- * Basic
+ * Изменяем заголовок последней в списке страницы.
  * @order 2
  * @col 6
  */

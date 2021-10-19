@@ -22,12 +22,13 @@ function AppMock(props: any) {
             //components.ui.addViews(require('@steroidsjs/bootstrap').default);
             //ui.addFields(require('@steroidsjs/core/ui/form').default);
             //ui.addFormatters(require('@steroidsjs/core/ui/format').default);
-            //ui.addIcons(require('@steroidsjs/bootstrap/icon/fontawesome').default);
+            ui.addViews(require('@steroidsjs/bootstrap/index').default);
+            ui.addIcons(require('@steroidsjs/bootstrap/icon/fontawesome').default);
         },
     });
 
     return renderApplication(
-            <Component {...childProps} />,
+        <Component {...childProps} />,
     );
 }
 

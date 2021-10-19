@@ -1,8 +1,7 @@
 import 'jest-enzyme';
-import React from "react";
-import HtmlFieldView from "@steroidsjs/bootstrap/form/HtmlField/HtmlFieldView";
-import HtmlField from "./HtmlField";
-import mountWithApp from "../../../../tests/mountWithApp";
+import HtmlFieldView from '@steroidsjs/bootstrap/form/HtmlField/HtmlFieldView';
+import HtmlField from './HtmlField';
+import mountWithApp from '../../../../tests/mountWithApp';
 
 describe('HtmlField tests', () => {
     it('should render something without props', () => {
@@ -11,21 +10,20 @@ describe('HtmlField tests', () => {
     });
 
     describe('Static props', () => {
-       const props = {
-           className: 'test',
-           dark: true,
-           disabled: true,
-           error: ['Error text'],
-           placeholder: 'test',
-           required: true
-       };
+        const props = {
+            className: 'test',
+            dark: true,
+            disabled: true,
+            error: ['Error text'],
+            placeholder: 'test',
+            required: true,
+        };
 
-       const wrapper = mountWithApp(HtmlField, {...props, view: HtmlFieldView});
+        const wrapper = mountWithApp(HtmlField, {...props, view: HtmlFieldView});
 
-       it('should static props transmitted unchanged', () => {
-           // expect(wrapper.find('HtmlField')).toMatchSnapshot();
-           expect(wrapper.find('HtmlField')).toHaveProp(props);
-       });
+        it('should static props transmitted unchanged', () => {
+            expect(wrapper.find('HtmlField')).toHaveProp(props);
+        });
         it('should have right external className', () => {
             expect(wrapper.find('HtmlField')).toHaveClassName(props.className);
         });
@@ -44,11 +42,9 @@ describe('HtmlField tests', () => {
     // console.error
     //     TypeError: window.MutationObserver is not a constructor
 
-
     /// TODO Doesn't work now.
     // console.log:
     //              Found node output: <div class="HtmlFieldView"><div></div></div>
-
 
     // describe('Action', () => {
     //     it('should value change', () => {

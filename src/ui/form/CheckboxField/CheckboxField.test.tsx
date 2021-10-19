@@ -1,11 +1,9 @@
 import 'jest-enzyme';
-import React from "react";
 import CheckboxFieldView from '@steroidsjs/bootstrap/form/CheckboxField/CheckboxFieldView';
 import mountWithApp from '../../../../tests/mountWithApp';
-import {ICheckboxFieldProps} from "./CheckboxField";
+import {ICheckboxFieldProps} from './CheckboxField';
 
 const CheckboxField = require('./CheckboxField').default;
-
 
 describe('CheckboxField tests', () => {
     it('should render something without props', () => {
@@ -14,15 +12,15 @@ describe('CheckboxField tests', () => {
     });
 
     describe('Static props', () => {
-       const props: ICheckboxFieldProps = {
-           label: 'Checkbox',
-           className: 'test',
-           required: true,
-           errors: ['Error text'],
-           disabled: true,
-       };
+        const props: ICheckboxFieldProps = {
+            label: 'Checkbox',
+            className: 'test',
+            required: true,
+            errors: ['Error text'],
+            disabled: true,
+        };
 
-       const wrapper = mountWithApp(CheckboxField, {...props, view: CheckboxFieldView});
+        const wrapper = mountWithApp(CheckboxField, {...props, view: CheckboxFieldView});
 
         it('should static props transmitted unchanged', () => {
             expect(wrapper.find('CheckboxField')).toHaveProp(props);

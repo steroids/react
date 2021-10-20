@@ -29,7 +29,6 @@ export const items = [
 export default () => (
     <div style={{display: 'flex'}}>
         <NavField
-            layout='navbar'
             items={items}
             label='Basic'
         />

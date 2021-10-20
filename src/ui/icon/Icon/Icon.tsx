@@ -22,6 +22,7 @@ import {useComponents} from '../../../hooks';
  *
  * That get the icon used <Icon name={'icon-name'} />
  */
+
 export interface IIconProps {
     /**
      * Имя иконки (латиницей). Импорт иконок происходит на старте приложения.

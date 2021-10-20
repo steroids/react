@@ -17421,6 +17421,73 @@
                 }
             ]
         },
+        "IProgressBarProps": {
+            "name": "IProgressBarProps",
+            "moduleName": "ui/layout/ProgressBar/ProgressBar",
+            "title": "ProgressBar",
+            "description": "Progress bar. Отображает текущий прогресс какой-либо операции",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Функция, позволяющая задавать собственные иконки в зависимости от прогресса и статуса",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Функция, позволяющая изменить генерацию лейбла",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "percent",
+                    "decorators": [],
+                    "description": "Прогресс в процентах",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "showLabel",
+                    "decorators": [],
+                    "description": "Флаг, определяющий показывать ли лейбл",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер компонента",
+                    "required": false,
+                    "type": "\"small\" | \"large\" | \"medium\"",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "Статус компонента",
+                    "required": false,
+                    "type": "\"success\" | \"normal\" | \"exception\"",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "Тип компонента - круг или линия",
+                    "required": false,
+                    "type": "\"circle\" | \"line\"",
+                    "example": null
+                }
+            ]
+        },
         "IProgressBarViewProps": {
             "name": "IProgressBarViewProps",
             "moduleName": "ui/layout/ProgressBar/ProgressBar",
@@ -17460,6 +17527,65 @@
                     "description": "",
                     "required": false,
                     "type": "\"success\" | \"normal\" | \"exception\"",
+                    "example": null
+                }
+            ]
+        },
+        "ISkeletonProps": {
+            "name": "ISkeletonProps",
+            "moduleName": "ui/layout/Skeleton/Skeleton",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "animation",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"pulse\" | \"wave\"",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "height",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "\"circle\" | \"text\" | \"rect\"",
+                    "example": null
+                },
+                {
+                    "name": "width",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
                     "example": null
                 }
             ]
@@ -22204,13 +22330,13 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Обычный пример использования DropDownField."
+                    "description": "Простой пример использзования AutoAutoCompleteField с коллекцией элементов вложенных в {props.items} ."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Выключенный или недоступный для использования."
+                    "description": "Выключенный AutoCompleteField также выключает Input."
                 },
                 "errors": {
                     "order": "4",
@@ -22318,13 +22444,13 @@
                     "order": "1",
                     "col": "4",
                     "title": null,
-                    "description": "Обычный пример использования SliderField."
+                    "description": "Обычный пример использования CheckboxField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "4",
                     "title": null,
-                    "description": "Выключенный или недоступный для использования."
+                    "description": "Выключенный или недоступный CheckboxField для заполнения."
                 },
                 "errors": {
                     "order": "4",
@@ -22344,19 +22470,19 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Простой пример использзования AutoAutoCompleteField с коллекцией элементов вложенных в {props.items} ."
+                    "description": "Обычный пример использования списка из CheckboxListField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Выключенный AutoCompleteField также выключает Input."
+                    "description": "Список с недоступными для заполнения полями."
                 },
                 "errors": {
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Обработка ошибок."
+                    "description": "Обработка ошибок в списке."
                 },
                 "required": {
                     "order": "3",
@@ -22370,7 +22496,7 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Обычный пример использования SwitcherField."
+                    "description": "Обычный  пример использования DateField."
                 },
                 "disabled": {
                     "order": "2",
@@ -22452,13 +22578,13 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Обычный пример использования списка из CheckboxListField."
+                    "description": "Обычный пример испоьзования DateTimeField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Список с недоступными для заполнения полями."
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
@@ -22522,7 +22648,7 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Обычный  пример использования DateField."
+                    "description": "Обычный пример использования DropDownField."
                 },
                 "disabled": {
                     "order": "2",
@@ -22726,19 +22852,25 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Обычный пример использования TimeField."
+                    "description": "Обычный пример использования"
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Выключен или недоступен для использования."
+                    "description": "Выключенный."
                 },
                 "errors": {
                     "order": "4",
                     "col": "3",
                     "title": null,
                     "description": "Обработка ошибок."
+                },
+                "layouts": {
+                    "order": "5",
+                    "col": "12",
+                    "title": null,
+                    "description": "Демонстрация всех видов использования свойства layout"
                 },
                 "required": {
                     "order": "3",
@@ -22752,7 +22884,7 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Обычный пример использования TextField."
+                    "description": "Обычный пример использования NumberField."
                 },
                 "disabled": {
                     "order": "2",
@@ -22780,7 +22912,7 @@
                 },
                 "sizes": {
                     "order": "5",
-                    "col": "8",
+                    "col": "12",
                     "title": null,
                     "description": "По-умлочанию NumberField имеет 3 заданных размера поля."
                 }
@@ -22790,7 +22922,7 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Обычный пример использования"
+                    "description": "Обычный пример использования PasswordField."
                 },
                 "disabled": {
                     "order": "2",
@@ -22834,7 +22966,7 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Обычный пример испоьзования DateTimeField."
+                    "description": "Обычный пример использования RadioListField."
                 },
                 "disabled": {
                     "order": "2",
@@ -22846,7 +22978,7 @@
                     "order": "4",
                     "col": "6",
                     "title": null,
-                    "description": "Обработка ошибок в списке."
+                    "description": "Обработка ошибок."
                 },
                 "required": {
                     "order": "3",
@@ -22890,7 +23022,7 @@
                     "order": "7",
                     "col": "6",
                     "title": null,
-                    "description": "Максимаьное выставляемое значение RateField"
+                    "description": "Максимальное выставляемое значение RateField"
                 },
                 "required": {
                     "order": "3",
@@ -22912,13 +23044,13 @@
                     "order": "1",
                     "col": "4",
                     "title": null,
-                    "description": "Обычный пример использования CheckboxField."
+                    "description": "Обычный пример использования SliderField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "4",
                     "title": null,
-                    "description": "Выключенный или недоступный CheckboxField для заполнения."
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
@@ -22950,7 +23082,7 @@
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Обычный пример использования RadioListField."
+                    "description": "Обычный пример использования SwitcherField."
                 },
                 "disabled": {
                     "order": "2",
@@ -22976,13 +23108,13 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Обычный пример использования NumberField."
+                    "description": "Обычный пример использования TextField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Выключенный."
+                    "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
                     "order": "4",
@@ -23020,13 +23152,13 @@
                     "order": "1",
                     "col": "3",
                     "title": null,
-                    "description": "Обычный пример использования PasswordField."
+                    "description": "Обычный пример использования TimeField."
                 },
                 "disabled": {
                     "order": "2",
                     "col": "3",
                     "title": null,
-                    "description": "Выключенный или недоступный для использования."
+                    "description": "Выключен или недоступен для использования."
                 },
                 "errors": {
                     "order": "4",
@@ -23087,12 +23219,58 @@
                     "description": "Время самостоятельного пропадания уведомления в милесекундах"
                 }
             },
+            "ProgressBar": {
+                "percent": {
+                    "order": "2",
+                    "col": "6",
+                    "title": null,
+                    "description": "Свойство percent может задваться статично или динамически.\n)  (max - min)) + min;"
+                },
+                "showLabel": {
+                    "order": "4",
+                    "col": "6",
+                    "title": null,
+                    "description": "Можно убрать иконку."
+                },
+                "sizes": {
+                    "order": "5",
+                    "col": "12",
+                    "title": null,
+                    "description": "По-умолчанию имеется 3 вида размера."
+                },
+                "status": {
+                    "order": "1",
+                    "col": "6",
+                    "title": null,
+                    "description": "Компонент имеет 3 базовых вида статуса."
+                },
+                "type": {
+                    "order": "3",
+                    "col": "6",
+                    "title": null,
+                    "description": "Имеется два типа: 'circle', 'line'. По-умолчанию задается 'line'."
+                }
+            },
+            "Skeleton": {
+                "animations": {
+                    "order": "1",
+                    "col": "3",
+                    "title": null,
+                    "description": "Демонстрация двух видов анимации и трёх типов Skeleton."
+                },
+                "width height": {
+                    "order": "2",
+                    "col": "5",
+                    "title": null,
+                    "description": "Демонстрация задания кастомной ширины и высоты."
+                }
+            },
             "Tooltip": {
                 "basic": {
                     "order": "1",
                     "col": "6",
                     "title": null,
-                    "description": "Обычное использование Tooltip"
+                    "description": "Обычное использование Tooltip c 4-мя разными позициями и по-умолчанию включена видимость."
                 }
             }
         },
@@ -23348,13 +23526,13 @@
                     "order": "3",
                     "col": "12",
                     "title": null,
-                    "description": "Передаем заданный массив роутов"
+                    "description": "Передаем заданный массив роутов."
                 },
                 "page-title": {
                     "order": "2",
                     "col": "6",
                     "title": null,
-                    "description": "Изменяем заголовок последней в списке страницы"
+                    "description": "Изменяем заголовок последней в списке страницы."
                 }
             },
             "Controls": {
@@ -23410,7 +23588,7 @@
                 },
                 "sizes": {
                     "order": "5",
-                    "col": "12",
+                    "col": "8",
                     "title": null,
                     "description": "Sizes"
                 }

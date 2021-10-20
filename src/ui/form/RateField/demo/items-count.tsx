@@ -2,7 +2,7 @@ import * as React from 'react';
 import RateField from '../RateField';
 
 /**
- * Максимаьное выставляемое значение RateField
+ * Максимальное выставляемое значение RateField
  * @order 7
  * @col 6
  */

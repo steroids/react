@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useCallback} from 'react';
 import Nav, {INavProps, INavItem} from '../../nav/Nav/Nav';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -27,16 +26,22 @@ function NavField(props: INavFieldProps): JSX.Element {
         items: props.items,
     });
 
-    const onChange = useCallback(value => props.input.onChange(value), [props.input]);
-
     return (
         <Nav
             {...props.navProps}
+            layout={props.navProps.layout}
             items={items as INavItem[]}
             activeTab={props.input.value}
-            onChange={onChange}
+            onChange={props.onChange}
+            disabled={props.disabled}
         />
     );
 }
+
+NavField.defaultProps = {
+    navProps: {
+        layout: 'button',
+    },
+};
 
 export default fieldWrapper('NavField', NavField);

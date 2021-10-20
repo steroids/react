@@ -1,11 +1,26 @@
 import * as React from 'react';
 import _orderBy from 'lodash-es/orderBy';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
 import useDispatch from '../../../hooks/useDispatch';
 import {useComponents, useSelector} from '../../../hooks';
 import {setFlashes, closeNotification} from '../../../actions/notifications';
 import {getNotifications, getPosition} from '../../../reducers/notifications';
+
+/**
+ * Перед тем как использовать компонент Notification поместите его в DOM дереве следующим образом:
+ * ```
+ * <div className={bem.block()})}>
+ * ```
+ *      <Notifications/>
+ *      ```
+ *      <ModalPortal/>
+ *      ```
+ *      <TooltipPortal/>
+ *      ```
+ * </div>
+ * ```
+ */
 
 interface INotificationItem {
     id?: number,

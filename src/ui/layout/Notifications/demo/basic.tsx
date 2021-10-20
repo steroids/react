@@ -3,6 +3,12 @@ import useDispatch from '../../../../hooks/useDispatch';
 import Button from '../../../form/Button';
 import {showNotification} from '../../../../actions/notifications';
 
+/**
+ * Все типы уведомлений
+ * @order 1
+ * @col 6
+ */
+
 export default () => {
     const dispatch = useDispatch();
     const notifications = {
@@ -19,7 +25,6 @@ export default () => {
     return (
         <div
             style={{
-                width: '30%',
                 display: 'flex',
                 flexFlow: 'column',
             }}
@@ -32,7 +37,7 @@ export default () => {
                             color={level}
                             label={__(`Уведомление типа "${level}"`)}
                             onClick={() => {
-                                dispatch(showNotification(message, level, {timeOut: 2000}));
+                                dispatch(showNotification(message, level));
                             }}
                             style={{ margin: '10px 0' }}
                         />

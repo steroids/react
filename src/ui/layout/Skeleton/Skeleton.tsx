@@ -1,5 +1,5 @@
+import * as React from 'react';
 import {useComponents} from '../../../hooks';
-import * as React from "react";
 
 export interface ISkeletonViewProps {
     className?: string,
@@ -10,7 +10,7 @@ export interface ISkeletonViewProps {
     width?: string | number
 }
 
-interface ISkeletonProps {
+export interface ISkeletonProps {
     className?: string,
     children?: React.ReactNode,
     animation?: 'pulse' | 'wave',
@@ -20,13 +20,12 @@ interface ISkeletonProps {
 }
 
 function Skeleton(props: ISkeletonProps): JSX.Element {
-
     return useComponents().ui.renderView('layout.SkeletonView', props);
 }
 
 Skeleton.defaultProps = {
     animation: 'pulse',
-    type: 'text'
+    type: 'text',
 };
 
 export default Skeleton;

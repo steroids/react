@@ -1,10 +1,9 @@
 import 'jest-enzyme';
-import React from 'react';
-import PasswordFieldView from "@steroidsjs/bootstrap/form/PasswordField/PasswordFieldView";
-import PasswordField from "./PasswordField";
+import PasswordFieldView from '@steroidsjs/bootstrap/form/PasswordField/PasswordFieldView';
+import PasswordField from './PasswordField';
 import mountWithApp from '../../../../tests/mountWithApp';
 
-describe('Password tests', ()=> {
+describe('Password tests', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(PasswordField, {view: PasswordFieldView});
         expect(wrapper).not.toBeEmptyRender();
@@ -18,7 +17,7 @@ describe('Password tests', ()=> {
             className: 'test',
             placeholder: 'test',
             errors: ['Error text'],
-            style: {width: '120px'}
+            style: {width: '120px'},
         };
 
         const wrapper = mountWithApp(PasswordField, {...props, view: PasswordFieldView});

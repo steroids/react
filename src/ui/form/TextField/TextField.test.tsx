@@ -1,7 +1,6 @@
 import 'jest-enzyme';
-import React from 'react';
 import TextFieldView from '@steroidsjs/bootstrap/form/TextField/TextFieldView';
-import TextField from "./TextField";
+import TextField from './TextField';
 import mountWithApp from '../../../../tests/mountWithApp';
 
 describe('TextField tests', () => {
@@ -16,7 +15,7 @@ describe('TextField tests', () => {
             required: true,
             className: 'test',
             placeholder: 'test',
-            errors: ['Error text']
+            errors: ['Error text'],
         };
 
         const wrapper = mountWithApp(TextField, {...props, view: TextFieldView});
@@ -50,5 +49,5 @@ describe('TextField tests', () => {
             wrapper.find('textarea').simulate('keypress', {key: 'Enter'});
             // expect(wrapper.find('textarea')).toHaveProp(props.submitOnEnter);
         });
-    })
+    });
 });

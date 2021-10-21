@@ -29,7 +29,7 @@ describe('CheckboxField tests', () => {
             expect(wrapper.find('.CheckboxFieldView__label')).toHaveText(props.label);
         });
 
-        it('should have external className', () => {
+        it('should have right external className', () => {
             expect(wrapper.find('input')).toHaveClassName(props.className);
         });
         it('should be required', () => {

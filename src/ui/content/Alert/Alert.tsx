@@ -26,15 +26,15 @@ interface IAlertProps {
 
     style?: React.CSSProperties,
 
-    /* Нужно ли отображать кнопку, чтобы закрыть Оповещение
+    /** Нужно ли отображать кнопку, чтобы закрыть Оповещение
      */
     showClose?: boolean,
 
-    /*
+    /**
      * Нужно ли отображать иконку, соответствующую типа Оповещения
      *
      */
-    showIcon?: boolean | string, 
+    showIcon?: boolean | string,
 
     /**
      * Callback функция вызываемая при нажатии на кнопку закрытия
@@ -56,7 +56,7 @@ export interface IAlertViewProps extends IAlertProps {
     isExist: boolean,
     isVisible: boolean,
     onClose: () => void,
-    onClick?: (e: MouseEvent) => void	,
+    onClick?: (e: MouseEvent) => void,
 }
 
 function Alert(props: IAlertProps): JSX.Element {
@@ -71,7 +71,7 @@ function Alert(props: IAlertProps): JSX.Element {
         if (props.onClose) {
             props.onClose();
         }
-    }, []);
+    }, [props]);
 
     return components.ui.renderView(props.view || 'content.AlertView', {
         ...props,

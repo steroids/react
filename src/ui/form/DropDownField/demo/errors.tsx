@@ -13,6 +13,7 @@ export default () => (
         <DropDownField
             label='Errors'
             errors={['Error 1 text', 'Error 2 text']}
+            layout
             items={items}
         />
     </>

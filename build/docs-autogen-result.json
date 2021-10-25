@@ -22630,11 +22630,35 @@
                     "title": null,
                     "description": "Оключён и без рамок"
                 },
+                "errors": {
+                    "order": "4",
+                    "col": "6",
+                    "title": null,
+                    "description": "Обработка ошибок."
+                },
                 "icon": {
                     "order": "3",
                     "col": "6",
                     "title": null,
                     "description": "Кастомная иконка справа выбранная по контексту"
+                },
+                "placeholder": {
+                    "order": "6",
+                    "col": "6",
+                    "title": null,
+                    "description": "Сообщение внутри импута"
+                },
+                "required": {
+                    "order": "3",
+                    "col": "6",
+                    "title": null,
+                    "description": "Как обязательное поле для заполнения."
+                },
+                "showRemove": {
+                    "order": "7",
+                    "col": "6",
+                    "title": null,
+                    "description": "После введения датты при наведении показывается кнопка, удалить содержание внутри инпута"
                 }
             },
             "DropDownField": {

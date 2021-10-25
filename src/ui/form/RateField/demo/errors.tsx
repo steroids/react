@@ -9,6 +9,6 @@ import RateField from '../RateField';
 
 export default () => (
     <>
-        <RateField errors={['Error 1 text', 'Error 2 text']} />
+        <RateField errors={['Error 1 text', 'Error 2 text']} layout />
     </>
 );

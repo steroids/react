@@ -14,6 +14,7 @@ export default () => (
             label='Errors'
             errors={['Error 1 text', 'Error 2 text']}
             items={items}
+            layout
         />
     </>
 );

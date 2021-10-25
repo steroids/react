@@ -9,6 +9,6 @@ import PasswordField from '../PasswordField';
 
 export default () => (
     <>
-        <PasswordField label='Errors' errors={['Error 1 text', 'Error 2 text']} />
+        <PasswordField label='Errors' errors={['Error 1 text', 'Error 2 text']} layout />
     </>
 );

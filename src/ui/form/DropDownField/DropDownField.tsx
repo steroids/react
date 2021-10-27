@@ -57,6 +57,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
 export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'items'> {
     errors?: string[],
     items: Record<string, unknown>[],
+    selectedItems: Record<string, unknown>[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
     forwardedRef: any,
@@ -76,7 +77,6 @@ export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'item
     onItemHover: (id: PrimaryKey | any) => void,
     onItemRemove: (id: PrimaryKey | any) => void,
     onClose: () => void,
-
     placeholder: string,
     isAutoComplete?: boolean,
     searchAutoFocus?: any,
@@ -111,6 +111,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         setHoveredId,
         selectedIds,
         setSelectedIds,
+        selectedItems,
     } = useDataSelect({
         multiple: props.multiple,
         selectFirst: props.selectFirst,
@@ -191,6 +192,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isOpened,
         isLoading,
         onOpen,
+        selectedItems,
         // TODO onFocus
         // TODO onBlur
         onItemHover,

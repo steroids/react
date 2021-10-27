@@ -2,8 +2,8 @@ import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _isNil from 'lodash-es/isNil';
 
-import { useCallback, useMemo, useState } from 'react';
-import { useEvent, usePrevious, useUpdateEffect } from 'react-use';
+import {useCallback, useMemo, useState} from 'react';
+import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
 interface IDataSelectItem {
     id: number | string | boolean,
@@ -168,7 +168,6 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
     useUpdateEffect(() => {
         const itemsForSelect = config.sourceItems || config.items;
-
         const newSelectedIds = config.selectedIds && config.selectedIds.length > 0
             ? itemsForSelect.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];

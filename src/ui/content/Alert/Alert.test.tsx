@@ -48,18 +48,20 @@ describe('Alert', () => {
     });
 
     describe('Actions', () => {
+        const mockedOnClose = jest.fn();
+
         const props = {
             showClose: true,
             showIcon: false,
-            // eslint-disable-next-line no-console
-            onClose: () => console.log('this is callback'),
+            onClose: mockedOnClose,
         };
 
         it('should click to Close call callback', () => {
             const wrapper = mountWithApp(Alert, {...props});
-            expect(wrapper.find('Alert')).toHaveProp(props);
+            // expect(wrapper.find('Alert')).toHaveProp(props);
 
             wrapper.find('.AlertView__icon-close').first().simulate('click');
+            expect(mockedOnClose.mock.calls.length === 1);
         });
     });
 });

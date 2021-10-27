@@ -89,7 +89,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             : [];
     }, [config.items, config.selectFirst, config.selectedIds, primaryKey, config.inputValue]);
 
-    const initialSelectedItems = useMemo(() => initialSelectedIds.length > 0
+    const initialSelectedItems = useMemo(() => config.items.length > 0 && initialSelectedIds.length > 0
         ? initialSelectedIds.map(selectedId => config.items.find(item => item.id === selectedId))
         : [], [initialSelectedIds, config.items]);
 

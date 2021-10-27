@@ -1,11 +1,9 @@
 import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
-import _remove from 'lodash-es/remove';
-import _includes from 'lodash-es/includes';
 import _isNil from 'lodash-es/isNil';
 
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
+import { useCallback, useMemo, useState } from 'react';
+import { useEvent, usePrevious, useUpdateEffect } from 'react-use';
 
 interface IDataSelectItem {
     id: number | string | boolean,
@@ -65,6 +63,7 @@ export interface IDataSelectResult {
     setHoveredId: (id: PrimaryKey) => void,
     selectedIds: PrimaryKey[],
     setSelectedIds: (ids: PrimaryKey | PrimaryKey[], skipToggle?: boolean) => void,
+    selectedItems: IDataSelectItem[],
 }
 
 const defaultProps = {
@@ -90,13 +89,18 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             : [];
     }, [config.items, config.selectFirst, config.selectedIds, primaryKey, config.inputValue]);
 
-    // console.log(initialSelectedIds);
+    const initialSelectedItems = useMemo(() => config.items.length > 0
+        && initialSelectedIds.length > 0
+        ? initialSelectedIds.map(selectedId => config.items.find(item => item.id === selectedId))
+        : [],
+    [initialSelectedIds, config.items]);
 
     // State
     const [isOpened, setIsOpened] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const [hoveredId, setHoveredId] = useState(null);
     const [selectedIds, setSelectedIdsInternal] = useState(initialSelectedIds);
+    const [selectedItems, setSelectedItemsInternal] = useState(initialSelectedItems);
 
     // Handler for select/toggle item by id
     const setSelectedIds = useCallback((ids, skipToggle = false) => {
@@ -126,6 +130,32 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         }
     }, [config.multiple, selectedIds]);
 
+    // Update selected items on change selectedIds or items or source items
+    const prevSelectedIdsLength = usePrevious(selectedIds.length);
+    useUpdateEffect(() => {
+        const newSelectedItems = [];
+        let hasChanges = false;
+        selectedIds.forEach(selectedId => {
+            let finedItem = config.items.find(item => item[primaryKey] === selectedId);
+            if (!finedItem) {
+                finedItem = config.sourceItems.find(item => item[primaryKey] === selectedId);
+            }
+            const selectedItem = selectedItems.find(item => item[primaryKey] === selectedId);
+            if (finedItem || selectedItem) {
+                newSelectedItems.push(finedItem || selectedItem);
+            }
+            if (
+                finedItem
+                && (!selectedItem || selectedItem !== finedItem)
+            ) {
+                hasChanges = true;
+            }
+        });
+        if (hasChanges || prevSelectedIdsLength !== selectedIds.length) {
+            setSelectedItemsInternal(newSelectedItems);
+        }
+    }, [config.items, config.sourceItems, primaryKey, selectedIds, selectedItems, prevSelectedIdsLength]);
+
     // Select first after fetch data
     const prevItemsLength = usePrevious(config.items.length);
     useUpdateEffect(() => {
@@ -142,10 +172,15 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         const newSelectedIds = config.selectedIds && config.selectedIds.length > 0
             ? itemsForSelect.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];
+        selectedItems.forEach(selectedItem => {
+            if (!newSelectedIds.includes(selectedItem.id) && config.selectedIds.includes(selectedItem.id)) {
+                newSelectedIds.push(selectedItem.id);
+            }
+        });
         if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
-    }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds]);
+    }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds, selectedItems, config.sourceItems]);
 
     // Global key down handler for navigate on items
     // Support keys:
@@ -224,5 +259,6 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         setHoveredId,
         selectedIds,
         setSelectedIds,
+        selectedItems,
     };
 }

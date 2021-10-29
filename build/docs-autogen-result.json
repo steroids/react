@@ -1327,6 +1327,14 @@
                     "example": null
                 },
                 {
+                    "name": "selectedItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IDataSelectItem[]",
+                    "example": null
+                },
+                {
                     "name": "setHoveredId",
                     "decorators": [],
                     "description": "",
@@ -9121,6 +9129,14 @@
                     "required": true,
                     "type": "any[]",
                     "example": null
+                },
+                {
+                    "name": "selectedItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Record[]",
+                    "example": null
                 }
             ]
         },
@@ -11194,6 +11210,14 @@
                     "example": "true"
                 },
                 {
+                    "name": "useBorder",
+                    "decorators": [],
+                    "description": "Включает рамки и тень.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "useHash",
                     "decorators": [],
                     "description": "Указывает, что в качестве сепаратора для параметров формы в адресной строке нужно использовать '#', а не '?'",
@@ -11349,6 +11373,14 @@
                     "description": "",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "useBorder",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
                     "example": null
                 }
             ]
@@ -15342,7 +15374,15 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
+                },
+                {
+                    "name": "countFormat",
+                    "decorators": [],
+                    "description": "Мера измерения в всплывающем окне при изменении значения.",
+                    "required": false,
+                    "type": "any",
+                    "example": "'%'"
                 },
                 {
                     "name": "dark",
@@ -15361,9 +15401,17 @@
                     "example": null
                 },
                 {
+                    "name": "defaultValue",
+                    "decorators": [],
+                    "description": "Значение по-умолчанию при первом рендере",
+                    "required": false,
+                    "type": "number | number[]",
+                    "example": "1"
+                },
+                {
                     "name": "disabled",
                     "decorators": [],
-                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "description": "Отключет или включает слайдер",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -15385,6 +15433,14 @@
                     "example": "'Only english letters'"
                 },
                 {
+                    "name": "isRange",
+                    "decorators": [],
+                    "description": "Делает слайдер с двумя значениями",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "label",
                     "decorators": [],
                     "description": "Название поля либо отмена отображение поля (false)",
@@ -15399,6 +15455,14 @@
                     "required": false,
                     "type": "FormLayout",
                     "example": "'horizontal'"
+                },
+                {
+                    "name": "marks",
+                    "decorators": [],
+                    "description": "Отметки",
+                    "required": false,
+                    "type": "{number: ReactNode} | {number: {label: any, style: any}}",
+                    "example": "{ min: 20, 40: 40, max: 100 }"
                 },
                 {
                     "name": "max",
@@ -15425,12 +15489,20 @@
                     "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
                 },
                 {
+                    "name": "onAfterChange",
+                    "decorators": [],
+                    "description": "Вызваемая функция после наведения вне поля слайдера.",
+                    "required": true,
+                    "type": "{}",
+                    "example": "{() => console.log('You are out of SliderField')}"
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
-                    "description": "",
-                    "required": false,
+                    "description": "Вызваемая функция во время изминения состояния слайдера.",
+                    "required": true,
                     "type": "{}",
-                    "example": null
+                    "example": "{() => console.log('Hello, SliderField')}"
                 },
                 {
                     "name": "placeholder",
@@ -15465,12 +15537,12 @@
                     "example": null
                 },
                 {
-                    "name": "sliderProps",
+                    "name": "step",
                     "decorators": [],
-                    "description": "Свойства для компонента слайдера",
+                    "description": "Длина шага слайдера",
                     "required": false,
-                    "type": "any",
-                    "example": null
+                    "type": "number",
+                    "example": "10"
                 },
                 {
                     "name": "view",
@@ -15508,7 +15580,7 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "componentId",
@@ -15517,6 +15589,14 @@
                     "required": false,
                     "type": "string",
                     "example": null
+                },
+                {
+                    "name": "countFormat",
+                    "decorators": [],
+                    "description": "Мера измерения в всплывающем окне при изменении значения.",
+                    "required": false,
+                    "type": "any",
+                    "example": "'%'"
                 },
                 {
                     "name": "dark",
@@ -15535,9 +15615,17 @@
                     "example": null
                 },
                 {
+                    "name": "defaultValue",
+                    "decorators": [],
+                    "description": "Значение по-умолчанию при первом рендере",
+                    "required": false,
+                    "type": "number | number[]",
+                    "example": "1"
+                },
+                {
                     "name": "disabled",
                     "decorators": [],
-                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "description": "Отключет или включает слайдер",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -15575,6 +15663,14 @@
                     "example": null
                 },
                 {
+                    "name": "isRange",
+                    "decorators": [],
+                    "description": "Делает слайдер с двумя значениями",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "label",
                     "decorators": [],
                     "description": "Название поля либо отмена отображение поля (false)",
@@ -15589,6 +15685,14 @@
                     "required": false,
                     "type": "FormLayout",
                     "example": "'horizontal'"
+                },
+                {
+                    "name": "marks",
+                    "decorators": [],
+                    "description": "Отметки",
+                    "required": false,
+                    "type": "{number: ReactNode} | {number: {label: any, style: any}}",
+                    "example": "{ min: 20, 40: 40, max: 100 }"
                 },
                 {
                     "name": "max",
@@ -15615,12 +15719,20 @@
                     "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
                 },
                 {
+                    "name": "onAfterChange",
+                    "decorators": [],
+                    "description": "Вызваемая функция после наведения вне поля слайдера.",
+                    "required": true,
+                    "type": "{}",
+                    "example": "{() => console.log('You are out of SliderField')}"
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
-                    "description": "",
-                    "required": false,
+                    "description": "Вызваемая функция во время изминения состояния слайдера.",
+                    "required": true,
                     "type": "{}",
-                    "example": null
+                    "example": "{() => console.log('Hello, SliderField')}"
                 },
                 {
                     "name": "placeholder",
@@ -15663,12 +15775,12 @@
                     "example": null
                 },
                 {
-                    "name": "sliderProps",
+                    "name": "step",
                     "decorators": [],
-                    "description": "Свойства для компонента слайдера",
+                    "description": "Длина шага слайдера",
                     "required": false,
-                    "type": "any",
-                    "example": null
+                    "type": "number",
+                    "example": "10"
                 },
                 {
                     "name": "view",
@@ -19784,6 +19896,14 @@
                     "example": "true"
                 },
                 {
+                    "name": "useBorder",
+                    "decorators": [],
+                    "description": "Включает рамки и тень.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "useHash",
                     "decorators": [],
                     "description": "Указывает, что в качестве сепаратора для параметров формы в адресной строке нужно использовать '#', а не '?'",
@@ -23077,28 +23197,28 @@
                     "description": "Выключенный или недоступный для использования."
                 },
                 "errors": {
-                    "order": "4",
+                    "order": "5",
                     "col": "4",
                     "title": null,
-                    "description": "Обработка ошибок."
+                    "description": "Обработка ошибок c лейблом."
+                },
+                "marks": {
+                    "order": "7",
+                    "col": "4",
+                    "title": null,
+                    "description": "Обычный пример использования режима промежутка вместе с заданными отметками и возможность выбирать только по меткам."
                 },
                 "min-max": {
-                    "order": "5",
+                    "order": "4",
                     "col": "4",
                     "title": null,
                     "description": "Установлены рамки минамльного и максимального значения."
                 },
-                "required": {
-                    "order": "3",
+                "range": {
+                    "order": "7",
                     "col": "4",
                     "title": null,
-                    "description": "Как обязательное поле для заполнения."
-                },
-                "size": {
-                    "order": "6",
-                    "col": "12",
-                    "title": null,
-                    "description": "По-умлочанию SliderField имеет 3 заданных размера."
+                    "description": "Использования режима промежутка с отметками."
                 }
             },
             "SwitcherField": {

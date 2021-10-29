@@ -37,6 +37,43 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
      */
     max?: number;
 
+    /**
+     * Делает слайдер с двумя значениями
+     * @example true
+     */
+    isRange?: boolean,
+
+    /**
+     * Длина шага слайдера
+     * @example 10
+     */
+    step?: null | number;
+
+    /**
+     * Значение по-умолчанию при первом рендере. Для isRange=false исполуется number, для isRange=true - number[]
+     * @example 1
+     */
+    defaultValue?: number | number[],
+
+    /**
+     * Мера измерения в всплывающем окне при изменении значения.
+     * @example '%'
+     */
+    countFormat?: string | any | null,
+
+    /**
+     * Отметки
+     * @example { min: 20, 40: 40, max: 100 }
+     */
+    marks?: {number: React.ReactNode} | {number: { style, label }}
+
+    /**
+     * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
+     * @see https://github.com/schrodinger/rc-slider
+     * @example {() => console.log('Slider handler is released')}
+     */
+    onAfterChange: (value: any) => void,
+
     [key: string]: any;
 }
 
@@ -50,8 +87,8 @@ export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperO
         onAfterChange: (value: any) => void,
     }
 }
-
-const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
+// TODO Может пригодится, писал Вова
+// const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
 function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
@@ -59,14 +96,38 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
     const slider = useMemo(() => ({
         min: props.min,
         max: props.max,
-        defaultValue: 0,
+        step: props.step,
+        marks: props.marks,
+        isRange: props.isRange,
+        disabled: props.disabled,
+        onChange: props.onChange,
+        onAfterChange: props.onAfterChange,
+        isVertical: props.isVertical,
         value: props.input.value || 0,
-        onChange: range => props.input.onChange.call(null, range),
-        onAfterChange: value => {
-            value = normalizeValue(value);
-            props.input.onChange.call(null, value);
-        },
-    }), [props.min, props.max, props.input.value, props.input.onChange]);
+        countFormat: props.countFormat,
+        defaultValue: props.defaultValue,
+        tooltipIsVisible: props.tooltipIsVisible,
+        // TODO Может пригодится, писал Вова
+        // onChange: range => props.input.onChange.call(null, range),
+        // onAfterChange: value => {
+        //     value = normalizeValue(value);
+        //     props.input.onChange.call(null, value);
+        // },
+    }), [
+        props.min,
+        props.max,
+        props.step,
+        props.marks,
+        props.isRange,
+        props.onChange,
+        props.disabled,
+        props.isVertical,
+        props.input.value,
+        props.countFormat,
+        props.defaultValue,
+        props.onAfterChange,
+        props.tooltipIsVisible,
+    ]);
 
     return components.ui.renderView('form.SliderFieldView', {
         ...props,
@@ -77,8 +138,11 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
 SliderField.defaultProps = {
     disabled: false,
     required: false,
+    isRange: false,
     className: '',
+    countFormat: '',
     errors: null,
+    step: 1,
     min: 0,
     max: 100,
 };

@@ -8,7 +8,7 @@ import SliderField from '../SliderField';
  */
 
 export default () => (
-    <div style={{padding: '0 20px'}}>
+    <div style={{padding: '20px 30px'}}>
         <SliderField label='Disabled' disabled />
     </div>
 );

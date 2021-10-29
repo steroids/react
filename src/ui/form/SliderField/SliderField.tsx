@@ -50,34 +50,27 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
     step?: null | number;
 
     /**
-     * Значение по-умолчанию при первом рендере
+     * Значение по-умолчанию при первом рендере. Для isRange=false исполуется number, для isRange=true - number[]
      * @example 1
      */
     defaultValue?: number | number[],
 
     /**
-     * Отключет или включает слайдер
-     * @example true
-     */
-    disabled?: boolean;
-
-    /**
      * Мера измерения в всплывающем окне при изменении значения.
+     * @example '%'
      */
     countFormat?: string | any | null,
 
     /**
      * Отметки
+     * @example { min: 20, 40: 40, max: 100 }
      */
     marks?: {number: React.ReactNode} | {number: { style, label }}
 
     /**
-     * Вызваемая функция во время изминения состояния слайдера.
-     */
-    onChange: (value: any) => void,
-
-    /**
-     * Вызваемая функция после наведения вне поля слайдера.
+     * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
+     * @see https://github.com/schrodinger/rc-slider
+     * @example {() => console.log('Slider handler is released')}
      */
     onAfterChange: (value: any) => void,
 

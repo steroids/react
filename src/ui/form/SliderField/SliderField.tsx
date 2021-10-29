@@ -10,8 +10,12 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
  */
 export interface ISliderFieldProps extends IFieldWrapperInputProps {
     /**
+     * Свойства для компонента слайдера
+     */
+    sliderProps?: any;
+
+    /**
      * Дополнительный CSS-класс для элемента отображения
-     * @example 'large'
      */
     className?: CssClassName;
 
@@ -59,25 +63,21 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
 
     /**
      * Мера измерения в всплывающем окне при изменении значения.
-     * @example '%'
      */
     countFormat?: string | any | null,
 
     /**
      * Отметки
-     * @example { min: 20, 40: 40, max: 100 }
      */
     marks?: {number: React.ReactNode} | {number: { style, label }}
 
     /**
      * Вызваемая функция во время изминения состояния слайдера.
-     * @example {() => console.log('Hello, SliderField')}
      */
     onChange: (value: any) => void,
 
     /**
      * Вызваемая функция после наведения вне поля слайдера.
-     * @example {() => console.log('You are out of SliderField')}
      */
     onAfterChange: (value: any) => void,
 

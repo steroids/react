@@ -15374,7 +15374,7 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "countFormat",
@@ -15382,7 +15382,7 @@
                     "description": "Мера измерения в всплывающем окне при изменении значения.",
                     "required": false,
                     "type": "any",
-                    "example": null
+                    "example": "'%'"
                 },
                 {
                     "name": "dark",
@@ -15462,7 +15462,7 @@
                     "description": "Отметки",
                     "required": false,
                     "type": "{number: ReactNode} | {number: {label: any, style: any}}",
-                    "example": null
+                    "example": "{ min: 20, 40: 40, max: 100 }"
                 },
                 {
                     "name": "max",
@@ -15494,7 +15494,7 @@
                     "description": "Вызваемая функция после наведения вне поля слайдера.",
                     "required": true,
                     "type": "{}",
-                    "example": null
+                    "example": "{() => console.log('You are out of SliderField')}"
                 },
                 {
                     "name": "onChange",
@@ -15502,7 +15502,7 @@
                     "description": "Вызваемая функция во время изминения состояния слайдера.",
                     "required": true,
                     "type": "{}",
-                    "example": null
+                    "example": "{() => console.log('Hello, SliderField')}"
                 },
                 {
                     "name": "placeholder",
@@ -15534,14 +15534,6 @@
                     "description": "Размер поля",
                     "required": false,
                     "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "sliderProps",
-                    "decorators": [],
-                    "description": "Свойства для компонента слайдера",
-                    "required": false,
-                    "type": "any",
                     "example": null
                 },
                 {
@@ -15588,7 +15580,7 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'large'"
                 },
                 {
                     "name": "componentId",
@@ -15604,7 +15596,7 @@
                     "description": "Мера измерения в всплывающем окне при изменении значения.",
                     "required": false,
                     "type": "any",
-                    "example": null
+                    "example": "'%'"
                 },
                 {
                     "name": "dark",
@@ -15700,7 +15692,7 @@
                     "description": "Отметки",
                     "required": false,
                     "type": "{number: ReactNode} | {number: {label: any, style: any}}",
-                    "example": null
+                    "example": "{ min: 20, 40: 40, max: 100 }"
                 },
                 {
                     "name": "max",
@@ -15732,7 +15724,7 @@
                     "description": "Вызваемая функция после наведения вне поля слайдера.",
                     "required": true,
                     "type": "{}",
-                    "example": null
+                    "example": "{() => console.log('You are out of SliderField')}"
                 },
                 {
                     "name": "onChange",
@@ -15740,7 +15732,7 @@
                     "description": "Вызваемая функция во время изминения состояния слайдера.",
                     "required": true,
                     "type": "{}",
-                    "example": null
+                    "example": "{() => console.log('Hello, SliderField')}"
                 },
                 {
                     "name": "placeholder",
@@ -15780,14 +15772,6 @@
                     "description": "",
                     "required": true,
                     "type": "{defaultValue: number, max: number, min: number, onAfterChange: {}, onChange: {}, value: number}",
-                    "example": null
-                },
-                {
-                    "name": "sliderProps",
-                    "decorators": [],
-                    "description": "Свойства для компонента слайдера",
-                    "required": false,
-                    "type": "any",
                     "example": null
                 },
                 {

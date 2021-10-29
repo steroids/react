@@ -2,8 +2,8 @@ import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _isNil from 'lodash-es/isNil';
 
-import {useCallback, useMemo, useState} from 'react';
-import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
+import { useCallback, useMemo, useState } from 'react';
+import { useEvent, usePrevious, useUpdateEffect } from 'react-use';
 
 interface IDataSelectItem {
     id: number | string | boolean,
@@ -91,9 +91,9 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
 
     const initialSelectedItems = useMemo(() => config.items.length > 0
         && initialSelectedIds.length > 0
-        ? initialSelectedIds.map(selectedId => config.items.find(item => item.id === selectedId))
-        : [],
-    [initialSelectedIds, config.items]);
+            ? initialSelectedIds.map(selectedId => config.items.find(item => item.id === selectedId))
+            : [],
+        [initialSelectedIds, config.items]);
 
     // State
     const [isOpened, setIsOpened] = useState(false);
@@ -172,7 +172,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             ? itemsForSelect.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];
         selectedItems.forEach(selectedItem => {
-            if (!newSelectedIds.includes(selectedItem.id) && config.selectedIds.includes(selectedItem.id)) {
+            if (!newSelectedIds.includes(selectedItem.id) && config.selectedIds && config.selectedIds.includes(selectedItem.id)) {
                 newSelectedIds.push(selectedItem.id);
             }
         });

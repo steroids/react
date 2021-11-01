@@ -8,7 +8,7 @@ import SliderField from '../SliderField';
  */
 
 const marks = {
-    '-10': '-10°C',
+    [-10]: '-10°C',
     0: <strong>0°C</strong>,
     26: '26°C',
     37: '37°C',
@@ -23,6 +23,6 @@ const marks = {
 
 export default () => (
     <div style={{padding: '20px 30px'}}>
-        <SliderField marks={marks} isRange />
+        <SliderField min={-10} marks={marks} isRange />
     </div>
 );

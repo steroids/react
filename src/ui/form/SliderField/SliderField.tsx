@@ -1,5 +1,4 @@
 import * as React from 'react';
-import _toInteger from 'lodash-es/toInteger';
 import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -56,10 +55,10 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
     defaultValue?: number | number[],
 
     /**
-     * Мера измерения в всплывающем окне при изменении значения.
+     * Любое строкове значение после значения состояния слайдера в всплывающем окошке.
      * @example '%'
      */
-    countFormat?: string | any | null,
+    valuePostfix?: string,
 
     /**
      * Отметки
@@ -72,23 +71,13 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
      * @see https://github.com/schrodinger/rc-slider
      * @example {() => console.log('Slider handler is released')}
      */
-    onAfterChange: (value: any) => void,
+    onAfterChange?: (value: any) => void,
 
     [key: string]: any;
 }
 
 export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperOutputProps {
-    slider: {
-        min: number,
-        max: number,
-        defaultValue: number,
-        value: number,
-        onChange: (value: any) => void,
-        onAfterChange: (value: any) => void,
-    }
 }
-// TODO Может пригодится, писал Вова
-// const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
 function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
@@ -104,28 +93,22 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
         onAfterChange: props.onAfterChange,
         isVertical: props.isVertical,
         value: props.input.value || 0,
-        countFormat: props.countFormat,
+        valuePostfix: props.valuePostfix,
         defaultValue: props.defaultValue,
         tooltipIsVisible: props.tooltipIsVisible,
-        // TODO Может пригодится, писал Вова
-        // onChange: range => props.input.onChange.call(null, range),
-        // onAfterChange: value => {
-        //     value = normalizeValue(value);
-        //     props.input.onChange.call(null, value);
-        // },
     }), [
         props.min,
         props.max,
         props.step,
         props.marks,
         props.isRange,
-        props.onChange,
         props.disabled,
+        props.onChange,
+        props.onAfterChange,
         props.isVertical,
         props.input.value,
-        props.countFormat,
+        props.valuePostfix,
         props.defaultValue,
-        props.onAfterChange,
         props.tooltipIsVisible,
     ]);
 
@@ -136,11 +119,8 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
 }
 
 SliderField.defaultProps = {
-    disabled: false,
-    required: false,
-    isRange: false,
     className: '',
-    countFormat: '',
+    valuePostfix: '',
     errors: null,
     step: 1,
     min: 0,

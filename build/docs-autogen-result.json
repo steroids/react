@@ -11194,14 +11194,6 @@
                     "example": null
                 },
                 {
-                    "name": "size",
-                    "decorators": [],
-                    "description": "Размер ячеек в таблице",
-                    "required": false,
-                    "type": "string",
-                    "example": "'sm'"
-                },
-                {
                     "name": "style",
                     "decorators": [],
                     "description": "Объект CSS стилей",
@@ -11373,14 +11365,6 @@
                     "description": "",
                     "required": true,
                     "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "size",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
                     "example": null
                 },
                 {
@@ -15467,7 +15451,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Отметки",
+                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "{number: ReactNode} | {number: {label: any, style: any}}",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -15705,7 +15689,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Отметки",
+                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "{number: ReactNode} | {number: {label: any, style: any}}",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -15767,6 +15751,14 @@
                     "example": null
                 },
                 {
+                    "name": "rangeDefaultValue",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number[]",
+                    "example": null
+                },
+                {
                     "name": "required",
                     "decorators": [],
                     "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
@@ -15780,6 +15772,14 @@
                     "description": "Размер поля",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "sliderDefaultValue",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
                     "example": null
                 },
                 {
@@ -19904,14 +19904,6 @@
                     "example": null
                 },
                 {
-                    "name": "size",
-                    "decorators": [],
-                    "description": "Размер ячеек в таблице",
-                    "required": false,
-                    "type": "string",
-                    "example": "'sm'"
-                },
-                {
                     "name": "style",
                     "decorators": [],
                     "description": "Объект CSS стилей",
@@ -23256,7 +23248,7 @@
                     "order": "7",
                     "col": "4",
                     "title": null,
-                    "description": "Обычный пример использования режима промежутка вместе с заданными отметками и возможность выбирать только по меткам."
+                    "description": "Обычный пример задания отметок со описанием по всей длине слайдера."
                 },
                 "min-max": {
                     "order": "4",
@@ -23264,11 +23256,23 @@
                     "title": null,
                     "description": "Установлены рамки минамльного и максимального значения."
                 },
+                "onAfterChange": {
+                    "order": "9",
+                    "col": "6",
+                    "title": null,
+                    "description": "Использования свойства onAfterChange для изминения значения счетчика после отпускания tip'а у слайдера."
+                },
+                "onChange": {
+                    "order": "8",
+                    "col": "6",
+                    "title": null,
+                    "description": "Использования свойства onChange для изминения значения счетчика."
+                },
                 "range": {
                     "order": "7",
                     "col": "4",
                     "title": null,
-                    "description": "Использования режима промежутка с отметками."
+                    "description": "Обычный пример использования с заданным свойством isRange={true}, для задания промежутка значений."
                 }
             },
             "SwitcherField": {

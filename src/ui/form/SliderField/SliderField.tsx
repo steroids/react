@@ -1,4 +1,5 @@
 import * as React from 'react';
+import _toInteger from 'lodash-es/toInteger';
 import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -61,7 +62,9 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
     valuePostfix?: string,
 
     /**
-     * Отметки
+     * Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.
+     * Если вы хотите задать стиль определенной точки метки, значением должен быть объект,
+     * содержащий свойства style и label.
      * @example { min: 20, 40: 40, max: 100 }
      */
     marks?: {number: React.ReactNode} | {number: { style, label }}
@@ -77,54 +80,49 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
 }
 
 export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperOutputProps {
+    sliderDefaultValue?: number,
+    rangeDefaultValue?: number[],
 }
+
+const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
 function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const slider = useMemo(() => ({
+    const sliderProps = useMemo(() => ({
         min: props.min,
         max: props.max,
         step: props.step,
         marks: props.marks,
         isRange: props.isRange,
         disabled: props.disabled,
-        onChange: props.onChange,
-        onAfterChange: props.onAfterChange,
         isVertical: props.isVertical,
         value: props.input.value || 0,
         valuePostfix: props.valuePostfix,
         defaultValue: props.defaultValue,
         tooltipIsVisible: props.tooltipIsVisible,
-    }), [
-        props.min,
-        props.max,
-        props.step,
-        props.marks,
-        props.isRange,
-        props.disabled,
-        props.onChange,
-        props.onAfterChange,
-        props.isVertical,
-        props.input.value,
-        props.valuePostfix,
-        props.defaultValue,
-        props.tooltipIsVisible,
-    ]);
+        onChange: range => props.input.onChange.call(null, range),
+        onAfterChange: value => {
+            value = normalizeValue(value);
+            props.input.onChange.call(null, value);
+        },
+    }), [props.min, props.max, props.step, props.marks, props.isRange, props.disabled, props.isVertical, props.input.value, props.input.onChange, props.valuePostfix, props.defaultValue, props.tooltipIsVisible]);
 
     return components.ui.renderView('form.SliderFieldView', {
         ...props,
-        slider,
+        sliderProps,
     });
 }
 
 SliderField.defaultProps = {
-    className: '',
-    valuePostfix: '',
-    errors: null,
     step: 1,
     min: 0,
     max: 100,
+    errors: null,
+    className: '',
+    valuePostfix: '',
+    sliderDefaultValue: 5,
+    rangeDefaultValue: [0, 10],
 };
 
 export default fieldWrapper('SliderField', SliderField);

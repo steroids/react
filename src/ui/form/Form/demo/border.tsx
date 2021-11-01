@@ -6,14 +6,15 @@ import TextField from '../../TextField';
 import InputField from '../../InputField';
 
 /**
- * Обычный пример использования Form.
- * @order 1
+ * Обычный пример включения рамок у компонента Form.
+ * @order 4
  * @col 12
  */
 
 export default () => (
     <>
         <Form
+            isBordered
             formId='TestForm'
             useRedux
             syncWithAddressBar

@@ -1,13 +1,11 @@
 import * as React from 'react';
 import Form from '../Form';
 import DateField from '../../DateField';
-import DateTimeField from '../../DateTimeField';
-import TextField from '../../TextField';
 import InputField from '../../InputField';
 
 /**
- * Обычный пример использования Form.
- * @order 1
+ * Обычный пример использования с прокидыванием свойства layout='horizontal'.
+ * @order 2
  * @col 12
  */
 
@@ -18,7 +16,7 @@ export default () => (
             useRedux
             syncWithAddressBar
             autoFocus
-            layout='default'
+            layout='horizontal'
             size='large'
             fields={[
                 {
@@ -27,7 +25,7 @@ export default () => (
                     label: 'Email',
                 },
                 {
-                    component: TextField,
+                    component: () => <InputField />,
                     attribute: 'message',
                     label: 'Message',
                 },
@@ -35,11 +33,6 @@ export default () => (
                     component: DateField,
                     attribute: 'date',
                     label: 'Date',
-                },
-                {
-                    component: DateTimeField,
-                    attribute: 'startTime',
-                    label: 'Start time',
                 },
             ]}
             submitLabel='Submit'

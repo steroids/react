@@ -11106,6 +11106,14 @@
                     "example": null
                 },
                 {
+                    "name": "isBordered",
+                    "decorators": [],
+                    "description": "Включает рамки и тень.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "layout",
                     "decorators": [],
                     "description": "Шаблон для полей в форме",
@@ -11186,6 +11194,14 @@
                     "example": null
                 },
                 {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер ячеек в таблице",
+                    "required": false,
+                    "type": "string",
+                    "example": "'sm'"
+                },
+                {
                     "name": "style",
                     "decorators": [],
                     "description": "Объект CSS стилей",
@@ -11205,14 +11221,6 @@
                     "name": "syncWithAddressBar",
                     "decorators": [],
                     "description": "Значения полей формы будут подставляться в качестве query-параметров в адресную строку",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "useBorder",
-                    "decorators": [],
-                    "description": "Включает рамки и тень.",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -11344,6 +11352,14 @@
                     "example": null
                 },
                 {
+                    "name": "isBordered",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "layout",
                     "decorators": [],
                     "description": "",
@@ -11360,6 +11376,14 @@
                     "example": null
                 },
                 {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "style",
                     "decorators": [],
                     "description": "",
@@ -11373,14 +11397,6 @@
                     "description": "",
                     "required": false,
                     "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "useBorder",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
                     "example": null
                 }
             ]
@@ -15374,15 +15390,7 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": "'large'"
-                },
-                {
-                    "name": "countFormat",
-                    "decorators": [],
-                    "description": "Мера измерения в всплывающем окне при изменении значения.",
-                    "required": false,
-                    "type": "any",
-                    "example": "'%'"
+                    "example": null
                 },
                 {
                     "name": "dark",
@@ -15403,7 +15411,7 @@
                 {
                     "name": "defaultValue",
                     "decorators": [],
-                    "description": "Значение по-умолчанию при первом рендере",
+                    "description": "Значение по-умолчанию при первом рендере. Для isRange=false исполуется number, для isRange=true - number[]",
                     "required": false,
                     "type": "number | number[]",
                     "example": "1"
@@ -15411,7 +15419,7 @@
                 {
                     "name": "disabled",
                     "decorators": [],
-                    "description": "Отключет или включает слайдер",
+                    "description": "Переводит элемент в состояние \"не активен\"",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -15491,18 +15499,18 @@
                 {
                     "name": "onAfterChange",
                     "decorators": [],
-                    "description": "Вызваемая функция после наведения вне поля слайдера.",
-                    "required": true,
+                    "description": "Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)",
+                    "required": false,
                     "type": "{}",
-                    "example": "{() => console.log('You are out of SliderField')}"
+                    "example": "{() => console.log('Slider handler is released')}"
                 },
                 {
                     "name": "onChange",
                     "decorators": [],
-                    "description": "Вызваемая функция во время изминения состояния слайдера.",
-                    "required": true,
+                    "description": "",
+                    "required": false,
                     "type": "{}",
-                    "example": "{() => console.log('Hello, SliderField')}"
+                    "example": null
                 },
                 {
                     "name": "placeholder",
@@ -15537,12 +15545,28 @@
                     "example": null
                 },
                 {
+                    "name": "sliderProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента слайдера",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
                     "name": "step",
                     "decorators": [],
                     "description": "Длина шага слайдера",
                     "required": false,
                     "type": "number",
                     "example": "10"
+                },
+                {
+                    "name": "valuePostfix",
+                    "decorators": [],
+                    "description": "Любое строкове значение после значения состояния слайдера в всплывающем окошке.",
+                    "required": false,
+                    "type": "string",
+                    "example": "'%'"
                 },
                 {
                     "name": "view",
@@ -15580,7 +15604,7 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": "'large'"
+                    "example": null
                 },
                 {
                     "name": "componentId",
@@ -15589,14 +15613,6 @@
                     "required": false,
                     "type": "string",
                     "example": null
-                },
-                {
-                    "name": "countFormat",
-                    "decorators": [],
-                    "description": "Мера измерения в всплывающем окне при изменении значения.",
-                    "required": false,
-                    "type": "any",
-                    "example": "'%'"
                 },
                 {
                     "name": "dark",
@@ -15617,7 +15633,7 @@
                 {
                     "name": "defaultValue",
                     "decorators": [],
-                    "description": "Значение по-умолчанию при первом рендере",
+                    "description": "Значение по-умолчанию при первом рендере. Для isRange=false исполуется number, для isRange=true - number[]",
                     "required": false,
                     "type": "number | number[]",
                     "example": "1"
@@ -15625,7 +15641,7 @@
                 {
                     "name": "disabled",
                     "decorators": [],
-                    "description": "Отключет или включает слайдер",
+                    "description": "Переводит элемент в состояние \"не активен\"",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -15721,18 +15737,18 @@
                 {
                     "name": "onAfterChange",
                     "decorators": [],
-                    "description": "Вызваемая функция после наведения вне поля слайдера.",
-                    "required": true,
+                    "description": "Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)",
+                    "required": false,
                     "type": "{}",
-                    "example": "{() => console.log('You are out of SliderField')}"
+                    "example": "{() => console.log('Slider handler is released')}"
                 },
                 {
                     "name": "onChange",
                     "decorators": [],
-                    "description": "Вызваемая функция во время изминения состояния слайдера.",
-                    "required": true,
+                    "description": "",
+                    "required": false,
                     "type": "{}",
-                    "example": "{() => console.log('Hello, SliderField')}"
+                    "example": null
                 },
                 {
                     "name": "placeholder",
@@ -15767,11 +15783,11 @@
                     "example": null
                 },
                 {
-                    "name": "slider",
+                    "name": "sliderProps",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{defaultValue: number, max: number, min: number, onAfterChange: {}, onChange: {}, value: number}",
+                    "description": "Свойства для компонента слайдера",
+                    "required": false,
+                    "type": "any",
                     "example": null
                 },
                 {
@@ -15781,6 +15797,14 @@
                     "required": false,
                     "type": "number",
                     "example": "10"
+                },
+                {
+                    "name": "valuePostfix",
+                    "decorators": [],
+                    "description": "Любое строкове значение после значения состояния слайдера в всплывающем окошке.",
+                    "required": false,
+                    "type": "string",
+                    "example": "'%'"
                 },
                 {
                     "name": "view",
@@ -19784,6 +19808,14 @@
                     "example": null
                 },
                 {
+                    "name": "isBordered",
+                    "decorators": [],
+                    "description": "Включает рамки и тень.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "layout",
                     "decorators": [],
                     "description": "Шаблон для полей в форме",
@@ -19872,6 +19904,14 @@
                     "example": null
                 },
                 {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер ячеек в таблице",
+                    "required": false,
+                    "type": "string",
+                    "example": "'sm'"
+                },
+                {
                     "name": "style",
                     "decorators": [],
                     "description": "Объект CSS стилей",
@@ -19891,14 +19931,6 @@
                     "name": "syncWithAddressBar",
                     "decorators": [],
                     "description": "Значения полей формы будут подставляться в качестве query-параметров в адресную строку",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "useBorder",
-                    "decorators": [],
-                    "description": "Включает рамки и тень.",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -22919,6 +22951,24 @@
                     "col": "12",
                     "title": null,
                     "description": "Обычный пример использования Form."
+                },
+                "border": {
+                    "order": "4",
+                    "col": "12",
+                    "title": null,
+                    "description": "Обычный пример включения рамок у компонента Form."
+                },
+                "horizontal": {
+                    "order": "2",
+                    "col": "12",
+                    "title": null,
+                    "description": "Обычный пример использования с прокидыванием свойства layout='horizontal'."
+                },
+                "inline": {
+                    "order": "3",
+                    "col": "12",
+                    "title": null,
+                    "description": "Обычный пример использования с Form в одну строку с использованием layout='inline'."
                 }
             },
             "HtmlField": {

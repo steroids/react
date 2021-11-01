@@ -4,7 +4,7 @@ import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import * as queryString from 'qs';
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useFirstMountState, useMount, usePrevious, useUpdateEffect} from 'react-use';
 import {IApiMethod} from '../../../components/ApiComponent';
 import AutoSaveHelper from './AutoSaveHelper';
@@ -178,6 +178,12 @@ export interface IFormProps {
      */
     captchaActionName?: string;
 
+    /**
+     * Включает рамки и тень.
+     * @example true
+     */
+    isBordered?: boolean,
+
     [key: string]: any;
 }
 
@@ -186,6 +192,7 @@ export interface IFormViewProps {
     fields?: (string | IFieldProps)[],
     onSubmit: any,
     className?: CssClassName,
+    isBordered?: boolean,
     style?: any,
     layout?: {
         layout: FormLayoutName | boolean,
@@ -462,9 +469,10 @@ function Form(props: IFormProps): JSX.Element {
                     isSubmitting,
                     layout,
                     onSubmit,
-                    children: props.children,
                     submitLabel: props.submitLabel,
                     fields: props.fields,
+                    children: props.children,
+                    isBordered: props.isBordered,
                     className: props.className,
                 })
                 : props.children}

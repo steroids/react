@@ -1,13 +1,12 @@
 import * as React from 'react';
+import {DropDownField} from '@steroidsjs/core/ui/form';
 import Form from '../Form';
 import DateField from '../../DateField';
-import DateTimeField from '../../DateTimeField';
-import TextField from '../../TextField';
 import InputField from '../../InputField';
 
 /**
- * Обычный пример использования Form.
- * @order 1
+ * Обычный пример использования с Form в одну строку с использованием layout='inline'.
+ * @order 3
  * @col 12
  */
 
@@ -18,28 +17,20 @@ export default () => (
             useRedux
             syncWithAddressBar
             autoFocus
-            layout='default'
+            layout='inline'
             size='large'
             fields={[
                 {
-                    component: InputField,
+                    component: DropDownField,
                     attribute: 'email',
-                    label: 'Email',
                 },
                 {
-                    component: TextField,
+                    component: InputField,
                     attribute: 'message',
-                    label: 'Message',
                 },
                 {
                     component: DateField,
                     attribute: 'date',
-                    label: 'Date',
-                },
-                {
-                    component: DateTimeField,
-                    attribute: 'startTime',
-                    label: 'Start time',
                 },
             ]}
             submitLabel='Submit'

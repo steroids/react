@@ -9,8 +9,8 @@ export default class SocialComponent {
     _initializing: any;
     providers: any;
 
-    constructor(components) {
-        this.providers = {};
+    constructor(components, config) {
+        this.providers = config.providers || {};
         this._initializing = {};
         this._components = components;
     }

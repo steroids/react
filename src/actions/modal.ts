@@ -1,5 +1,5 @@
 import _uniqueId from 'lodash-es/uniqueId';
-import {IModalProps} from '@steroidsjs/core/ui/modal/Modal/Modal';
+import {IModalProps} from '../ui/modal/Modal/Modal';
 
 export const MODAL_OPEN = '@modal/open';
 export const MODAL_MARK_CLOSING = '@modal/markClosing';

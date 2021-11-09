@@ -289,7 +289,6 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
     );
 };
 
-// TODO @navigationHoc()
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
 
@@ -396,7 +395,6 @@ function Router(props: IRouterProps): JSX.Element {
         return null;
     }
 
-    // TODO double render!!..
     if (process.env.IS_SSR) {
         return (
             <SsrProviderContext.Consumer>

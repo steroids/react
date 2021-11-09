@@ -89,15 +89,11 @@ export default function List(props: IListProps): JSX.Element {
         model: props.model,
         searchModel: props.searchModel,
         items: props.items,
+        initialItems: props.initialItems,
     });
 
-    // Wait initialization
-    if (!list) {
-        return null;
-    }
-
     const ItemView = props.itemView || components.ui.getView('list.ListItemView');
-    const content = (list.items || []).map((item, index) => (
+    const content = (list?.items || []).map((item, index) => (
         <ItemView
             {...props.itemProps}
             key={item[props.primaryKey] || index}

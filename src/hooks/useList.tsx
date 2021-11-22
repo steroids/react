@@ -174,6 +174,11 @@ export interface IListConfig {
      * и последующие запросы на бекенд для 2-й и следующих страниц
      */
     initialItems?: Array<any>,
+
+    /**
+     * Количество элементов всего в списке (для отрисовки пагинации), заданное вручную
+     */
+    initialTotal?: number,
 }
 
 export interface IListOutput {
@@ -398,6 +403,7 @@ export default function useList(config: IListConfig): IListOutput {
                     scope: config.scope,
                     items: null,
                     sourceItems: config.items || null,
+                    total: config.initialTotal,
                     isRemote: !config.items,
                     primaryKey: config.primaryKey || defaultConfig.primaryKey,
                     formId,

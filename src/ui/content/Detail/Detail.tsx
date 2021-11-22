@@ -91,7 +91,7 @@ export interface IDetailProps {
     /**
      * Дочерние компоненты
      */
-    children: React.ReactNode | React.ReactNode[],
+    children?: React.ReactNode | React.ReactNode[],
 
     [key: string]: any
 }

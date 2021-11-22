@@ -92,7 +92,9 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     const initialSelectedItems = useMemo(
         () => config.items.length > 0
         && initialSelectedIds.length > 0
-            ? initialSelectedIds.map(selectedId => config.items.find(item => item.id === selectedId))
+            ? initialSelectedIds
+                .map(selectedId => config.items.find(item => item.id === selectedId))
+                .filter(Boolean)
             : [],
         [initialSelectedIds, config.items],
     );
@@ -139,7 +141,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         let hasChanges = false;
         selectedIds.forEach(selectedId => {
             let finedItem = config.items.find(item => item[primaryKey] === selectedId);
-            if (!finedItem) {
+            if (!finedItem && config.sourceItems) {
                 finedItem = config.sourceItems.find(item => item[primaryKey] === selectedId);
             }
             const selectedItem = selectedItems.find(item => item[primaryKey] === selectedId);

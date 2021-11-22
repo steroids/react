@@ -1,4 +1,4 @@
-import providers from './social';
+import _isFunction from 'lodash-es/isFunction';
 
 /**
  * Social Component
@@ -6,7 +6,9 @@ import providers from './social';
  */
 export default class SocialComponent {
     _components: any;
+
     _initializing: any;
+
     providers: any;
 
     constructor(components, config) {
@@ -17,11 +19,17 @@ export default class SocialComponent {
 
     init() {
         Object.keys(this.providers).forEach(name => {
-            if (providers[name]) {
-                const config = this.providers[name] || {};
-                this.providers[name] = new providers[name](this._components);
-                Object.assign(this.providers[name], config);
+            if (_isFunction(this.providers[name])) {
+                this.providers[name] = {className: this.providers[name]};
             }
+
+            const ProviderClass = this.providers[name].className;
+            delete this.providers[name].className;
+            if (!ProviderClass) {
+                throw new Error('Not found class for social provider: ' + name);
+            }
+
+            this.providers[name] = new ProviderClass(this._components, this.providers[name]);
         });
         Object.keys(this.providers).forEach(name => {
             this._initializing[name] = this.providers[name].init();
@@ -32,8 +40,6 @@ export default class SocialComponent {
         if (!this._initializing[socialName]) {
             return Promise.reject();
         }
-        return this._initializing[socialName].then(() =>
-            this.providers[socialName].start()
-        );
+        return this._initializing[socialName].then(() => this.providers[socialName].start());
     }
 }

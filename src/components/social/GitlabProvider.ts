@@ -1,12 +1,14 @@
 export default class GitlabProvider {
     _components: any;
+
     url: string;
+
     redirectUrl: any;
 
-    constructor(components) {
+    constructor(components, config) {
         this._components = components;
-        this.url = '';
-        this.redirectUrl = this._components.http.getUrl('/api/v1/auth/social/proxy');
+        this.url = config.url || '';
+        this.redirectUrl = config.redirectUrl || this._components.http.getUrl('/api/v1/auth/social/proxy');
     }
 
     async init() {
@@ -29,21 +31,21 @@ export default class GitlabProvider {
                 width,
                 height,
                 left: window.screen.width / 2 - width / 2,
-                top: window.screen.height / 2 - height / 2
+                top: window.screen.height / 2 - height / 2,
             };
             const popup = window.open(
                 this.url,
                 __('Авторизация через Gitlab'),
                 Object.entries(params)
                     .map(([key, value]) => key + '=' + value)
-                    .join(',')
+                    .join(','),
             );
             popup.onbeforeunload = () => reject();
 
             // This is a handler which is used by child window to pass auth result
-            // @ts-ignore
-            window.authCallback = link => {
-                // link: http://127.0.0.1:9424/api/v1/auth/social/proxy?provider=gitlab_kozhindev#access_token=7b87e3de0000000111111122222223333333d1b4ff3ee3f040085518198d885d&token_type=Bearer
+            (window as any).authCallback = link => {
+                // link: http://127.0.0.1:9424/api/v1/auth/social/proxy
+                // ?provider=gitlab_kozhindev#access_token=7b87e3de0...5518198d885d&token_type=Bearer
                 const token = (/access_token=(\w+)/.exec(link) || [])[1];
                 if (token) {
                     resolve({token});

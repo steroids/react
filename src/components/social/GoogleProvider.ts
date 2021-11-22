@@ -1,10 +1,11 @@
 export default class GoogleProvider {
     _components: any;
+
     clientId: string;
 
-    constructor(components) {
+    constructor(components, config) {
         this._components = components;
-        this.clientId = '';
+        this.clientId = config.clientId;
     }
 
     async init() {
@@ -12,8 +13,7 @@ export default class GoogleProvider {
             'https://apis.google.com/js/client:platform.js',
             null,
             async () => {
-                // @ts-ignore
-                const gapi = await this._components.resource.wait(() => window.gapi);
+                const gapi = await this._components.resource.wait(() => (window as any).gapi);
                 return new Promise(resolve => {
                     gapi.load('auth2', () => {
                         if (gapi.auth2.getAuthInstance()) {
@@ -28,20 +28,19 @@ export default class GoogleProvider {
                                 fetch_basic_profile: true,
                                 ux_mode: 'popup',
                                 scope: 'profile email',
-                                access_type: 'online'
+                                access_type: 'online',
                             })
                             .then(resolve);
                     });
                 });
-            }
+            },
         );
     }
 
     async start() {
-        // @ts-ignore
-        const response = await window.gapi.auth2.getAuthInstance().signIn();
+        const response = await (window as any).gapi.auth2.getAuthInstance().signIn();
         return {
-            token: response.getAuthResponse().id_token
+            token: response.getAuthResponse().id_token,
         };
     }
 }

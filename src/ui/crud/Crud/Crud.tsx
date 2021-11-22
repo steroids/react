@@ -240,13 +240,15 @@ function Crud(props: ICrudProps): JSX.Element {
         model: props.model,
         restUrl: props.restUrl,
         restApi: props.restApi,
+        grid: props.grid,
+        form: props.form,
         goToAction,
         items,
         itemsToControls,
         record,
         recordId,
-    }), [crudId, goToAction, items, itemsToControls, props.model, props.primaryKey,
-        props.queryKey, props.restUrl, props.restApi, record, recordId]);
+    }), [crudId, props.queryKey, props.primaryKey, props.model, props.restUrl, props.restApi, props.grid,
+        props.form, goToAction, items, itemsToControls, record, recordId]);
 
     // Open modal on route change
     useEffect(() => {

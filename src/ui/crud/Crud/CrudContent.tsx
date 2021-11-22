@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {useCallback, useMemo} from 'react';
+import {IGridProps} from '@steroidsjs/core/ui/list/Grid/Grid';
+import {IFormProps} from '@steroidsjs/core/ui/form/Form/Form';
+import {Detail} from '@steroidsjs/core/ui/content/Detail';
 import {CRUD_ACTION_CREATE, CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE} from './utils';
 import {showNotification} from '../../../actions/notifications';
 import useDispatch from '../../../hooks/useDispatch';
@@ -21,6 +24,8 @@ export interface ICrudContentProps {
     record?: Record<string, unknown>,
     recordId?: PrimaryKey,
     action?: string,
+    grid?: IGridProps | React.ReactNode,
+    form?: IFormProps | React.ReactNode,
 }
 
 export default function CrudContent(props: ICrudContentProps): JSX.Element {
@@ -74,6 +79,7 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
                     pagination={{
                         loadMore: false,
                     }}
+                    {...props.grid}
                 />
             );
 
@@ -82,10 +88,9 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
             if (!ItemComponent) {
                 ItemComponent = Form;
             }
-            if (props.action === CRUD_ACTION_UPDATE && !props.record) {
+            if (props.action === CRUD_ACTION_UPDATE && (props.restUrl || props.restApi) && !props.record) {
                 return null;
             }
-
             return (
                 <ItemComponent // Form
                     key={formId}
@@ -98,6 +103,7 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
                     submitLabel={props.recordId ? __('Сохранить') : __('Добавить')}
                     layout='horizontal'
                     onComplete={onFormComplete}
+                    {...props.form}
                     initialValues={formInitialValues}
                 />
             );

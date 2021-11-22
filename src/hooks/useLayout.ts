@@ -9,7 +9,7 @@ import {useMount, usePrevious, useUpdateEffect} from 'react-use';
 import useSsr from './useSsr';
 import {IComponents} from '../providers/ComponentsProvider';
 import useComponents from './useComponents';
-import {getRoute} from '../reducers/router';
+import {getRoute, getRoutesMap} from '../reducers/router';
 import {getData, getInitializeCounter, getUser, isInitialized as getIsInitialized} from '../reducers/auth';
 import useSelector from './useSelector';
 import {init, setData, setUser} from '../actions/auth';
@@ -96,14 +96,26 @@ export const runInitAction = (
 );
 
 export default function useLayout(initAction: any = null): ILayout {
-    const {route, user, data, isInitialized, initializeCounter, redirectPageId} = useSelector(state => ({
-        route: getRoute(state),
-        user: getUser(state),
-        data: getData(state),
-        isInitialized: getIsInitialized(state),
-        initializeCounter: getInitializeCounter(state),
-        redirectPageId: state.auth.redirectPageId,
-    }));
+    const {
+        route,
+        user,
+        data,
+        isInitialized,
+        initializeCounter,
+        redirectPageId,
+        loginRouteId,
+    } = useSelector(state => {
+        const routesMap = getRoutesMap(state);
+        return {
+            route: getRoute(state),
+            user: getUser(state),
+            data: getData(state),
+            isInitialized: getIsInitialized(state),
+            initializeCounter: getInitializeCounter(state),
+            redirectPageId: state.auth.redirectPageId,
+            loginRouteId: Object.keys(routesMap).find(name => routesMap[name].role === 'login'),
+        };
+    });
 
     const [error, setError] = useState(null);
 
@@ -151,17 +163,21 @@ export default function useLayout(initAction: any = null): ILayout {
             userRoles.push(null); // Guest
         }
         if (_intersection(pageRoles, userRoles).length === 0) {
-            status = STATUS_ACCESS_DENIED;
-            if (process.env.NODE_ENV !== 'production') {
-                // eslint-disable-next-line no-console
-                console.log(
-                    'Access denied. Page roles: ',
-                    pageRoles,
-                    'User roles:',
-                    userRoles.join(),
-                    'Route:',
-                    route,
-                );
+            if (loginRouteId && route.id !== loginRouteId) {
+                dispatch(goToRoute(loginRouteId));
+            } else {
+                status = STATUS_ACCESS_DENIED;
+                if (process.env.NODE_ENV !== 'production') {
+                    // eslint-disable-next-line no-console
+                    console.log(
+                        'Access denied. Page roles: ',
+                        pageRoles,
+                        'User roles:',
+                        userRoles.join(),
+                        'Route:',
+                        route,
+                    );
+                }
             }
         }
     }

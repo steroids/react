@@ -101,4 +101,4 @@ SwitcherField.defaultProps = {
     errors: null,
 };
 
-export default fieldWrapper('SwitcherField', SwitcherField);
+export default fieldWrapper<ISwitcherFieldProps>('SwitcherField', SwitcherField);

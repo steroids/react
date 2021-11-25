@@ -112,4 +112,4 @@ CheckboxListField.defaultProps = {
     multiple: true,
 };
 
-export default fieldWrapper('CheckboxListField', CheckboxListField);
+export default fieldWrapper<ICheckboxListFieldProps>('CheckboxListField', CheckboxListField);

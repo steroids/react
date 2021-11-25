@@ -178,4 +178,4 @@ InputField.defaultProps = {
     addonAfter: null,
 };
 
-export default fieldWrapper('InputField', InputField);
+export default fieldWrapper<IInputFieldProps>('InputField', InputField);

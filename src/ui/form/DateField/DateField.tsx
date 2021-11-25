@@ -99,4 +99,4 @@ DateField.defaultProps = {
     valueFormat: 'YYYY-MM-DD',
 };
 
-export default fieldWrapper('DateField', DateField);
+export default fieldWrapper<IDateFieldProps>('DateField', DateField);

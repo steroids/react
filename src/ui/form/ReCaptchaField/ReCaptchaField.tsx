@@ -32,4 +32,4 @@ function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps):
     });
 }
 
-export default fieldWrapper('ReCaptchaField', ReCaptchaField);
+export default fieldWrapper<IReCaptchaFieldProps>('ReCaptchaField', ReCaptchaField);

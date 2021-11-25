@@ -117,4 +117,4 @@ TimeField.defaultProps = {
     valueFormat: 'HH:mm',
 };
 
-export default fieldWrapper('TimeField', TimeField);
+export default fieldWrapper<ITimeFieldProps>('TimeField', TimeField);

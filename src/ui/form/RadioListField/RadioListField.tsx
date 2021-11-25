@@ -100,4 +100,4 @@ RadioListField.defaultProps = {
     errors: null,
 };
 
-export default fieldWrapper('RadioListField', RadioListField);
+export default fieldWrapper<IRadioListFieldProps>('RadioListField', RadioListField);

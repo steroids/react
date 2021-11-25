@@ -217,4 +217,4 @@ DropDownField.defaultProps = {
     multiple: false,
 };
 
-export default fieldWrapper('DropDownField', DropDownField);
+export default fieldWrapper<IDropDownFieldProps>('DropDownField', DropDownField);

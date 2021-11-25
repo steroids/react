@@ -171,4 +171,4 @@ AutoCompleteField.defaultProps = {
     className: '',
 };
 
-export default fieldWrapper('AutoCompleteField', AutoCompleteField);
+export default fieldWrapper<IAutoCompleteFieldProps>('AutoCompleteField', AutoCompleteField);

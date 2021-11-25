@@ -23,7 +23,7 @@ export interface IDataSelectConfig {
      * Список с видимыми элементами
      * @example [{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]
      */
-    items: IDataSelectItem[],
+    items?: IDataSelectItem[],
 
     /**
      * Сделать активным первый элемент в списке
@@ -35,7 +35,7 @@ export interface IDataSelectConfig {
      * Список с идентификаторами выбранных элементов
      * @example [1, 4]
      */
-    selectedIds: any,
+    selectedIds?: any,
 
     /**
      * Первичный ключ для item
@@ -46,7 +46,7 @@ export interface IDataSelectConfig {
     /**
      * Значение поля в форме
      */
-    inputValue: any
+    inputValue?: any
 
     /**
      *  Список со всеми элементами

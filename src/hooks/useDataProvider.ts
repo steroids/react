@@ -3,13 +3,13 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 
 import {useEffect, useMemo, useRef, useState} from 'react';
+import {usePrevious} from 'react-use';
 import {IApiMethod} from '../components/ApiComponent';
 import {normalizeItems} from '../utils/data';
 import {useComponents} from './index';
 import Enum from '../base/Enum';
 import {getEnumLabels} from '../reducers/fields';
 import {smartSearch} from '../utils/text';
-import {usePrevious} from "react-use";
 
 export interface AutoCompleteConfig {
     /**
@@ -33,7 +33,7 @@ export interface AutoCompleteConfig {
 
 export type DataProviderItems = string
     | ({ new(): Enum })
-    | (string | number | { id: string | number | boolean, label: string | any })[];
+    | (string | number | { id: string | number | boolean, label: string | any, [key: string]: any })[];
 
 export interface IDataProviderConfig {
     /**
@@ -196,8 +196,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.query,
-        dataProvider, dataProvider.action, dataProvider.onSearch, sourceItems]);
+    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevQuery, sourceItems]);
 
     return {
         sourceItems,

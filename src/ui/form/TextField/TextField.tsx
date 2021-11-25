@@ -99,4 +99,4 @@ TextField.defaultProps = {
     errors: null,
 };
 
-export default fieldWrapper('TextField', TextField);
+export default fieldWrapper<ITextFieldProps>('TextField', TextField);

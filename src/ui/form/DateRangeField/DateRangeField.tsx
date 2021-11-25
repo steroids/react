@@ -229,4 +229,4 @@ DateRangeField.defaultProps = {
     noBorder: false,
 };
 
-export default fieldWrapper('DateRangeField', DateRangeField, {attributeSuffixes: ['from', 'to']});
+export default fieldWrapper<IDateRangeFieldProps>('DateRangeField', DateRangeField, {attributeSuffixes: ['from', 'to']});

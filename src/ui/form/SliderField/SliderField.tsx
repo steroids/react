@@ -125,4 +125,4 @@ SliderField.defaultProps = {
     rangeDefaultValue: [0, 10],
 };
 
-export default fieldWrapper('SliderField', SliderField);
+export default fieldWrapper<ISliderFieldProps>('SliderField', SliderField);

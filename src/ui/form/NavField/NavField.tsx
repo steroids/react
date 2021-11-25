@@ -44,4 +44,4 @@ NavField.defaultProps = {
     },
 };
 
-export default fieldWrapper('NavField', NavField);
+export default fieldWrapper<INavFieldProps>('NavField', NavField);

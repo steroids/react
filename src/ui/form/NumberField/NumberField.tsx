@@ -74,4 +74,4 @@ NumberField.defaultProps = {
     errors: null,
 };
 
-export default fieldWrapper('NumberField', NumberField);
+export default fieldWrapper<INumberFieldProps>('NumberField', NumberField);

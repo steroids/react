@@ -101,4 +101,4 @@ RateField.defaultProps = {
     disabled: false,
 };
 
-export default fieldWrapper('RateField', RateField);
+export default fieldWrapper<IRateFieldProps>('RateField', RateField);

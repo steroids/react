@@ -230,4 +230,4 @@ ImageField.defaultProps = {
     },
 };
 
-export default fieldWrapper('ImageField', ImageField);
+export default fieldWrapper<IImageFieldProps>('ImageField', ImageField);

@@ -33,7 +33,8 @@ export interface ICropInputProps {
     reactImageCropProps?: ReactCropProps
 }
 
-export interface IImageFieldProps extends IFieldWrapperInputProps, Omit<IFileHocInput, 'multiple' | 'imagesOnly'>, IFileHocOutput {
+export interface IImageFieldProps extends IFieldWrapperInputProps,
+    Omit<IFileHocInput, 'multiple' | 'imagesOnly'>, IFileHocOutput {
 
     /**
      * Дополнительный CSS-класс для компонента

@@ -12,7 +12,8 @@ import {IDataSelectConfig} from '../../../hooks/useDataSelect';
  * CheckboxListField
  * Список с чекбоксами. Используется в формах для выбора нескольких значений.
  */
-export interface ICheckboxListFieldProps extends IFieldWrapperInputProps, IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
+export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
+    IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
 
     /**
      * Свойства для элемента \<input /\>

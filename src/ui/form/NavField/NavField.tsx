@@ -16,7 +16,7 @@ export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOu
     /**
      * Свойства для компонента Nav
      */
-    navProps: INavProps,
+    navProps?: INavProps,
 
     [key: string]: any,
 }

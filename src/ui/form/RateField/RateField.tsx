@@ -46,7 +46,7 @@ export interface IRateFieldProps extends IFieldWrapperInputProps {
      */
     className?: CssClassName,
 
-    inputProps: {
+    inputProps?: {
         [key: string]: any,
     },
 }

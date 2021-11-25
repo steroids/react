@@ -8,7 +8,6 @@ import SliderField from '../SliderField';
  */
 
 const marks = {
-    [-10]: '-10°C',
     0: <strong>0°C</strong>,
     26: '26°C',
     37: '37°C',

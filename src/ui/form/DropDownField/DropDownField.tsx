@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useClickAway, usePrevious} from 'react-use';
+import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
@@ -79,7 +79,7 @@ export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'item
     onClose: () => void,
     placeholder: string,
     isAutoComplete?: boolean,
-    searchAutoFocus?: any,
+    isSearchAutoFocus?: boolean,
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -177,13 +177,14 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         }
     }, [prevSelectedIds, props.input.onChange, props.multiple, props.onChange, selectedIds]);
 
-    // form reset
-    useEffect(() => {
-        //if form reset
-        if (props.input.value === undefined && selectedIds.length > 0) {
+    // Reset selected ids on form reset
+    const prevInputValue = usePrevious(props.input.value);
+    useUpdateEffect(() => {
+        // if form reset
+        if (prevInputValue && props.input.value === undefined && selectedIds.length > 0) {
             onReset();
         }
-    }, [onReset, props.input.value, selectedIds.length]);
+    }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,
@@ -215,6 +216,7 @@ DropDownField.defaultProps = {
     autoComplete: false,
     showReset: false,
     multiple: false,
+    isSearchAutoFocus: true,
 };
 
 export default fieldWrapper<IDropDownFieldProps>('DropDownField', DropDownField);

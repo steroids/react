@@ -196,7 +196,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevQuery, sourceItems]);
+    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider,
+        config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevQuery, sourceItems]);
 
     return {
         sourceItems,

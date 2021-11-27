@@ -112,7 +112,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             if (!config.multiple && ids.length > 1) {
                 ids = [ids[0]];
             }
-            setSelectedIdsInternal(ids);
+
+            setSelectedIdsInternal(ids.sort());
         } else {
             const id = ids;
             if (!id) {
@@ -120,10 +121,10 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (config.multiple) {
                 if (selectedIds.indexOf(id) !== -1) {
                     if (!skipToggle) {
-                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id));
+                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id).sort());
                     }
                 } else {
-                    setSelectedIdsInternal([...selectedIds, id]);
+                    setSelectedIdsInternal([...selectedIds, id].sort());
                 }
             } else {
                 if (selectedIds.length !== 1 || selectedIds[0] !== id) {
@@ -181,10 +182,12 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 newSelectedIds.push(selectedItem.id);
             }
         });
-        if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
+        if (!_isEqual(prevConfigSelectedIds.sort(), newSelectedIds.sort())
+            && !_isEqual(selectedIds.sort(), newSelectedIds.sort()) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
-    }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds, selectedItems, config.sourceItems]);
+    }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds,
+        selectedItems, config.sourceItems, selectedIds]);
 
     // Global key down handler for navigate on items
     // Support keys:
@@ -192,6 +195,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // - esc
     // - enter
     // - up/down arrows
+    // - space
     const onKeyDown = useCallback((e) => {
         // Skip no active
         if (!isFocused && !isOpened) {
@@ -202,10 +206,9 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         if ([9, 27].includes(e.which)) {
             e.preventDefault();
             setIsOpened(false);
-            return;
         }
 
-        // Keys: enter
+        // Keys: enter (select and close)
         if (e.which === 13 && isOpened) {
             e.preventDefault();
 
@@ -218,6 +221,17 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (config.items.length > 0) {
                 // Select first result
                 setSelectedIds(config.items[0], true);
+            }
+
+            setIsOpened(false);
+        }
+
+        // Keys: space (toggle select)
+        if (e.which === 32 && isOpened) {
+            e.preventDefault();
+            if (hoveredId) {
+                // Select hovered
+                setSelectedIds(hoveredId);
             }
         }
 

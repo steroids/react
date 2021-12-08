@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.1.0-beta.26",
+  "version": "2.1.0-beta.27",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -46,7 +46,7 @@
     "react-helmet": "^6.1.0",
     "react-image-crop": "^9.0.2",
     "react-input-mask": "^3.0.0-alpha.2",
-    "react-redux": "^7.1.1",
+    "react-redux": "7.1.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-use": "^17.1.0",

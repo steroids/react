@@ -94,4 +94,4 @@ PasswordField.defaultProps = {
     errors: null,
 };
 
-export default fieldWrapper('PasswordField', PasswordField);
+export default fieldWrapper<IPasswordFieldProps>('PasswordField', PasswordField);

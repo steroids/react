@@ -68,4 +68,4 @@ CheckboxField.defaultProps = {
     inputProps: {},
 };
 
-export default fieldWrapper('CheckboxField', CheckboxField, {label: false});
+export default fieldWrapper<ICheckboxFieldProps>('CheckboxField', CheckboxField, {label: false});

@@ -46,7 +46,7 @@ export interface IRateFieldProps extends IFieldWrapperInputProps {
      */
     className?: CssClassName,
 
-    inputProps: {
+    inputProps?: {
         [key: string]: any,
     },
 }
@@ -101,4 +101,4 @@ RateField.defaultProps = {
     disabled: false,
 };
 
-export default fieldWrapper('RateField', RateField);
+export default fieldWrapper<IRateFieldProps>('RateField', RateField);

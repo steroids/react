@@ -186,4 +186,4 @@ FileField.defaultProps = {
     multiple: false,
 };
 
-export default fieldWrapper('FileField', FileField);
+export default fieldWrapper<IFileFieldProps>('FileField', FileField);

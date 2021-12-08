@@ -2,8 +2,8 @@ import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _isNil from 'lodash-es/isNil';
 
-import { useCallback, useMemo, useState } from 'react';
-import { useEvent, usePrevious, useUpdateEffect } from 'react-use';
+import {useCallback, useMemo, useState} from 'react';
+import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
 interface IDataSelectItem {
     id: number | string | boolean,
@@ -23,7 +23,7 @@ export interface IDataSelectConfig {
      * Список с видимыми элементами
      * @example [{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]
      */
-    items: IDataSelectItem[],
+    items?: IDataSelectItem[],
 
     /**
      * Сделать активным первый элемент в списке
@@ -35,7 +35,7 @@ export interface IDataSelectConfig {
      * Список с идентификаторами выбранных элементов
      * @example [1, 4]
      */
-    selectedIds: any,
+    selectedIds?: any,
 
     /**
      * Первичный ключ для item
@@ -46,7 +46,7 @@ export interface IDataSelectConfig {
     /**
      * Значение поля в форме
      */
-    inputValue: any
+    inputValue?: any
 
     /**
      *  Список со всеми элементами
@@ -89,11 +89,15 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             : [];
     }, [config.items, config.selectFirst, config.selectedIds, primaryKey, config.inputValue]);
 
-    const initialSelectedItems = useMemo(() => config.items.length > 0
+    const initialSelectedItems = useMemo(
+        () => config.items.length > 0
         && initialSelectedIds.length > 0
-            ? initialSelectedIds.map(selectedId => config.items.find(item => item.id === selectedId))
+            ? initialSelectedIds
+                .map(selectedId => config.items.find(item => item.id === selectedId))
+                .filter(Boolean)
             : [],
-        [initialSelectedIds, config.items]);
+        [initialSelectedIds, config.items],
+    );
 
     // State
     const [isOpened, setIsOpened] = useState(false);
@@ -108,7 +112,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             if (!config.multiple && ids.length > 1) {
                 ids = [ids[0]];
             }
-            setSelectedIdsInternal(ids);
+
+            setSelectedIdsInternal(ids.sort());
         } else {
             const id = ids;
             if (!id) {
@@ -116,10 +121,10 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (config.multiple) {
                 if (selectedIds.indexOf(id) !== -1) {
                     if (!skipToggle) {
-                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id));
+                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id).sort());
                     }
                 } else {
-                    setSelectedIdsInternal([...selectedIds, id]);
+                    setSelectedIdsInternal([...selectedIds, id].sort());
                 }
             } else {
                 if (selectedIds.length !== 1 || selectedIds[0] !== id) {
@@ -137,7 +142,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         let hasChanges = false;
         selectedIds.forEach(selectedId => {
             let finedItem = config.items.find(item => item[primaryKey] === selectedId);
-            if (!finedItem) {
+            if (!finedItem && config.sourceItems) {
                 finedItem = config.sourceItems.find(item => item[primaryKey] === selectedId);
             }
             const selectedItem = selectedItems.find(item => item[primaryKey] === selectedId);
@@ -172,14 +177,17 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             ? itemsForSelect.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
             : [];
         selectedItems.forEach(selectedItem => {
-            if (!newSelectedIds.includes(selectedItem.id) && config.selectedIds && config.selectedIds.includes(selectedItem.id)) {
+            if (!newSelectedIds.includes(selectedItem.id) && config.selectedIds
+                && config.selectedIds.includes(selectedItem.id)) {
                 newSelectedIds.push(selectedItem.id);
             }
         });
-        if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
+        if (!_isEqual(prevConfigSelectedIds.sort(), newSelectedIds.sort())
+            && !_isEqual(selectedIds.sort(), newSelectedIds.sort()) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
-    }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds, selectedItems, config.sourceItems]);
+    }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds,
+        selectedItems, config.sourceItems, selectedIds]);
 
     // Global key down handler for navigate on items
     // Support keys:
@@ -187,6 +195,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // - esc
     // - enter
     // - up/down arrows
+    // - space
     const onKeyDown = useCallback((e) => {
         // Skip no active
         if (!isFocused && !isOpened) {
@@ -197,10 +206,9 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         if ([9, 27].includes(e.which)) {
             e.preventDefault();
             setIsOpened(false);
-            return;
         }
 
-        // Keys: enter
+        // Keys: enter (select and close)
         if (e.which === 13 && isOpened) {
             e.preventDefault();
 
@@ -213,6 +221,17 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (config.items.length > 0) {
                 // Select first result
                 setSelectedIds(config.items[0], true);
+            }
+
+            setIsOpened(false);
+        }
+
+        // Keys: space (toggle select)
+        if (e.which === 32 && isOpened) {
+            e.preventDefault();
+            if (hoveredId) {
+                // Select hovered
+                setSelectedIds(hoveredId);
             }
         }
 

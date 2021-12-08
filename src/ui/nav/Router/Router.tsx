@@ -103,6 +103,12 @@ export interface IRouteItem {
     enums?: string | string[],
 
     /**
+     * Назначение страницы, указывается, чтобы приложение автоматически могло найти страницу авторизации или 404-ю..
+     * @example 'login'
+     */
+    role?: 'login' | '404' | string,
+
+    /**
      * Список с ролями, который показывает, кому из пользователей будет доступен просмотр страницы
      * @example ['user', 'admin']
      */
@@ -289,7 +295,6 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
     );
 };
 
-// TODO @navigationHoc()
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
 
@@ -396,7 +401,6 @@ function Router(props: IRouterProps): JSX.Element {
         return null;
     }
 
-    // TODO double render!!..
     if (process.env.IS_SSR) {
         return (
             <SsrProviderContext.Consumer>

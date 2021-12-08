@@ -11,4 +11,4 @@ function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps): JSX.Ele
     return <span>{props.text || props.children}</span>;
 }
 
-export default fieldWrapper('BlankField', BlankField);
+export default fieldWrapper<IBlankFieldProps>('BlankField', BlankField);

@@ -254,4 +254,4 @@ FieldList.defaultProps = {
     enableKeyboardNavigation: true,
 };
 
-export default fieldWrapper('FieldList', FieldList, {list: true});
+export default fieldWrapper<IFieldListProps>('FieldList', FieldList, {list: true});

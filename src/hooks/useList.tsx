@@ -1,9 +1,10 @@
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {IApiMethod} from '../components/ApiComponent';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
@@ -73,7 +74,7 @@ export interface IListConfig {
      * Url, который вернет коллекцию элементов
      * @example api/v1/articles
      */
-    action?: string,
+    action?: string | IApiMethod,
 
     /**
      * Тип HTTP запроса (GET | POST | PUT | DELETE)
@@ -167,6 +168,17 @@ export interface IListConfig {
      * Элементы коллекции
      */
     items?: Array<any>,
+
+    /**
+     * Начальные элементы. Используется для подгрузки нескольких списков в один запрос, при этом не отменяя пагинацию
+     * и последующие запросы на бекенд для 2-й и следующих страниц
+     */
+    initialItems?: Array<any>,
+
+    /**
+     * Количество элементов всего в списке (для отрисовки пагинации), заданное вручную
+     */
+    initialTotal?: number,
 }
 
 export interface IListOutput {
@@ -381,7 +393,7 @@ export default function useList(config: IListConfig): IListOutput {
     // Init list in redux store
     useMount(() => {
         if (!list) {
-            const toDispatch = [
+            const toDispatch: any = [
                 listInit(config.listId, {
                     listId: config.listId,
                     action: config.action || config.action === '' ? config.action : null,
@@ -391,6 +403,7 @@ export default function useList(config: IListConfig): IListOutput {
                     scope: config.scope,
                     items: null,
                     sourceItems: config.items || null,
+                    total: config.initialTotal,
                     isRemote: !config.items,
                     primaryKey: config.primaryKey || defaultConfig.primaryKey,
                     formId,
@@ -400,9 +413,14 @@ export default function useList(config: IListConfig): IListOutput {
                     sortAttribute: sort.attribute || null,
                     layoutAttribute: layoutNamesProps.attribute || null,
                 }),
-                listSetItems(config.listId, config.items),
-                listLazyFetch(config.listId),
             ];
+
+            if (config.initialItems || config.items) {
+                toDispatch.push(listSetItems(config.listId, config.initialItems || config.items));
+            }
+            if (!config.initialItems) {
+                toDispatch.push(listLazyFetch(config.listId));
+            }
 
             dispatch(toDispatch);
         }
@@ -413,7 +431,7 @@ export default function useList(config: IListConfig): IListOutput {
     const prevFormValues = usePrevious(formValues);
 
     useUpdateEffect(() => {
-        if (!_isEqual(formValues, prevFormValues)) {
+        if (prevFormValues && !_isEqual(formValues, prevFormValues)) {
             // Has changes (but not page) -> reset page
             const attribute = paginationProps.attribute;
 

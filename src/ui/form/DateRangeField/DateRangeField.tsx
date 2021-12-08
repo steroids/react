@@ -197,7 +197,8 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
         numberOfMonths: 2,
         showFooter: false,
-    }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat]);
+    }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange,
+        props.inputTo.value, props.valueFormat]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', {
         ...props.viewProps,
@@ -229,4 +230,5 @@ DateRangeField.defaultProps = {
     noBorder: false,
 };
 
-export default fieldWrapper('DateRangeField', DateRangeField, {attributeSuffixes: ['from', 'to']});
+export default fieldWrapper<IDateRangeFieldProps>('DateRangeField', DateRangeField,
+    {attributeSuffixes: ['from', 'to']});

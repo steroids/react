@@ -110,4 +110,4 @@ HtmlField.defaultProps = {
     className: '',
 };
 
-export default fieldWrapper('HtmlField', HtmlField);
+export default fieldWrapper<IHtmlFieldProps>('HtmlField', HtmlField);

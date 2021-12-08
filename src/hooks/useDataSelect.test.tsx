@@ -49,7 +49,7 @@ describe('hook useDataSelect', () => {
             setSelectedIds([52, 28]);
             await (() => new Promise(setImmediate))();
             wrapper.update();
-            expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([52, 28]);
+            expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([28, 52]);
             expect(wrapper.find('.item-52').hasClass('selected')).toEqual(true);
             expect(wrapper.find('.item-28').hasClass('selected')).toEqual(true);
             expect(wrapper.find('.item-33').hasClass('selected')).toEqual(false);

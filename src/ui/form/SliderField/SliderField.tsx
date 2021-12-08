@@ -67,7 +67,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
      * содержащий свойства style и label.
      * @example { min: 20, 40: 40, max: 100 }
      */
-    marks?: {number: React.ReactNode} | {number: { style, label }}
+    marks?: Record<string, {string: { style, label }} | React.ReactNode | string>,
 
     /**
      * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
@@ -125,4 +125,4 @@ SliderField.defaultProps = {
     rangeDefaultValue: [0, 10],
 };
 
-export default fieldWrapper('SliderField', SliderField);
+export default fieldWrapper<ISliderFieldProps>('SliderField', SliderField);

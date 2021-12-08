@@ -4,6 +4,7 @@ import {matchPath} from 'react-router';
 import * as queryString from 'qs';
 import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
 import _pick from 'lodash-es/pick';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
@@ -202,11 +203,14 @@ const reducerMap = {
         };
     },
     '@@router/LOCATION_CHANGE': (state, action) => {
-        const activeIds = Object.keys(state.routesMap).filter(id => checkIsActive(state, state.routesMap[id]));
-        const currentRoute = activeIds.length > 0 ? state.routesMap[activeIds[0]] : null;
+        const newActiveIds = Object.keys(state.routesMap).filter(id => checkIsActive(state, state.routesMap[id]));
+        const currentRoute = newActiveIds.length > 0 ? state.routesMap[newActiveIds[0]] : null;
+        if (!_isEqual(newActiveIds, state.activeIds)) {
+            state.activeIds = newActiveIds;
+        }
+
         return {
             ...state,
-            activeIds,
             match: getMatch(currentRoute, state),
         };
     },

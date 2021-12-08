@@ -41,9 +41,9 @@ export interface IPaginationSizeProps {
     className?: CssClassName;
 
     /**
-     * Размер
+     * Значение по-умолчанию
      */
-    size?: Size;
+    defaultValue?: number;
 
     /**
      * Переопределение view React компонента для кастомизации отображения

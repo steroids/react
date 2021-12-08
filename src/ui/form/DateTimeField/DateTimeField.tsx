@@ -126,4 +126,4 @@ DateTimeField.defaultProps = {
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
 };
 
-export default fieldWrapper('DateTimeField', DateTimeField);
+export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);

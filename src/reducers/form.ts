@@ -73,3 +73,4 @@ export default (state = initialState, action) => {
 };
 
 export const formSelector = (state, formId, selector) => selector(state.form?.[formId] || {});
+export const getFormValues = (state, formId) => state.form?.[formId]?.values || null;

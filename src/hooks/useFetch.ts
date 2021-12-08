@@ -47,6 +47,10 @@ export const normalizeConfig = config => (
 );
 
 export const getConfigId = config => {
+    if (config === null) {
+        return null;
+    }
+
     const result = _trim(config.id || config.url, '/');
     if (!result) {
         // eslint-disable-next-line no-console

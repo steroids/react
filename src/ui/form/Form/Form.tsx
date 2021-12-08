@@ -474,6 +474,7 @@ function Form(props: IFormProps): JSX.Element {
                     children: props.children,
                     isBordered: props.isBordered,
                     className: props.className,
+                    style: props.style,
                 })
                 : props.children}
         </FormContext.Provider>

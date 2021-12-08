@@ -168,6 +168,8 @@ export default function Grid(props: IGridProps): JSX.Element {
         model: props.model,
         searchModel: props.searchModel,
         items: props.items,
+        initialItems: props.initialItems,
+        initialTotal: props.initialTotal,
     });
 
     const renderLabel = useCallback((column) => {

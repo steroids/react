@@ -103,8 +103,8 @@ interface IFieldWrapperOptions {
     attributeSuffixes?: string[],
 }
 
-type FieldWrapperComponent = {
-    (props: IFieldWrapperInputProps): JSX.Element;
+export interface FieldWrapperComponent<T> {
+    (props: IFieldWrapperInputProps & T): JSX.Element;
     WrappedComponent: any;
     displayName: any;
     defaultProps: any;
@@ -166,13 +166,13 @@ const createDynamicField = (componentId, Component, options: IFieldWrapperOption
 };
 
 // Field Wrapper
-export default function fieldWrapper(
+export default function fieldWrapper<T = any>(
     componentId,
     Component: any,
     optionsConfig: IFieldWrapperOptions = {
         attributeSuffixes: [''],
     },
-): FieldWrapperComponent {
+): FieldWrapperComponent<T> {
     const options = {
         ...optionsConfig,
         attributeSuffixes: optionsConfig.attributeSuffixes || [''],

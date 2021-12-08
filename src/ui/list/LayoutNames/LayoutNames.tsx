@@ -62,10 +62,12 @@ function LayoutNames(props: ILayoutNamesProps): JSX.Element {
 
     const dispatch = useDispatch();
 
+    const list: IList = props.list || {};
+
     const onChange = useCallback((value) => {
         components.clientStorage.set(props.attribute, value);
-        dispatch(listSetLayout(props.list.listId, value));
-    }, [components.clientStorage, dispatch, props.attribute, props.list.listId]);
+        dispatch(listSetLayout(list.listId, value));
+    }, [components.clientStorage, dispatch, list.listId, props.attribute]);
 
     if (props.enable === false) {
         return null;
@@ -74,7 +76,7 @@ function LayoutNames(props: ILayoutNamesProps): JSX.Element {
     const defaultComponent = require('../../nav/Nav').default;
     return components.ui.renderView(props.view || defaultComponent, {
         items: props.items,
-        activeTab: props.list.layoutName || null,
+        activeTab: list.layoutName || null,
         onChange,
     }, true);
 }

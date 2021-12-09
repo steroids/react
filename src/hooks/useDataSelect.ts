@@ -172,18 +172,17 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // Update selected items on change value
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
     useUpdateEffect(() => {
-        const itemsForSelect = config.sourceItems || config.items;
-        const newSelectedIds = config.selectedIds && config.selectedIds.length > 0
-            ? itemsForSelect.map(item => item[primaryKey]).filter(id => config.selectedIds.includes(id))
-            : [];
+        const newSelectedIds = config.selectedIds;
         selectedItems.forEach(selectedItem => {
             if (!newSelectedIds.includes(selectedItem.id) && config.selectedIds
                 && config.selectedIds.includes(selectedItem.id)) {
                 newSelectedIds.push(selectedItem.id);
             }
         });
-        if (!_isEqual(prevConfigSelectedIds.sort(), newSelectedIds.sort())
-            && !_isEqual(selectedIds.sort(), newSelectedIds.sort()) && newSelectedIds.length !== 0) {
+        newSelectedIds.sort();
+
+        if (!_isEqual(prevConfigSelectedIds, newSelectedIds)
+            && !_isEqual(selectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
     }, [config.items, config.selectedIds, primaryKey, prevConfigSelectedIds,

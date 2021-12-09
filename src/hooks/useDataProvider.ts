@@ -87,6 +87,14 @@ export interface IDataProviderConfig {
      * @example true
      */
     autoFetch?: boolean,
+
+    /**
+     * Идентификаторы выбранных значений, которые необходимо подгрузить при `autoFetch` режиме.
+     * На бекенд будут переданы идентификаторы в параметре `ids`, которые необходимо вернуть.
+     * Используется только при `autoFetch = true`
+     * @example [1, 22]
+     */
+    initialSelectedIds?: number[],
 }
 
 export interface IDataProviderResult {
@@ -151,7 +159,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     const isAutoFetchedRef = useRef(false);
     const prevQuery = usePrevious(config.query);
     useEffect(() => {
-        const fetchRemote = async () => {
+        const fetchRemote = async (isAuto) => {
             const searchHandler = dataProvider.onSearch || (
                 typeof dataProvider.action === 'function'
                     ? (method: any, params) => method(components.api, params).then(response => response.data)
@@ -160,6 +168,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             );
             const result = searchHandler(dataProvider.action, {
                 query: config.query,
+                ...(isAuto ? {ids: config.initialSelectedIds} : null),
                 ...config.dataProvider.params,
             });
 
@@ -184,7 +193,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             setItems(config.query ? smartSearch(config.query, sourceItems) : sourceItems);
         } else if (config.autoFetch && isAutoFetchedRef.current === false) {
             isAutoFetchedRef.current = true;
-            fetchRemote();
+            fetchRemote(true);
         } else if (autoComplete.enable) {
             if (delayTimerRef.current) {
                 clearTimeout(delayTimerRef.current);
@@ -196,8 +205,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider,
-        config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevQuery, sourceItems]);
+    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevQuery, sourceItems]);
 
     return {
         sourceItems,

@@ -6,17 +6,23 @@ import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useEffectOnce, usePrevious, useUpdateEffect} from 'react-use';
+import {closeModal, openModal} from '../../../actions/modal';
+import {getOpened} from '../../../reducers/modal';
 import {IFetchConfig} from '../../../hooks/useFetch';
 import {IListProps} from '../../list/List/List';
 import {useComponents, useSelector} from '../../../hooks';
 import {fetch} from '../../../hoc';
-import {initParams, initRoutes} from '../../../actions/router';
+import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
 import {getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {IFetchHocConfigFunc} from '../../../hoc/fetch';
+
+export const ROUTER_ROLE_LOGIN = 'login';
+export const ROUTER_ROLE_MODAL = 'modal';
+export const ROUTER_ROLE_404 = '404';
 
 /**
  * Router
@@ -106,7 +112,7 @@ export interface IRouteItem {
      * Назначение страницы, указывается, чтобы приложение автоматически могло найти страницу авторизации или 404-ю..
      * @example 'login'
      */
-    role?: 'login' | '404' | string,
+    role?: 'login' | 'modal' | '404' | string,
 
     /**
      * Список с ролями, который показывает, кому из пользователей будет доступен просмотр страницы
@@ -350,6 +356,43 @@ function Router(props: IRouterProps): JSX.Element {
             window.scrollTo(0, 0);
         }
     }, [props.autoScrollTop, routeId]);
+
+    // Check to open/close modals
+    const prevRoute = usePrevious(route);
+    useUpdateEffect(() => {
+        if (prevRoute?.id !== route?.id) {
+            if (prevRoute && prevRoute.role === ROUTER_ROLE_MODAL) {
+                dispatch(closeModal(prevRoute.id));
+            }
+            if (route && route.role === ROUTER_ROLE_MODAL) {
+                const Component = routes.find(item => item.id === route.id)?.component;
+                if (Component) {
+                    dispatch(openModal(Component, {
+                        modalId: route.id,
+                        ...routeParams,
+                    }));
+                }
+            }
+        }
+    }, [dispatch, prevRoute, route, routeParams, routes]);
+
+    // Check close modal - go to parent page
+    const openedModals = useSelector(state => getOpened(state));
+    const openedModalIds = useMemo(() => (openedModals || []).map(modal => modal.id), [openedModals]);
+    const prevOpenedModalIds = usePrevious(openedModalIds);
+    useEffect(() => {
+        if (prevOpenedModalIds !== openedModalIds && route && !openedModalIds.includes(route.id)
+        && route.role === ROUTER_ROLE_MODAL) {
+            const parentRouteId = activeRouteIds.find(activeRouteId => {
+                const activeRoute = routes.find(routeItem => routeItem.id === activeRouteId);
+                return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
+            });
+            if (parentRouteId) {
+                // TODO route params?..
+                dispatch(goToRoute(parentRouteId));
+            }
+        }
+    });
 
     const renderItem = (routeItem: IRouteItem, routeProps) => {
         let children = null;

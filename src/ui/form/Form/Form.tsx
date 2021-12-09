@@ -1,14 +1,12 @@
 import * as React from 'react';
-import {useSelector} from 'react-redux';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
-import * as queryString from 'qs';
 import {useCallback, useMemo} from 'react';
 import {useFirstMountState, useMount, usePrevious, useUpdateEffect} from 'react-use';
+import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import {IApiMethod} from '../../../components/ApiComponent';
 import AutoSaveHelper from './AutoSaveHelper';
-import SyncAddressBarHelper from './SyncAddressBarHelper';
 import {IFieldProps} from '../Field/Field';
 import {useComponents} from '../../../hooks';
 import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form';
@@ -150,20 +148,10 @@ export interface IFormProps {
     submitLabel?: string;
 
     /**
-     * Значения полей формы будут подставляться в качестве query-параметров в адресную строку
+     * Синхронизация значений формы с адресной строкой
      * @example true
      */
-    syncWithAddressBar?: boolean;
-
-    /**
-     * Обработчик, который используется для форматирования значений из адресной строки в валидные значения формы
-     */
-    restoreCustomizer?: (...args: any[]) => any; // TODO Refactor it!
-
-    /**
-     * Указывает, что в качестве сепаратора для параметров формы в адресной строке нужно использовать '#', а не '?'
-     */
-    useHash?: boolean; // TODO Refactor it!
+    addressBar?: boolean | IAddressBarConfig,
 
     /**
      * Если в форме есть элементы \<input\>, то произойдет автоматическая фокусировка на первом из них
@@ -230,7 +218,7 @@ interface ICaptchaParams {
     actionName: string
 }
 
-const getCaptchaToken = (params:ICaptchaParams):Promise<string> => {
+const getCaptchaToken = (params: ICaptchaParams): Promise<string> => {
     const {googleCaptcha, siteKey, actionName = 'submit'} = params;
 
     return new Promise(resolve => {
@@ -256,22 +244,28 @@ function Form(props: IFormProps): JSX.Element {
     // Normalize layout
     const layout = useMemo(() => normalizeLayout(props.layout), [props.layout]);
 
+    // Address bar synchronization
+    const {
+        initialQuery,
+        updateQuery,
+    } = useAddressBar({
+        enable: !!props.addressBar,
+        model: props.model,
+        ...(typeof props.addressBar === 'boolean' ? {enable: props.addressBar} : props.addressBar),
+    });
+
     // Resolve initial values
     let initialValues = props.initialValues;
 
     // Restore initial values from address bar and local storage
     const isFirstMount = useFirstMountState();
-    const locationSearch = useSelector(state => _get(state, 'router.location.search', ''));
     if (isFirstMount) {
         // Query
-        if (props.syncWithAddressBar) {
-            initialValues = SyncAddressBarHelper.restore(
-                {
-                    ...props.initialValues,
-                    ...SyncAddressBarHelper.cleanValues(queryString.parse(locationSearch)),
-                },
-                props.restoreCustomizer,
-            );
+        if (initialQuery) {
+            initialValues = {
+                ...props.initialValues,
+                ...initialQuery,
+            };
         }
 
         // Local storage
@@ -294,19 +288,8 @@ function Form(props: IFormProps): JSX.Element {
 
     // Sync with address bar
     useUpdateEffect(() => {
-        if (props.syncWithAddressBar) {
-            // TODO
-            /*const page = Number(_get(values, 'page', 1));
-            SyncAddressBarHelper.save(
-                components.store,
-                SyncAddressBarHelper.cleanValues({
-                    ...values,
-                    page: page > 1 && page,
-                }),
-                props.useHash,
-            );*/
-        }
-    }, [props.syncWithAddressBar, props.useHash, values]);
+        updateQuery(values);
+    }, [updateQuery, values]);
 
     // Auto focus
     useMount(() => {

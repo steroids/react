@@ -4,11 +4,10 @@ import {components} from '../../../hoc';
 import {IComponentsHocOutput} from '../../../hoc/components';
 
 @components('ui')
-export default class TooltipPortal extends React.PureComponent<IComponentsHocOutput>{
-
+export default class TooltipPortal extends React.PureComponent<IComponentsHocOutput> {
     componentDidMount() {
         if (!this.props.ui.getPortalElement()) {
-            throw new Error('Not found UI Portal container. Please set <Portal/> in layout.')
+            throw new Error('Not found UI Portal container. Please set <Portal/> in layout.');
         }
     }
 

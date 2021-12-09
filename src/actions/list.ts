@@ -236,6 +236,11 @@ export const listFetch = (listId: string, query: any = {}) => (dispatch, getStat
     // Send request
     toDispatch.push(
         Promise.resolve(onFetch(list, formValues, components)).then(data => {
+            // Skip on empty
+            if (!data) {
+                return [];
+            }
+
             // Check list is not destroy
             if (!getState().list.lists[listId]) {
                 return [];

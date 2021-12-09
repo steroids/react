@@ -20,13 +20,13 @@ export const formInitialize = (formId, values) => ({
 /**
  * Изменение значения поля
  * @param formId
- * @param name
+ * @param nameOrObject
  * @param value
  */
-export const formChange = (formId, name, value) => ({
+export const formChange = (formId, nameOrObject, value = null) => ({
     type: FORM_CHANGE,
     formId,
-    name,
+    nameOrObject,
     value,
 });
 

@@ -182,14 +182,14 @@ function Nav(props: INavProps): JSX.Element {
                 isActive: activeTab === (_has(item, 'id') ? item.id : index),
             }))
                 .filter(item => item.visible !== false)
-            : (routes || []).map(route => ({
+            : (routes as INavItem[] || []).map(route => ({
                 id: route.id,
                 label: route.label,
                 toRoute: route.id,
                 toRouteParams: routerParams,
                 visible: route.isNavVisible,
                 isActive: (activeRouteIds || []).includes(route.id),
-            } as INavItem))
+            }))
                 .filter(item => item.visible !== false)
     ),
     [activeRouteIds, activeTab, props.items, routerParams, routes]);

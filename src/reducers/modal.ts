@@ -5,7 +5,7 @@ import {MODAL_OPEN, MODAL_CLOSE, MODAL_MARK_CLOSING} from '../actions/modal';
 export const MODAL_DEFAULT_GROUP = 'modal';
 
 export interface IModal {
-    id: number,
+    id: string | number,
     modal: any,
     props: any,
     isClosing: boolean,

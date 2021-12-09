@@ -8,7 +8,7 @@ export interface Model {
 
 export interface ModelAttribute {
     type?: 'autoTime' | 'boolean' | 'dateTime' | 'date' | 'double' | 'email' | 'enum' | 'file' | 'files' | 'html'
-        | 'integer' | 'money' | 'password' | 'phone' | 'primaryKey' | 'size' | 'string' | 'text' | 'time',
+        | 'integer' | 'money' | 'password' | 'phone' | 'primaryKey' | 'size' | 'string' | 'text' | 'time' | string,
     jsType?: 'boolean' | 'string' | 'string[]' | 'number' | 'number[]' | string,
     attribute?: string,
     label?: string,
@@ -16,11 +16,11 @@ export interface ModelAttribute {
     isRequired?: boolean,
     isSortable?: boolean,
     field?: string | any,
-    fieldProps?: object,
+    fieldProps?: Record<string, unknown>,
     searchField?: string | any,
-    searchFieldProps?: object,
+    searchFieldProps?: Record<string, unknown>,
     formatter?: string | any,
-    formatterProps?: object,
+    formatterProps?: Record<string, unknown>,
     defaultValue?: any,
     fromStringConverter?: (value: string, type: string, item: any) => any,
     toStringConverter?: (value: any, type: string, item: any) => string | null,

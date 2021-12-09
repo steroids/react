@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {parse, compile} from 'path-to-regexp';
 import {matchPath} from 'react-router';
 import * as queryString from 'qs';
@@ -9,29 +8,11 @@ import _pick from 'lodash-es/pick';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
+import {IRouteItem} from '../ui/nav/Router/Router';
 import {
     ROUTER_INIT_ROUTES,
     ROUTER_SET_PARAMS,
 } from '../actions/router';
-
-export interface IRoute {
-    id?: string,
-    title?: string,
-    label?: string,
-    icon?: string,
-    exact?: boolean,
-    strict?: boolean,
-    path?: string,
-    redirectTo?: string,
-    isVisible?: boolean,
-    isNavVisible?: boolean,
-    component?: React.ReactNode,
-    componentProps?: Record<string, unknown>,
-    roles?: string[],
-    items?: IRoute[],
-
-    [key: string]: any,
-}
 
 interface IRouterInitialState {
     location: {
@@ -40,8 +21,8 @@ interface IRouterInitialState {
         hash: string,
         query: Record<string, unknown>,
     },
-    routesTree: IRoute,
-    routesMap: { [key: string]: IRoute },
+    routesTree: IRouteItem,
+    routesMap: { [key: string]: IRouteItem },
     activeIds: string[],
     match: {
         path: string,
@@ -123,9 +104,9 @@ const checkIsActive = (state, item) => {
 /**
  * Normalize routes tree (convert object structure to items[])
  */
-const normalizeRoutes = (state, item: IRoute, activeIds: string[], routesMap: Record<string, unknown>) => {
+const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], routesMap: Record<string, unknown>) => {
     let items = null;
-    if (_isArray(item.items)) {
+    if (Array.isArray(item.items)) {
         items = item.items.map(subItem => normalizeRoutes(state, subItem, activeIds, routesMap));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
@@ -159,7 +140,11 @@ const normalizeRoutes = (state, item: IRoute, activeIds: string[], routesMap: Re
 /**
  * Find route in routes tree
  */
-const findRecursive = (item: IRoute, predicate: string | any, pathItems: IRoute[] | null = null): IRoute | null => {
+const findRecursive = (
+    item: IRouteItem,
+    predicate: string | any,
+    pathItems: IRouteItem[] | null = null,
+): IRouteItem | null => {
     if ((_isFunction(predicate) && predicate(item)) || predicate === item.id) {
         if (pathItems) {
             pathItems.push(item);
@@ -167,11 +152,14 @@ const findRecursive = (item: IRoute, predicate: string | any, pathItems: IRoute[
         return item;
     }
 
-    const finedItem = (item.items || []).find(subItem => findRecursive(subItem, predicate, pathItems)) || null;
-    if (finedItem && pathItems) {
-        pathItems.push(item);
+    if (Array.isArray((item.items))) {
+        const finedItem = item.items.find(subItem => findRecursive(subItem, predicate, pathItems)) || null;
+        if (finedItem && pathItems) {
+            pathItems.push(item);
+        }
+        return finedItem;
     }
-    return finedItem;
+    return null;
 };
 
 const getMatch = (currentRoute, state) => {
@@ -232,13 +220,13 @@ export const getRouterParams = state => _get(state.router, 'params');
 export const getActiveRouteIds = state => _get(state.router, 'activeIds') || null;
 export const getRoutesMap = state => _get(state.router, 'routesMap') || null;
 export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
-export const getRoute = (state, routeId = null): IRoute => _get(
+export const getRoute = (state, routeId = null): IRouteItem => _get(
     state.router, ['routesMap', routeId || getRouteId(state)],
 ) || null;
 export const getRouteProp = (state, routeId = null, param) => _get(getRoute(state, routeId), param) || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
 export const getRouteParam = (state, param) => _get(getRouteParams(state), param) || null;
-export const getRouteBreadcrumbs = (state, routeId = null): IRoute[] => {
+export const getRouteBreadcrumbs = (state, routeId = null): IRouteItem[] => {
     const items = [];
     findRecursive(state.router.routesTree, routeId, items);
     return items.reverse().filter(item => item.isVisible !== false && item.isNavVisible !== false);

@@ -88,6 +88,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     // Query state
     const [query, setQuery] = useState('');
 
+    const inputSelectedIds = useMemo(
+        () => props.selectedIds || [].concat(props.input.value || []),
+        [props.input.value, props.selectedIds],
+    );
+
     // Data provider
     const {items, isLoading, isAutoComplete, sourceItems} = useDataProvider({
         items: props.items,
@@ -95,12 +100,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         autoComplete: props.autoComplete,
         autoFetch: props.autoFetch,
         query,
+        initialSelectedIds: inputSelectedIds,
     });
-
-    const inputSelectedIds = useMemo(
-        () => props.selectedIds || [].concat(props.input.value || []),
-        [props.input.value, props.selectedIds],
-    );
 
     // Data select
     const {

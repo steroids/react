@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import {IRoute} from '../reducers/router';
 import {IComponentsHocOutput} from './components';
 import {IRouteItem} from '../ui/nav/Router/Router';
 import useLayout from '../hooks/useLayout';
@@ -12,7 +11,7 @@ import useLayout from '../hooks/useLayout';
  * авторизации (первая загрузка страницы, логин/регистация и выход).
  */
 export interface ILayoutHocInput {
-    route?: IRoute,
+    route?: IRouteItem,
     user?: {
         role: string,
     },

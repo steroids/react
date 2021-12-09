@@ -2,6 +2,7 @@ import _get from 'lodash-es/get';
 import queryString from 'query-string';
 import {replace} from 'connected-react-router';
 import _toInteger from 'lodash-es/toInteger';
+import _has from 'lodash-es/has';
 import {useCallback, useRef} from 'react';
 import useSelector from '../hooks/useSelector';
 import useDispatch from '../hooks/useDispatch';
@@ -25,6 +26,8 @@ const defaultProps = {
     useHash: false,
 };
 
+const ARRAY_VALUE_SEPARATOR = '_';
+
 export const defaultFromStringConverter = (value, type, item) => {
     type = type || '';
 
@@ -32,7 +35,7 @@ export const defaultFromStringConverter = (value, type, item) => {
     if (type.substr(-2) === '[]') {
         const subType = type.substr(0, type.length - 2);
         return value
-            ? value.split(',').map(v => defaultFromStringConverter(v, subType, item))
+            ? value.split(ARRAY_VALUE_SEPARATOR).map(v => defaultFromStringConverter(v, subType, item))
             : null;
     }
 
@@ -56,7 +59,7 @@ export const defaultToStringConverter = (value, type, item) => {
     // Array
     if (type.substr(-2) === '[]') {
         return value
-            ? value.join(',')
+            ? value.join(ARRAY_VALUE_SEPARATOR)
             : null;
     }
 
@@ -76,14 +79,18 @@ export const queryRestore = (model: Model, location, useHash) => {
     const values = queryString.parse(useHash ? location.hash : location.search);
     const result = {};
 
-    model.attributes.forEach(item => {
-        if (typeof item !== 'string') {
-            const converter = item.fromStringConverter || defaultFromStringConverter;
-            const value = converter(values[item.attribute] as string, item.type, item);
+    const attributes = model?.attributes || Object.keys(values);
+    attributes.forEach(item => {
+        if (typeof item === 'string') {
+            item = {attribute: item};
+        }
 
-            if (value !== null || item.defaultValue !== null) {
-                result[item.attribute] = value !== null ? value : item.defaultValue;
-            }
+        const defaultValue = _has(item, 'defaultValue') ? item.defaultValue : null;
+        const converter = item.fromStringConverter || defaultFromStringConverter;
+        const value = converter(values[item.attribute] as string, item.type || 'string', item);
+
+        if (value !== null || defaultValue !== null) {
+            result[item.attribute] = value !== null ? value : defaultValue;
         }
     });
     return result;
@@ -97,10 +104,17 @@ export const queryRestore = (model: Model, location, useHash) => {
  */
 export const queryReplace = (model: Model, location, values, useHash) => {
     const result = {};
-    model.attributes.forEach(item => {
-        if (typeof item !== 'string' && values?.[item.attribute] !== item.defaultValue) {
+
+    const attributes = model?.attributes || Object.keys(values);
+    attributes.forEach(item => {
+        if (typeof item === 'string') {
+            item = {attribute: item};
+        }
+
+        const defaultValue = _has(item, 'defaultValue') ? item.defaultValue : null;
+        if (values?.[item.attribute] !== defaultValue) {
             const converter = item.toStringConverter || defaultToStringConverter;
-            const value = converter(values?.[item.attribute], item.type, item);
+            const value = converter(values?.[item.attribute], item.type || 'string', item);
             if (value !== null) {
                 result[item.attribute] = value;
             }
@@ -128,7 +142,7 @@ export default function useAddressBar(config: IAddressBarConfig): IAddressBarOut
     const location = useSelector(state => _get(state, 'router.location') || null);
     // Initial query
     const initialQueryRef = useRef(null);
-    if (!initialQueryRef.current) {
+    if (!initialQueryRef.current && config.enable) {
         initialQueryRef.current = queryRestore(config.model, location, config.useHash);
     }
 

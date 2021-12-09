@@ -6,6 +6,7 @@ import _upperFirst from 'lodash-es/upperFirst';
 import _merge from 'lodash-es/merge';
 import _intersection from 'lodash-es/intersection';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
+import {ROUTER_ROLE_LOGIN} from '../ui/nav/Router/Router';
 import useSsr from './useSsr';
 import {IComponents} from '../providers/ComponentsProvider';
 import useComponents from './useComponents';
@@ -113,7 +114,7 @@ export default function useLayout(initAction: any = null): ILayout {
             isInitialized: getIsInitialized(state),
             initializeCounter: getInitializeCounter(state),
             redirectPageId: state.auth.redirectPageId,
-            loginRouteId: Object.keys(routesMap).find(name => routesMap[name].role === 'login'),
+            loginRouteId: Object.keys(routesMap).find(name => routesMap[name].role === ROUTER_ROLE_LOGIN),
         };
     });
 

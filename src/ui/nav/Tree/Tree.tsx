@@ -148,7 +148,7 @@ function Tree(props: ITreeProps) {
                     icon: route.icon,
                 };
             };
-            return routes.map(route => routeToItem(route)).filter(r => r.visible);
+            return (routes as IRouteItem[]).map(route => routeToItem(route)).filter(r => r.visible);
         }
 
         if (Array.isArray(props.items)) {

@@ -1,5 +1,6 @@
 import {useComponents, useSelector} from '../../../hooks';
-import {getRouteBreadcrumbs, IRoute} from '../../../reducers/router';
+import {getRouteBreadcrumbs} from '../../../reducers/router';
+import {IRouteItem} from '../Router/Router';
 
 /**
  * Breadcrumbs
@@ -16,7 +17,7 @@ export interface IBreadcrumbsProps {
      * Коллекция элементов навигационной цепочки
      * @example [{id: 'root', title: 'Home'}, {id: 'catalog', title: 'Catalog'}]
      */
-    items?: IRoute[],
+    items?: IRouteItem[],
 
     /**
      * Вместо items можно передать идентификатор роута, от которого компонент самостоятельно построит

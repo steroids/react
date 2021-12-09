@@ -8,7 +8,7 @@ import {IApiMethod} from '../components/ApiComponent';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
-import useAddressBar from '../hooks/useAddressBar';
+import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
 import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../actions/list';
 import useDispatch from '../hooks/useDispatch';
 import {formChange} from '../actions/form';
@@ -42,19 +42,6 @@ interface ISortProps {
      * @example -price
      */
     defaultValue?: string | string[] | null,
-}
-
-interface IAddressBar {
-    /**
-     * Подключить синхронизацию значений формы списка с адресной строкой
-     * @example false
-     */
-    enable?: boolean,
-
-    /**
-     * Указывает, что в качестве сепаратора для параметров формы в адресной строке нужно использовать '#', а не '?'
-     */
-    useHash?: boolean,
 }
 
 export interface IListConfig {
@@ -146,7 +133,7 @@ export interface IListConfig {
      * Синхронизация значений формы списка с адресной строкой
      * @example true
      */
-    addressBar?: boolean | IAddressBar,
+    addressBar?: boolean | IAddressBarConfig,
 
     scope?: string[],
 
@@ -206,10 +193,6 @@ export const defaultConfig = {
         enable: false,
         attribute: 'sort',
         defaultValue: null,
-    },
-    addressBar: {
-        enable: false,
-        useHash: false,
     },
 };
 

@@ -34,14 +34,14 @@ export default function useDateTime(props:IUseDateTimeProps) {
         const result = date + props.dateTimeSeparator + (timeValue || '00:00');
         props.input.onChange.call(
             null,
-            convertDate(result, props.valueFormat, props.valueFormat, true),
+            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, true),
         );
     }, [props.dateTimeSeparator, props.input.onChange, props.valueFormat, timeValue]);
     const onTimeSelect = useCallback(time => {
         const result = (dateValue || moment().format(dateValueFormat)) + props.dateTimeSeparator + time;
         props.input.onChange.call(
             null,
-            convertDate(result, props.valueFormat, props.valueFormat, true),
+            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, true),
         );
     }, [dateValue, dateValueFormat, props.dateTimeSeparator, props.input.onChange, props.valueFormat]);
 

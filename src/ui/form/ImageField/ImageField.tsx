@@ -122,7 +122,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
                     ...props.crop,
                     onSubmit: (crop, imageId) => setCroppedImage({...crop, id: imageId}),
                 },
-                image: _first(data),
+                image: _first(data) || data,
             }));
             // eslint-disable-next-line no-empty
         } catch (e) {}
@@ -136,7 +136,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         uploader: {
             uploaderConfigs: {
                 xhr: {
-                    responseParser,
+                    responseParser: props.crop ? responseParser : null,
                 },
             },
             ...props.uploader,

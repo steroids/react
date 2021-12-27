@@ -5,21 +5,6 @@ import _isObject from 'lodash-es/isObject';
 import 'moment/locale/it';
 import 'moment/locale/ru';
 
-// Fix load locale data
-if (process.env.IS_SSR) {
-    // @ts-ignore
-    global.IntlMessageFormat = IntlMessageFormat;
-    require('intl-messageformat/dist/locale-data/ru');
-    // @ts-ignore
-    delete global.IntlMessageFormat;
-} else {
-    // @ts-ignore
-    window.IntlMessageFormat = IntlMessageFormat;
-    require('intl-messageformat/dist/locale-data/ru');
-    // @ts-ignore
-    delete window.IntlMessageFormat;
-}
-
 /**
  * Locale Component
  * Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны

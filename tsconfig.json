@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
+    "lib": ["dom", "es2020.intl"],
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "baseUrl": ".",

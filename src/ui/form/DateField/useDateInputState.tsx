@@ -93,10 +93,12 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         () => convertDate(
             props.input.value,
             [
-                props.displayFormat,
                 props.valueFormat,
+                props.displayFormat,
             ],
             props.displayFormat,
+            false,
+            true,
         ) || '',
         [props.displayFormat, props.input.value, props.valueFormat],
     );
@@ -119,15 +121,15 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
     // Display input change handler
     const onDisplayValueChange = useCallback(value => {
         setDisplayValue(value);
-        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC);
+        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, true);
         const newValue = parsedValue || !value ? parsedValue || null : false;
-        if (newValue !== false && newValue !== props.input.value) {
+        if (newValue && newValue !== props.input.value) {
             props.input.onChange.call(null, newValue);
             if (props.onChange) {
                 props.onChange.call(null, value);
             }
         }
-    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.useUTC, props.valueFormat]);
+    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat]);
 
     // Dropdown opened state
     const [isOpened, setIsOpened] = useState(false);
@@ -137,10 +139,13 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         e.preventDefault();
         setIsOpened(true);
     }, [setIsOpened]);
-    const onBlur = useCallback(e => {
-        e.preventDefault();
-        //setIsOpened(false);
-    }, []);
+
+    const onBlur = useCallback(() => {
+        if (propsDisplayValue !== displayValue) {
+            setDisplayValue(propsDisplayValue);
+        }
+    }, [displayValue, propsDisplayValue]);
+
     const onClose = useCallback(() => {
         setIsOpened(false);
 

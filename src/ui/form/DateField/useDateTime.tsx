@@ -19,14 +19,18 @@ export default function useDateTime(props:IUseDateTimeProps) {
 
     const dateValue = useMemo(() => convertDate(
         props.input.value,
-        [props.displayFormat, props.valueFormat],
+        [props.valueFormat, props.displayFormat],
         dateValueFormat,
+        false,
+        true,
     ), [dateValueFormat, props.displayFormat, props.input.value, props.valueFormat]);
 
     const timeValue = useMemo(() => convertDate(
         props.input.value,
         [props.displayFormat, props.valueFormat],
         timeValueFormat,
+        false,
+        true,
     ), [props.displayFormat, props.input.value, props.valueFormat, timeValueFormat]);
 
     // Handler for calendar and time picker changes

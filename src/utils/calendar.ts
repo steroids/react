@@ -5,6 +5,7 @@ export const convertDate = (
     fromFormats: string | string[],
     toFormat: string = null,
     utc = false,
+    dateInUtc = false,
 ) => {
     if (!date) {
         return null;
@@ -21,7 +22,12 @@ export const convertDate = (
         if (!validFormat) {
             return null;
         }
-        momentDate = moment(date, validFormat);
+
+        if (dateInUtc) {
+            momentDate = moment.utc(date, validFormat);
+        } else {
+            momentDate = moment(date, validFormat);
+        }
     } else if (date instanceof Date) {
         momentDate = moment(date);
     }
@@ -33,7 +39,7 @@ export const convertDate = (
     if (utc) {
         momentDate = momentDate.utc();
     } else {
-        momentDate = momentDate.utc(true).local();
+        momentDate = momentDate.local();
     }
 
     return toFormat ? momentDate.format(toFormat) : momentDate.toDate();

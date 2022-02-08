@@ -126,7 +126,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
-        value: props.input.value || '',
+        value: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
         placeholder: props.placeholder,
         disabled: props.disabled,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DropDownField} from '@steroidsjs/core/ui/form';
+import {DropDownField} from '../../../form';
 import Form from '../Form';
 import DateField from '../../DateField';
 import InputField from '../../InputField';

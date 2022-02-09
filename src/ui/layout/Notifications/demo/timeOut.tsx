@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Button} from '@steroidsjs/core/ui/form';
-import useDispatch from '@steroidsjs/core/hooks/useDispatch';
-import {showNotification} from '@steroidsjs/core/actions/notifications';
+import {Button} from '../../../form';
+import useDispatch from '../../../../hooks/useDispatch';
+import {showNotification} from '../../../../actions/notifications';
 
 /**
  * Время самостоятельного пропадания уведомления в милесекундах

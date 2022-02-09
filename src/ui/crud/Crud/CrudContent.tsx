@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {useCallback, useMemo} from 'react';
-import {IGridProps} from '@steroidsjs/core/ui/list/Grid/Grid';
-import {IFormProps} from '@steroidsjs/core/ui/form/Form/Form';
-import {Detail} from '@steroidsjs/core/ui/content/Detail';
+import {IGridProps} from '../../list/Grid/Grid';
+import {IFormProps} from '../../form/Form/Form';
 import {CRUD_ACTION_CREATE, CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE} from './utils';
 import {showNotification} from '../../../actions/notifications';
 import useDispatch from '../../../hooks/useDispatch';

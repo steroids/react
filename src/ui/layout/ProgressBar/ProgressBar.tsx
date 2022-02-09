@@ -1,5 +1,5 @@
-import Icon from '@steroidsjs/core/ui/icon/Icon/Icon';
 import * as React from 'react';
+import Icon from '../../icon/Icon/Icon';
 import {useComponents} from '../../../hooks';
 
 export interface IProgressBarViewProps {

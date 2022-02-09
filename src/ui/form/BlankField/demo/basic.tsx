@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AutoCompleteField, DateTimeField} from '@steroidsjs/core/ui/form';
+import {AutoCompleteField, DateTimeField} from '../../../form';
 import BlankField from '../BlankField';
 
 /**

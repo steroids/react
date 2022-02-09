@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useComponents } from '@steroidsjs/core/hooks';
+import { useComponents } from '../../../hooks';
 
 export interface ICollapseItemProps {
     view?: any,

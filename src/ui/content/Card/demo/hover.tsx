@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button} from '@steroidsjs/core/ui/form';
+import {Button} from '../../../form';
 import Card from '../Card';
 
 /**

@@ -1,5 +1,5 @@
-import {Card} from '@steroidsjs/core/ui/content';
 import * as React from 'react';
+import {Card} from '../../../content';
 
 const colors = {
     primary: 'primary',

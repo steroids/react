@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, AvatarGroup} from '@steroidsjs/core/ui/content';
+import {Avatar, AvatarGroup} from '../../../content';
 
 /**
  * Group of avatars

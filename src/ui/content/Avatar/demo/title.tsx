@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar} from '@steroidsjs/core/ui/content';
+import {Avatar} from '../../../content';
 
 /**
  * Basic sizes with title and online status

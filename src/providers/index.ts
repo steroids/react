@@ -1,9 +1,9 @@
-import SsrProvider from '@steroidsjs/core/providers/SsrProvider';
-import ScreenProvider from '@steroidsjs/core/providers/ScreenProvider';
-import ComponentsProvider from '@steroidsjs/core/providers/ComponentsProvider';
+import ScreenProvider from './ScreenProvider';
+import ComponentsProvider from './ComponentsProvider';
+import SsrProvider from './SsrProvider';
 
 export {
     SsrProvider,
     ScreenProvider,
-    ComponentsProvider
-}
+    ComponentsProvider,
+};

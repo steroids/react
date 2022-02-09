@@ -30,6 +30,9 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
     const uploader = useInitial(() => new FileUp({
         dropArea: {},
         backendUrl: generateBackendUrl(props),
+        uploaderConfig: {
+            ...props.uploaderConfig,
+        },
         ...props.uploader,
         form: {
             ...(props.uploader && props.uploader.form),
@@ -193,7 +196,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
 
     //todo refactoring
     useEffect(() => {
-        if (!_isEqual(prevInputValue !== props.input.value)) {
+        if (prevInputValue && !_isEqual(prevInputValue !== props.input.value)) {
             const toRemove = _difference(
                 [].concat(props.input.value || []),
                 [].concat(prevInputValue || []),

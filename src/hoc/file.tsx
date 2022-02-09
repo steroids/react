@@ -36,6 +36,10 @@ export interface IFileHocInput {
     imagesProcessor?: any;
     imagesExactSize?: any;
     initialFiles?: any;
+    uploaderConfig?: {
+        useFormData?: boolean,
+        fileFieldName?: string,
+    }
 }
 
 export interface IFileHocOutput {

@@ -7,7 +7,7 @@ import _isFunction from 'lodash-es/isFunction';
 import _isEqual from 'lodash-es/isEqual';
 import _isNil from 'lodash-es/isNil';
 import {formSelector} from '../reducers/form';
-import {formChange} from '../actions/form';
+import {formChange, formSetErrors} from '../actions/form';
 import {filterItems} from '../utils/data';
 import {IApiMethod} from '../components/ApiComponent';
 
@@ -254,15 +254,19 @@ export const listFetch = (listId: string, query: any = {}) => (dispatch, getStat
                 };
             }
 
-            return {
-                items: data.items || [],
-                total: data.total || null,
-                meta: data.meta || null,
-                page: formValues[list.pageAttribute],
-                pageSize: formValues[list.pageSizeAttribute],
-                listId,
-                type: LIST_AFTER_FETCH,
-            };
+            return [
+                // Check has errors
+                formSetErrors(list.formId, data.errors || null),
+                {
+                    items: data.items || [],
+                    total: data.total || null,
+                    meta: data.meta || null,
+                    page: formValues[list.pageAttribute],
+                    pageSize: formValues[list.pageSizeAttribute],
+                    listId,
+                    type: LIST_AFTER_FETCH,
+                },
+            ];
         }),
     );
 

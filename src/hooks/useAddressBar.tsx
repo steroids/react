@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import {replace} from 'connected-react-router';
 import _toInteger from 'lodash-es/toInteger';
 import _has from 'lodash-es/has';
+import _isEqual from 'lodash-es/isEqual';
 import {useCallback, useRef} from 'react';
 import useSelector from '../hooks/useSelector';
 import useDispatch from '../hooks/useDispatch';
@@ -20,11 +21,6 @@ export interface IAddressBarOutput {
     initialQuery: Record<string, unknown>,
     updateQuery: (values: Record<string, unknown>) => void,
 }
-
-const defaultProps = {
-    enable: false,
-    useHash: false,
-};
 
 const ARRAY_VALUE_SEPARATOR = '_';
 
@@ -59,7 +55,7 @@ export const defaultToStringConverter = (value, type, item) => {
     // Array
     if (type.substr(-2) === '[]') {
         return value
-            ? value.join(ARRAY_VALUE_SEPARATOR)
+            ? [].concat(value || []).join(ARRAY_VALUE_SEPARATOR)
             : null;
     }
 
@@ -87,7 +83,7 @@ export const queryRestore = (model: Model, location, useHash) => {
 
         const defaultValue = _has(item, 'defaultValue') ? item.defaultValue : null;
         const converter = item.fromStringConverter || defaultFromStringConverter;
-        const value = converter(values[item.attribute] as string, item.type || 'string', item);
+        const value = converter(values[item.attribute] as string, item.jsType || 'string', item);
 
         if (value !== null || defaultValue !== null) {
             result[item.attribute] = value !== null ? value : defaultValue;
@@ -114,7 +110,7 @@ export const queryReplace = (model: Model, location, values, useHash) => {
         const defaultValue = _has(item, 'defaultValue') ? item.defaultValue : null;
         if (values?.[item.attribute] !== defaultValue) {
             const converter = item.toStringConverter || defaultToStringConverter;
-            const value = converter(values?.[item.attribute], item.type || 'string', item);
+            const value = converter(values?.[item.attribute], item.jsType || 'string', item);
             if (value !== null) {
                 result[item.attribute] = value;
             }
@@ -150,7 +146,16 @@ export default function useAddressBar(config: IAddressBarConfig): IAddressBarOut
     const dispatch = useDispatch();
     const updateQuery = useCallback(values => {
         if (config.enable) {
-            dispatch(queryReplace(config.model, location, values, config.useHash));
+            const normalizedValues = Object.keys(values).reduce((obj, key) => {
+                if (values[key] !== undefined) {
+                    obj[key] = values[key];
+                }
+                return obj;
+            }, {});
+            if (!_isEqual(initialQueryRef.current, normalizedValues)) {
+                initialQueryRef.current = normalizedValues;
+                dispatch(queryReplace(config.model, location, values, config.useHash));
+            }
         }
     }, [config.enable, config.model, config.useHash, dispatch, location]);
 

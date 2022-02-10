@@ -1,5 +1,4 @@
 import * as React from 'react';
-import _get from 'lodash-es/get';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isString from 'lodash-es/isString';
 import {useCallback, useMemo} from 'react';

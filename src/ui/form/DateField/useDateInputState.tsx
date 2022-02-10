@@ -120,6 +120,8 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
 
     // Display input change handler
     const onDisplayValueChange = useCallback(value => {
+        value = value.replace(/[^0-9:. ]/g, '');
+
         setDisplayValue(value);
         const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, true);
         const newValue = parsedValue || !value ? parsedValue || null : false;

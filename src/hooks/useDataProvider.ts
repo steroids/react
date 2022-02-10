@@ -158,6 +158,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     const delayTimerRef = useRef(null);
     const isAutoFetchedRef = useRef(false);
     const prevQuery = usePrevious(config.query);
+    const prevParams = usePrevious(dataProvider.params);
     useEffect(() => {
         const fetchRemote = async (isAuto) => {
             const searchHandler = dataProvider.onSearch || (
@@ -200,7 +201,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             }
 
             // Changed query logic
-            if (prevQuery !== config.query) {
+            if (prevQuery !== config.query || prevParams !== dataProvider.params) {
                 // Search with delay
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }

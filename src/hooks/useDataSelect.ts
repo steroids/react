@@ -172,7 +172,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // Update selected items on change value
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
     useUpdateEffect(() => {
-        const newSelectedIds = config.selectedIds;
+        const newSelectedIds = config.selectedIds || [];
         selectedItems.forEach(selectedItem => {
             if (!newSelectedIds.includes(selectedItem.id) && config.selectedIds
                 && config.selectedIds.includes(selectedItem.id)) {

@@ -6,7 +6,7 @@ import _isObject from 'lodash-es/isObject';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useComponents, useSelector} from '../../../hooks';
 import {
-    getActiveRouteIds, getNavItems,
+    getActiveRouteIds, getNavItems, getRouteParams,
     getRouterParams,
 } from '../../../reducers/router';
 import {IButtonProps} from '../../form/Button/Button';
@@ -142,7 +142,7 @@ function Nav(props: INavProps): JSX.Element {
     const {routes, activeRouteIds, routerParams} = useSelector(state => ({
         routes: typeof props.items === 'string' ? getNavItems(state, props.items) : null,
         activeRouteIds: getActiveRouteIds(state),
-        routerParams: getRouterParams(state),
+        routerParams: getRouteParams(state),
     }));
 
     const [activeTab, setActiveTab] = useState(props.activeTab || _get(props, 'items.0.id') || 0);

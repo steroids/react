@@ -1,5 +1,5 @@
 import {useComponents, useSelector} from '../../../hooks';
-import {getRouteBreadcrumbs} from '../../../reducers/router';
+import {getRouteBreadcrumbs, getRouteParams} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
 
 /**
@@ -42,15 +42,19 @@ export interface IBreadcrumbsProps {
     [key: string]: any,
 }
 
-export type IBreadcrumbsViewProps = IBreadcrumbsProps;
+export type IBreadcrumbsViewProps = IBreadcrumbsProps & {
+    routeParams?: any,
+};
 
 export default function Breadcrumbs(props: IBreadcrumbsProps): JSX.Element {
     const components = useComponents();
-    const routeItems = useSelector(state => props.pageId ? getRouteBreadcrumbs(state, props.pageId) : null);
+    const routeItems = useSelector(state => getRouteBreadcrumbs(state, props.pageId));
+    const routeParams = useSelector(state => getRouteParams(state));
     const items = props.items || routeItems;
 
     return components.ui.renderView(props.view || 'nav.BreadcrumbsView', {
         ...props,
         items,
+        routeParams,
     });
 }

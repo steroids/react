@@ -228,6 +228,7 @@ export const getRouteParams = state => _get(state.router, 'match.params') || nul
 export const getRouteParam = (state, param) => _get(getRouteParams(state), param) || null;
 export const getRouteBreadcrumbs = (state, routeId = null): IRouteItem[] => {
     const items = [];
+    routeId = routeId || getRouteId(state);
     findRecursive(state.router.routesTree, routeId, items);
     return items.reverse().filter(item => item.isVisible !== false && item.isNavVisible !== false);
 };

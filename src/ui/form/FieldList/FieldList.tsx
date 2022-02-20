@@ -88,6 +88,11 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
     className?: CssClassName;
 
     /**
+     * Дополнительный CSS-класс для таблицы
+     */
+    tableClassName?: CssClassName;
+
+    /**
      * Переопределение view React компонента для кастомизации отображения списка с группами полей
      * @example MyCustomView
      */
@@ -129,6 +134,7 @@ export interface IFieldListViewProps {
     showAdd?: boolean,
     children?: React.ReactNode,
     className?: string,
+    tableClassName?: string,
     style?: any,
     forwardedRef?: any,
     disabled?: boolean,
@@ -214,6 +220,8 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         size: props.size,
         disabled: props.disabled,
         required: props.required,
+        className: props.className,
+        tableClassName: props.tableClassName,
         items,
     };
 

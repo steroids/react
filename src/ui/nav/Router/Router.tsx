@@ -16,7 +16,7 @@ import {useComponents, useSelector} from '../../../hooks';
 import {fetch} from '../../../hoc';
 import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
-import {getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducers/router';
+import {buildUrl, getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {IFetchHocConfigFunc} from '../../../hoc/fetch';
 
@@ -265,7 +265,8 @@ export const treeToList = (item, isRoot = true) => {
 };
 
 const renderComponent = (route: IRouteItem, activePath, routeProps) => {
-    if (route.redirectTo && route.path === activePath) {
+    const routePath = buildUrl(route.path, routeProps?.match?.params);
+    if (route.redirectTo && routePath === activePath) {
         const to = findRedirectPathRecursive(route);
         if (to === null) {
             // eslint-disable-next-line no-console
@@ -274,11 +275,12 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
         }
 
         // Check already redirected
-        if (activePath !== to) {
+        const toPath = buildUrl(to, routeProps?.match?.params);
+        if (activePath !== toPath) {
             return (
                 <Redirect
                     {...routeProps}
-                    to={to}
+                    to={toPath}
                     {...route.componentProps}
                 />
             );
@@ -404,6 +406,12 @@ function Router(props: IRouterProps): JSX.Element {
 
             const activeRoute = routes.find(r => r.id === activeRouteId);
             children = renderComponent(activeRoute, activePath, {...routeProps, children}) || children;
+
+            // Stop, if route is exact
+            if (activeRoute.exact) {
+                return true;
+            }
+
             return false;
         });
 

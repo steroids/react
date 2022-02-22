@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useCallback, useEffect, useMemo} from 'react';
+import {usePrevious, useUpdateEffect} from 'react-use';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -94,6 +95,19 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     useEffect(() => {
         props.input.onChange.call(null, selectedIds);
     }, [props.input.onChange, selectedIds]);
+
+    const onReset = useCallback(() => {
+        setSelectedIds([]);
+    }, [setSelectedIds]);
+
+    // Reset selected ids on form reset
+    const prevInputValue = usePrevious(props.input.value);
+    useUpdateEffect(() => {
+        // if form reset
+        if (prevInputValue && props.input.value === undefined && selectedIds.length > 0) {
+            onReset();
+        }
+    }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', {
         ...props,

@@ -49,7 +49,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
-        value: props.input.value ?? undefined,
+        value: props.input.value ?? '',
         onChange: e => props.input.onChange(e.target?.value || e.nativeEvent?.text),
         type: 'number',
         min: props.min,
@@ -60,7 +60,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         ...props.inputProps,
     }), [props.disabled, props.input, props.inputProps, props.placeholder, props.min, props.max, props.step]);
 
-    return components.ui.renderView(props.view || 'form.NumberFieldView' || 'form.InputFieldView', props);
+    return components.ui.renderView(props.view || 'form.NumberFieldView', props);
 }
 
 NumberField.defaultProps = {

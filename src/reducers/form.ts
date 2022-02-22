@@ -64,7 +64,10 @@ export function reducerItem(state, action) {
             return _set(state, 'submitCounter', (state.submitCounter || 0) + 1);
 
         case FORM_RESET:
-            return _set(state, 'values', _cloneDeep(state.initialValues || {}));
+            return {
+                ...state,
+                values: _cloneDeep(state.initialValues || {}),
+            };
 
         case FORM_ARRAY_ADD:
             // eslint-disable-next-line no-case-declarations

@@ -116,7 +116,7 @@ export interface IButtonProps {
      * автоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
      * @param e => fetch(...)
      */
-    onClick?: (e: Event | React.MouseEvent) => Promise<any> | void;
+    onClick?: (e: Event | React.MouseEvent) => Promise<any> | any;
 
     /**
      * Переводит кнопку в состояние "не активна"

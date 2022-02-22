@@ -62,8 +62,8 @@ export const buildUrl = (path, params = null) => {
     let pathKeys = [];
     try {
         pathKeys = parse(path)
-            .slice(1)
-            .map((p: any) => p.name);
+            .map((p: any) => typeof p === 'object' && p.name)
+            .filter(Boolean);
         url = compile(path)({
             ...params,
         });

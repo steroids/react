@@ -46,6 +46,13 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     showReset?: boolean;
 
     /**
+     * Атрибут, в котором должны лежать дочерние элементы списка (для группировки)
+     * Если аттрибут не задан - группировка не производится
+     * @example items
+     */
+    groupAttribute?: string,
+
+    /**
      * Включает стиль без 'border'
      * @example true
      */
@@ -118,6 +125,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         selectFirst: props.selectFirst,
         selectedIds: inputSelectedIds,
         primaryKey: props.primaryKey,
+        groupAttribute: props.groupAttribute,
         items,
         sourceItems,
         inputValue: props.input.value,

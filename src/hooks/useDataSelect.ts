@@ -44,6 +44,13 @@ export interface IDataSelectConfig {
     primaryKey?: string,
 
     /**
+     * Атрибут, в котором должны лежать дочерние элементы списка (для группировки)
+     * Если аттрибут не задан - группировка не производится
+     * @example items
+     */
+    groupAttribute?: string,
+
+    /**
      * Значение поля в форме
      */
     inputValue?: any
@@ -247,7 +254,20 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else {
                 // Navigate on items by keys
                 const direction = isDown ? 1 : -1;
-                const keys = config.items.map(item => item.id);
+                const getKeysRecursive = items => {
+                    let ids = [];
+                    items.forEach(item => {
+                        if (config.groupAttribute && Array.isArray(item[config.groupAttribute])) {
+                            ids = ids.concat(getKeysRecursive(item[config.groupAttribute]));
+                        } else {
+                            ids.push(item.id);
+                        }
+                        return ids;
+                    });
+                    return ids;
+                };
+                //const keys = config.items.map(item => item.id);
+                const keys = getKeysRecursive(config.items);
 
                 // Get current index
                 let index = hoveredId ? keys.indexOf(hoveredId) : -1;
@@ -264,7 +284,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setHoveredId(keys[newIndex]);
             }
         }
-    }, [config.items, hoveredId, isFocused, isOpened, setSelectedIds, selectedIds]);
+    }, [isFocused, isOpened, hoveredId, selectedIds, config.items, config.groupAttribute, setSelectedIds]);
     useEvent('keydown', onKeyDown);
 
     return {

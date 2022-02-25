@@ -114,6 +114,12 @@ export interface IListConfig {
     autoDestroy?: boolean,
 
     /**
+     * Отправлять запрос на обновление данных при изменении данных формы. По-умолчанию - включено.
+     * @example false
+     */
+    autoFetchOnFormChanges?: boolean,
+
+    /**
      * Обработчик, который вызывается при изменении значений формы, и нужен для подгрузки новых элементов коллекции
      * @param {IList} list
      * @param {Object} query
@@ -427,10 +433,12 @@ export default function useList(config: IListConfig): IListOutput {
             updateQuery(formValues);
 
             // Send request
-            dispatch(listLazyFetch(config.listId));
+            if (config.autoFetchOnFormChanges !== false) {
+                dispatch(listLazyFetch(config.listId));
+            }
         }
-    }, [config.listId, dispatch, formId, formValues, paginationProps.attribute,
-        paginationProps.defaultValue, prevFormValues, updateQuery]);
+    }, [config.autoFetchOnFormChanges, config.listId, dispatch, formId, formValues,
+        paginationProps.attribute, paginationProps.defaultValue, prevFormValues, updateQuery]);
 
     // Check change query
     const prevQuery = usePrevious(config.query);

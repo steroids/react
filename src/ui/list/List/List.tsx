@@ -91,6 +91,7 @@ export default function List(props: IListProps): JSX.Element {
         items: props.items,
         initialItems: props.initialItems,
         initialTotal: props.initialTotal,
+        autoFetchOnFormChanges: props.autoFetchOnFormChanges,
     });
 
     const ItemView = props.itemView || components.ui.getView('list.ListItemView');

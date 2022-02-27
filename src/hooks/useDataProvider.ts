@@ -1,6 +1,7 @@
 import {useSelector} from 'react-redux';
 import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
+import _isEqual from 'lodash-es/isEqual';
 
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {usePrevious} from 'react-use';
@@ -201,7 +202,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             }
 
             // Changed query logic
-            if (prevQuery !== config.query || prevParams !== dataProvider.params) {
+            if (prevQuery !== config.query || !_isEqual(prevParams, dataProvider.params)) {
                 // Search with delay
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }

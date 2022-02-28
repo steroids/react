@@ -114,7 +114,7 @@ export default function useLayout(initAction: any = null): ILayout {
             isInitialized: getIsInitialized(state),
             initializeCounter: getInitializeCounter(state),
             redirectPageId: state.auth.redirectPageId,
-            loginRouteId: Object.keys(routesMap).find(name => routesMap[name].role === ROUTER_ROLE_LOGIN),
+            loginRouteId: routesMap && Object.keys(routesMap).find(name => routesMap[name].role === ROUTER_ROLE_LOGIN),
         };
     });
 

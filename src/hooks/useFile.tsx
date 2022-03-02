@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import {useMount, useUnmount, useUpdate, usePrevious} from 'react-use';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
@@ -8,8 +8,8 @@ import _isEqual from 'lodash-es/isEqual';
 import _difference from 'lodash-es/difference';
 import buildURL from 'axios/lib/helpers/buildURL';
 import {IFileHocInput, IFileHocOutput} from '../hoc/file';
-import useInitial from '../hooks/useInitial';
-import {useForm} from '../hooks/index';
+import useInitial from './useInitial';
+import {useForm} from './index';
 
 const imagesMimeTypes = [
     'image/gif',
@@ -84,7 +84,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
      * @param {File} file
      * @private
      */
-    const onQueueItemEnd = (file) => {
+    const onQueueItemEnd = useCallback((file) => {
         forceUpdate();
         // Check successfully
         if (file.getResult() !== File.RESULT_SUCCESS) {
@@ -103,14 +103,33 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
         } else {
             props.input.onChange(id);
         }
-    };
+    }, [forceUpdate, props.input, props.multiple]);
+    const prevOnQueueItemEnd = usePrevious(onQueueItemEnd);
+    useEffect(() => {
+        if (prevOnQueueItemEnd) {
+            uploader.queue.off(
+                QueueCollection.EVENT_ITEM_END,
+                prevOnQueueItemEnd,
+            );
+        }
+        uploader.queue.on(
+            QueueCollection.EVENT_ITEM_END,
+            onQueueItemEnd,
+        );
+    }, [onQueueItemEnd, prevOnQueueItemEnd, uploader.queue]);
+    useUnmount(() => {
+        uploader.queue.off(
+            QueueCollection.EVENT_ITEM_END,
+            onQueueItemEnd,
+        );
+    });
 
     /**
      * Triggered by queue when file is removed from it
      * @param {File[]} removedFiles
      * @private
      */
-    const onQueueRemove = (removedFiles) => {
+    const onQueueRemove = useCallback((removedFiles) => {
         const toRemove = removedFiles
             .map(file => _get(file.getResultHttpMessage(), 'id'))
             .filter(Boolean);
@@ -128,7 +147,26 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
             props.input.onChange(null);
         }
         forceUpdate();
-    };
+    }, [forceUpdate, props.input, props.multiple]);
+    const prevOnQueueRemove = usePrevious(onQueueRemove);
+    useEffect(() => {
+        if (prevOnQueueRemove) {
+            uploader.queue.off(
+                QueueCollection.EVENT_REMOVE,
+                prevOnQueueRemove,
+            );
+        }
+        uploader.queue.on(
+            QueueCollection.EVENT_REMOVE,
+            onQueueRemove,
+        );
+    }, [onQueueRemove, prevOnQueueRemove, uploader.queue]);
+    useUnmount(() => {
+        uploader.queue.off(
+            QueueCollection.EVENT_REMOVE,
+            onQueueRemove,
+        );
+    });
 
     useMount(() => {
         uploader.queue.on(
@@ -138,14 +176,6 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
         uploader.queue.on(
             QueueCollection.EVENT_ITEM_PROGRESS,
             forceUpdate,
-        );
-        uploader.queue.on(
-            QueueCollection.EVENT_ITEM_END,
-            onQueueItemEnd,
-        );
-        uploader.queue.on(
-            QueueCollection.EVENT_REMOVE,
-            onQueueRemove,
         );
     });
 
@@ -157,14 +187,6 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
         uploader.queue.off(
             QueueCollection.EVENT_ITEM_PROGRESS,
             forceUpdate,
-        );
-        uploader.queue.off(
-            QueueCollection.EVENT_ITEM_END,
-            onQueueItemEnd,
-        );
-        uploader.queue.off(
-            QueueCollection.EVENT_REMOVE,
-            onQueueRemove,
         );
     });
 

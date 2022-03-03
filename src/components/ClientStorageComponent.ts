@@ -16,6 +16,8 @@ export default class ClientStorageComponent {
 
     sessionStorageAvailable: boolean;
 
+    domain?: string;
+
     private _ssrCookie: Record<string, any>
 
     constructor(components, config) {
@@ -43,6 +45,7 @@ export default class ClientStorageComponent {
             }
         }
 
+        this.domain = config?.domain || null;
         this._ssrCookie = config?.ssrCookie;
     }
 
@@ -116,7 +119,11 @@ export default class ClientStorageComponent {
     }
 
     _getDomain() {
-        const host = (typeof location !== 'undefined' && location.hostname) || '';
+        if (this.domain) {
+            return this.domain;
+        }
+
+        const host = (typeof window.location !== 'undefined' && window.location.hostname) || '';
         return (
             (!/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(host)
                 && host

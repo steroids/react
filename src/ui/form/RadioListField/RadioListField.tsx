@@ -87,6 +87,7 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.RadioListFieldView', {
         ...props,
+        items,
         inputProps,
         onItemSelect,
         selectedIds,

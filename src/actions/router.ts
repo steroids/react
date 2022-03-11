@@ -32,7 +32,7 @@ export const goToParent = (level = 1) => (dispatch, getState) => {
     const getRouteParams = require('../reducers/router').getRouteParams;
     const state = getState();
     const params = getRouteParams(state);
-    const parentRoute = getRouteParent(state, level);
+    const parentRoute = getRouteParent(state, null, level);
     const parentRouteId = parentRoute ? parentRoute.id : null;
     const parentRouteParams = parentRoute ? params : null;
     if (parentRouteId) {

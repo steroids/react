@@ -1,10 +1,10 @@
 import React, {useContext, useMemo} from 'react';
 import _isString from 'lodash-es/isString';
-import {Field} from '@steroidsjs/core/ui/form';
-import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
-import {FormContext, IFormContext} from '@steroidsjs/core/ui/form/Form/Form';
-import {useComponents} from '@steroidsjs/core/hooks';
-import {mergeLayoutProp} from '@steroidsjs/core/utils/form';
+import Field from '../Field';
+import {IFieldProps} from '../Field/Field';
+import {FormContext, IFormContext} from '../Form/Form';
+import {useComponents} from '../../../hooks';
+import {mergeLayoutProp} from '../../../utils/form';
 
 /**
  * FieldSet

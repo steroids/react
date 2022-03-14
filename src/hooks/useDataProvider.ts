@@ -160,6 +160,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     const isAutoFetchedRef = useRef(false);
     const prevQuery = usePrevious(config.query);
     const prevParams = usePrevious(dataProvider.params);
+    const prevValues = usePrevious(config.initialSelectedIds);
+
     useEffect(() => {
         const fetchRemote = async (isAuto) => {
             const searchHandler = dataProvider.onSearch || (
@@ -193,6 +195,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         if (!config.dataProvider) {
             // Client-side search on static items
             setItems(config.query ? smartSearch(config.query, sourceItems) : sourceItems);
+        } else if (!_isEqual(prevValues, config.initialSelectedIds)) {
+            fetchRemote(true);
         } else if (config.autoFetch && isAutoFetchedRef.current === false) {
             isAutoFetchedRef.current = true;
             fetchRemote(true);

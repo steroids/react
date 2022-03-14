@@ -195,10 +195,11 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         if (!config.dataProvider) {
             // Client-side search on static items
             setItems(config.query ? smartSearch(config.query, sourceItems) : sourceItems);
-        } else if (!_isEqual(prevValues, config.initialSelectedIds)) {
-            fetchRemote(true);
         } else if (config.autoFetch && isAutoFetchedRef.current === false) {
             isAutoFetchedRef.current = true;
+            fetchRemote(true);
+
+        } else if (!_isEqual(prevValues, config.initialSelectedIds)) {
             fetchRemote(true);
         } else if (autoComplete.enable) {
             if (delayTimerRef.current) {

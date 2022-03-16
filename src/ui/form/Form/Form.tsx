@@ -11,6 +11,7 @@ import {IFieldProps} from '../Field/Field';
 import {useComponents} from '../../../hooks';
 import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form';
 import validate from '../validate';
+import { formSetSubmitting } from '../../../actions/form';
 
 /**
  * Form
@@ -322,6 +323,8 @@ function Form(props: IFormProps): JSX.Element {
 
     // OnSubmit handler
     const onSubmit = useCallback(async (e = null) => {
+        dispatch(formSetSubmitting(props.formId, true));
+
         // TODO
         if (e) {
             e.preventDefault();
@@ -391,6 +394,8 @@ function Form(props: IFormProps): JSX.Element {
                 options,
             );
 
+        dispatch(formSetSubmitting(props.formId, false));
+
         // Skip on 2fa
         if (response.twoFactor) {
             return null;
@@ -417,7 +422,7 @@ function Form(props: IFormProps): JSX.Element {
         }
 
         return null;
-    }, [components.api, components.http, components.resource, components.ui, props, setErrors, values]);
+    }, [components.api, components.http, components.resource, components.ui, props, setErrors, values, dispatch]);
 
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);

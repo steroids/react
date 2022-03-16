@@ -3,6 +3,7 @@ export const FORM_CHANGE = '@form/change';
 export const FORM_RESET = '@form/reset';
 export const FORM_SET_ERRORS = '@form/set_errors';
 export const FORM_SUBMIT = '@form/submit';
+export const FORM_SET_SUBMITTING = '@form/set_submitting';
 export const FORM_ARRAY_ADD = '@form/array_add';
 export const FORM_ARRAY_REMOVE = '@form/array_remove';
 
@@ -48,6 +49,16 @@ export const formSetErrors = (formId, errors) => ({
 export const formSubmit = (formId) => ({
     type: FORM_SUBMIT,
     formId,
+});
+/**
+ * Установить состояние отправки формы
+ * @param formId
+ * @param isSubmitting
+ */
+export const formSetSubmitting = (formId, isSubmitting) => ({
+    type: FORM_SET_SUBMITTING,
+    formId,
+    isSubmitting,
 });
 
 /**

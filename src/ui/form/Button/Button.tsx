@@ -314,6 +314,7 @@ function Button(props: IButtonProps): JSX.Element {
         isFailed,
         isLoading,
         disabled,
+        submitting,
         tag,
         formId: context?.formId || null,
         url: url || (tag === 'a' ? '#' : null),

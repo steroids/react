@@ -1,13 +1,14 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useComponents} from '../../../hooks';
 import {convertDate} from '../../../utils/calendar';
+import {DayPickerProps} from 'react-day-picker';
 
 export interface ICalendarProps {
     /**
      * Значение задает выбранные в календаре дату или диапазон дат.
      * Необходимо передать валидную дату в виде строки (массива строк)
      */
-    value: string | string[],
+    value?: string | string[],
 
     /**
      * Формат даты отправляемый на сервер
@@ -24,7 +25,7 @@ export interface ICalendarProps {
      * Свойства для компонента DayPickerInput
      * @example {dayPickerProps: {showWeekNumbers: true}}
      */
-    pickerProps?: any,
+    pickerProps?: DayPickerProps | any,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -138,6 +139,7 @@ function Calendar(props: ICalendarProps) {
 
     return components.ui.renderView(props.view || 'content.CalendarView', {
         ...props.viewProps,
+        ...props.pickerProps,
         month,
         toYear,
         fromYear,

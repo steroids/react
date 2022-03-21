@@ -220,8 +220,8 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
     useEffect(() => {
         if (prevInputValue && !_isEqual(prevInputValue !== props.input.value)) {
             const toRemove = _difference(
-                [].concat(props.input.value || []),
                 [].concat(prevInputValue || []),
+                [].concat(props.input.value || []),
             );
             if (toRemove.length > 0) {
                 uploader.queue.remove(
@@ -232,7 +232,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [prevInputValue]);
+    }, [prevInputValue, props.input.value]);
 
     /**
      * Show browse dialog in user browser

@@ -344,13 +344,16 @@ function Form(props: IFormProps): JSX.Element {
 
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {
+            dispatch(formSetSubmitting(props.formId, false));
             return null;
         }
         if (props.validators) {
             validate(cleanedValues, props.validators);
         }
         if (props.onSubmit) {
-            return props.onSubmit.call(null, cleanedValues);
+            const submitResult = await props.onSubmit.call(null, cleanedValues);
+            dispatch(formSetSubmitting(props.formId, false));
+            return submitResult;
         }
 
         // Add captcha token

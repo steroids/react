@@ -90,10 +90,9 @@ function Meta(props: IMetaProps) {
                 <script
                     key={index}
                     {...attrs}
-                    dangerouslySetInnerHTML={{
-                        __html: attrs.innerHtml,
-                    }}
-                />
+                >
+                    {attrs.innerHtml || ''}
+                </script>
             ))}
             {props.noScripts?.map((attrs, index) => (
                 <noscript

@@ -3,13 +3,14 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 import _isEqual from 'lodash-es/isEqual';
 
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {usePrevious} from 'react-use';
+import {fieldsDataProviderSetItems} from '../actions/fields';
 import {IApiMethod} from '../components/ApiComponent';
 import {normalizeItems} from '../utils/data';
-import {useComponents} from './index';
+import {useComponents, useDispatch} from './index';
 import Enum from '../base/Enum';
-import {getEnumLabels} from '../reducers/fields';
+import {getDataProviderItems, getEnumLabels} from '../reducers/fields';
 import {smartSearch} from '../utils/text';
 
 export interface AutoCompleteConfig {
@@ -49,6 +50,13 @@ export interface IDataProviderConfig {
      */
     dataProvider?: {
         /**
+         * Уникальный (глобально) идентификатор, под которых будут храниться
+         * подгруженные данные в redux (при включенном флаге useRedux). Если
+         * не задан - данные будут храниться в локальном стейте
+         */
+        reduxId?: string,
+
+        /**
          * URL для подгрузки новой коллекции данных
          * @example '/api/v1/search'
          */
@@ -68,6 +76,7 @@ export interface IDataProviderConfig {
          * @return {Promise<Array> | Array}
          */
         onSearch?: (action: string, params: Record<string, unknown>) => Array<unknown> | Promise<Array<unknown>>,
+
     },
 
     /**
@@ -129,6 +138,8 @@ const defaultProps = {
  */
 export default function useDataProvider(config: IDataProviderConfig): IDataProviderResult {
     const components = useComponents();
+    const dispatch = useDispatch();
+    const reduxDataProviderId = config.dataProvider?.reduxId;
 
     // Check enum
     const enumItems = useSelector(state => _isString(config.items) ? getEnumLabels(state, config.items) : null);
@@ -137,9 +148,20 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     const initialItems = normalizeItems(enumItems || config.items);
 
     // Items state
-    const [sourceItems, setSourceItems] = useState(initialItems);
     const [items, setItems] = useState(initialItems);
     const [isLoading, setIsLoading] = useState(false);
+
+    // Source items state (redux or local)
+    const [sourceInternalItems, setSourceInternalItems] = useState(initialItems);
+    const sourceReduxItems = useSelector(state => getDataProviderItems(state, reduxDataProviderId));
+    const sourceItems = reduxDataProviderId ? sourceReduxItems : sourceInternalItems;
+    const setSourceItems = useCallback((value) => {
+        if (reduxDataProviderId) {
+            dispatch(fieldsDataProviderSetItems(reduxDataProviderId, value));
+        } else {
+            setSourceInternalItems(value);
+        }
+    }, [reduxDataProviderId, dispatch]);
 
     // Normalize autoComplete
     const autoComplete: AutoCompleteConfig = useMemo(() => ({
@@ -198,7 +220,6 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         } else if (config.autoFetch && isAutoFetchedRef.current === false) {
             isAutoFetchedRef.current = true;
             fetchRemote(true);
-
         } else if (!_isEqual(prevValues, config.initialSelectedIds)) {
             fetchRemote(true);
         } else if (autoComplete.enable) {
@@ -212,7 +233,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevQuery, sourceItems]);
+    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
 
     return {
         sourceItems,

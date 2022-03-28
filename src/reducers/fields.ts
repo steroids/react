@@ -1,9 +1,10 @@
 import _isString from 'lodash-es/isString';
 import _get from 'lodash-es/get';
-import {FIELDS_SET_META} from '../actions/fields';
+import {FIELDS_SET_META, FIELDS_DATA_PROVIDER_SET_ITEMS} from '../actions/fields';
 
 const initialState = {
     props: {},
+    dataProvider: {},
     meta: null,
 };
 const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, '');
@@ -20,6 +21,16 @@ export default (state = initialState, action) => {
                     ...action.meta,
                 },
             };
+
+        case FIELDS_DATA_PROVIDER_SET_ITEMS:
+            return {
+                ...state,
+                dataProvider: {
+                    ...state.dataProvider,
+                    [action.dataProviderId]: action.items,
+                },
+            };
+
         default:
             return state;
     }
@@ -40,3 +51,5 @@ export const getModel = (state, name) => {
     }
     return name || null;
 };
+
+export const getDataProviderItems = (state, dataProviderId) => state?.fields?.dataProvider?.[dataProviderId] || null;

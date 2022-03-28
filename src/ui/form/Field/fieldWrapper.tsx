@@ -63,6 +63,8 @@ export interface IFieldWrapperInputProps {
      */
     layout?: FormLayout;
 
+    value?: any,
+
     onChange?: (...args: any[]) => any;
 
     /**
@@ -117,8 +119,9 @@ const createDynamicField = (componentId, Component, options: IFieldWrapperOption
         const components = useComponents();
 
         // Get context, formId
-        const context = useContext(FormContext);
-        const formId = props.formId || context?.formId || null;
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const context = props.formId !== false ? useContext(FormContext) : null;
+        const formId = props.formId || props.formId === false ? props.formId : (context?.formId || null);
         const model = props.model || context?.model || null;
 
         // Result wrapper props
@@ -136,12 +139,31 @@ const createDynamicField = (componentId, Component, options: IFieldWrapperOption
             const name = [props.prefix, props[attributeKey]].filter(Boolean).join('.');
 
             // Register field
-            components.ui.registerField(formId, name, componentId);
+            if (formId) {
+                components.ui.registerField(formId, name, componentId);
+            }
 
-            // Resolve data provider
-            const {errors, value, setValue} = context?.provider
-                ? context?.provider.useField(formId, name, options.list)
-                : providers.state.useField(props.value);
+            let errors;
+            let value;
+            let setValue;
+            if (context?.provider) {
+                // Resolve data provider
+                const providerResult = context?.provider.useField(formId, name, options.list);
+                errors = providerResult.errors;
+                value = providerResult.value;
+                setValue = providerResult.setValue;
+            } else if (_has(props, 'value') && _has(props, 'onChange')) {
+                // Controlled component via props
+                errors = null;
+                value = props.value;
+                setValue = props.onChange;
+            } else {
+                // Uncontrolled component
+                const stateResult = providers.state.useField(props.value);
+                errors = stateResult.errors;
+                value = stateResult.value;
+                setValue = stateResult.setValue;
+            }
 
             // Set errors
             wrapperProps[errorsKey] = errors;

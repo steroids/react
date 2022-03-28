@@ -209,8 +209,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             && !_isEqual(selectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
             setSelectedIdsInternal(newSelectedIds);
         }
-    }, [linearItems, config.selectedIds, primaryKey, prevConfigSelectedIds,
-        selectedItems, config.sourceItems, selectedIds]);
+    }, [config.selectedIds, prevConfigSelectedIds, selectedIds, selectedItems]);
 
     // Global key down handler for navigate on items
     // Support keys:

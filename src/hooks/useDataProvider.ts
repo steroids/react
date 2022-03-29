@@ -2,6 +2,7 @@ import {useSelector} from 'react-redux';
 import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 import _isEqual from 'lodash-es/isEqual';
+import _uniqBy from 'lodash-es/uniqBy';
 
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {usePrevious} from 'react-use';
@@ -210,6 +211,11 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             newItems = normalizeItems(newItems);
             if (!config.query) {
                 setSourceItems(newItems);
+            } else {
+                setSourceItems(_uniqBy([
+                    ...sourceItems,
+                    ...newItems,
+                ], 'id'));
             }
             setItems(newItems);
         };
@@ -233,7 +239,9 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.api, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider, dataProvider.action, dataProvider.onSearch, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
+    }, [autoComplete, components.api, components.http, config.autoFetch,
+        config.dataProvider, config.initialSelectedIds, config.query, dataProvider,
+        dataProvider.action, dataProvider.onSearch, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
 
     return {
         sourceItems,

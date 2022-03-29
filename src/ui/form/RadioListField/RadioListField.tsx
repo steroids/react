@@ -42,6 +42,7 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
     items: {
         id: number | string | boolean,
         label?: string,
+        disabled?: boolean,
         isSelected: boolean,
         isHovered: boolean,
     }[],
@@ -63,6 +64,7 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
         setSelectedIds,
     } = useDataSelect({
         selectedIds: props.selectedIds,
+        selectFirst: props.selectFirst,
         primaryKey: props.primaryKey,
         items,
         inputValue: props.input.value,

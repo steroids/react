@@ -4,11 +4,12 @@ import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import {useCallback, useMemo} from 'react';
 import {useFirstMountState, useMount, usePrevious, useUpdateEffect} from 'react-use';
+import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import {IApiMethod} from '../../../components/ApiComponent';
 import AutoSaveHelper from './AutoSaveHelper';
 import {IFieldProps} from '../Field/Field';
-import {useComponents} from '../../../hooks';
+import {useComponents, useDispatch} from '../../../hooks';
 import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form';
 import validate from '../validate';
 import { formSetSubmitting } from '../../../actions/form';
@@ -43,6 +44,12 @@ export interface IFormProps {
      * @example POST
      */
     actionMethod?: string;
+
+    /**
+     * Текст ошибки при неудачной отправке данных. По-умолчанию: "Не удалось отправить данные"
+     * @example Упс, что-то пошло не так
+     */
+    submitErrorMessage?: string;
 
     /**
      * Шаблон для полей в форме
@@ -241,6 +248,7 @@ function Form(props: IFormProps): JSX.Element {
 
     // Get components and dispatch method
     const components = useComponents();
+    const reduxDispatch = useDispatch();
 
     // Normalize layout
     const layout = useMemo(() => normalizeLayout(props.layout), [props.layout]);
@@ -377,7 +385,7 @@ function Form(props: IFormProps): JSX.Element {
             };
         }
 
-        // Send request
+        // Request options for 2fa
         const options = {
             onTwoFactor: props.onTwoFactor
                 ? async (providerName) => {
@@ -388,19 +396,30 @@ function Form(props: IFormProps): JSX.Element {
                 }
                 : undefined,
         };
-        const response = typeof props.action === 'function'
-            ? await props.action.call(null, components.api, cleanedValues, options)
-            : await components.http.send(
-                props.actionMethod,
-                props.action || window.location.pathname,
-                cleanedValues,
-                options,
-            );
+
+        // Send request
+        let response;
+        try {
+            response = typeof props.action === 'function'
+                ? await props.action.call(null, components.api, cleanedValues, options)
+                : await components.http.send(
+                    props.actionMethod,
+                    props.action || window.location.pathname,
+                    cleanedValues,
+                    options,
+                );
+        } catch (requestError) {
+            console.error(requestError); // eslint-disable-line no-console
+            dispatch(formSetSubmitting(props.formId, false));
+            reduxDispatch(showNotification(props.submitErrorMessage || __('Не удалось отправить данные'), 'danger'));
+            return null;
+        }
 
         dispatch(formSetSubmitting(props.formId, false));
 
         // Skip on 2fa
         if (response.twoFactor) {
+            dispatch(formSetSubmitting(props.formId, false));
             return null;
         }
 
@@ -408,10 +427,12 @@ function Form(props: IFormProps): JSX.Element {
 
         // Event onAfterSubmit
         if (props.onAfterSubmit && props.onAfterSubmit.call(null, cleanedValues, data, response) === false) {
+            dispatch(formSetSubmitting(props.formId, false));
             return null;
         }
 
         if (data.errors) {
+            dispatch(formSetSubmitting(props.formId, false));
             setErrors(data.errors);
             return null;
         }
@@ -424,8 +445,9 @@ function Form(props: IFormProps): JSX.Element {
             //AutoSaveHelper.remove(props.clientStorage, props.formId);
         }
 
+        dispatch(formSetSubmitting(props.formId, false));
         return null;
-    }, [components.api, components.http, components.resource, components.ui, props, setErrors, values, dispatch]);
+    }, [dispatch, props, values, components.ui, components.resource, components.http, components.api, reduxDispatch, setErrors]);
 
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);

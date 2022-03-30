@@ -12,7 +12,7 @@ import {
     FORM_SET_SUBMITTING,
     FORM_RESET,
     FORM_ARRAY_ADD,
-    FORM_ARRAY_REMOVE,
+    FORM_ARRAY_REMOVE, FORM_DESTROY,
 } from '../actions/form';
 
 /**
@@ -72,6 +72,9 @@ export function reducerItem(state, action) {
                 ...state,
                 values: _cloneDeep(state.initialValues || {}),
             };
+
+        case FORM_DESTROY:
+            return null;
 
         case FORM_ARRAY_ADD:
             // eslint-disable-next-line no-case-declarations

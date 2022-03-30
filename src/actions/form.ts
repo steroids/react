@@ -1,6 +1,7 @@
 export const FORM_INITIALIZE = '@form/initialize';
 export const FORM_CHANGE = '@form/change';
 export const FORM_RESET = '@form/reset';
+export const FORM_DESTROY = '@form/destroy';
 export const FORM_SET_ERRORS = '@form/set_errors';
 export const FORM_SUBMIT = '@form/submit';
 export const FORM_SET_SUBMITTING = '@form/set_submitting';
@@ -67,6 +68,15 @@ export const formSetSubmitting = (formId, isSubmitting) => ({
  */
 export const formReset = (formId) => ({
     type: FORM_RESET,
+    formId,
+});
+
+/**
+ * Удаление данных формы из redux хранилища
+ * @param formId
+ */
+export const formDestroy = (formId) => ({
+    type: FORM_DESTROY,
     formId,
 });
 

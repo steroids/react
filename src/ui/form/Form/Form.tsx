@@ -3,7 +3,7 @@ import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import {useCallback, useMemo} from 'react';
-import {useFirstMountState, useMount, usePrevious, useUpdateEffect} from 'react-use';
+import {useFirstMountState, useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import {IApiMethod} from '../../../components/ApiComponent';
@@ -12,7 +12,7 @@ import {IFieldProps} from '../Field/Field';
 import {useComponents, useDispatch} from '../../../hooks';
 import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form';
 import validate from '../validate';
-import { formSetSubmitting } from '../../../actions/form';
+import {formDestroy, formSetSubmitting} from '../../../actions/form';
 
 /**
  * Form
@@ -180,6 +180,12 @@ export interface IFormProps {
      */
     isBordered?: boolean,
 
+    /**
+     * Очищать ли данные формы с redux хранилища при размонтировании компонента. По-умолчанию - false
+     * @example false
+     */
+    autoDestroy?: boolean,
+
     [key: string]: any;
 }
 
@@ -321,6 +327,13 @@ function Form(props: IFormProps): JSX.Element {
             //AutoSaveHelper.save(components.clientStorage, props.formId, values);
         }
     }, [props.autoSave, values]);
+
+    // Auto destroy
+    useUnmount(() => {
+        if (props.autoDestroy) {
+            dispatch(formDestroy(props.formId));
+        }
+    });
 
     // OnChange handler
     useUpdateEffect(() => {

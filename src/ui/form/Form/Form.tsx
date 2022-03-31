@@ -46,7 +46,7 @@ export interface IFormProps {
     actionMethod?: string;
 
     /**
-     * Текст ошибки при неудачной отправке данных. По-умолчанию: "Не удалось отправить данные"
+     * Текст ошибки при неудачной отправке данных. По-умолчанию: "Ошибка сервера"
      * @example Упс, что-то пошло не так
      */
     submitErrorMessage?: string;
@@ -424,11 +424,14 @@ function Form(props: IFormProps): JSX.Element {
         } catch (requestError) {
             console.error(requestError); // eslint-disable-line no-console
             dispatch(formSetSubmitting(props.formId, false));
-            reduxDispatch(showNotification(props.submitErrorMessage || __('Не удалось отправить данные'), 'danger'));
+            reduxDispatch(
+                showNotification(
+                    props.submitErrorMessage || __('Ошибка сервера'),
+                    'danger',
+                ),
+            );
             return null;
         }
-
-        dispatch(formSetSubmitting(props.formId, false));
 
         // Skip on 2fa
         if (response.twoFactor) {
@@ -449,6 +452,10 @@ function Form(props: IFormProps): JSX.Element {
             setErrors(data.errors);
             return null;
         }
+
+        // Clean errors
+        setErrors(null);
+
         if (props.onComplete) {
             props.onComplete.call(null, cleanedValues, data, response);
         }
@@ -460,7 +467,8 @@ function Form(props: IFormProps): JSX.Element {
 
         dispatch(formSetSubmitting(props.formId, false));
         return null;
-    }, [dispatch, props, values, components.ui, components.resource, components.http, components.api, reduxDispatch, setErrors]);
+    }, [dispatch, props, values, components.ui, components.resource,
+        components.http, components.api, reduxDispatch, setErrors]);
 
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);

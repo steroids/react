@@ -110,6 +110,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         timePanelViewProps,
         size: props.size,
         icon: props.icon,
+        label: props.label,
         errors: props.errors,
         className: props.className,
         showRemove: props.showRemove,

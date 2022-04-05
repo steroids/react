@@ -230,6 +230,7 @@ export default function fieldWrapper<T = any>(
             return components.ui.renderView(FieldLayout, {
                 ...attributesProps,
                 layout,
+                size: props.size || context.size || null,
                 required: _has(props, 'required') ? props.required : metaProps.required,
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,

@@ -219,6 +219,7 @@ export interface IFormContext {
     model?: any;
     prefix?: string | boolean;
     layout?: FormLayout;
+    size?: Size;
     provider?: any,
     reducer?: { dispatch: React.Dispatch<any>, select: any },
     dispatch?: any,
@@ -482,11 +483,12 @@ function Form(props: IFormProps): JSX.Element {
         formId: props.formId,
         model: props.model,
         prefix: props.prefix,
+        size: props.size,
         layout: props.layout,
         provider,
         reducer,
         dispatch,
-    }), [dispatch, props.formId, props.layout, props.model, props.prefix, provider, reducer]);
+    }), [dispatch, props.formId, props.layout, props.model, props.prefix, props.size, provider, reducer]);
 
     // Wait initialization (only for redux)
     if (values === undefined) {

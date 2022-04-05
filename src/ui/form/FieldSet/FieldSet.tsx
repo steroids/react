@@ -52,10 +52,12 @@ function FieldSet(props: IFieldSetProps): JSX.Element {
         prefix: [context.prefix, props.prefix]
             .filter(Boolean)
             .join('.'),
+        size: props.size || context.size,
         layout: mergeLayoutProp(context.layout, props.layout),
         provider: context.provider,
         reducer: context.reducer,
-    }), [context.provider, context.reducer, props.formId, props.layout, props.model, props.prefix]);
+    }), [context.formId, context.layout, context.model, context.prefix, context.provider, context.reducer,
+        context.size, props.formId, props.layout, props.model, props.prefix, props.size]);
 
     const FieldSetView = props.view || components.ui.getView('form.FieldSetView');
 

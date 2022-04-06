@@ -22,7 +22,7 @@ export interface IListProps extends IListConfig {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: React.ComponentType;
+    view?: CustomView;
 
     /**
      * Дополнительный CSS-класс для элемента отображения

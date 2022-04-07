@@ -35,7 +35,7 @@ export function reducerItem(state, action) {
                 isInvalid: false,
                 isSubmitting: false,
                 ...state,
-                values: state?.values || _cloneDeep(action.values || {}),
+                values: _cloneDeep(action.values || {}) || state?.values,
                 initialValues: action.values || state?.values || null,
             };
 

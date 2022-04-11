@@ -47,13 +47,19 @@ export default class LocaleComponent {
      * @param format Формат
      */
     moment(date: string = undefined, format: string = undefined) {
-        if (
-            this.backendTimeZone
-            && date
-            && date.length === 19
-            && moment(date, 'YYYY-MM-DD HH:mm:ss').isValid()
-        ) {
-            date += this.backendTimeZone;
+        if (date && this.backendTimeZone) {
+            if (
+                date.length === 16
+                && moment(date, 'YYYY-MM-DD HH:mm').isValid()
+            ) {
+                date += ':00';
+            }
+            if (
+                date.length === 19
+                && moment(date, 'YYYY-MM-DD HH:mm:ss').isValid()
+            ) {
+                date += this.backendTimeZone;
+            }
         }
         return moment(date, format).locale(this.language);
     }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
+import _cloneDeep from 'lodash-es/cloneDeep';
 import {useCallback, useMemo} from 'react';
 import {useFirstMountState, useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
@@ -362,7 +363,7 @@ function Form(props: IFormProps): JSX.Element {
                 });
         }
 
-        let cleanedValues = cleanEmptyObject(values);
+        let cleanedValues = _cloneDeep(cleanEmptyObject(values));
 
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {

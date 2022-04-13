@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useCallback, useRef} from 'react';
-import {useClickAway} from 'react-use';
+import {useClickAway, useEvent} from 'react-use';
 import {useComponents} from '../../../hooks';
 import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
 import useAbsolutePositioning, {
@@ -25,6 +25,12 @@ export interface IDropDownProps extends IAbsolutePositioningInputProps {
      * @example MyCustomView
      */
     view?: any,
+
+    /**
+     * В каком случае закрывать DropDown. По-умолчанию - `click-away`
+     * @example click-any
+     */
+    closeMode?: 'click-away' | 'click-any',
 }
 
 export interface IDropDownViewProps extends IDropDownProps, IAbsolutePositioningOutputProps {
@@ -56,14 +62,26 @@ function DropDown(props: IDropDownProps): JSX.Element {
     // Outside click -> close
     const forwardedRef = useRef(null);
     useClickAway(forwardedRef, (event) => {
-        if (isManualControl) {
-            if (!childRef.current.contains(event.target) && props.onClose) {
-                props.onClose();
+        if (props.closeMode === 'click-away') {
+            if (isManualControl) {
+                if (!childRef.current.contains(event.target) && props.onClose) {
+                    props.onClose();
+                }
+            } else {
+                onHide();
             }
-        } else {
-            onHide();
         }
     });
+
+    // Any click -> close
+    useEvent(
+        'click',
+        useCallback(() => {
+            if (isComponentExist && isComponentVisible && props.closeMode === 'click-any') {
+                onHide();
+            }
+        }, [isComponentExist, isComponentVisible, onHide, props.closeMode]),
+    );
 
     const calculatePosition = useCallback((componentSize) => {
         calculateAbsolutePosition(position, childRef.current, componentSize);
@@ -103,6 +121,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
                         style={style}
                         calculatePosition={calculatePosition}
                         isComponentVisible={isComponentVisible}
+                        onClose={onHide}
                     />
                 </TooltipInnerPortal>
             )}

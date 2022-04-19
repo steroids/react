@@ -228,7 +228,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             fetchRemote(true);
         } else if (!_isEqual(prevValues, config.initialSelectedIds)) {
             fetchRemote(false);
-        } else if (autoComplete.enable) {
+        } else if (autoComplete.enable || (config.autoFetch && isAutoFetchedRef.current === true)) {
             if (delayTimerRef.current) {
                 clearTimeout(delayTimerRef.current);
             }

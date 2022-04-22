@@ -51,7 +51,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
     let initialFiles = props.initialFiles;
     if (!initialFiles) {
         // Find in form values
-        initialFiles = form.formSelector(state => _get(state, ['values', props.input.name.replace(/Ids?$/, '')]));
+        initialFiles = form.formSelector(state => _get(state, 'values.' + props.input.name.replace(/Ids?$/, '')));
     }
     useEffect(() => {
         if (initialFiles) {

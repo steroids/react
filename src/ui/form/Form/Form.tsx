@@ -340,9 +340,9 @@ function Form(props: IFormProps): JSX.Element {
     // OnChange handler
     useUpdateEffect(() => {
         if (props.onChange) {
-            props.onChange(values);
+            props.onChange.call(null, values);
         }
-    }, [props, values]);
+    }, [props.onChange, values]);
 
     // OnSubmit handler
     const onSubmit = useCallback(async (e = null) => {

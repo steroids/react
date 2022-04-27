@@ -27,7 +27,7 @@ export interface IFetchResult {
             value: string
         },
         [key: string]: unknown
-    },
+    } | any,
     isLoading: boolean,
     fetch?: (newParams?: Record<string, unknown>) => void,
 }

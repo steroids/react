@@ -89,6 +89,13 @@ export const getLinearItems = (items, groupAttribute) => {
     return result;
 };
 
+const isIdExists = id => {
+    if (typeof id === 'boolean') {
+        return true;
+    }
+    return !!id;
+};
+
 export default function useDataSelect(config: IDataSelectConfig): IDataSelectResult {
     // Get primary key
     const primaryKey = config.primaryKey || defaultProps.primaryKey;
@@ -118,7 +125,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         && initialSelectedIds.length > 0
             ? initialSelectedIds
                 .map(selectedId => linearItems.find(item => item.id === selectedId))
-                .filter(Boolean)
+                .filter(isIdExists)
             : [],
         [initialSelectedIds, linearItems],
     );
@@ -140,7 +147,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             setSelectedIdsInternal(ids.sort());
         } else {
             const id = ids;
-            if (!id) {
+            if (!isIdExists(id)) {
                 setSelectedIdsInternal([]);
             } else if (config.multiple) {
                 if (selectedIds.indexOf(id) !== -1) {

@@ -98,7 +98,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
             ],
             props.displayFormat,
             false,
-            true,
+            props.useUTC,
         ) || '',
         [props.displayFormat, props.input.value, props.valueFormat],
     );
@@ -123,7 +123,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         value = value.replace(/[^0-9:. ]/g, '');
 
         setDisplayValue(value);
-        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, true);
+        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC);
         const newValue = parsedValue || !value ? parsedValue || null : false;
         if (newValue && newValue !== props.input.value) {
             props.input.onChange.call(null, newValue);
@@ -131,7 +131,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
                 props.onChange.call(null, value);
             }
         }
-    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat]);
+    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat, props.useUTC]);
 
     // Dropdown opened state
     const [isOpened, setIsOpened] = useState(false);

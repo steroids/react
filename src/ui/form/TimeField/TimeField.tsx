@@ -78,6 +78,7 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         placeholder: props.placeholder,
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
+        useUTC: props.useUTC,
     });
 
     const timePanelViewProps = useMemo(() => ({

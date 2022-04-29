@@ -352,18 +352,36 @@ function Form(props: IFormProps): JSX.Element {
         if (e) {
             e.preventDefault();
         }
+        let cleanedValues = _cloneDeep(values);
 
         // Append non touched fields to values object
         if (props.formId) {
             Object.keys(components.ui.getRegisteredFields(props.formId) || {})
                 .forEach(key => {
-                    if (_isUndefined(_get(values, key))) {
-                        _set(values, key, null);
+                    // Don't set null values for keys in empty array items
+                    const keyParts = [];
+                    let arrayKey;
+                    key.split('.').find(keyPart => {
+                        if (keyParts.length > 0 && Array.isArray(_get(cleanedValues, keyParts))) {
+                            keyParts.push(keyPart);
+                            arrayKey = keyParts.join('.');
+                            return true;
+                        }
+                        keyParts.push(keyPart);
+                        return false;
+                    });
+                    if (arrayKey && !_get(cleanedValues, arrayKey)) {
+                        return;
+                    }
+
+                    if (_isUndefined(_get(cleanedValues, key))) {
+                        _set(cleanedValues, key, null);
                     }
                 });
         }
 
-        let cleanedValues = _cloneDeep(cleanEmptyObject(values));
+        // Clean
+        cleanedValues = cleanEmptyObject(cleanedValues);
 
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {

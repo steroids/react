@@ -58,21 +58,32 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
             uploader.queue.add(
                 [].concat(initialFiles || [])
                     .filter(item => !!item.uid)
-                    .map(
-                        item => new File({
-                            path: item.title || item.label || item.uid || item.id,
+                    .map(item => {
+                        const path = item.title || item.label || item.uid || item.id;
+                        const resultHttpMessage = {
+                            id: item.id || item.uid,
+                            images: item.thumbnailUrl
+                                ? [{url: item.thumbnailUrl}]
+                                : null,
+                        };
+
+                        const file = uploader.queue.getByUid(item.uid);
+                        if (file) {
+                            file.setPath(path);
+                            file.setResultHttpMessage(resultHttpMessage);
+                            return false;
+                        }
+
+                        return new File({
+                            path,
                             status: File.STATUS_END,
                             result: File.RESULT_SUCCESS,
                             resultHttpStatus: 200,
-                            resultHttpMessage: {
-                                id: item.id || item.uid,
-                                images: item.thumbnailUrl
-                                    ? [{url: item.thumbnailUrl}]
-                                    : null,
-                            },
+                            resultHttpMessage,
                             uid: item.uid,
-                        }),
-                    ),
+                        });
+                    })
+                    .filter(Boolean),
             );
             forceUpdate();
         }

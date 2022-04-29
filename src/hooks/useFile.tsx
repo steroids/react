@@ -55,9 +55,19 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
     }
     useEffect(() => {
         if (initialFiles) {
+            const normalizedInitialFiles = [].concat(initialFiles || [])
+                .filter(item => !!item.uid);
+
+            // Remove not exists
+            const toDelete = uploader.queue.getFiles()
+                .filter(file => !normalizedInitialFiles.find(item => item.uid === file.getUid()));
+            if (toDelete.length > 0) {
+                uploader.queue.remove(toDelete);
+            }
+
+            // Add or update
             uploader.queue.add(
-                [].concat(initialFiles || [])
-                    .filter(item => !!item.uid)
+                normalizedInitialFiles
                     .map(item => {
                         const path = item.title || item.label || item.uid || item.id;
                         const resultHttpMessage = {
@@ -85,6 +95,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
                     })
                     .filter(Boolean),
             );
+
             forceUpdate();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

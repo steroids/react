@@ -71,17 +71,16 @@ function DropDown(props: IDropDownProps): JSX.Element {
                 onHide();
             }
         }
-    });
+    }, ['mousedown', 'touchstart']);
 
     // Any click -> close
-    useEvent(
-        'click',
-        useCallback(() => {
-            if (isComponentExist && isComponentVisible && props.closeMode === 'click-any') {
-                onHide();
-            }
-        }, [isComponentExist, isComponentVisible, onHide, props.closeMode]),
-    );
+    const onAnyClick = useCallback(() => {
+        if (isComponentExist && isComponentVisible && props.closeMode === 'click-any') {
+            onHide();
+        }
+    }, [isComponentExist, isComponentVisible, onHide, props.closeMode]);
+    useEvent('mousedown', onAnyClick);
+    useEvent('touchstart', onAnyClick);
 
     const calculatePosition = useCallback((componentSize) => {
         calculateAbsolutePosition(position, childRef.current, componentSize);
@@ -135,6 +134,7 @@ DropDown.defaultProps = {
     defaultVisible: false,
     gap: 15,
     position: 'bottom',
+    closeMode: 'click-away',
 };
 
 export default DropDown;

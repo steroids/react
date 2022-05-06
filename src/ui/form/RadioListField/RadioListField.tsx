@@ -85,6 +85,7 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
     // Sync with form
     useEffect(() => {
         props.input.onChange.call(null, selectedIds[0]);
+        props.onChange?.call(null, selectedIds[0]);
     }, [props.input.onChange, selectedIds]);
 
     return components.ui.renderView(props.view || 'form.RadioListFieldView', {

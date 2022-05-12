@@ -8,7 +8,7 @@ export interface IBlankFieldProps extends IFieldWrapperInputProps {
 }
 
 function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    return <span>{props.text || props.children}</span>;
+    return <span>{props.text || props.children || props.input?.value}</span>;
 }
 
 export default fieldWrapper<IBlankFieldProps>('BlankField', BlankField);

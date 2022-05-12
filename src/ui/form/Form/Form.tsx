@@ -196,6 +196,7 @@ export interface IFormViewProps {
     onSubmit: any,
     className?: CssClassName,
     isBordered?: boolean,
+    autoFocus?: boolean,
     style?: any,
     layout?: {
         layout: FormLayoutName | boolean,
@@ -307,20 +308,6 @@ function Form(props: IFormProps): JSX.Element {
     useUpdateEffect(() => {
         updateQuery(values);
     }, [updateQuery, values]);
-
-    // Auto focus
-    useMount(() => {
-        if (props.autoFocus && process.env.IS_WEB) {
-            // TODO
-            /*const element: any = findDOMNode(this);
-            const inputEl = element.querySelector('input:not([type=hidden])');
-            setTimeout(() => {
-                if (inputEl && inputEl.focus) {
-                    inputEl.focus();
-                }
-            }, 10);*/
-        }
-    });
 
     // Auto save
     useUpdateEffect(() => {
@@ -530,6 +517,7 @@ function Form(props: IFormProps): JSX.Element {
                     isBordered: props.isBordered,
                     className: props.className,
                     style: props.style,
+                    autoFocus: props.autoFocus,
                 })
                 : props.children}
         </FormContext.Provider>

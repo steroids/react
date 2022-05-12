@@ -135,7 +135,7 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
                     uid: file.getUid(),
                     fileId: data.id || null,
                     title: file.getName(),
-                    size: props.size,
+                    size: data.size || data.fileSize,
                     disabled: props.disabled,
                     showRemove: props.showRemove,
                     onRemove: () => onRemove(file),

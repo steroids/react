@@ -116,6 +116,7 @@ TimeField.defaultProps = {
     showRemove: true,
     type: 'text',
     valueFormat: 'HH:mm',
+    useUTC: true,
 };
 
 export default fieldWrapper<ITimeFieldProps>('TimeField', TimeField);

@@ -4,7 +4,7 @@ import {convertDate} from '../../../utils/calendar';
 import {IDateInputStateInput} from '../../form/DateField/useDateInputState';
 
 interface IUseDateTimeProps extends
-    Pick<IDateInputStateInput, 'displayFormat' | 'valueFormat' | 'input'>
+    Pick<IDateInputStateInput, 'displayFormat' | 'valueFormat' | 'input' | 'useUTC'>
 {
     dateTimeSeparator: string,
 }
@@ -22,7 +22,7 @@ export default function useDateTime(props:IUseDateTimeProps) {
         [props.valueFormat, props.displayFormat],
         dateValueFormat,
         false,
-        true,
+        props.useUTC,
     ), [dateValueFormat, props.displayFormat, props.input.value, props.valueFormat]);
 
     const timeValue = useMemo(() => convertDate(
@@ -30,7 +30,7 @@ export default function useDateTime(props:IUseDateTimeProps) {
         [props.displayFormat, props.valueFormat],
         timeValueFormat,
         false,
-        true,
+        props.useUTC,
     ), [props.displayFormat, props.input.value, props.valueFormat, timeValueFormat]);
 
     // Handler for calendar and time picker changes
@@ -38,14 +38,14 @@ export default function useDateTime(props:IUseDateTimeProps) {
         const result = date + props.dateTimeSeparator + (timeValue || '00:00');
         props.input.onChange.call(
             null,
-            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, true),
+            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, props.useUTC),
         );
     }, [props.dateTimeSeparator, props.input.onChange, props.valueFormat, timeValue]);
     const onTimeSelect = useCallback(time => {
         const result = (dateValue || moment().format(dateValueFormat)) + props.dateTimeSeparator + time;
         props.input.onChange.call(
             null,
-            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, true),
+            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, props.useUTC),
         );
     }, [dateValue, dateValueFormat, props.dateTimeSeparator, props.input.onChange, props.valueFormat]);
 

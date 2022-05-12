@@ -71,6 +71,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
                     .map(item => {
                         const path = item.title || item.label || item.uid || item.id;
                         const resultHttpMessage = {
+                            ...item,
                             id: item.id || item.uid,
                             images: item.thumbnailUrl
                                 ? [{url: item.thumbnailUrl}]

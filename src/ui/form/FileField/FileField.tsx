@@ -142,6 +142,7 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
                     error: null,
                     image: null,
                     progress: null,
+                    item: data,
                 };
                 // Add error
                 if (file.getResult() === File.RESULT_ERROR) {

@@ -30,6 +30,7 @@ export interface IFetchResult {
     } | any,
     isLoading: boolean,
     fetch?: (newParams?: Record<string, unknown>) => void,
+    error?: Record<string, any>,
 }
 
 export const normalizeConfig = config => (
@@ -104,6 +105,7 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
 
     // State for data and loading flag
     const [data, setData] = useState(preloadedDataByConfigId || null);
+    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(!!config && !data);
 
     // Cancel tokens
@@ -128,7 +130,13 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
 
         if (config) {
             setIsLoading(true);
-            setData(await fetchData(config, components, addCancelToken));
+
+            try {
+                setData(await fetchData(config, components, addCancelToken));
+            } catch (error) {
+                setError(error.response);  
+            }
+            
             setIsLoading(false);
         }
     }, [components, config]);
@@ -144,5 +152,5 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
         fetch();
     }, [fetch]);
 
-    return {data, isLoading, fetch};
+    return {data, isLoading, fetch, error};
 }

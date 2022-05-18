@@ -30,7 +30,7 @@ export interface IFetchResult {
     } | any,
     isLoading: boolean,
     fetch?: (newParams?: Record<string, unknown>) => void,
-    axiosError?: AxiosError,
+    axiosError: AxiosError | null,
 }
 
 export const normalizeConfig = config => (

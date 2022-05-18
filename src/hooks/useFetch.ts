@@ -1,7 +1,7 @@
 import {useCallback, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
 import _trim from 'lodash-es/trim';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import {useComponents, useSsr} from './index';
 import {IComponents} from '../providers/ComponentsProvider';
 import {IApiMethod} from '../components/ApiComponent';
@@ -30,6 +30,7 @@ export interface IFetchResult {
     } | any,
     isLoading: boolean,
     fetch?: (newParams?: Record<string, unknown>) => void,
+    axiosError: AxiosError | null,
 }
 
 export const normalizeConfig = config => (
@@ -104,6 +105,7 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
 
     // State for data and loading flag
     const [data, setData] = useState(preloadedDataByConfigId || null);
+    const [axiosError, setAxiosError] = useState(null);
     const [isLoading, setIsLoading] = useState(!!config && !data);
 
     // Cancel tokens
@@ -128,7 +130,15 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
 
         if (config) {
             setIsLoading(true);
-            setData(await fetchData(config, components, addCancelToken));
+
+            try {
+                setData(await fetchData(config, components, addCancelToken));
+            } catch (error) {
+                if (error.isAxiosError) {
+                    setAxiosError(error);
+                }  
+            }
+            
             setIsLoading(false);
         }
     }, [components, config]);
@@ -144,5 +154,5 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
         fetch();
     }, [fetch]);
 
-    return {data, isLoading, fetch};
+    return {data, isLoading, fetch, axiosError};
 }

@@ -31,12 +31,17 @@ export interface IModalProps {
     controls?: IControlItem[],
 
     /**
-     * Время, через которое произойдет закрытие Modal.
-     * В этот отрезок времени должны происходить все анимации закрытия компонента.
+     * Время, в течение которого будет происходить анимация закрытия Modal.
      * Переопределяет отрезок времени, заданный в ModalPortal
      * @example 300
      */
     closeTimeoutMs?: number,
+
+    /**
+     * Время в миллисекундах, через которое автоматически произойдет закрытие Modal.
+     * @example 1000
+     */
+    closeAfterMs?: number,
 
     /**
      * Группа Modal
@@ -106,6 +111,12 @@ function Modal(props: IModalProps): JSX.Element {
 
     const ModalView = props.view || components.ui.getView('modal.ModalView');
     const ContentComponent = props.component;
+
+    React.useEffect(() => {
+        if (props.closeAfterMs) {
+            setTimeout(() => props.onClose(), props.closeAfterMs);
+        }
+    }, []);
 
     return (
         <ModalView {...props}>

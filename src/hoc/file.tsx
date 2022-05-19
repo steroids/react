@@ -39,7 +39,7 @@ export interface IFileHocInput {
     uploaderConfig?: {
         useFormData?: boolean,
         fileFieldName?: string,
-    }
+    } | any
 }
 
 export interface IFileHocOutput {

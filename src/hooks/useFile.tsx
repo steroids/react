@@ -9,7 +9,7 @@ import _difference from 'lodash-es/difference';
 import buildURL from 'axios/lib/helpers/buildURL';
 import {IFileHocInput, IFileHocOutput} from '../hoc/file';
 import useInitial from './useInitial';
-import {useForm} from './index';
+import {useComponents, useForm} from './index';
 
 const imagesMimeTypes = [
     'image/gif',
@@ -27,11 +27,18 @@ function generateBackendUrl(props) {
 }
 
 export default function useFile(props: IFileHocInput): IFileHocOutput {
+    const {http} = useComponents();
+    http.getAccessToken(); // TODO Run promise..
+
     const uploader = useInitial(() => new FileUp({
         dropArea: {},
         backendUrl: generateBackendUrl(props),
         uploaderConfig: {
             ...props.uploaderConfig,
+            headers: {
+                ...props.uploaderConfig?.headers,
+                Authorization: 'Bearer ' + http._accessToken, // TODO how to get access token wuthout promise?
+            },
         },
         ...props.uploader,
         form: {

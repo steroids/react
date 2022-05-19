@@ -38,7 +38,7 @@ export interface IModalProps {
     closeTimeoutMs?: number,
 
     /**
-     * Время, через которое автоматически произойдет закрытие Modal.
+     * Время в миллисекундах, через которое автоматически произойдет закрытие Modal.
      * @example 1000
      */
     closeAfterMs?: number,

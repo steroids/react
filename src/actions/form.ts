@@ -1,6 +1,7 @@
 export const FORM_INITIALIZE = '@form/initialize';
 export const FORM_CHANGE = '@form/change';
 export const FORM_RESET = '@form/reset';
+export const FORM_HARD_RESET = '@form/hard_reset';
 export const FORM_DESTROY = '@form/destroy';
 export const FORM_SET_ERRORS = '@form/set_errors';
 export const FORM_SUBMIT = '@form/submit';
@@ -68,6 +69,15 @@ export const formSetSubmitting = (formId, isSubmitting) => ({
  */
 export const formReset = (formId) => ({
     type: FORM_RESET,
+    formId,
+});
+
+/**
+ * Полный сброс значений формы
+ * @param formId
+ */
+export const formHardReset = (formId) => ({
+    type: FORM_HARD_RESET,
     formId,
 });
 

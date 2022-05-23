@@ -11,8 +11,10 @@ import {
     FORM_SUBMIT,
     FORM_SET_SUBMITTING,
     FORM_RESET,
+    FORM_HARD_RESET,
     FORM_ARRAY_ADD,
-    FORM_ARRAY_REMOVE, FORM_DESTROY,
+    FORM_ARRAY_REMOVE,
+    FORM_DESTROY,
 } from '../actions/form';
 
 /**
@@ -71,6 +73,16 @@ export function reducerItem(state, action) {
             return {
                 ...state,
                 values: _cloneDeep(state.initialValues || {}),
+            };
+
+        case FORM_HARD_RESET:
+            return {
+                ...state,
+                initialValues: null,
+                values: {},
+                errors: {},
+                isInvalid: false,
+                isSubmitting: false,
             };
 
         case FORM_DESTROY:

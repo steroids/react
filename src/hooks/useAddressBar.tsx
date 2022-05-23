@@ -1,4 +1,5 @@
 import _get from 'lodash-es/get';
+import _isEmpty from 'lodash-es/isEmpty';
 import queryString from 'query-string';
 import {replace} from 'connected-react-router';
 import _toInteger from 'lodash-es/toInteger';
@@ -147,14 +148,14 @@ export default function useAddressBar(config: IAddressBarConfig): IAddressBarOut
     const updateQuery = useCallback(values => {
         if (config.enable) {
             const normalizedValues = Object.keys(values).reduce((obj, key) => {
-                if (values[key] !== undefined) {
+                if (values[key] !== undefined && !_isEmpty(values[key])) {
                     obj[key] = values[key];
                 }
                 return obj;
             }, {});
             if (!_isEqual(initialQueryRef.current, normalizedValues)) {
                 initialQueryRef.current = normalizedValues;
-                dispatch(queryReplace(config.model, location, values, config.useHash));
+                dispatch(queryReplace(config.model, location, normalizedValues, config.useHash));
             }
         }
     }, [config.enable, config.model, config.useHash, dispatch, location]);

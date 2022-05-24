@@ -73,7 +73,7 @@ export const formReset = (formId) => ({
 });
 
 /**
- * Полный сброс значений формы
+ * Сброс данных формы, включая первоначальное состояние (initialValues)
  * @param formId
  */
 export const formHardReset = (formId) => ({

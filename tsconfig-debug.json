@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./../sfu-operator-frontend/node_modules/@steroidsjs/core",
+    "watch": true
+  }
+}

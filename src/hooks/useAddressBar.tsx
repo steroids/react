@@ -147,6 +147,7 @@ export default function useAddressBar(config: IAddressBarConfig): IAddressBarOut
     const dispatch = useDispatch();
     const updateQuery = useCallback(values => {
         if (config.enable) {
+            // Remove all 'undefined' values or empty objects/arrays from passed form values
             const normalizedValues = Object.keys(values).reduce((obj, key) => {
                 const value = values[key];
                 const isValidValue = typeof value === 'object'

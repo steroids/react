@@ -211,9 +211,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             }
         });
         newSelectedIds.sort();
-
-        if (!_isEqual(prevConfigSelectedIds, newSelectedIds)
-            && !_isEqual(selectedIds, newSelectedIds) && newSelectedIds.length !== 0) {
+        if (!_isEqual(prevConfigSelectedIds, newSelectedIds) && !_isEqual(selectedIds, newSelectedIds)) {
             setSelectedIdsInternal(newSelectedIds);
         }
     }, [config.selectedIds, prevConfigSelectedIds, selectedIds, selectedItems]);

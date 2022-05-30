@@ -2,6 +2,7 @@ import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _isObject from 'lodash-es/isObject';
+import _isEmpty from 'lodash-es/isEmpty';
 import {set as _set, delete as _delete} from 'dot-prop-immutable';
 
 import {
@@ -61,7 +62,11 @@ export function reducerItem(state, action) {
             return _set(state, 'values.' + action.nameOrObject, action.value);
 
         case FORM_SET_ERRORS:
-            return _set(state, 'errors', action.errors);
+            return {
+                ...state,
+                errors: action.errors,
+                isInvalid: !_isEmpty(action.errors),
+            }
 
         case FORM_SUBMIT:
             return _set(state, 'submitCounter', (state.submitCounter || 0) + 1);

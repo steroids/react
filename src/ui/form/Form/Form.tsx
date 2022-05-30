@@ -4,7 +4,7 @@ import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import {useCallback, useMemo} from 'react';
-import {useFirstMountState, useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import {IApiMethod} from '../../../components/ApiComponent';
@@ -194,6 +194,7 @@ export interface IFormViewProps {
     submitLabel?: string;
     fields?: (string | IFieldProps)[],
     onSubmit: any,
+    isInvalid?: boolean,
     className?: CssClassName,
     isBordered?: boolean,
     autoFocus?: boolean,

@@ -195,7 +195,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             );
             const result = searchHandler(dataProvider.action, {
                 query: config.query,
-                ...(isAuto ? {ids: config.initialSelectedIds} : null),
+                ...(isAuto ? {ids: config.initialSelectedIds} : null), // deprecated logic
+                ...(config.initialSelectedIds?.length > 0 ? {withIds: config.initialSelectedIds} : null),
                 ...config.dataProvider.params,
             });
 

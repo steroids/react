@@ -46,11 +46,24 @@ export const normalizeItems = (sourceItems: ICrudItem[] | { [key: string]: ICrud
             onClick: async (e, props) => {
                 if (props.restApi) {
                     await props.restApi.delete(props.components.api, {[props.primaryKey]: props.recordId});
-                } else if (props.restUrl) {
-                    await props.components.http.delete(`${props.restUrl}/${props.recordId}`);
+                    props.goToAction(CRUD_ACTION_INDEX);
+                    return;
                 }
 
-                props.goToAction(CRUD_ACTION_INDEX);
+                if (props.restUrl) {
+                    await props.components.http.delete(`${props.restUrl}/${props.recordId}`)
+                        .then(() => props.goToAction(CRUD_ACTION_INDEX))
+                        .catch((error) => {
+                            if (props.errorHandler) {
+                                props.errorHandler(error, props.components.store.dispatch);
+                            } else {
+                                throw error;
+                            }
+                        });
+                    return;
+                }
+
+                throw new Error('Either restApi or restUrl must be set');
             },
         },
     };

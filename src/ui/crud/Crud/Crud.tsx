@@ -55,6 +55,7 @@ export interface ICrudClickProps {
     record?: Record<string, unknown>,
     components: IComponents,
     goToAction: (nextAction: string) => any,
+    errorHandler?: (error, dispatch: any) => void,
 }
 
 export interface ICrudProps {
@@ -76,7 +77,7 @@ export interface ICrudProps {
     form?: IFormProps | React.ReactNode,
     detail?: any, //TODO IDetailProps,
     crudView?: CustomView,
-
+    errorHandler?: (error, dispatch: any) => void,
     [key: string]: any,
 }
 
@@ -189,6 +190,7 @@ function Crud(props: ICrudProps): JSX.Element {
         record,
         components,
         goToAction,
+        errorHandler: props.errorHandler,
     }), [components, goToAction, props.crudId, props.mode, props.primaryKey, props.queryKey,
         props.restApi, props.restUrl, record, recordId, routeAction, routeId, routeParams]);
 

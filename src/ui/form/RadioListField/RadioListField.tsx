@@ -7,6 +7,8 @@ import fieldWrapper, {
 } from '../../form/Field/fieldWrapper';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
+import {usePrevious} from "react-use";
+import _isEqual from 'lodash-es/isEqual';
 
 /**
  * RadioListField
@@ -53,6 +55,11 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
 function RadioListField(props: IRadioListFieldProps): JSX.Element {
     const components = useComponents();
 
+    const inputSelectedIds = useMemo(
+        () => props.selectedIds || [].concat(props.input.value || []),
+        [props.input.value, props.selectedIds],
+    );
+
     // Data provider
     const {items} = useDataProvider({
         items: props.items,
@@ -63,7 +70,7 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
         selectedIds,
         setSelectedIds,
     } = useDataSelect({
-        selectedIds: props.selectedIds,
+        selectedIds: inputSelectedIds,
         selectFirst: props.selectFirst,
         primaryKey: props.primaryKey,
         items,
@@ -83,9 +90,14 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
     }), [props.disabled, props.input, props.inputProps]);
 
     // Sync with form
+    const prevSelectedIds = usePrevious(selectedIds);
     useEffect(() => {
-        props.input.onChange.call(null, selectedIds[0]);
-        props.onChange?.call(null, selectedIds[0]);
+        if (!_isEqual(prevSelectedIds || [], selectedIds)) {
+            props.input.onChange.call(null, selectedIds[0]);
+            if (props.onChange) {
+                props.onChange.call(null, selectedIds[0]);
+            }
+        }
     }, [props.input.onChange, selectedIds]);
 
     return components.ui.renderView(props.view || 'form.RadioListFieldView', {

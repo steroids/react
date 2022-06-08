@@ -69,9 +69,8 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
         useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
     });
-
-    console.log("DATETIME INPUT", inputProps);
 
     const {
         dateValueFormat,
@@ -85,6 +84,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         input: props.input,
         valueFormat: props.valueFormat,
         useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
     });
 
     // Calendar props
@@ -129,6 +129,7 @@ DateTimeField.defaultProps = {
     displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     useUTC: true,
+    dateInUTC: false,
 };
 
 export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);

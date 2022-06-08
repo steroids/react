@@ -49,9 +49,18 @@ export interface IDateInputStateInput extends IFieldWrapperInputProps {
     valueFormat?: string;
 
     /**
-     * Использовать всемирное время (UTC) вместо местного для даты, отправляемой на сервер
+     * Приводить значение даты к часовому поясу UTC
+     * (пример: с бэкенда приходит дата в какой-либо временной зоне (не UTC), но нужно отбразить ее
+     * в часовом поясе UTC. В этом случае dateInUTC = false, а useUTC = true)
      */
     useUTC?: boolean;
+
+    /**
+     * Задано ли значение даты в часовом поясе UTC
+     * (пример: с бэкенда приходит дата в UTC, но нужно отбразить ее в локальном времени.
+     * В этом случае dateInUTC = true, а useUTC = false)
+     */
+    dateInUTC?: boolean;
 }
 
 export interface IDateInputStateOutput {
@@ -97,8 +106,8 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
                 props.displayFormat,
             ],
             props.displayFormat,
-            false,
             props.useUTC,
+            props.dateInUTC,
         ) || '',
         [props.displayFormat, props.input.value, props.valueFormat],
     );
@@ -123,7 +132,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         value = value.replace(/[^0-9:. ]/g, '');
 
         setDisplayValue(value);
-        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC);
+        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC, props.dateInUTC);
         const newValue = parsedValue || !value ? parsedValue || null : false;
         if (newValue && newValue !== props.input.value) {
             props.input.onChange.call(null, newValue);
@@ -131,7 +140,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
                 props.onChange.call(null, value);
             }
         }
-    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat, props.useUTC]);
+    }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat, props.useUTC, props.dateInUTC]);
 
     // Dropdown opened state
     const [isOpened, setIsOpened] = useState(false);

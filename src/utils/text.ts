@@ -31,6 +31,7 @@ export type TSmartSearchOutput = ISmartSearchOutputItem[];
  */
 // eslint-disable-next-line import/prefer-default-export
 export const smartSearch = (query: string, sourceItems: ISmartSearchSourceItem[]): TSmartSearchOutput => {
+
     if (!query) {
         return sourceItems;
     }

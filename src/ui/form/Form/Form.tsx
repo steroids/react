@@ -247,10 +247,10 @@ const getCaptchaToken = (params: ICaptchaParams): Promise<string> => {
 };
 
 function Form(props: IFormProps): JSX.Element {
+    const prevFormId = usePrevious(props.formId); // eslint-disable-line react-hooks/rules-of-hooks
+    const prevUseRedux = usePrevious(props.useRedux); // eslint-disable-line react-hooks/rules-of-hooks
     // Dev validation. You cannot change data provider (formId, useRedux)
     if (process.env.NODE_ENV !== 'production') {
-        const prevFormId = usePrevious(props.formId); // eslint-disable-line react-hooks/rules-of-hooks
-        const prevUseRedux = usePrevious(props.useRedux); // eslint-disable-line react-hooks/rules-of-hooks
         if ((prevFormId && props.formId !== prevFormId) || (prevUseRedux && props.useRedux !== prevUseRedux)) {
             throw new Error('Props formId and useRedux cannot be changed dynamically! Its related to data provider');
         }

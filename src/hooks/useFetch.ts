@@ -126,6 +126,7 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
             });
         }
 
+        setAxiosError(null);
         setData(null);
 
         if (config) {

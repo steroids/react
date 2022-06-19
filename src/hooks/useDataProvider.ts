@@ -164,6 +164,14 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         }
     }, [reduxDataProviderId, dispatch]);
 
+    // Check change items from props
+    const prevInitialItems = usePrevious(initialItems);
+    useEffect(() => {
+        if (prevInitialItems && !_isEqual(prevInitialItems, initialItems)) {
+            setSourceInternalItems(initialItems);
+        }
+    }, [prevInitialItems, initialItems]);
+
     // Normalize autoComplete
     const autoComplete: AutoCompleteConfig = useMemo(() => ({
         ...defaultProps.autoComplete,

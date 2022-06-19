@@ -16,6 +16,10 @@ const imagesMimeTypes = [
     'image/jpeg',
     'image/pjpeg',
     'image/png',
+    'image/heif',
+    'image/heic',
+    'image/heif-sequence',
+    'image/heic-sequence',
 ];
 
 function generateBackendUrl(props) {

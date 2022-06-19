@@ -168,10 +168,9 @@ function Nav(props: INavProps): JSX.Element {
 
     const onClick = useCallback((item, index) => {
         const newActiveTab = _has(item, 'id') ? item.id : index;
+        setActiveTab(newActiveTab);
         if (props.onChange) {
             props.onChange.call(null, newActiveTab);
-        } else {
-            setActiveTab(newActiveTab);
         }
     }, [props.onChange]);
 

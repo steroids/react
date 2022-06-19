@@ -4,7 +4,7 @@ import {convertDate} from '../../../utils/calendar';
 import {IDateInputStateInput} from '../../form/DateField/useDateInputState';
 
 interface IUseDateTimeProps extends
-    Pick<IDateInputStateInput, 'displayFormat' | 'valueFormat' | 'input' | 'useUTC'>
+    Pick<IDateInputStateInput, 'displayFormat' | 'valueFormat' | 'input' | 'useUTC' | 'dateInUTC'>
 {
     dateTimeSeparator: string,
 }
@@ -21,16 +21,16 @@ export default function useDateTime(props:IUseDateTimeProps) {
         props.input.value,
         [props.valueFormat, props.displayFormat],
         dateValueFormat,
-        false,
         props.useUTC,
+        props.dateInUTC,
     ), [dateValueFormat, props.displayFormat, props.input.value, props.valueFormat]);
 
     const timeValue = useMemo(() => convertDate(
         props.input.value,
         [props.displayFormat, props.valueFormat],
         timeValueFormat,
-        false,
         props.useUTC,
+        props.dateInUTC,
     ), [props.displayFormat, props.input.value, props.valueFormat, timeValueFormat]);
 
     // Handler for calendar and time picker changes
@@ -38,14 +38,31 @@ export default function useDateTime(props:IUseDateTimeProps) {
         const result = date + props.dateTimeSeparator + (timeValue || '00:00');
         props.input.onChange.call(
             null,
-            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, props.useUTC),
+            convertDate(
+                result,
+                [props.valueFormat, 'YYYY-MM-DD HH:mm'],
+                props.valueFormat,
+                // converting to UTC here depends on whether the date is stored in UTC
+                props.dateInUTC,
+                // whether the date provided from onSelect is in UTC or not depends on this flag
+                props.useUTC
+            ),
         );
     }, [props.dateTimeSeparator, props.input.onChange, props.valueFormat, timeValue]);
     const onTimeSelect = useCallback(time => {
         const result = (dateValue || moment().format(dateValueFormat)) + props.dateTimeSeparator + time;
+
         props.input.onChange.call(
             null,
-            convertDate(result, [props.valueFormat, 'YYYY-MM-DD HH:mm'], props.valueFormat, props.useUTC),
+            convertDate(
+                result,
+                [props.valueFormat, 'YYYY-MM-DD HH:mm'],
+                props.valueFormat,
+                // converting to UTC here depends on whether the date is stored in UTC
+                props.dateInUTC,
+                // whether the date provided from onSelect is in UTC or not depends on this flag
+                props.useUTC
+            ),
         );
     }, [dateValue, dateValueFormat, props.dateTimeSeparator, props.input.onChange, props.valueFormat]);
 

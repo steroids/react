@@ -233,6 +233,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         if ([9, 27].includes(e.which)) {
             e.preventDefault();
             setIsOpened(false);
+            setIsFocused(false);
         }
 
         // Keys: enter (select and close)
@@ -255,8 +256,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
 
         // Keys: space (toggle select)
         if (e.which === 32 && isOpened) {
-            e.preventDefault();
             if (hoveredId) {
+                e.preventDefault();
                 // Select hovered
                 setSelectedIds(hoveredId);
             }

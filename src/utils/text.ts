@@ -11,8 +11,27 @@ const stringToWords = str => {
     return words.filter(Boolean);
 };
 
+
+interface ISmartSearchSourceItem {
+    id: string | number,
+    label: string | number,
+}
+
+interface ISmartSearchOutputItem extends ISmartSearchSourceItem {
+    labelHighlighted?: [string, boolean][];
+}
+
+export type TSmartSearchOutput = ISmartSearchOutputItem[];
+
+/**
+ * Регистронезависимый поиск.
+ *
+ * @param query
+ * @param sourceItems
+ */
 // eslint-disable-next-line import/prefer-default-export
-export const smartSearch = (query, sourceItems) => {
+export const smartSearch = (query: string, sourceItems: ISmartSearchSourceItem[]): TSmartSearchOutput => {
+
     if (!query) {
         return sourceItems;
     }
@@ -30,6 +49,7 @@ export const smartSearch = (query, sourceItems) => {
         let wordIndex = 0;
         let wordChar = null;
         let wordCharIndex = 0;
+        let prevIsMatch = false;
         // eslint-disable-next-line no-constant-condition
         while (true) {
             const char = queryCharacters[index];
@@ -46,23 +66,29 @@ export const smartSearch = (query, sourceItems) => {
                 highlighted = [];
                 break;
             }
-            const isMatch = !char.match(/[\p{Lu}]/u)
-                ? wordChar.toLowerCase() === char.toLowerCase()
-                : wordChar === char;
+            const isMatch = wordChar.toLowerCase() === char.toLowerCase();
+
             if (isMatch) {
                 index += 1;
                 wordCharIndex += 1;
                 highlighted[highlighted.length - 1][0] += wordChar;
                 highlighted[highlighted.length - 1][1] = true;
+                prevIsMatch = true;
             } else {
+                if (!prevIsMatch) {
+                    index = 0;
+                }
+
                 highlighted.push([word.substr(wordCharIndex), false]);
                 highlighted.push(['', false]);
                 wordIndex += 1;
                 wordCharIndex = 0;
+                prevIsMatch = false;
             }
         }
         highlighted = highlighted.filter(highlightedItem => !!highlightedItem[0]);
         if (highlighted.findIndex(highlightedItem => highlightedItem[1]) !== -1) {
+            // @ts-ignore
             item.labelHighlighted = highlighted;
             return true;
         }

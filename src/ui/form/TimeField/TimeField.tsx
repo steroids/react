@@ -79,6 +79,7 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
         useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
     });
 
     const timePanelViewProps = useMemo(() => ({
@@ -117,6 +118,7 @@ TimeField.defaultProps = {
     type: 'text',
     valueFormat: 'HH:mm',
     useUTC: true,
+    dateInUTC: false,
 };
 
 export default fieldWrapper<ITimeFieldProps>('TimeField', TimeField);

@@ -305,8 +305,9 @@ export const listDestroy = (listId: string) => {
     };
 };
 
-export const add = (listId, item) => ({
+export const add = (listId, item, prepend = false) => ({
     item,
+    prepend,
     listId,
     type: LIST_ITEM_ADD,
 });

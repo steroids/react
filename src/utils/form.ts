@@ -53,7 +53,7 @@ export const mergeLayoutProp = (layout1, layout2) => {
 
 export const cleanEmptyObject = object => {
     // if all properties are null substitute the object with null
-    if (!Object.values(object).some(x => x)) {
+    if (!Object.values(object).some(x => x !== null)) {
         return null;
     }
 

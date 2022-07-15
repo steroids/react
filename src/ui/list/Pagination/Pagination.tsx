@@ -130,8 +130,8 @@ function Pagination(props: IPaginationProps): JSX.Element {
 
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)
-            .map(pageItem => ({
-                page: pageItem !== '...' ? pageItem : null,
+            .map((pageItem, index, pages) => ({
+                page: pageItem !== '...' ? pageItem : Math.floor(((pages[index + 1] + pages[index - 1]) / 2)),
                 label: pageItem,
                 isActive: page === pageItem,
             })),

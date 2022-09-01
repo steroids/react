@@ -12,6 +12,7 @@ import Router, {IRouteItem} from '../ui/nav/Router/Router';
 import MetricsComponent from '../components/MetricsComponent';
 import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider';
 import useComponents from './useComponents';
+import {IFetchConfig} from '../hooks/useFetch';
 
 /**
  * Application HOC
@@ -31,7 +32,12 @@ export interface IApplicationHookConfig {
     routes?: () => IRouteItem,
     layoutView?: () => CustomView,
     layoutProps?: Record<string, unknown>,
-    screen?: boolean | Omit<IScreenProviderProps, 'children'>
+    screen?: boolean | Omit<IScreenProviderProps, 'children'>,
+
+    /**
+     * These fetch configurations will be used to preload and store for no matter what route matched in case of SSR
+     */
+    defaultFetches?: IFetchConfig[],
 }
 
 export interface IApplicationHookResult {

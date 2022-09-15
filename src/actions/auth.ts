@@ -47,7 +47,7 @@ export const setData = data => ({
 });
 
 export const logout = (routeId: string | boolean = 'root', routeParams: any = null) => (dispatch, getState, {http}) => {
-    http.removeAccessToken();
+    http.onLogout();
     return dispatch([
         setUser(null),
         routeId && goToRoute(routeId, routeParams),

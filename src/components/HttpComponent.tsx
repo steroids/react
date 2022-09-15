@@ -139,6 +139,10 @@ export default class HttpComponent {
         this._axios = null;
     }
 
+    onLogout() {
+        this.removeAccessToken();
+    }
+
     async getAxiosInstance() {
         if (!this._axios) {
             this._axios = axios.create(await this.getAxiosConfig());

@@ -87,7 +87,7 @@ describe('auth actions', () => {
             ];
 
             store.dispatch(logout(false));
-            expect(componentsMock.http.removeAccessToken).toHaveBeenCalled();
+            expect(componentsMock.http.onLogout).toHaveBeenCalled();
             expect(store.getActions()).toEqual(expectedActions);
         });
 
@@ -107,7 +107,7 @@ describe('auth actions', () => {
             ];
 
             store.dispatch(logout());
-            expect(componentsMock.http.removeAccessToken).toHaveBeenCalled();
+            expect(componentsMock.http.onLogout).toHaveBeenCalled();
             expect(store.getActions()).toEqual(expectedActions);
         });
     });

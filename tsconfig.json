@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "lib": ["dom", "es2020.intl"],
+    "lib": ["dom", "es2020.Intl"],
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "baseUrl": ".",
     "declaration": true,
     "isolatedModules": true,
     "outDir": "./dist",
+    "skipLibCheck": true,
     "paths": {
       "@steroidsjs/core/*": [
         "../react/src/*"

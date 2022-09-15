@@ -67,6 +67,7 @@ export default () => (
             enable: true,
             defaultValue: '-price',
         }}
+        // @ts-ignore
         itemView={(props: any) => (
             <div className='list-group-item'>
                 <div>{props.item.title}</div>

@@ -25,6 +25,7 @@ export default () => (
         <SliderField
             min={-10}
             max={80}
+            // @ts-ignore
             marks={marks}
         />
     </div>

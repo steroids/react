@@ -84,6 +84,7 @@ export default () => (
         }}
         addressBar
         className='list-group'
+        // @ts-ignore
         itemView={(props: any) => (
             <div className='list-group-item'>
                 <div>{props.item.name}</div>

@@ -1,5 +1,7 @@
 import axios from 'axios';
+// @ts-ignore
 import BaseHttpComponent from '@steroidsjs/core/components/HttpComponent';
+// @ts-ignore
 import {login, logout} from '@steroidsjs/core/actions/auth';
 
 export default class JwtHttpComponent extends BaseHttpComponent {
@@ -21,6 +23,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
     async getAxiosConfig() {
         const config = super.getAxiosConfig();
         if (!this._refreshToken) {
+            // @ts-ignore
             const clientStorage = this._components.clientStorage;
             const tokenValue = clientStorage.get(this.refreshTokenKey, clientStorage.STORAGE_COOKIE)
                 || clientStorage.get(this.refreshTokenKey)
@@ -48,8 +51,9 @@ export default class JwtHttpComponent extends BaseHttpComponent {
             async (error) => {
                 const originalRequest = error.config;
                 if (error.response.status === 401 && error.config && !error.config._isRetry) {
+                    // @ts-ignore
                     const {store} = this._components;
-
+                    // @ts-ignore
                     const response = await this.send(
                         this.refreshTokenRequest.method,
                         this.refreshTokenRequest.url,
@@ -57,6 +61,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                             [this.refreshTokenKey]: this._refreshToken,
                         },
                     );
+                    // @ts-ignore
                     const accessToken = response?.data?.[this.accessTokenKey];
                     if (accessToken) {
                         store.dispatch(login(accessToken));
@@ -74,28 +79,38 @@ export default class JwtHttpComponent extends BaseHttpComponent {
     }
 
     async getAxiosInstance() {
+        // @ts-ignore
         if (!this._axios) {
+            // @ts-ignore
             this._axios = axios.create(await this.getAxiosConfig());
+            // @ts-ignore
             this.setRefreshTokenInterceptor(this._axios);
         }
+        // @ts-ignore
         return this._axios;
     }
 
     removeRefreshToken() {
         this._refreshToken = null;
+        // @ts-ignore
         this.resetConfig();
+        // @ts-ignore
         this._components.clientStorage.remove(
             this.refreshTokenKey,
+            // @ts-ignore
             this._components.clientStorage.STORAGE_COOKIE,
         );
     }
 
     setRefreshToken(value) {
         this._refreshToken = value;
+        // @ts-ignore
         this.resetConfig();
+        // @ts-ignore
         this._components.clientStorage.set(
             this.refreshTokenKey,
             value,
+            // @ts-ignore
             this._components.clientStorage.STORAGE_COOKIE,
             180,
         );
@@ -103,12 +118,14 @@ export default class JwtHttpComponent extends BaseHttpComponent {
 
     async getRefreshToken() {
         if (this._refreshToken === false) {
+            // @ts-ignore
             this._refreshToken = await this._components.clientStorage.get(this.refreshTokenKey) || null;
         }
         return this._refreshToken;
     }
 
     onLogout() {
+        // @ts-ignore
         this.removeAccessToken();
         this.removeRefreshToken();
     }

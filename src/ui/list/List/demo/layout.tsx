@@ -25,6 +25,7 @@ export default () => (
             ],
         }}
         contentClassName='row mx-lg-n1'
+        // @ts-ignore
         itemView={(props: any) => (
             <div className={`py-1 px-lg-1 ${props.layoutSelected === 'list' ? 'col-12' : 'col-6'}`}>
                 <div className='card p-2'>

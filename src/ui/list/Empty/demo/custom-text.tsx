@@ -11,6 +11,7 @@ export default () => (
     <>
         <Empty
             text='К сожалению, ничего не найдено'
+            // @ts-ignore
             view={(props: any) => (
                 <div className='alert alert-primary' role='alert'>
                     {props.text}

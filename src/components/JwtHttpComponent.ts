@@ -48,6 +48,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
             async (error) => {
                 const originalRequest = error.config;
                 if (error.response.status === 401 && error.config && !error.config._isRetry) {
+                    this.removeAccessToken();
                     const {store} = this._components;
 
                     const response = await this.send(
@@ -64,9 +65,8 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                         originalRequest._isRetry = true;
                         originalRequest.headers.Authorization = 'Bearer ' + accessToken;
                         return axiosInstance.request(originalRequest);
-                    } else {
-                        store.dispatch(logout());
                     }
+                    store.dispatch(logout());
                 }
                 throw error;
             },

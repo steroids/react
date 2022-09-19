@@ -60,8 +60,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                     );
                     const accessToken = response?.data?.[this.accessTokenKey];
                     if (accessToken) {
-                        store.dispatch(login(accessToken));
-
+                        this.setAccessToken(accessToken);
                         originalRequest._isRetry = true;
                         originalRequest.headers.Authorization = 'Bearer ' + accessToken;
                         return axiosInstance.request(originalRequest);

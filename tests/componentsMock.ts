@@ -3,5 +3,6 @@ export default {
         setAccessToken: jest.fn(),
         removeAccessToken: jest.fn(),
         onLogout: jest.fn(),
+        onLogin: jest.fn(),
     },
 };

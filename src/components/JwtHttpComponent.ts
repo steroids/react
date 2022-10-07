@@ -111,4 +111,12 @@ export default class JwtHttpComponent extends BaseHttpComponent {
         this.removeAccessToken();
         this.removeRefreshToken();
     }
+
+    onLogin(params: {
+        accessToken: string,
+        refreshToken: string,
+    }) {
+        this.setAccessToken(params.accessToken);
+        this.setRefreshToken(params.refreshToken);
+    }
 }

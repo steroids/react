@@ -19,12 +19,15 @@ export const init = (skipInitialized = false) => (dispatch, getState) => {
 
 export const reInit = () => init();
 
-export const login = (token, redirectPageId: string | boolean = 'root') => (
+export const login = (token, redirectPageId: string | boolean = 'root', params: any) => (
     dispatch,
     getState,
     {http},
 ) => {
-    http.setAccessToken(token);
+    http.onLogin({
+        accessToken: token,
+        ...params,
+    });
     return dispatch({
         type: AUTH_INIT,
         redirectPageId: redirectPageId || null,

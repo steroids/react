@@ -19,7 +19,7 @@ export const init = (skipInitialized = false) => (dispatch, getState) => {
 
 export const reInit = () => init();
 
-export const login = (token, redirectPageId: string | boolean = 'root', params: any) => (
+export const login = (token, redirectPageId: string | boolean = 'root', params?: any) => (
     dispatch,
     getState,
     {http},

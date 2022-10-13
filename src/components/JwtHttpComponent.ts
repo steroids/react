@@ -51,7 +51,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
             async (error) => {
                 const originalRequest = error.config;
                 if (error.response.status === 401 && error.config && !error.config._isRetry) {
-                    // @ts-ignore
+                    this.removeAccessToken();
                     const {store} = this._components;
                     // @ts-ignore
                     const response = await this.send(
@@ -64,14 +64,12 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                     // @ts-ignore
                     const accessToken = response?.data?.[this.accessTokenKey];
                     if (accessToken) {
-                        store.dispatch(login(accessToken));
-
+                        this.setAccessToken(accessToken);
                         originalRequest._isRetry = true;
                         originalRequest.headers.Authorization = 'Bearer ' + accessToken;
                         return axiosInstance.request(originalRequest);
-                    } else {
-                        store.dispatch(logout());
                     }
+                    store.dispatch(logout());
                 }
                 throw error;
             },
@@ -128,5 +126,13 @@ export default class JwtHttpComponent extends BaseHttpComponent {
         // @ts-ignore
         this.removeAccessToken();
         this.removeRefreshToken();
+    }
+
+    onLogin(params: {
+        accessToken: string,
+        refreshToken: string,
+    }) {
+        this.setAccessToken(params.accessToken);
+        this.setRefreshToken(params.refreshToken);
     }
 }

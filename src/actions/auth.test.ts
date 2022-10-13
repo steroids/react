@@ -57,7 +57,7 @@ describe('auth actions', () => {
             ];
 
             store.dispatch(login(token, false));
-            expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(token);
+            expect(componentsMock.http.onLogin).toHaveBeenCalled();
             expect(store.getActions()).toEqual(expectedActions);
         });
 
@@ -72,7 +72,7 @@ describe('auth actions', () => {
             ];
 
             store.dispatch(login(token, redirectPageId));
-            expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(token);
+            expect(componentsMock.http.onLogin).toHaveBeenCalled();
             expect(store.getActions()).toEqual(expectedActions);
         });
     });

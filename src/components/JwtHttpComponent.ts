@@ -47,7 +47,12 @@ export default class JwtHttpComponent extends BaseHttpComponent {
             (config) => config,
             async (error) => {
                 const originalRequest = error.config;
-                if (error.response.status === 401 && error.config && !error.config._isRetry) {
+                if (
+                    error.response.status === 401
+                    && error.config
+                    && !error.config._isRetry
+                    && originalRequest.url !== this.getUrl(this.refreshTokenRequest?.url)
+                ) {
                     this.removeAccessToken();
                     const {store} = this._components;
 
@@ -85,7 +90,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
         this.resetConfig();
         this._components.clientStorage.remove(
             this.refreshTokenKey,
-            this._components.clientStorage.STORAGE_COOKIE,
+            this.clientStorageName,
         );
     }
 
@@ -95,14 +100,14 @@ export default class JwtHttpComponent extends BaseHttpComponent {
         this._components.clientStorage.set(
             this.refreshTokenKey,
             value,
-            this._components.clientStorage.STORAGE_COOKIE,
-            180,
+            this.clientStorageName,
+            this.clientStorageExpiresIn,
         );
     }
 
     async getRefreshToken() {
         if (this._refreshToken === false) {
-            this._refreshToken = await this._components.clientStorage.get(this.refreshTokenKey) || null;
+            this._refreshToken = await this._components.clientStorage.get(this.refreshTokenKey, this.clientStorageName) || null;
         }
         return this._refreshToken;
     }

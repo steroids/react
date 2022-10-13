@@ -21,6 +21,10 @@ export default class HttpComponent {
 
     apiUrl: string;
 
+    clientStorageName: string;
+
+    clientStorageExpiresIn: number;
+
     _accessToken: any;
 
     _axios: any;
@@ -40,6 +44,8 @@ export default class HttpComponent {
             //|| process.env.APP_BACKEND_URL
             || (!process.env.IS_SSR ? window.location.protocol + '//' + window.location.host : '');
         this.accessTokenKey = config.accessTokenKey || 'accessToken';
+        this.clientStorageName = config.clientStorageName || this._components.clientStorage.STORAGE_COOKIE;
+        this.clientStorageExpiresIn = config.clientStorageExpiresIn || 180;
 
         this._lazyRequests = {};
         this._axios = null;
@@ -107,7 +113,7 @@ export default class HttpComponent {
         this.resetConfig();
         this._components.clientStorage.remove(
             this.accessTokenKey,
-            this._components.clientStorage.STORAGE_COOKIE,
+            this.clientStorageName,
         );
     }
 
@@ -120,8 +126,8 @@ export default class HttpComponent {
         this._components.clientStorage.set(
             this.accessTokenKey,
             value,
-            this._components.clientStorage.STORAGE_COOKIE,
-            180,
+            this.clientStorageName,
+            this.clientStorageExpiresIn,
         );
     }
 
@@ -130,7 +136,7 @@ export default class HttpComponent {
      */
     async getAccessToken() {
         if (this._accessToken === false) {
-            this._accessToken = await this._components.clientStorage.get(this.accessTokenKey) || null;
+            this._accessToken = await this._components.clientStorage.get(this.accessTokenKey, this.clientStorageName) || null;
         }
         return this._accessToken;
     }

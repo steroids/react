@@ -1450,6 +1450,19 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@steroidsjs/eslint-config@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@steroidsjs/eslint-config/-/eslint-config-2.0.1.tgz#456cb02098ace4682ea44be2058678422c34f4d2"
+  integrity sha512-9KZEYfyTLPOwn+/5/I8KVySlhqLUKCjoiBYg6RORUVR+1pcoFQRpUqLreZYaFDtlBSzJxOqiMH6aB6bOazY+AA==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^4.15.0"
+    "@typescript-eslint/parser" "^4.15.0"
+    eslint-config-airbnb "18.2.1"
+    eslint-plugin-import "^2.22.1"
+    eslint-plugin-jsx-a11y "^6.4.1"
+    eslint-plugin-react "^7.21.5"
+    eslint-plugin-react-hooks "^1.7.0"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

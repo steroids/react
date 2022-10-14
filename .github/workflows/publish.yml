@@ -12,10 +12,7 @@ jobs:
         with:
           node-version: 12
       - run: yarn
-      - run: yarn upgrade @steroidsjs/core
-      - run: yarn tsc
-      - run: cp ./{package.json,LICENSE,README.md} dist/
-      - run: cp src/index.d.ts dist/
+      - run: npm run script publish.prepare
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dist/package.json

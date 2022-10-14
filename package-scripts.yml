@@ -1,0 +1,12 @@
+scripts:
+  docs: typedoc --ignoreCompilerErrors --json typedoc.json .
+  test: jest
+  build: >-
+    tsc && copyfiles ./{package.json,LICENSE,README.md} dist/ && copyfiles src/index.d.ts
+    dist/
+  watch: tsc -p tsconfig-debug.json
+  publish:
+    prepare: yarn && yarn upgrade @steroidsjs/core && nps build
+    manual:
+      script: npm whoami && nps publish.prepare && cd dist && npm publish
+      description: 'Use it to publish to NPM manually (authorize to NPM first)'

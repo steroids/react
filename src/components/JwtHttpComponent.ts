@@ -22,7 +22,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
         const config = super.getAxiosConfig();
         if (!this._refreshToken) {
             const clientStorage = this._components.clientStorage;
-            const tokenValue = clientStorage.get(this.refreshTokenKey, clientStorage.STORAGE_COOKIE)
+            const tokenValue = clientStorage.get(this.refreshTokenKey, this.clientStorageName)
                 || clientStorage.get(this.refreshTokenKey)
                 || null;
 
@@ -34,8 +34,8 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                 clientStorage.set(
                     this.refreshTokenKey,
                     this._refreshToken,
-                    clientStorage.STORAGE_COOKIE,
-                    180,
+                    this.clientStorageName,
+                    this.clientStorageExpiresIn,
                 );
             }
         }

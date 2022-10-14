@@ -90,6 +90,12 @@ export interface IFormProps {
     onChange?: (...args: any[]) => any;
 
     /**
+     * Обработчик события ошибки выполнения запроса
+     * @param args
+     */
+    onError?: (...args: any[]) => any;
+
+    /**
      * Обработчик успешного выполнения формы (без ошибок)
      * @param args
      */
@@ -432,6 +438,7 @@ function Form(props: IFormProps): JSX.Element {
         } catch (requestError) {
             console.error(requestError); // eslint-disable-line no-console
             dispatch(formSetSubmitting(props.formId, false));
+            props.onError(requestError);
             reduxDispatch(
                 showNotification(
                     props.submitErrorMessage || __('Ошибка сервера'),

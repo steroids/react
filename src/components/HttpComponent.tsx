@@ -76,7 +76,7 @@ export default class HttpComponent {
         // Set access token
         if (this._accessToken === false) {
             const clientStorage = this._components.clientStorage;
-            const tokenValue = clientStorage.get(this.accessTokenKey, clientStorage.STORAGE_COOKIE)
+            const tokenValue = clientStorage.get(this.accessTokenKey, this.clientStorageName)
                 || clientStorage.get(this.accessTokenKey)
                 || null;
 
@@ -89,8 +89,8 @@ export default class HttpComponent {
                 clientStorage.set(
                     this.accessTokenKey,
                     this._accessToken,
-                    clientStorage.STORAGE_COOKIE,
-                    180,
+                    this.clientStorageName,
+                    this.clientStorageExpiresIn,
                 );
             }
         }

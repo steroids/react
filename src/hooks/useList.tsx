@@ -445,7 +445,7 @@ export default function useList(config: IListConfig): IListOutput {
     useUpdateEffect(() => {
         _union(Object.keys(prevQuery), Object.keys(config.query))
             .forEach(key => {
-                if (_isEqual(prevQuery[key], config.query[key])) {
+                if (!_isEqual(prevQuery[key], config.query[key])) {
                     dispatch(formChange(formId, key, config.query[key]));
                 }
             });

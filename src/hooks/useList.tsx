@@ -100,6 +100,12 @@ export interface IListConfig {
     empty?: boolean | string | IEmptyProps,
 
     /**
+     * Состояние загрузки элементов списка
+     * @example false
+     */
+    isLoading?: boolean,
+
+    /**
      * Форма для поиска элементов
      * @example {fields: ['title'], model: {attributes: ['title:string:Название']}}
      */

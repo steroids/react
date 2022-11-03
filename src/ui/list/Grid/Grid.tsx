@@ -239,6 +239,7 @@ export default function Grid(props: IGridProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'list.GridView', {
         ...props,
+        list,
         paginationPosition,
         paginationSizePosition,
         layoutNamesPosition,

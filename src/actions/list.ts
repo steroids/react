@@ -41,6 +41,7 @@ export const LIST_BEFORE_FETCH = '@list/before_fetch';
 export const LIST_AFTER_FETCH = '@list/after_fetch';
 export const LIST_ITEM_ADD = '@list/item_add';
 export const LIST_ITEM_UPDATE = '@list/item_update';
+export const LIST_ITEM_DELETE = '@list/item_delete';
 export const LIST_DESTROY = '@list/destroy';
 export const LIST_TOGGLE_ITEM = '@list/toggle_item';
 export const LIST_TOGGLE_ALL = '@list/toggle_all';
@@ -316,6 +317,11 @@ export const update = (listId, item, condition) => ({
     condition,
     listId,
     type: LIST_ITEM_UPDATE,
+});
+export const deleteItem = (listId, condition) => ({
+    condition,
+    listId,
+    type: LIST_ITEM_DELETE,
 });
 export const toggleItem = (listId, itemId) => ({
     listId,

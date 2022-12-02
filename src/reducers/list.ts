@@ -142,12 +142,12 @@ const reducerMap = {
         };
     },
     [LIST_TOGGLE_ITEM]: (state, action) => {
-        const selectedIds = _get(state, ['selectedIds', action.listId]) || [];
+        let selectedIds = _get(state, ['selectedIds', action.listId]) || [];
         const index = selectedIds.indexOf(action.itemId);
         if (index === -1) {
-            selectedIds.push(action.itemId);
+            selectedIds = [...selectedIds, action.itemId];
         } else {
-            selectedIds.splice(index, 1);
+            selectedIds = selectedIds.filter(selectedId => selectedId !== action.itemId);
         }
         return {
             ...state,

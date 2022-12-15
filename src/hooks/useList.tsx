@@ -461,7 +461,6 @@ export default function useList(config: IListConfig): IListOutput {
     useUpdateEffect(() => {
         dispatch([
             listSetItems(config.listId, config.items),
-            listLazyFetch(config.listId),
         ]);
     }, [dispatch, config.items, config.listId]);
 

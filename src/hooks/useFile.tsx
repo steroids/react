@@ -48,6 +48,7 @@ export default function useFile(props: IFileHocInput): IFileHocOutput {
         form: {
             ...(props.uploader && props.uploader.form),
             multiple: props.multiple,
+            accept: props.imagesOnly ? imagesMimeTypes.join(', ') : '',
         },
     }));
 

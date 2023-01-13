@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.2.104",
+  "version": "2.2.105",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -28,7 +28,7 @@
     "connected-react-router": "^6.9.1",
     "domready": "^1.0.8",
     "dot-prop-immutable": "^2.1.0",
-    "fileup-core": "^1.2.6",
+    "fileup-core": "^1.2.7",
     "history": "^4.10.1",
     "intl-messageformat": "^9.11.0",
     "js-cookie": "^2.2.1",

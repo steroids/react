@@ -21,12 +21,15 @@ import {
     formArrayAdd,
     FORM_ARRAY_REMOVE,
     formArrayRemove,
-} from './form';
+} from '../../src/actions/form';
 
-import prepareMiddleware from '../../tests/storeMiddlewareMock';
+import prepareMiddleware from '../storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
+const mockFormId = 'mockFormId';
+const mockObject = { name: 'John' };
+const mockNumber = 5;
 
 describe('form actions', () => {
     beforeEach(() => {
@@ -37,12 +40,12 @@ describe('form actions', () => {
         const expectedActions = [
             {
                 type: FORM_INITIALIZE,
-                formId: '0',
-                values: {},
+                formId: mockFormId,
+                values: mockObject,
             },
         ];
 
-        store.dispatch(formInitialize('0', {}));
+        store.dispatch(formInitialize(mockFormId, mockObject));
         expect(store.getActions()).toEqual(expectedActions);
     });
 
@@ -50,39 +53,58 @@ describe('form actions', () => {
         it('without value', () => {
             const expectedActions = [
                 {
-                    formId: '0',
+                    formId: mockFormId,
                     type: FORM_CHANGE,
                     value: null,
-                    nameOrObject: {},
+                    nameOrObject: mockObject,
                 },
             ];
 
-            store.dispatch(formChange('0', {}));
+            store.dispatch(formChange(mockFormId, mockObject));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('with value', () => {
+            const expectedActions = [
+                {
+                    formId: mockFormId,
+                    type: FORM_CHANGE,
+                    value: null,
+                    nameOrObject: mockObject,
+                },
+            ];
+
+            store.dispatch(formChange(mockFormId, mockObject, null));
+
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
 
     it('formSetErrors', () => {
+        const mockError = {
+            message: "It's crashed",
+        };
+
         const expectedActions = [
             {
-                formId: '0',
+                formId: mockFormId,
                 type: FORM_SET_ERRORS,
-                errors: {},
+                errors: mockError,
             },
         ];
 
-        store.dispatch(formSetErrors('0', {}));
+        store.dispatch(formSetErrors(mockFormId, mockError));
         expect(store.getActions()).toEqual(expectedActions);
     });
     it('formSubmit', () => {
         const expectedActions = [
             {
-                formId: '0',
+                formId: mockFormId,
                 type: FORM_SUBMIT,
             },
         ];
 
-        store.dispatch(formSubmit('0'));
+        store.dispatch(formSubmit(mockFormId));
         expect(store.getActions()).toEqual(expectedActions);
     });
 
@@ -90,25 +112,25 @@ describe('form actions', () => {
         it('true condition', () => {
             const expectedActions = [
                 {
-                    formId: '0',
+                    formId: mockFormId,
                     isSubmitting: true,
                     type: FORM_SET_SUBMITTING,
                 },
             ];
 
-            store.dispatch(formSetSubmitting('0', true));
+            store.dispatch(formSetSubmitting(mockFormId, true));
             expect(store.getActions()).toEqual(expectedActions);
         });
         it('false condition', () => {
             const expectedActions = [
                 {
-                    formId: '0',
+                    formId: mockFormId,
                     isSubmitting: false,
                     type: FORM_SET_SUBMITTING,
                 },
             ];
 
-            store.dispatch(formSetSubmitting('0', false));
+            store.dispatch(formSetSubmitting(mockFormId, false));
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
@@ -116,24 +138,24 @@ describe('form actions', () => {
     it('formReset', () => {
         const expectedActions = [
             {
-                formId: '0',
+                formId: mockFormId,
                 type: FORM_RESET,
             },
         ];
 
-        store.dispatch(formReset('0'));
+        store.dispatch(formReset(mockFormId));
         expect(store.getActions()).toEqual(expectedActions);
     });
 
     it('formHardReset', () => {
         const expectedActions = [
             {
-                formId: '0',
+                formId: mockFormId,
                 type: FORM_HARD_RESET,
             },
         ];
 
-        store.dispatch(formHardReset('0'));
+        store.dispatch(formHardReset(mockFormId));
         expect(store.getActions()).toEqual(expectedActions);
     });
 
@@ -141,11 +163,11 @@ describe('form actions', () => {
         const expectedActions = [
             {
                 type: FORM_DESTROY,
-                formId: '0',
+                formId: mockFormId,
             },
         ];
 
-        store.dispatch(formDestroy('0'));
+        store.dispatch(formDestroy(mockFormId));
         expect(store.getActions()).toEqual(expectedActions);
     });
     it('formArrayAdd', () => {
@@ -154,14 +176,14 @@ describe('form actions', () => {
         const expectedActions = [
             {
                 type: FORM_ARRAY_ADD,
-                formId: '0',
+                formId: mockFormId,
                 name,
-                rowsCount: 4,
-                initialValues: {},
+                rowsCount: mockNumber,
+                initialValues: mockObject,
             },
         ];
 
-        store.dispatch(formArrayAdd('0', name, 4, {}));
+        store.dispatch(formArrayAdd(mockFormId, name, mockNumber, mockObject));
         expect(store.getActions()).toEqual(expectedActions);
     });
     it('formArrayRemove', () => {
@@ -170,13 +192,13 @@ describe('form actions', () => {
         const expectedActions = [
             {
                 type: FORM_ARRAY_REMOVE,
-                formId: '0',
+                formId: mockFormId,
                 name,
-                index: 5,
+                index: mockNumber,
             },
         ];
 
-        store.dispatch(formArrayRemove('0', name, 5));
+        store.dispatch(formArrayRemove(mockFormId, name, mockNumber));
         expect(store.getActions()).toEqual(expectedActions);
     });
 });

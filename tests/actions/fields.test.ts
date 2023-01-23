@@ -12,40 +12,38 @@ import {
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
 
-const mockedMeta = { meta: 'meta' };
-
 describe('fields actions', () => {
     beforeEach(() => {
         store.clearActions();
     });
 
     it('setMeta', () => {
+        const meta = {meta: 'meta'};
+
         const expectedActions = [
             {
                 type: FIELDS_SET_META,
-                meta: mockedMeta,
+                meta,
             },
         ];
 
-        store.dispatch(setMeta(mockedMeta));
+        store.dispatch(setMeta(meta));
         expect(store.getActions()).toEqual(expectedActions);
     });
 
     it('fieldsDataProviderSetItems', () => {
-        const mockedDataProviderId = '0';
-        const mockedItems = { item1: 'item1', item2: false };
+        const dataProviderId = '0';
+        const mockedItems = {item1: 'item1', item2: false};
 
         const expectedActions = [
             {
                 type: FIELDS_DATA_PROVIDER_SET_ITEMS,
-                dataProviderId: mockedDataProviderId,
+                dataProviderId,
                 items: mockedItems,
             },
         ];
 
-        store.dispatch(
-            fieldsDataProviderSetItems(mockedDataProviderId, mockedItems),
-        );
+        store.dispatch(fieldsDataProviderSetItems(dataProviderId, mockedItems));
 
         expect(store.getActions()).toEqual(expectedActions);
     });

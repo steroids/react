@@ -37,14 +37,12 @@ describe('Enum', () => {
 
     describe('getLabel', () => {
         it('correct', () => {
-            const expectedLabel = 'label1';
+            const expectedResult = 'label1';
 
-            expect(TestEnum.getLabel(TestEnum.FIELD_1)).toBe(expectedLabel);
+            expect(TestEnum.getLabel(TestEnum.FIELD_1)).toBe(expectedResult);
         });
         it('incorrect', () => {
-            const mockIncorrectLabel = 'Test';
-
-            expect(TestEnum.getLabel(mockIncorrectLabel)).toBe('');
+            expect(TestEnum.getLabel('Test')).toBe('');
         });
     });
 
@@ -80,17 +78,15 @@ describe('Enum', () => {
 
     describe('getCssClass', () => {
         it('correct', () => {
-            const expectedCssClass = 'orange';
+            const expectedResult = 'orange';
 
             expect(TestEnum.getCssClass(TestEnum.FIELD_1)).toEqual(
-                expectedCssClass,
+                expectedResult,
             );
         });
 
         it('incorrect', () => {
-            const incorrectMockValue = 'Test';
-
-            expect(TestEnum.getCssClass(incorrectMockValue)).toEqual('');
+            expect(TestEnum.getCssClass('Test')).toEqual('');
         });
     });
 });

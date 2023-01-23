@@ -49,7 +49,7 @@ describe('actions screen', () => {
         });
 
         //TODO
-        // Дописать тест после таймаута
+        // Дописать it
 
         it('without skip timeout', () => {
             store.dispatch(setWidth(mockWidth));

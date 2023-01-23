@@ -28,7 +28,6 @@ import prepareMiddleware from '../storeMiddlewareMock';
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
 const mockFormId = 'mockFormId';
-const mockObject = { name: 'John' };
 const mockNumber = 5;
 
 describe('form actions', () => {
@@ -37,20 +36,29 @@ describe('form actions', () => {
     });
 
     it('formInitialize', () => {
+        const mockValues = {
+            value1: 'orange',
+            value2: 'green',
+        };
+
         const expectedActions = [
             {
                 type: FORM_INITIALIZE,
                 formId: mockFormId,
-                values: mockObject,
+                values: mockValues,
             },
         ];
 
-        store.dispatch(formInitialize(mockFormId, mockObject));
+        store.dispatch(formInitialize(mockFormId, mockValues));
         expect(store.getActions()).toEqual(expectedActions);
     });
 
     describe('formChange', () => {
         it('without value', () => {
+            const mockObject = {
+                object: true,
+            };
+
             const expectedActions = [
                 {
                     formId: mockFormId,
@@ -65,16 +73,19 @@ describe('form actions', () => {
         });
 
         it('with value', () => {
+            const mockValue = 'Ivan';
+            const mockName = 'Anatoliy';
+
             const expectedActions = [
                 {
                     formId: mockFormId,
                     type: FORM_CHANGE,
-                    value: null,
-                    nameOrObject: mockObject,
+                    value: mockValue,
+                    nameOrObject: mockName,
                 },
             ];
 
-            store.dispatch(formChange(mockFormId, mockObject, null));
+            store.dispatch(formChange(mockFormId, mockName, mockValue));
 
             expect(store.getActions()).toEqual(expectedActions);
         });
@@ -171,34 +182,41 @@ describe('form actions', () => {
         expect(store.getActions()).toEqual(expectedActions);
     });
     it('formArrayAdd', () => {
-        const name = 'Contact';
+        const mockName = 'Contact';
+
+        const mockInitialValues = {
+            value1: 'value1',
+            value2: 'value2',
+        };
 
         const expectedActions = [
             {
                 type: FORM_ARRAY_ADD,
                 formId: mockFormId,
-                name,
+                name: mockName,
                 rowsCount: mockNumber,
-                initialValues: mockObject,
+                initialValues: mockInitialValues,
             },
         ];
 
-        store.dispatch(formArrayAdd(mockFormId, name, mockNumber, mockObject));
+        store.dispatch(
+            formArrayAdd(mockFormId, mockName, mockNumber, mockInitialValues),
+        );
         expect(store.getActions()).toEqual(expectedActions);
     });
     it('formArrayRemove', () => {
-        const name = 'Contact';
+        const mockName = 'Phone';
 
         const expectedActions = [
             {
                 type: FORM_ARRAY_REMOVE,
                 formId: mockFormId,
-                name,
+                name: mockName,
                 index: mockNumber,
             },
         ];
 
-        store.dispatch(formArrayRemove(mockFormId, name, mockNumber));
+        store.dispatch(formArrayRemove(mockFormId, mockName, mockNumber));
         expect(store.getActions()).toEqual(expectedActions);
     });
 });

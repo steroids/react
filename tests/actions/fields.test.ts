@@ -33,17 +33,17 @@ describe('fields actions', () => {
 
     it('fieldsDataProviderSetItems', () => {
         const dataProviderId = '0';
-        const mockedItems = {item1: 'item1', item2: false};
+        const items = {item1: 'item1', item2: false};
 
         const expectedActions = [
             {
                 type: FIELDS_DATA_PROVIDER_SET_ITEMS,
                 dataProviderId,
-                items: mockedItems,
+                items,
             },
         ];
 
-        store.dispatch(fieldsDataProviderSetItems(dataProviderId, mockedItems));
+        store.dispatch(fieldsDataProviderSetItems(dataProviderId, items));
 
         expect(store.getActions()).toEqual(expectedActions);
     });

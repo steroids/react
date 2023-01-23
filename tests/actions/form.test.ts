@@ -120,10 +120,12 @@ describe('form actions', () => {
 
     describe('formSetSubmitting', () => {
         it('true condition', () => {
+            const isSubmitting = true;
+
             const expectedActions = [
                 {
                     formId: mockFormId,
-                    isSubmitting: true,
+                    isSubmitting,
                     type: FORM_SET_SUBMITTING,
                 },
             ];
@@ -132,10 +134,12 @@ describe('form actions', () => {
             expect(store.getActions()).toEqual(expectedActions);
         });
         it('false condition', () => {
+            const isSubmitting = false;
+
             const expectedActions = [
                 {
                     formId: mockFormId,
-                    isSubmitting: false,
+                    isSubmitting,
                     type: FORM_SET_SUBMITTING,
                 },
             ];
@@ -184,7 +188,7 @@ describe('form actions', () => {
         const name = 'Contacts';
         const rowsCount = 10;
 
-        const mockInitialValues = {
+        const initialValues = {
             value1: 'value1',
             value2: 'value2',
         };
@@ -195,12 +199,12 @@ describe('form actions', () => {
                 formId: mockFormId,
                 name,
                 rowsCount,
-                initialValues: mockInitialValues,
+                initialValues,
             },
         ];
 
         store.dispatch(
-            formArrayAdd(mockFormId, name, rowsCount, mockInitialValues),
+            formArrayAdd(mockFormId, name, rowsCount, initialValues),
         );
         expect(store.getActions()).toEqual(expectedActions);
     });

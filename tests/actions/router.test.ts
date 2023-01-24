@@ -138,7 +138,7 @@ describe('actions router', () => {
         });
     });
 
-    it('goToParent', () => {
+    it('goToParent without parentRouteId', () => {
         const level = 2;
         const expectedActions = [];
 
@@ -146,19 +146,4 @@ describe('actions router', () => {
 
         expect(store.getActions()).toEqual(expectedActions);
     });
-
-    //ToDo goToParent with parentRoutId
-    //  it('test', () => {
-    //      const object = {
-    //          var: 1,
-    //          path: 2,
-    //          zet: {
-    //              alph: [5],
-    //          },
-    //      };
-
-    //      console.log(_get(object, ['zet', 'alph']));
-
-    //      state.router.routesMap.routeId = '2';
-    //  });
 });

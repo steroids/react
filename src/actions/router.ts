@@ -1,4 +1,6 @@
-import {push, replace} from 'connected-react-router';
+import { push, replace } from 'connected-react-router';
+
+type TParams = Record<string, any>;
 
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
@@ -9,7 +11,7 @@ export const initRoutes = routes => ({
     routes,
 });
 
-export const initParams = params => ({
+export const initParams = (params: TParams) => ({
     type: ROUTER_SET_PARAMS,
     params,
 });

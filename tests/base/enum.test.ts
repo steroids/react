@@ -42,7 +42,9 @@ describe('Enum', () => {
             expect(TestEnum.getLabel(TestEnum.FIELD_1)).toBe(expectedResult);
         });
         it('incorrect', () => {
-            expect(TestEnum.getLabel('Test')).toBe('');
+            const expectedResult = '';
+
+            expect(TestEnum.getLabel('Test')).toBe(expectedResult);
         });
     });
 
@@ -86,7 +88,9 @@ describe('Enum', () => {
         });
 
         it('incorrect', () => {
-            expect(TestEnum.getCssClass('Test')).toEqual('');
+            const expectedResult = '';
+
+            expect(TestEnum.getCssClass('Test')).toEqual(expectedResult);
         });
     });
 });

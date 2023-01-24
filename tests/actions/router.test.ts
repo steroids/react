@@ -1,4 +1,5 @@
 import configureMockStore from 'redux-mock-store';
+import _get from 'lodash-es/get';
 
 import prepareMiddleware from '../storeMiddlewareMock';
 
@@ -12,7 +13,9 @@ import {
 } from '../../src/actions/router';
 
 const mockStore = configureMockStore([prepareMiddleware]);
-const store = mockStore({});
+const store = mockStore({
+    initialState: {},
+});
 
 describe('actions router', () => {
     beforeEach(() => {
@@ -38,7 +41,9 @@ describe('actions router', () => {
     });
 
     it('initParams', () => {
-        const params = {
+        type TParams = Record<string, any>;
+
+        const params: TParams = {
             shallow: true,
             displayUrl: false,
         };
@@ -106,7 +111,7 @@ describe('actions router', () => {
 
             const params = {
                 exact: false,
-                query: 'conctacts',
+                query: 'contacts',
             };
             const isReplace = true;
 
@@ -141,4 +146,19 @@ describe('actions router', () => {
 
         expect(store.getActions()).toEqual(expectedActions);
     });
+
+    //ToDo goToParent with parentRoutId
+    //  it('test', () => {
+    //      const object = {
+    //          var: 1,
+    //          path: 2,
+    //          zet: {
+    //              alph: [5],
+    //          },
+    //      };
+
+    //      console.log(_get(object, ['zet', 'alph']));
+
+    //      state.router.routesMap.routeId = '2';
+    //  });
 });

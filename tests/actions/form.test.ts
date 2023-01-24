@@ -60,8 +60,8 @@ describe('form actions', () => {
 
             const expectedActions = [
                 {
-                    formId: mockFormId,
                     type: FORM_CHANGE,
+                    formId: mockFormId,
                     value: null,
                     nameOrObject,
                 },
@@ -77,8 +77,8 @@ describe('form actions', () => {
 
             const expectedActions = [
                 {
-                    formId: mockFormId,
                     type: FORM_CHANGE,
+                    formId: mockFormId,
                     value,
                     nameOrObject: name,
                 },
@@ -97,8 +97,8 @@ describe('form actions', () => {
 
         const expectedActions = [
             {
-                formId: mockFormId,
                 type: FORM_SET_ERRORS,
+                formId: mockFormId,
                 errors,
             },
         ];
@@ -109,8 +109,8 @@ describe('form actions', () => {
     it('formSubmit', () => {
         const expectedActions = [
             {
-                formId: mockFormId,
                 type: FORM_SUBMIT,
+                formId: mockFormId,
             },
         ];
 
@@ -124,13 +124,13 @@ describe('form actions', () => {
 
             const expectedActions = [
                 {
+                    type: FORM_SET_SUBMITTING,
                     formId: mockFormId,
                     isSubmitting,
-                    type: FORM_SET_SUBMITTING,
                 },
             ];
 
-            store.dispatch(formSetSubmitting(mockFormId, true));
+            store.dispatch(formSetSubmitting(mockFormId, isSubmitting));
             expect(store.getActions()).toEqual(expectedActions);
         });
         it('false condition', () => {
@@ -138,13 +138,13 @@ describe('form actions', () => {
 
             const expectedActions = [
                 {
+                    type: FORM_SET_SUBMITTING,
                     formId: mockFormId,
                     isSubmitting,
-                    type: FORM_SET_SUBMITTING,
                 },
             ];
 
-            store.dispatch(formSetSubmitting(mockFormId, false));
+            store.dispatch(formSetSubmitting(mockFormId, isSubmitting));
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
@@ -152,8 +152,8 @@ describe('form actions', () => {
     it('formReset', () => {
         const expectedActions = [
             {
-                formId: mockFormId,
                 type: FORM_RESET,
+                formId: mockFormId,
             },
         ];
 
@@ -164,8 +164,8 @@ describe('form actions', () => {
     it('formHardReset', () => {
         const expectedActions = [
             {
-                formId: mockFormId,
                 type: FORM_HARD_RESET,
+                formId: mockFormId,
             },
         ];
 

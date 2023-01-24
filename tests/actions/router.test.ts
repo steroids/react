@@ -13,9 +13,7 @@ import {
 } from '../../src/actions/router';
 
 const mockStore = configureMockStore([prepareMiddleware]);
-const store = mockStore({
-    initialState: {},
-});
+const store = mockStore({});
 
 describe('actions router', () => {
     beforeEach(() => {
@@ -41,9 +39,7 @@ describe('actions router', () => {
     });
 
     it('initParams', () => {
-        type TParams = Record<string, any>;
-
-        const params: TParams = {
+        const params = {
             shallow: true,
             displayUrl: false,
         };

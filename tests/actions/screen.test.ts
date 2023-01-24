@@ -21,38 +21,39 @@ describe('actions screen', () => {
     });
 
     it('setMedia', () => {
-        const mockMedia = {
+        const media = {
             viewport: '1200px',
         };
 
         const expectedActions = [
             {
                 type: SCREEN_SET_MEDIA,
-                media: mockMedia,
+                media,
             },
         ];
 
-        store.dispatch(setMedia(mockMedia));
+        store.dispatch(setMedia(media));
+        expect(store.getActions()).toEqual(expectedActions);
     });
 
     describe('setWidth', () => {
-        const mockWidth = '1200px';
+        const width = '1200px';
 
         const expectedActions = [
             {
                 type: SCREEN_SET_WIDTH,
-                width: mockWidth,
+                width,
             },
         ];
 
         it('with skip timeout', () => {
-            store.dispatch(setWidth(mockWidth, true));
+            store.dispatch(setWidth(width, true));
 
             expect(store.getActions()).toEqual(expectedActions);
         });
 
         it('without skip timeout', () => {
-            store.dispatch(setWidth(mockWidth));
+            store.dispatch(setWidth(width));
 
             expect(setTimeout).toHaveBeenCalledTimes(1);
             expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 100);

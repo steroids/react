@@ -16,8 +16,11 @@ import {
     toggleAll,
     toggleItem,
     update,
+    IList,
+    httpFetchHandler,
 } from '../../src/actions/list';
 import prepareMiddleware from '../storeMiddlewareMock';
+import componentsMock from '../componentsMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
@@ -28,6 +31,28 @@ describe('auth actions', () => {
     });
 
     //TODO httpFetchHandler localFetchHandler
+
+    //  describe('httpFetchHandler', () => {
+    //      it('', () => {
+    //          const query = {
+    //              search: 'string',
+    //          };
+
+    //          const list: IList = {
+    //              action: '',
+    //              scope: ['scope'],
+    //          };
+
+    //          console.log(typeof list.action === 'function');
+
+    //          httpFetchHandler(list, query, {
+    //              api: componentsMock.api,
+    //              http: componentsMock.http,
+    //          });
+
+    //          // expect(componentsMock.http.send).toHaveBeenCalled();
+    //      });
+    //  });
 
     it('listInit', () => {
         const listId = 'list1';

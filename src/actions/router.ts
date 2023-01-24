@@ -1,6 +1,6 @@
 import { push, replace } from 'connected-react-router';
 
-type TParams = Record<string, any>;
+type TParams = Record<string, any> | null;
 
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
@@ -11,12 +11,12 @@ export const initRoutes = routes => ({
     routes,
 });
 
-export const initParams = (params: TParams) => ({
+export const initParams = params => ({
     type: ROUTER_SET_PARAMS,
     params,
 });
 
-export const goToRoute = (routeId, params = null, isReplace = false) => (dispatch, getState, {store}) => {
+export const goToRoute = (routeId, params: TParams = null, isReplace = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
         return [];

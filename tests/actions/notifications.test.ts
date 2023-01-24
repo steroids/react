@@ -6,6 +6,7 @@ import {
     closeNotification,
     NOTIFICATIONS_CLOSE,
     NOTIFICATIONS_SHOW,
+    setFlashes,
     showNotification,
 } from '../../src/actions/notifications';
 
@@ -19,10 +20,12 @@ describe('actions notifications', () => {
 
     describe('closeNotification', () => {
         it('without arguments', () => {
+            const id = null;
+
             const expectedActions = [
                 {
                     type: NOTIFICATIONS_CLOSE,
-                    id: null,
+                    id,
                 },
             ];
 
@@ -45,21 +48,19 @@ describe('actions notifications', () => {
             expect(store.getActions()).toEqual(expectedActions);
         });
 
-        //ToDO
-        // - showNotification
         describe('showNotification', () => {
             //message = ... , level = null, params = def
 
             it('with default arguments', () => {
                 const message = 'You won 1000000 dollars';
                 const level = 'success';
-                const id = '1';
+                const notificationId = '1';
                 const position = 'top-right';
 
                 const expectedActions = [
                     {
                         type: NOTIFICATIONS_SHOW,
-                        id,
+                        id: notificationId,
                         message,
                         level,
                         position,
@@ -75,13 +76,13 @@ describe('actions notifications', () => {
             it('with level argument', () => {
                 const message = 'This button will blow up you computer ^_^';
                 const level = 'primary';
-                const id = '2';
+                const notificationId = '2';
                 const position = 'top-right';
 
                 const expectedActions = [
                     {
                         type: NOTIFICATIONS_SHOW,
-                        id,
+                        id: notificationId,
                         message,
                         level,
                         position,
@@ -93,12 +94,39 @@ describe('actions notifications', () => {
             });
         });
 
-        //   describe('setFlashes', () => {
-        //       it('with correct data', () => {});
-        //   });
-        //   const flashes = {
-        //       key1: 'key1',
-        //       key2: 'key2',
-        //   };
+        describe('setFlashes', () => {
+            it('with filled flashes', () => {
+                const infoMessage = 'This bycycle is 20% off ';
+                const notificationId = '3';
+                const level = 'info';
+                const position = 'top-right';
+
+                const flashes = {
+                    info: infoMessage,
+                };
+
+                const expectedActions = [
+                    {
+                        type: NOTIFICATIONS_SHOW,
+                        id: notificationId,
+                        message: infoMessage,
+                        level,
+                        position,
+                    },
+                ];
+
+                store.dispatch(setFlashes(flashes));
+                expect(store.getActions()).toEqual(expectedActions);
+            });
+            it('with empty flashes', () => {
+                const flashes = {};
+
+                const expectedActions = [];
+
+                store.dispatch(setFlashes(flashes));
+
+                expect(store.getActions()).toEqual(expectedActions);
+            });
+        });
     });
 });

@@ -12,6 +12,9 @@ import prepareMiddleware from '../storeMiddlewareMock';
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
 
+jest.useFakeTimers();
+jest.spyOn(global, 'setTimeout');
+
 describe('actions screen', () => {
     beforeEach(() => {
         store.clearActions();
@@ -48,11 +51,13 @@ describe('actions screen', () => {
             expect(store.getActions()).toEqual(expectedActions);
         });
 
-        //TODO
-        // Дописать it
-
         it('without skip timeout', () => {
             store.dispatch(setWidth(mockWidth));
+
+            expect(setTimeout).toHaveBeenCalledTimes(1);
+            expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 100);
+
+            jest.runAllTimers();
 
             expect(store.getActions()).toEqual(expectedActions);
         });

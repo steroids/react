@@ -53,10 +53,16 @@ describe('actions screen', () => {
         });
 
         it('without skip timeout', () => {
+            const timerCallCount = 1;
+            const timerDelayMs = 100;
+
             store.dispatch(setWidth(width));
 
-            expect(setTimeout).toHaveBeenCalledTimes(1);
-            expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 100);
+            expect(setTimeout).toHaveBeenCalledTimes(timerCallCount);
+            expect(setTimeout).toHaveBeenCalledWith(
+                expect.any(Function),
+                timerDelayMs,
+            );
 
             jest.runAllTimers();
 

@@ -14,7 +14,7 @@ const showNotificationDefaults: IShowNotificationParameters = {
     timeOut: 10000,
 };
 
-export const closeNotification = (id = null) => ({
+export const closeNotification = (id: string | null = null) => ({
     type: NOTIFICATIONS_CLOSE,
     id,
 });

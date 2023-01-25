@@ -66,23 +66,21 @@ describe('screen reducers', () => {
     describe('getDeviceType', () => {
         it(SCREEN_PHONE, () => {
             const state = {
-                ...initialState,
-                width: 320,
+                screen: {...initialState, width: 320},
             };
 
             expect(getDeviceType(state)).toBe(SCREEN_PHONE);
         });
         it(SCREEN_TABLET, () => {
             const state = {
-                ...initialState,
-                width: 768,
+                screen: {...initialState, width: 768},
             };
 
             expect(getDeviceType(state)).toBe(SCREEN_TABLET);
         });
         it(SCREEN_DESKTOP, () => {
             const state = {
-                ...initialState,
+                screen: {...initialState},
             };
 
             expect(getDeviceType(state)).toBe(SCREEN_DESKTOP);
@@ -91,32 +89,31 @@ describe('screen reducers', () => {
 
     it('isPhone', () => {
         const state = {
-            ...initialState,
+            screen: {...initialState},
         };
         expect(isPhone(state)).not.toBe(true);
 
-        state.width = 320;
+        state.screen.width = 320;
 
         expect(isPhone(state)).toBe(true);
     });
     it('isTablet', () => {
         const state = {
-            ...initialState,
+            screen: {...initialState},
         };
         expect(isTablet(state)).not.toBe(true);
 
-        state.width = 768;
+        state.screen.width = 768;
 
         expect(isTablet(state)).toBe(true);
     });
     it('isDesktop', () => {
         const state = {
-            ...initialState,
-            width: 320,
+            screen: {...initialState, width: 320},
         };
         expect(isDesktop(state)).not.toBe(true);
 
-        state.width = 1024;
+        state.screen.width = 1024;
 
         expect(isDesktop(state)).toBe(true);
     });

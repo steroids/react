@@ -34,10 +34,10 @@ export default (state = initialState, action) => {
 };
 
 export const getDeviceType = (state) => {
-    if (state.width < state.media[SCREEN_TABLET]) {
+    if (state.screen.width < state.screen.media[SCREEN_TABLET]) {
         return SCREEN_PHONE;
     }
-    if (state.width < state.media[SCREEN_DESKTOP]) {
+    if (state.screen.width < state.screen.media[SCREEN_DESKTOP]) {
         return SCREEN_TABLET;
     }
     return SCREEN_DESKTOP;

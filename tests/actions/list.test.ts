@@ -16,11 +16,8 @@ import {
     toggleAll,
     toggleItem,
     update,
-    IList,
-    httpFetchHandler,
 } from '../../src/actions/list';
 import prepareMiddleware from '../storeMiddlewareMock';
-import componentsMock from '../componentsMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
@@ -31,28 +28,6 @@ describe('auth actions', () => {
     });
 
     //TODO httpFetchHandler localFetchHandler
-
-    //  describe('httpFetchHandler', () => {
-    //      it('', () => {
-    //          const query = {
-    //              search: 'string',
-    //          };
-
-    //          const list: IList = {
-    //              action: '',
-    //              scope: ['scope'],
-    //          };
-
-    //          console.log(typeof list.action === 'function');
-
-    //          httpFetchHandler(list, query, {
-    //              api: componentsMock.api,
-    //              http: componentsMock.http,
-    //          });
-
-    //          // expect(componentsMock.http.send).toHaveBeenCalled();
-    //      });
-    //  });
 
     it('listInit', () => {
         const listId = 'list1';
@@ -72,9 +47,10 @@ describe('auth actions', () => {
         store.dispatch(listInit(listId, payload));
         expect(store.getActions()).toEqual(expectedActions);
     });
+
     it('listSetItems', () => {
         const listId = 'list2';
-        const items = [true, false, NaN];
+        const items = [{id: 2, name: 'html'}];
 
         const expectedActions = [
             {
@@ -109,7 +85,7 @@ describe('auth actions', () => {
     describe('add', () => {
         it('with prepend argument', () => {
             const listId = 'list4';
-            const item = 'macaroni';
+            const item = {id: 1, name: 'body'};
             const prepend = true;
 
             const expectedActions = [
@@ -124,17 +100,17 @@ describe('auth actions', () => {
             store.dispatch(add(listId, item, prepend));
             expect(store.getActions()).toEqual(expectedActions);
         });
+
         it('without prepend argument', () => {
             const listId = 'list5';
-            const item = 'cheese';
-            const prepend = false;
+            const item = {id: 324, name: 'p'};
 
             const expectedActions = [
                 {
                     type: LIST_ITEM_ADD,
                     listId,
                     item,
-                    prepend,
+                    prepend: false,
                 },
             ];
 
@@ -145,8 +121,11 @@ describe('auth actions', () => {
 
     it('update', () => {
         const listId = 'list6';
-        const item = 'bread';
-        const condition = true;
+        const item = {id: 873287, name: 'address'};
+        const condition = {
+            id: 1,
+            name: 'list6',
+        };
 
         const expectedActions = [
             {
@@ -163,7 +142,9 @@ describe('auth actions', () => {
 
     it('deleteItem', () => {
         const listId = 'list7';
-        const condition = false;
+        const condition = {
+            id: 1,
+        };
 
         const expectedActions = [
             {
@@ -176,6 +157,7 @@ describe('auth actions', () => {
         store.dispatch(deleteItem(listId, condition));
         expect(store.getActions()).toEqual(expectedActions);
     });
+
     it('toggleItem', () => {
         const listId = 'list7';
         const itemId = 'item1';
@@ -191,6 +173,7 @@ describe('auth actions', () => {
         store.dispatch(toggleItem(listId, itemId));
         expect(store.getActions()).toEqual(expectedActions);
     });
+
     it('toggleAll', () => {
         const listId = 'list8';
 

@@ -1,17 +1,27 @@
 import _isString from 'lodash-es/isString';
 import _get from 'lodash-es/get';
-import {FIELDS_SET_META, FIELDS_DATA_PROVIDER_SET_ITEMS} from '../actions/fields';
+import {
+    FIELDS_SET_META,
+    FIELDS_DATA_PROVIDER_SET_ITEMS,
+} from '../actions/fields';
 
-const initialState = {
+export interface IFieldsState {
+    props: Record<string, any>;
+    dataProvider: Record<string, any>;
+    meta: Record<string, any> | null;
+}
+
+const initialState: IFieldsState = {
     props: {},
     dataProvider: {},
     meta: null,
 };
-const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, '');
+
+export const normalizeName = (name) => name.replace(/\\/g, '.').replace(/^\./, '');
 export default (state = initialState, action) => {
     switch (action.type) {
         case FIELDS_SET_META:
-            Object.keys(action.meta).forEach(name => {
+            Object.keys(action.meta).forEach((name) => {
                 action.meta[name].className = name;
             });
             return {
@@ -36,7 +46,7 @@ export default (state = initialState, action) => {
     }
 };
 
-export const isMetaFetched = state => _get(state, ['fields', 'meta']) !== null;
+export const isMetaFetched = (state) => _get(state, ['fields', 'meta']) !== null;
 export const getEnumLabels = (state, name) => _get(state, ['fields', 'meta', name, 'labels']) || null;
 const warnings = {};
 export const getModel = (state, name) => {

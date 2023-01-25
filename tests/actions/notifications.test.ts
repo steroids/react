@@ -20,12 +20,10 @@ describe('actions notifications', () => {
 
     describe('closeNotification', () => {
         it('without arguments', () => {
-            const id = null;
-
             const expectedActions = [
                 {
                     type: NOTIFICATIONS_CLOSE,
-                    id,
+                    id: null,
                 },
             ];
 

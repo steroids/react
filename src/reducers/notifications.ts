@@ -3,7 +3,12 @@ import {
     NOTIFICATIONS_CLOSE,
 } from '../actions/notifications';
 
-const initialState = {
+export type TNotificationsState = {
+    items: any[];
+    position: string;
+};
+
+const initialState: TNotificationsState = {
     items: [],
     position: '',
 };
@@ -12,27 +17,25 @@ export default (state = initialState, action) => {
         case NOTIFICATIONS_SHOW:
             return {
                 ...state,
-                items: []
-                    .concat(state.items)
-                    .concat([
-                        {
-                            id: action.id,
-                            level: action.level || 'info',
-                            message: action.message,
-                            isClosing: false,
-                            position: action.position,
-                        },
-                    ]),
+                items: [].concat(state.items).concat([
+                    {
+                        id: action.id,
+                        level: action.level || 'info',
+                        message: action.message,
+                        isClosing: false,
+                        position: action.position,
+                    },
+                ]),
                 position: action.position,
             };
         case NOTIFICATIONS_CLOSE:
             return {
                 ...state,
-                items: state.items.filter(item => item.id !== action.id),
+                items: state.items.filter((item) => item.id !== action.id),
             };
         default:
             return state;
     }
 };
-export const getNotifications = state => state.notifications.items;
-export const getPosition = state => state.notifications.position;
+export const getNotifications = (state) => state.notifications.items;
+export const getPosition = (state) => state.notifications.position;

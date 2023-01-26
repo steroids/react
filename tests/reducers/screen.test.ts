@@ -26,7 +26,7 @@ describe('screen reducers', () => {
         initialState = {...defaultInitialState};
     });
 
-    it(SCREEN_SET_WIDTH, () => {
+    it('SCREEN_SET_WIDTH', () => {
         const width = 3260;
 
         const action = {
@@ -42,7 +42,7 @@ describe('screen reducers', () => {
         expect(screen(initialState, action)).toEqual(expectedState);
     });
 
-    it(SCREEN_SET_MEDIA, () => {
+    it('SCREEN_SET_MEDIA', () => {
         const action = {
             type: SCREEN_SET_MEDIA,
             media: {
@@ -62,7 +62,7 @@ describe('screen reducers', () => {
     });
 
     describe('getDeviceType', () => {
-        it(SCREEN_PHONE, () => {
+        it('SCREEN_PHONE', () => {
             const state = {
                 screen: {...initialState, width: 320},
             };
@@ -70,7 +70,7 @@ describe('screen reducers', () => {
             expect(getDeviceType(state)).toBe(SCREEN_PHONE);
         });
 
-        it(SCREEN_TABLET, () => {
+        it('SCREEN_TABLET', () => {
             const state = {
                 screen: {...initialState, width: 768},
             };
@@ -78,7 +78,7 @@ describe('screen reducers', () => {
             expect(getDeviceType(state)).toBe(SCREEN_TABLET);
         });
 
-        it(SCREEN_DESKTOP, () => {
+        it('SCREEN_DESKTOP', () => {
             const state = {
                 screen: {...initialState},
             };

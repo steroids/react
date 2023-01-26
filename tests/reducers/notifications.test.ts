@@ -7,16 +7,15 @@ import {
 } from '../../src/actions/notifications';
 
 describe('notifications reducers', () => {
-    let initialState: TNotificationsState = {
+    const defaultInitialState: TNotificationsState = {
         items: [],
         position: '',
     };
 
+    let initialState: TNotificationsState = {...defaultInitialState};
+
     beforeEach(() => {
-        initialState = {
-            items: [],
-            position: '',
-        };
+        initialState = {...defaultInitialState};
     });
 
     it(NOTIFICATIONS_CLOSE, () => {
@@ -29,14 +28,13 @@ describe('notifications reducers', () => {
         ];
 
         const action = {
-            id,
             type: NOTIFICATIONS_CLOSE,
+            id,
         };
 
         initialState.items = items;
 
-        const expectedState = {...initialState};
-        expectedState.items = [];
+        const expectedState = {...initialState, items: []};
 
         expect(notifications(initialState, action)).toEqual(expectedState);
     });

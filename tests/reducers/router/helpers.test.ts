@@ -2,6 +2,8 @@ import {
     IRouterInitialState,
     isRouterInitialized,
     buildUrl,
+    checkIsActive,
+    normalizeRoutes,
 } from '../../../src/reducers/router';
 import {IRouteItem} from '../../../src/ui/nav/Router/Router';
 
@@ -55,27 +57,111 @@ describe('router reducers', () => {
         });
     });
 
-    //  describe('checkIsActive', () => {
-    //      it('not SSR with file protocol', () => {
-    //          process.env.IS_SSR = 'false';
+    describe('checkIsActive', () => {
+        //TODO checkIsActive
+        //   it('not SSR with file protocol', () => {
+        //       process.env.IS_SSR = 'false';
+        //       global.window.location.protocol = 'file:';
+        //       global.window.location.hash = 'hash';
 
-    //          global.window.location.protocol = 'file:';
-    //          global.window.location.href = '#yakor';
+        //       const item = {
+        //           path: 'contacts/hash',
+        //           exact: false,
+        //           strict: false,
+        //       };
 
-    //          const item = {
-    //              exact: true,
-    //              strict: false,
-    //              path: '...s',
-    //          };
-    //      });
+        //       const state: IRouterInitialState = {
+        //           ...initialState,
+        //           location: null,
+        //       };
 
-    //      it('not SSR without file protocol', () => {
-    //          process.env.IS_SSR = 'false';
-    //          global.window.location.protocol = 'http:';
-    //      });
-    //  });
+        //       console.log(checkIsActive(state, item));
+        //   });
+
+        it('not SSR without file protocol', () => {
+            const pathname = 'home/contacts/it';
+            const item = {
+                exact: true,
+                strict: true,
+                path: pathname,
+            };
+
+            global.window.location.protocol = 'http:';
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    hash: '',
+                    query: null,
+                    search: '',
+                    pathname,
+                },
+            };
+
+            const expectedResult = true;
+
+            expect(checkIsActive(state, item)).toBe(expectedResult);
+        });
+    });
 
     //TODO normalizeRoutes findRecursive
+
+    describe('normalizeRoutes', () => {
+        it('with items as object', () => {
+            const component = () => null;
+
+            const items = {
+                memePage: {id: '3', component},
+            };
+
+            const routesMap: {[key: string]: IRouteItem} = {
+                dashboard: {
+                    id: '1',
+                    component,
+                },
+                information: {
+                    id: '2',
+                    component,
+                },
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                routesMap,
+            };
+            const item: IRouteItem = {
+                id: '5',
+                title: 'megaItem',
+                label: 'megaLabel',
+                exact: true,
+                strict: true,
+                path: 'home/contacts/mega',
+                isVisible: true,
+                isNavVisible: true,
+                component,
+                componentProps: null,
+            };
+            const activeIds = ['dashboard', 'information'];
+
+            const expectedResult = {
+                ...item,
+                id: item.id,
+                title: item.title,
+                label: item.label,
+                icon: null,
+                exact: item.exact,
+                strict: item.strict,
+                path: item.path,
+                isVisible: item.isVisible,
+                isNavVisible: item.isNavVisible,
+                component: item.component,
+                componentProps: item.componentProps,
+                roles: [],
+            };
+
+            expect(normalizeRoutes(state, item, activeIds, routesMap));
+        });
+    });
 
     describe('isRouterInitialized', () => {
         it('without routesTree', () => {

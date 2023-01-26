@@ -19,7 +19,7 @@ export interface IRouterInitialState {
         pathname: string;
         search: string;
         hash: string;
-        query: Record<string, unknown>;
+        query: Record<string, unknown> | null;
     } | null;
     routesTree: IRouteItem | null;
     routesMap: {[key: string]: IRouteItem} | null;
@@ -109,7 +109,7 @@ export const checkIsActive = (state, item) => {
 /**
  * Normalize routes tree (convert object structure to items[])
  */
-const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], routesMap: Record<string, unknown>) => {
+export const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], routesMap: Record<string, unknown>) => {
     let items = null;
     if (Array.isArray(item.items)) {
         items = item.items.map(subItem => normalizeRoutes(state, subItem, activeIds, routesMap));

@@ -37,26 +37,47 @@ describe('router reducers', () => {
         it('without currentRoute', () => {
             const currentRoute = null;
 
-            const globalState = {
-                router: {...initialState} as IRouterInitialState,
+            const state: IRouterInitialState = {
+                ...initialState,
             };
 
             const expectedResult = null;
 
-            expect(getMatch(currentRoute, globalState)).toBe(expectedResult);
+            expect(getMatch(currentRoute, state)).toBe(expectedResult);
         });
 
         it('with currentRoute', () => {
+            const path = '/home/contacts';
+
             const currentRoute = {
                 id: 1,
                 exact: true,
                 strict: false,
-                path: '/home/contacts',
+                path,
             };
 
-            const globalState = {
-                router: {...initialState} as IRouterInitialState,
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    pathname: path,
+                    hash: '',
+                    query: {
+                        query1: 'query1',
+                    },
+                    search: '',
+                },
             };
+
+            const expectedResult = {
+                path,
+                url: path,
+                isExact: true,
+                params: {
+                    ...state.location?.query,
+                },
+            };
+
+            expect(getMatch(currentRoute, state)).toEqual(expectedResult);
         });
     });
 

@@ -1,18 +1,4 @@
-import {
-    getActiveRouteIds,
-    getRoute,
-    getRouteId,
-    getRouteParams,
-    getRouteParam,
-    getRouteProp,
-    getRouterParams,
-    getRoutesMap,
-    IRouterInitialState,
-    isRouterInitialized,
-    getRouteChildren,
-    buildUrl,
-    getMatch,
-} from '../../../src/reducers/router';
+import {IRouterInitialState} from '../../../src/reducers/router';
 import {IRouteItem} from '../../../src/ui/nav/Router/Router';
 
 describe('router reducers', () => {

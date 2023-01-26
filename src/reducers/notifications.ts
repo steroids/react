@@ -3,10 +3,16 @@ import {
     NOTIFICATIONS_CLOSE,
 } from '../actions/notifications';
 
-const initialState = {
+export type TNotificationsState = {
+   items: any[];
+   position: string;
+};
+
+const initialState: TNotificationsState = {
     items: [],
     position: '',
 };
+
 export default (state = initialState, action) => {
     switch (action.type) {
         case NOTIFICATIONS_SHOW:

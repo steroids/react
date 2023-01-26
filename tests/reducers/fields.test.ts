@@ -14,18 +14,16 @@ import {
 const mockWarn = jest.spyOn(console, 'warn');
 
 describe('fields reducers', () => {
-    let initialState: IFieldsState = {
+    const defaultInitialState: IFieldsState = {
         props: {},
         dataProvider: {},
         meta: null,
     };
 
+    let initialState = {...defaultInitialState};
+
     beforeEach(() => {
-        initialState = {
-            props: {},
-            dataProvider: {},
-            meta: null,
-        };
+        initialState = {...defaultInitialState};
     });
 
     it('normalizeName', () => {
@@ -61,10 +59,11 @@ describe('fields reducers', () => {
             meta: {
                 ...initialState.meta,
                 ...action.meta,
+                meta1: {
+                    className: 'meta1',
+                },
             },
         };
-
-        expectedState.meta.meta1.className = 'meta1';
 
         expect(fields(initialState, action)).toEqual(expectedState);
     });

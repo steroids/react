@@ -33,8 +33,13 @@ describe('auth actions', () => {
         const listId = 'list1';
 
         const payload = {
-            listLength: 4,
-            listData: ['21', 50, true, false],
+            listId,
+            items: [
+                {
+                    id: 1,
+                    name: 'item1',
+                },
+            ],
         };
 
         const expectedActions = [
@@ -122,10 +127,7 @@ describe('auth actions', () => {
     it('update', () => {
         const listId = 'list6';
         const item = {id: 873287, name: 'address'};
-        const condition = {
-            id: 1,
-            name: 'list6',
-        };
+        const condition = {id: 1, name: 'list6'};
 
         const expectedActions = [
             {
@@ -142,9 +144,7 @@ describe('auth actions', () => {
 
     it('deleteItem', () => {
         const listId = 'list7';
-        const condition = {
-            id: 1,
-        };
+        const condition = {id: 1, name: 'list12'};
 
         const expectedActions = [
             {

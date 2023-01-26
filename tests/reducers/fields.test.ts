@@ -34,7 +34,7 @@ describe('fields reducers', () => {
         expect(normalizeName(name)).toBe(expectedResult);
     });
 
-    it(FIELDS_SET_META, () => {
+    it('FIELDS_SET_META', () => {
         const action = {
             type: FIELDS_SET_META,
             meta: {
@@ -68,7 +68,7 @@ describe('fields reducers', () => {
         expect(fields(initialState, action)).toEqual(expectedState);
     });
 
-    it(FIELDS_DATA_PROVIDER_SET_ITEMS, () => {
+    it('FIELDS_DATA_PROVIDER_SET_ITEMS', () => {
         const dataProvider = {
             unknownApi: 'api',
         };

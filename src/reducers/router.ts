@@ -14,30 +14,31 @@ import {
     ROUTER_SET_PARAMS,
 } from '../actions/router';
 
-interface IRouterInitialState {
+export interface IRouterInitialState {
     location: {
-        pathname: string,
-        search: string,
-        hash: string,
-        query: Record<string, unknown>,
-    },
-    routesTree: IRouteItem,
-    routesMap: { [key: string]: IRouteItem },
-    activeIds: string[],
+        pathname: string;
+        search: string;
+        hash: string;
+        query: Record<string, unknown>;
+    } | null;
+    routesTree: IRouteItem | null;
+    routesMap: {[key: string]: IRouteItem} | null;
+    activeIds: string[] | null;
+    currentId: null;
     match: {
-        path: string,
-        url: string,
-        isExact: string,
-        params: Record<string, unknown>,
-    },
+        path: string;
+        url: string;
+        isExact: string;
+        params: Record<string, unknown> | null;
+    } | null;
 
-    params: Record<string, unknown>,
-    configs: any,
-    data: Record<string, unknown>,
-    counters: Record<string, unknown>,
+    params: Record<string, unknown> | null;
+    configs: any;
+    data: Record<string, unknown>;
+    counters: Record<string, unknown>;
 }
 
-const initialState = {
+const initialState: IRouterInitialState = {
     location: null,
     routesTree: null,
     routesMap: null,
@@ -49,14 +50,16 @@ const initialState = {
     configs: [],
     data: {},
     counters: {},
-} as IRouterInitialState;
+};
+
+type TUrlParams = { [key: string]: unknown } | null;
 
 /**
  * Generate url for route by path and params
  * @param path
  * @param params
  */
-export const buildUrl = (path, params = null) => {
+export const buildUrl = (path, params: TUrlParams = null) => {
     // Get url
     let url = path;
     let pathKeys = [];
@@ -89,7 +92,7 @@ export const buildUrl = (path, params = null) => {
 /**
  * Return true, if item is 'active' - opened current route or it children
  */
-const checkIsActive = (state, item) => {
+export const checkIsActive = (state, item) => {
     // Check is active
     const pathname = !process.env.IS_SSR && window.location.protocol === 'file:'
         ? window.location.hash
@@ -164,7 +167,7 @@ const findRecursive = (
     return null;
 };
 
-const getMatch = (currentRoute, state) => {
+export const getMatch = (currentRoute, state) => {
     const match = currentRoute
         ? matchPath(String(state.location.pathname), _pick(currentRoute, ['id', 'exact', 'strict', 'path']))
         : null;
@@ -221,11 +224,11 @@ export const isRouterInitialized = state => !!state.router.routesTree;
 export const getRouterParams = state => _get(state.router, 'params');
 export const getActiveRouteIds = state => _get(state.router, 'activeIds') || null;
 export const getRoutesMap = state => _get(state.router, 'routesMap') || null;
-export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
-export const getRoute = (state, routeId = null): IRouteItem => _get(
+export const getRouteId = (state) => _get(state.router, 'activeIds.0') || null;
+export const getRoute = (state, routeId: string = null): IRouteItem => _get(
     state.router, ['routesMap', routeId || getRouteId(state)],
 ) || null;
-export const getRouteProp = (state, routeId = null, param) => _get(getRoute(state, routeId), param) || null;
+export const getRouteProp = (state, routeId: string = null, param) => _get(getRoute(state, routeId), param) || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
 export const getRouteParam = (state, param) => _get(getRouteParams(state), param) || null;
 export const getRouteBreadcrumbs = (state, routeId = null): IRouteItem[] => {
@@ -234,7 +237,7 @@ export const getRouteBreadcrumbs = (state, routeId = null): IRouteItem[] => {
     findRecursive(state.router.routesTree, routeId, items);
     return items.reverse().filter(item => item.isVisible !== false && item.isNavVisible !== false);
 };
-export const getRouteChildren = (state, routeId = null) => {
+export const getRouteChildren = (state, routeId: string = null) => {
     const route = getRoute(state, routeId);
     return route?.items || null;
 };

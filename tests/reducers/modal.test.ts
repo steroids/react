@@ -8,10 +8,12 @@ import modal, {IModal} from '../../src/reducers/modal';
 type TOpened = Record<string, IModal[]>;
 
 describe('modal reducer', () => {
-    let initialState = {opened: {} as TOpened};
+    const defaultInitialState = {opened: {} as TOpened};
+
+    let initialState = {...defaultInitialState};
 
     beforeEach(() => {
-        initialState = {opened: {}};
+        initialState = {...defaultInitialState};
     });
 
     describe('MODAL_OPEN', () => {
@@ -55,6 +57,7 @@ describe('modal reducer', () => {
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });
+
         it('new modal to group', () => {
             const modalGroup = 'group';
             const action = {
@@ -78,7 +81,7 @@ describe('modal reducer', () => {
 
             initialState = {
                 opened: {
-                    group, // items in reducer
+                    group,
                 },
             };
 
@@ -102,8 +105,6 @@ describe('modal reducer', () => {
 
     describe('MODAL_MARK_CLOSING', () => {
         it('with initialState return', () => {
-            const modalGroup = 'group';
-
             const group = [
                 {
                     id: 'modal3',
@@ -125,13 +126,14 @@ describe('modal reducer', () => {
             const action = {
                 type: MODAL_MARK_CLOSING,
                 id: 'modal15',
-                group: modalGroup,
+                group: 'group',
             };
 
-            const expectedState = initialState;
+            const expectedState = {...initialState};
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });
+
         it('with set isClosing true', () => {
             const id = 'modal3';
             const modalGroup = 'group';
@@ -166,10 +168,9 @@ describe('modal reducer', () => {
             expect(modal(initialState, action)).toEqual(expectedState);
         });
     });
+
     describe('MODAL_CLOSE', () => {
         it('with initialState return ', () => {
-            const modalGroup = 'group';
-
             const group = [
                 {
                     id: 'modal30',
@@ -184,7 +185,7 @@ describe('modal reducer', () => {
 
             const action = {
                 type: MODAL_CLOSE,
-                group: modalGroup,
+                group: 'group',
                 id: 'modal15',
             };
 
@@ -192,10 +193,11 @@ describe('modal reducer', () => {
                 opened: {group},
             };
 
-            const expectedState = initialState;
+            const expectedState = {...initialState};
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });
+
         it('with delete modal from group', () => {
             const id = 'modal15';
             const modalGroup = 'group';

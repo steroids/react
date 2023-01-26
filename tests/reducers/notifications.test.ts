@@ -18,7 +18,7 @@ describe('notifications reducers', () => {
         initialState = {...defaultInitialState};
     });
 
-    it(NOTIFICATIONS_CLOSE, () => {
+    it('NOTIFICATIONS_CLOSE', () => {
         const id = 'notification1';
 
         const items = [
@@ -39,7 +39,7 @@ describe('notifications reducers', () => {
         expect(notifications(initialState, action)).toEqual(expectedState);
     });
 
-    it(NOTIFICATIONS_SHOW, () => {
+    it('NOTIFICATIONS_SHOW', () => {
         const action = {
             type: NOTIFICATIONS_SHOW,
             id: 'notification3',

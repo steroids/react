@@ -11,7 +11,7 @@ import screen, {
 } from '../../src/reducers/screen';
 
 describe('screen reducers', () => {
-    let initialState = {
+    const defaultInitialState = {
         width: 1280,
         media: {
             [SCREEN_PHONE]: 320,
@@ -19,19 +19,16 @@ describe('screen reducers', () => {
             [SCREEN_DESKTOP]: 1024,
         },
     };
+
+    let initialState = {...defaultInitialState};
+
     beforeEach(() => {
-        initialState = {
-            width: 1280,
-            media: {
-                [SCREEN_PHONE]: 320,
-                [SCREEN_TABLET]: 768,
-                [SCREEN_DESKTOP]: 1024,
-            },
-        };
+        initialState = {...defaultInitialState};
     });
 
     it(SCREEN_SET_WIDTH, () => {
         const width = 3260;
+
         const action = {
             type: SCREEN_SET_WIDTH,
             width,
@@ -44,6 +41,7 @@ describe('screen reducers', () => {
 
         expect(screen(initialState, action)).toEqual(expectedState);
     });
+
     it(SCREEN_SET_MEDIA, () => {
         const action = {
             type: SCREEN_SET_MEDIA,
@@ -71,6 +69,7 @@ describe('screen reducers', () => {
 
             expect(getDeviceType(state)).toBe(SCREEN_PHONE);
         });
+
         it(SCREEN_TABLET, () => {
             const state = {
                 screen: {...initialState, width: 768},
@@ -78,6 +77,7 @@ describe('screen reducers', () => {
 
             expect(getDeviceType(state)).toBe(SCREEN_TABLET);
         });
+
         it(SCREEN_DESKTOP, () => {
             const state = {
                 screen: {...initialState},
@@ -91,26 +91,31 @@ describe('screen reducers', () => {
         const state = {
             screen: {...initialState},
         };
+
         expect(isPhone(state)).not.toBe(true);
 
         state.screen.width = 320;
 
         expect(isPhone(state)).toBe(true);
     });
+
     it('isTablet', () => {
         const state = {
             screen: {...initialState},
         };
+
         expect(isTablet(state)).not.toBe(true);
 
         state.screen.width = 768;
 
         expect(isTablet(state)).toBe(true);
     });
+
     it('isDesktop', () => {
         const state = {
             screen: {...initialState, width: 320},
         };
+
         expect(isDesktop(state)).not.toBe(true);
 
         state.screen.width = 1024;

@@ -15,10 +15,7 @@ import {
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
 
-const mockGroup = {
-    groupNumber: 3,
-    scrollable: true,
-};
+const mockGroup = 'modalGroup3';
 
 jest.mock('lodash-es/uniqueId');
 
@@ -27,75 +24,10 @@ describe('auth actions', () => {
         store.clearActions();
     });
 
-    describe('modalMarkClosing', () => {
-        it('without group argument', () => {
-            const modalId = 'modal1';
-            const group = null;
-
-            const expectedActions = [
-                {
-                    type: MODAL_MARK_CLOSING,
-                    id: modalId,
-                    group,
-                },
-            ];
-
-            store.dispatch(modalMarkClosing(modalId));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-        it('with group argument', () => {
-            const modalId = 'modal2';
-
-            const expectedActions = [
-                {
-                    type: MODAL_MARK_CLOSING,
-                    id: modalId,
-                    group: mockGroup,
-                },
-            ];
-
-            store.dispatch(modalMarkClosing(modalId, mockGroup));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-    });
-
-    describe('closeModal', () => {
-        it('without group argument', () => {
-            const modalId = 'modal3';
-            const group = null;
-
-            const expectedActions = [
-                {
-                    type: MODAL_CLOSE,
-                    id: modalId,
-                    group,
-                },
-            ];
-
-            store.dispatch(closeModal(modalId));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-        it('with group argument', () => {
-            const modalId = 'modal4';
-            const expectedActions = [
-                {
-                    type: MODAL_CLOSE,
-                    id: modalId,
-                    group: mockGroup,
-                },
-            ];
-
-            store.dispatch(closeModal(modalId, mockGroup));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-    });
-
     describe('openModal', () => {
-        const modal = {
-            backgroundColor: '#fff',
-        };
+        const modal = () => null;
 
-        it('with props modalId', () => {
+        it('with props', () => {
             const modalId = 'modal5';
             const modalGroup = 'primary';
 
@@ -117,25 +49,85 @@ describe('auth actions', () => {
             store.dispatch(openModal(modal, props));
             expect(store.getActions()).toEqual(expectedActions);
         });
-        it('without props modalId', () => {
+
+        it('without props', () => {
             const modalId = 'modal32';
-            const group = null;
-            const props = {};
 
             const expectedActions = [
                 {
                     type: MODAL_OPEN,
                     id: modalId,
                     modal,
-                    group,
-                    props,
+                    group: null,
+                    props: {},
                 },
             ];
 
             _uniqueId.mockImplementation(() => modalId);
-
             store.dispatch(openModal(modal));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
 
+    describe('modalMarkClosing', () => {
+        it('without group argument', () => {
+            const modalId = 'modal1';
+
+            const expectedActions = [
+                {
+                    type: MODAL_MARK_CLOSING,
+                    id: modalId,
+                    group: null,
+                },
+            ];
+
+            store.dispatch(modalMarkClosing(modalId));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('with group argument', () => {
+            const modalId = 'modal2';
+
+            const expectedActions = [
+                {
+                    type: MODAL_MARK_CLOSING,
+                    id: modalId,
+                    group: mockGroup,
+                },
+            ];
+
+            store.dispatch(modalMarkClosing(modalId, mockGroup));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    describe('closeModal', () => {
+        it('without group argument', () => {
+            const modalId = 'modal3';
+
+            const expectedActions = [
+                {
+                    type: MODAL_CLOSE,
+                    id: modalId,
+                    group: null,
+                },
+            ];
+
+            store.dispatch(closeModal(modalId));
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+
+        it('with group argument', () => {
+            const modalId = 'modal4';
+            const expectedActions = [
+                {
+                    type: MODAL_CLOSE,
+                    id: modalId,
+                    group: mockGroup,
+                },
+            ];
+
+            store.dispatch(closeModal(modalId, mockGroup));
             expect(store.getActions()).toEqual(expectedActions);
         });
     });

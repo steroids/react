@@ -145,7 +145,7 @@ export const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], ro
 /**
  * Find route in routes tree
  */
-const findRecursive = (
+export const findRecursive = (
     item: IRouteItem,
     predicate: string | any,
     pathItems: IRouteItem[] | null = null,
@@ -158,11 +158,11 @@ const findRecursive = (
     }
 
     if (Array.isArray((item.items))) {
-        const finedItem = item.items.find(subItem => findRecursive(subItem, predicate, pathItems)) || null;
-        if (finedItem && pathItems) {
+        const foundedItem = item.items.find(subItem => findRecursive(subItem, predicate, pathItems)) || null;
+        if (foundedItem && pathItems) {
             pathItems.push(item);
         }
-        return finedItem;
+        return foundedItem;
     }
     return null;
 };
@@ -231,7 +231,7 @@ export const getRoute = (state, routeId: string = null): IRouteItem => _get(
 export const getRouteProp = (state, routeId: string = null, param) => _get(getRoute(state, routeId), param) || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
 export const getRouteParam = (state, param) => _get(getRouteParams(state), param) || null;
-export const getRouteBreadcrumbs = (state, routeId = null): IRouteItem[] => {
+export const getRouteBreadcrumbs = (state, routeId: string | null = null): IRouteItem[] => {
     const items = [];
     routeId = routeId || getRouteId(state);
     findRecursive(state.router.routesTree, routeId, items);
@@ -241,7 +241,7 @@ export const getRouteChildren = (state, routeId: string = null) => {
     const route = getRoute(state, routeId);
     return route?.items || null;
 };
-export const getRouteParent = (state, routeId = null, level = 1) => {
+export const getRouteParent = (state, routeId: string | null = null, level = 1) => {
     const route = getRoute(state, routeId);
     const breadcrumbs = route ? getRouteBreadcrumbs(state, route.id) : [];
     return breadcrumbs.length > level + 1

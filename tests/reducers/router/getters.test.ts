@@ -10,6 +10,8 @@ import {
     IRouterInitialState,
     getRouteChildren,
     getMatch,
+    getRouteBreadcrumbs,
+    getRouteParent,
 } from '../../../src/reducers/router';
 import {IRouteItem} from '../../../src/ui/nav/Router/Router';
 
@@ -411,7 +413,40 @@ describe('router reducers', () => {
         });
     });
 
-    //TODO getRouteBreadcrumbs
+    it('getRouteBreadcrumbs', () => {
+        const predicate = '2';
+
+        const childrenRoutes: IRouteItem[] = [
+            {
+                id: '2',
+                label: 'childrenRoute1',
+                isVisible: true,
+                isNavVisible: true,
+                items: [],
+            },
+        ];
+
+        const parentRoute: IRouteItem = {
+            id: '1',
+            label: 'parentRoute',
+            isVisible: true,
+            isNavVisible: true,
+            items: childrenRoutes,
+        };
+
+        const globalState = {
+            router: {
+                ...initialState,
+                routesTree: parentRoute,
+            } as IRouterInitialState,
+        };
+
+        const expectedResult = [parentRoute, childrenRoutes[0]];
+
+        expect(getRouteBreadcrumbs(globalState, predicate)).toEqual(
+            expectedResult,
+        );
+    });
 
     describe('getRouteChildren', () => {
         it('with items', () => {
@@ -461,5 +496,59 @@ describe('router reducers', () => {
         });
     });
 
-    //TODO getRouteParent
+    describe('getRouteParent', () => {
+        const routeId = '3';
+        const parentRoute: IRouteItem = {
+            id: 'parentRoute',
+            isNavVisible: true,
+            isVisible: true,
+            items: [
+                {
+                    id: '2',
+                    label: 'desired route',
+                    isNavVisible: true,
+                    isVisible: true,
+                    items: [
+                        {
+                            id: '3',
+                            isNavVisible: true,
+                            isVisible: true,
+                            items: [],
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const globalState = {
+            router: {
+                ...initialState,
+                routesMap: {
+                    1: parentRoute,
+                    2: parentRoute.items ? parentRoute.items[0] : {},
+                    3: parentRoute.items ? parentRoute.items[0].items[0] : {},
+                },
+                routesTree: parentRoute,
+            } as IRouterInitialState,
+        };
+
+        it('with correct level', () => {
+            const level = 1;
+
+            const expectedResult = parentRoute.items && parentRoute.items[0];
+
+            expect(getRouteParent(globalState, routeId, level)).toEqual(
+                expectedResult,
+            );
+        });
+
+        it('with incorrect level', () => {
+            const level = 2;
+            const expectedResult = null;
+
+            expect(getRouteParent(globalState, routeId, level)).toBe(
+                expectedResult,
+            );
+        });
+    });
 });

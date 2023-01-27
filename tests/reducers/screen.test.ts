@@ -2,6 +2,7 @@ import {SCREEN_SET_WIDTH, SCREEN_SET_MEDIA} from '../../src/actions/screen';
 
 import screen, {
     getDeviceType,
+    IScreenInitialState,
     isDesktop,
     isPhone,
     isTablet,
@@ -10,8 +11,22 @@ import screen, {
     SCREEN_TABLET,
 } from '../../src/reducers/screen';
 
+interface IGlobalStateWithScreen {
+    screen: IScreenInitialState;
+}
+
+const checkIsDevice = (
+    state: IGlobalStateWithScreen,
+    fn: (state: IGlobalStateWithScreen) => boolean,
+    width: number,
+) => {
+    expect(fn(state)).toBe(false);
+    state.screen.width = width;
+    expect(fn(state)).toBe(true);
+};
+
 describe('screen reducers', () => {
-    const defaultInitialState = {
+    const defaultInitialState: IScreenInitialState = {
         width: 1280,
         media: {
             [SCREEN_PHONE]: 320,
@@ -20,7 +35,7 @@ describe('screen reducers', () => {
         },
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState: IScreenInitialState = {...defaultInitialState};
 
     beforeEach(() => {
         initialState = {...defaultInitialState};
@@ -92,11 +107,7 @@ describe('screen reducers', () => {
             screen: {...initialState},
         };
 
-        expect(isPhone(state)).not.toBe(true);
-
-        state.screen.width = 320;
-
-        expect(isPhone(state)).toBe(true);
+        checkIsDevice(state, isPhone, 320);
     });
 
     it('isTablet', () => {
@@ -104,11 +115,7 @@ describe('screen reducers', () => {
             screen: {...initialState},
         };
 
-        expect(isTablet(state)).not.toBe(true);
-
-        state.screen.width = 768;
-
-        expect(isTablet(state)).toBe(true);
+        checkIsDevice(state, isTablet, 768);
     });
 
     it('isDesktop', () => {
@@ -116,10 +123,6 @@ describe('screen reducers', () => {
             screen: {...initialState, width: 320},
         };
 
-        expect(isDesktop(state)).not.toBe(true);
-
-        state.screen.width = 1024;
-
-        expect(isDesktop(state)).toBe(true);
+        checkIsDevice(state, isDesktop, 1024);
     });
 });

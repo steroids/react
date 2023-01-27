@@ -17,10 +17,10 @@ describe('modal reducer', () => {
     });
 
     describe('MODAL_OPEN', () => {
-        it('modal merge props with group', () => {
+        it('update modal in group', () => {
             const id = '1';
-            const modalGroup = 'group';
-            const group = [
+            const modalGroupName = 'group';
+            const modalGroup = [
                 {
                     id,
                     modal: null,
@@ -34,13 +34,13 @@ describe('modal reducer', () => {
 
             initialState = {
                 opened: {
-                    group,
+                    [modalGroupName]: modalGroup,
                 },
             };
 
             const action = {
                 type: MODAL_OPEN,
-                group: modalGroup,
+                group: modalGroupName,
                 id,
                 props: {
                     backgroundColor: '#000000',
@@ -50,24 +50,24 @@ describe('modal reducer', () => {
 
             const expectedState = {...initialState};
 
-            expectedState.opened[modalGroup][0].props = {
-                ...group[0].props,
+            expectedState.opened[modalGroupName][0].props = {
+                ...modalGroup[0].props,
                 ...action.props,
             };
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });
 
-        it('new modal to group', () => {
-            const modalGroup = 'group';
+        it('add new modal to group', () => {
+            const modalGroupName = 'group';
             const action = {
                 type: MODAL_OPEN,
                 id: '21',
-                group: modalGroup,
+                group: modalGroupName,
                 modal: 'modal12',
             };
 
-            const group = [
+            const modalGroup = [
                 {
                     id: '1',
                     modal: null,
@@ -81,14 +81,14 @@ describe('modal reducer', () => {
 
             initialState = {
                 opened: {
-                    group,
+                    [modalGroupName]: modalGroup,
                 },
             };
 
             const expectedState = {...initialState};
 
-            expectedState.opened[modalGroup] = [
-                ...initialState.opened[modalGroup],
+            expectedState.opened[modalGroupName] = [
+                ...initialState.opened[modalGroupName],
                 {
                     id: action.id,
                     modal: action.modal,
@@ -105,7 +105,9 @@ describe('modal reducer', () => {
 
     describe('MODAL_MARK_CLOSING', () => {
         it('with initialState return', () => {
-            const group = [
+            const modalGroupName = 'group';
+
+            const modalGroup = [
                 {
                     id: 'modal3',
                     modal: null,
@@ -119,14 +121,14 @@ describe('modal reducer', () => {
 
             initialState = {
                 opened: {
-                    group,
+                    [modalGroupName]: modalGroup,
                 },
             };
 
             const action = {
                 type: MODAL_MARK_CLOSING,
                 id: 'modal15',
-                group: 'group',
+                [modalGroupName]: modalGroupName,
             };
 
             const expectedState = {...initialState};
@@ -136,8 +138,8 @@ describe('modal reducer', () => {
 
         it('with set isClosing true', () => {
             const id = 'modal3';
-            const modalGroup = 'group';
-            const group = [
+            const modalGroupName = 'group';
+            const modalGroup = [
                 {
                     id,
                     modal: null,
@@ -151,19 +153,19 @@ describe('modal reducer', () => {
 
             initialState = {
                 opened: {
-                    group,
+                    [modalGroupName]: modalGroup,
                 },
             };
 
             const action = {
                 type: MODAL_MARK_CLOSING,
                 id,
-                group: modalGroup,
+                [modalGroupName]: modalGroupName,
             };
 
             const expectedState = {...initialState};
 
-            expectedState.opened[modalGroup][0].isClosing = true;
+            expectedState.opened[modalGroupName][0].isClosing = true;
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });
@@ -171,7 +173,9 @@ describe('modal reducer', () => {
 
     describe('MODAL_CLOSE', () => {
         it('with initialState return ', () => {
-            const group = [
+            const modalGroupName = 'group';
+
+            const modalGroup = [
                 {
                     id: 'modal30',
                     modal: null,
@@ -185,12 +189,14 @@ describe('modal reducer', () => {
 
             const action = {
                 type: MODAL_CLOSE,
-                group: 'group',
+                [modalGroupName]: modalGroupName,
                 id: 'modal15',
             };
 
             initialState = {
-                opened: {group},
+                opened: {
+                    [modalGroupName]: modalGroup,
+                },
             };
 
             const expectedState = {...initialState};
@@ -200,9 +206,9 @@ describe('modal reducer', () => {
 
         it('with delete modal from group', () => {
             const id = 'modal15';
-            const modalGroup = 'group';
+            const modalGroupName = 'group';
 
-            const group = [
+            const modalGroup = [
                 {
                     id,
                     modal: null,
@@ -217,18 +223,18 @@ describe('modal reducer', () => {
             const action = {
                 type: MODAL_CLOSE,
                 id,
-                group: modalGroup,
+                [modalGroupName]: modalGroupName,
             };
 
             initialState = {
                 opened: {
-                    group,
+                    [modalGroupName]: modalGroup,
                 },
             };
 
             const expectedState = {...initialState};
 
-            expectedState.opened[modalGroup] = [];
+            expectedState.opened[modalGroupName] = [];
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });

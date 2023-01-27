@@ -17,11 +17,11 @@ const initialState: IFieldsState = {
     meta: null,
 };
 
-export const normalizeName = (name) => name.replace(/\\/g, '.').replace(/^\./, '');
+export const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, '');
 export default (state = initialState, action) => {
     switch (action.type) {
         case FIELDS_SET_META:
-            Object.keys(action.meta).forEach((name) => {
+            Object.keys(action.meta).forEach(name => {
                 action.meta[name].className = name;
             });
             return {
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
     }
 };
 
-export const isMetaFetched = (state) => _get(state, ['fields', 'meta']) !== null;
+export const isMetaFetched = state => _get(state, ['fields', 'meta']) !== null;
 export const getEnumLabels = (state, name) => _get(state, ['fields', 'meta', name, 'labels']) || null;
 const warnings = {};
 export const getModel = (state, name) => {

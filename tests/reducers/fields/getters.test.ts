@@ -29,6 +29,7 @@ describe('fields reducers', () => {
 
             expect(getEnumLabels(state, name)).toEqual(expectedResult);
         });
+
         it('without labels', () => {
             const name = 'megaLabels';
             const state = {
@@ -52,6 +53,7 @@ describe('fields reducers', () => {
 
             expect(getModel(state, name)).toBe(expectedResult);
         });
+
         it('without name argument', () => {
             const state = {};
 
@@ -59,6 +61,7 @@ describe('fields reducers', () => {
 
             expect(getModel(state, undefined)).toBe(expectedResult);
         });
+
         it('with meta', () => {
             const name = 'description';
             const description = 'This page about apples';
@@ -75,6 +78,7 @@ describe('fields reducers', () => {
 
             expect(getModel(state, name)).toEqual(expectedResult);
         });
+
         it('without meta', () => {
             const name = 'description';
             const consoleWarnFirstArgument = 'Steroids: Not found model meta:';
@@ -117,6 +121,7 @@ describe('fields reducers', () => {
                 expectedResult,
             );
         });
+
         it('with incorrect dataProviderId', () => {
             const dataProviderId = 'helperApi';
 

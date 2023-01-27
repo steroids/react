@@ -41,7 +41,7 @@ describe('fields reducers', () => {
             ...defaultInitialState,
             meta: {
                 meta2: {
-                    className: 'black',
+                    someMeta: 'someMeta',
                 },
             },
         };

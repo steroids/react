@@ -66,7 +66,7 @@ export function reducerItem(state, action) {
                 ...state,
                 errors: action.errors,
                 isInvalid: !_isEmpty(action.errors),
-            }
+            };
 
         case FORM_SUBMIT:
             return _set(state, 'submitCounter', (state.submitCounter || 0) + 1);
@@ -95,11 +95,14 @@ export function reducerItem(state, action) {
 
         case FORM_ARRAY_ADD:
             // eslint-disable-next-line no-case-declarations
-            const newValue = [].concat(_get(state, 'values.' + action.name) || []);
-            for (let i = 0; i < action.rowsCount; i += 1) {
-                newValue.push(_cloneDeep(action.initialValues || {}));
+            if (action.name) {
+                const newValue = [].concat(_get(state, 'values.' + action.name) || []);
+                for (let i = 0; i < action.rowsCount; i += 1) {
+                    newValue.push(_cloneDeep(action.initialValues || {}));
+                }
+                return _set(state, 'values.' + action.name, newValue);
             }
-            return _set(state, 'values.' + action.name, newValue);
+            return state;
 
         case FORM_ARRAY_REMOVE:
             return _delete(state, 'values.' + action.name + '.' + action.index);

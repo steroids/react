@@ -65,6 +65,9 @@ describe('modal reducer', () => {
                 id: '21',
                 group: modalGroupName,
                 modal: 'modal12',
+                props: {
+                    color: '#ffff',
+                },
             };
 
             const modalGroup = [
@@ -85,19 +88,19 @@ describe('modal reducer', () => {
                 },
             };
 
-            const expectedState = {...initialState};
-
-            expectedState.opened[modalGroupName] = [
-                ...initialState.opened[modalGroupName],
-                {
-                    id: action.id,
-                    modal: action.modal,
-                    isClosing: false,
-                    props: {
-                        ultraScrollable: true,
-                    },
+            const expectedState = {
+                opened: {
+                    [modalGroupName]: [
+                        ...initialState.opened[modalGroupName],
+                        {
+                            id: action.id,
+                            modal: action.modal,
+                            props: action.props,
+                            isClosing: false,
+                        },
+                    ],
                 },
-            ];
+            };
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });

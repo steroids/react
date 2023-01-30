@@ -56,10 +56,10 @@ describe('fields reducers', () => {
 
         it('without name argument', () => {
             const state = {};
-
             const expectedResult = null;
+            const name = null;
 
-            expect(getModel(state, undefined)).toBe(expectedResult);
+            expect(getModel(state, name)).toBe(expectedResult);
         });
 
         it('with meta', () => {
@@ -121,7 +121,6 @@ describe('fields reducers', () => {
                 expectedResult,
             );
         });
-
         it('with incorrect dataProviderId', () => {
             const dataProviderId = 'helperApi';
 

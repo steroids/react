@@ -127,7 +127,7 @@ const reducerMap = {
             [action.listId]: {
                 ...state.lists[action.listId],
                 items: state.lists[action.listId].items.filter(
-                    item => !_isMatch(item, action.condition)
+                    item => !_isMatch(item, action.condition),
                 ),
             },
         },
@@ -197,7 +197,7 @@ export const getIds = (state, listId) => {
         (list && list.items && list.items.map(item => item[list.primaryKey])) || []
     );
 };
-export const getListItems = (state, listId) => _get(state, ['list', 'lists', listId, 'items']);
+export const getListItems = (state, listId) => _get(state, ['list', 'lists', listId, 'items']) || null;
 export const getCheckedIds = (state, listId) => _get(state, ['list', 'selectedIds', listId]) || [];
 export const isChecked = (state, listId, itemId) => getCheckedIds(state, listId).includes(itemId);
 export const isCheckedAll = (state, listId) => {

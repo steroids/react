@@ -3,8 +3,8 @@ import {
     AUTH_INIT_USER,
     AUTH_SET_DATA,
     AUTH_ADD_SOCIAL,
-} from '../actions/auth';
-import auth from './auth';
+} from '../../src/actions/auth';
+import auth from '../../src/reducers/auth';
 
 describe('auth reducer', () => {
     const initialState = {

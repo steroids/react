@@ -1,28 +1,29 @@
 {
-  "compilerOptions": {
-    "jsx": "react",
-    "lib": ["dom", "es2020.intl"],
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "declaration": true,
-    "isolatedModules": true,
-    "outDir": "./dist",
-    "paths": {
-      "@steroidsjs/core/*": [
-        "../react/src/*"
-      ],
-      "@steroidsjs/bootstrap/*": [
-        "../react-bootstrap/src/*"
-      ]
-    }
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx"
-  ]
-}
+	"compilerOptions": {
+	  "jsx": "react",
+	  "lib": ["dom", "es2020.intl"],
+	  "experimentalDecorators": true,
+	  "esModuleInterop": true,
+	  "baseUrl": ".",
+	  "declaration": true,
+	  "isolatedModules": true,
+	  "outDir": "./dist",
+	  "paths": {
+		 "@steroidsjs/core/*": [
+			"../react/src/*"
+		 ],
+		 "@steroidsjs/bootstrap/*": [
+			"../react-bootstrap/src/*"
+		 ]
+	  }
+	},
+	"include": [
+	  "src/**/*"
+	],
+	"exclude": [
+	  "node_modules",
+	  "src/**/*.test.ts",
+	  "src/**/*.test.tsx"
+	]
+ }
+ 

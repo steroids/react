@@ -1,4 +1,4 @@
-import { smartSearch } from './text';
+import { smartSearch } from '../../src/utils/text';
 
 const itemRuLabel = 'Загромождена входная дверь в электрощитовую';
 const itemEnLabel = 'this is a text in english language, wow';

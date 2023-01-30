@@ -10,9 +10,9 @@ import {
     setUser,
     addSocial,
     setData,
-} from './auth';
-import prepareMiddleware from '../../tests/storeMiddlewareMock';
-import componentsMock from '../../tests/componentsMock';
+} from '../../src/actions/auth';
+import prepareMiddleware from '../storeMiddlewareMock';
+import componentsMock from '../componentsMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});

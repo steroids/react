@@ -21,13 +21,13 @@ export const openModal = (modal, props: IModalProps = {}) => {
     };
 };
 
-export const modalMarkClosing = (id, group = null) => ({
+export const modalMarkClosing = (id: string, group: string | null = null) => ({
     type: MODAL_MARK_CLOSING,
     id,
     group,
 });
 
-export const closeModal = (id, group = null) => ({
+export const closeModal = (id: string, group: string | null = null) => ({
     type: MODAL_CLOSE,
     id,
     group,

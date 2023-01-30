@@ -131,7 +131,7 @@ describe('modal reducer', () => {
             const action = {
                 type: MODAL_MARK_CLOSING,
                 id: 'modal15',
-                [modalGroupName]: modalGroupName,
+                group: modalGroupName,
             };
 
             const expectedState = {...initialState};
@@ -163,7 +163,7 @@ describe('modal reducer', () => {
             const action = {
                 type: MODAL_MARK_CLOSING,
                 id,
-                [modalGroupName]: modalGroupName,
+                group: modalGroupName,
             };
 
             const expectedState = {...initialState};
@@ -192,7 +192,7 @@ describe('modal reducer', () => {
 
             const action = {
                 type: MODAL_CLOSE,
-                [modalGroupName]: modalGroupName,
+                group: modalGroupName,
                 id: 'modal15',
             };
 
@@ -226,7 +226,7 @@ describe('modal reducer', () => {
             const action = {
                 type: MODAL_CLOSE,
                 id,
-                [modalGroupName]: modalGroupName,
+                group: modalGroupName,
             };
 
             initialState = {

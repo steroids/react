@@ -247,8 +247,8 @@ export const getRouteChildren = (state, routeId: TRouteIdArg = null) => {
 export const getRouteParent = (state, routeId: TRouteIdArg = null, level = 1) => {
     const route = getRoute(state, routeId);
     const breadcrumbs = route ? getRouteBreadcrumbs(state, route.id) : [];
-    return breadcrumbs.length > level + 1
-        ? breadcrumbs[breadcrumbs.length - (level + 1)]
+    return breadcrumbs.length > level
+        ? breadcrumbs[breadcrumbs.length - (level)]
         : null;
 };
 // TODO levels...

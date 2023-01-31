@@ -388,7 +388,7 @@ describe('router reducers', () => {
         });
 
         it('with correct level', () => {
-            const level = 1;
+            const level = 2;
             const expectedResult = parentRoute.items && parentRoute.items[0];
 
             expect(getRouteParent(state, routeId, level)).toEqual(
@@ -397,7 +397,7 @@ describe('router reducers', () => {
         });
 
         it('with incorrect level', () => {
-            const level = 2;
+            const level = 3;
             const expectedResult = null;
 
             expect(getRouteParent(state, routeId, level)).toBe(expectedResult);

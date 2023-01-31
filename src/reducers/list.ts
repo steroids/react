@@ -158,9 +158,9 @@ const reducerMap = {
         };
     },
     [LIST_TOGGLE_ALL]: (state, action) => {
-        const list4 = state.lists[action.listId];
-        if (list4) {
-            const ids = list4.items.map(item => item[list4.primaryKey]) || [];
+        const list = state.lists[action.listId];
+        if (list) {
+            const ids = list.items.map(item => item[list.primaryKey]) || [];
             const isAll = state.selectedIds[action.listId]
                 && _every(ids.map(id => state.selectedIds[action.listId].includes(id)));
             return {

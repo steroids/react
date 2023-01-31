@@ -1,0 +1,283 @@
+import {
+    getCheckedIds,
+    getIds,
+    getList,
+    getListItems,
+    isChecked,
+    isCheckedAll,
+    isListInitialized,
+} from '../../../src/reducers/list';
+
+type TListCommonArg = Record<string, any> | null;
+
+describe('list reducers', () => {
+    const defaultInitialState = {
+        lists: {},
+        selectedIds: {},
+    };
+
+    let initialState = {...defaultInitialState};
+
+    const getStateWithWrappedLists = (
+        lists: TListCommonArg = null,
+        extraData: TListCommonArg = null,
+    ) => ({
+        list: {
+            ...initialState,
+            lists: {
+                ...lists,
+            },
+            ...extraData,
+        },
+    });
+
+    beforeEach(() => {
+        initialState = {...defaultInitialState};
+    });
+
+    describe('isListInitialized', () => {
+        it('should return true', () => {
+            const listId = '10';
+
+            const state = getStateWithWrappedLists({[listId]: {}});
+
+            const expectedResult = true;
+
+            expect(isListInitialized(state, listId)).toEqual(expectedResult);
+        });
+    });
+
+    describe('getList', () => {
+        it('should return list', () => {
+            const listId = '10';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                    primaryKey: 'key',
+                },
+            };
+
+            const state = getStateWithWrappedLists(lists);
+
+            expect(getList(state, listId)).toEqual(lists[listId]);
+        });
+
+        it('should return null', () => {
+            const listId = '11';
+
+            const lists = {
+                10: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                    items: [],
+                },
+            };
+
+            const state = getStateWithWrappedLists(lists);
+
+            const expectedResult = null;
+
+            expect(getList(state, listId)).toEqual(expectedResult);
+        });
+    });
+
+    describe('getIds', () => {
+        it('should return empty array', () => {
+            const listId = '10';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                    items: [],
+                },
+            };
+
+            const state = getStateWithWrappedLists(lists);
+
+            const expectedResult = [];
+
+            expect(getIds(state, listId)).toEqual(expectedResult);
+        });
+
+        it('should return ids', () => {
+            const listId = '10';
+            const primaryKey = 'key';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                    primaryKey,
+                    items: [
+                        {
+                            [primaryKey]: 'item1',
+                        },
+                    ],
+                },
+            };
+
+            const state = getStateWithWrappedLists(lists);
+
+            const expectedResult = ['item1'];
+
+            expect(getIds(state, listId)).toEqual(expectedResult);
+        });
+    });
+
+    describe('getListItems', () => {
+        it('should return items', () => {
+            const listId = '12';
+            const primaryKey = 'key';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                    primaryKey,
+                    items: [
+                        {
+                            [primaryKey]: 'item1',
+                        },
+                    ],
+                },
+            };
+
+            const state = getStateWithWrappedLists(lists);
+
+            const expectedResult = [...lists[listId].items];
+
+            expect(getListItems(state, listId)).toEqual(expectedResult);
+        });
+
+        it('should return null', () => {
+            const listId = '12';
+            const primaryKey = 'key';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                    primaryKey,
+                },
+            };
+
+            const state = getStateWithWrappedLists(lists);
+
+            const expectedResult = null;
+
+            expect(getListItems(state, listId)).toEqual(expectedResult);
+        });
+    });
+
+    describe('getCheckedIds', () => {
+        it('should return selectedIds', () => {
+            const checkedIds = ['1', '3', '5'];
+            const listId = '12';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                },
+            };
+
+            const selectedIds = {
+                [listId]: checkedIds,
+            };
+
+            const state = getStateWithWrappedLists(lists, {selectedIds});
+
+            expect(getCheckedIds(state, listId)).toEqual(checkedIds);
+        });
+
+        it('should return empty array', () => {
+            const listId = '13';
+
+            const lists = {
+                10: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                },
+            };
+
+            const selectedIds = {
+                10: ['1', '3', '5'],
+            };
+
+            const state = getStateWithWrappedLists(lists, {selectedIds});
+
+            const expectedResult = [];
+
+            expect(getCheckedIds(state, listId)).toEqual(expectedResult);
+        });
+    });
+
+    describe('isChecked', () => {
+        it('default behavior', () => {
+            const itemId = '3';
+            const checkedIds = ['1', itemId, '5'];
+            const listId = '12';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                },
+            };
+
+            const selectedIds = {
+                [listId]: checkedIds,
+            };
+
+            const state = getStateWithWrappedLists(lists, {selectedIds});
+
+            const expectedResult = true;
+
+            expect(isChecked(state, listId, itemId)).toEqual(expectedResult);
+        });
+    });
+
+    describe('isCheckedAll', () => {
+        it('should return true', () => {
+            const checkedIds = ['item1'];
+            const listId = '12';
+            const primaryKey = 'key';
+
+            const lists = {
+                [listId]: {
+                    formId: '1',
+                    isRemote: true,
+                    loadMore: true,
+                    primaryKey,
+                    items: [
+                        {
+                            [primaryKey]: 'item1',
+                        },
+                    ],
+                },
+            };
+
+            const selectedIds = {
+                [listId]: checkedIds,
+            };
+
+            const state = getStateWithWrappedLists(lists, {selectedIds});
+
+            const expectedResult = true;
+
+            expect(isCheckedAll(state, listId)).toEqual(expectedResult);
+        });
+    });
+});

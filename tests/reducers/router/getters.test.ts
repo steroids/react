@@ -9,7 +9,6 @@ import {
     getRoutesMap,
     IRouterInitialState,
     getRouteChildren,
-    getMatch,
     getRouteBreadcrumbs,
     getRouteParent,
 } from '../../../src/reducers/router';
@@ -32,55 +31,17 @@ describe('router reducers', () => {
 
     let initialState = {...defaultInitialState};
 
+    const getStateWithRouterData = (
+        routerData: Record<string, any> | null = null,
+    ) => ({
+        router: {
+            ...initialState,
+            ...routerData,
+        },
+    });
+
     beforeEach(() => {
         initialState = {...defaultInitialState};
-    });
-    describe('getMatch', () => {
-        it('without currentRoute', () => {
-            const currentRoute = null;
-
-            const state: IRouterInitialState = {
-                ...initialState,
-            };
-
-            const expectedResult = null;
-
-            expect(getMatch(currentRoute, state)).toBe(expectedResult);
-        });
-
-        it('with currentRoute', () => {
-            const path = '/home/contacts';
-
-            const currentRoute = {
-                id: 1,
-                exact: true,
-                strict: false,
-                path,
-            };
-
-            const state: IRouterInitialState = {
-                ...initialState,
-                location: {
-                    pathname: path,
-                    hash: '',
-                    query: {
-                        query1: 'query1',
-                    },
-                    search: '',
-                },
-            };
-
-            const expectedResult = {
-                path,
-                url: path,
-                isExact: true,
-                params: {
-                    ...state.location?.query,
-                },
-            };
-
-            expect(getMatch(currentRoute, state)).toEqual(expectedResult);
-        });
     });
 
     describe('getRouterParams', () => {
@@ -91,31 +52,21 @@ describe('router reducers', () => {
                 },
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    params,
-                } as IRouterInitialState,
-            };
+            const state = getStateWithRouterData({params});
 
             const expectedResult = params;
 
-            expect(getRouterParams(globalState)).toEqual(expectedResult);
+            expect(getRouterParams(state)).toEqual(expectedResult);
         });
 
         it('without params', () => {
             const params = null;
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    params,
-                } as IRouterInitialState,
-            };
+            const state = getStateWithRouterData({params});
 
             const expectedResult = params;
 
-            expect(getRouterParams(globalState)).toEqual(expectedResult);
+            expect(getRouterParams(state)).toEqual(expectedResult);
         });
     });
 
@@ -123,29 +74,17 @@ describe('router reducers', () => {
         it('with activeIds', () => {
             const activeIds = ['dashboard', 'personal_area', 'error', 'root'];
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    activeIds,
-                } as IRouterInitialState,
-            };
+            const state = getStateWithRouterData({activeIds});
 
-            const expectedResult = activeIds;
-
-            expect(getActiveRouteIds(globalState)).toEqual(expectedResult);
+            expect(getActiveRouteIds(state)).toEqual(activeIds);
         });
 
         it('without activeIds', () => {
-            const globalState = {
-                router: {
-                    ...initialState,
-                    activeIds: null,
-                } as IRouterInitialState,
-            };
+            const state = getStateWithRouterData({activeIds: null});
 
             const expectedResult = null;
 
-            expect(getActiveRouteIds(globalState)).toEqual(expectedResult);
+            expect(getActiveRouteIds(state)).toEqual(expectedResult);
         });
     });
 
@@ -158,169 +97,121 @@ describe('router reducers', () => {
                 },
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap,
-                } as IRouterInitialState,
-            };
+            const state = getStateWithRouterData({routesMap});
 
-            const expectedResult = routesMap;
-
-            expect(getRoutesMap(globalState)).toEqual(expectedResult);
+            expect(getRoutesMap(state)).toEqual(routesMap);
         });
 
         it('without routesMap', () => {
-            const routesMap = null;
+            const state = getStateWithRouterData({});
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap,
-                } as IRouterInitialState,
-            };
+            const expectedResult = null;
 
-            const expectedResult = routesMap;
-
-            expect(getRoutesMap(globalState)).toEqual(expectedResult);
+            expect(getRoutesMap(state)).toEqual(expectedResult);
         });
     });
 
     describe('getRouteId', () => {
         it('with activeIds', () => {
-            const globalState = {
-                router: {
-                    ...initialState,
-                    activeIds: ['dashboard', 'personal_area', 'error', 'root'],
-                } as IRouterInitialState,
-            };
+            const activeIds = ['dashboard', 'personal_area', 'error', 'root'];
+
+            const state = getStateWithRouterData({activeIds});
 
             const expectedResult = 'dashboard';
 
-            expect(getRouteId(globalState)).toEqual(expectedResult);
+            expect(getRouteId(state)).toEqual(expectedResult);
         });
 
         it('without activeIds', () => {
-            const globalState = {
-                router: {
-                    ...initialState,
-                    activeIds: null,
-                } as IRouterInitialState,
-            };
+            const state = getStateWithRouterData({activeIds: null});
 
             const expectedResult = null;
 
-            expect(getRouteId(globalState)).toEqual(expectedResult);
+            expect(getRouteId(state)).toEqual(expectedResult);
         });
     });
 
     describe('getRoute', () => {
         it('with routeId', () => {
             const routeId = 'dashboard';
-            const dashboard: IRouteItem = {
+            const route: IRouteItem = {
                 id: '1',
                 exact: true,
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap: {
-                        dashboard,
-                    },
-                } as IRouterInitialState,
+            const routesMap = {
+                [routeId]: route,
             };
 
-            const expectedResult = dashboard;
+            const state = getStateWithRouterData({routesMap});
 
-            expect(getRoute(globalState, routeId)).toEqual(expectedResult);
+            expect(getRoute(state, routeId)).toEqual(route);
         });
 
         it('without routeId', () => {
-            const dashboard: IRouteItem = {
+            const route: IRouteItem = {
                 id: '1',
                 exact: true,
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap: {
-                        dashboard,
-                    },
-                    activeIds: ['dashboard'],
-                } as IRouterInitialState,
+            const routesMap = {
+                dashboard: route,
             };
 
-            const expectedResult = dashboard;
+            const activeIds = ['dashboard'];
 
-            expect(getRoute(globalState)).toEqual(expectedResult);
+            const state = getStateWithRouterData({routesMap, activeIds});
+
+            expect(getRoute(state)).toEqual(route);
         });
 
         it('without routesMap', () => {
             const routeId = 'home';
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap: {},
-                },
-            };
+            const state = getStateWithRouterData({});
 
             const expectedResult = null;
 
-            expect(getRoute(globalState, routeId)).toEqual(expectedResult);
+            expect(getRoute(state, routeId)).toEqual(expectedResult);
         });
     });
 
     describe('getRouteProp', () => {
-        it('with param', () => {
-            const exact = true;
-            const param = 'exact';
+        it('with prop', () => {
+            const propValue = true;
+            const propName = 'exact';
             const routeId = 'dashboard';
 
-            const dashboard: IRouteItem = {
+            const route: IRouteItem = {
                 id: '1',
-                exact,
+                [propName]: propValue,
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap: {
-                        dashboard,
-                    },
-                } as IRouterInitialState,
+            const routesMap = {
+                dashboard: route,
             };
 
-            const expectedResult = exact;
+            const state = getStateWithRouterData({routesMap});
 
-            expect(getRouteProp(globalState, routeId, param)).toBe(
-                expectedResult,
-            );
+            expect(getRouteProp(state, routeId, propName)).toBe(propValue);
         });
-        it('with not existing param', () => {
-            const param = 'exact';
+        it('with not existing prop', () => {
+            const propName = 'exact';
             const routeId = 'dashboard';
 
-            const dashboard: IRouteItem = {
+            const route: IRouteItem = {
                 id: '1',
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap: {
-                        dashboard,
-                    },
-                } as IRouterInitialState,
+            const routesMap = {
+                [routeId]: route,
             };
+
+            const state = getStateWithRouterData({routesMap});
 
             const expectedResult = null;
 
-            expect(getRouteProp(globalState, routeId, param)).toBe(
-                expectedResult,
-            );
+            expect(getRouteProp(state, routeId, propName)).toBe(expectedResult);
         });
     });
 
@@ -330,214 +221,177 @@ describe('router reducers', () => {
                 param1: 'param1',
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    match: {
-                        params,
-                        path: 'home',
-                        isExact: 'true',
-                        url: 'https://megasite.com',
-                    },
-                } as IRouterInitialState,
+            const match = {
+                params,
+                path: 'home',
+                isExact: 'true',
+                url: 'https://megasite.com',
             };
 
-            const expectedResult = params;
+            const state = getStateWithRouterData({match});
 
-            expect(getRouteParams(globalState)).toEqual(expectedResult);
+            expect(getRouteParams(state)).toEqual(params);
         });
 
         it('without params', () => {
-            const globalState = {
-                router: {
-                    ...initialState,
-                    match: {
-                        params: null,
-                        path: 'home',
-                        isExact: 'true',
-                        url: 'https://megasite.com',
-                    },
-                } as IRouterInitialState,
+            const match = {
+                params: null,
+                path: 'home',
+                isExact: 'true',
+                url: 'https://megasite.com',
             };
+
+            const state = getStateWithRouterData({match});
 
             const expectedResult = null;
 
-            expect(getRouteParams(globalState)).toEqual(expectedResult);
+            expect(getRouteParams(state)).toEqual(expectedResult);
         });
     });
 
     describe('getRouteParam', () => {
         it('with correct param', () => {
-            const param = 'param1';
+            const paramName = 'param1';
             const params = {
-                param1: 'param1',
+                [paramName]: 'param1',
             };
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    match: {
-                        params,
-                        path: 'home',
-                        isExact: 'true',
-                        url: 'https://megasite.com',
-                    },
-                } as IRouterInitialState,
+            const match = {
+                params,
+                path: 'home',
+                isExact: 'true',
+                url: 'https://megasite.com',
             };
 
-            const expectedResult = params.param1;
+            const state = getStateWithRouterData({match});
 
-            expect(getRouteParam(globalState, param)).toBe(expectedResult);
+            const expectedResult = params[paramName];
+
+            expect(getRouteParam(state, paramName)).toBe(expectedResult);
         });
 
         it('with incorrect param', () => {
-            const param = 'param2';
+            const paramName = 'param2';
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    match: {
-                        params: {
-                            param1: 'param1',
-                        },
-                        path: 'home',
-                        isExact: 'true',
-                        url: 'https://megasite.com',
-                    },
-                } as IRouterInitialState,
+            const match = {
+                params: {
+                    param1: 'param1',
+                },
+                path: 'home',
+                isExact: 'true',
+                url: 'https://megasite.com',
             };
+
+            const state = getStateWithRouterData({match});
 
             const expectedResult = null;
 
-            expect(getRouteParam(globalState, param)).toBe(expectedResult);
+            expect(getRouteParam(state, paramName)).toBe(expectedResult);
         });
     });
 
     it('getRouteBreadcrumbs', () => {
-        const predicate = '2';
+        const routeId = '2';
 
-        const childrenRoutes: IRouteItem[] = [
-            {
-                id: '2',
-                label: 'childrenRoute1',
-                isVisible: true,
-                isNavVisible: true,
-                items: [],
-            },
-        ];
+        const route: IRouteItem = {
+            id: routeId,
+            label: 'childrenRoute1',
+            isVisible: true,
+            isNavVisible: true,
+            items: [],
+        };
 
         const parentRoute: IRouteItem = {
             id: '1',
             label: 'parentRoute',
             isVisible: true,
             isNavVisible: true,
-            items: childrenRoutes,
+            items: [route],
         };
 
-        const globalState = {
-            router: {
-                ...initialState,
-                routesTree: parentRoute,
-            } as IRouterInitialState,
-        };
+        const state = getStateWithRouterData({routesTree: parentRoute});
 
-        const expectedResult = [parentRoute, childrenRoutes[0]];
+        const expectedResult = [parentRoute, route];
 
-        expect(getRouteBreadcrumbs(globalState, predicate)).toEqual(
-            expectedResult,
-        );
+        expect(getRouteBreadcrumbs(state, routeId)).toEqual(expectedResult);
     });
 
     describe('getRouteChildren', () => {
         it('with items', () => {
             const routeId = 'dashboard';
-            const items = [{id: '1', exact: true}];
+            const routeChildren = [{id: '1', exact: true}];
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap: {
-                        dashboard: {
-                            id: '1',
-                            exact: true,
-                            items,
-                        },
-                    },
-                } as IRouterInitialState,
+            const routesMap = {
+                dashboard: {
+                    id: '1',
+                    exact: true,
+                    items: routeChildren,
+                },
             };
 
-            const expectedResult = items;
+            const state = getStateWithRouterData({routesMap});
 
-            expect(getRouteChildren(globalState, routeId)).toEqual(
-                expectedResult,
-            );
+            expect(getRouteChildren(state, routeId)).toEqual(routeChildren);
         });
 
         it('without items', () => {
             const routeId = 'dashboard';
 
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesMap: {
-                        dashboard: {
-                            id: '1',
-                            exact: true,
-                        },
-                    },
-                } as IRouterInitialState,
+            const routesMap = {
+                dashboard: {
+                    id: '1',
+                    exact: true,
+                },
             };
+
+            const state = getStateWithRouterData({routesMap});
 
             const expectedResult = null;
 
-            expect(getRouteChildren(globalState, routeId)).toEqual(
-                expectedResult,
-            );
+            expect(getRouteChildren(state, routeId)).toEqual(expectedResult);
         });
     });
 
     describe('getRouteParent', () => {
         const routeId = '3';
-        const parentRoute: IRouteItem = {
-            id: 'parentRoute',
+
+        const routeItem2 = {
+            id: '3',
             isNavVisible: true,
             isVisible: true,
-            items: [
-                {
-                    id: '2',
-                    label: 'desired route',
-                    isNavVisible: true,
-                    isVisible: true,
-                    items: [
-                        {
-                            id: '3',
-                            isNavVisible: true,
-                            isVisible: true,
-                            items: [],
-                        },
-                    ],
-                },
-            ],
+            items: [],
+        };
+        const routeItem1 = {
+            id: '2',
+            label: 'desired route',
+            isNavVisible: true,
+            isVisible: true,
+            items: [routeItem2],
         };
 
-        const globalState = {
-            router: {
-                ...initialState,
-                routesMap: {
-                    1: parentRoute,
-                    2: parentRoute.items ? parentRoute.items[0] : {},
-                    3: parentRoute.items ? parentRoute.items[0].items[0] : {},
-                },
-                routesTree: parentRoute,
-            } as IRouterInitialState,
+        const parentRoute = {
+            id: '1',
+            isNavVisible: true,
+            isVisible: true,
+            items: [routeItem1],
         };
+
+        const routesMap = {
+            [parentRoute.id]: parentRoute,
+            [routeItem1.id]: routeItem1,
+            [routeItem2.id]: routeItem2,
+        };
+
+        const state = getStateWithRouterData({
+            routesMap,
+            routesTree: parentRoute,
+        });
 
         it('with correct level', () => {
             const level = 1;
-
             const expectedResult = parentRoute.items && parentRoute.items[0];
 
-            expect(getRouteParent(globalState, routeId, level)).toEqual(
+            expect(getRouteParent(state, routeId, level)).toEqual(
                 expectedResult,
             );
         });
@@ -546,9 +400,7 @@ describe('router reducers', () => {
             const level = 2;
             const expectedResult = null;
 
-            expect(getRouteParent(globalState, routeId, level)).toBe(
-                expectedResult,
-            );
+            expect(getRouteParent(state, routeId, level)).toBe(expectedResult);
         });
     });
 });

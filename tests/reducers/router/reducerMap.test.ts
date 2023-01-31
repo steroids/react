@@ -20,7 +20,7 @@ describe('router reducers', () => {
         counters: {},
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {...defaultInitialState};	
 
     beforeEach(() => {
         initialState = {...defaultInitialState};

@@ -5,6 +5,7 @@ import {
     checkIsActive,
     normalizeRoutes,
     findRecursive,
+    getMatch,
 } from '../../../src/reducers/router';
 import {IRouteItem} from '../../../src/ui/nav/Router/Router';
 
@@ -398,6 +399,54 @@ describe('router reducers', () => {
                 expectedResult,
             );
             expect(pathItems).toEqual(expectedPathItems);
+        });
+    });
+
+    describe('getMatch', () => {
+        it('without currentRoute', () => {
+            const currentRoute = null;
+
+            const state: IRouterInitialState = {
+                ...initialState,
+            };
+
+            const expectedResult = null;
+
+            expect(getMatch(currentRoute, state)).toBe(expectedResult);
+        });
+
+        it('with currentRoute', () => {
+            const path = '/home/contacts';
+
+            const currentRoute = {
+                id: 'route1',
+                exact: true,
+                strict: false,
+                path,
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    pathname: path,
+                    hash: '',
+                    query: {
+                        query1: 'query1',
+                    },
+                    search: '',
+                },
+            };
+
+            const expectedResult = {
+                path,
+                url: path,
+                isExact: true,
+                params: {
+                    ...state.location?.query,
+                },
+            };
+
+            expect(getMatch(currentRoute, state)).toEqual(expectedResult);
         });
     });
 

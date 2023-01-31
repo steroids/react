@@ -14,6 +14,8 @@ import {
     ROUTER_SET_PARAMS,
 } from '../actions/router';
 
+type TRouteIdArg = string | null;
+
 export interface IRouterInitialState {
     location: {
         pathname: string;
@@ -224,24 +226,25 @@ export const isRouterInitialized = state => !!state.router.routesTree;
 export const getRouterParams = state => _get(state.router, 'params');
 export const getActiveRouteIds = state => _get(state.router, 'activeIds') || null;
 export const getRoutesMap = state => _get(state.router, 'routesMap') || null;
-export const getRouteId = (state) => _get(state.router, 'activeIds.0') || null;
-export const getRoute = (state, routeId: string = null): IRouteItem => _get(
+export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
+export const getRoute = (state, routeId: TRouteIdArg = null): IRouteItem => _get(
     state.router, ['routesMap', routeId || getRouteId(state)],
 ) || null;
-export const getRouteProp = (state, routeId: string = null, param) => _get(getRoute(state, routeId), param) || null;
+export const getRouteProp = (state, routeId: TRouteIdArg = null, propName) => _get(getRoute(state, routeId), propName)
+ || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
-export const getRouteParam = (state, param) => _get(getRouteParams(state), param) || null;
-export const getRouteBreadcrumbs = (state, routeId: string | null = null): IRouteItem[] => {
+export const getRouteParam = (state, paramName) => _get(getRouteParams(state), paramName) || null;
+export const getRouteBreadcrumbs = (state, routeId: TRouteIdArg = null): IRouteItem[] => {
     const items = [];
     routeId = routeId || getRouteId(state);
     findRecursive(state.router.routesTree, routeId, items);
     return items.reverse().filter(item => item.isVisible !== false && item.isNavVisible !== false);
 };
-export const getRouteChildren = (state, routeId: string = null) => {
+export const getRouteChildren = (state, routeId: TRouteIdArg = null) => {
     const route = getRoute(state, routeId);
     return route?.items || null;
 };
-export const getRouteParent = (state, routeId: string | null = null, level = 1) => {
+export const getRouteParent = (state, routeId: TRouteIdArg = null, level = 1) => {
     const route = getRoute(state, routeId);
     const breadcrumbs = route ? getRouteBreadcrumbs(state, route.id) : [];
     return breadcrumbs.length > level + 1

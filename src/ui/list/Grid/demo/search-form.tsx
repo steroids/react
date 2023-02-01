@@ -1,6 +1,6 @@
+import * as React from 'react';
 import Grid from '../Grid';
 import {columns, items} from './basic';
-import * as React from 'react';
 import {searchForm} from './inner-search-form';
 
 /**

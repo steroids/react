@@ -1,6 +1,7 @@
 {
   "extends": "@steroidsjs/eslint-config",
   "rules": {
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }

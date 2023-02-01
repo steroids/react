@@ -130,14 +130,14 @@ function Pagination(props: IPaginationProps): JSX.Element {
 
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)
-            .map((pageItem, index, pages) => {
+            .map((pageItem, index, pagesArray) => {
                 // Номер страницы для '...' кнопки (выбирает страницу между двумя соседними пронумерованными)
-                const pageNumberForButtonWithDots = Math.floor(((pages[index + 1] + pages[index - 1]) / 2));
+                const pageNumberForButtonWithDots = Math.floor(((pagesArray[index + 1] + pagesArray[index - 1]) / 2));
                 return {
                     page: pageItem !== '...' ? pageItem : pageNumberForButtonWithDots,
                     label: pageItem,
                     isActive: page === pageItem,
-                }
+                };
             }),
         [page, props.aroundCount, totalPages],
     );

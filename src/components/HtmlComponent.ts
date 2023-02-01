@@ -6,6 +6,7 @@ import _isString from 'lodash-es/isString';
  */
 export default class HtmlComponent {
     _instances: any;
+
     namespace = '';
 
     constructor(components) {

@@ -191,6 +191,7 @@ function Crud(props: ICrudProps): JSX.Element {
         components,
         goToAction,
         errorHandler: props.errorHandler,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }), [components, goToAction, props.crudId, props.mode, props.primaryKey, props.queryKey,
         props.restApi, props.restUrl, record, recordId, routeAction, routeId, routeParams]);
 

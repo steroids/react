@@ -23,6 +23,7 @@ export default function useDateTime(props:IUseDateTimeProps) {
         dateValueFormat,
         props.useUTC,
         props.dateInUTC,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     ), [dateValueFormat, props.displayFormat, props.input.value, props.valueFormat]);
 
     const timeValue = useMemo(() => convertDate(
@@ -31,6 +32,7 @@ export default function useDateTime(props:IUseDateTimeProps) {
         timeValueFormat,
         props.useUTC,
         props.dateInUTC,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     ), [props.displayFormat, props.input.value, props.valueFormat, timeValueFormat]);
 
     // Handler for calendar and time picker changes
@@ -45,9 +47,10 @@ export default function useDateTime(props:IUseDateTimeProps) {
                 // converting to UTC here depends on whether the date is stored in UTC
                 props.dateInUTC,
                 // whether the date provided from onSelect is in UTC or not depends on this flag
-                props.useUTC
+                props.useUTC,
             ),
         );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.dateTimeSeparator, props.input.onChange, props.valueFormat, timeValue]);
     const onTimeSelect = useCallback(time => {
         const result = (dateValue || moment().format(dateValueFormat)) + props.dateTimeSeparator + time;
@@ -61,9 +64,10 @@ export default function useDateTime(props:IUseDateTimeProps) {
                 // converting to UTC here depends on whether the date is stored in UTC
                 props.dateInUTC,
                 // whether the date provided from onSelect is in UTC or not depends on this flag
-                props.useUTC
+                props.useUTC,
             ),
         );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dateValue, dateValueFormat, props.dateTimeSeparator, props.input.onChange, props.valueFormat]);
 
     return {

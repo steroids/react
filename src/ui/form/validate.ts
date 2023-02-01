@@ -7,7 +7,7 @@ import _size from 'lodash-es/size';
 import _isFunction from 'lodash-es/isFunction';
 import moment from 'moment';
 
-const validate = function (data, rules) {
+const validate = (data, rules) => {
     const errors = {};
     rules.forEach(item => {
         const attributes = [].concat(item[0]);
@@ -36,11 +36,11 @@ const validate = function (data, rules) {
                             errors[attribute] = __('Field must be integer');
                         } else if ((params.min || params.min === 0) && value < params.min) {
                             errors[attribute] = __('Value is too small, min: {min}', {
-                                min: params.min
+                                min: params.min,
                             });
                         } else if ((params.max || params.max === 0) && value > params.max) {
                             errors[attribute] = __('Value is too large, max: {max}', {
-                                max: params.max
+                                max: params.max,
                             });
                         }
                     }
@@ -55,17 +55,19 @@ const validate = function (data, rules) {
                             errors[attribute] = __('Field must be string');
                         } else if (_size(value) > params.max) {
                             errors[attribute] = __('String is too long, max: {max}', {
-                                max: params.max
+                                max: params.max,
                             });
                         } else if (
-                            (params.min || params.min === 0) &&
-                            _size(value) < params.min
+                            (params.min || params.min === 0)
+                            && _size(value) < params.min
                         ) {
                             errors[attribute] = __('String is too short, min: {min}', {
-                                min: params.min
+                                min: params.min,
                             });
                         }
                     }
+                    break;
+                default:
                     break;
             }
             if (_isFunction(rule)) {
@@ -82,10 +84,10 @@ const validate = function (data, rules) {
         // throw new SubmissionError(errors);
     }
 };
-validate.error = (attribute, message) => {
-    // TODO
-    // throw new SubmissionError({
-    //     [attribute]: message
-    // });
-};
+// validate.error = (attribute, message) => {
+//     // TODO
+//     // throw new SubmissionError({
+//     //     [attribute]: message
+//     // });
+// };
 export default validate;

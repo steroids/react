@@ -1,5 +1,5 @@
-import Grid from '../Grid';
 import * as React from 'react';
+import Grid from '../Grid';
 import {columns} from './basic';
 
 /**

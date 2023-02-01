@@ -107,7 +107,10 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
             case 'topRight':
                 // Проверка - выходит ли tooltip за верхний край страницы?
                 // Если да - меняем позицию на bottom
-                if (useAutoPositioning && ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + props.gap))) {
+                if (
+                    useAutoPositioning
+                    && ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + props.gap))
+                ) {
                     newStyle.top = parentDimensions.top + parentDimensions.height;
                     newPosition = newPosition.replace('top', 'bottom');
                 } else {
@@ -120,8 +123,11 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
             case 'bottomRight':
                 // Проверка - выходит ли tooltip за нижний край страницы?
                 // Если да - меняем позицию на top
-                if (useAutoPositioning && ((window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY)))
-                    <= Math.round(componentSize.height + props.gap)
+                if (
+                    useAutoPositioning
+                    && ((window.innerHeight - (
+                        parentDimensions.top + parentDimensions.height - window.scrollY
+                    ))) <= Math.round(componentSize.height + props.gap)
                 ) {
                     newStyle.top = parentDimensions.top - componentSize.height;
                     newPosition = newPosition.replace('bottom', 'top');
@@ -149,7 +155,12 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
             case 'rightBottom':
                 // Проверка - выходит ли tooltip за правый край страницы?
                 // Если да - меняем позицию на left
-                if (useAutoPositioning && (document.body.clientWidth - parentDimensions.right <= Math.round(componentSize.width + props.gap))) {
+                if (
+                    useAutoPositioning
+                    && (document.body.clientWidth - parentDimensions.right <= Math.round(
+                        componentSize.width + props.gap,
+                    ))
+                ) {
                     newStyle.left = parentDimensions.left - componentSize.width;
                     newPosition = newPosition.replace('right', 'left');
                 } else {
@@ -236,6 +247,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
         }
         setStyle(newStyle);
         setPosition(newPosition);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.gap]);
 
     const onShow = useCallback(() => {

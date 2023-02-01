@@ -127,7 +127,7 @@ const reducerMap = {
             [action.listId]: {
                 ...state.lists[action.listId],
                 items: state.lists[action.listId].items.filter(
-                    item => !_isMatch(item, action.condition)
+                    item => !_isMatch(item, action.condition),
                 ),
             },
         },

@@ -190,9 +190,11 @@ describe('textUtilsTest', () => {
             expect(smartSearch('', null)).toEqual(null);
             expect(smartSearch(null, null)).toEqual(null);
 
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             expect(smartSearch()).toEqual(undefined);
             expect(() => smartSearch('l', null)).toThrow(TypeError);
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             expect(() => smartSearch('l')).toThrow(TypeError);
         });
@@ -267,7 +269,6 @@ describe('textUtilsTest', () => {
             expect(result2[0].id).toEqual(3);
             expect(result2[0].label).toEqual(itemEnLabel);
             expect(result2[0].labelHighlighted).toEqual(testResultHighlightedExpectedQueryLangEn2);
-
         });
 
         it('oppositeLetterCase', () => {
@@ -282,7 +283,6 @@ describe('textUtilsTest', () => {
             expect(result2[0].id).toEqual(3);
             expect(result2[0].label).toEqual(itemEnLabel);
             expect(result2[0].labelHighlighted).toEqual(testResultHighlightedExpectedOppositeLetterCase2);
-
 
             expect(smartSearch('ОтКрЫваеТся ВО', items2)).toHaveLength(1);
         });

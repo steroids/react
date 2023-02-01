@@ -6,7 +6,7 @@ import required from './demo/required';
 import sizes from './demo/sizes';
 
 export default {
-  title: 'form.NumberField',
+    title: 'form.NumberField',
 };
 
 export {
@@ -16,4 +16,4 @@ export {
     placeholder,
     required,
     sizes,
-}
+};

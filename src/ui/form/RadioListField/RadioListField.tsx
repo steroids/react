@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {useCallback, useEffect, useMemo} from 'react';
+import {usePrevious} from 'react-use';
+import _isEqual from 'lodash-es/isEqual';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -7,8 +9,6 @@ import fieldWrapper, {
 } from '../../form/Field/fieldWrapper';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import {usePrevious} from "react-use";
-import _isEqual from 'lodash-es/isEqual';
 
 /**
  * RadioListField
@@ -98,6 +98,7 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
                 props.onChange.call(null, selectedIds[0]);
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.input.onChange, selectedIds]);
 
     return components.ui.renderView(props.view || 'form.RadioListFieldView', {

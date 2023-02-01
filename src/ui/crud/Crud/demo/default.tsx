@@ -37,7 +37,7 @@ export default () => (
                         attribute: 'name',
                         label: __('Имя'),
                     },
-                ]
+                ],
             }}
             detail={{
                 attributes: [
@@ -49,8 +49,8 @@ export default () => (
                         attribute: 'name',
                         label: __('Имя'),
                     },
-                ]
+                ],
             }}
         />
     </>
-)
+);

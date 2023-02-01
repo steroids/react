@@ -6,7 +6,7 @@ import sizes from './demo/sizes';
 import icon from './demo/icon';
 
 export default {
-  title: 'form.DateField',
+    title: 'form.DateField',
 };
 
 export {
@@ -16,4 +16,4 @@ export {
     required,
     sizes,
     icon,
-}
+};

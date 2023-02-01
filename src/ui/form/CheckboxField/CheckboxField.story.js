@@ -4,7 +4,7 @@ import errors from './demo/errors';
 import required from './demo/required';
 
 export default {
-  title: 'form.CheckboxField',
+    title: 'form.CheckboxField',
 };
 
 export {
@@ -12,4 +12,4 @@ export {
     disabled,
     errors,
     required,
-}
+};

@@ -14,18 +14,14 @@ jest.mock('lodash-es/uniqueId');
 describe('useUniqueId hook', () => {
     it('default behavior', () => {
         const prefix = 'usefulHook_';
-
         const mockImplementationResult = `${prefix}1`;
-
-        const expectedResult = mockImplementationResult;
+        const expectedUniqueId = mockImplementationResult;
 
         _uniqueId.mockImplementation(() => mockImplementationResult);
-
         const wrapper = mountWithApp(MockComponent, prefix);
 
         const uniqueId = wrapper.find('MockResultComponent').prop('uniqueId');
-
-        expect(uniqueId).toBe(expectedResult);
+        expect(uniqueId).toBe(expectedUniqueId);
         expect(typeof uniqueId).toBe('string');
     });
 });

@@ -12,10 +12,36 @@ const MockComponent = (props: any) => (
 describe('useScreen hook', () => {
     it('usage', () => {
         const wrapper = mountWithApp(MockComponent, {});
+
         const screen: IScreen = wrapper
             .find('MockResultComponent')
             .prop('screen');
 
         expect('width' in screen).toBe(true);
+        expect('media' in screen).toBe(true);
+        expect('setMedia' in screen).toBe(true);
+        expect('isPhone' in screen).toBe(true);
+        expect('isTablet' in screen).toBe(true);
+        expect('isDesktop' in screen).toBe(true);
+        expect('getDeviceType' in screen).toBe(true);
+
+        const expectedDefaultWidth = 1024;
+        expect(screen.width).toBe(expectedDefaultWidth);
+
+        const expectedPhoneWidth = 320;
+        expect(screen.media?.phone).toBe(expectedPhoneWidth);
+
+        const expectedTabletWidth = 768;
+        expect(screen.media?.tablet).toBe(expectedTabletWidth);
+
+        const expectedDesktopWidth = 1024;
+        expect(screen.media?.desktop).toBe(expectedDesktopWidth);
+
+        expect(typeof screen.media).toBe('object');
+        expect(typeof screen.setMedia).toBe('function');
+        expect(typeof screen.isPhone).toBe('function');
+        expect(typeof screen.isTablet).toBe('function');
+        expect(typeof screen.isDesktop).toBe('function');
+        expect(typeof screen.getDeviceType).toBe('function');
     });
 });

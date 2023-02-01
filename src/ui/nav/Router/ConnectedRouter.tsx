@@ -10,7 +10,7 @@ interface IConnectedRouterProps {
     history?: any,
 }
 
-export default class ConnectedRouter extends React.PureComponent<IConnectedRouterProps> {
+export default class ConnectedRouter extends React.PureComponent<React.PropsWithChildren<IConnectedRouterProps>> {
     inTimeTravelling?: any;
 
     unsubscribe?: any;

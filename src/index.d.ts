@@ -88,7 +88,7 @@ declare type CustomStyle = React.CSSProperties;
  * Переопределение view React компонента для кастомизации отображения
  * @example MyCustomView
  */
-declare type CustomView = React.ReactNode;
+declare type CustomView = React.ReactNode | React.FunctionComponent;
 
 /**
  * HTTP метод

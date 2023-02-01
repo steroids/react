@@ -38,12 +38,12 @@ describe('list reducers', () => {
     describe('isListInitialized', () => {
         it('should return true', () => {
             const listId = '10';
-
             const state = getStateWithWrappedLists({[listId]: {}});
+            const expectedIsListInitialized = true;
 
-            const expectedResult = true;
-
-            expect(isListInitialized(state, listId)).toEqual(expectedResult);
+            expect(isListInitialized(state, listId)).toEqual(
+                expectedIsListInitialized,
+            );
         });
     });
 
@@ -51,18 +51,19 @@ describe('list reducers', () => {
         it('should return list', () => {
             const listId = '10';
 
+            const litItem = {
+                formId: '1',
+                isRemote: true,
+                loadMore: true,
+                primaryKey: 'key',
+            };
+
             const lists = {
-                [listId]: {
-                    formId: '1',
-                    isRemote: true,
-                    loadMore: true,
-                    primaryKey: 'key',
-                },
+                [listId]: litItem,
             };
 
             const state = getStateWithWrappedLists(lists);
-
-            expect(getList(state, listId)).toEqual(lists[listId]);
+            expect(getList(state, listId)).toEqual(litItem);
         });
 
         it('should return null', () => {
@@ -78,10 +79,8 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists);
-
-            const expectedResult = null;
-
-            expect(getList(state, listId)).toEqual(expectedResult);
+            const emptyList = null;
+            expect(getList(state, listId)).toEqual(emptyList);
         });
     });
 
@@ -99,10 +98,8 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists);
-
-            const expectedResult = [];
-
-            expect(getIds(state, listId)).toEqual(expectedResult);
+            const expectedEmptyIds = [];
+            expect(getIds(state, listId)).toEqual(expectedEmptyIds);
         });
 
         it('should return ids', () => {
@@ -124,10 +121,8 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists);
-
-            const expectedResult = ['item1'];
-
-            expect(getIds(state, listId)).toEqual(expectedResult);
+            const expectedIds = ['item1'];
+            expect(getIds(state, listId)).toEqual(expectedIds);
         });
     });
 
@@ -151,10 +146,8 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists);
-
-            const expectedResult = [...lists[listId].items];
-
-            expect(getListItems(state, listId)).toEqual(expectedResult);
+            const expectedListItems = [...lists[listId].items];
+            expect(getListItems(state, listId)).toEqual(expectedListItems);
         });
 
         it('should return null', () => {
@@ -171,10 +164,8 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists);
-
-            const expectedResult = null;
-
-            expect(getListItems(state, listId)).toEqual(expectedResult);
+            const emptyListItems = null;
+            expect(getListItems(state, listId)).toEqual(emptyListItems);
         });
     });
 
@@ -196,7 +187,6 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists, {selectedIds});
-
             expect(getCheckedIds(state, listId)).toEqual(checkedIds);
         });
 
@@ -216,10 +206,11 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists, {selectedIds});
+            const expectedEmptyCheckedIds = [];
 
-            const expectedResult = [];
-
-            expect(getCheckedIds(state, listId)).toEqual(expectedResult);
+            expect(getCheckedIds(state, listId)).toEqual(
+                expectedEmptyCheckedIds,
+            );
         });
     });
 
@@ -242,10 +233,8 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists, {selectedIds});
-
-            const expectedResult = true;
-
-            expect(isChecked(state, listId, itemId)).toEqual(expectedResult);
+            const expectedIsChecked = true;
+            expect(isChecked(state, listId, itemId)).toEqual(expectedIsChecked);
         });
     });
 
@@ -274,10 +263,8 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithWrappedLists(lists, {selectedIds});
-
-            const expectedResult = true;
-
-            expect(isCheckedAll(state, listId)).toEqual(expectedResult);
+            const expectedIsCheckedAll = true;
+            expect(isCheckedAll(state, listId)).toEqual(expectedIsCheckedAll);
         });
     });
 });

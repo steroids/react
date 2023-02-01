@@ -47,7 +47,6 @@ describe('list reducers', () => {
             };
 
             const expectedState = {...initialState};
-
             expect(list(initialState, action)).toEqual(expectedState);
         });
     });
@@ -192,6 +191,7 @@ describe('list reducers', () => {
     describe('LIST_AFTER_FETCH', () => {
         it('items match', () => {
             const listId = '5';
+
             const items = [
                 {
                     primaryKey: 'key',
@@ -281,6 +281,7 @@ describe('list reducers', () => {
 
         it('list without items', () => {
             const listId = '5';
+
             const items = [
                 {
                     primaryKey: 'key',
@@ -318,9 +319,11 @@ describe('list reducers', () => {
     describe('LIST_ITEM_ADD', () => {
         it('with prepend true', () => {
             const listId = '2';
+
             const item1 = {
                 id: 'item1',
             };
+
             const item2 = {
                 id: 'item2',
             };
@@ -355,9 +358,11 @@ describe('list reducers', () => {
 
         it('with prepend false', () => {
             const listId = '2';
+
             const item1 = {
                 id: 'item1',
             };
+
             const item2 = {
                 id: 'item2',
             };
@@ -394,6 +399,7 @@ describe('list reducers', () => {
     describe('LIST_ITEM_UPDATE', () => {
         it('condition match', () => {
             const listId = '10';
+
             const action = {
                 type: LIST_ITEM_UPDATE,
                 condition: {
@@ -440,6 +446,7 @@ describe('list reducers', () => {
 
         it('condition not match', () => {
             const listId = '10';
+
             const action = {
                 type: LIST_ITEM_UPDATE,
                 condition: {
@@ -515,6 +522,7 @@ describe('list reducers', () => {
     describe('LIST_DESTROY', () => {
         it('default behavior', () => {
             const listId = '10';
+
             const action = {
                 type: LIST_DESTROY,
                 listId,
@@ -541,6 +549,7 @@ describe('list reducers', () => {
         it('with not existing itemId', () => {
             const itemId = '10';
             const listId = '1';
+
             const action = {
                 type: LIST_TOGGLE_ITEM,
                 itemId,
@@ -566,6 +575,7 @@ describe('list reducers', () => {
         it('with existing itemId', () => {
             const itemId = '10';
             const listId = '1';
+
             const action = {
                 type: LIST_TOGGLE_ITEM,
                 itemId,
@@ -593,6 +603,7 @@ describe('list reducers', () => {
         it('should return empty array', () => {
             const listId = '11';
             const primaryKey = 'key';
+
             const action = {
                 type: LIST_TOGGLE_ALL,
                 listId,
@@ -610,9 +621,7 @@ describe('list reducers', () => {
             };
 
             const state = getStateWithLists(lists);
-
             const expectedResult = [];
-
             expect(list(state, action)).toEqual(expectedResult);
         });
 
@@ -620,6 +629,7 @@ describe('list reducers', () => {
             const listId = '11';
             const primaryKey = 'key';
             const itemId = 'item1';
+
             const action = {
                 type: LIST_TOGGLE_ALL,
                 listId,
@@ -655,6 +665,7 @@ describe('list reducers', () => {
         it('one id selected', () => {
             const listId = '11';
             const primaryKey = 'key';
+
             const action = {
                 type: LIST_TOGGLE_ALL,
                 listId,
@@ -696,6 +707,7 @@ describe('list reducers', () => {
         it('default behavior', () => {
             const listId = '10';
             const layoutName = 'layout';
+
             const action = {
                 type: LIST_SET_LAYOUT,
                 listId,

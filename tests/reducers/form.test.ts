@@ -14,7 +14,6 @@ import form, {formSelector, getFormValues} from '../../src/reducers/form';
 
 describe('form reducers', () => {
     const defaultInitialState = {};
-
     let initialState = {...defaultInitialState};
 
     beforeEach(() => {
@@ -38,7 +37,6 @@ describe('form reducers', () => {
         };
 
         const expectedState = {...initialState};
-
         expect(form(initialState, action)).toEqual(expectedState);
     });
 
@@ -108,6 +106,7 @@ describe('form reducers', () => {
 
         it('with nameOrObject as object and should return new state', () => {
             const formId = '10';
+
             const nameOrObject = {
                 3: {
                     type: 'number',
@@ -166,7 +165,7 @@ describe('form reducers', () => {
                 },
             };
 
-            const expectedResult = {
+            const expectedState = {
                 [formId]: {
                     isInvalid: true,
                     errors: action.errors,
@@ -174,7 +173,7 @@ describe('form reducers', () => {
                 },
             };
 
-            expect(form(initialState, action)).toEqual(expectedResult);
+            expect(form(initialState, action)).toEqual(expectedState);
         });
 
         it('without errors', () => {
@@ -193,7 +192,7 @@ describe('form reducers', () => {
                 },
             };
 
-            const expectedResult = {
+            const expectedState = {
                 [formId]: {
                     isInvalid: false,
                     errors: action.errors,
@@ -201,12 +200,13 @@ describe('form reducers', () => {
                 },
             };
 
-            expect(form(initialState, action)).toEqual(expectedResult);
+            expect(form(initialState, action)).toEqual(expectedState);
         });
     });
 
     it('FORM_INITIALIZE', () => {
         const formId = '10';
+
         const action = {
             type: FORM_INITIALIZE,
             formId,
@@ -237,6 +237,7 @@ describe('form reducers', () => {
     describe('FORM_SUBMIT', () => {
         it('with submitCounter', () => {
             const formId = '15';
+
             const action = {
                 type: FORM_SUBMIT,
                 formId,
@@ -263,6 +264,7 @@ describe('form reducers', () => {
 
         it('without submitCounter', () => {
             const formId = '15';
+
             const action = {
                 type: FORM_SUBMIT,
                 formId,
@@ -289,6 +291,7 @@ describe('form reducers', () => {
 
     it('FORM_SET_SUBMITTING', () => {
         const formId = '0';
+
         const action = {
             type: FORM_SET_SUBMITTING,
             formId,
@@ -314,6 +317,7 @@ describe('form reducers', () => {
     describe('FORM_RESET', () => {
         it('with initialValues', () => {
             const formId = '32';
+
             const action = {
                 type: FORM_RESET,
                 formId,
@@ -348,6 +352,7 @@ describe('form reducers', () => {
 
         it('without initialValues', () => {
             const formId = '32';
+
             const action = {
                 type: FORM_RESET,
                 formId,
@@ -403,6 +408,7 @@ describe('form reducers', () => {
 
     it('FORM_DESTROY', () => {
         const formId = '10';
+
         const action = {
             type: FORM_DESTROY,
             formId,
@@ -426,11 +432,10 @@ describe('form reducers', () => {
         expect(form(initialState, action)).toEqual(expectedState);
     });
 
-    //TODO FORM_ARRAY_ADD
-
     describe('FORM_ARRAY_ADD', () => {
         it('without name and initialValues', () => {
             const formId = '10';
+
             const action = {
                 type: FORM_ARRAY_ADD,
                 formId,
@@ -445,7 +450,6 @@ describe('form reducers', () => {
             };
 
             const expectedState = {...initialState};
-
             expect(form(initialState, action)).toEqual(expectedState);
         });
 
@@ -531,7 +535,6 @@ describe('form reducers', () => {
     describe('formSelector', () => {
         it('with correct formId', () => {
             const formId = '1';
-
             const selector = ({values}) => values;
 
             const globalState = {
@@ -553,7 +556,6 @@ describe('form reducers', () => {
 
         it('with incorrect formId', () => {
             const formId = '0';
-
             const selector = (currentForm) => currentForm;
 
             const globalState = {
@@ -566,10 +568,10 @@ describe('form reducers', () => {
                 },
             };
 
-            const expectedResult = {};
+            const expectedSelectData = {};
 
             expect(formSelector(globalState, formId, selector)).toEqual(
-                expectedResult,
+                expectedSelectData,
             );
         });
     });
@@ -577,24 +579,25 @@ describe('form reducers', () => {
     describe('getFormValues', () => {
         it('should return values', () => {
             const formId = '0';
-            const globalState = {
-                form: {
-                    [formId]: {
-                        values: {
-                            fields: {
-                                name: {
-                                    type: 'text',
-                                    autocomplete: true,
-                                },
-                            },
-                        },
+
+            const formValues = {
+                fields: {
+                    name: {
+                        type: 'text',
+                        autocomplete: true,
                     },
                 },
             };
 
-            const expectedResult = globalState.form[formId].values;
+            const globalState = {
+                form: {
+                    [formId]: {
+                        values: formValues,
+                    },
+                },
+            };
 
-            expect(getFormValues(globalState, formId)).toEqual(expectedResult);
+            expect(getFormValues(globalState, formId)).toEqual(formValues);
         });
 
         it('should return null', () => {
@@ -619,9 +622,8 @@ describe('form reducers', () => {
                 },
             };
 
-            const expectedResult = null;
-
-            expect(getFormValues(globalState, formId)).toEqual(expectedResult);
+            const emptyFormValues = null;
+            expect(getFormValues(globalState, formId)).toEqual(emptyFormValues);
         });
     });
 });

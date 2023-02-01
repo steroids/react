@@ -1,6 +1,6 @@
 import axios from 'axios';
 import BaseHttpComponent from '@steroidsjs/core/components/HttpComponent';
-import {login, logout} from '@steroidsjs/core/actions/auth';
+import {logout} from '@steroidsjs/core/actions/auth';
 
 export default class JwtHttpComponent extends BaseHttpComponent {
     refreshTokenRequest: {
@@ -107,7 +107,10 @@ export default class JwtHttpComponent extends BaseHttpComponent {
 
     async getRefreshToken() {
         if (this._refreshToken === false) {
-            this._refreshToken = await this._components.clientStorage.get(this.refreshTokenKey, this.clientStorageName) || null;
+            this._refreshToken = await this._components.clientStorage.get(
+                this.refreshTokenKey,
+                this.clientStorageName,
+            ) || null;
         }
         return this._refreshToken;
     }

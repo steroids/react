@@ -106,6 +106,7 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
             value = normalizeValue(value);
             props.input.onChange.call(null, value);
         },
+    // eslint-disable-next-line max-len
     }), [props.min, props.max, props.step, props.marks, props.isRange, props.disabled, props.isVertical, props.input.value, props.input.onChange, props.valuePostfix, props.defaultValue, props.tooltipIsVisible]);
 
     return components.ui.renderView('form.SliderFieldView', {

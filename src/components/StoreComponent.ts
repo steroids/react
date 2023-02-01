@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import {createStore, applyMiddleware, compose} from 'redux';
 import {routerMiddleware, connectRouter} from 'connected-react-router';
 import {
@@ -170,6 +171,7 @@ export default class StoreComponent {
             );
         }
         // Promise, detect errors on rejects
+        // eslint-disable-next-line max-len
         // Detect action through instanceof Promise is not working in production mode, then used single detection by type
         if (
             typeof action === 'object'

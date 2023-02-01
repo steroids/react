@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as queryString from 'qs';
 import _isArray from 'lodash-es/isArray';
 
@@ -79,6 +80,7 @@ export default class ResourceComponent {
         if (window.ymaps) {
             return new Promise(resolve =>
                 // @ts-ignore
+                // eslint-disable-next-line implicit-arrow-linebreak
                 window.ymaps.ready(() => resolve(window.ymaps)));
         }
         return this.loadScript(

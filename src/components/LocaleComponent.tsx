@@ -34,6 +34,7 @@ export default class LocaleComponent {
         this.translations = {};
         // Publish to global
         if (process.env.IS_SSR) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             global.__ = this.translate.bind(this);
         } else {
@@ -75,7 +76,7 @@ export default class LocaleComponent {
 
         // Cut react components
         const components = {};
-        Object.keys(params).map(key => {
+        Object.keys(params).forEach(key => {
             if (_isObject(params[key])) {
                 components[key] = params[key];
                 params[key] = `!!${key}!!`;
@@ -98,7 +99,7 @@ export default class LocaleComponent {
         }
         // Index components
         const indexedComponents = [];
-        Object.keys(components).map(key => {
+        Object.keys(components).forEach(key => {
             const index = message.indexOf(`!!${key}!!`);
             if (index !== -1) {
                 indexedComponents.push({
@@ -119,7 +120,7 @@ export default class LocaleComponent {
         // Split text to array, paste components
         const result = [];
         const textParts = message.split('!!component!!');
-        for (let i = 0, j = 0; i < textParts.length; i++) {
+        for (let i = 0, j = 0; i < textParts.length; i += 1) {
             let isComponentAdded = false;
             if (
                 j === 0
@@ -130,14 +131,14 @@ export default class LocaleComponent {
                     <span key={`element-${j}`}>{indexedComponents[j].component}</span>,
                 );
                 isComponentAdded = true;
-                j++;
+                j += 1;
             }
             result.push(<span key={`text-${i}`}>{textParts[i]}</span>);
             if (!isComponentAdded && j < indexedComponents.length) {
                 result.push(
                     <span key={`element${j}`}>{indexedComponents[j].component}</span>,
                 );
-                j++;
+                j += 1;
             }
         }
         return <span>{result}</span>;

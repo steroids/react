@@ -8,20 +8,22 @@ import Card from '../Card';
  * @col 12
  */
 
+const text = 'Some quick example text to build on the card title and make up the bulk of the card\'s content.';
+
 export default () => (
     <div style={{display: 'grid', gridAutoFlow: 'column', gridGap: '30px'}}>
         <Card
             title='Card title'
             header='Header'
         >
-            Some quick example text to build on the card title and make up the bulk of the card's content.
+            {text}
             <Button>Button</Button>
         </Card>
         <Card
             title='Card title'
             footer='Footer'
         >
-            Some quick example text to build on the card title and make up the bulk of the card's content.
+            {text}
             <Button>Button</Button>
         </Card>
         <Card
@@ -29,7 +31,7 @@ export default () => (
             header='Header'
             footer='Footer'
         >
-            Some quick example text to build on the card title and make up the bulk of the card's content.
+            {text}
             <Button>Button</Button>
         </Card>
     </div>

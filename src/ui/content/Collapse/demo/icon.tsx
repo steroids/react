@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import * as React from 'react';
 import Collapse from '../Collapse';
 import CollapseItem from '../CollapseItem';

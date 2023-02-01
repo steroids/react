@@ -136,7 +136,10 @@ export default class HttpComponent {
      */
     async getAccessToken() {
         if (this._accessToken === false) {
-            this._accessToken = await this._components.clientStorage.get(this.accessTokenKey, this.clientStorageName) || null;
+            this._accessToken = await this._components.clientStorage.get(
+                this.accessTokenKey,
+                this.clientStorageName,
+            ) || null;
         }
         return this._accessToken;
     }

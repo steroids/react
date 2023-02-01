@@ -17,7 +17,10 @@ export default class HtmlComponent {
         if (!this._instances[blockName]) {
             this._instances[blockName] = (...names) => this.classNames(...names);
             this._instances[blockName].block = modifiers => this._applyModifiers(blockName, modifiers);
-            this._instances[blockName].element = (elementName, modifiers) => this._applyModifiers(blockName + '__' + elementName, modifiers);
+            this._instances[blockName].element = (elementName, modifiers) => this._applyModifiers(
+                blockName + '__' + elementName,
+                modifiers,
+            );
         }
         return this._instances[blockName];
     }
@@ -51,9 +54,11 @@ export default class HtmlComponent {
     }
 
     closest(element, className) {
+        // eslint-disable-next-line no-cond-assign
         while ((element = element.parentElement)
+        // eslint-disable-next-line no-empty
         && !element.classList.contains(className)) {
-        } // eslint-disable-line no-empty
+        }
         return element;
     }
 

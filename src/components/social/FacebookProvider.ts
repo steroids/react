@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 export default class FacebookProvider {
     _components: any;
 
@@ -42,6 +43,7 @@ export default class FacebookProvider {
                             token: response.authResponse.accessToken,
                         });
                     } else {
+                        // eslint-disable-next-line prefer-promise-reject-errors
                         reject('FB error: ' + response.status);
                     }
                 },

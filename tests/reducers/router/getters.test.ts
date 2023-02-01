@@ -280,7 +280,7 @@ describe('router reducers', () => {
             const routeChildren = [{id: routeId, exact: true}];
 
             const routesMap = {
-                dashboard: {
+                [routeId]: {
                     id: '1',
                     exact: true,
                     items: routeChildren,
@@ -295,7 +295,7 @@ describe('router reducers', () => {
             const routeId = 'dashboard';
 
             const routesMap = {
-                dashboard: {
+                [routeId]: {
                     id: routeId,
                     exact: true,
                 },
@@ -303,7 +303,9 @@ describe('router reducers', () => {
 
             const state = getStateWithRouterData({routesMap});
             const emptyRouteChildren = null;
-            expect(getRouteChildren(state, routeId)).toEqual(emptyRouteChildren);
+            expect(getRouteChildren(state, routeId)).toEqual(
+                emptyRouteChildren,
+            );
         });
     });
 

@@ -32,7 +32,7 @@ describe('router reducers', () => {
     let initialState = {...defaultInitialState};
 
     const getStateWithRouterData = (
-        routerData: Record<string, any> | null = null,
+        routerData: Record<string, any> | null = {},
     ) => ({
         router: {
             ...initialState,
@@ -45,7 +45,7 @@ describe('router reducers', () => {
     });
 
     describe('getRouterParams', () => {
-        it('with params', () => {
+        it('default behavior', () => {
             const params = {
                 query: {
                     search: 'bamboo',
@@ -53,38 +53,21 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({params});
-
-            const expectedResult = params;
-
-            expect(getRouterParams(state)).toEqual(expectedResult);
-        });
-
-        it('without params', () => {
-            const params = null;
-
-            const state = getStateWithRouterData({params});
-
-            const expectedResult = params;
-
-            expect(getRouterParams(state)).toEqual(expectedResult);
+            expect(getRouterParams(state)).toEqual(params);
         });
     });
 
     describe('getActiveRouteIds', () => {
         it('with activeIds', () => {
             const activeIds = ['dashboard', 'personal_area', 'error', 'root'];
-
             const state = getStateWithRouterData({activeIds});
-
             expect(getActiveRouteIds(state)).toEqual(activeIds);
         });
 
         it('without activeIds', () => {
             const state = getStateWithRouterData({activeIds: null});
-
-            const expectedResult = null;
-
-            expect(getActiveRouteIds(state)).toEqual(expectedResult);
+            const emptyActiveIds = null;
+            expect(getActiveRouteIds(state)).toEqual(emptyActiveIds);
         });
     });
 
@@ -98,36 +81,28 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({routesMap});
-
             expect(getRoutesMap(state)).toEqual(routesMap);
         });
 
         it('without routesMap', () => {
-            const state = getStateWithRouterData({});
-
-            const expectedResult = null;
-
-            expect(getRoutesMap(state)).toEqual(expectedResult);
+            const state = getStateWithRouterData();
+            const emptyRoutesMap = null;
+            expect(getRoutesMap(state)).toEqual(emptyRoutesMap);
         });
     });
 
     describe('getRouteId', () => {
         it('with activeIds', () => {
             const activeIds = ['dashboard', 'personal_area', 'error', 'root'];
-
             const state = getStateWithRouterData({activeIds});
-
-            const expectedResult = 'dashboard';
-
-            expect(getRouteId(state)).toEqual(expectedResult);
+            const expectedRouteId = 'dashboard';
+            expect(getRouteId(state)).toEqual(expectedRouteId);
         });
 
         it('without activeIds', () => {
-            const state = getStateWithRouterData({activeIds: null});
-
-            const expectedResult = null;
-
-            expect(getRouteId(state)).toEqual(expectedResult);
+            const state = getStateWithRouterData();
+            const emptyRoute = null;
+            expect(getRouteId(state)).toEqual(emptyRoute);
         });
     });
 
@@ -144,7 +119,6 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({routesMap});
-
             expect(getRoute(state, routeId)).toEqual(route);
         });
 
@@ -159,20 +133,15 @@ describe('router reducers', () => {
             };
 
             const activeIds = ['dashboard'];
-
             const state = getStateWithRouterData({routesMap, activeIds});
-
             expect(getRoute(state)).toEqual(route);
         });
 
         it('without routesMap', () => {
             const routeId = 'home';
-
             const state = getStateWithRouterData({});
-
-            const expectedResult = null;
-
-            expect(getRoute(state, routeId)).toEqual(expectedResult);
+            const emptyRoute = null;
+            expect(getRoute(state, routeId)).toEqual(emptyRoute);
         });
     });
 
@@ -192,7 +161,6 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({routesMap});
-
             expect(getRouteProp(state, routeId, propName)).toBe(propValue);
         });
         it('with not existing prop', () => {
@@ -208,10 +176,8 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({routesMap});
-
-            const expectedResult = null;
-
-            expect(getRouteProp(state, routeId, propName)).toBe(expectedResult);
+            const emptyPropValue = null;
+            expect(getRouteProp(state, routeId, propName)).toBe(emptyPropValue);
         });
     });
 
@@ -229,7 +195,6 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({match});
-
             expect(getRouteParams(state)).toEqual(params);
         });
 
@@ -242,16 +207,15 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({match});
-
-            const expectedResult = null;
-
-            expect(getRouteParams(state)).toEqual(expectedResult);
+            const emptyParams = null;
+            expect(getRouteParams(state)).toEqual(emptyParams);
         });
     });
 
     describe('getRouteParam', () => {
         it('with correct param', () => {
             const paramName = 'param1';
+
             const params = {
                 [paramName]: 'param1',
             };
@@ -264,10 +228,8 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({match});
-
-            const expectedResult = params[paramName];
-
-            expect(getRouteParam(state, paramName)).toBe(expectedResult);
+            const expectedParamValue = params[paramName];
+            expect(getRouteParam(state, paramName)).toBe(expectedParamValue);
         });
 
         it('with incorrect param', () => {
@@ -283,10 +245,8 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({match});
-
-            const expectedResult = null;
-
-            expect(getRouteParam(state, paramName)).toBe(expectedResult);
+            const emptyParamValue = null;
+            expect(getRouteParam(state, paramName)).toBe(emptyParamValue);
         });
     });
 
@@ -310,16 +270,14 @@ describe('router reducers', () => {
         };
 
         const state = getStateWithRouterData({routesTree: parentRoute});
-
-        const expectedResult = [parentRoute, route];
-
-        expect(getRouteBreadcrumbs(state, routeId)).toEqual(expectedResult);
+        const expectedRouteBreadcrumbs = [parentRoute, route];
+        expect(getRouteBreadcrumbs(state, routeId)).toEqual(expectedRouteBreadcrumbs);
     });
 
     describe('getRouteChildren', () => {
         it('with items', () => {
             const routeId = 'dashboard';
-            const routeChildren = [{id: '1', exact: true}];
+            const routeChildren = [{id: routeId, exact: true}];
 
             const routesMap = {
                 dashboard: {
@@ -330,7 +288,6 @@ describe('router reducers', () => {
             };
 
             const state = getStateWithRouterData({routesMap});
-
             expect(getRouteChildren(state, routeId)).toEqual(routeChildren);
         });
 
@@ -339,37 +296,29 @@ describe('router reducers', () => {
 
             const routesMap = {
                 dashboard: {
-                    id: '1',
+                    id: routeId,
                     exact: true,
                 },
             };
 
             const state = getStateWithRouterData({routesMap});
-
-            const expectedResult = null;
-
-            expect(getRouteChildren(state, routeId)).toEqual(expectedResult);
+            const emptyRouteChildren = null;
+            expect(getRouteChildren(state, routeId)).toEqual(emptyRouteChildren);
         });
     });
 
     describe('getRouteParent', () => {
-        const routeId = '3';
+        const routeId = '2';
 
-        const routeItem2 = {
-            id: '3',
-            isNavVisible: true,
-            isVisible: true,
-            items: [],
-        };
         const routeItem1 = {
             id: '2',
             label: 'desired route',
             isNavVisible: true,
             isVisible: true,
-            items: [routeItem2],
+            items: [],
         };
 
-        const parentRoute = {
+        const routeParent = {
             id: '1',
             isNavVisible: true,
             isVisible: true,
@@ -377,30 +326,28 @@ describe('router reducers', () => {
         };
 
         const routesMap = {
-            [parentRoute.id]: parentRoute,
+            [routeParent.id]: routeParent,
             [routeItem1.id]: routeItem1,
-            [routeItem2.id]: routeItem2,
         };
 
         const state = getStateWithRouterData({
             routesMap,
-            routesTree: parentRoute,
+            routesTree: routeParent,
         });
 
         it('with correct level', () => {
-            const level = 2;
-            const expectedResult = parentRoute.items && parentRoute.items[0];
+            const level = 1;
+            const expectedRouteParent = routeParent;
 
             expect(getRouteParent(state, routeId, level)).toEqual(
-                expectedResult,
+                expectedRouteParent,
             );
         });
 
         it('with incorrect level', () => {
-            const level = 3;
-            const expectedResult = null;
-
-            expect(getRouteParent(state, routeId, level)).toBe(expectedResult);
+            const level = 2;
+            const emptyRouteParent = null;
+            expect(getRouteParent(state, routeId, level)).toBe(emptyRouteParent);
         });
     });
 });

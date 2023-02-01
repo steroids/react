@@ -18,26 +18,26 @@ type TRouteIdArg = string | null;
 
 export interface IRouterInitialState {
     location: {
-        pathname: string;
-        search: string;
-        hash: string;
-        query: Record<string, unknown> | null;
-    } | null;
-    routesTree: IRouteItem | null;
-    routesMap: {[key: string]: IRouteItem} | null;
-    activeIds: string[] | null;
-    currentId: null;
+        pathname: string,
+        search: string,
+        hash: string,
+        query: Record<string, unknown> | null,
+    } | null,
+    routesTree: IRouteItem | null,
+    routesMap: {[key: string]: IRouteItem} | null,
+    activeIds: string[] | null,
+    currentId: null,
     match: {
-        path: string;
-        url: string;
-        isExact: string;
-        params: Record<string, unknown> | null;
-    } | null;
+        path: string,
+        url: string,
+        isExact: string,
+        params: Record<string, unknown> | null,
+    } | null,
 
-    params: Record<string, unknown> | null;
-    configs: any;
-    data: Record<string, unknown>;
-    counters: Record<string, unknown>;
+    params: Record<string, unknown>,
+    configs: any,
+    data: Record<string, unknown>,
+    counters: Record<string, unknown>,
 }
 
 const initialState: IRouterInitialState = {
@@ -230,8 +230,9 @@ export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
 export const getRoute = (state, routeId: TRouteIdArg = null): IRouteItem => _get(
     state.router, ['routesMap', routeId || getRouteId(state)],
 ) || null;
-export const getRouteProp = (state, routeId: TRouteIdArg = null, propName) => _get(getRoute(state, routeId), propName)
- || null;
+export const getRouteProp = (state, routeId: TRouteIdArg = null, propName) => _get(
+    getRoute(state, routeId), propName,
+) || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
 export const getRouteParam = (state, paramName) => _get(getRouteParams(state), paramName) || null;
 export const getRouteBreadcrumbs = (state, routeId: TRouteIdArg = null): IRouteItem[] => {
@@ -248,7 +249,7 @@ export const getRouteParent = (state, routeId: TRouteIdArg = null, level = 1) =>
     const route = getRoute(state, routeId);
     const breadcrumbs = route ? getRouteBreadcrumbs(state, route.id) : [];
     return breadcrumbs.length > level
-        ? breadcrumbs[breadcrumbs.length - (level)]
+        ? breadcrumbs[breadcrumbs.length - (level + 1)]
         : null;
 };
 // TODO levels...

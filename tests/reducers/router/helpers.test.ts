@@ -31,6 +31,7 @@ describe('router reducers', () => {
     beforeEach(() => {
         initialState = {...defaultInitialState};
         jest.resetModules();
+
         process.env = {
             ...originalEnv,
         };
@@ -44,18 +45,14 @@ describe('router reducers', () => {
                 search: 'Ivan',
             };
 
-            const expectedResult = '/home/contacts/physics?search=Ivan';
-
-            expect(buildUrl(path, params)).toBe(expectedResult);
+            const expectedUrl = '/home/contacts/physics?search=Ivan';
+            expect(buildUrl(path, params)).toBe(expectedUrl);
         });
 
         it('without params', () => {
             const path = '/home/contacts/physics';
             const params = null;
-
-            const expectedResult = path;
-
-            expect(buildUrl(path, params)).toBe(expectedResult);
+            expect(buildUrl(path, params)).toBe(path);
         });
     });
 
@@ -82,6 +79,7 @@ describe('router reducers', () => {
 
         it('not SSR without file protocol', () => {
             const pathname = 'home/contacts/it';
+
             const item = {
                 exact: true,
                 strict: true,
@@ -100,9 +98,8 @@ describe('router reducers', () => {
                 },
             };
 
-            const expectedResult = true;
-
-            expect(checkIsActive(state, item)).toBe(expectedResult);
+            const expectedIsActive = true;
+            expect(checkIsActive(state, item)).toBe(expectedIsActive);
         });
     });
 
@@ -125,6 +122,7 @@ describe('router reducers', () => {
                 ...initialState,
                 routesMap,
             };
+
             const item: IRouteItem = {
                 id: '5',
                 title: 'megaItem',
@@ -137,9 +135,10 @@ describe('router reducers', () => {
                 component,
                 componentProps: null,
             };
+
             const activeIds = ['dashboard', 'information'];
 
-            const expectedResult = {
+            const expectedRoutesTree = {
                 ...item,
                 id: item.id,
                 title: item.title,
@@ -157,16 +156,20 @@ describe('router reducers', () => {
             };
 
             expect(normalizeRoutes(state, item, activeIds, routesMap)).toEqual(
-                expectedResult,
+                expectedRoutesTree,
             );
         });
 
         it('with items as object', () => {
             const component = () => null;
             const childrenPage = 'memePage';
+            const activeIds = ['dashboard', 'information'];
 
             const items = {
-                [childrenPage]: {id: '3', exact: true} as IRouteItem,
+                [childrenPage]: {
+                    id: '3',
+                    exact: true,
+                } as IRouteItem,
             };
 
             const routesMap: {[key: string]: IRouteItem} = {
@@ -184,6 +187,7 @@ describe('router reducers', () => {
                 ...initialState,
                 routesMap,
             };
+
             const item: IRouteItem = {
                 id: '5',
                 title: 'megaItem',
@@ -197,9 +201,8 @@ describe('router reducers', () => {
                 componentProps: null,
                 items,
             };
-            const activeIds = ['dashboard', 'information'];
 
-            const expectedResult = {
+            const expectedRoutesTree = {
                 ...item,
                 id: item.id,
                 title: item.title,
@@ -227,7 +230,7 @@ describe('router reducers', () => {
             };
 
             expect(normalizeRoutes(state, item, activeIds, routesMap)).toEqual(
-                expectedResult,
+                expectedRoutesTree,
             );
         });
 
@@ -251,6 +254,7 @@ describe('router reducers', () => {
                 ...initialState,
                 routesMap,
             };
+
             const item: IRouteItem = {
                 id: '5',
                 title: 'megaItem',
@@ -264,9 +268,10 @@ describe('router reducers', () => {
                 componentProps: null,
                 items,
             };
+
             const activeIds = ['dashboard', 'information'];
 
-            const expectedResult = {
+            const expectedRoutesTree = {
                 ...item,
                 id: item.id,
                 title: item.title,
@@ -293,7 +298,7 @@ describe('router reducers', () => {
             };
 
             expect(normalizeRoutes(state, item, activeIds, routesMap)).toEqual(
-                expectedResult,
+                expectedRoutesTree,
             );
         });
     });
@@ -301,8 +306,6 @@ describe('router reducers', () => {
     describe('findRecursive', () => {
         it('with predicate as parentRoute id', () => {
             const parentRouteId = '1';
-
-            const predicate = parentRouteId;
 
             const parentRoute: IRouteItem = {
                 id: parentRouteId,
@@ -314,54 +317,47 @@ describe('router reducers', () => {
                 {id: '3', label: 'item3'},
             ];
 
-            const expectedResult = parentRoute;
             const expectedPathItems = pathItems.concat([parentRoute]);
 
-            expect(findRecursive(parentRoute, predicate, pathItems)).toEqual(
-                expectedResult,
-            );
+            expect(
+                findRecursive(parentRoute, parentRouteId, pathItems),
+            ).toEqual(parentRoute);
+
             expect(pathItems).toEqual(expectedPathItems);
         });
 
         it('with predicate as parentRoute id, without pathItems', () => {
             const parentRouteId = '1';
 
-            const predicate = parentRouteId;
-
             const parentRoute: IRouteItem = {
                 id: parentRouteId,
                 label: 'parentRoute',
             };
 
-            const expectedResult = parentRoute;
-
-            expect(findRecursive(parentRoute, predicate)).toEqual(
-                expectedResult,
+            expect(findRecursive(parentRoute, parentRouteId)).toEqual(
+                parentRoute,
             );
         });
 
         it('without predicate and childrenRoutes array', () => {
-            const parentRouteId = '1';
-
             const predicate = '';
 
             const parentRoute: IRouteItem = {
-                id: parentRouteId,
+                id: '1',
                 label: 'parentRoute',
             };
 
-            const expectedResult = null;
+            const emptyRoute = null;
 
-            expect(findRecursive(parentRoute, predicate)).toEqual(
-                expectedResult,
-            );
+            expect(findRecursive(parentRoute, predicate)).toEqual(emptyRoute);
         });
 
         it('with childrenRoutes array and pathItems', () => {
             const routeId = '1';
-            const predicate = '10';
+            const deepRouteId = '10';
+
             const deepChildrenRoute = {
-                id: '10',
+                id: deepRouteId,
                 label: 'item10',
             };
 
@@ -369,11 +365,7 @@ describe('router reducers', () => {
                 {
                     id: '2',
                     label: 'children2',
-                    items: [
-                        {
-                            ...deepChildrenRoute,
-                        },
-                    ] as IRouteItem[],
+                    items: [deepChildrenRoute],
                 },
             ];
 
@@ -393,11 +385,12 @@ describe('router reducers', () => {
                 .concat([childrenRoutes[0]])
                 .concat([parentRoute]);
 
-            const expectedResult = childrenRoutes[0];
+            const expectedRoute = childrenRoutes[0];
 
-            expect(findRecursive(parentRoute, predicate, pathItems)).toEqual(
-                expectedResult,
+            expect(findRecursive(parentRoute, deepRouteId, pathItems)).toEqual(
+                expectedRoute,
             );
+
             expect(pathItems).toEqual(expectedPathItems);
         });
     });
@@ -410,9 +403,8 @@ describe('router reducers', () => {
                 ...initialState,
             };
 
-            const expectedResult = null;
-
-            expect(getMatch(currentRoute, state)).toBe(expectedResult);
+            const emptyMatch = null;
+            expect(getMatch(currentRoute, state)).toBe(emptyMatch);
         });
 
         it('with currentRoute', () => {
@@ -437,7 +429,7 @@ describe('router reducers', () => {
                 },
             };
 
-            const expectedResult = {
+            const expectedMatch = {
                 path,
                 url: path,
                 isExact: true,
@@ -446,7 +438,7 @@ describe('router reducers', () => {
                 },
             };
 
-            expect(getMatch(currentRoute, state)).toEqual(expectedResult);
+            expect(getMatch(currentRoute, state)).toEqual(expectedMatch);
         });
     });
 
@@ -459,9 +451,11 @@ describe('router reducers', () => {
                 } as IRouterInitialState,
             };
 
-            const expectedResult = false;
+            const expectedIsInitialized = false;
 
-            expect(isRouterInitialized(globalState)).toBe(expectedResult);
+            expect(isRouterInitialized(globalState)).toBe(
+                expectedIsInitialized,
+            );
         });
 
         it('with routesTree', () => {
@@ -472,9 +466,11 @@ describe('router reducers', () => {
                 } as IRouterInitialState,
             };
 
-            const expectedResult = true;
+            const expectedIsInitialized = true;
 
-            expect(isRouterInitialized(globalState)).toBe(expectedResult);
+            expect(isRouterInitialized(globalState)).toBe(
+                expectedIsInitialized,
+            );
         });
     });
 

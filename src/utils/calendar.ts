@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+// eslint-disable-next-line import/prefer-default-export
 export const convertDate = (
     date: string | Date,
     fromFormats: string | string[],

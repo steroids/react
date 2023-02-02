@@ -440,6 +440,8 @@ function Form(props: IFormProps): JSX.Element {
             dispatch(formSetSubmitting(props.formId, false));
             props.onError(requestError);
             reduxDispatch(
+                //@ts-ignore
+                //TODO TYPES
                 showNotification(
                     props.submitErrorMessage || __('Ошибка сервера'),
                     'danger',

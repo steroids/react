@@ -125,6 +125,8 @@ export default function useLayout(initAction: any = null): ILayout {
     useMount(() => {
         // Callback for load initial page data (return promise)
         if (_isFunction(initAction)) {
+            //@ts-ignore
+            //TODO TYPES
             dispatch(init(true));
         } else {
             dispatch(setUser(null));
@@ -134,17 +136,17 @@ export default function useLayout(initAction: any = null): ILayout {
     const initializeCounterPrev = usePrevious(initializeCounter);
 
     useUpdateEffect(() => {
-        if (!_isFunction(initAction) || initializeCounter <= initializeCounterPrev) {
-            return;
-        }
+        if (!_isFunction(initAction) || initializeCounter <= initializeCounterPrev) { return; }
 
         runInitAction(initAction, components, dispatch)
             .then(() => {
                 if (redirectPageId) {
+                    //@ts-ignore
+                    //TODO TYPES
                     dispatch(goToRoute(redirectPageId));
                 }
             })
-            .catch(e => {
+            .catch((e) => {
                 setError(e);
                 throw e;
             });
@@ -165,11 +167,13 @@ export default function useLayout(initAction: any = null): ILayout {
         }
         if (_intersection(pageRoles, userRoles).length === 0) {
             if (loginRouteId && route.id !== loginRouteId) {
+                //@ts-ignore
+                //TODO TYPES
                 dispatch(goToRoute(loginRouteId));
             } else {
                 status = STATUS_ACCESS_DENIED;
                 if (process.env.NODE_ENV !== 'production') {
-                    // eslint-disable-next-line no-console
+                // eslint-disable-next-line no-console
                     console.log(
                         'Access denied. Page roles: ',
                         pageRoles,

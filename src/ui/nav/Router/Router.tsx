@@ -391,6 +391,8 @@ function Router(props: IRouterProps): JSX.Element {
             });
             if (parentRouteId) {
                 // TODO route params?..
+                //@ts-ignore
+                // TODO TYPES
                 dispatch(goToRoute(parentRouteId));
             }
         }

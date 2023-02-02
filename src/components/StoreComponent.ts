@@ -99,6 +99,8 @@ export default class StoreComponent {
 
         if (!this.store) {
             this.store = createStore(
+                //TODO TYPES
+                //@ts-ignore
                 this.reducers(
                     this._routerReducer ? {
                         router: this._routerReducer,

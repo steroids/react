@@ -17,7 +17,6 @@ describe('router reducers', () => {
         routesTree: null,
         routesMap: null,
         activeIds: null,
-        currentId: null,
         match: null,
 
         params: {},

@@ -20,7 +20,6 @@ describe('router reducers', () => {
         routesTree: null,
         routesMap: null,
         activeIds: null,
-        currentId: null,
         match: null,
 
         params: {},
@@ -32,7 +31,7 @@ describe('router reducers', () => {
     let initialState = {...defaultInitialState};
 
     const getStateWithRouterData = (
-        routerData: Record<string, any> | null = {},
+        routerData: Record<string, any> = {},
     ) => ({
         router: {
             ...initialState,
@@ -65,7 +64,7 @@ describe('router reducers', () => {
         });
 
         it('without activeIds', () => {
-            const state = getStateWithRouterData({activeIds: null});
+            const state = getStateWithRouterData();
             const emptyActiveIds = null;
             expect(getActiveRouteIds(state)).toEqual(emptyActiveIds);
         });
@@ -110,7 +109,7 @@ describe('router reducers', () => {
         it('with routeId', () => {
             const routeId = 'dashboard';
             const route: IRouteItem = {
-                id: '1',
+                id: routeId,
                 exact: true,
             };
 
@@ -123,89 +122,86 @@ describe('router reducers', () => {
         });
 
         it('without routeId', () => {
+            const routeId = 'dashboard';
             const route: IRouteItem = {
-                id: '1',
+                id: routeId,
                 exact: true,
-            };
-
-            const routesMap = {
-                dashboard: route,
-            };
-
-            const activeIds = ['dashboard'];
-            const state = getStateWithRouterData({routesMap, activeIds});
-            expect(getRoute(state)).toEqual(route);
-        });
-
-        it('without routesMap', () => {
-            const routeId = 'home';
-            const state = getStateWithRouterData({});
-            const emptyRoute = null;
-            expect(getRoute(state, routeId)).toEqual(emptyRoute);
-        });
-    });
-
-    describe('getRouteProp', () => {
-        it('with prop', () => {
-            const propValue = true;
-            const propName = 'exact';
-            const routeId = 'dashboard';
-
-            const route: IRouteItem = {
-                id: '1',
-                [propName]: propValue,
-            };
-
-            const routesMap = {
-                dashboard: route,
-            };
-
-            const state = getStateWithRouterData({routesMap});
-            expect(getRouteProp(state, routeId, propName)).toBe(propValue);
-        });
-        it('with not existing prop', () => {
-            const propName = 'exact';
-            const routeId = 'dashboard';
-
-            const route: IRouteItem = {
-                id: '1',
             };
 
             const routesMap = {
                 [routeId]: route,
             };
 
+            const activeIds = [routeId];
+            const state = getStateWithRouterData({routesMap, activeIds});
+            expect(getRoute(state)).toEqual(route);
+        });
+
+        it('without routesMap', () => {
+            const routeId = 'home';
+            const state = getStateWithRouterData();
+            const emptyRoute = null;
+            expect(getRoute(state, routeId)).toEqual(emptyRoute);
+        });
+    });
+
+    describe('getRouteProp', () => {
+        const getRoutesMapMock = (routeName: string, routeValue: Record<string, any>) => ({
+            [routeName]: routeValue,
+        });
+
+        it('with prop', () => {
+            const propValue = true;
+            const propName = 'exact';
+            const routeId = 'dashboard';
+
+            const route: IRouteItem = {
+                id: routeId,
+                [propName]: propValue,
+            };
+
+            const routesMap = getRoutesMapMock(routeId, route);
+            const state = getStateWithRouterData({routesMap});
+            expect(getRouteProp(state, routeId, propName)).toBe(propValue);
+        });
+
+        it('with not existing prop', () => {
+            const notExistingPropName = 'exact';
+            const routeId = 'dashboard';
+
+            const route: IRouteItem = {
+                id: routeId,
+            };
+
+            const routesMap = getRoutesMapMock(routeId, route);
             const state = getStateWithRouterData({routesMap});
             const emptyPropValue = null;
-            expect(getRouteProp(state, routeId, propName)).toBe(emptyPropValue);
+            expect(getRouteProp(state, routeId, notExistingPropName)).toBe(emptyPropValue);
         });
     });
 
     describe('getRouteParams', () => {
+        const match = {
+            path: 'home',
+            isExact: 'true',
+            url: 'https://megasite.com',
+        };
+
         it('with params', () => {
             const params = {
                 param1: 'param1',
             };
 
-            const match = {
+            const matchWithParams = {
+                ...match,
                 params,
-                path: 'home',
-                isExact: 'true',
-                url: 'https://megasite.com',
             };
 
-            const state = getStateWithRouterData({match});
+            const state = getStateWithRouterData({match: matchWithParams});
             expect(getRouteParams(state)).toEqual(params);
         });
 
         it('without params', () => {
-            const match = {
-                params: null,
-                path: 'home',
-                isExact: 'true',
-                url: 'https://megasite.com',
-            };
-
             const state = getStateWithRouterData({match});
             const emptyParams = null;
             expect(getRouteParams(state)).toEqual(emptyParams);
@@ -213,107 +209,105 @@ describe('router reducers', () => {
     });
 
     describe('getRouteParam', () => {
+        const match = {
+            path: 'home',
+            isExact: 'true',
+            url: 'https://megasite.com',
+        };
+
         it('with correct param', () => {
-            const paramName = 'param1';
+            const paramName = 'paramName';
+            const paramValue = 'paramValue';
 
-            const params = {
-                [paramName]: 'param1',
+            const matchWithParams = {
+                ...match,
+                params: {
+                    [paramName]: paramValue,
+                },
             };
 
-            const match = {
-                params,
-                path: 'home',
-                isExact: 'true',
-                url: 'https://megasite.com',
-            };
-
-            const state = getStateWithRouterData({match});
-            const expectedParamValue = params[paramName];
-            expect(getRouteParam(state, paramName)).toBe(expectedParamValue);
+            const state = getStateWithRouterData({match: matchWithParams});
+            expect(getRouteParam(state, paramName)).toBe(paramValue);
         });
 
         it('with incorrect param', () => {
-            const paramName = 'param2';
+            const notExistingParamName = 'exact';
 
-            const match = {
+            const matchWithParams = {
+                ...match,
                 params: {
-                    param1: 'param1',
+                    strict: true,
                 },
-                path: 'home',
-                isExact: 'true',
-                url: 'https://megasite.com',
             };
 
-            const state = getStateWithRouterData({match});
+            const state = getStateWithRouterData({match: matchWithParams});
             const emptyParamValue = null;
-            expect(getRouteParam(state, paramName)).toBe(emptyParamValue);
+            expect(getRouteParam(state, notExistingParamName)).toBe(emptyParamValue);
         });
     });
 
     it('getRouteBreadcrumbs', () => {
-        const routeId = '2';
+        const routeId = 'childRoute';
 
-        const route: IRouteItem = {
+        const childRoute: IRouteItem = {
             id: routeId,
-            label: 'childrenRoute1',
+            label: 'childRoute',
             isVisible: true,
             isNavVisible: true,
             items: [],
         };
 
         const parentRoute: IRouteItem = {
-            id: '1',
+            id: 'parentRoute',
             label: 'parentRoute',
             isVisible: true,
             isNavVisible: true,
-            items: [route],
+            items: [childRoute],
         };
 
         const state = getStateWithRouterData({routesTree: parentRoute});
-        const expectedRouteBreadcrumbs = [parentRoute, route];
+        const expectedRouteBreadcrumbs = [parentRoute, childRoute];
         expect(getRouteBreadcrumbs(state, routeId)).toEqual(expectedRouteBreadcrumbs);
     });
 
     describe('getRouteChildren', () => {
         it('with items', () => {
-            const routeId = 'dashboard';
-            const routeChildren = [{id: routeId, exact: true}];
+            const routeParentId = 'routeParent';
+            const routeChildren = [{id: 'routeChild', exact: true}];
 
             const routesMap = {
-                [routeId]: {
-                    id: '1',
+                [routeParentId]: {
+                    id: routeParentId,
                     exact: true,
                     items: routeChildren,
                 },
             };
 
             const state = getStateWithRouterData({routesMap});
-            expect(getRouteChildren(state, routeId)).toEqual(routeChildren);
+            expect(getRouteChildren(state, routeParentId)).toEqual(routeChildren);
         });
 
         it('without items', () => {
-            const routeId = 'dashboard';
+            const routeParentId = 'dashboard';
 
             const routesMap = {
-                [routeId]: {
-                    id: routeId,
+                [routeParentId]: {
+                    id: routeParentId,
                     exact: true,
                 },
             };
 
             const state = getStateWithRouterData({routesMap});
             const emptyRouteChildren = null;
-            expect(getRouteChildren(state, routeId)).toEqual(
-                emptyRouteChildren,
-            );
+            expect(getRouteChildren(state, routeParentId)).toEqual(emptyRouteChildren);
         });
     });
 
     describe('getRouteParent', () => {
-        const routeId = '2';
+        const routeChildId = 'routeChild';
 
-        const routeItem1 = {
-            id: '2',
+        const routeChild = {
+            id: routeChildId,
             label: 'desired route',
             isNavVisible: true,
             isVisible: true,
@@ -321,15 +315,15 @@ describe('router reducers', () => {
         };
 
         const routeParent = {
-            id: '1',
+            id: 'routeParent',
             isNavVisible: true,
             isVisible: true,
-            items: [routeItem1],
+            items: [routeChild],
         };
 
         const routesMap = {
             [routeParent.id]: routeParent,
-            [routeItem1.id]: routeItem1,
+            [routeChild.id]: routeChild,
         };
 
         const state = getStateWithRouterData({
@@ -340,16 +334,13 @@ describe('router reducers', () => {
         it('with correct level', () => {
             const level = 1;
             const expectedRouteParent = routeParent;
-
-            expect(getRouteParent(state, routeId, level)).toEqual(
-                expectedRouteParent,
-            );
+            expect(getRouteParent(state, routeChildId, level)).toEqual(expectedRouteParent);
         });
 
         it('with incorrect level', () => {
             const level = 2;
             const emptyRouteParent = null;
-            expect(getRouteParent(state, routeId, level)).toBe(emptyRouteParent);
+            expect(getRouteParent(state, routeChildId, level)).toBe(emptyRouteParent);
         });
     });
 });

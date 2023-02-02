@@ -26,7 +26,6 @@ export interface IRouterInitialState {
     routesTree: IRouteItem | null,
     routesMap: {[key: string]: IRouteItem} | null,
     activeIds: string[] | null,
-    currentId: null,
     match: {
         path: string,
         url: string,
@@ -45,7 +44,6 @@ const initialState: IRouterInitialState = {
     routesTree: null,
     routesMap: null,
     activeIds: null,
-    currentId: null,
     match: null,
 
     params: {},

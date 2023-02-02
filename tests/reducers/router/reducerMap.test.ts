@@ -11,7 +11,6 @@ describe('router reducers', () => {
         routesTree: null,
         routesMap: null,
         activeIds: null,
-        currentId: null,
         match: null,
 
         params: {},
@@ -20,7 +19,7 @@ describe('router reducers', () => {
         counters: {},
     };
 
-    let initialState = {...defaultInitialState};	
+    let initialState = {...defaultInitialState};
 
     beforeEach(() => {
         initialState = {...defaultInitialState};
@@ -57,7 +56,7 @@ describe('router reducers', () => {
                 [parentRouteId]: parentRoute,
             },
             activeIds: [],
-            currentId: null,
+
             match: null,
             params: {},
             configs: [],
@@ -114,7 +113,7 @@ describe('router reducers', () => {
             const expectedState: IRouterInitialState = {
                 ...initialState,
                 activeIds: [],
-                currentId: null,
+
                 match: null,
                 params: {},
                 configs: [],
@@ -148,7 +147,7 @@ describe('router reducers', () => {
             const expectedState: IRouterInitialState = {
                 ...initialState,
                 activeIds: [],
-                currentId: null,
+
                 match: null,
                 params: {},
                 configs: [],

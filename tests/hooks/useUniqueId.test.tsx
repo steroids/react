@@ -14,10 +14,9 @@ jest.mock('lodash-es/uniqueId');
 describe('useUniqueId hook', () => {
     it('default behavior', () => {
         const prefix = 'usefulHook_';
-        const mockImplementationResult = `${prefix}1`;
-        const expectedUniqueId = mockImplementationResult;
+        const expectedUniqueId = `${prefix}1`;
 
-        _uniqueId.mockImplementation(() => mockImplementationResult);
+        _uniqueId.mockImplementation(() => expectedUniqueId);
         const wrapper = mountWithApp(MockComponent, prefix);
 
         const uniqueId = wrapper.find('MockResultComponent').prop('uniqueId');

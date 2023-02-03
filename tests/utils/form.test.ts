@@ -1,8 +1,4 @@
-import configureMockStore from 'redux-mock-store';
-import {cleanEmptyObject, mergeLayoutProp, normalizeLayout, providers} from '../../src/utils/form';
-import prepareMiddleware from '../storeMiddlewareMock';
-
-const mockStore = configureMockStore([prepareMiddleware]);
+import {cleanEmptyObject, mergeLayoutProp, normalizeLayout} from '../../src/utils/form';
 
 describe('form utils', () => {
     describe('normalizeLayout', () => {
@@ -105,27 +101,6 @@ describe('form utils', () => {
             };
 
             expect(cleanEmptyObject(entity)).toEqual(entity);
-        });
-    });
-
-    describe('providers', () => {
-        it('useForm', () => {
-            const formId = 'contactUs';
-
-            const initialValues = {
-
-            };
-
-            const store = mockStore({
-                form: {
-                    [formId]: {
-
-                    },
-                },
-            });
-
-            providers.redux.useForm(formId, initialValues);
-            console.log(store);
         });
     });
 });

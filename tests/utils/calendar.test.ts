@@ -12,16 +12,16 @@ describe('calendar utils', () => {
     });
 
     it('with utc', () => {
-        const expectedFormatDate = '31.12.22';
-        expect(convertDate(date, fromFormats, toFormat, utc)).toBe(expectedFormatDate);
+        const anotherDate = '1.1.2023 23:59';
+        const anotherFromFormat = 'D.M.YYYY HH:mm';
+        const expectedFormatDate = '01.01.23';
+        expect(convertDate(anotherDate, anotherFromFormat, toFormat, utc)).toBe(expectedFormatDate);
     });
 
     it('with utc and dateInUtc', () => {
-        const anotherDate = '1.1.2023 23:59';
-        const anotherFromFormat = 'D.M.YYYY HH:mm';
         const dateInUtc = true;
         const expectedFormatDate = '01.01.23';
-        expect(convertDate(anotherDate, anotherFromFormat, toFormat, utc, dateInUtc)).toBe(expectedFormatDate);
+        expect(convertDate(date, fromFormats, toFormat, utc, dateInUtc)).toBe(expectedFormatDate);
     });
 
     it('with date as Date instance', () => {

@@ -7,7 +7,6 @@ import _isObject from 'lodash-es/isObject';
 import _isInteger from 'lodash-es/isInteger';
 import _isFunction from 'lodash-es/isFunction';
 import _every from 'lodash-es/every';
-import {NamedChunksPlugin} from 'webpack';
 
 /**
  * Normalize items for save to state. Support enum class or normal items list.
@@ -133,7 +132,7 @@ export const shouldUpdate = (objA, objB, deepPaths: any = null) => {
         if (keysA.length !== keysB.length) {
             return true;
         }
-        console.log('Called');
+
         // Convert deep paths to array of arrays
         if (deepPaths) {
             deepPaths = deepPaths.map(p => _isString(p) ? p.split('.') : p);

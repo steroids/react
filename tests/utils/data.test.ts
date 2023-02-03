@@ -1,5 +1,5 @@
 import Enum from '../../src/base/Enum';
-import {normalizeItems, shouldUpdate, shouldUpdateSingle} from '../../src/utils/data';
+import {checkCondition, normalizeItems, shouldUpdate, shouldUpdateSingle} from '../../src/utils/data';
 
 describe('data utils', () => {
     describe('normalizeItems', () => {
@@ -93,7 +93,41 @@ describe('data utils', () => {
         });
     });
 
-    //TODO checkCondition, filterItems
+    //TODO other checkCondition cases, filterItems
+
+    describe('checkCondition', () => {
+        describe('condition as array', () => {
+            const getItem = (entityName, entityValue) => ({[entityName]: entityValue});
+            const getCondition = (operator, key, value) => [operator, key, value];
+
+            it('switch =', () => {
+                const ageName = 'age';
+                const ageValue = 18;
+                const condition = getCondition('=', ageName, ageValue);
+                const item = getItem(ageName, ageValue);
+                const expectedCondition = true;
+                expect(checkCondition(item, condition)).toBe(expectedCondition);
+            });
+
+            it('switch >', () => {
+                const ageName = 'age';
+                const ageValue = 19;
+                const condition = getCondition('>', ageName, 18);
+                const item = getItem(ageName, ageValue);
+                const expectedCondition = true;
+                expect(checkCondition(item, condition)).toBe(expectedCondition);
+            });
+
+            it('switch >= || =>', () => {
+                const ageName = 'age';
+                const ageValue = 19;
+                const condition = getCondition('>=', ageName, 18);
+                const item = getItem(ageName, ageValue);
+                const expectedCondition = true;
+                expect(checkCondition(item, condition)).toBe(expectedCondition);
+            });
+        });
+    });
 
     describe('shouldUpdateSingle', () => {
         it('parameters as functions', () => {
@@ -144,12 +178,10 @@ describe('data utils', () => {
             expect(shouldUpdate(sandwichRecipe, sandwichRecipe)).toBe(expectedShouldUpdate);
         });
 
-        //TODO isIt Working?
         it('with deepPaths and different objects', () => {
-            const deepPaths = ['recipe', 'homemadeFood', 'delicious'];
-
-            // expect(shouldUpdate(pilafRecipe, sandwichRecipe));
-            console.log(shouldUpdate(pilafRecipe, sandwichRecipe, deepPaths));
+            const deepPaths = ['homemade.delicious.recipe'];
+            const expectedShouldUpdate = true;
+            expect(shouldUpdate(pilafRecipe, sandwichRecipe, deepPaths)).toBe(expectedShouldUpdate);
         });
     });
 });

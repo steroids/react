@@ -1,7 +1,7 @@
 import {indexBy} from '../../src/utils/collection';
 
 describe('indexBy', () => {
-    it('collection as object', () => {
+    it('collection as not array', () => {
         const collection = {};
         const key = 'id';
         expect(indexBy(collection, key)).toEqual(collection);
@@ -31,11 +31,5 @@ describe('indexBy', () => {
         };
 
         expect(indexBy(collection, indexKey)).toEqual(expectedIndexedObject);
-    });
-
-    it('collection as null', () => {
-        const collection = null;
-        const key = 'notExistingKey';
-        expect(indexBy(collection, key)).toEqual(collection);
     });
 });

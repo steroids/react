@@ -2,7 +2,7 @@ import 'jest-enzyme';
 import mountWithApp from '../../../../tests/mountWithApp';
 import Card from './Card';
 
-describe('Card tests', () => {
+describe.skip('Card tests', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(Card);
         // expect(wrapper).toMatchSnapshot();

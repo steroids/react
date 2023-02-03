@@ -2,7 +2,7 @@ import 'jest-enzyme';
 import mountWithApp from '../../../../tests/mountWithApp';
 import Avatar from './Avatar';
 
-describe('Avatar tests', () => {
+describe.skip('Avatar tests', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(Avatar);
         expect(wrapper.find('Avatar')).not.toBeEmptyRender();

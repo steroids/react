@@ -143,6 +143,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         }
 
         return (
+            // @ts-ignore
             <Provider store={components.store.store}>
                 {content}
             </Provider>

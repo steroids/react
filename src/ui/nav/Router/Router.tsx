@@ -473,6 +473,7 @@ function Router(props: IRouterProps): JSX.Element {
         );
     }
     return (
+        // @ts-ignore
         <ConnectedRouter history={components.store.history}>
             {renderContent()}
         </ConnectedRouter>

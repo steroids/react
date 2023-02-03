@@ -32,5 +32,6 @@ export default function Portal(props: IPortalProps): React.ReactPortal {
         return null;
     }
 
+    // @ts-ignore
     return createPortal(props.children, elementRef.current);
 }

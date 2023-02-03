@@ -11,6 +11,7 @@ import {
     getRouteChildren,
     getRouteBreadcrumbs,
     getRouteParent,
+    isRouterInitialized,
 } from '../../../src/reducers/router';
 import {IRouteItem} from '../../../src/ui/nav/Router/Router';
 
@@ -41,6 +42,20 @@ describe('router reducers', () => {
 
     beforeEach(() => {
         initialState = {...defaultInitialState};
+    });
+
+    describe('isRouterInitialized', () => {
+        it('without routesTree', () => {
+            const state = getStateWithRouterData({routesTree: null});
+            const expectedIsInitialized = false;
+            expect(isRouterInitialized(state)).toBe(expectedIsInitialized);
+        });
+
+        it('with routesTree', () => {
+            const state = getStateWithRouterData({routesTree: {}});
+            const expectedIsInitialized = true;
+            expect(isRouterInitialized(state)).toBe(expectedIsInitialized);
+        });
     });
 
     describe('getRouterParams', () => {

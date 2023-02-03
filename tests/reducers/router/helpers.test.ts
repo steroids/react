@@ -18,7 +18,6 @@ describe('router reducers', () => {
         routesMap: null,
         activeIds: null,
         match: null,
-
         params: {},
         configs: [],
         data: {},
@@ -27,65 +26,39 @@ describe('router reducers', () => {
 
     let initialState = {...defaultInitialState};
 
+    const getStateWithRoutesMap = (routesMap: Record<string, any>) => ({...initialState, routesMap: {...routesMap}});
+
     beforeEach(() => {
         initialState = {...defaultInitialState};
         jest.resetModules();
-
-        process.env = {
-            ...originalEnv,
-        };
+        process.env = {...originalEnv};
     });
 
     describe('buildUrl', () => {
+        const path = '/home/contacts/physics';
+
         it('with params', () => {
-            const path = '/home/contacts/physics';
-
-            const params = {
-                search: 'Ivan',
-            };
-
+            const params = {search: 'Ivan'};
             const expectedUrl = '/home/contacts/physics?search=Ivan';
             expect(buildUrl(path, params)).toBe(expectedUrl);
         });
 
         it('without params', () => {
-            const path = '/home/contacts/physics';
-            const params = null;
-            expect(buildUrl(path, params)).toBe(path);
+            expect(buildUrl(path)).toBe(path);
         });
     });
 
     describe('checkIsActive', () => {
         //TODO checkIsActive with file protocol
-        //   it('not SSR with file protocol', () => {
-        //       process.env.IS_SSR = 'false';
-        //       global.window.location.protocol = 'file:';
-        //       global.window.location.hash = 'hash';
-
-        //       const item = {
-        //           path: 'contacts/hash',
-        //           exact: false,
-        //           strict: false,
-        //       };
-
-        //       const state: IRouterInitialState = {
-        //           ...initialState,
-        //           location: null,
-        //       };
-
-        //       console.log(checkIsActive(state, item));
-        //   });
-
         it('not SSR without file protocol', () => {
             const pathname = 'home/contacts/it';
+            global.window.location.protocol = 'http:';
 
             const item = {
                 exact: true,
                 strict: true,
                 path: pathname,
             };
-
-            global.window.location.protocol = 'http:';
 
             const state: IRouterInitialState = {
                 ...initialState,
@@ -103,293 +76,187 @@ describe('router reducers', () => {
     });
 
     describe('normalizeRoutes', () => {
-        it('without items', () => {
-            const component = () => null;
+        const component = () => null;
+        const dashboard = 'dashboard';
+        const information = 'information';
+        const activeIds = [dashboard, information];
 
-            const routesMap: {[key: string]: IRouteItem} = {
-                dashboard: {
-                    id: '1',
-                    component,
-                },
-                information: {
-                    id: '2',
-                    component,
-                },
-            };
+        const getExpectedRoutesMap = (routesMap, routeToNormalize, expectedRoutesTree) => ({
+            ...routesMap,
+            [routeToNormalize.id]: expectedRoutesTree,
+        });
 
-            const state: IRouterInitialState = {
-                ...initialState,
-                routesMap,
-            };
+        const getExpectedRoutesTree = (routeToNormalize, items) => ({
+            ...routeToNormalize,
+            id: routeToNormalize.id,
+            title: routeToNormalize.title,
+            label: routeToNormalize.label,
+            exact: routeToNormalize.exact,
+            strict: routeToNormalize.strict,
+            path: routeToNormalize.path,
+            isVisible: routeToNormalize.isVisible,
+            isNavVisible: routeToNormalize.isNavVisible,
+            component: null,
+            componentProps: routeToNormalize.componentProps,
+            icon: null,
+            roles: [],
+            items,
+        });
 
-            const item: IRouteItem = {
-                id: '5',
-                title: 'megaItem',
-                label: 'megaLabel',
-                exact: true,
-                strict: true,
-                path: 'home/contacts/mega',
-                isVisible: true,
-                isNavVisible: true,
+        const getRoutesMap = () => ({
+            [dashboard]: {
+                id: dashboard,
                 component,
-                componentProps: null,
-            };
+            },
+            [information]: {
+                id: information,
+                component,
+            },
+        });
 
-            const activeIds = ['dashboard', 'information'];
+        const state = getStateWithRoutesMap(getRoutesMap());
 
-            const expectedRoutesTree = {
-                ...item,
-                id: item.id,
-                title: item.title,
-                label: item.label,
-                exact: item.exact,
-                strict: item.strict,
-                path: item.path,
-                isVisible: item.isVisible,
-                isNavVisible: item.isNavVisible,
-                component: null,
-                componentProps: item.componentProps,
-                icon: null,
-                roles: [],
-                items: null,
-            };
+        const routeWithoutChildren = {
+            id: 'routeWithoutChildren',
+            title: 'routeWithoutChildren',
+            label: 'routeWithoutChildren',
+            exact: true,
+            strict: true,
+            path: 'home/contacts/routeWithoutChildren',
+            isVisible: true,
+            isNavVisible: true,
+            component,
+            componentProps: null,
+        };
 
-            expect(normalizeRoutes(state, item, activeIds, routesMap)).toEqual(
-                expectedRoutesTree,
-            );
+        it('without items', () => {
+            const routesMap = getRoutesMap();
+            const expectedRoutesTree = getExpectedRoutesTree(routeWithoutChildren, null);
+            const expectedRoutesMap = getExpectedRoutesMap(routesMap, routeWithoutChildren, expectedRoutesTree);
+            expect(normalizeRoutes(state, routeWithoutChildren, activeIds, routesMap)).toEqual(expectedRoutesTree);
+            expect(routesMap).toEqual(expectedRoutesMap);
         });
 
         it('with items as object', () => {
-            const component = () => null;
-            const childrenPage = 'memePage';
-            const activeIds = ['dashboard', 'information'];
+            const childRoute = 'childRoute';
+            const routesMap = getRoutesMap();
 
             const items = {
-                [childrenPage]: {
-                    id: '3',
+                [childRoute]: {
+                    id: childRoute,
                     exact: true,
                 } as IRouteItem,
             };
 
-            const routesMap: {[key: string]: IRouteItem} = {
-                dashboard: {
-                    id: '1',
-                    component,
+            const routeWithChildren = {...routeWithoutChildren, items};
+
+            const expectedRoutesTree = getExpectedRoutesTree(routeWithChildren, [
+                {
+                    ...normalizeRoutes(
+                        state,
+                        items[childRoute],
+                        activeIds,
+                        routesMap,
+                    ),
+                    id: childRoute,
                 },
-                information: {
-                    id: '2',
-                    component,
-                },
-            };
+            ]);
 
-            const state: IRouterInitialState = {
-                ...initialState,
-                routesMap,
-            };
-
-            const item: IRouteItem = {
-                id: '5',
-                title: 'megaItem',
-                label: 'megaLabel',
-                exact: true,
-                strict: true,
-                path: 'home/contacts/mega',
-                isVisible: true,
-                isNavVisible: true,
-                component,
-                componentProps: null,
-                items,
-            };
-
-            const expectedRoutesTree = {
-                ...item,
-                id: item.id,
-                title: item.title,
-                label: item.label,
-                exact: item.exact,
-                strict: item.strict,
-                path: item.path,
-                isVisible: item.isVisible,
-                isNavVisible: item.isNavVisible,
-                component: null,
-                componentProps: item.componentProps,
-                icon: null,
-                roles: [],
-                items: [
-                    {
-                        ...normalizeRoutes(
-                            state,
-                            items.memePage,
-                            activeIds,
-                            routesMap,
-                        ),
-                        id: childrenPage,
-                    },
-                ],
-            };
-
-            expect(normalizeRoutes(state, item, activeIds, routesMap)).toEqual(
-                expectedRoutesTree,
-            );
+            const expectedRoutesMap = getExpectedRoutesMap(routesMap, routeWithChildren, expectedRoutesTree);
+            expect(normalizeRoutes(state, routeWithChildren, activeIds, routesMap)).toEqual(expectedRoutesTree);
+            expect(routesMap).toEqual(expectedRoutesMap);
         });
 
         it('with items as array', () => {
-            const component = () => null;
+            const items = [{id: 'childRoute', exact: true} as IRouteItem];
+            const routeWithChildren = {...routeWithoutChildren, items};
+            const routesMap = getRoutesMap();
 
-            const items = [{id: '3', exact: true} as IRouteItem];
-
-            const routesMap: {[key: string]: IRouteItem} = {
-                dashboard: {
-                    id: '1',
-                    component,
+            const expectedRoutesTree = getExpectedRoutesTree(routeWithChildren, [
+                {
+                    ...normalizeRoutes(
+                        state,
+                        items[0],
+                        activeIds,
+                        routesMap,
+                    ),
                 },
-                information: {
-                    id: '2',
-                    component,
-                },
-            };
+            ]);
 
-            const state: IRouterInitialState = {
-                ...initialState,
-                routesMap,
-            };
-
-            const item: IRouteItem = {
-                id: '5',
-                title: 'megaItem',
-                label: 'megaLabel',
-                exact: true,
-                strict: true,
-                path: 'home/contacts/mega',
-                isVisible: true,
-                isNavVisible: true,
-                component,
-                componentProps: null,
-                items,
-            };
-
-            const activeIds = ['dashboard', 'information'];
-
-            const expectedRoutesTree = {
-                ...item,
-                id: item.id,
-                title: item.title,
-                label: item.label,
-                exact: item.exact,
-                strict: item.strict,
-                path: item.path,
-                isVisible: item.isVisible,
-                isNavVisible: item.isNavVisible,
-                component: null,
-                componentProps: item.componentProps,
-                icon: null,
-                roles: [],
-                items: [
-                    {
-                        ...normalizeRoutes(
-                            state,
-                            items[0],
-                            activeIds,
-                            routesMap,
-                        ),
-                    },
-                ],
-            };
-
-            expect(normalizeRoutes(state, item, activeIds, routesMap)).toEqual(
-                expectedRoutesTree,
-            );
+            const expectedRoutesMap = getExpectedRoutesMap(routesMap, routeWithChildren, expectedRoutesTree);
+            expect(normalizeRoutes(state, routeWithChildren, activeIds, routesMap)).toEqual(expectedRoutesTree);
+            expect(routesMap).toEqual(expectedRoutesMap);
         });
     });
 
     describe('findRecursive', () => {
-        it('with predicate as parentRoute id', () => {
-            const parentRouteId = '1';
+        const getPathItems = () => [
+            {id: 'someRoute1', label: 'someRoute1'},
+            {id: 'someRoute2', label: 'someRoute2'},
+        ];
 
-            const parentRoute: IRouteItem = {
+        it('with predicate as parentRoute id', () => {
+            const parentRouteId = 'parentRoute';
+            const pathItems = getPathItems();
+
+            const parentRoute = {
                 id: parentRouteId,
                 label: 'parentRoute',
             };
 
-            const pathItems: IRouteItem[] = [
-                {id: '2', label: 'item2'},
-                {id: '3', label: 'item3'},
-            ];
-
             const expectedPathItems = pathItems.concat([parentRoute]);
-
-            expect(
-                findRecursive(parentRoute, parentRouteId, pathItems),
-            ).toEqual(parentRoute);
-
+            expect(findRecursive(parentRoute, parentRouteId, pathItems)).toEqual(parentRoute);
             expect(pathItems).toEqual(expectedPathItems);
         });
 
         it('with predicate as parentRoute id, without pathItems', () => {
-            const parentRouteId = '1';
+            const parentRouteId = 'parentRoute';
 
             const parentRoute: IRouteItem = {
                 id: parentRouteId,
                 label: 'parentRoute',
             };
 
-            expect(findRecursive(parentRoute, parentRouteId)).toEqual(
-                parentRoute,
-            );
+            expect(findRecursive(parentRoute, parentRouteId)).toEqual(parentRoute);
         });
 
         it('without predicate and childrenRoutes array', () => {
-            const predicate = '';
+            const emptyPredicate = '';
 
             const parentRoute: IRouteItem = {
-                id: '1',
+                id: 'parentRoute',
                 label: 'parentRoute',
             };
 
             const emptyRoute = null;
-
-            expect(findRecursive(parentRoute, predicate)).toEqual(emptyRoute);
+            expect(findRecursive(parentRoute, emptyPredicate)).toEqual(emptyRoute);
         });
 
         it('with childrenRoutes array and pathItems', () => {
-            const routeId = '1';
-            const deepRouteId = '10';
+            const routeId = 'parentRoute';
+            const deepChildRouteId = 'deepRoute';
+            const pathItems = getPathItems();
 
-            const deepChildrenRoute = {
-                id: deepRouteId,
-                label: 'item10',
+            const deepChildRoute = {
+                id: deepChildRouteId,
+                label: 'deepChildRoute',
             };
 
-            const childrenRoutes: IRouteItem[] = [
-                {
-                    id: '2',
-                    label: 'children2',
-                    items: [deepChildrenRoute],
-                },
-            ];
+            const childRoute = {
+                id: 'childRoute',
+                label: 'childRoute',
+                items: [deepChildRoute],
+            };
 
-            const parentRoute: IRouteItem = {
+            const parentRoute = {
                 id: routeId,
                 label: 'parentRoute',
-                items: childrenRoutes,
+                items: [childRoute],
             };
 
-            const pathItems: IRouteItem[] = [
-                {id: '2', label: 'item2'},
-                {id: '3', label: 'item3'},
-            ];
-
-            const expectedPathItems = pathItems
-                .concat([deepChildrenRoute])
-                .concat([childrenRoutes[0]])
-                .concat([parentRoute]);
-
-            const expectedRoute = childrenRoutes[0];
-
-            expect(findRecursive(parentRoute, deepRouteId, pathItems)).toEqual(
-                expectedRoute,
-            );
-
+            const expectedPathItems = pathItems.concat([deepChildRoute, childRoute, parentRoute]);
+            const expectedRoute = childRoute;
+            expect(findRecursive(parentRoute, deepChildRouteId, pathItems)).toEqual(expectedRoute);
             expect(pathItems).toEqual(expectedPathItems);
         });
     });
@@ -410,7 +277,7 @@ describe('router reducers', () => {
             const path = '/home/contacts';
 
             const currentRoute = {
-                id: 'route1',
+                id: 'currentRoute',
                 exact: true,
                 strict: false,
                 path,
@@ -438,38 +305,6 @@ describe('router reducers', () => {
             };
 
             expect(getMatch(currentRoute, state)).toEqual(expectedMatch);
-        });
-    });
-
-    describe('isRouterInitialized', () => {
-        it('without routesTree', () => {
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesTree: null,
-                } as IRouterInitialState,
-            };
-
-            const expectedIsInitialized = false;
-
-            expect(isRouterInitialized(globalState)).toBe(
-                expectedIsInitialized,
-            );
-        });
-
-        it('with routesTree', () => {
-            const globalState = {
-                router: {
-                    ...initialState,
-                    routesTree: {},
-                } as IRouterInitialState,
-            };
-
-            const expectedIsInitialized = true;
-
-            expect(isRouterInitialized(globalState)).toBe(
-                expectedIsInitialized,
-            );
         });
     });
 

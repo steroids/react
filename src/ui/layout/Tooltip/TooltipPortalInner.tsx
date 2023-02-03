@@ -2,7 +2,11 @@ import * as React from 'react';
 import {createPortal} from 'react-dom';
 import { useComponents } from 'src/hooks';
 
-export default function TooltipPortal(props) {
+interface ITooltipPortalProps {
+    children: React.ReactNode,
+}
+
+export default function TooltipPortal(props: ITooltipPortalProps): React.ReactPortal {
     const components = useComponents();
 
     React.useEffect(() => {

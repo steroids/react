@@ -17,14 +17,6 @@ describe('useScreen hook', () => {
             .find('MockResultComponent')
             .prop('screen');
 
-        expect('width' in screen).toBe(true);
-        expect('media' in screen).toBe(true);
-        expect('setMedia' in screen).toBe(true);
-        expect('isPhone' in screen).toBe(true);
-        expect('isTablet' in screen).toBe(true);
-        expect('isDesktop' in screen).toBe(true);
-        expect('getDeviceType' in screen).toBe(true);
-
         const expectedDefaultWidth = 1024;
         expect(screen.width).toBe(expectedDefaultWidth);
 

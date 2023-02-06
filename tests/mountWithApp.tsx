@@ -24,9 +24,7 @@ function AppMock(props: any) {
             //ui.addFields(require('@steroidsjs/core/ui/form').default);
             //ui.addFormatters(require('@steroidsjs/core/ui/format').default);
             ui.addViews(require('@steroidsjs/bootstrap/index').default);
-            ui.addIcons(
-                require('@steroidsjs/bootstrap/icon/fontawesome').default,
-            );
+            ui.addIcons(require('@steroidsjs/bootstrap/icon/fontawesome').default);
         },
     });
 

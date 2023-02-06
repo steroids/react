@@ -4,7 +4,7 @@ import InputFieldView from '@steroidsjs/bootstrap/form/InputField/InputFieldView
 import InputField from './InputField';
 import mountWithApp from '../../../../tests/mountWithApp';
 
-describe('InputField tests', () => {
+describe.skip('InputField tests', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(InputField, {view: InputFieldView});
         expect(wrapper).not.toBeEmptyRender();

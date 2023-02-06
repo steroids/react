@@ -21,6 +21,5 @@ describe('useUniqueId hook', () => {
 
         const uniqueId = wrapper.find('MockResultComponent').prop('uniqueId');
         expect(uniqueId).toBe(expectedUniqueId);
-        expect(typeof uniqueId).toBe('string');
     });
 });

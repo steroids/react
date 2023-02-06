@@ -118,14 +118,14 @@ export const checkCondition = (item, condition) => {
 
 export const filterItems = (items: Array<any>, condition: any) => items.filter(item => checkCondition(item, condition));
 
-const shouldUpdateSingle = (a, b) => {
+export const shouldUpdateSingle = (a, b) => {
     if (_isFunction(a) && _isFunction(b)) {
         return false;
     }
     return a !== b;
 };
 
-export const shouldUpdate = (objA, objB, deepPaths = null) => {
+export const shouldUpdate = (objA, objB, deepPaths: any = null) => {
     if (_isObject(objA) && _isObject(objB)) {
         const keysA = Object.keys(objA);
         const keysB = Object.keys(objB);

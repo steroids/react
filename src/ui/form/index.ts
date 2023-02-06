@@ -25,6 +25,7 @@ import SliderField from './SliderField';
 import SwitcherField from './SwitcherField';
 import TextField from './TextField';
 import TimeField from './TimeField';
+import RateField from './RateField';
 
 export {
     AutoCompleteField,
@@ -54,6 +55,7 @@ export {
     SwitcherField,
     TextField,
     TimeField,
+    RateField,
 };
 
 export default {
@@ -84,4 +86,5 @@ export default {
     SwitcherField,
     TextField,
     TimeField,
+    RateField,
 };

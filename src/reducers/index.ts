@@ -6,10 +6,9 @@ import list from './list';
 import notifications from './notifications';
 import modal from './modal';
 import router from './router';
-import screen from './screen';
 
 export {
-    form, auth, fields, list, notifications, modal, router, screen,
+    form, auth, fields, list, notifications, modal, router,
 };
 export default asyncReducers => combineReducers({
     form,
@@ -18,7 +17,6 @@ export default asyncReducers => combineReducers({
     list,
     notifications,
     modal,
-    screen,
     ...asyncReducers,
     router: (state, action) => router(asyncReducers.router ? asyncReducers.router(state, action) : {}, action),
 });

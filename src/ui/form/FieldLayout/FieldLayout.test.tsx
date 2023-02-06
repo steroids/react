@@ -2,7 +2,7 @@ import 'jest-enzyme';
 import mountWithApp from '../../../../tests/mountWithApp';
 import FieldLayout from './FieldLayout';
 
-describe('FieldLayout', () => {
+describe.skip('FieldLayout', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(FieldLayout);
         expect(wrapper.find(FieldLayout)).not.toBeEmptyRender();

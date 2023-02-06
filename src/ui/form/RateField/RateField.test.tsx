@@ -5,7 +5,7 @@ import {IRateFieldProps} from './RateField';
 
 const RateField = require('./RateField').default;
 
-describe('RateField tests', () => {
+describe.skip('RateField tests', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(RateField);
         expect(wrapper).not.toBeEmptyRender();

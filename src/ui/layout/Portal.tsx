@@ -1,9 +1,13 @@
+import React, {useRef} from 'react';
 import {createPortal} from 'react-dom';
-import {useRef} from 'react';
 import {useMount, useUnmount} from 'react-use';
 import {useComponents} from '../../hooks';
 
-export default function Portal(props) {
+interface IPortalProps {
+    children: React.ReactNode,
+}
+
+export default function Portal(props: IPortalProps): React.ReactPortal {
     const components = useComponents();
     const elementRef = useRef(null);
 

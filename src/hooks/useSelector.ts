@@ -1,4 +1,4 @@
-import {useSelector as useReduxSelector, shallowEqual, DefaultRootState} from 'react-redux';
+import {useSelector as useReduxSelector, shallowEqual} from 'react-redux';
 
 export default function useSelector<TState = any, TSelected = any>(
     selector: (state: TState) => TSelected,

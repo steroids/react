@@ -440,6 +440,8 @@ export default function useList(config: IListConfig): IListOutput {
 
             // Send request
             if (config.autoFetchOnFormChanges !== false) {
+                //TODO Remove @ts-ignore
+                //@ts-ignore
                 dispatch(listLazyFetch(config.listId));
             }
         }
@@ -459,6 +461,8 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Check change items
     useUpdateEffect(() => {
+        //TODO Remove @ts-ignore
+        //@ts-ignore
         dispatch([
             listSetItems(config.listId, config.items),
         ]);
@@ -473,6 +477,8 @@ export default function useList(config: IListConfig): IListOutput {
     });
 
     const onFetch = useCallback((params = {}) => {
+        //TODO Remove @ts-ignore
+        //@ts-ignore
         dispatch(listFetch(config.listId, params));
     }, [config.listId, dispatch]);
 

@@ -26,6 +26,8 @@ export default () => {
                     color='dark'
                     label={`Позиция ${position}`}
                     onClick={() => {
+                        //TODO remove @ts-ignore
+                        //@ts-ignore
                         dispatch(showNotification(position, 'success', {position, timeOut: 1000}));
                     }}
                 />

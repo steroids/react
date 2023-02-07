@@ -52,6 +52,8 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
 
     const onFormComplete = useCallback(() => {
         window.scrollTo(0, 0);
+        //TODO remove @ts-ignore
+        //@ts-ignore
         dispatch(showNotification(__('Запись успешно обновлена.')));
 
         props.goToAction.call(null, CRUD_ACTION_INDEX);

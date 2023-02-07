@@ -134,12 +134,16 @@ function Crud(props: ICrudProps): JSX.Element {
 
     const goToAction = useCallback((nextAction) => {
         if (nextAction === CRUD_ACTION_INDEX) {
+            //TODO remove @ts-ignore
+            //@ts-ignore
             dispatch(listRefresh(crudId));
         }
         if (routeAction !== nextAction) {
             if (mode === MODE_MODAL) {
                 dispatch(closeModal(crudId));
             }
+            //TODO remove @ts-ignore
+            //@ts-ignore
             dispatch(goToRoute(routeId, {
                 ...routeParams,
                 [props.queryKey]: null,

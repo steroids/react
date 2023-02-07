@@ -14,22 +14,24 @@ import {
     ROUTER_SET_PARAMS,
 } from '../actions/router';
 
-interface IRouterInitialState {
+type TRouteIdArg = string | null;
+
+export interface IRouterInitialState {
     location: {
         pathname: string,
         search: string,
         hash: string,
-        query: Record<string, unknown>,
-    },
-    routesTree: IRouteItem,
-    routesMap: { [key: string]: IRouteItem },
-    activeIds: string[],
+        query: Record<string, unknown> | null,
+    } | null,
+    routesTree: IRouteItem | null,
+    routesMap: {[key: string]: IRouteItem} | null,
+    activeIds: string[] | null,
     match: {
         path: string,
         url: string,
         isExact: string,
-        params: Record<string, unknown>,
-    },
+        params: Record<string, unknown> | null,
+    } | null,
 
     params: Record<string, unknown>,
     configs: any,
@@ -37,26 +39,27 @@ interface IRouterInitialState {
     counters: Record<string, unknown>,
 }
 
-const initialState = {
+const initialState: IRouterInitialState = {
     location: null,
     routesTree: null,
     routesMap: null,
     activeIds: null,
-    currentId: null,
     match: null,
 
     params: {},
     configs: [],
     data: {},
     counters: {},
-} as IRouterInitialState;
+};
+
+type TUrlParams = { [key: string]: unknown } | null;
 
 /**
  * Generate url for route by path and params
  * @param path
  * @param params
  */
-export const buildUrl = (path, params = null) => {
+export const buildUrl = (path, params: TUrlParams = null) => {
     // Get url
     let url = path;
     let pathKeys = [];
@@ -89,7 +92,7 @@ export const buildUrl = (path, params = null) => {
 /**
  * Return true, if item is 'active' - opened current route or it children
  */
-const checkIsActive = (state, item) => {
+export const checkIsActive = (state, item) => {
     // Check is active
     const pathname = !process.env.IS_SSR && window.location.protocol === 'file:'
         ? window.location.hash
@@ -106,7 +109,7 @@ const checkIsActive = (state, item) => {
 /**
  * Normalize routes tree (convert object structure to items[])
  */
-const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], routesMap: Record<string, unknown>) => {
+export const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], routesMap: Record<string, unknown>) => {
     let items = null;
     if (Array.isArray(item.items)) {
         items = item.items.map(subItem => normalizeRoutes(state, subItem, activeIds, routesMap));
@@ -142,7 +145,7 @@ const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], routesMap
 /**
  * Find route in routes tree
  */
-const findRecursive = (
+export const findRecursive = (
     item: IRouteItem,
     predicate: string | any,
     pathItems: IRouteItem[] | null = null,
@@ -155,16 +158,16 @@ const findRecursive = (
     }
 
     if (Array.isArray((item.items))) {
-        const finedItem = item.items.find(subItem => findRecursive(subItem, predicate, pathItems)) || null;
-        if (finedItem && pathItems) {
+        const foundedItem = item.items.find(subItem => findRecursive(subItem, predicate, pathItems)) || null;
+        if (foundedItem && pathItems) {
             pathItems.push(item);
         }
-        return finedItem;
+        return foundedItem;
     }
     return null;
 };
 
-const getMatch = (currentRoute, state) => {
+export const getMatch = (currentRoute, state) => {
     const match = currentRoute
         ? matchPath(String(state.location.pathname), _pick(currentRoute, ['id', 'exact', 'strict', 'path']))
         : null;
@@ -222,26 +225,28 @@ export const getRouterParams = state => _get(state.router, 'params');
 export const getActiveRouteIds = state => _get(state.router, 'activeIds') || null;
 export const getRoutesMap = state => _get(state.router, 'routesMap') || null;
 export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
-export const getRoute = (state, routeId = null): IRouteItem => _get(
+export const getRoute = (state, routeId: TRouteIdArg = null): IRouteItem => _get(
     state.router, ['routesMap', routeId || getRouteId(state)],
 ) || null;
-export const getRouteProp = (state, routeId = null, param) => _get(getRoute(state, routeId), param) || null;
+export const getRouteProp = (state, routeId: TRouteIdArg = null, propName) => _get(
+    getRoute(state, routeId), propName,
+) || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
-export const getRouteParam = (state, param) => _get(getRouteParams(state), param) || null;
-export const getRouteBreadcrumbs = (state, routeId = null): IRouteItem[] => {
+export const getRouteParam = (state, paramName) => _get(getRouteParams(state), paramName) || null;
+export const getRouteBreadcrumbs = (state, routeId: TRouteIdArg = null): IRouteItem[] => {
     const items = [];
     routeId = routeId || getRouteId(state);
     findRecursive(state.router.routesTree, routeId, items);
     return items.reverse().filter(item => item.isVisible !== false && item.isNavVisible !== false);
 };
-export const getRouteChildren = (state, routeId = null) => {
+export const getRouteChildren = (state, routeId: TRouteIdArg = null) => {
     const route = getRoute(state, routeId);
     return route?.items || null;
 };
-export const getRouteParent = (state, routeId = null, level = 1) => {
+export const getRouteParent = (state, routeId: TRouteIdArg = null, level = 1) => {
     const route = getRoute(state, routeId);
     const breadcrumbs = route ? getRouteBreadcrumbs(state, route.id) : [];
-    return breadcrumbs.length > level + 1
+    return breadcrumbs.length > level
         ? breadcrumbs[breadcrumbs.length - (level + 1)]
         : null;
 };

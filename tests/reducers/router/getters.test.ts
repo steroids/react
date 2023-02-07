@@ -46,7 +46,7 @@ describe('router reducers', () => {
 
     describe('isRouterInitialized', () => {
         it('without routesTree', () => {
-            const state = getStateWithRouterData({routesTree: null});
+            const state = getStateWithRouterData();
             const expectedIsInitialized = false;
             expect(isRouterInitialized(state)).toBe(expectedIsInitialized);
         });

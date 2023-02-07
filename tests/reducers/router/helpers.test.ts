@@ -1,6 +1,5 @@
 import {
     IRouterInitialState,
-    isRouterInitialized,
     buildUrl,
     checkIsActive,
     normalizeRoutes,
@@ -26,7 +25,10 @@ describe('router reducers', () => {
 
     let initialState = {...defaultInitialState};
 
-    const getStateWithRoutesMap = (routesMap: Record<string, any>) => ({...initialState, routesMap: {...routesMap}});
+    const getStateWithRoutesMap = (routesMap: Record<string, any>) => ({
+        ...initialState,
+        routesMap: {...routesMap}
+    });
 
     beforeEach(() => {
         initialState = {...defaultInitialState};
@@ -81,29 +83,20 @@ describe('router reducers', () => {
         const information = 'information';
         const activeIds = [dashboard, information];
 
-        const getExpectedRoutesMap = (routesMap, routeToNormalize, expectedRoutesTree) => ({
+        const getExpectedRoutesMap = (routesMap, route, expectedRoutesTree) => ({
             ...routesMap,
-            [routeToNormalize.id]: expectedRoutesTree,
+            [route.id]: expectedRoutesTree,
         });
 
-        const getExpectedRoutesTree = (routeToNormalize, items) => ({
-            ...routeToNormalize,
-            id: routeToNormalize.id,
-            title: routeToNormalize.title,
-            label: routeToNormalize.label,
-            exact: routeToNormalize.exact,
-            strict: routeToNormalize.strict,
-            path: routeToNormalize.path,
-            isVisible: routeToNormalize.isVisible,
-            isNavVisible: routeToNormalize.isNavVisible,
+        const getExpectedRoutesTree = (route, items) => ({
+            ...route,
             component: null,
-            componentProps: routeToNormalize.componentProps,
             icon: null,
             roles: [],
             items,
         });
 
-        const getRoutesMap = () => ({
+        const routesMap = {
             [dashboard]: {
                 id: dashboard,
                 component,
@@ -112,9 +105,9 @@ describe('router reducers', () => {
                 id: information,
                 component,
             },
-        });
+        };
 
-        const state = getStateWithRoutesMap(getRoutesMap());
+        const state = getStateWithRoutesMap(routesMap);
 
         const routeWithoutChildren = {
             id: 'routeWithoutChildren',
@@ -130,7 +123,6 @@ describe('router reducers', () => {
         };
 
         it('without items', () => {
-            const routesMap = getRoutesMap();
             const expectedRoutesTree = getExpectedRoutesTree(routeWithoutChildren, null);
             const expectedRoutesMap = getExpectedRoutesMap(routesMap, routeWithoutChildren, expectedRoutesTree);
             expect(normalizeRoutes(state, routeWithoutChildren, activeIds, routesMap)).toEqual(expectedRoutesTree);
@@ -139,7 +131,6 @@ describe('router reducers', () => {
 
         it('with items as object', () => {
             const childRoute = 'childRoute';
-            const routesMap = getRoutesMap();
 
             const items = {
                 [childRoute]: {
@@ -168,15 +159,17 @@ describe('router reducers', () => {
         });
 
         it('with items as array', () => {
-            const items = [{id: 'childRoute', exact: true} as IRouteItem];
-            const routeWithChildren = {...routeWithoutChildren, items};
-            const routesMap = getRoutesMap();
+            const childRoute = {id: 'childRoute', exact: true} as IRouteItem;
+            const routeWithChildren = {
+                ...routeWithoutChildren,
+                items: [childRoute]
+            };
 
             const expectedRoutesTree = getExpectedRoutesTree(routeWithChildren, [
                 {
                     ...normalizeRoutes(
                         state,
-                        items[0],
+                        childRoute,
                         activeIds,
                         routesMap,
                     ),
@@ -190,14 +183,15 @@ describe('router reducers', () => {
     });
 
     describe('findRecursive', () => {
-        const getPathItems = () => [
+        const defaultPathItems = [
             {id: 'someRoute1', label: 'someRoute1'},
             {id: 'someRoute2', label: 'someRoute2'},
         ];
 
         it('with predicate as parentRoute id', () => {
             const parentRouteId = 'parentRoute';
-            const pathItems = getPathItems();
+
+            const pathItems = [...defaultPathItems];
 
             const parentRoute = {
                 id: parentRouteId,
@@ -235,7 +229,8 @@ describe('router reducers', () => {
         it('with childrenRoutes array and pathItems', () => {
             const routeId = 'parentRoute';
             const deepChildRouteId = 'deepRoute';
-            const pathItems = getPathItems();
+
+            const pathItems = [...defaultPathItems];
 
             const deepChildRoute = {
                 id: deepChildRouteId,
@@ -255,8 +250,7 @@ describe('router reducers', () => {
             };
 
             const expectedPathItems = pathItems.concat([deepChildRoute, childRoute, parentRoute]);
-            const expectedRoute = childRoute;
-            expect(findRecursive(parentRoute, deepChildRouteId, pathItems)).toEqual(expectedRoute);
+            expect(findRecursive(parentRoute, deepChildRouteId, pathItems)).toEqual(childRoute);
             expect(pathItems).toEqual(expectedPathItems);
         });
     });

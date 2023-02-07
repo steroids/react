@@ -26,7 +26,7 @@ describe('router reducers', () => {
     });
 
     it('ROUTER_INIT_ROUTES', () => {
-        const parentRouteId = '1';
+        const parentRouteId = 'parentRouteId';
 
         const parentRoute: IRouteItem = {
             id: parentRouteId,
@@ -56,7 +56,6 @@ describe('router reducers', () => {
                 [parentRouteId]: parentRoute,
             },
             activeIds: [],
-
             match: null,
             params: {},
             configs: [],
@@ -69,29 +68,33 @@ describe('router reducers', () => {
 
     describe('@@router/LOCATION_CHANGE', () => {
         it('with routesMap', () => {
+            const parentRouteId = 'parentRouteId';
+            const childRouteId = 'childRouteId';
+
             const action = {
                 type: '@@router/LOCATION_CHANGE',
             };
 
             global.window.location.protocol = 'http:';
 
+            const childRoute = {
+                id: 'childRouteId',
+                isNavVisible: true,
+                isVisible: true,
+                path: 'parentRoute/childrenRoute',
+                exact: true,
+                strict: false,
+            };
+
             const parentRoute: IRouteItem = {
-                id: '1',
+                id: 'parentRouteId',
                 isNavVisible: true,
                 isVisible: true,
                 path: '/parentRoute',
                 exact: true,
                 strict: false,
-
                 items: [
-                    {
-                        id: '2',
-                        isNavVisible: true,
-                        isVisible: true,
-                        path: 'parentRoute/childrenRoute',
-                        exact: true,
-                        strict: false,
-                    },
+                    childRoute
                 ],
             };
 
@@ -104,16 +107,15 @@ describe('router reducers', () => {
                     search: '',
                 },
                 routesMap: {
-                    1: parentRoute,
-                    2: parentRoute.items && parentRoute.items[0],
+                    [parentRouteId]: parentRoute,
+                    [childRouteId]: childRoute,
                 },
-                activeIds: ['4', '5'],
+                activeIds: ['someRoute1', 'someRoute2'],
             };
 
             const expectedState: IRouterInitialState = {
                 ...initialState,
                 activeIds: [],
-
                 match: null,
                 params: {},
                 configs: [],
@@ -141,7 +143,7 @@ describe('router reducers', () => {
                     search: '',
                 },
                 routesMap: {},
-                activeIds: ['4', '5'],
+                activeIds: ['someRoute1', 'someRoute2'],
             };
 
             const expectedState: IRouterInitialState = {

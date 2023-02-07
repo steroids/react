@@ -49,11 +49,8 @@ describe('ClientStorageComponent', () => {
             const localStorageAvailableArgument = 'localStorageAvailable';
             const localStorageValueArgument = '1';
             const clientStorage = getInstanceClientStorage();
-            expect(localStorage.setItem).toHaveBeenCalled();
             expect(localStorage.setItem).toHaveBeenCalledWith(localStorageAvailableArgument, localStorageValueArgument);
-            expect(localStorage.getItem).toHaveBeenCalled();
             expect(localStorage.getItem).toHaveBeenCalledWith(localStorageAvailableArgument);
-            expect(localStorage.removeItem).toHaveBeenCalled();
             expect(localStorage.removeItem).toHaveBeenCalledWith(localStorageAvailableArgument);
             expect(clientStorage.localStorageAvailable).toBe(true);
         });
@@ -62,14 +59,11 @@ describe('ClientStorageComponent', () => {
             const sessionStorageAvailableArgument = 'sessionStorageAvailable';
             const sessionStorageValueArgument = '1';
             const clientStorage = getInstanceClientStorage();
-            expect(sessionStorage.setItem).toHaveBeenCalled();
 
             expect(sessionStorage.setItem)
                 .toHaveBeenCalledWith(sessionStorageAvailableArgument, sessionStorageValueArgument);
 
-            expect(sessionStorage.getItem).toHaveBeenCalled();
             expect(sessionStorage.getItem).toHaveBeenCalledWith(sessionStorageAvailableArgument);
-            expect(sessionStorage.removeItem).toHaveBeenCalled();
             expect(sessionStorage.removeItem).toHaveBeenCalledWith(sessionStorageAvailableArgument);
             expect(clientStorage.sessionStorageAvailable).toBe(true);
         });
@@ -85,19 +79,16 @@ describe('ClientStorageComponent', () => {
 
             it('set', () => {
                 clientStorage.set(localStorageKey, localStorageValue, clientStorage.STORAGE_LOCAL);
-                expect(localStorage.setItem).toHaveBeenCalled();
                 expect(localStorage.setItem).toHaveBeenCalledWith(localStorageKey, localStorageValue);
             });
 
             it('get', () => {
                 clientStorage.get(localStorageKey, clientStorage.STORAGE_LOCAL);
-                expect(localStorage.getItem).toHaveBeenCalled();
                 expect(localStorage.getItem).toHaveBeenCalledWith(localStorageKey);
             });
 
             it('remove', () => {
                 clientStorage.remove(localStorageKey, clientStorage.STORAGE_LOCAL);
-                expect(localStorage.removeItem).toHaveBeenCalled();
                 expect(localStorage.removeItem).toHaveBeenCalledWith(localStorageKey);
             });
         });
@@ -107,19 +98,16 @@ describe('ClientStorageComponent', () => {
             const sessionStorageValue = true;
             it('set', () => {
                 clientStorage.set(sessionStorageKey, sessionStorageValue, clientStorage.STORAGE_SESSION);
-                expect(sessionStorage.setItem).toHaveBeenCalled();
                 expect(sessionStorage.setItem).toHaveBeenCalledWith(sessionStorageKey, sessionStorageValue);
             });
 
             it('get', () => {
                 clientStorage.get(sessionStorageKey, clientStorage.STORAGE_SESSION);
-                expect(sessionStorage.getItem).toHaveBeenCalled();
                 expect(sessionStorage.getItem).toHaveBeenCalledWith(sessionStorageKey);
             });
 
             it('remove', () => {
                 clientStorage.remove(sessionStorageKey, clientStorage.STORAGE_SESSION);
-                expect(sessionStorage.removeItem).toHaveBeenCalled();
                 expect(sessionStorage.removeItem).toHaveBeenCalledWith(sessionStorageKey);
             });
         });
@@ -134,7 +122,6 @@ describe('ClientStorageComponent', () => {
         it('with domain', () => {
             const getDomainCallCount = 1;
             expect(clientStorage._getDomain()).toBe(domain);
-            expect(clientStorage._getDomain).toHaveBeenCalled();
             expect(clientStorage._getDomain).toHaveBeenCalledTimes(getDomainCallCount);
         });
 

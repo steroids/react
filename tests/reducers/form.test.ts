@@ -13,11 +13,10 @@ import {
 import form, {formSelector, getFormValues} from '../../src/reducers/form';
 
 describe('form reducers', () => {
-    const defaultInitialState = {};
-    let initialState = {...defaultInitialState};
+    let initialState = {};
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {};
     });
 
     it('reducer without formId', () => {
@@ -26,35 +25,48 @@ describe('form reducers', () => {
         };
 
         initialState = {
-            10: {
-                fields: {
-                    name: {
-                        type: 'text',
-                        autocomplete: true,
-                    },
-                },
+            isWithoutFormId: true
+        };
+
+        expect(form(initialState, action)).toEqual(initialState);
+    });
+
+    it('FORM_INITIALIZE', () => {
+        const formId = 'formId';
+
+        const action = {
+            type: FORM_INITIALIZE,
+            formId,
+            values: 'testEmail'
+        };
+
+        initialState = {
+            [formId]: {},
+        };
+
+        const expectedState = {
+            [formId]: {
+                errors: {},
+                isInvalid: false,
+                isSubmitting: false,
+                values: action.values,
+                initialValues: action.values,
             },
         };
 
-        const expectedState = {...initialState};
         expect(form(initialState, action)).toEqual(expectedState);
     });
 
     describe('FORM_CHANGE', () => {
         it('with nameOrObject as string', () => {
-            const formId = '10';
+            const formId = 'formId';
             const nameOrObject = 'email';
 
             const action = {
                 type: FORM_CHANGE,
                 formId,
                 nameOrObject,
-                value: {
-                    10: {
-                        type: 'text',
-                        autocomplete: true,
-                    },
-                },
+                value: 'testEmail'
             };
 
             initialState = {
@@ -76,7 +88,7 @@ describe('form reducers', () => {
         });
 
         it('with nameOrObject as object and should return initial state', () => {
-            const formId = '10';
+            const formId = 'formId';
             const nameOrObject = {};
 
             const action = {
@@ -89,29 +101,19 @@ describe('form reducers', () => {
                 [formId]: {
                     isSubmitting: false,
                     values: {
-                        1: {
-                            type: 'text',
-                            autocomplete: false,
-                        },
+                        someValue: 'someValue',
                     },
                 },
             };
 
-            const expectedState = {
-                ...initialState,
-            };
-
-            expect(form(initialState, action)).toEqual(expectedState);
+            expect(form(initialState, action)).toEqual(initialState);
         });
 
         it('with nameOrObject as object and should return new state', () => {
-            const formId = '10';
+            const formId = 'formId';
 
             const nameOrObject = {
-                3: {
-                    type: 'number',
-                    autocomplete: true,
-                },
+                someValue: 'someValue'
             };
 
             const action = {
@@ -124,10 +126,7 @@ describe('form reducers', () => {
                 [formId]: {
                     isSubmitting: false,
                     values: {
-                        1: {
-                            type: 'text',
-                            autocomplete: false,
-                        },
+                        someValue: 'someValue'
                     },
                 },
             };
@@ -147,9 +146,15 @@ describe('form reducers', () => {
     });
 
     describe('FORM_SET_ERRORS', () => {
-        it('with errors', () => {
-            const formId = '5';
+        const formId = 'formId';
 
+        const getInitialState = () => ({
+            [formId]: {
+                isInvalid: false,
+            },
+        })
+
+        it('with errors', () => {
             const action = {
                 type: FORM_SET_ERRORS,
                 formId,
@@ -158,103 +163,56 @@ describe('form reducers', () => {
                 },
             };
 
-            initialState = {
-                [formId]: {
-                    isInvalid: false,
-                    isSubmitting: false,
-                },
-            };
+            const state = getInitialState();
 
             const expectedState = {
                 [formId]: {
                     isInvalid: true,
                     errors: action.errors,
-                    isSubmitting: false,
                 },
             };
 
-            expect(form(initialState, action)).toEqual(expectedState);
+            expect(form(state, action)).toEqual(expectedState);
         });
 
         it('without errors', () => {
-            const formId = '5';
-
             const action = {
                 type: FORM_SET_ERRORS,
                 formId,
                 errors: {},
             };
 
-            initialState = {
-                [formId]: {
-                    isInvalid: false,
-                    isSubmitting: false,
-                },
-            };
+            const state = getInitialState();
 
             const expectedState = {
                 [formId]: {
                     isInvalid: false,
                     errors: action.errors,
-                    isSubmitting: false,
                 },
             };
 
-            expect(form(initialState, action)).toEqual(expectedState);
+            expect(form(state, action)).toEqual(expectedState);
         });
     });
 
-    it('FORM_INITIALIZE', () => {
-        const formId = '10';
+    describe('FORM_SUBMIT', () => {
+        const formId = 'formId';
 
         const action = {
-            type: FORM_INITIALIZE,
+            type: FORM_SUBMIT,
             formId,
-            values: {
-                someValue: {
-                    id: 1,
-                },
-            },
         };
 
-        initialState = {
-            [formId]: {},
-        };
 
-        const expectedState = {
-            [formId]: {
-                errors: {},
-                isInvalid: false,
-                isSubmitting: false,
-                values: action.values,
-                initialValues: action.values,
-            },
-        };
-
-        expect(form(initialState, action)).toEqual(expectedState);
-    });
-
-    describe('FORM_SUBMIT', () => {
         it('with submitCounter', () => {
-            const formId = '15';
-
-            const action = {
-                type: FORM_SUBMIT,
-                formId,
-            };
-
             initialState = {
                 [formId]: {
-                    isSubmitting: true,
-                    isInvalid: false,
                     submitCounter: 10,
                 },
             };
 
             const expectedState = {
                 [formId]: {
-                    isSubmitting: true,
-                    isInvalid: false,
                     submitCounter: 11,
                 },
             };
@@ -263,24 +221,12 @@ describe('form reducers', () => {
         });
 
         it('without submitCounter', () => {
-            const formId = '15';
-
-            const action = {
-                type: FORM_SUBMIT,
-                formId,
-            };
-
             initialState = {
-                [formId]: {
-                    isSubmitting: true,
-                    isInvalid: false,
-                },
+                [formId]: {},
             };
 
             const expectedState = {
                 [formId]: {
-                    isSubmitting: true,
-                    isInvalid: false,
                     submitCounter: 1,
                 },
             };
@@ -290,7 +236,7 @@ describe('form reducers', () => {
     });
 
     it('FORM_SET_SUBMITTING', () => {
-        const formId = '0';
+        const formId = 'formId';
 
         const action = {
             type: FORM_SET_SUBMITTING,
@@ -299,15 +245,12 @@ describe('form reducers', () => {
         };
 
         initialState = {
-            [formId]: {
-                isInvalid: true,
-            },
+            [formId]: {},
         };
 
         const expectedState = {
             [formId]: {
-                isInvalid: true,
-                isSubmitting: false,
+                isSubmitting: action.isSubmitting,
             },
         };
 
@@ -315,26 +258,20 @@ describe('form reducers', () => {
     });
 
     describe('FORM_RESET', () => {
+        const formId = 'formId';
+
+        const action = {
+            type: FORM_RESET,
+            formId,
+        };
+
+
         it('with initialValues', () => {
-            const formId = '32';
-
-            const action = {
-                type: FORM_RESET,
-                formId,
-            };
-
             initialState = {
                 [formId]: {
                     initialValues: {
-                        name: {
-                            type: 'text',
-                            autocomplete: true,
-                            data: {
-                                id: '15',
-                            },
-                        },
+                        someValue: 'someValue'
                     },
-                    isSubmitting: false,
                 },
             };
 
@@ -351,22 +288,12 @@ describe('form reducers', () => {
         });
 
         it('without initialValues', () => {
-            const formId = '32';
-
-            const action = {
-                type: FORM_RESET,
-                formId,
-            };
-
             initialState = {
-                [formId]: {
-                    isSubmitting: false,
-                },
+                [formId]: {},
             };
 
             const expectedState = {
                 [formId]: {
-                    ...initialState[formId],
                     values: {},
                 },
             };
@@ -376,7 +303,7 @@ describe('form reducers', () => {
     });
 
     it('FORM_HARD_RESET', () => {
-        const formId = '15';
+        const formId = 'formId';
 
         const action = {
             type: FORM_HARD_RESET,
@@ -385,10 +312,6 @@ describe('form reducers', () => {
 
         initialState = {
             [formId]: {
-                errors: {
-                    1: 'Password is weak',
-                },
-                isSubmitting: true,
                 isInvalid: true,
             },
         };
@@ -407,7 +330,7 @@ describe('form reducers', () => {
     });
 
     it('FORM_DESTROY', () => {
-        const formId = '10';
+        const formId = 'formId';
 
         const action = {
             type: FORM_DESTROY,
@@ -417,10 +340,7 @@ describe('form reducers', () => {
         initialState = {
             [formId]: {
                 values: {
-                    name: {
-                        type: 'text',
-                        autoComplete: true,
-                    },
+                    someValue: 'someValue'
                 },
             },
         };
@@ -433,9 +353,9 @@ describe('form reducers', () => {
     });
 
     describe('FORM_ARRAY_ADD', () => {
-        it('without name and initialValues', () => {
-            const formId = '10';
+        const formId = 'formId';
 
+        it('without name and initialValues', () => {
             const action = {
                 type: FORM_ARRAY_ADD,
                 formId,
@@ -454,33 +374,29 @@ describe('form reducers', () => {
         });
 
         it('without initialValues and with name', () => {
-            const formId = '10';
-            const name = 'telephone';
+            const telephoneName = 'telephone';
+            const telephoneValue = '88005553535'
 
             const action = {
                 type: FORM_ARRAY_ADD,
                 formId,
                 rowsCount: 1,
-                name,
+                name: telephoneName,
                 initialValues: {},
             };
 
             initialState = {
                 [formId]: {
-                    isSubmitting: false,
                     values: {
-                        [name]: {
-                            autocomplete: true,
-                        },
+                        [telephoneName]: telephoneValue,
                     },
                 },
             };
 
             const expectedState = {
                 [formId]: {
-                    isSubmitting: false,
                     values: {
-                        [name]: [initialState[formId].values[name], {}],
+                        [telephoneName]: [telephoneValue, {}],
                     },
                 },
             };
@@ -490,15 +406,10 @@ describe('form reducers', () => {
     });
 
     it('FORM_ARRAY_REMOVE', () => {
-        const formId = '87';
+        const formId = 'formId';
         const index = '1';
         const valueName = 'telephone';
 
-        const creditCardValue = {
-            1: {
-                show: false,
-            },
-        };
 
         const action = {
             type: FORM_ARRAY_REMOVE,
@@ -511,11 +422,8 @@ describe('form reducers', () => {
             [formId]: {
                 values: {
                     [valueName]: {
-                        [index]: {
-                            autoComplete: true,
-                        },
+                        [index]: '424242'
                     },
-                    creditCard: creditCardValue,
                 },
             },
         };
@@ -523,7 +431,6 @@ describe('form reducers', () => {
         const expectedState = {
             [formId]: {
                 values: {
-                    creditCard: creditCardValue,
                     [valueName]: {},
                 },
             },
@@ -534,59 +441,43 @@ describe('form reducers', () => {
 
     describe('formSelector', () => {
         it('with correct formId', () => {
-            const formId = '1';
+            const existingFormId = 'existingFormId';
+            const formValues = {someValue: 'someValue'};
+
             const selector = ({values}) => values;
 
             const globalState = {
                 form: {
-                    [formId]: {
-                        values: {
-                            someValue: 'someValue',
-                        },
+                    [existingFormId]: {
+                        values: formValues
                     },
                 },
             };
 
-            const expectedResult = globalState.form[formId].values;
-
-            expect(formSelector(globalState, formId, selector)).toEqual(
-                expectedResult,
-            );
+            expect(formSelector(globalState, existingFormId, selector)).toEqual(formValues);
         });
 
         it('with incorrect formId', () => {
-            const formId = '0';
+            const notExistingFormId = 'notExistingFormId';
             const selector = (currentForm) => currentForm;
 
             const globalState = {
                 form: {
-                    10: {
-                        values: {
-                            someValue: 'someValue',
-                        },
-                    },
+                    existingFormId: {},
                 },
             };
 
-            const expectedSelectData = {};
-
-            expect(formSelector(globalState, formId, selector)).toEqual(
-                expectedSelectData,
-            );
+            const emptyForm = {};
+            expect(formSelector(globalState, notExistingFormId, selector)).toEqual(emptyForm);
         });
     });
 
     describe('getFormValues', () => {
         it('should return values', () => {
-            const formId = '0';
+            const formId = 'formId';
 
             const formValues = {
-                fields: {
-                    name: {
-                        type: 'text',
-                        autocomplete: true,
-                    },
-                },
+                someValue: 'someValue'
             };
 
             const globalState = {
@@ -601,29 +492,20 @@ describe('form reducers', () => {
         });
 
         it('should return null', () => {
-            const formId = '0';
+            const notExistingFormId = 'notExistingFormId';
 
             const globalState = {
                 form: {
-                    15: {
+                    existingFormId: {
                         values: {
-                            fields: {
-                                name: {
-                                    type: 'text',
-                                    autocomplete: true,
-                                },
-                                telephone: {
-                                    type: 'tel',
-                                    autocomplete: false,
-                                },
-                            },
+                            someValue: 'someValue'
                         },
                     },
                 },
             };
 
             const emptyFormValues = null;
-            expect(getFormValues(globalState, formId)).toEqual(emptyFormValues);
+            expect(getFormValues(globalState, notExistingFormId)).toEqual(emptyFormValues);
         });
     });
 });

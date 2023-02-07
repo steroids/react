@@ -262,6 +262,8 @@ function Button(props: IButtonProps): JSX.Element {
         }
 
         if (props.toRoute) {
+            //TODO remove @ts-ignore
+            //@ts-ignore
             dispatch(goToRoute(props.toRoute, props.toRouteParams));
         }
 

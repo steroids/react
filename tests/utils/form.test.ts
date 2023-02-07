@@ -12,7 +12,7 @@ describe('form utils', () => {
             expect(normalizeLayout(layout)).toEqual(layout);
         });
 
-        it('lay as not object', () => {
+        it('layout as not object', () => {
             const layout = 'layout';
 
             const expectedNormalizedLayout = {
@@ -27,10 +27,9 @@ describe('form utils', () => {
         const firstLayout = {
             hasBlackBars: true,
             width: 1024,
-
         };
 
-        let secondLayout: any = {
+        const secondLayout = {
             hasRedElements: true,
             height: 768,
         };
@@ -46,61 +45,50 @@ describe('form utils', () => {
 
         it('secondLayout is false state', () => {
             const expectedEmptyLayout = null;
-            secondLayout = false;
-            expect(mergeLayoutProp(firstLayout, secondLayout)).toEqual(expectedEmptyLayout);
+            const falsyLayout = false;
+            expect(mergeLayoutProp(firstLayout, falsyLayout)).toEqual(expectedEmptyLayout);
         });
     });
 
     describe('cleanEmptyObject', () => {
-        const getPlaintObject = () => (Object.create(null, {
-            isPlain: {
-                value: null,
-                configurable: true,
-                enumerable: true,
-                writable: true,
-            },
-        }));
+        const plainObject = {
+            value: null,
+            configurable: true,
+            enumerable: true,
+            writable: true,
+        };
 
         it('with object not empty', () => {
-            const entity = {
+            const objectWithoutEmptyValues = {
                 color: '#000',
                 hasVoice: true,
                 hasTail: true,
                 hasSword: true,
             };
 
-            expect(cleanEmptyObject(entity)).toBe(entity);
+            expect(cleanEmptyObject(objectWithoutEmptyValues)).toEqual(objectWithoutEmptyValues);
         });
 
         it('with all object properties null', () => {
-            const entity = {
+            const objectWithEmptyValues = {
                 form: null,
                 shape: null,
             };
 
-            const expectedEmptyCleanObject = null;
-            expect(cleanEmptyObject(entity)).toEqual(expectedEmptyCleanObject);
+            const emptyObject = null;
+            expect(cleanEmptyObject(objectWithEmptyValues)).toBe(emptyObject);
         });
 
-        it('with plain Object', () => {
-            const plainObject = getPlaintObject();
-
-            const entity = {
-                plainObject,
-            };
-
-            expect(cleanEmptyObject(entity)).toEqual(entity);
+        it('with plain object', () => {
+            expect(cleanEmptyObject({plainObject})).toEqual({plainObject});
         });
 
         it('with array', () => {
-            const plainObject = getPlaintObject();
-            const array = [plainObject];
+            const objectWithArrayValue = {
+                array: [plainObject]
+            }
 
-            const entity = {
-                array,
-            };
-
-            expect(cleanEmptyObject(entity)).toEqual(entity);
+            expect(cleanEmptyObject(objectWithArrayValue)).toEqual(objectWithArrayValue);
         });
     });
 });

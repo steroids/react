@@ -4,7 +4,7 @@ describe('calendar utils', () => {
     const date = '1.1.2023';
     const fromFormats = 'D.M.YYYY';
     const utc = true;
-    let toFormat = 'DD.MM.YY';
+    const toFormat = 'DD.MM.YY';
 
     it('default behavior', () => {
         const expectedFormatDate = '01.01.23';
@@ -25,8 +25,8 @@ describe('calendar utils', () => {
     });
 
     it('with date as Date instance', () => {
-        const birthday = new Date(new Date().setFullYear(2000, 8, 3));
-        toFormat = 'DD.MM.YYYY';
-        expect(convertDate(birthday, fromFormats, toFormat)).toBe('03.09.2000');
+        const dateInstance = new Date(new Date().setFullYear(2000, 8, 3));
+        const toFormatWithFullYear = 'DD.MM.YYYY';
+        expect(convertDate(dateInstance, fromFormats, toFormatWithFullYear)).toBe('03.09.2000');
     });
 });

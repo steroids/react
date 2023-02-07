@@ -19,6 +19,7 @@ function AppMock(props: any) {
                 ...config?.components?.store,
             },
         },
+        screen: {},
         onInit: ({ui}) => {
             //components.ui.addViews(require('@steroidsjs/bootstrap').default);
             //ui.addFields(require('@steroidsjs/core/ui/form').default);

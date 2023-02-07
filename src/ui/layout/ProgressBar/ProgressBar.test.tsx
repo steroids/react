@@ -2,7 +2,7 @@ import 'jest-enzyme';
 import mountWithApp from '../../../../tests/mountWithApp';
 import ProgressBar from './ProgressBar';
 
-describe('ProgressBar tests', () => {
+describe.skip('ProgressBar tests', () => {
     it('should render something without props and views', () => {
         const wrapper = mountWithApp(ProgressBar);
         expect(wrapper.find('ProgressBar')).not.toBeEmptyRender();

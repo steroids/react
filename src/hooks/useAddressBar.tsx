@@ -160,17 +160,9 @@ export default function useAddressBar(config: IAddressBarConfig): IAddressBarOut
             }, {});
             if (!_isEqual(initialQueryRef.current, normalizedValues)) {
                 initialQueryRef.current = normalizedValues;
-                // TODO TYPES
+                //TODO Remove @ts-ignore
                 //@ts-ignore
-                dispatch(
-                    //@ts-ignore
-                    queryReplace(
-                        config.model,
-                        location,
-                        normalizedValues,
-                        config.useHash,
-                    ),
-                );
+                dispatch(queryReplace(config.model, location, normalizedValues, config.useHash));
             }
         }
     }, [config.enable, config.model, config.useHash, dispatch, location]);

@@ -12,4 +12,4 @@ export {
     errors,
     required,
     sizes,
-}
+};

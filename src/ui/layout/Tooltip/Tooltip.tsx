@@ -57,7 +57,7 @@ export interface ITooltipProps {
     /**
      * Рассчет позиции подсказки
      */
-    calculatePosition?: (tooltipDimensions: object, arrowDimensions: object) => void,
+    calculatePosition?: (tooltipDimensions: Record<string, any>, arrowDimensions: Record<string, any>) => void,
 
     [key: string]: any,
 }

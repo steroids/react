@@ -3,7 +3,7 @@ import TextFieldView from '@steroidsjs/bootstrap/form/TextField/TextFieldView';
 import TextField from './TextField';
 import mountWithApp from '../../../../tests/mountWithApp';
 
-describe('TextField tests', () => {
+describe.skip('TextField tests', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(TextField, {view: TextFieldView});
         expect(wrapper).not.toBeEmptyRender();

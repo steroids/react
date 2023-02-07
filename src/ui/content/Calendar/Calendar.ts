@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import {DayPickerProps} from 'react-day-picker';
 import {useComponents} from '../../../hooks';
 import {convertDate} from '../../../utils/calendar';
-import {DayPickerProps} from 'react-day-picker';
 
 export interface ICalendarProps {
     /**
@@ -92,7 +92,7 @@ export interface ICalendarViewProps extends ICalendarProps {
     isCaptionPanelVisible: boolean,
 
     /**
-     * Функция измения состояние отображения панели для выбора месяца/года
+     * Функция изменения состояние отображения панели для выбора месяца/года
      */
     toggleCaptionPanel: () => void,
 }

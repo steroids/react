@@ -5,7 +5,7 @@ import link from './demo/link';
 import sizes from './demo/sizes';
 
 export default {
-  title: 'Button',
+    title: 'Button',
 };
 
 export {
@@ -14,4 +14,4 @@ export {
     disabled,
     link,
     sizes,
-}
+};

@@ -7,7 +7,7 @@ import security from './demo/security';
 import sizes from './demo/sizes';
 
 export default {
-  title: 'form.PasswordField',
+    title: 'form.PasswordField',
 };
 
 export {
@@ -18,4 +18,4 @@ export {
     security,
     required,
     sizes,
-}
+};

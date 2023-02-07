@@ -439,6 +439,8 @@ function Form(props: IFormProps): JSX.Element {
             console.error(requestError); // eslint-disable-line no-console
             dispatch(formSetSubmitting(props.formId, false));
             props.onError(requestError);
+            //TODO Remove @ts-ignore
+            //@ts-ignore
             reduxDispatch(
                 //@ts-ignore
                 showNotification(

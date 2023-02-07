@@ -75,6 +75,7 @@ export default function useDateRange(props:IUseDateRangeProps) {
                 inputFromRef.current.focus();
             }
         }
+    // eslint-disable-next-line max-len
     }, [focus, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value]);
 
     return {

@@ -1,56 +1,61 @@
-import { useComponents } from "../../../hooks";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect} from 'react';
+import {useComponents} from '../../../hooks';
 
 interface IStepsProps {
-	stepItems: IStepItem[];
-	currentStep: number;
-	isChangeable?: boolean;
-	className?: string;
-	onChange?: (index: number) => void;
+    stepItems: IStepItem[];
+    currentStep: number;
+    isChangeable?: boolean;
+    className?: string;
+    onChange?: (index: number) => void;
 }
 
 export interface IStepsViewProps {
-	className?: string;
-	children?: React.ReactNode;
+    className?: string;
+    children?: React.ReactNode;
 }
 
 export interface IStepItemViewProps {
-	stepItem: IStepItem,
-	className?: string,
-	index: number,
-	status: string,
-	disabled: boolean,
-	onChange: () => void
+    stepItem: IStepItem,
+    className?: string,
+    index: number,
+    status: string,
+    disabled: boolean,
+    onChange: () => void
 }
 
 export interface IStepItem{
-	title?: string;
-	subtitle?: string;
-	description?: string;
-	icon?: string | React.ReactNode;
-	isError?: boolean;
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    icon?: string | React.ReactNode;
+    isError?: boolean;
 }
 
 function Steps(props: IStepsProps): JSX.Element {
-	const [isChangeable, setIsChangeable] = useState(false);
+    const [isChangeable, setIsChangeable] = useState(false);
 
-	useEffect(() => setIsChangeable(props.isChangeable),[props.isChangeable]);
+    useEffect(() => setIsChangeable(props.isChangeable), [props.isChangeable]);
 
-	function getStepStatus(index:number, stepItem: IStepItem) {
-		if (stepItem.isError) return 'error';
-		if (props.currentStep < index) return 'wait';
-		if (props.currentStep === index) return 'active';
-		return 'finish';
-	}
+    function getStepStatus(index:number, stepItem: IStepItem) {
+        if (stepItem.isError) return 'error';
+        if (props.currentStep < index) return 'wait';
+        if (props.currentStep === index) return 'active';
+        return 'finish';
+    }
 
-	return useComponents().ui.renderView("list.StepsView",{className: props.className,
-		children: props.stepItems.map(
-				(stepItem, index) =>
-					useComponents().ui.renderView("list.StepItemView",
-					{stepItem, index: index + 1, status: getStepStatus(index, stepItem), disabled: !isChangeable,
-							onChange: () => {if (isChangeable) props.onChange(index)}}
-					)
-		)});
+    return useComponents().ui.renderView('list.StepsView', {
+        className: props.className,
+        children: props.stepItems.map(
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            (stepItem, index) => useComponents().ui.renderView('list.StepItemView',
+                {
+                    stepItem,
+                    index: index + 1,
+                    status: getStepStatus(index, stepItem),
+                    disabled: !isChangeable,
+                    onChange: () => { if (isChangeable) props.onChange(index); },
+                }),
+        )});
 }
 
 Steps.defaultProps = {

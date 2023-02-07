@@ -122,7 +122,9 @@ export default function calculate(gap, position, parentRef, tooltipSize, arrowSi
     // Проверка - при позиционировании top/bottom tooltip не выходит за пределы страницы по горизонтали
     if (position.includes('top') || position.includes('bottom')) {
         if (!position.includes('Left')
-            && (style.left < 0 || parentDimensions.left <= Math.round((tooltipSize.width - parentDimensions.width) + gap))
+            && (style.left < 0 || parentDimensions.left <= Math.round(
+                (tooltipSize.width - parentDimensions.width) + gap,
+            ))
         ) {
             style.right = null;
             position = position.replace('Right', 'Left');

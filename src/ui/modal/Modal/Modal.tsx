@@ -116,6 +116,7 @@ function Modal(props: IModalProps): JSX.Element {
         if (props.closeAfterMs) {
             setTimeout(() => props.onClose(), props.closeAfterMs);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

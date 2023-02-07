@@ -160,6 +160,7 @@ export default function useAddressBar(config: IAddressBarConfig): IAddressBarOut
             }, {});
             if (!_isEqual(initialQueryRef.current, normalizedValues)) {
                 initialQueryRef.current = normalizedValues;
+                //TODO Remove @ts-ignore
                 //@ts-ignore
                 dispatch(queryReplace(config.model, location, normalizedValues, config.useHash));
             }

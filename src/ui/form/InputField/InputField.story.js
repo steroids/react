@@ -10,7 +10,7 @@ import textAddons from './demo/textAddons';
 import mask from './demo/mask';
 
 export default {
-  title: 'form.InputField',
+    title: 'form.InputField',
 };
 
 export {
@@ -23,5 +23,5 @@ export {
     types,
     addons,
     textAddons,
-    mask
-}
+    mask,
+};

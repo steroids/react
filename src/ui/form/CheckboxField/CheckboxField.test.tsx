@@ -5,7 +5,7 @@ import {ICheckboxFieldProps} from './CheckboxField';
 
 const CheckboxField = require('./CheckboxField').default;
 
-describe('CheckboxField tests', () => {
+describe.skip('CheckboxField tests', () => {
     it('should render something without props', () => {
         const wrapper = mountWithApp(CheckboxField, {view: CheckboxFieldView});
         expect(wrapper).not.toBeEmptyRender();

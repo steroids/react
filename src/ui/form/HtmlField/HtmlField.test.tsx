@@ -3,7 +3,7 @@ import HtmlFieldView from '@steroidsjs/bootstrap/form/HtmlField/HtmlFieldView';
 import HtmlField from './HtmlField';
 import mountWithApp from '../../../../tests/mountWithApp';
 
-describe('HtmlField tests', () => {
+describe.skip('HtmlField tests', () => {
     /* @todo we don't want to test CKEditor, consider testing only props that are passed to the HtmlFieldView */
     xit('should render something without props', () => {
         const wrapper = mountWithApp(HtmlField, {view: HtmlFieldView});

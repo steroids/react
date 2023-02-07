@@ -109,6 +109,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
             props.useUTC,
             props.dateInUTC,
         ) || '',
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [props.displayFormat, props.input.value, props.valueFormat],
     );
 
@@ -135,7 +136,13 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         let newValue = value;
 
         if (value !== null) {
-            const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC, props.dateInUTC);
+            const parsedValue = convertDate(
+                value,
+                props.displayFormat,
+                props.valueFormat,
+                props.useUTC,
+                props.dateInUTC,
+            );
             newValue = parsedValue || !value ? parsedValue : false;
         }
 
@@ -145,6 +152,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
                 props.onChange.call(null, value);
             }
         }
+    // eslint-disable-next-line max-len
     }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat, props.useUTC, props.dateInUTC]);
 
     // Dropdown opened state

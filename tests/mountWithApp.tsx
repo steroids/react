@@ -1,4 +1,5 @@
 import * as React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {mount} from 'enzyme';
 import HtmlComponent from '../src/components/HtmlComponent';
 import useApplication from '../src/hooks/useApplication';
@@ -18,6 +19,7 @@ function AppMock(props: any) {
                 ...config?.components?.store,
             },
         },
+        screen: {},
         onInit: ({ui}) => {
             //components.ui.addViews(require('@steroidsjs/bootstrap').default);
             //ui.addFields(require('@steroidsjs/core/ui/form').default);

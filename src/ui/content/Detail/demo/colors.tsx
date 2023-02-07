@@ -12,6 +12,8 @@ const colors = {
     dr: 'dark',
 };
 
+const text = 'Some quick example text to build on the card title and make up the bulk of the card\'s content.';
+
 function capitalize(s) {
     return s[0].toUpperCase() + s.slice(1);
 }
@@ -27,7 +29,7 @@ export default () => (
                         title={capitalize(color) + ' card title'}
                         color={color}
                     >
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                        {text}
                     </Card>
                 </>
             </div>

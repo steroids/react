@@ -6,7 +6,7 @@ import sizes from './demo/sizes';
 import submit from './demo/submit';
 
 export default {
-  title: 'form.TextField',
+    title: 'form.TextField',
 };
 
 export {
@@ -16,4 +16,4 @@ export {
     required,
     sizes,
     submit,
-}
+};

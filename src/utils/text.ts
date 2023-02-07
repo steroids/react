@@ -11,7 +11,6 @@ const stringToWords = str => {
     return words.filter(Boolean);
 };
 
-
 interface ISmartSearchSourceItem {
     id: string | number,
     label: string | number,
@@ -30,8 +29,7 @@ export type TSmartSearchOutput = ISmartSearchOutputItem[];
  * @param sourceItems
  */
 // eslint-disable-next-line import/prefer-default-export
-export const smartSearch = (query: string, sourceItems: ISmartSearchSourceItem[]): TSmartSearchOutput => {
-
+export const smartSearch = (query: string | null, sourceItems: ISmartSearchSourceItem[] | null): TSmartSearchOutput => {
     if (!query) {
         return sourceItems;
     }
@@ -88,6 +86,7 @@ export const smartSearch = (query: string, sourceItems: ISmartSearchSourceItem[]
         }
         highlighted = highlighted.filter(highlightedItem => !!highlightedItem[0]);
         if (highlighted.findIndex(highlightedItem => highlightedItem[1]) !== -1) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             item.labelHighlighted = highlighted;
             return true;

@@ -1,9 +1,9 @@
 import basic from './demo/basic';
 
 export default {
-  title: 'form.Form',
+    title: 'form.Form',
 };
 
 export {
     basic,
-}
+};

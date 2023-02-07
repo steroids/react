@@ -66,7 +66,7 @@ export function reducerItem(state, action) {
                 ...state,
                 errors: action.errors,
                 isInvalid: !_isEmpty(action.errors),
-            }
+            };
 
         case FORM_SUBMIT:
             return _set(state, 'submitCounter', (state.submitCounter || 0) + 1);

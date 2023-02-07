@@ -1,5 +1,5 @@
-import Grid from '../../Grid';
 import * as React from 'react';
+import Grid from '../../Grid';
 import CheckboxColumn from '../CheckboxColumn';
 import {columns, items} from '../../Grid/demo/basic';
 

@@ -1,3 +1,3 @@
-import Steps from "./Steps";
+import Steps from './Steps';
 
 export default Steps;

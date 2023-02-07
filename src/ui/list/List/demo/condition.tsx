@@ -1,5 +1,5 @@
-import List from '../List';
 import * as React from 'react';
+import List from '../List';
 
 /**
  * List with filtration by custom condition

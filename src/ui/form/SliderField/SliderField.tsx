@@ -67,7 +67,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps {
      * содержащий свойства style и label.
      * @example { min: 20, 40: 40, max: 100 }
      */
-    marks?: Record<string, {string: { style, label }} | React.ReactNode | string>,
+    marks?: Record<string, {style: {color}, label} | React.ReactNode | string>,
 
     /**
      * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
@@ -106,6 +106,7 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
             value = normalizeValue(value);
             props.input.onChange.call(null, value);
         },
+    // eslint-disable-next-line max-len
     }), [props.min, props.max, props.step, props.marks, props.isRange, props.disabled, props.isVertical, props.input.value, props.input.onChange, props.valuePostfix, props.defaultValue, props.tooltipIsVisible]);
 
     return components.ui.renderView('form.SliderFieldView', {

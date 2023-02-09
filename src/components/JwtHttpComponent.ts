@@ -56,21 +56,24 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                     this.removeAccessToken();
                     const {store} = this._components;
 
-                    const response = await this.send(
-                        this.refreshTokenRequest.method,
-                        this.refreshTokenRequest.url,
-                        {
-                            [this.refreshTokenKey]: this._refreshToken,
-                        },
-                    );
-                    const accessToken = response?.data?.[this.accessTokenKey];
-                    if (accessToken) {
-                        this.setAccessToken(accessToken);
-                        originalRequest._isRetry = true;
-                        originalRequest.headers.Authorization = 'Bearer ' + accessToken;
-                        return axiosInstance.request(originalRequest);
+                    try {
+                        const response = await this.send(
+                            this.refreshTokenRequest.method,
+                            this.refreshTokenRequest.url,
+                            {
+                                [this.refreshTokenKey]: this._refreshToken,
+                            },
+                        );
+                        const accessToken = response?.data?.[this.accessTokenKey];
+                        if (accessToken) {
+                            this.setAccessToken(accessToken);
+                            originalRequest._isRetry = true;
+                            originalRequest.headers.Authorization = 'Bearer ' + accessToken;
+                            return axiosInstance.request(originalRequest);
+                        }
+                    } catch {
+                        store.dispatch(logout());
                     }
-                    store.dispatch(logout());
                 }
                 throw error;
             },

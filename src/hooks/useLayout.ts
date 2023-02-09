@@ -136,7 +136,9 @@ export default function useLayout(initAction: any = null): ILayout {
     const initializeCounterPrev = usePrevious(initializeCounter);
 
     useUpdateEffect(() => {
-        if (!_isFunction(initAction) || initializeCounter <= initializeCounterPrev) { return; }
+        if (!_isFunction(initAction) || initializeCounter <= initializeCounterPrev) {
+            return;
+        }
 
         runInitAction(initAction, components, dispatch)
             .then(() => {
@@ -146,7 +148,7 @@ export default function useLayout(initAction: any = null): ILayout {
                     dispatch(goToRoute(redirectPageId));
                 }
             })
-            .catch((e) => {
+            .catch(e => {
                 setError(e);
                 throw e;
             });

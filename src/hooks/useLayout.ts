@@ -136,9 +136,7 @@ export default function useLayout(initAction: any = null): ILayout {
     const initializeCounterPrev = usePrevious(initializeCounter);
 
     useUpdateEffect(() => {
-        if (!_isFunction(initAction) || initializeCounter <= initializeCounterPrev) {
-            return;
-        }
+        if (!_isFunction(initAction) || initializeCounter <= initializeCounterPrev) { return; }
 
         runInitAction(initAction, components, dispatch)
             .then(() => {
@@ -148,7 +146,7 @@ export default function useLayout(initAction: any = null): ILayout {
                     dispatch(goToRoute(redirectPageId));
                 }
             })
-            .catch(e => {
+            .catch((e) => {
                 setError(e);
                 throw e;
             });
@@ -175,7 +173,7 @@ export default function useLayout(initAction: any = null): ILayout {
             } else {
                 status = STATUS_ACCESS_DENIED;
                 if (process.env.NODE_ENV !== 'production') {
-                    // eslint-disable-next-line no-console
+                // eslint-disable-next-line no-console
                     console.log(
                         'Access denied. Page roles: ',
                         pageRoles,

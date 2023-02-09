@@ -442,6 +442,7 @@ function Form(props: IFormProps): JSX.Element {
             //TODO Remove @ts-ignore
             //@ts-ignore
             reduxDispatch(
+                //TODO Remove @ts-ignore
                 //@ts-ignore
                 showNotification(
                     props.submitErrorMessage || __('Ошибка сервера'),

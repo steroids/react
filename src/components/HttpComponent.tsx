@@ -9,7 +9,8 @@ import {setFlashes} from '../actions/notifications';
 interface IHttpRequestOptions {
     lazy?: boolean | number,
     cancelToken?: any,
-    onTwoFactor?: (providerName: string) => Promise<any>
+    onTwoFactor?: (providerName: string) => Promise<any>,
+    responseType?: string,
 }
 
 /**
@@ -240,6 +241,9 @@ export default class HttpComponent {
         }
         if (options.cancelToken) {
             axiosConfig.cancelToken = options.cancelToken;
+        }
+        if (options.responseType) {
+            axiosConfig.responseType = options.responseType;
         }
         if (options.lazy) {
             if (this._lazyRequests[method]) {

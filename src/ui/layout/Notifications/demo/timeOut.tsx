@@ -27,6 +27,8 @@ export default () => {
                     label={`Через ${time / 1000} секунд пропадет уведомление`}
                     onClick={() => {
                         dispatch(
+                            //TODO remove @ts-ignore
+                            //@ts-ignore
                             showNotification(
                                 `${time / 1000} секунд`, 'info',
                                 {position: 'bottom-right', timeOut: time},

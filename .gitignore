@@ -69,3 +69,6 @@ Thumbs.db
 
 build/docs-autogen-raw.json
 /dist
+
+/.yarnrc.yml
+/.yarn

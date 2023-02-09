@@ -74,6 +74,7 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                     } catch {
                         store.dispatch(logout());
                     }
+                    store.dispatch(logout());
                 }
                 throw error;
             },

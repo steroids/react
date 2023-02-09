@@ -63,6 +63,12 @@ export interface IAvatarProps {
      * @example MyCustomView
      */
     view?: CustomView;
+
+    /**
+     * Статус истории
+     * @example {true}
+     */
+    story?: boolean;
 }
 
 export interface IAvatarViewProps extends IAvatarProps {

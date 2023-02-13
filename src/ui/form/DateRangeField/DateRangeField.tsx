@@ -1,7 +1,7 @@
-import { useCallback, useMemo } from 'react';
-import { ICalendarProps } from '../../content/Calendar/Calendar';
+import {useCallback, useMemo} from 'react';
+import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
-import { useComponents } from '../../../hooks';
+import {useComponents} from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
 import fieldWrapper, {
     IFieldWrapperInputProps,

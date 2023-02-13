@@ -15,7 +15,7 @@ function DemoModal(props: IModalProps) {
             ]}
             {...props}
         >
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{marginBottom: '20px'}}>
                 This is your modal content.
             </div>
         </Modal>

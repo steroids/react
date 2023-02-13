@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createPortal} from 'react-dom';
-import { useComponents } from '../../../hooks';
+import {useComponents} from '../../../hooks';
 
 interface ITooltipPortalProps {
     children: React.ReactNode,

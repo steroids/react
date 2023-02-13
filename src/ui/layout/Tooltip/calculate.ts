@@ -1,7 +1,7 @@
 import {TooltipArrowPosition, TooltipStylePosition} from '../Tooltip/Tooltip';
 
 export default function calculate(gap, position, parentRef, tooltipSize, arrowSize) {
-    const style: TooltipStylePosition = { left: null, right: null, top: null };
+    const style: TooltipStylePosition = {left: null, right: null, top: null};
     let arrowPosition: TooltipArrowPosition = null;
 
     const {top, right, left, width, height} = parentRef.getBoundingClientRect();

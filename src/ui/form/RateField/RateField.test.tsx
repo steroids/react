@@ -21,7 +21,7 @@ describe.skip('RateField tests', () => {
             inputProps: {},
         };
 
-        const wrapper = mountWithApp(RateField, {...props, view: RateFieldView });
+        const wrapper = mountWithApp(RateField, {...props, view: RateFieldView});
 
         it('should static props transmitted unchanged', () => {
             expect(wrapper.find('RateField')).toHaveProp(props);

@@ -93,7 +93,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
     const timerRef = useRef(null);
 
     const calculateAbsolutePosition = useCallback((newPosition:Position, childRef, componentSize) => {
-        const newStyle: IStyleObj = { left: null, right: null, top: null };
+        const newStyle: IStyleObj = {left: null, right: null, top: null};
         const {top, right, left, width, height} = childRef.getBoundingClientRect();
         const parentDimensions = {top, right, left, width, height};
         parentDimensions.top += window.scrollY;

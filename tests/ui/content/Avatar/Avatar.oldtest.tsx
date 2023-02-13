@@ -1,6 +1,6 @@
 import 'jest-enzyme';
-import mountWithApp from '../../../../tests/mountWithApp';
-import Avatar from './Avatar';
+import mountWithApp from '../../../mountWithApp';
+import Avatar from '../../../../src/ui/content/Avatar/Avatar';
 
 describe.skip('Avatar tests', () => {
     it('should render something without props', () => {

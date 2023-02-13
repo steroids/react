@@ -1,5 +1,11 @@
 {
   "extends": "@steroidsjs/eslint-config",
+  "plugins": [
+    "eslint-plugin-import",
+    "eslint-plugin-jsx-a11y",
+    "eslint-plugin-react-hooks",
+    "eslint-plugin-react"
+  ],
   "rules": {
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",

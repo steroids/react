@@ -20,7 +20,7 @@
  "scripts": {
   "docs": "typedoc --ignoreCompilerErrors --json typedoc.json .",
   "test": "jest",
-  "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src ./tests",
+  "lint": "eslint -c ./.eslintrc --ext .js,.jsx,.ts,.tsx ./src ./tests",
   "build": "tsc && cp ./{package.json,LICENSE,README.md} dist/ && cp src/index.d.ts dist/",
   "watch": "tsc -p tsconfig-debug.json"
  },
@@ -82,10 +82,6 @@
   "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
   "enzyme": "^3.11.0",
   "eslint": "^7.20.0",
-  "eslint-plugin-react-hooks": "^4.6.0",
-  "eslint-plugin-jsx-a11y": "^6.7.1",
-  "eslint-plugin-import": "^2.27.5",
-  "eslint-plugin-react": "^7.32.2",
   "jest": "^26.6.3",
   "jest-enzyme": "^7.1.2",
   "ts-jest": "^26.5.1",

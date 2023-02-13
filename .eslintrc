@@ -5,6 +5,8 @@
     "class-methods-use-this": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-undef": "off",
+    "no-redeclare": "off",
+    "react/sort-comp": "off",
     "jsx-a11y/anchor-is-valid": "off"
   }
 }

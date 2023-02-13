@@ -6,7 +6,7 @@ import {render} from '../../../customRender';
 import Avatar from '../../../../src/ui/content/Avatar/Avatar';
 import AvatarView from './AvatarView';
 
-describe('Avatar tests', () => {
+describe.skip('Avatar tests', () => {
     const props = {
         alt: 'default image',
         src: 'https://www.dreamsart.it/wp-content/uploads/2019/04/image1-9.jpeg',

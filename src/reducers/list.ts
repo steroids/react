@@ -158,9 +158,9 @@ const reducerMap = {
         };
     },
     [LIST_TOGGLE_ALL]: (state, action) => {
-        const list4 = state.lists[action.listId];
-        if (list4) {
-            const ids = list4.items.map(item => item[list4.primaryKey]) || [];
+        const list = state.lists[action.listId];
+        if (list) {
+            const ids = list.items.map(item => item[list.primaryKey]) || [];
             const isAll = state.selectedIds[action.listId]
                 && _every(ids.map(id => state.selectedIds[action.listId].includes(id)));
             return {
@@ -197,11 +197,11 @@ export const getIds = (state, listId) => {
         (list && list.items && list.items.map(item => item[list.primaryKey])) || []
     );
 };
-export const getListItems = (state, listId) => _get(state, ['list', 'lists', listId, 'items']);
-export const getCheckedIds = (state, listId) => _get(state, ['list', 'selectedIds', listId]) || [];
-export const isChecked = (state, listId, itemId) => getCheckedIds(state, listId).includes(itemId);
-export const isCheckedAll = (state, listId) => {
-    const selectedIds = getCheckedIds(state, listId);
+export const getListItems = (state, listId) => _get(state, ['list', 'lists', listId, 'items']) || null;
+export const getSelectedIds = (state, listId) => _get(state, ['list', 'selectedIds', listId]) || [];
+export const isSelected = (state, listId, itemId) => getSelectedIds(state, listId).includes(itemId);
+export const isSelectedAll = (state, listId) => {
+    const selectedIds = getSelectedIds(state, listId);
     return (
         selectedIds.length > 0
         && _every(getIds(state, listId).map(id => selectedIds.includes(id)))

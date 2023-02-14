@@ -19,15 +19,14 @@
             "@steroidsjs/bootstrap/*": [
                 "../react-bootstrap/src/*"
             ]
-        },
-        "types": [
-            "jest",
-        ]
+        }
     },
     "include": [
         "src/**/*"
     ],
     "exclude": [
         "node_modules",
+        "src/**/*.test.ts",
+        "src/**/*.test.tsx"
     ]
 }

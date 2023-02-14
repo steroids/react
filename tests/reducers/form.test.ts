@@ -367,7 +367,7 @@ describe('form reducers', () => {
             expect(form(initialState, action)).toEqual(expectedState);
         });
 
-        it('without initialValues and with name', () => {
+        it('with initialValues and name', () => {
             const phoneName = 'phone';
             const phoneValue = '88005553535';
             const initialValue = 'initialValue';
@@ -404,34 +404,6 @@ describe('form reducers', () => {
             };
 
             expect(form(initialState, action)).toEqual(expectedState);
-        });
-
-        it('with initialValues and name', () => {
-            const phoneName = 'phone';
-            const phoneValue = '88005553535';
-
-            const action = {
-                type: FORM_ARRAY_ADD,
-                formId,
-                rowsCount: 1,
-                name: phoneName,
-                initialValues: {},
-            };
-
-            const initialState = {
-                [formId]: {
-                    isSubmitting: false,
-                    values: {
-                        [phoneName]: phoneValue,
-                    },
-                },
-            };
-
-            const expectedState = {
-                [formId]: {
-
-                },
-            };
         });
     });
 

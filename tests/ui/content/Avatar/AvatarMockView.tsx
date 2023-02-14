@@ -45,7 +45,6 @@ export default function Avatar(props: IAvatarProps) {
                 'has-border-without-avatar': props.hasBorder && !props.src,
                 'has-custom-status': props.status && !!customSize.width,
             }), props.className)}
-
         >
             <span
                 className={bem.element('body')}

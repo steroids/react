@@ -15,14 +15,3 @@ export {
     DropDown,
     Badge,
 };
-
-export default {
-    Avatar,
-    AvatarGroup,
-    Collapse,
-    CollapseItem,
-    Alert,
-    Card,
-    DropDown,
-    Badge,
-};

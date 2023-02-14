@@ -20,7 +20,7 @@ export interface IBadgeProps {
     /**
      * Стиль скругления
      */
-    borderType: 'rounder' | 'squarer';
+    roundingStyle: 'rounder' | 'squarer';
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -37,12 +37,6 @@ export interface IBadgeProps {
      * @example {() => console.log('this is callback')}
      */
     onClose?: () => void,
-
-    /**
-     * Время анимации в миллисекундах
-     * @example {1000}
-     */
-    animationDuration?: number,
 
     /** Текст для badge
     * @example {'Sending is confirmed!'}
@@ -63,20 +57,15 @@ export interface IBadgeProps {
 }
 
 export interface IBadgeViewProps extends IBadgeProps {
-    isVisible: boolean,
     isExist: boolean,
-    onClose: () => void
 }
-
 function Badge(props: IBadgeProps): JSX.Element {
     const components = useComponents();
 
-    const [isExist, setIsExist] = useState<boolean>(true);
-    const [isVisible, setIsVisible] = useState<boolean>(true);
+    const [isExist, setIsExist] = useState(true);
 
     const onClose = useCallback(() => {
-        setIsVisible(false);
-        setTimeout(() => setIsExist(false), props.animationDuration);
+        setIsExist(false);
         if (props.onClose) {
             props.onClose();
         }
@@ -85,17 +74,14 @@ function Badge(props: IBadgeProps): JSX.Element {
     return components.ui.renderView(props.view || 'content.BadgeView', {
         ...props,
         isExist,
-        isVisible,
         onClose,
     });
 }
 
 Badge.defaultProps = {
     type: 'primary',
-    borderType: 'squarer',
+    roundingStyle: 'squarer',
     showClose: false,
-    animation: false,
-    animationDuration: 390,
 };
 
 export default Badge;

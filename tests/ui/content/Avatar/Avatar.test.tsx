@@ -1,10 +1,9 @@
-/* eslint-disable no-undef */
 import React from 'react';
 import {getByTestId} from '@testing-library/dom';
 import '@testing-library/jest-dom';
 import {render} from '../../../customRender';
 import Avatar from '../../../../src/ui/content/Avatar/Avatar';
-import AvatarView from './AvatarView';
+import AvatarView from './AvatarMockView';
 
 describe.skip('Avatar tests', () => {
     const props = {
@@ -24,15 +23,7 @@ describe.skip('Avatar tests', () => {
     it('should render right image', () => {
         const {container} = render(<Avatar
             data-testid={testId}
-            alt={props.alt}
-            src={props.src}
-            title={props.title}
-            className={props.className}
-            size={props.size}
-            shape={props.shape}
-            status={props.status}
-            style={props.style}
-            view={props.view}
+            {...props}
         />);
 
         expect(getByTestId(container, testId)).toBeInTheDocument();

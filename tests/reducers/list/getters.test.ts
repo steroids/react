@@ -1,10 +1,10 @@
 import {
-    getCheckedIds,
+    getSelectedIds,
     getIds,
     getList,
     getListItems,
-    isChecked,
-    isCheckedAll,
+    isSelected,
+    isSelectedAll,
     isListInitialized,
 } from '../../../src/reducers/list';
 
@@ -18,7 +18,10 @@ describe('list reducers', () => {
 
     let initialState = {...defaultInitialState};
 
-    const getStateWithWrappedLists = (lists: TListCommonArg = null, extraData: TListCommonArg = null) => ({
+    const getStateWithWrappedLists = (
+        lists: TListCommonArg = null,
+        extraData: TListCommonArg = null,
+    ) => ({
         list: {
             ...initialState,
             lists: {...lists},
@@ -43,16 +46,16 @@ describe('list reducers', () => {
         it('should return list', () => {
             const listId = 'listId';
 
-            const litItem = {
+            const listProperties = {
                 formId: 'formId',
                 isRemote: true,
                 loadMore: true,
                 primaryKey: 'key',
             };
 
-            const lists = {[listId]: litItem};
+            const lists = {[listId]: listProperties};
             const state = getStateWithWrappedLists(lists);
-            expect(getList(state, listId)).toEqual(litItem);
+            expect(getList(state, listId)).toEqual(listProperties);
         });
 
         it('should return null', () => {
@@ -143,9 +146,9 @@ describe('list reducers', () => {
         });
     });
 
-    describe('getCheckedIds', () => {
+    describe('getSelectedIds', () => {
         it('should return selectedIds', () => {
-            const checkedIds = ['beautifulItemId', 'terribleItemId', 'shyItemId'];
+            const selectedIds = ['beautifulItemId', 'terribleItemId', 'shyItemId'];
             const listId = 'listId';
 
             const lists = {
@@ -156,14 +159,21 @@ describe('list reducers', () => {
                 },
             };
 
-            const selectedIds = {[listId]: checkedIds};
-            const state = getStateWithWrappedLists(lists, {selectedIds});
-            expect(getCheckedIds(state, listId)).toEqual(checkedIds);
+            const state = getStateWithWrappedLists(
+                lists,
+                {
+                    selectedIds: {
+                        [listId]: selectedIds,
+                    },
+                },
+            );
+
+            expect(getSelectedIds(state, listId)).toEqual(selectedIds);
         });
 
         it('should return empty array', () => {
             const notExistingListId = 'notExistingListId';
-            const existingListId = 'existingListId'
+            const existingListId = 'existingListId';
 
             const lists = {
                 [existingListId]: {
@@ -173,17 +183,25 @@ describe('list reducers', () => {
                 },
             };
 
-            const selectedIds = {[existingListId]: ['beautifulItemId']};
-            const state = getStateWithWrappedLists(lists, {selectedIds});
-            const expectedEmptyCheckedIds = [];
-            expect(getCheckedIds(state, notExistingListId)).toEqual(expectedEmptyCheckedIds);
+            const state = getStateWithWrappedLists(
+                lists,
+                {
+                    selectedIds:
+                    {
+                        [existingListId]: ['beautifulItemId'],
+                    },
+                },
+            );
+
+            const expectedEmptySelectedIds = [];
+            expect(getSelectedIds(state, notExistingListId)).toEqual(expectedEmptySelectedIds);
         });
     });
 
-    describe('isChecked', () => {
+    describe('isSelected', () => {
         it('default behavior', () => {
             const shyItemId = 'shyItemId';
-            const checkedIds = ['terribleItemId', shyItemId];
+            const selectedIds = ['terribleItemId', shyItemId];
             const listId = 'listId';
 
             const lists = {
@@ -194,19 +212,24 @@ describe('list reducers', () => {
                 },
             };
 
-            const selectedIds = {
-                [listId]: checkedIds,
-            };
+            const state = getStateWithWrappedLists(
+                lists,
+                {
+                    selectedIds: {
+                        [listId]: selectedIds,
+                    },
+                },
+            );
 
-            const state = getStateWithWrappedLists(lists, {selectedIds});
-            expect(isChecked(state, listId, shyItemId)).toBe(true);
+            const expectedIsSelected = true;
+            expect(isSelected(state, listId, shyItemId)).toBe(expectedIsSelected);
         });
     });
 
-    describe('isCheckedAll', () => {
+    describe('isSelectedAll', () => {
         it('should return true', () => {
-            const itemId = 'itemId'
-            const checkedIds = [itemId];
+            const itemId = 'itemId';
+            const selectedIds = [itemId];
             const listId = 'listId';
             const primaryKey = 'primaryKey';
 
@@ -220,9 +243,17 @@ describe('list reducers', () => {
                 },
             };
 
-            const selectedIds = {[listId]: checkedIds};
-            const state = getStateWithWrappedLists(lists, {selectedIds});
-            expect(isCheckedAll(state, listId)).toEqual(true);
+            const state = getStateWithWrappedLists(
+                lists,
+                {
+                    selectedIds: {
+                        [listId]: selectedIds,
+                    },
+                },
+            );
+
+            const expectedIsSelectedAll = true;
+            expect(isSelectedAll(state, listId)).toEqual(expectedIsSelectedAll);
         });
     });
 });

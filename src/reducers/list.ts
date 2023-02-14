@@ -198,10 +198,10 @@ export const getIds = (state, listId) => {
     );
 };
 export const getListItems = (state, listId) => _get(state, ['list', 'lists', listId, 'items']) || null;
-export const getCheckedIds = (state, listId) => _get(state, ['list', 'selectedIds', listId]) || [];
-export const isChecked = (state, listId, itemId) => getCheckedIds(state, listId).includes(itemId);
-export const isCheckedAll = (state, listId) => {
-    const selectedIds = getCheckedIds(state, listId);
+export const getSelectedIds = (state, listId) => _get(state, ['list', 'selectedIds', listId]) || [];
+export const isSelected = (state, listId, itemId) => getSelectedIds(state, listId).includes(itemId);
+export const isSelectedAll = (state, listId) => {
+    const selectedIds = getSelectedIds(state, listId);
     return (
         selectedIds.length > 0
         && _every(getIds(state, listId).map(id => selectedIds.includes(id)))

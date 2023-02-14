@@ -69,7 +69,7 @@ describe('list reducers', () => {
             [existingList]: {
                 listId: existingList,
                 items: [],
-            }
+            },
         });
 
         const expectedState = {
@@ -93,18 +93,17 @@ describe('list reducers', () => {
 
         it('without total prop', () => {
             action.total = null;
-            expectedState.lists[payloadList].total = action.items.length;
             expect(list(state, action)).toEqual(expectedState);
         });
     });
 
     describe('LIST_SET_ITEMS', () => {
         it('default behavior', () => {
-            const payloadListId = 'payloadListId';
+            const listId = 'listId';
 
             const action = {
                 type: LIST_SET_ITEMS,
-                listId: payloadListId,
+                listId,
                 items: [],
             };
 
@@ -112,7 +111,7 @@ describe('list reducers', () => {
                 existingList: {
                     items: [],
                 },
-                [payloadListId]: {
+                [listId]: {
                     isLoading: true,
                 },
             };
@@ -123,8 +122,8 @@ describe('list reducers', () => {
                 ...initialState,
                 lists: {
                     ...state.lists,
-                    [payloadListId]: {
-                        ...state.lists[payloadListId],
+                    [listId]: {
+                        ...state.lists[listId],
                         items: action.items,
                     },
                 },
@@ -136,11 +135,11 @@ describe('list reducers', () => {
 
     describe('LIST_BEFORE_FETCH', () => {
         it('default behavior', () => {
-            const payloadListId = 'payloadListId';
+            const listId = 'listId';
 
             const action = {
                 type: LIST_BEFORE_FETCH,
-                listId: payloadListId,
+                listId,
             };
 
             const listProperties: IList = {
@@ -148,7 +147,7 @@ describe('list reducers', () => {
                 isRemote: false,
             };
 
-            const state = getStateWithLists({[payloadListId]: listProperties});
+            const state = getStateWithLists({[listId]: listProperties});
 
             const expectedState = {
                 ...initialState,
@@ -166,7 +165,7 @@ describe('list reducers', () => {
 
     describe('LIST_AFTER_FETCH', () => {
         it('items match', () => {
-            const payloadListId = 'payloadListId';
+            const listId = 'listId';
 
             const items = [
                 {
@@ -177,24 +176,25 @@ describe('list reducers', () => {
             const action = {
                 type: LIST_AFTER_FETCH,
                 items,
-                listId: payloadListId,
+                listId,
             };
 
             const listProperties: IList = {
-                isLoading: false,
+                isLoading: true,
                 isRemote: false,
                 items,
             };
 
-            const state = getStateWithLists({[payloadListId]: listProperties});
+            const state = getStateWithLists({[listId]: listProperties});
 
             const expectedState = {
                 ...state,
                 lists: {
-                    [payloadListId]: {
+                    [listId]: {
                         ...listProperties,
                         ...action,
                         isFetched: true,
+                        isLoading: false,
                     },
                 },
             };
@@ -203,7 +203,7 @@ describe('list reducers', () => {
         });
 
         it('with list loadMore and action page', () => {
-            const payloadListId = 'payloadListId';
+            const listId = 'listId';
 
             const action = {
                 type: LIST_AFTER_FETCH,
@@ -212,13 +212,13 @@ describe('list reducers', () => {
                         id: 'item3',
                     },
                 ],
-                listId: payloadListId,
+                listId,
                 page: 2,
                 pageSize: 1,
             };
 
             const listProperties: IList = {
-                isLoading: false,
+                isLoading: true,
                 isRemote: false,
                 items: [
                     {
@@ -231,15 +231,16 @@ describe('list reducers', () => {
                 loadMore: true,
             };
 
-            const state = getStateWithLists({[payloadListId]: listProperties});
+            const state = getStateWithLists({[listId]: listProperties});
 
             const expectedState = {
                 ...state,
                 lists: {
-                    [payloadListId]: {
+                    [listId]: {
                         ...listProperties,
                         ...action,
                         isFetched: true,
+                        isLoading: false,
                         items: [
                             {
                                 id: 'item1',
@@ -256,7 +257,7 @@ describe('list reducers', () => {
         });
 
         it('list without items', () => {
-            const payloadListId = 'payloadListId';
+            const listId = 'listId';
 
             const items = [
                 {
@@ -267,22 +268,23 @@ describe('list reducers', () => {
             const action = {
                 type: LIST_AFTER_FETCH,
                 items,
-                listId: payloadListId,
+                listId,
             };
 
             const listProperties: IList = {
-                isLoading: false,
+                isLoading: true,
                 isRemote: false,
             };
 
-            const state = getStateWithLists({[payloadListId]: listProperties});
+            const state = getStateWithLists({[listId]: listProperties});
 
             const expectedState = {
                 ...state,
                 lists: {
-                    [payloadListId]: {
+                    [listId]: {
                         ...listProperties,
                         ...action,
+                        isLoading: false,
                         isFetched: true,
                     },
                 },
@@ -293,29 +295,29 @@ describe('list reducers', () => {
     });
 
     describe('LIST_ITEM_ADD', () => {
-        const payloadListId = 'payloadListId';
-        const existingItem = {id: 'existingItem'}
+        const listId = 'listId';
+        const existingItem = {id: 'existingItem'};
         const payloadItem = {id: 'payloadItem'};
 
         const action = {
             type: LIST_ITEM_ADD,
             prepend: true,
-            listId: payloadListId,
+            listId,
             item: payloadItem,
         };
 
         const listProperties: IList = {
-            listId: payloadListId,
+            listId,
             formId: 'formId',
             items: [existingItem],
         };
 
-        const state = getStateWithLists({[payloadListId]: listProperties});
+        const state = getStateWithLists({[listId]: listProperties});
 
         const expectedState = {
             ...state,
             lists: {
-                [payloadListId]: {
+                [listId]: {
                     ...listProperties,
                     items: [payloadItem, existingItem],
                 },
@@ -328,7 +330,7 @@ describe('list reducers', () => {
 
         it('with prepend false', () => {
             action.prepend = false;
-            expectedState.lists[payloadListId].items = [existingItem, payloadItem];
+            expectedState.lists[listId].items = [existingItem, payloadItem];
             expect(list(state, action)).toEqual(expectedState);
         });
     });
@@ -343,7 +345,7 @@ describe('list reducers', () => {
             item: {
                 listId,
             },
-        })
+        });
 
         const listProperties: IList = {
             isLoading: false,
@@ -361,7 +363,7 @@ describe('list reducers', () => {
         });
 
         it('condition match', () => {
-            const action = getAction({primaryKey: 'key'})
+            const action = getAction({primaryKey: 'key'});
 
             const expectedState = {
                 ...state,
@@ -382,7 +384,7 @@ describe('list reducers', () => {
         });
 
         it('condition not match', () => {
-            const action = getAction({someProp: 'someProp'})
+            const action = getAction({someProp: 'someProp'});
             const expectedResult = {...state};
             expect(list(state, action)).toEqual(expectedResult);
         });
@@ -398,13 +400,13 @@ describe('list reducers', () => {
             const action = {
                 type: LIST_ITEM_DELETE,
                 listId,
-                condition: matchCondition
+                condition: matchCondition,
             };
 
             const listProperties: IList = {
                 isLoading: false,
                 items: [
-                    matchCondition
+                    matchCondition,
                 ],
                 loadMore: false,
             };
@@ -467,7 +469,9 @@ describe('list reducers', () => {
                 [listId]: [],
             };
 
-            const state = getStateWithLists({}, selectedIds);
+            const emptyListData = {};
+
+            const state = getStateWithLists(emptyListData, selectedIds);
 
             const expectedState = {
                 ...state,
@@ -483,8 +487,9 @@ describe('list reducers', () => {
             const selectedIds = {
                 [listId]: [itemId],
             };
+            const emptyListData = {};
 
-            const state = getStateWithLists({}, selectedIds);
+            const state = getStateWithLists(emptyListData, selectedIds);
 
             const expectedState = {
                 ...state,
@@ -500,6 +505,7 @@ describe('list reducers', () => {
     describe('LIST_TOGGLE_ALL', () => {
         const listId = 'listId';
         const primaryKey = 'primaryKey';
+        const primaryKeyValue = 'list1';
 
         const action = {
             type: LIST_TOGGLE_ALL,
@@ -511,10 +517,10 @@ describe('list reducers', () => {
                 existingList: {
                     items: [
                         {
-                            [primaryKey]: 'item1',
+                            [primaryKeyValue]: 'item1',
                         },
                     ],
-                    primaryKey,
+                    primaryKey: primaryKeyValue,
                 },
             };
 
@@ -530,10 +536,10 @@ describe('list reducers', () => {
                 [listId]: {
                     items: [
                         {
-                            [primaryKey]: itemId,
+                            [primaryKeyValue]: itemId,
                         },
                     ],
-                    primaryKey,
+                    primaryKey: primaryKeyValue,
                 },
             };
 
@@ -555,22 +561,22 @@ describe('list reducers', () => {
 
         it('one id selected', () => {
             const item1 = {
-                [primaryKey]: 'item1',
+                [primaryKeyValue]: 'item1',
             };
 
             const item2 = {
-                [primaryKey]: 'item2',
+                [primaryKeyValue]: 'item2',
             };
 
             const lists = {
                 [listId]: {
                     items: [item1, item2],
-                    primaryKey,
+                    primaryKey: primaryKeyValue,
                 },
             };
 
             const selectedIds = {
-                [listId]: [item1[primaryKey]],
+                [listId]: [item1[primaryKeyValue]],
             };
 
             const state = getStateWithLists(lists, selectedIds);
@@ -578,7 +584,7 @@ describe('list reducers', () => {
             const expectedState = {
                 ...state,
                 selectedIds: {
-                    [listId]: [item1[primaryKey], item2[primaryKey]],
+                    [listId]: [item1[primaryKeyValue], item2[primaryKeyValue]],
                 },
             };
 
@@ -597,19 +603,19 @@ describe('list reducers', () => {
                 layoutName,
             };
 
-            const listItem = {
+            const listProperties = {
                 items: [],
                 formId: 'formId',
                 listId,
             } as IList;
 
-            const state = getStateWithLists({[listId]: listItem});
+            const state = getStateWithLists({[listId]: listProperties});
 
             const expectedState = {
                 ...state,
                 lists: {
                     [listId]: {
-                        ...listItem,
+                        ...listProperties,
                         layoutName,
                     },
                 },

@@ -5,8 +5,3 @@ export {
     Avatar,
     AvatarGroup,
 };
-
-export default {
-    Avatar,
-    AvatarGroup,
-};

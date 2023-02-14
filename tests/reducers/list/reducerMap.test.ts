@@ -505,7 +505,6 @@ describe('list reducers', () => {
     describe('LIST_TOGGLE_ALL', () => {
         const listId = 'listId';
         const primaryKey = 'primaryKey';
-        const primaryKeyValue = 'list1';
 
         const action = {
             type: LIST_TOGGLE_ALL,
@@ -517,10 +516,10 @@ describe('list reducers', () => {
                 existingList: {
                     items: [
                         {
-                            [primaryKeyValue]: 'item1',
+                            [primaryKey]: 'item1',
                         },
                     ],
-                    primaryKey: primaryKeyValue,
+                    primaryKey,
                 },
             };
 
@@ -536,10 +535,10 @@ describe('list reducers', () => {
                 [listId]: {
                     items: [
                         {
-                            [primaryKeyValue]: itemId,
+                            [primaryKey]: itemId,
                         },
                     ],
-                    primaryKey: primaryKeyValue,
+                    primaryKey,
                 },
             };
 
@@ -561,22 +560,22 @@ describe('list reducers', () => {
 
         it('one id selected', () => {
             const item1 = {
-                [primaryKeyValue]: 'item1',
+                [primaryKey]: 'item1',
             };
 
             const item2 = {
-                [primaryKeyValue]: 'item2',
+                [primaryKey]: 'item2',
             };
 
             const lists = {
                 [listId]: {
                     items: [item1, item2],
-                    primaryKey: primaryKeyValue,
+                    primaryKey,
                 },
             };
 
             const selectedIds = {
-                [listId]: [item1[primaryKeyValue]],
+                [listId]: [item1[primaryKey]],
             };
 
             const state = getStateWithLists(lists, selectedIds);
@@ -584,7 +583,7 @@ describe('list reducers', () => {
             const expectedState = {
                 ...state,
                 selectedIds: {
-                    [listId]: [item1[primaryKeyValue], item2[primaryKeyValue]],
+                    [listId]: [item1[primaryKey], item2[primaryKey]],
                 },
             };
 

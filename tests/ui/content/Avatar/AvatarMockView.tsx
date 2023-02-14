@@ -53,7 +53,6 @@ export default function Avatar(props: IAvatarProps) {
                     ...props.style,
                     ...customSize,
                 }}
-
             >
                 {(props.src && renderImage()) || (
                     <span>

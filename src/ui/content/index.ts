@@ -3,6 +3,7 @@ import {Collapse, CollapseItem} from './Collapse';
 import Card from './Card';
 import DropDown from './DropDown';
 import Alert from './Alert';
+import Badge from './Badge';
 
 export {
     Avatar,
@@ -12,6 +13,7 @@ export {
     Alert,
     Card,
     DropDown,
+    Badge,
 };
 
 export default {
@@ -22,4 +24,5 @@ export default {
     Alert,
     Card,
     DropDown,
+    Badge,
 };

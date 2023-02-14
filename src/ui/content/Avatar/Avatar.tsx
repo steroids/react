@@ -65,10 +65,10 @@ export interface IAvatarProps {
     view?: CustomView;
 
     /**
-     * Статус истории
+     * Наличие обводки вокруг аватара
      * @example {true}
      */
-    story?: boolean;
+    hasBorder?: boolean;
 }
 
 export interface IAvatarViewProps extends IAvatarProps {

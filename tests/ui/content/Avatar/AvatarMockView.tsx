@@ -41,11 +41,10 @@ export default function Avatar(props: IAvatarProps) {
                 shape: props.shape,
                 'has-image': !!props.src && !props.isError,
                 'has-status': props.status,
-                'has-story-avatar': props.story && !!props.src,
-                'has-story-without-avatar': props.story && !props.src,
+                'has-border-avatar': props.hasBorder && !!props.src,
+                'has-border-without-avatar': props.hasBorder && !props.src,
                 'has-custom-status': props.status && !!customSize.width,
             }), props.className)}
-
         >
             <span
                 className={bem.element('body')}
@@ -53,7 +52,6 @@ export default function Avatar(props: IAvatarProps) {
                     ...props.style,
                     ...customSize,
                 }}
-
             >
                 {(props.src && renderImage()) || (
                     <span>

@@ -63,6 +63,12 @@ export interface IAvatarProps {
      * @example MyCustomView
      */
     view?: CustomView;
+
+    /**
+     * Наличие обводки вокруг аватара
+     * @example {true}
+     */
+    hasBorder?: boolean;
 }
 
 export interface IAvatarViewProps extends IAvatarProps {

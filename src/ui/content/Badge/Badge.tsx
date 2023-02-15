@@ -8,11 +8,6 @@ export interface IBadgeProps {
     className?: CssClassName;
 
     /**
-     * Дочерние элементы
-     */
-    children?: CustomView;
-
-    /**
      * Тип badge
      */
     type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
@@ -54,6 +49,11 @@ export interface IBadgeProps {
     chipContent?: string;
 
     style?: React.CSSProperties,
+
+    /**
+     * Размер для badge
+     */
+    size: 'small' | 'medium' | 'large';
 }
 
 export interface IBadgeViewProps extends IBadgeProps {

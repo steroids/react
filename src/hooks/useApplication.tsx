@@ -32,7 +32,7 @@ export interface IApplicationHookConfig {
     routes?: () => IRouteItem,
     layoutView?: () => CustomView,
     layoutProps?: Record<string, unknown>,
-    screen?: boolean | Omit<IScreenProviderProps, 'children'>,
+    screen?: Omit<IScreenProviderProps, 'children'>,
 
     /**
      * These fetch configurations will be used to preload and store for no matter what route matched in case of SSR

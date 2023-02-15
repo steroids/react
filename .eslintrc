@@ -1,18 +1,11 @@
 {
   "extends": "@steroidsjs/eslint-config",
-  "plugins": [
-    "eslint-plugin-import",
-    "eslint-plugin-jsx-a11y",
-    "eslint-plugin-react-hooks",
-    "eslint-plugin-react"
-  ],
   "rules": {
-    "import/prefer-default-export": "off",
-    "class-methods-use-this": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-undef": "off",
     "no-redeclare": "off",
-    "react/sort-comp": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "react/no-unused-prop-types": "off",
+    "react/default-props-match-prop-types": "off",
+    "react/sort-comp": "off"
   }
 }

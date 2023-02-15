@@ -101,6 +101,11 @@ export interface IModalProps {
      */
     view?: CustomView,
 
+    /**
+     * Вложенные элементы
+     */
+    children?: string | any,
+
     [key: string]: any,
 }
 

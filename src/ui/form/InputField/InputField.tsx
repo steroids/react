@@ -47,7 +47,7 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
     viewProps?: any;
 
     /**
-     * Размер Innput
+     * Размер Input
      * @example 'large'
      */
     size?: Size;

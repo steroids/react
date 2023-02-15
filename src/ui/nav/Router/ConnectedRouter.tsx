@@ -8,6 +8,8 @@ import structure from 'connected-react-router/lib/structure/plain';
 interface IConnectedRouterProps {
     store?: any,
     history?: any,
+    stateCompareFunction?: any,
+    noInitialPop?: any,
 }
 
 export default class ConnectedRouter extends React.PureComponent<React.PropsWithChildren<IConnectedRouterProps>> {

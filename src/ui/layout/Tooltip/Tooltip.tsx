@@ -33,6 +33,11 @@ export interface ITooltipProps {
     content?: string | any,
 
     /**
+     * Вложенные элементы
+     */
+    children?: string | any,
+
+    /**
      * Позиционирование подсказки, относительно целевого элемента
      */
     position?: TooltipPosition,
@@ -42,6 +47,18 @@ export interface ITooltipProps {
      * @example true
      */
     defaultVisible?: boolean,
+
+    /**
+     * Время анимации в миллисекундах
+     * @example 200
+     */
+    animationMs?: number,
+
+    /**
+     * Отступ от элемента
+     * @example 16
+     */
+    gap?: number,
 
     /**
      * Стили для абсолютного позиционирования подсказки

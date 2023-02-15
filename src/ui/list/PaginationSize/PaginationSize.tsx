@@ -58,6 +58,11 @@ export interface IPaginationSizeProps {
      */
     onChange?: (value: number) => void,
 
+    /**
+     * Список, для которого используется пагинация
+     */
+    list?: any,
+
     [key: string]: any,
 }
 

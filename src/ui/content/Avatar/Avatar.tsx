@@ -1,5 +1,5 @@
 import {useState, useCallback, useMemo} from 'react';
-import { useComponents } from '../../../hooks';
+import {useComponents} from '../../../hooks';
 
 export interface IAvatarProps {
 

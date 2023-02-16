@@ -27,7 +27,7 @@ describe('router reducers', () => {
 
     const getStateWithRoutesMap = (routesMap: Record<string, any>) => ({
         ...initialState,
-        routesMap: {...routesMap}
+        routesMap: {...routesMap},
     });
 
     beforeEach(() => {
@@ -162,7 +162,7 @@ describe('router reducers', () => {
             const childRoute = {id: 'childRoute', exact: true} as IRouteItem;
             const routeWithChildren = {
                 ...routeWithoutChildren,
-                items: [childRoute]
+                items: [childRoute],
             };
 
             const expectedRoutesTree = getExpectedRoutesTree(routeWithChildren, [

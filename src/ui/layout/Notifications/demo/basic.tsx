@@ -41,7 +41,7 @@ export default () => {
                                 //@ts-ignore
                                 dispatch(showNotification(message, level));
                             }}
-                            style={{ margin: '10px 0' }}
+                            style={{margin: '10px 0'}}
                         />
                     ))
             ))}

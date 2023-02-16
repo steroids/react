@@ -13,7 +13,7 @@ function DemoModal(props: IModalProps) {
             onClose={props.onClose}
             {...props}
         >
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{marginBottom: '20px'}}>
                 This is your content for
                 <strong>
                     {' '}
@@ -34,7 +34,7 @@ function DemoModal(props: IModalProps) {
 export default () => {
     const dispatch = useDispatch();
     return (
-        <div style={{ display: 'flex' }}>
+        <div style={{display: 'flex'}}>
             {sizesArray.map((size) => (
                 <Button
                     key={size}
@@ -46,7 +46,7 @@ export default () => {
                             size,
                         }));
                     }}
-                    style={{ marginRight: '20px' }}
+                    style={{marginRight: '20px'}}
                 />
             ))}
         </div>

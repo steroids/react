@@ -94,7 +94,7 @@ describe('router reducers', () => {
                 exact: true,
                 strict: false,
                 items: [
-                    childRoute
+                    childRoute,
                 ],
             };
 

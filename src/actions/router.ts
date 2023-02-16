@@ -1,4 +1,4 @@
-import { push, replace } from 'connected-react-router';
+import {push, replace} from 'connected-react-router';
 
 type TParams = Record<string, any> | null;
 

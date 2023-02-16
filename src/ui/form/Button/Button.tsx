@@ -148,6 +148,11 @@ export interface IButtonProps {
     view?: React.ComponentType;
 
     /**
+     * Вложенные элементы
+     */
+    children?: string | any,
+
+    /**
      * ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров
      * используйте свойство `toRouteParams`
      * @example profile
@@ -237,6 +242,7 @@ function Button(props: IButtonProps): JSX.Element {
     // Form submitting
     const context: IFormContext = useContext(FormContext);
     const form = useForm();
+    // eslint-disable-next-line react/prop-types
     let submitting = !!props.submitting;
     if (form) {
         submitting = form.formSelector(state => state.isSubmitting);

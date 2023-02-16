@@ -1,9 +1,11 @@
 {
   "extends": "@steroidsjs/eslint-config",
   "rules": {
-    "linebreak-style": 0,
-    "import/prefer-default-export": "off",
-    "class-methods-use-this": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-undef": "off",
+    "no-redeclare": "off",
+    "react/no-unused-prop-types": "off",
+    "react/default-props-match-prop-types": "off",
+    "react/sort-comp": "off"
   }
 }

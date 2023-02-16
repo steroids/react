@@ -19,7 +19,7 @@ export default class ClientStorageComponent {
 
     domain?: string;
 
-    private _ssrCookie: Record<string, any>
+    private _ssrCookie: Record<string, any>;
 
     constructor(components, config) {
         this.localStorageAvailable = !process.env.IS_SSR;

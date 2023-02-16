@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import { useComponents } from '../../../hooks';
+import {useComponents} from '../../../hooks';
 
 export interface IAlertProps {
     view?: any,

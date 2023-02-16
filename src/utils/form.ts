@@ -21,7 +21,7 @@ export const setInWithPath = (state: any, value: any, path: string[], pathIndex 
 
     if (!state) {
         if (Number.isNaN(first)) {
-            return { [first]: next };
+            return {[first]: next};
         }
         const initialized = [];
         initialized[parseInt(first, 10)] = next;

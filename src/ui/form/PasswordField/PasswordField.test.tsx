@@ -63,7 +63,7 @@ describe.skip('Password tests', () => {
     describe('Actions', () => {
         it('should value change', () => {
             const wrapper = mountWithApp(PasswordField, {view: PasswordFieldView});
-            wrapper.find('input').simulate('change', { target: { value: 'test' } });
+            wrapper.find('input').simulate('change', {target: {value: 'test'}});
             expect(wrapper.find('input')).toHaveProp('value', 'test');
         });
     });

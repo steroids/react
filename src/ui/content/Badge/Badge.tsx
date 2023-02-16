@@ -1,6 +1,11 @@
 import React, {useCallback, useState} from 'react';
 import {useComponents} from '../../../hooks';
 
+interface ICounter {
+    isEnable: boolean,
+    content: string | number
+}
+
 export interface IBadgeProps {
     /**
     * Дополнительный CSS-класс
@@ -39,14 +44,9 @@ export interface IBadgeProps {
     message?: string,
 
     /**
-     * Нужно ли отображать ставку в badge
+     * Нужно ли отображать счетчик
      */
-    hasChip?: boolean;
-
-    /**
-    * Содержимое вставки
-    */
-    chipContent?: string;
+    counter: boolean | ICounter;
 
     style?: React.CSSProperties,
 
@@ -81,6 +81,8 @@ function Badge(props: IBadgeProps): JSX.Element {
 Badge.defaultProps = {
     type: 'primary',
     roundingStyle: 'squarer',
+    size: 'medium',
+    counter: false,
     showClose: false,
 };
 

@@ -14,7 +14,7 @@ export interface IAlertProps {
      * Типы Оповещений
      * @example {'info'}
      */
-    type: 'success' | 'info' | 'warning' | 'error' | string,
+    type: 'success' | 'info' | 'warning' | 'error' | 'default' | string,
 
     /** Основное сообщения Оповещения
      * @example {'Sending is confirmed!'}
@@ -85,7 +85,7 @@ function Alert(props: IAlertProps): JSX.Element {
 }
 
 Alert.defaultProps = {
-    type: 'success',
+    type: 'default',
     showClose: false,
     showIcon: true,
     animation: false,

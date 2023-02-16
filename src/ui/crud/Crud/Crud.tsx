@@ -291,6 +291,7 @@ function Crud(props: ICrudProps): JSX.Element {
         title: routeTitle,
         controls,
         children: (controlsAction === CRUD_ACTION_INDEX || !isLoading) && (
+            //@ts-ignore
             <CrudContent
                 {...contentProps}
                 action={controlsAction}

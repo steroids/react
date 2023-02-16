@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../../../../src/ui/icon/Icon';
+import Icon from '../../../../src/ui/content/Icon';
 import {IAlertViewProps} from '../../../../src/ui/content/Alert/Alert';
 import {useBem} from '../../../../src/hooks';
 import IconView from './IconMockView';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Icon from '../../icon/Icon/Icon';
+import Icon from '../../content/Icon/Icon';
 import {useComponents} from '../../../hooks';
 
 export interface IProgressBarViewProps {

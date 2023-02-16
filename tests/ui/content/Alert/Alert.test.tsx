@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {screen} from '@testing-library/react';
+import {fireEvent} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import Alert from '../../../../src/ui/content/Alert';
 import AlertView from './AlertMockView';
@@ -24,6 +24,8 @@ describe('Alert', () => {
         </div>
     );
 
+    const expectedAlertClass = 'AlertView';
+
     it('should render something without props', () => {
         const {container} = render(<Alert view={AlertView} />);
 
@@ -35,7 +37,61 @@ describe('Alert', () => {
         const alert = getByTestId(props.testId);
 
         expect(alert).toBeInTheDocument();
-        const expectedAlertClass = 'AlertView';
         expect(alert).toHaveClass(expectedAlertClass);
+    });
+
+    it('should render right icons', () => {
+        const {getByTestId, getAllByRole} = render(JSXWrapper);
+        const alert = getByTestId(props.testId);
+        const closeIcon = getAllByRole('img')[1];
+
+        expect(alert).toHaveClass(`${expectedAlertClass}_${props.type}`);
+        expect(closeIcon).toHaveClass(`${expectedAlertClass}__icon-close`);
+    });
+
+    it('should have right external className', () => {
+        const {getByTestId} = render(JSXWrapper);
+        const alert = getByTestId(props.testId);
+
+        expect(alert).toHaveClass(props.className);
+    });
+
+    it('should have right message and description', () => {
+        const {getByText} = render(JSXWrapper);
+
+        expect(getByText(props.message)).toBeInTheDocument();
+        expect(getByText(props.description)).toBeInTheDocument();
+    });
+
+    it('should have right external style', () => {
+        const {getByTestId} = render(JSXWrapper);
+        const alert = getByTestId(props.testId);
+
+        expect(alert).toHaveStyle(props.style);
+    });
+
+    describe('actions', () => {
+        const mockedOnClose = jest.fn();
+
+        const actionProps = {
+            showClose: true,
+            showIcon: false,
+            onClose: mockedOnClose,
+            view: AlertView,
+        };
+
+        const actionJSXWrapper = (
+            <div>
+                <Alert {...actionProps} />
+            </div>
+        );
+
+        it('should click to close call callback', () => {
+            const {container} = render(actionJSXWrapper);
+            const closeIcon = container.getElementsByClassName(`${expectedAlertClass}__icon-close`)[0];
+            const expectedCloseCallCount = 1;
+            fireEvent.click(closeIcon);
+            expect(mockedOnClose.mock.calls.length).toBe(expectedCloseCallCount);
+        });
     });
 });

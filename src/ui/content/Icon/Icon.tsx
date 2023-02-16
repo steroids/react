@@ -90,7 +90,7 @@ export default function Icon(props: IIconProps): JSX.Element {
         }
     }
 
-    return components.ui.renderView(props.view || 'icon.IconView', {
+    return components.ui.renderView(props.view || 'content.IconView', {
         ...props,
         icon,
     });

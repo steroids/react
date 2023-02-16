@@ -8,7 +8,7 @@ export interface IAlertProps {
     /**
     * Дочерние элементы
     */
-    action?: React.ReactNode,
+    children?: React.ReactNode,
 
     /**
      * Типы Оповещений

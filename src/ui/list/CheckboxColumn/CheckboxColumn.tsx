@@ -2,7 +2,7 @@ import {useCallback, useMemo} from 'react';
 import {useComponents, useSelector} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
 import {toggleAll, toggleItem} from '../../../actions/list';
-import {isChecked, isCheckedAll} from '../../../reducers/list';
+import {isSelected, isSelectedAll} from '../../../reducers/list';
 
 /**
  * CheckboxColumn
@@ -50,8 +50,8 @@ export default function CheckboxColumn(props: ICheckboxColumnProps): JSX.Element
     const dispatch = useDispatch();
     const value = useSelector(state => (
         props.item
-            ? isChecked(state, props.listId, itemId)
-            : isCheckedAll(state, props.listId)
+            ? isSelected(state, props.listId, itemId)
+            : isSelectedAll(state, props.listId)
     ));
 
     const onChange = useCallback(() => {

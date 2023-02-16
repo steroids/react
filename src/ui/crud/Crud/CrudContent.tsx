@@ -23,8 +23,8 @@ export interface ICrudContentProps {
     record?: Record<string, unknown>,
     recordId?: PrimaryKey,
     action?: string,
-    grid?: IGridProps | React.ReactNode,
-    form?: IFormProps | React.ReactNode,
+    grid?: IGridProps,
+    form?: IFormProps,
 }
 
 export default function CrudContent(props: ICrudContentProps): JSX.Element {

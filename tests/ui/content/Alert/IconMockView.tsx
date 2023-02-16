@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import { IBemHocOutput } from '@steroidsjs/core/hoc/bem';
+import {IBemHocOutput} from '@steroidsjs/core/hoc/bem';
 import {IIconViewProps} from '@steroidsjs/core/ui/content/Icon/Icon';
-import { useBem } from '@steroidsjs/core/hooks';
+import {useBem} from '@steroidsjs/core/hooks';
 
 export default function IconView(props: IIconViewProps & IBemHocOutput) {
     const bem = useBem('IconView');
     if (typeof props.icon === 'string' && props.icon.indexOf('<svg') === 0) {
         return (
             <span
-                dangerouslySetInnerHTML={{ __html: props.icon } /* eslint-disable-line react/no-danger */}
+                dangerouslySetInnerHTML={{__html: props.icon} /* eslint-disable-line react/no-danger */}
                 aria-label={props.title}
                 title={props.title}
                 className={bem(bem.block(), props.className)}

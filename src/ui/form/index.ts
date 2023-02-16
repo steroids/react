@@ -25,6 +25,7 @@ import SliderField from './SliderField';
 import SwitcherField from './SwitcherField';
 import TextField from './TextField';
 import TimeField from './TimeField';
+import RateField from './RateField';
 
 export {
     AutoCompleteField,
@@ -54,34 +55,5 @@ export {
     SwitcherField,
     TextField,
     TimeField,
-};
-
-export default {
-    AutoCompleteField,
-    BlankField,
-    Button,
-    CheckboxField,
-    CheckboxListField,
-    DateField,
-    DateRangeField,
-    DateTimeField,
-    DateTimeRangeField,
-    DropDownField,
-    Field,
-    FieldLayout,
-    FieldList,
-    FieldSet,
-    FileField,
-    Form,
-    HtmlField,
-    InputField,
-    NavField,
-    NumberField,
-    PasswordField,
-    RadioListField,
-    ReCaptchaField,
-    SliderField,
-    SwitcherField,
-    TextField,
-    TimeField,
+    RateField,
 };

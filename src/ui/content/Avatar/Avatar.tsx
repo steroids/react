@@ -69,7 +69,6 @@ export interface IAvatarProps {
      * @example {true}
      */
     hasBorder?: boolean;
-
 }
 
 export interface IAvatarViewProps extends IAvatarProps {

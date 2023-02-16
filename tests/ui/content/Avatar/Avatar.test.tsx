@@ -19,6 +19,8 @@ describe('Avatar tests', () => {
         view: AvatarView,
     };
 
+    const expectedAvatarClass = 'AvatarView';
+
     const JSXWrapper = (
         <div>
             <Avatar {...props} />
@@ -30,16 +32,17 @@ describe('Avatar tests', () => {
         const avatar = getByTestId(props.testId);
 
         expect(avatar).toBeInTheDocument();
-        expect(avatar).toHaveClass('AvatarView');
+        expect(avatar).toHaveClass(expectedAvatarClass);
+        expect(avatar).toHaveClass(props.className);
     });
 
     it('avatar should have right size, shape, status', () => {
         const {getByTestId} = render(JSXWrapper);
         const avatar = getByTestId(props.testId);
 
-        expect(avatar).toHaveClass(`AvatarView_size_${props.size}`);
-        expect(avatar).toHaveClass(`AvatarView_shape_${props.shape}`);
-        expect(avatar).toHaveClass('AvatarView_has-status');
+        expect(avatar).toHaveClass(`${expectedAvatarClass}_size_${props.size}`);
+        expect(avatar).toHaveClass(`${expectedAvatarClass}_shape_${props.shape}`);
+        expect(avatar).toHaveClass(`${expectedAvatarClass}_has-status`);
     });
 
     it('should render picture with right attributes', () => {

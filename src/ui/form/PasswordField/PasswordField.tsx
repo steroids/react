@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useMemo, useState } from 'react';
+import {useMemo, useState} from 'react';
 import {IInputFieldProps} from '../InputField/InputField';
-import { useComponents } from '../../../hooks';
+import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**

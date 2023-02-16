@@ -13,6 +13,17 @@ import {IButtonProps} from '../../form/Button/Button';
  */
 export interface IPaginationProps {
     /**
+     * Подключить пагинацию
+     * @example true
+     */
+    enable?: boolean,
+
+    /**
+     * Значение по-умолчанию
+     */
+    defaultValue?: number;
+
+    /**
      * Аттрибут (название) в форме для поля пагинации
      * @example page
      */
@@ -72,6 +83,11 @@ export interface IPaginationProps {
      * Темная тема
      */
     dark?: boolean,
+
+    /**
+     * Список, для которого используется пагинация
+     */
+    list?: any,
 
     [key: string]: any,
 }

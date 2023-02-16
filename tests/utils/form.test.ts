@@ -85,8 +85,8 @@ describe('form utils', () => {
 
         it('with array', () => {
             const objectWithArrayValue = {
-                array: [plainObject]
-            }
+                array: [plainObject],
+            };
 
             expect(cleanEmptyObject(objectWithArrayValue)).toEqual(objectWithArrayValue);
         });

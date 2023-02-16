@@ -41,7 +41,7 @@ describe.skip('TextField tests', () => {
     describe('Actions', () => {
         it('should value change', () => {
             const wrapper = mountWithApp(TextField, {view: TextFieldView});
-            wrapper.find('textarea').simulate('change', {target: {value: 'test'} });
+            wrapper.find('textarea').simulate('change', {target: {value: 'test'}});
             expect(wrapper.find('textarea')).toHaveProp('value', 'test');
         });
         it('should submit on enter', () => {

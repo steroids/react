@@ -23,7 +23,7 @@ export default () => {
                         modalId: 'demo',
                         title: 'Modal based only on props',
                         component: () => (
-                            <div style={{ marginBottom: '20px' }}>
+                            <div style={{marginBottom: '20px'}}>
                                 This is your modal content.
                             </div>
                         ),

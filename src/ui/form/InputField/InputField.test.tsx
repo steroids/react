@@ -53,7 +53,7 @@ describe.skip('InputField tests', () => {
     describe('Actions', () => {
         it('should value change', () => {
             const wrapper = mountWithApp(InputField, {view: InputFieldView});
-            wrapper.find('input').simulate('change', { target: { value: 'test' } });
+            wrapper.find('input').simulate('change', {target: {value: 'test'}});
             expect(wrapper.find('input')).toHaveProp('value', 'test');
         });
     });

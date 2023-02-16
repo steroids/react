@@ -12,4 +12,5 @@ jobs:
           path: react-bootstrap
       - run: yarn
       - run: cd react-bootstrap && yarn
+      - run: yarn lint
       - run: yarn test

@@ -43,7 +43,7 @@ describe.skip('CheckboxField tests', () => {
     describe('Actions', () => {
         it('should checked after click', () => {
             const wrapper = mountWithApp(CheckboxField, {view: CheckboxFieldView});
-            wrapper.find('input').simulate('change', {target: {checked: true} });
+            wrapper.find('input').simulate('change', {target: {checked: true}});
             expect(wrapper.find('input')).toHaveProp('checked', true);
         });
     });

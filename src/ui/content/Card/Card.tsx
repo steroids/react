@@ -1,4 +1,4 @@
-import { useComponents } from '../../../hooks';
+import {useComponents} from '../../../hooks';
 
 export interface ICardProps {
     /**

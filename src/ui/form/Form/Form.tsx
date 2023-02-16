@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';

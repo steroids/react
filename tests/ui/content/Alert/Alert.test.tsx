@@ -43,7 +43,8 @@ describe('Alert', () => {
     it('should render right icons', () => {
         const {getByTestId, getAllByRole} = render(JSXWrapper);
         const alert = getByTestId(props.testId);
-        const closeIcon = getAllByRole('img')[1];
+        const closeIconIndex = 1;
+        const closeIcon = getAllByRole('img')[closeIconIndex];
 
         expect(alert).toHaveClass(`${expectedAlertClass}_${props.type}`);
         expect(closeIcon).toHaveClass(`${expectedAlertClass}__icon-close`);
@@ -88,9 +89,11 @@ describe('Alert', () => {
 
         it('should click to close call callback', () => {
             const {container} = render(actionJSXWrapper);
-            const closeIcon = container.getElementsByClassName(`${expectedAlertClass}__icon-close`)[0];
+            const closeIconIndex = 0;
+            const closeIcon = container.getElementsByClassName(`${expectedAlertClass}__icon-close`)[closeIconIndex];
             const expectedCloseCallCount = 1;
             fireEvent.click(closeIcon);
+
             expect(mockedOnClose.mock.calls.length).toBe(expectedCloseCallCount);
         });
     });

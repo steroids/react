@@ -78,8 +78,6 @@ function Notifications(props:INotificationsProps): JSX.Element {
     const dispatch = useDispatch();
     useMount(() => {
         if (props.initialFlashes) {
-            //TODO remove @ts-ignore
-            //@ts-ignore
             dispatch(setFlashes(props.initialFlashes));
 
             // Disable scroll or scroll to top on show notifications

@@ -125,8 +125,6 @@ export default function useLayout(initAction: any = null): ILayout {
     useMount(() => {
         // Callback for load initial page data (return promise)
         if (_isFunction(initAction)) {
-            //TODO Remove @ts-ignore
-            //@ts-ignore
             dispatch(init(true));
         } else {
             dispatch(setUser(null));
@@ -140,11 +138,10 @@ export default function useLayout(initAction: any = null): ILayout {
             return;
         }
 
+        //@ts-ignore
         runInitAction(initAction, components, dispatch)
             .then(() => {
                 if (redirectPageId) {
-                    //TODO Remove @ts-ignore
-                    //@ts-ignore
                     dispatch(goToRoute(redirectPageId));
                 }
             })
@@ -169,8 +166,6 @@ export default function useLayout(initAction: any = null): ILayout {
         }
         if (_intersection(pageRoles, userRoles).length === 0) {
             if (loginRouteId && route.id !== loginRouteId) {
-                //TODO Remove @ts-ignore
-                //@ts-ignore
                 dispatch(goToRoute(loginRouteId));
             } else {
                 status = STATUS_ACCESS_DENIED;

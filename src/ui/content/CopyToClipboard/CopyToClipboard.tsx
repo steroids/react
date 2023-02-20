@@ -40,8 +40,6 @@ export default function CopyToClipboard(props: ICopyToClipboardProps) {
                     params: undefined,
                     ...(typeof props.notification === 'string' ? {message: props.notification} : props.notification),
                 };
-                //TODO Remove @ts-ignore
-                //@ts-ignore
                 dispatch(showNotification(notification.message, notification.level, notification.params));
             }
 

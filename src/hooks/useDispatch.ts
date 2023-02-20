@@ -1,5 +1,7 @@
+import {Dispatch} from 'react';
 import {useDispatch as useReduxDispatch} from 'react-redux';
 
 export default function useDispatch() {
-    return useReduxDispatch();
+    //@ts-ignore
+    return useReduxDispatch<Dispatch<any>>();
 }

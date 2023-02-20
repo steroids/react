@@ -37,8 +37,6 @@ export default () => {
                             color={level}
                             label={__(`Уведомление типа "${level}"`)}
                             onClick={() => {
-                                //TODO remove @ts-ignore
-                                //@ts-ignore
                                 dispatch(showNotification(message, level));
                             }}
                             style={{margin: '10px 0'}}

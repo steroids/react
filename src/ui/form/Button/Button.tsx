@@ -50,7 +50,7 @@ export interface IButtonProps {
      * Цвет состояния
      * @example success
      */
-    color?: ColorName;
+    color?: 'basic' | 'primary' | 'secondary' | 'info' | 'warning' | 'danger' | 'success';
 
     /**
      * Отображать как ссылку?
@@ -200,6 +200,11 @@ export interface IButtonProps {
      * Цвет текста кнопки или ссылки
      */
     textColor?: any,
+
+    /**
+     * Толщина шрифта кнопки
+     */
+    fontThickness: 'regular' | 'bold',
 
     [key: string]: any;
 }

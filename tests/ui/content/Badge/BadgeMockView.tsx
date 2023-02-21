@@ -11,17 +11,6 @@ interface IBadgeMockProps extends IBadgeViewProps {
 export default function BadgeView(props: IBadgeMockProps) {
     const bem = useBem('BadgeView');
 
-    const renderCorrectIcon = () => {
-        const getIconProps = () => ({
-            className: 'close',
-            name: require('@steroidsjs/boostrap/icons/svgs/close.svg'),
-            onClick: props.onClose,
-            view: IconMockView,
-        });
-
-        return ['warning', 'info'].includes(props.type) ? <Icon {...getIconProps()} /> : <Icon {...getIconProps()} />;
-    };
-
     return (
         props.isExist && (
             <div
@@ -42,18 +31,22 @@ export default function BadgeView(props: IBadgeMockProps) {
                         <span className={bem.element('message')}>
                             {props.message}
                         </span>
-                        {props.showClose && renderCorrectIcon()}
-                        {!props.showClose && props.counter
-                            && (
-                                <span className={bem.element('counter')}>
-                                    {typeof props.counter === 'object'
-                                        && (
-                                            <span className={bem.element('counter-content')}>
-                                                {props.counter.content}
-                                            </span>
-                                        )}
-                                </span>
-                            )}
+                        {props.counter && (
+                            <span className={bem.element('counter')}>
+                                {typeof props.counter === 'object' && (
+                                    <span className={bem.element('counter-content')}>
+                                        {props.counter.content}
+                                    </span>
+                                )}
+                            </span>
+                        )}
+                        {props.showClose && (
+                            <Icon
+                                onClick={props.onClose}
+                                className={bem.element('close')}
+                                name='badge-close'
+                            />
+                        )}
                     </div>
                 </div>
             </div>

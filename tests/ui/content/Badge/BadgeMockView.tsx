@@ -26,7 +26,7 @@ export default function BadgeView(props: IBadgeMockProps) {
                 )}
                 style={props.style}
             >
-                <div className={bem.element('content-wrapper')}>
+                <div className={bem.element('wrapper')}>
                     <div className={bem.element('content')}>
                         <span className={bem.element('message')}>
                             {props.message}
@@ -42,9 +42,10 @@ export default function BadgeView(props: IBadgeMockProps) {
                         )}
                         {props.showClose && (
                             <Icon
+                                view={IconMockView}
                                 onClick={props.onClose}
                                 className={bem.element('close')}
-                                name='badge-close'
+                                name={require('@steroidsjs/boostrap/icons/svgs/close.svg')}
                             />
                         )}
                     </div>

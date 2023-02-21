@@ -198,7 +198,7 @@ export interface IButtonProps {
     /**
      * Толщина шрифта кнопки
      */
-    fontThickness: 'regular' | 'bold',
+    fontThickness?: 'regular' | 'bold',
 
     [key: string]: any;
 }
@@ -348,6 +348,7 @@ Button.defaultProps = {
     size: 'md',
     className: '',
     resetFailedMs: 2000,
+    fontThickness: 'regular',
     badge: {
         enable: false,
         value: 0,

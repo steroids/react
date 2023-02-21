@@ -5,8 +5,3 @@ export {
     CollapseItem,
     Collapse,
 };
-
-export default {
-    CollapseItem,
-    Collapse,
-};

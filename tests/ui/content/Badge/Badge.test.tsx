@@ -1,5 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
+import {fireEvent, screen } from '@testing-library/dom';
+
 import {render} from '../../../customRender';
 import Badge from '../../../../src/ui/content/Badge/Badge';
 import BadgeMockView from './BadgeMockView';
@@ -82,5 +84,29 @@ describe('Badge tests', () => {
         });
     });
 
-    //TODO Action
+    describe('actions', () => {
+        const mockedOnClose = jest.fn();
+
+        const actionProps = {
+            showClose: true,
+            onClose: mockedOnClose,
+            view: BadgeMockView,
+        };
+
+        const actionJSXWrapper = (
+            <div>
+                <Badge {...actionProps} />
+            </div>
+        );
+
+        it('should click to close call callback', () => {
+            const {container} = render(actionJSXWrapper);
+            const closeIconIndex = 0;
+            const closeIcon = container.getElementsByClassName(`${expectedBadgeClass}__close`)[closeIconIndex];
+            const expectedCloseCallCount = 1;
+            fireEvent.click(closeIcon);
+
+            expect(mockedOnClose.mock.calls.length).toBe(expectedCloseCallCount);
+        });
+    });
 });

@@ -50,7 +50,7 @@ export interface IAccordionCommonProps {
      * При значении "top" верхняя часть шапки будет закруглена.
      * @example {'top'}
      */
-    positionStyle?: 'bottom' | 'middle' | 'top',
+    position?: 'bottom' | 'middle' | 'top',
 }
 
 export interface IAccordionCommonViewProps extends IAccordionCommonProps {

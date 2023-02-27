@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {fireEvent, screen } from '@testing-library/dom';
+import {fireEvent} from '@testing-library/dom';
 
 import {render} from '../../../customRender';
 import Badge from '../../../../src/ui/content/Badge/Badge';

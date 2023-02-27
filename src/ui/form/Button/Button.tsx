@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import {useUpdateEffect} from 'react-use';
 import FieldLayout from '../FieldLayout';
 import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';

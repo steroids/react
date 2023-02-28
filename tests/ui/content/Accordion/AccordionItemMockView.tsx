@@ -10,25 +10,62 @@ export default function AccordionItemView(props: IAccordionCommonViewProps) {
     const bem = useBem('AccordionItemView');
 
     React.useEffect(() => {
-        if (!props.toggleAccordion || !props.activeKey) return;
+        if (!props.toggleAccordion || !props.toggleCollapse || !props.activeKey) return;
 
-        props.toggleAccordion(props.activeKey - 1);
+        if (props.hasOneOpenItem) {
+            props.toggleAccordion(props.activeKey - 1);
+        } else {
+            props.toggleCollapse(props.activeKey - 1);
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.activeKey]);
 
-    const handleHeaderClick = () => {
-        if (props.disabled || !props.toggleAccordion) return;
+    const renderIcons = () => {
+        if (!props.icon) {
+            return null;
+        }
 
-        props.toggleAccordion(props.childIndex);
+        const openClassName = bem.element('open-icon');
+        const closeClassName = bem.element('close-icon');
+
+        return (
+            <>
+                {typeof props.icon.open === 'string'
+                    ? <Icon name={props.icon.open} className={openClassName} />
+                    : <span className={openClassName}>{props.icon.open}</span>}
+                {typeof props.icon.close === 'string'
+                    ? <Icon name={props.icon.close} className={closeClassName} />
+                    : <span className={closeClassName}>{props.icon.close}</span>}
+            </>
+        );
+    };
+
+    const handleHeaderClick = () => {
+        if (props.disabled || !props.toggleAccordion || !props.toggleCollapse) {
+            return;
+        }
+
+        const {toggleAccordion, toggleCollapse, hasOneOpenItem, childIndex} = props;
+
+        if (hasOneOpenItem) {
+            toggleAccordion(childIndex);
+        } else {
+            toggleCollapse(childIndex);
+        }
     };
 
     return (
         <div
-            className={bem(bem.block({
-                disable: props.disabled,
-                [`position_${props.position}`]: !!props.position,
-                [`theme_${props.theme}`]: !!props.theme,
-            }), props.className)}
+            className={bem(
+                bem.block({
+                    disable: props.disabled,
+                    [`position_${props.position}`]: !!props.position,
+                    [`theme_${props.theme}`]: !!props.theme,
+                    opened: !props.disabled && props.isShowMore,
+                }),
+                props.className,
+            )}
             style={props.style}
         >
             <div
@@ -42,14 +79,13 @@ export default function AccordionItemView(props: IAccordionCommonViewProps) {
                 </div>
                 <div className={bem.element('icon-wrapper')}>
                     {props.icon
-                        ? (typeof props.icon === 'string' ? <Icon name={props.icon} /> : props.icon)
+                        ? renderIcons()
                         : (
                             <Icon
-                                view={IconMockView}
                                 className={bem.element('icon', {
                                     active: !props.disabled && props.isShowMore,
                                 })}
-                                name="close"
+                                name="mockIconName"
                             />
                         )}
                 </div>

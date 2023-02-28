@@ -14,13 +14,14 @@ export default function ButtonView(props: IButtonViewProps & IBemHocOutput) {
         const title = props.label && _isString(props.label)
             ? props.label
             : (props.hint || null);
+
         return (
             <>
                 {props.isLoading && (
                     <Icon
                         view={IconMockView}
                         className={bem.element('loader')}
-                        name='close'
+                        name='mockIconName'
                     />
                 )}
                 {!props.isLoading && (
@@ -43,7 +44,9 @@ export default function ButtonView(props: IButtonViewProps & IBemHocOutput) {
     };
 
     const renderBadge = () => {
-        if (!props.badge || !props.badge.enable) return null;
+        if (!props.badge || !props.badge.enable) {
+            return null;
+        }
 
         return (
             <span

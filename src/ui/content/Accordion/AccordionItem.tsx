@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useComponents} from '../../../hooks';
 import {IAccordionCommonProps, IAccordionCommonViewProps} from './Accordion';
 
@@ -13,6 +12,7 @@ AccordionItem.defaultProps = {
     title: 'Accordion',
     positionStyle: 'top',
     theme: 'light',
+
 } as IAccordionCommonViewProps;
 
 export default AccordionItem;

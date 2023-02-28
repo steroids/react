@@ -2,6 +2,5 @@
 
 export default {
     default: require('./testIcon.svg'),
-    info: require('./testIcon.svg'),
-    close: require('./testIcon.svg'),
+    mockIconName: require('./testIcon.svg'),
 };

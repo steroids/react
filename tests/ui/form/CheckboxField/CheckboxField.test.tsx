@@ -1,42 +1,29 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {fireEvent, screen} from '@testing-library/dom';
 import CheckboxField, {ICheckboxFieldViewProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';
 import CheckboxFieldMockView from './CheckboxFieldMockView';
 import {IBemHocInput} from '../../../../src/hoc/bem';
 import {render} from '../../../customRender';
-
-type PropsType = ICheckboxFieldViewProps & IBemHocInput;
+import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('CheckboxField tests', () => {
-    const props: PropsType = {
+    const defaultProps: ICheckboxFieldViewProps & IBemHocInput = {
         view: CheckboxFieldMockView,
 
         inputProps: {
             name: 'checkbox-test',
             type: 'checkbox',
             checked: false,
-            onChange: () => { },
+            onChange: () => {},
             disabled: false,
         },
     };
 
-    function JSXWrapper(additionalProps: Omit<PropsType, 'inputProps'> | null = null) {
-        return (
-            <div>
-                <CheckboxField
-                    {...props}
-                    {...additionalProps}
-                />
-            </div>
-        );
-    }
-
     const expectedCheckboxClass = 'CheckboxFieldView';
 
     it('should be in the document', () => {
-        const {container} = render(JSXWrapper());
-        const checkbox = container.getElementsByClassName(expectedCheckboxClass)[0];
+        const {container} = render(JSXWrapper(CheckboxField, defaultProps));
+        const checkbox = getElementByClassName(container, expectedCheckboxClass);
 
         expect(checkbox).toBeInTheDocument();
     });
@@ -47,12 +34,12 @@ describe('CheckboxField tests', () => {
             width: '30px',
         };
 
-        const {container} = render(JSXWrapper({
+        const {container} = render(JSXWrapper(CheckboxField, defaultProps, {
             className: externalClassName,
             style: externalStyle,
         }));
 
-        const checkbox = container.getElementsByClassName(externalClassName)[0];
+        const checkbox = getElementByClassName(container, externalClassName);
 
         expect(checkbox).toBeInTheDocument();
         expect(checkbox).toHaveStyle(externalStyle);
@@ -61,7 +48,7 @@ describe('CheckboxField tests', () => {
     it('should have label', () => {
         const label = 'label';
 
-        const {getByText} = render(JSXWrapper({
+        const {getByText} = render(JSXWrapper(CheckboxField, defaultProps, {
             label,
         }));
 
@@ -71,8 +58,8 @@ describe('CheckboxField tests', () => {
     });
 
     it('should have name', () => {
-        const {container} = render(JSXWrapper());
-        const input = container.getElementsByClassName(`${expectedCheckboxClass}__input`)[0];
+        const {container} = render(JSXWrapper(CheckboxField, defaultProps));
+        const input = getElementByClassName(container, `${expectedCheckboxClass}__input`);
 
         expect(input).toHaveAttribute('name', 'checkbox-test');
     });

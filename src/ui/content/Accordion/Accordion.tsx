@@ -20,7 +20,16 @@ export interface IAccordionCommonProps {
      * Пользовательская иконка svg или название иконки
      * @example {'circle'}
      */
-    icon?: React.ReactNode | string,
+    icon?: {
+        open: React.ReactNode | string,
+        close: React.ReactNode | string,
+    },
+
+    /**
+   * Включает режим в котором можно открыть только один аккордеон
+   * @example {true}
+   */
+    hasOneOpenItem?: boolean,
 
     /**
      * Название AccordionItem
@@ -55,27 +64,41 @@ export interface IAccordionCommonProps {
 
 export interface IAccordionCommonViewProps extends IAccordionCommonProps {
     toggleAccordion?: (number) => void,
+    toggleCollapse?: (number) => void;
     childIndex?: number,
     isShowMore?: boolean,
 }
 
 function Accordion(props: IAccordionCommonProps) {
-    const [selectedAccordion, setSelectedAccordion] = React.useState<number[]>([]);
+    const [selectedAccordions, setSelectedAccordions] = React.useState<number[]>([]);
 
     React.useEffect(() => {
         if (props.onChange) {
             props.onChange();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedAccordion]);
+    }, [selectedAccordions]);
+
+    const toggleCollapse = indexSelected => {
+        if (selectedAccordions.includes(indexSelected)) {
+            const newState = [...selectedAccordions];
+            const indexInArray = selectedAccordions.indexOf(indexSelected);
+            newState.splice(indexInArray, 1);
+            setSelectedAccordions(newState);
+        } else {
+            const newState = [...selectedAccordions];
+            newState.push(indexSelected);
+            setSelectedAccordions(newState);
+        }
+    };
 
     const toggleAccordion = indexSelected => {
-        if (selectedAccordion.includes(indexSelected)) {
-            setSelectedAccordion([]);
+        if (selectedAccordions.includes(indexSelected)) {
+            setSelectedAccordions([]);
         } else {
             const newSelectedAccordion = [];
             newSelectedAccordion.push(indexSelected);
-            setSelectedAccordion(newSelectedAccordion);
+            setSelectedAccordions(newSelectedAccordion);
         }
     };
 
@@ -91,8 +114,10 @@ function Accordion(props: IAccordionCommonProps) {
                     style: props.style,
                     activeKey: props.activeKey,
                     childIndex: index,
+                    toggleCollapse,
                     toggleAccordion,
-                    isShowMore: (selectedAccordion || []).includes(index),
+                    hasOneOpenItem: props.hasOneOpenItem,
+                    isShowMore: (selectedAccordions || []).includes(index),
                     icon: props.icon,
                     ...child.props,
                 }))

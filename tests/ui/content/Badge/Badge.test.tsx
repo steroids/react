@@ -1,13 +1,12 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-
 import {render} from '../../../customRender';
 import Badge from '../../../../src/ui/content/Badge/Badge';
 import BadgeMockView from './BadgeMockView';
+import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('Badge tests', () => {
-    const props = {
+    const defaultProps = {
         message: 'badgeTest',
         view: BadgeMockView,
         testId: 'badge-test',
@@ -17,48 +16,43 @@ describe('Badge tests', () => {
     };
 
     const expectedBadgeClass = 'BadgeView';
-
-    const JSXWrapper = (
-        <div>
-            <Badge {...props} />
-        </div>
-    );
+    const wrapper = JSXWrapper(Badge, defaultProps);
 
     it('should be in the document', () => {
-        const {getByTestId} = render(JSXWrapper);
-        const badge = getByTestId(props.testId);
+        const {getByTestId} = render(wrapper);
+        const badge = getByTestId(defaultProps.testId);
 
         expect(badge).toBeInTheDocument();
         expect(badge).toHaveClass(expectedBadgeClass);
-        expect(badge).toHaveClass(props.className);
+        expect(badge).toHaveClass(defaultProps.className);
     });
 
-    it('avatar should have right size, rounding, type and external className', () => {
-        const {getByTestId} = render(JSXWrapper);
-        const badge = getByTestId(props.testId);
+    it('should have right size, rounding, type and external className', () => {
+        const {getByTestId} = render(wrapper);
+        const badge = getByTestId(defaultProps.testId);
 
         expect(badge).toHaveClass(`${expectedBadgeClass}_primary`);
         expect(badge).toHaveClass(`${expectedBadgeClass}_medium`);
         expect(badge).toHaveClass(`${expectedBadgeClass}_squarer`);
-        expect(badge).toHaveClass(props.className);
+        expect(badge).toHaveClass(defaultProps.className);
     });
 
     it('should have correct message', () => {
-        const {getByText} = render(JSXWrapper);
-        const message = getByText(props.message);
+        const {getByText} = render(wrapper);
+        const message = getByText(defaultProps.message);
 
         expect(message).toBeInTheDocument();
     });
 
     it('should have right style', () => {
-        const {getByTestId} = render(JSXWrapper);
-        const badge = getByTestId(props.testId);
+        const {getByTestId} = render(wrapper);
+        const badge = getByTestId(defaultProps.testId);
 
-        expect(badge).toHaveStyle(props.style);
+        expect(badge).toHaveStyle(defaultProps.style);
     });
 
     describe('badge with counter', () => {
-        const counterProps = {
+        const defaultCounterProps = {
             view: BadgeMockView,
             testId: 'badge-test',
             counter: {
@@ -68,16 +62,12 @@ describe('Badge tests', () => {
             message: 'badge with chip',
         };
 
-        const counterJSXWrapper = (
-            <div>
-                <Badge {...counterProps} />
-            </div>
-        );
+        const counterWrapper = JSXWrapper(Badge, defaultCounterProps);
 
         it('should have counter', () => {
-            const {getByTestId, container} = render(counterJSXWrapper);
-            const badge = getByTestId(counterProps.testId);
-            const counter = container.getElementsByClassName(`${expectedBadgeClass}__counter`)[0];
+            const {getByTestId, container} = render(counterWrapper);
+            const badge = getByTestId(defaultCounterProps.testId);
+            const counter = getElementByClassName(container, `${expectedBadgeClass}__counter`);
 
             expect(badge).toHaveClass(`${expectedBadgeClass}_has-counter`);
             expect(counter).toBeInTheDocument();
@@ -87,22 +77,17 @@ describe('Badge tests', () => {
     describe('actions', () => {
         const mockedOnClose = jest.fn();
 
-        const actionProps = {
+        const actionDefaultProps = {
             showClose: true,
             onClose: mockedOnClose,
             view: BadgeMockView,
         };
 
-        const actionJSXWrapper = (
-            <div>
-                <Badge {...actionProps} />
-            </div>
-        );
+        const actionWrapper = JSXWrapper(Badge, actionDefaultProps);
 
         it('should click to close call callback', () => {
-            const {container} = render(actionJSXWrapper);
-            const closeIconIndex = 0;
-            const closeIcon = container.getElementsByClassName(`${expectedBadgeClass}__close`)[closeIconIndex];
+            const {container} = render(actionWrapper);
+            const closeIcon = getElementByClassName(container, `${expectedBadgeClass}__close`);
             const expectedCloseCallCount = 1;
             fireEvent.click(closeIcon);
 

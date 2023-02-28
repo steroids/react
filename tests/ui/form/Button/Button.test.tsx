@@ -1,32 +1,20 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-
 import {render} from '../../../customRender';
 import Button, {IButtonProps} from '../../../../src/ui/form/Button/Button';
 import ButtonMockView from './ButtonMockView';
+import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('Button tests', () => {
-    const props : IButtonProps = {
+    const defaultProps: IButtonProps = {
         view: ButtonMockView,
     };
-
-    function JSXWrapper(additionalProps: IButtonProps | null = null) {
-        return (
-            <div>
-                <Button
-                    {...props}
-                    {...additionalProps}
-                />
-            </div>
-        );
-    }
 
     const expectedButtonClass = 'ButtonView';
 
     it('button should be in the document', () => {
-        const {container} = render(JSXWrapper());
-        const button = container.getElementsByClassName(expectedButtonClass)[0];
+        const {container} = render(JSXWrapper(Button, defaultProps));
+        const button = getElementByClassName(container, expectedButtonClass);
 
         expect(button).toBeInTheDocument();
     });
@@ -34,7 +22,7 @@ describe('Button tests', () => {
     it('should have right label', () => {
         const label = 'test-label';
 
-        const {getByText} = render(JSXWrapper({
+        const {getByText} = render(JSXWrapper(Button, defaultProps, {
             label,
         }));
 
@@ -42,7 +30,7 @@ describe('Button tests', () => {
     });
 
     it('should have right color, outline, loading, fontThickness, size', () => {
-        const buttonProperties: IButtonProps = {
+        const additionalProps: IButtonProps = {
             color: 'info',
             outline: true,
             isLoading: true,
@@ -50,26 +38,23 @@ describe('Button tests', () => {
             size: 'md',
         };
 
-        const {container} = render(JSXWrapper(buttonProperties));
+        const {container} = render(JSXWrapper(Button, defaultProps, additionalProps));
+        const button = getElementByClassName(container, expectedButtonClass);
 
-        const button = container.getElementsByClassName(expectedButtonClass)[0];
-
-        expect(button).toHaveClass(`${expectedButtonClass}_outline_${buttonProperties.color}`);
+        expect(button).toHaveClass(`${expectedButtonClass}_outline_${additionalProps.color}`);
         expect(button).toHaveClass(`${expectedButtonClass}_loading`);
-        expect(button).toHaveClass(`${expectedButtonClass}_thickness_${buttonProperties.fontThickness}`);
-        expect(button).toHaveClass(`${expectedButtonClass}_size_${buttonProperties.size}`);
+        expect(button).toHaveClass(`${expectedButtonClass}_thickness_${additionalProps.fontThickness}`);
+        expect(button).toHaveClass(`${expectedButtonClass}_size_${additionalProps.size}`);
     });
 
     it('should have disabled', () => {
         const disabled = 'disabled';
 
-        const {container} = render(JSXWrapper(
-            {
-                [disabled]: true,
-            },
-        ));
+        const {container} = render(JSXWrapper(Button, defaultProps, {
+            [disabled]: true,
+        }));
 
-        const button = container.getElementsByClassName(expectedButtonClass)[0];
+        const button = getElementByClassName(container, expectedButtonClass);
 
         expect(button).toHaveClass(`${expectedButtonClass}_${disabled}`);
     });
@@ -77,38 +62,32 @@ describe('Button tests', () => {
     it('should have hint', () => {
         const hint = 'test-hint';
 
-        const {container} = render(JSXWrapper(
-            {
-                hint,
-            },
-        ));
+        const {container} = render(JSXWrapper(Button, defaultProps, {
+            hint,
+        }));
 
-        const button = container.getElementsByClassName(expectedButtonClass)[0];
+        const button = getElementByClassName(container, expectedButtonClass);
 
         expect(button).toHaveAttribute('title', hint);
     });
 
     it('should have failed', () => {
-        const {container} = render(JSXWrapper(
-            {
-                isFailed: true,
-            },
-        ));
+        const {container} = render(JSXWrapper(Button, defaultProps, {
+            isFailed: true,
+        }));
 
-        const button = container.getElementsByClassName(expectedButtonClass)[0];
+        const button = getElementByClassName(container, expectedButtonClass);
 
         expect(button).toHaveClass(`${expectedButtonClass}_failed`);
     });
 
     it('should be block and link', () => {
-        const {container} = render(JSXWrapper(
-            {
-                block: true,
-                link: true,
-            },
-        ));
+        const {container} = render(JSXWrapper(Button, defaultProps, {
+            block: true,
+            link: true,
+        }));
 
-        const link = container.getElementsByClassName(expectedButtonClass)[0];
+        const link = getElementByClassName(container, expectedButtonClass);
 
         expect(link).toHaveAttribute('href', '#');
         expect(link).toHaveClass('btn-link');
@@ -116,11 +95,9 @@ describe('Button tests', () => {
     });
 
     it('should be tag', () => {
-        const {container} = render(JSXWrapper(
-            {
-                tag: 'a',
-            },
-        ));
+        const {container} = render(JSXWrapper(Button, defaultProps, {
+            tag: 'a',
+        }));
 
         const tag = container.getElementsByTagName('a')[0];
 
@@ -130,11 +107,11 @@ describe('Button tests', () => {
     it('should have badge', () => {
         const badgeContent = 2;
 
-        const {container} = render(JSXWrapper({
+        const {container} = render(JSXWrapper(Button, defaultProps, {
             badge: badgeContent,
         }));
 
-        const badge = container.getElementsByClassName(`${expectedButtonClass}__badge`)[0];
+        const badge = getElementByClassName(container, `${expectedButtonClass}__badge`);
 
         expect(badge).toBeInTheDocument();
         expect(badge).toHaveTextContent(badgeContent.toString());
@@ -147,12 +124,12 @@ describe('Button tests', () => {
             width: '30px',
         };
 
-        const {container} = render(JSXWrapper({
+        const {container} = render(JSXWrapper(Button, defaultProps, {
             style: externalStyle,
             className: externalClassName,
         }));
 
-        const button = container.getElementsByClassName(expectedButtonClass)[0];
+        const button = getElementByClassName(container, expectedButtonClass);
 
         expect(button).toHaveStyle(externalStyle);
         expect(button).toHaveClass(externalClassName);
@@ -161,12 +138,9 @@ describe('Button tests', () => {
     it('default click', () => {
         const mockedOnClick = jest.fn();
 
-        const {container} = render(JSXWrapper(
-            {
-                onClick: mockedOnClick,
-
-            },
-        ));
+        const {container} = render(JSXWrapper(Button, defaultProps, {
+            onClick: mockedOnClick,
+        }));
 
         const button = container.getElementsByTagName('button')[0];
         const expectedClickCallCount = 1;

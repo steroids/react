@@ -194,11 +194,6 @@ export interface IButtonProps {
      */
     textColor?: any,
 
-    /**
-     * Толщина шрифта кнопки
-     */
-    fontThickness?: 'regular' | 'bold',
-
     [key: string]: any;
 }
 

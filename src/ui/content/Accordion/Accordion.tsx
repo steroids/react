@@ -1,6 +1,11 @@
 import * as React from 'react';
 import {useComponents} from '../../../hooks';
 
+export interface IAccordionIcon {
+    open: React.ReactElement | string,
+    close: React.ReactElement | string,
+}
+
 export interface IAccordionCommonProps {
     view?: any,
     style?: React.CSSProperties,
@@ -20,10 +25,7 @@ export interface IAccordionCommonProps {
      * Пользовательская иконка svg или название иконки
      * @example {'circle'}
      */
-    icon?: {
-        open: React.ReactNode | string,
-        close: React.ReactNode | string,
-    },
+    icon?: IAccordionIcon | React.ReactElement | string,
 
     /**
    * Включает режим в котором можно открыть только один аккордеон

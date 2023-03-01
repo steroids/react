@@ -12,7 +12,7 @@ AccordionItem.defaultProps = {
     title: 'Accordion',
     positionStyle: 'top',
     theme: 'light',
-
+    showIcon: true,
 } as IAccordionCommonViewProps;
 
 export default AccordionItem;

@@ -62,6 +62,11 @@ export interface IAccordionCommonProps {
      * @example {'top'}
      */
     position?: 'bottom' | 'middle' | 'top',
+
+    /**
+     * Отображать ли иконку у AccordionItem
+     */
+    showIcon?: boolean,
 }
 
 export interface IAccordionCommonViewProps extends IAccordionCommonProps {
@@ -121,6 +126,7 @@ function Accordion(props: IAccordionCommonProps) {
                     hasOneOpenItem: props.hasOneOpenItem,
                     isShowMore: (selectedAccordionItems || []).includes(index),
                     icon: props.icon,
+                    showIcon: props.showIcon,
                     ...child.props,
                 }))
             }

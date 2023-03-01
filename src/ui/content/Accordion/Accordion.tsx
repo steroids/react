@@ -22,7 +22,7 @@ export interface IAccordionCommonProps {
     disabled?: boolean,
 
     /**
-     * Пользовательская иконка svg или название иконки
+     * Пользовательская иконка svg или название иконки или объект с иконками open и close
      * @example {'circle'}
      */
     icon?: IAccordionIcon | React.ReactElement | string,

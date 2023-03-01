@@ -3,7 +3,7 @@ import {fireEvent} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import Button, {IButtonProps} from '../../../../src/ui/form/Button/Button';
 import ButtonMockView from './ButtonMockView';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
 
 describe('Button tests', () => {
     const props: IButtonProps = {
@@ -108,7 +108,7 @@ describe('Button tests', () => {
             tag: 'a',
         }));
 
-        const tag = container.getElementsByTagName('a')[0];
+        const tag = getElementByTag(container, 'a');
 
         expect(tag).toBeInTheDocument();
     });
@@ -154,7 +154,7 @@ describe('Button tests', () => {
             onClick: mockedOnClick,
         }));
 
-        const button = container.getElementsByTagName('button')[0];
+        const button = getElementByTag(container, 'button');
         const expectedClickCallCount = 1;
         fireEvent.click(button);
 

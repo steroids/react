@@ -342,7 +342,6 @@ Button.defaultProps = {
     size: 'md',
     className: '',
     resetFailedMs: 2000,
-    fontThickness: 'regular',
     badge: {
         enable: false,
         value: 0,

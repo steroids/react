@@ -4,7 +4,7 @@ import {useMount, useUnmount} from 'react-use';
 import {useComponents} from '../../hooks';
 
 interface IPortalProps {
-    children: React.ReactNode,
+    children?: React.ReactNode,
 }
 
 export default function Portal(props: IPortalProps): React.ReactPortal {

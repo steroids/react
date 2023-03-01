@@ -6,14 +6,14 @@ import ButtonMockView from './ButtonMockView';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('Button tests', () => {
-    const defaultProps: IButtonProps = {
+    const props: IButtonProps = {
         view: ButtonMockView,
     };
 
     const expectedButtonClass = 'ButtonView';
 
     it('button should be in the document', () => {
-        const {container} = render(JSXWrapper(Button, defaultProps));
+        const {container} = render(JSXWrapper(Button, props));
         const button = getElementByClassName(container, expectedButtonClass);
 
         expect(button).toBeInTheDocument();
@@ -22,7 +22,8 @@ describe('Button tests', () => {
     it('should have right label', () => {
         const label = 'test-label';
 
-        const {getByText} = render(JSXWrapper(Button, defaultProps, {
+        const {getByText} = render(JSXWrapper(Button, {
+            ...props,
             label,
         }));
 
@@ -38,7 +39,10 @@ describe('Button tests', () => {
             size: 'md',
         };
 
-        const {container} = render(JSXWrapper(Button, defaultProps, additionalProps));
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
+            ...additionalProps,
+        }));
         const button = getElementByClassName(container, expectedButtonClass);
 
         expect(button).toHaveClass(`${expectedButtonClass}_outline_${additionalProps.color}`);
@@ -50,7 +54,8 @@ describe('Button tests', () => {
     it('should have disabled', () => {
         const disabled = 'disabled';
 
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             [disabled]: true,
         }));
 
@@ -62,7 +67,8 @@ describe('Button tests', () => {
     it('should have hint', () => {
         const hint = 'test-hint';
 
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             hint,
         }));
 
@@ -72,7 +78,8 @@ describe('Button tests', () => {
     });
 
     it('should have failed', () => {
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             isFailed: true,
         }));
 
@@ -82,7 +89,8 @@ describe('Button tests', () => {
     });
 
     it('should be block and link', () => {
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             block: true,
             link: true,
         }));
@@ -95,7 +103,8 @@ describe('Button tests', () => {
     });
 
     it('should be tag', () => {
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             tag: 'a',
         }));
 
@@ -107,7 +116,8 @@ describe('Button tests', () => {
     it('should have badge', () => {
         const badgeContent = 2;
 
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             badge: badgeContent,
         }));
 
@@ -124,7 +134,8 @@ describe('Button tests', () => {
             width: '30px',
         };
 
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             style: externalStyle,
             className: externalClassName,
         }));
@@ -138,7 +149,8 @@ describe('Button tests', () => {
     it('default click', () => {
         const mockedOnClick = jest.fn();
 
-        const {container} = render(JSXWrapper(Button, defaultProps, {
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
             onClick: mockedOnClick,
         }));
 

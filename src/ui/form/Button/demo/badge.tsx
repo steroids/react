@@ -9,10 +9,8 @@ import Button from '../Button';
  */
 
 export default () => (
-    <>
         <Button
             badge={2}
             label={__('Badge')}
-        />
-    </>
+    />
 );

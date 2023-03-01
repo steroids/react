@@ -7,9 +7,9 @@ import AlertView from './AlertMockView';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('Alert', () => {
-    const defaultProps = {
+    const props = {
         className: 'test',
-        type: 'mockIconName',
+        type: 'mockIcon',
         message: 'Are you sure?',
         description: 'It is maybe dangerous',
         style: {width: '45%'},
@@ -19,7 +19,7 @@ describe('Alert', () => {
         view: AlertView,
     };
 
-    const wrapper = JSXWrapper(Alert, defaultProps);
+    const wrapper = JSXWrapper(Alert, props);
     const expectedAlertClass = 'AlertView';
 
     it('should render something without props', () => {
@@ -30,7 +30,7 @@ describe('Alert', () => {
 
     it('should be in the document', () => {
         const {getByTestId} = render(wrapper);
-        const alert = getByTestId(defaultProps.testId);
+        const alert = getByTestId(props.testId);
 
         expect(alert).toBeInTheDocument();
         expect(alert).toHaveClass(expectedAlertClass);
@@ -38,33 +38,33 @@ describe('Alert', () => {
 
     it('should render right icons', () => {
         const {getByTestId, getAllByRole} = render(wrapper);
-        const alert = getByTestId(defaultProps.testId);
+        const alert = getByTestId(props.testId);
         const closeIconIndex = 1;
         const closeIcon = getAllByRole('img')[closeIconIndex];
 
-        expect(alert).toHaveClass(`${expectedAlertClass}_${defaultProps.type}`);
+        expect(alert).toHaveClass(`${expectedAlertClass}_${props.type}`);
         expect(closeIcon).toHaveClass(`${expectedAlertClass}__icon-close`);
     });
 
     it('should have right external className', () => {
         const {getByTestId} = render(wrapper);
-        const alert = getByTestId(defaultProps.testId);
+        const alert = getByTestId(props.testId);
 
-        expect(alert).toHaveClass(defaultProps.className);
+        expect(alert).toHaveClass(props.className);
     });
 
     it('should have right message and description', () => {
         const {getByText} = render(wrapper);
 
-        expect(getByText(defaultProps.message)).toBeInTheDocument();
-        expect(getByText(defaultProps.description)).toBeInTheDocument();
+        expect(getByText(props.message)).toBeInTheDocument();
+        expect(getByText(props.description)).toBeInTheDocument();
     });
 
     it('should have right external style', () => {
         const {getByTestId} = render(wrapper);
-        const alert = getByTestId(defaultProps.testId);
+        const alert = getByTestId(props.testId);
 
-        expect(alert).toHaveStyle(defaultProps.style);
+        expect(alert).toHaveStyle(props.style);
     });
 
     describe('actions', () => {

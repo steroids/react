@@ -8,10 +8,8 @@ import Button from '../Button';
  * @col 4
  */
 
-export default () => (
-    <>
-        <Button confirm='Are you sure?'>
-            Confirm
-        </Button>
-    </>
-);
+export default () => {
+    <Button confirm='Are you sure?'>
+        Confirm
+    </Button>
+};

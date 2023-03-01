@@ -6,14 +6,14 @@ import AccordionItem from '../../../../src/ui/content/Accordion/AccordionItem';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('AccordionItem', () => {
-    const defaultProps: IAccordionCommonViewProps = {
+    const props: IAccordionCommonViewProps = {
         view: AccordionItemMockView,
     };
 
     const expectedAccordionItemClass = 'AccordionItemView';
 
     it('should be in the document', () => {
-        const {container} = render(JSXWrapper(AccordionItem, defaultProps));
+        const {container} = render(JSXWrapper(AccordionItem, props));
         const accordionItem = getElementByClassName(container, expectedAccordionItemClass);
 
         expect(accordionItem).toBeInTheDocument();
@@ -30,7 +30,8 @@ describe('AccordionItem', () => {
         const title = 'accordion-title';
         const content = 'accordion-content';
 
-        const {container, getByText} = render(JSXWrapper(AccordionItem, defaultProps, {
+        const {container, getByText} = render(JSXWrapper(AccordionItem, {
+            ...props,
             style: externalStyle,
             theme,
             position,
@@ -54,7 +55,8 @@ describe('AccordionItem', () => {
     });
 
     it('should have external icon', () => {
-        const {container} = render(JSXWrapper(AccordionItem, defaultProps, {
+        const {container} = render(JSXWrapper(AccordionItem, {
+            ...props,
             icon: {
                 open: 'default',
                 close: 'default',

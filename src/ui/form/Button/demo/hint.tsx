@@ -8,9 +8,7 @@ import Button from '../Button';
  * @col 4
  */
 export default () => (
-    <>
-        <Button hint='Hint text'>
-            Hint
-        </Button>
-    </>
+    <Button hint='Hint text'>
+        Hint
+    </Button>
 );

@@ -118,7 +118,7 @@ export default function AccordionItemView(props: IAccordionCommonViewProps) {
                                 className={bem.element('icon', {
                                     active: !props.disabled && props.isShowMore,
                                 })}
-                                name="mockIconName"
+                                name="mockIcon"
                             />
                         )}
                 </div>

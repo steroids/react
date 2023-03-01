@@ -6,16 +6,14 @@ export const getElementByClassName = (
     elementIndex = 0,
 ) => container.getElementsByClassName(className)[elementIndex];
 
-export function JSXWrapper<DefaultPropsType, AdditionalPropsType>(
+export function JSXWrapper<PropsType>(
     Component: any,
-    defaultProps: DefaultPropsType,
-    additionalProps?: AdditionalPropsType,
+    props: PropsType,
 ) {
     return (
         <div>
             <Component
-                {...defaultProps}
-                {...additionalProps}
+                {...props}
             />
         </div>
     );

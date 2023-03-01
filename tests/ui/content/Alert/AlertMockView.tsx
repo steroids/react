@@ -54,7 +54,7 @@ export default function Alert(props: IAlertProps) {
                                     className={bem.element('icon-close', {
                                         large: !!props.description,
                                     })}
-                                    name='mockIconName'
+                                    name='mockIcon'
                                     onClick={props.onClose}
                                 />
                             )}

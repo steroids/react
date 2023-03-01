@@ -21,7 +21,7 @@ export default function ButtonView(props: IButtonViewProps & IBemHocOutput) {
                     <Icon
                         view={IconMockView}
                         className={bem.element('loader')}
-                        name='mockIconName'
+                        name='mockIcon'
                     />
                 )}
                 {!props.isLoading && (

@@ -45,7 +45,7 @@ export default function BadgeView(props: IBadgeMockProps) {
                                 view={IconMockView}
                                 onClick={props.onClose}
                                 className={bem.element('close')}
-                                name='mockIconName'
+                                name='mockIcon'
                             />
                         )}
                     </div>

@@ -1,8 +1,8 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import {render} from '../../../customRender';
 import Avatar from '../../../../src/ui/content/Avatar/Avatar';
 import AvatarView from './AvatarMockView';
+import {JSXWrapper} from '../../../helpers';
 
 describe('Avatar tests', () => {
     const props = {
@@ -20,15 +20,10 @@ describe('Avatar tests', () => {
     };
 
     const expectedAvatarClass = 'AvatarView';
-
-    const JSXWrapper = (
-        <div>
-            <Avatar {...props} />
-        </div>
-    );
+    const wrapper = JSXWrapper(Avatar, props);
 
     it('avatar should be in the document', () => {
-        const {getByTestId} = render(JSXWrapper);
+        const {getByTestId} = render(wrapper);
         const avatar = getByTestId(props.testId);
 
         expect(avatar).toBeInTheDocument();
@@ -37,7 +32,7 @@ describe('Avatar tests', () => {
     });
 
     it('avatar should have right size, shape, status', () => {
-        const {getByTestId} = render(JSXWrapper);
+        const {getByTestId} = render(wrapper);
         const avatar = getByTestId(props.testId);
 
         expect(avatar).toHaveClass(`${expectedAvatarClass}_size_${props.size}`);
@@ -46,7 +41,7 @@ describe('Avatar tests', () => {
     });
 
     it('should render picture with right attributes', () => {
-        const {getByRole} = render(JSXWrapper);
+        const {getByRole} = render(wrapper);
         const picture = getByRole('img');
 
         expect(picture).toBeInTheDocument();
@@ -56,7 +51,7 @@ describe('Avatar tests', () => {
     });
 
     it('body should have right style', () => {
-        const {getByTestId} = render(JSXWrapper);
+        const {getByTestId} = render(wrapper);
         const body = getByTestId(props.bodyTestId);
 
         expect(body).toBeInTheDocument();

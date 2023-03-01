@@ -16,7 +16,7 @@ function AllTheProviders({children}: {children: React.ReactNode}) {
         },
         onInit: ({ui}) => {
             ui.addViews(require('@steroidsjs/bootstrap/index').default);
-            ui.addIcons(require('./ui/content/Icon/mockIcons').default);
+            ui.addIcons(require('./ui/content/Icon/mockIcon').default);
         },
     });
 

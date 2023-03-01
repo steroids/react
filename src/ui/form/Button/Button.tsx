@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import {useUpdateEffect} from 'react-use';
 import FieldLayout from '../FieldLayout';
 import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
@@ -35,12 +34,6 @@ export interface IButtonProps {
     hint?: string | any;
 
     /**
-     * Должна ли показываться надпись на кнопке в состоянии загрузки
-     * @example true
-     */
-    showLabelOnLoading?: boolean;
-
-    /**
      * HTML Тип
      * @example submit
      */
@@ -50,7 +43,7 @@ export interface IButtonProps {
      * Цвет состояния
      * @example success
      */
-    color?: ColorName;
+    color?: 'basic' | 'primary' | 'secondary' | 'info' | 'warning' | 'danger' | 'success';
 
     /**
      * Отображать как ссылку?
@@ -212,7 +205,6 @@ export interface IButtonViewProps extends IButtonProps {
     disabled?: boolean,
     onClick?: any,
     submitting?: boolean,
-    showLabelOnLoading: boolean,
 }
 
 function Button(props: IButtonProps): JSX.Element {
@@ -234,10 +226,9 @@ function Button(props: IButtonProps): JSX.Element {
 
     // Flags: isLoading, isFailed
     const [{isLoading, isFailed}, setStateFlags] = useState({isLoading: false, isFailed: false});
-    useUpdateEffect(
-        () => setStateFlags({isLoading: props.isLoading, isFailed: props.isFailed}),
-        [props.isLoading, props.isFailed],
-    );
+    React.useEffect(() => {
+        setStateFlags({isLoading: props.isLoading, isFailed: props.isFailed});
+    }, [props.isLoading, props.isFailed]);
 
     // Form submitting
     const context: IFormContext = useContext(FormContext);
@@ -248,7 +239,7 @@ function Button(props: IButtonProps): JSX.Element {
         submitting = form.formSelector(state => state.isSubmitting);
     }
 
-    const disabled = submitting || props.disabled || isLoading;
+    const disabled = submitting || props.disabled;
     const tag = props.tag || (props.link || url ? 'a' : 'button');
     const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
@@ -351,7 +342,6 @@ Button.defaultProps = {
     size: 'md',
     className: '',
     resetFailedMs: 2000,
-    showLabelOnLoading: true,
     badge: {
         enable: false,
         value: 0,

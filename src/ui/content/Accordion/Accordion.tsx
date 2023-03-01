@@ -126,7 +126,7 @@ function Accordion(props: IAccordionCommonProps) {
                     hasOneOpenItem: props.hasOneOpenItem,
                     isShowMore: (selectedAccordionItems || []).includes(index),
                     icon: props.icon,
-                    showIcon: props.showIcon || true,
+                    showIcon: props.showIcon,
                     ...child.props,
                 }))
             }

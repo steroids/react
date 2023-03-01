@@ -43,7 +43,7 @@ export interface IButtonProps {
      * Цвет состояния
      * @example success
      */
-    color?: 'basic' | 'primary' | 'secondary' | 'info' | 'warning' | 'danger' | 'success';
+    color?: ColorName;
 
     /**
      * Отображать как ссылку?

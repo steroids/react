@@ -34,6 +34,7 @@ declare type ColorName =
     | 'danger'
     | 'light'
     | 'dark'
+    | 'basic'
     | string;
 
 /**

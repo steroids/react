@@ -44,8 +44,7 @@ export default function Avatar(props: IAvatarProps) {
                 shape: props.shape,
                 'has-image': !!props.src && !props.isError,
                 'has-status': props.status,
-                'has-border-avatar': props.hasBorder && !!props.src,
-                'has-border-without-avatar': props.hasBorder && !props.src,
+                'has-border': props.hasBorder,
                 'has-custom-status': props.status && !!customSize.width,
             }), props.className)}
         >

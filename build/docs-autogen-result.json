@@ -3096,7 +3096,7 @@
         },
         "ICollapseProps": {
             "name": "ICollapseProps",
-            "moduleName": "ui/content/Collapse/Collapse",
+            "moduleName": "ui/content/Accordion/Accordion",
             "title": "",
             "description": "",
             "tags": {},
@@ -3203,7 +3203,7 @@
         },
         "ICollapseViewProps": {
             "name": "ICollapseViewProps",
-            "moduleName": "ui/content/Collapse/Collapse",
+            "moduleName": "ui/content/Accordion/Accordion",
             "title": "",
             "description": "",
             "tags": {},
@@ -3344,7 +3344,7 @@
         },
         "ICollapseItemProps": {
             "name": "ICollapseItemProps",
-            "moduleName": "ui/content/Collapse/CollapseItem",
+            "moduleName": "ui/content/Accordion/CollapseItem",
             "title": "",
             "description": "",
             "tags": {},
@@ -3459,7 +3459,7 @@
         },
         "ICollapseItemViewProps": {
             "name": "ICollapseItemViewProps",
-            "moduleName": "ui/content/Collapse/CollapseItem",
+            "moduleName": "ui/content/Accordion/CollapseItem",
             "title": "",
             "description": "",
             "tags": {},
@@ -22375,7 +22375,7 @@
                     "description": "Card with different orientation"
                 }
             },
-            "Collapse": {
+            "Accordion": {
                 "accordion": {
                     "order": "2",
                     "col": "6",
@@ -22416,7 +22416,7 @@
                     "order": "8",
                     "col": "6",
                     "title": null,
-                    "description": "Anonymous function every time you change state of Collapse"
+                    "description": "Anonymous function every time you change state of Accordion"
                 },
                 "show icon": {
                     "order": "6",

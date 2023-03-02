@@ -23,7 +23,7 @@ export interface IAvatarProps {
      * Размер аватара
      * @example {'md'}
      */
-    size?: Size | 'x-large' | number,
+    size?: Size | number,
 
     /**
      * Форма аватара

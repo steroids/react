@@ -4,11 +4,12 @@ import {fireEvent} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import Alert from '../../../../src/ui/content/Alert';
 import AlertView from './AlertMockView';
+import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('Alert', () => {
     const props = {
         className: 'test',
-        type: 'info',
+        type: 'mockIcon',
         message: 'Are you sure?',
         description: 'It is maybe dangerous',
         style: {width: '45%'},
@@ -18,12 +19,7 @@ describe('Alert', () => {
         view: AlertView,
     };
 
-    const JSXWrapper = (
-        <div>
-            <Alert {...props} />
-        </div>
-    );
-
+    const wrapper = JSXWrapper(Alert, props);
     const expectedAlertClass = 'AlertView';
 
     it('should render something without props', () => {
@@ -33,7 +29,7 @@ describe('Alert', () => {
     });
 
     it('should be in the document', () => {
-        const {getByTestId} = render(JSXWrapper);
+        const {getByTestId} = render(wrapper);
         const alert = getByTestId(props.testId);
 
         expect(alert).toBeInTheDocument();
@@ -41,7 +37,7 @@ describe('Alert', () => {
     });
 
     it('should render right icons', () => {
-        const {getByTestId, getAllByRole} = render(JSXWrapper);
+        const {getByTestId, getAllByRole} = render(wrapper);
         const alert = getByTestId(props.testId);
         const closeIconIndex = 1;
         const closeIcon = getAllByRole('img')[closeIconIndex];
@@ -51,21 +47,21 @@ describe('Alert', () => {
     });
 
     it('should have right external className', () => {
-        const {getByTestId} = render(JSXWrapper);
+        const {getByTestId} = render(wrapper);
         const alert = getByTestId(props.testId);
 
         expect(alert).toHaveClass(props.className);
     });
 
     it('should have right message and description', () => {
-        const {getByText} = render(JSXWrapper);
+        const {getByText} = render(wrapper);
 
         expect(getByText(props.message)).toBeInTheDocument();
         expect(getByText(props.description)).toBeInTheDocument();
     });
 
     it('should have right external style', () => {
-        const {getByTestId} = render(JSXWrapper);
+        const {getByTestId} = render(wrapper);
         const alert = getByTestId(props.testId);
 
         expect(alert).toHaveStyle(props.style);
@@ -81,16 +77,9 @@ describe('Alert', () => {
             view: AlertView,
         };
 
-        const actionJSXWrapper = (
-            <div>
-                <Alert {...actionProps} />
-            </div>
-        );
-
         it('should click to close call callback', () => {
-            const {container} = render(actionJSXWrapper);
-            const closeIconIndex = 0;
-            const closeIcon = container.getElementsByClassName(`${expectedAlertClass}__icon-close`)[closeIconIndex];
+            const {container} = render(JSXWrapper(Alert, actionProps));
+            const closeIcon = getElementByClassName(container, `${expectedAlertClass}__icon-close`);
             const expectedCloseCallCount = 1;
             fireEvent.click(closeIcon);
 

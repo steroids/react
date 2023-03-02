@@ -3,9 +3,11 @@ import React, {ReactElement} from 'react';
 import {render, RenderOptions} from '@testing-library/react';
 import useApplication from '../src/hooks/useApplication';
 import HtmlComponent from '../src/components/HtmlComponent';
+import {renderIntoDocument} from 'react-dom/test-utils';
 
 function AllTheProviders({children}: {children: React.ReactNode}) {
     const {renderApplication} = useApplication({
+        layoutView: () => require('./mockLayout').default,
         components: {
             html: {
                 className: HtmlComponent,
@@ -15,7 +17,7 @@ function AllTheProviders({children}: {children: React.ReactNode}) {
             },
         },
         onInit: ({ui}) => {
-            ui.addViews(require('@steroidsjs/bootstrap/index').default);
+            ui.addViews(require('./ui/index').default);
             ui.addIcons(require('./ui/content/Icon/mockIcon').default);
         },
     });

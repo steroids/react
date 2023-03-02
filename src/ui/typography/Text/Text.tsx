@@ -14,7 +14,7 @@ export interface ITextProps {
      * Шаблон текста
      * @example {'body1'}
      */
-    template?: 'body1' | 'body2' | 'span' | 'boldSpan' | string,
+    template?: 'body' | 'span' | 'boldSpan' | string,
 
     /** Соотношение шаблонов текста и HTML тегов
      * @example {body1: 'p', body2: 'p', span: 'span'}
@@ -46,8 +46,7 @@ function Text(props: ITextProps): JSX.Element {
 }
 
 Text.defaultProps = {
-    template: 'body1',
-    color: 'primary',
+    template: 'body',
     templateMapping: {
         body1: 'p',
         body2: 'p',

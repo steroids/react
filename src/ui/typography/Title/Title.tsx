@@ -56,7 +56,6 @@ Title.defaultProps = {
         h6: 'h6',
         subtitle: 'h6',
     },
-    color: 'primary',
 };
 
 export default Title;

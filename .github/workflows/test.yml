@@ -11,4 +11,5 @@ jobs:
           ref: master
           path: react-bootstrap
       - run: yarn
+      - run: cd react-bootstrap && yarn
       - run: yarn test

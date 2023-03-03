@@ -1,7 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {fireEvent, screen} from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
+import {fireEvent} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 import DropDown, {IDropDownProps} from '../../../../src/ui/content/DropDown/DropDown';
@@ -23,10 +22,7 @@ describe('DropDown tests', () => {
         content: () => <div>{contentText}</div>,
         position: 'top',
         closeMode: 'click-away',
-        children:
-    <button>
-        {buttonText}
-    </button>,
+        children: <button>{buttonText}</button>,
         className: externalClass,
 
     } as IDropDownProps;

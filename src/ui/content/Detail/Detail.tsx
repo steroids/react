@@ -103,7 +103,7 @@ export interface IDetailItemOutputProps extends IDetailItemProps {
 
 export interface IDetailViewProps extends IDetailProps {
     rows: IDetailItemOutputProps[][],
-    resizedNodeRef?: (node: HTMLElement) => void
+    resizedNodeRef?: (node: HTMLDivElement) => void
 }
 
 export const constants = Object.freeze({

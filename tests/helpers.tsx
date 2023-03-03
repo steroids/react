@@ -1,4 +1,5 @@
 import React from 'react';
+import Portal from '../src/ui/layout/Portal';
 
 export const getElementByClassName = (
     container: HTMLElement,
@@ -9,13 +10,17 @@ export const getElementByClassName = (
 export function JSXWrapper<PropsType>(
     Component: any,
     props: PropsType,
+    renderPortal = false,
 ) {
     return (
-        <div>
-            <Component
-                {...props}
-            />
-        </div>
+        <>
+            <div>
+                <Component
+                    {...props}
+                />
+            </div>
+            {renderPortal && <Portal />}
+        </>
     );
 }
 

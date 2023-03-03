@@ -21,6 +21,11 @@ export interface ITitleProps {
      */
     templateMapping?: Record<string, string>,
 
+     /** HTML тег
+     * @example {'h2'}
+     */
+     component?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
+
     /** Текст заголовка
      * @example {'Simple text'}
      */

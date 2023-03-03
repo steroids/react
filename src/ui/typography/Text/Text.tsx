@@ -21,6 +21,11 @@ export interface ITextProps {
      */
     templateMapping?: Record<string, string>,
 
+    /** HTML тег
+     * @example {'span'}
+     */
+    component?: 'p' | 'span' | string,
+
     /**
      * Цвет текста
      * @example {'primary'}

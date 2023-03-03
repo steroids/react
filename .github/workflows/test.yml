@@ -5,12 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/checkout@v2
-        with:
-          repository: steroids/react-bootstrap
-          ref: master
-          path: react-bootstrap
       - run: yarn
-      - run: cd react-bootstrap && yarn
-      - run: yarn lint
       - run: yarn test

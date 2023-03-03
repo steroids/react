@@ -1,5 +1,5 @@
 import React from 'react';
-import Portal from '../src/ui/layout/Portal'
+import Portal from '../src/ui/layout/Portal';
 
 export const getElementByClassName = (
     container: HTMLElement,

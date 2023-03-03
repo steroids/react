@@ -1,9 +1,9 @@
 import React, {ReactElement} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {render, RenderOptions} from '@testing-library/react';
+import {renderIntoDocument} from 'react-dom/test-utils';
 import useApplication from '../src/hooks/useApplication';
 import HtmlComponent from '../src/components/HtmlComponent';
-import {renderIntoDocument} from 'react-dom/test-utils';
 
 function AllTheProviders({children}: {children: React.ReactNode}) {
     const {renderApplication} = useApplication({

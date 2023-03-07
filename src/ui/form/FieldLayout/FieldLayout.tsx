@@ -36,10 +36,16 @@ export interface IFieldLayoutProps {
     layout?: FormLayout;
 
     /**
-     * Ошибки в поле
+     * Ошибки в поле или сообщение об
      * @example 'Field is required'
      */
     errors?: string[];
+
+    /**
+     * Вывод состояние successful для поля
+     * @example {'true'}
+     */
+    successful?: boolean;
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -55,6 +61,8 @@ export interface IFieldLayoutViewProps {
     required: boolean,
     hint: string | boolean,
     errors: string | string[],
+    successful: boolean,
+    size: Size,
     layout?: {
         layout: FormLayoutName | boolean,
         className?: string,
@@ -87,6 +95,7 @@ function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
         ...props,
         errors: props.errors || errors,
+        successful: props.successful,
         layout,
     });
 }

@@ -73,6 +73,12 @@ export interface IFieldWrapperInputProps {
      */
     errors?: string[];
 
+    /**
+     * Отображать ли состояние success на поле
+     * @example {'true'}
+     */
+    successful?: boolean,
+
     date?: any;
 
     /**
@@ -235,6 +241,7 @@ export default function fieldWrapper<T = any>(
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,
                 errors: props.errors,
+                successful: props.successful,
                 children: (
                     <Component.DynamicField {...props} />
                 ),

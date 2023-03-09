@@ -11,20 +11,15 @@ export interface ITextProps {
     children?: React.ReactNode,
 
     /**
-     * Шаблон текста
+     * Тип текста
      * @example {'body1'}
      */
-    template?: 'body' | 'span' | 'boldSpan' | string,
-
-    /** Соотношение шаблонов текста и HTML тегов
-     * @example {body1: 'p', body2: 'p', span: 'span'}
-     */
-    templateMapping?: Record<string, string>,
+    type?: 'body' | 'span' | 'boldSpan' | string,
 
     /** HTML тег
      * @example {'span'}
      */
-    component?: 'p' | 'span' | string,
+    tag?: 'p' | 'span' | string,
 
     /**
      * Цвет текста
@@ -51,13 +46,7 @@ function Text(props: ITextProps): JSX.Element {
 }
 
 Text.defaultProps = {
-    template: 'body',
-    templateMapping: {
-        body1: 'p',
-        body2: 'p',
-        span: 'span',
-        boldSpan: 'span',
-    },
+    type: 'body',
 };
 
 export default Text;

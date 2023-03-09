@@ -26,7 +26,7 @@ export interface IDetailItemProps {
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
-     */
+    */
     view?: CustomView,
 
     /**
@@ -38,11 +38,6 @@ export interface IDetailItemProps {
      * Дополнительный CSS-класс для ячейки со значением
      */
     contentClassName?: string
-
-    /**
-     * Отображать ли статус внутри ячейки значения
-     */
-    hasStatus?: boolean,
 }
 
 export default function DetailItem(props: IDetailItemProps): JSX.Element {

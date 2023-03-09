@@ -26,7 +26,7 @@ describe('Detail tests', () => {
         controls: [{label: 'Edit'}],
         view: DetailMockView,
         responsive: true,
-        children: <DetailItem label={tableHeadText} span={3} hasStatus>{tableValueText}</DetailItem>,
+        children: <DetailItem label={tableHeadText} span={3}>{tableValueText}</DetailItem>,
     } as IDetailViewProps;
 
     it('should be in the document', () => {

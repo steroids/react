@@ -34,7 +34,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: Event | React.ChangeEvent | string) => void,
+        onChange: (value: string) => void,
         value: number,
         placeholder: string,
         disabled: boolean,

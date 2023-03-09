@@ -18,7 +18,7 @@ describe('TextField tests', () => {
             onKeyUp: jest.fn(),
         },
         required: true,
-        onClose: jest.fn(),
+        onClear: jest.fn(),
         label: 'Label',
         placeholder: 'placeholder',
         className: externalClassName,
@@ -83,7 +83,7 @@ describe('TextField tests', () => {
     describe('actions', () => {
         const mockedOnChange = jest.fn();
         const mockedOnKeyUp = jest.fn();
-        const mockedOnClose = jest.fn();
+        const mockedOnClear = jest.fn();
 
         const actionProps: ITextFieldViewProps = {
             inputProps: {
@@ -96,7 +96,7 @@ describe('TextField tests', () => {
             },
             view: TextFieldMockView,
             showClose: true,
-            onClose: mockedOnClose,
+            onClear: mockedOnClear,
         };
 
         it('should call onChange', () => {
@@ -119,14 +119,14 @@ describe('TextField tests', () => {
             expect(mockedOnKeyUp.mock.calls.length).toBe(expectedKeyUpCallCount);
         });
 
-        it('should call onClose', () => {
+        it('should call onClear', () => {
             const {container, debug} = render(JSXWrapper(TextField, actionProps));
-            const expectedCloseCallCount = 1;
+            const expectedClearCallCount = 1;
             const closeIcon = getElementByClassName(container, `${expectedTextFieldClass}__close`);
 
             fireEvent.click(closeIcon);
 
-            expect(mockedOnClose.mock.calls.length).toBe(expectedCloseCallCount);
+            expect(mockedOnClear.mock.calls.length).toBe(expectedClearCallCount);
         });
     });
 });

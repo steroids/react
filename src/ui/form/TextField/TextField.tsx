@@ -44,10 +44,10 @@ export interface ITextFieldProps extends IFieldWrapperInputProps {
     showClose?: boolean,
 
     /**
-     * Callback функция вызываемая при нажатии на кнопку закрытия
+     * Callback функция вызываемая при нажатии на кнопку очищения поля
      * @example {() => console.log('this is callback')}
      */
-    onClose?: () => void,
+    onClear?: () => void,
 
     [key: string]: any;
 }
@@ -61,15 +61,12 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: boolean,
     },
-    isExist?: boolean,
-    onClose?: () => void,
+    onClear?: () => void,
 }
 
 function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const dispatch = useDispatch();
     const components = useComponents();
-
-    const [isExist, setIsExist] = React.useState<boolean>(true);
 
     const onKeyUp = useCallback(e => {
         if (
@@ -89,10 +86,9 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         [props.input.onChange],
     );
 
-    const onClose = useCallback(() => {
-        setIsExist(false);
-        if (props.onClose) {
-            props.onClose();
+    const onClear = useCallback(() => {
+        if (props.onClear) {
+            props.onClear();
         }
     }, []);
 
@@ -108,8 +104,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     return components.ui.renderView(props.view || 'form.TextFieldView', {
         ...props,
-        isExist,
-        onClose,
+        onClear,
         inputProps,
     });
 }

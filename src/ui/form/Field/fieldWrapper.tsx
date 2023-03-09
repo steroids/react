@@ -74,7 +74,7 @@ export interface IFieldWrapperInputProps {
     errors?: string[];
 
     /**
-     * Отображать ли состояние success на поле
+     * Отображать ли состояние successful на поле
      * @example {'true'}
      */
     successful?: boolean,

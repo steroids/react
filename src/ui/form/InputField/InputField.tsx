@@ -83,10 +83,31 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
     addonAfter?: ReactNode | string;
 
     /**
+    * Отображать ли состояние successful на поле
+    * @example {'true'}
+    */
+    successful?: boolean,
+
+    /**
      * Конфигурация маски
      * @example { mask: '+7 (999) 999-99-99' }
      */
-    maskProps?: any;
+    maskProps?: {
+        mask?: string,
+        maskPlaceholder?: string,
+        alwaysShowMask?: boolean,
+    };
+
+    /**
+     * Показывать иконку очищения поля
+     * @example {'true'}
+    */
+    showClear?: boolean;
+
+    /**
+     * Пользовательская иконка svg или название иконки
+     */
+    leadIcon?: React.ReactElement | string;
 
     success?: boolean;
     failed?: boolean;
@@ -97,6 +118,9 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
     style?: any,
     errors?: string[],
+    successful?: boolean,
+    showClear?: boolean,
+    leadIcon?: React.ReactElement | string,
     placeholder?: string,
     type?: string,
     inputProps: {
@@ -114,7 +138,11 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     addonAfter?: ReactNode | string,
 
     //types for react-input-mask
-    maskProps?: any;
+    maskProps?: {
+        mask?: string,
+        maskPlaceholder?: string,
+        alwaysShowMask?: boolean,
+    },
     onFocus?: (e: Event | React.FocusEvent) => void,
     onBlur?: (e: Event | React.FocusEvent) => void,
     onMouseDown?: (e: Event | React.MouseEvent) => void;
@@ -166,12 +194,14 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
 InputField.defaultProps = {
     type: 'text',
-    size: 'medium',
+    size: 'md',
     disabled: false,
     required: false,
     className: '',
     placeholder: '',
     errors: null,
+    showClear: false,
+    successful: false,
     textBefore: null,
     textAfter: null,
     addonBefore: null,

@@ -13,21 +13,13 @@ export default function NumberFieldView(props: INumberFieldViewProps & IBemHocOu
     const inputRef = useRef<HTMLInputElement>(null);
 
     const onStepUp = useCallback(() => {
-        if (!inputRef.current) {
-            return;
-        }
-
-        inputRef.current.stepUp();
-        props.inputProps.onChange(inputRef.current.value);
+        inputRef.current?.stepUp();
+        props.inputProps.onChange(inputRef.current?.value || '');
     }, [inputRef.current]);
 
     const onStepDown = useCallback(() => {
-        if (!inputRef.current) {
-            return;
-        }
-
-        inputRef.current.stepDown();
-        props.inputProps.onChange(inputRef.current.value);
+        inputRef.current?.stepDown();
+        props.inputProps.onChange(inputRef.current?.value || '');
     }, [inputRef.current]);
 
     const onChangeHandler = useCallback((value: string) => {
@@ -39,6 +31,7 @@ export default function NumberFieldView(props: INumberFieldViewProps & IBemHocOu
     }, [props.input]);
 
     const bem = useBem('NumberFieldView');
+
     return (
         <div
             className={bem(

@@ -12,7 +12,7 @@ export interface ITextProps {
 
     /**
      * Тип текста
-     * @example {'body1'}
+     * @example {'body'}
      */
     type?: 'body' | 'span' | 'boldSpan' | string,
 

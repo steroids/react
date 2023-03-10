@@ -31,7 +31,7 @@ describe('Text tests', () => {
         expect(text).toHaveClass(props.className);
     });
 
-    it('should have right color, type and external className', () => {
+    it('should have right color, type', () => {
         const {getByTestId} = render(wrapper);
         const text = getByTestId(props.testId);
 

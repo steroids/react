@@ -91,6 +91,12 @@ export interface IFieldWrapperInputProps {
      */
     size?: Size,
 
+    /**
+    * Callback функция вызываемая при нажатии на кнопку очищения поля
+    * @example {() => console.log('this is callback')}
+    */
+    onClear?: () => void,
+
     [key: string]: any,
 }
 
@@ -206,7 +212,7 @@ export default function fieldWrapper<T = any>(
         attributeSuffixes: optionsConfig.attributeSuffixes || [''],
     };
 
-    const NewComponent = (props: IFieldWrapperInputProps):JSX.Element => {
+    const NewComponent = (props: IFieldWrapperInputProps): JSX.Element => {
         const components = useComponents();
 
         // Get context, formId

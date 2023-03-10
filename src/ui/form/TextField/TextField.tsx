@@ -39,15 +39,9 @@ export interface ITextFieldProps extends IFieldWrapperInputProps {
     view?: CustomView;
 
     /**
-     *  Нужно ли отображать кнопку, чтобы закрыть Оповещение
+     *  Отображение кнопки очищения поля
      */
-    showClose?: boolean,
-
-    /**
-     * Callback функция вызываемая при нажатии на кнопку очищения поля
-     * @example {() => console.log('this is callback')}
-     */
-    onClear?: () => void,
+    showClear?: boolean,
 
     [key: string]: any;
 }

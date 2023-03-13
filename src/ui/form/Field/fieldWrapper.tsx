@@ -85,12 +85,6 @@ export interface IFieldWrapperInputProps {
      */
     size?: Size,
 
-    /**
-    * Callback функция вызываемая при нажатии на кнопку очищения поля
-    * @example {() => console.log('this is callback')}
-    */
-    onClear?: () => void,
-
     [key: string]: any,
 }
 

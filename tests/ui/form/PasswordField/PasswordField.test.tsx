@@ -23,9 +23,7 @@ describe('PasswordField tests', () => {
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(PasswordField, props));
-
         const passwordField = getElementByClassName(container, expectedPasswordFieldClass);
-
         expect(passwordField).toBeInTheDocument();
     });
 
@@ -53,9 +51,7 @@ describe('PasswordField tests', () => {
 
     it('should have security bar', () => {
         const {container} = render(JSXWrapper(PasswordField, props));
-
         const securityBar = getElementByClassName(container, `${expectedPasswordFieldClass}__security-bar`);
-
         expect(securityBar).toBeInTheDocument();
     });
 

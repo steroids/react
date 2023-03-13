@@ -92,6 +92,7 @@ PasswordField.defaultProps = {
     className: '',
     placeholder: '',
     errors: null,
+    size: 'md',
 };
 
 export default fieldWrapper<IPasswordFieldProps>('PasswordField', PasswordField);

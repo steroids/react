@@ -55,10 +55,11 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: boolean,
     },
+    onClear: VoidFunction,
 }
 
 function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const components = useComponents();
 
     const onKeyUp = useCallback(e => {
@@ -79,6 +80,8 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         [props.input.onChange],
     );
 
+    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+
     const inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value || '',
@@ -92,6 +95,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     return components.ui.renderView(props.view || 'form.TextFieldView', {
         ...props,
         inputProps,
+        onClear,
     });
 }
 

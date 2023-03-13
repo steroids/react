@@ -55,7 +55,6 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: boolean,
     },
-    onClear?: () => void,
 }
 
 function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -80,12 +79,6 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         [props.input.onChange],
     );
 
-    const onClear = useCallback(() => {
-        if (props.onClear) {
-            props.onClear();
-        }
-    }, []);
-
     const inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value || '',
@@ -98,7 +91,6 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     return components.ui.renderView(props.view || 'form.TextFieldView', {
         ...props,
-        onClear,
         inputProps,
     });
 }

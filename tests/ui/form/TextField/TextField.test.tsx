@@ -118,15 +118,5 @@ describe('TextField tests', () => {
 
             expect(mockedOnKeyUp.mock.calls.length).toBe(expectedKeyUpCallCount);
         });
-
-        it('should call onClear', () => {
-            const {container, debug} = render(JSXWrapper(TextField, actionProps));
-            const expectedClearCallCount = 1;
-            const closeIcon = getElementByClassName(container, `${expectedTextFieldClass}__close`);
-
-            fireEvent.click(closeIcon);
-
-            expect(mockedOnClear.mock.calls.length).toBe(expectedClearCallCount);
-        });
     });
 });

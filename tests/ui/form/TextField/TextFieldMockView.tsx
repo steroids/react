@@ -16,10 +16,6 @@ export default function TextFieldView(props: ITextFieldViewProps & IBemHocOutput
             return;
         }
 
-        if (props.onClear) {
-            props.onClear();
-        }
-
         props.input?.onChange('');
         textAreaRef.current.value = '';
     };

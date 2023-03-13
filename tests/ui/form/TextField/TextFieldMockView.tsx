@@ -11,18 +11,25 @@ export default function TextFieldView(props: ITextFieldViewProps & IBemHocOutput
 
     const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
 
-    const onClearHandler = React.useCallback(() => {
+    const clearHandler = () => {
+        if (!textAreaRef.current) {
+            return;
+        }
+
         if (props.onClear) {
             props.onClear();
         }
-    }, [props]);
+
+        props.input?.onChange('');
+        textAreaRef.current.value = '';
+    };
 
     return (
         <div className={bem(
             bem.block({
                 hasErrors: !!props.errors,
                 successful: props.successful,
-                filled: !!textAreaRef.current.value,
+                filled: !!textAreaRef.current?.value,
             }),
             props.className,
         )}
@@ -37,7 +44,7 @@ export default function TextFieldView(props: ITextFieldViewProps & IBemHocOutput
                 )}
                 {...props.inputProps}
             />
-            {props.showClose && <Icon view={IconMockView} className={bem.element('close')} name="mockIcon" onClick={onClearHandler} />}
+            {props.showClose && <Icon view={IconMockView} className={bem.element('close')} name="mockIcon" onClick={clearHandler} />}
         </div>
     );
 }

@@ -16,6 +16,12 @@ export interface IPasswordFieldProps extends IInputFieldProps {
      */
     security?: boolean;
 
+    /**
+     * Нужно ли отображать иконку для очищения пароля
+     */
+
+    showClear?: boolean;
+
     [key: string]: any;
 }
 
@@ -31,6 +37,7 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
     security?: boolean,
     errors?: string[],
     className?: CssClassName,
+    onClear?: () => void,
     securityLevel?: 'success' | 'warning' | 'danger',
     onShowPassword: () => void,
     onHidePassword: () => void,
@@ -69,6 +76,8 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     const components = useComponents();
 
+    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+
     props.inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value || '',
@@ -81,6 +90,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
     props.securityLevel = props.security ? checkPassword(props.input.value) : null;
     props.onShowPassword = () => setType('text');
     props.onHidePassword = () => setType('password');
+    props.onClear = onClear;
 
     return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', props);
 }
@@ -93,6 +103,7 @@ PasswordField.defaultProps = {
     placeholder: '',
     errors: null,
     size: 'md',
+    showClear: false,
 };
 
 export default fieldWrapper<IPasswordFieldProps>('PasswordField', PasswordField);

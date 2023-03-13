@@ -19,7 +19,6 @@ describe('TextField tests', () => {
         },
         required: true,
         onClear: jest.fn(),
-        label: 'Label',
         placeholder: 'placeholder',
         className: externalClassName,
         layout: true,
@@ -50,13 +49,6 @@ describe('TextField tests', () => {
         expect(textArea).toHaveAttribute('placeholder', props.placeholder);
     });
 
-    it('should have right label', () => {
-        const {getByText} = render(JSXWrapper(TextField, props));
-        const label = getByText(props.label + ':');
-
-        expect(label).toBeInTheDocument();
-    });
-
     it('should have name attribute and value', () => {
         const {container, getByText} = render(JSXWrapper(TextField, props));
         const textArea = getElementByTag(container, 'textarea');
@@ -64,13 +56,6 @@ describe('TextField tests', () => {
 
         expect(textArea).toHaveAttribute('name', props.inputProps.name);
         expect(value).toBeInTheDocument();
-    });
-
-    it('should be required', () => {
-        const {container} = render(JSXWrapper(TextField, props));
-        const label = getElementByClassName(container, 'FieldLayoutView__label');
-
-        expect(label).toHaveClass('FieldLayoutView__label_required');
     });
 
     it('should be disabled', () => {

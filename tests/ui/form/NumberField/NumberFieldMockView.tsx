@@ -22,14 +22,6 @@ export default function NumberFieldView(props: INumberFieldViewProps & IBemHocOu
         props.inputProps.onChange(inputRef.current?.value || '');
     }, [inputRef.current]);
 
-    const onChangeHandler = useCallback((value: string) => {
-        if (!props.input) {
-            return;
-        }
-
-        props.input.onChange(value);
-    }, [props.input]);
-
     const bem = useBem('NumberFieldView');
 
     return (
@@ -52,7 +44,7 @@ export default function NumberFieldView(props: INumberFieldViewProps & IBemHocOu
                     }),
                 )}
                 {...props.inputProps}
-                onChange={e => onChangeHandler(e.target.value)}
+                onChange={e => props.input?.onChange(e.target.value)}
             />
             {!props.disabled && !props.errors && (
 

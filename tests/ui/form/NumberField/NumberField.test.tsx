@@ -21,17 +21,13 @@ describe('NumberField tests', () => {
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(NumberField, props));
-
         const numberField = getElementByClassName(container, expectedNumberFieldClassName);
-
         expect(numberField).toBeInTheDocument();
     });
 
     it('should have the external class name', () => {
         const {container} = render(JSXWrapper(NumberField, props));
-
         const numberField = getElementByClassName(container, expectedNumberFieldClassName);
-
         expect(numberField).toHaveClass(externalClassName);
     });
 
@@ -46,17 +42,13 @@ describe('NumberField tests', () => {
 
     it('should have hint', () => {
         const {getByText} = render(JSXWrapper(NumberField, props));
-
         const message = getByText(hint);
-
         expect(message).toBeInTheDocument();
     });
 
     it('should have layout', () => {
         const {container} = render(JSXWrapper(NumberField, props));
-
         const layout = getElementByClassName(container, 'FieldLayoutView_layout');
-
         expect(layout).toBeInTheDocument();
     });
 

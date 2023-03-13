@@ -73,12 +73,6 @@ export interface IFieldWrapperInputProps {
      */
     errors?: string[];
 
-    /**
-     * Отображать ли состояние successful на поле
-     * @example {'true'}
-     */
-    successful?: boolean,
-
     date?: any;
 
     /**
@@ -90,12 +84,6 @@ export interface IFieldWrapperInputProps {
      * Размер поля
      */
     size?: Size,
-
-    /**
-    * Callback функция вызываемая при нажатии на кнопку очищения поля
-    * @example {() => console.log('this is callback')}
-    */
-    onClear?: () => void,
 
     [key: string]: any,
 }
@@ -247,7 +235,6 @@ export default function fieldWrapper<T = any>(
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,
                 errors: props.errors,
-                successful: props.successful,
                 children: (
                     <Component.DynamicField {...props} />
                 ),

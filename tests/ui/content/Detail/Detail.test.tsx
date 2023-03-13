@@ -31,9 +31,7 @@ describe('Detail tests', () => {
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(Detail, props));
-
         const DetailComponent = getElementByClassName(container, expectedDetailClass);
-
         expect(DetailComponent).toBeInTheDocument();
     });
 

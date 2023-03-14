@@ -284,7 +284,10 @@ export default function useList(config: IListConfig): IListOutput {
             return null;
         }
         return (
-            <Empty list={list} {...emptyProps} />
+            <Empty
+                list={list}
+                {...emptyProps}
+            />
         );
     };
 
@@ -316,7 +319,12 @@ export default function useList(config: IListConfig): IListOutput {
     // Layout switcher
     const LayoutNames = require('../ui/list/LayoutNames').default;
     const layoutNamesProps = normalizeLayoutNamesProps(config.layout);
-    const renderLayoutNames = () => <LayoutNames list={list} {...layoutNamesProps} />;
+    const renderLayoutNames = () => (
+        <LayoutNames
+            list={list}
+            {...layoutNamesProps}
+        />
+);
 
     // Models
     const defaultSearchModel = useMemo(() => getDefaultSearchModel({

@@ -10,6 +10,9 @@ import DateField from '../DateField';
 
 export default () => (
     <>
-        <DateField label='Disabled' disabled />
+        <DateField
+            label='Disabled'
+            disabled
+        />
     </>
 );

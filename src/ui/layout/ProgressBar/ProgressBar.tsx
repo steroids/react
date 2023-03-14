@@ -51,10 +51,18 @@ function ProgressBar(props: IProgressBarProps): JSX.Element {
     const components = useComponents();
 
     const getLabel = (() => {
-        if (!props.showLabel) return null;
-        if (props.icon) return props.icon(props.status, props.percent);
-        if (props.status === 'success') return <Icon name="check" />;
-        if (props.status === 'exception') return <Icon name="times" />;
+        if (!props.showLabel) {
+            return null;
+        }
+        if (props.icon) {
+            return props.icon(props.status, props.percent);
+        }
+        if (props.status === 'success') {
+            return <Icon name="check" />;
+        }
+        if (props.status === 'exception') {
+            return <Icon name="times" />;
+        }
         return props.label(props.percent);
     });
 

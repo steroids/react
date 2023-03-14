@@ -27,4 +27,9 @@ function AppMock(props: any) {
     );
 }
 
-export default (Component: any, props: any = {}) => mount(<AppMock {...props} Component={Component} />);
+export default (Component: any, props: any = {}) => mount(
+    <AppMock
+        {...props}
+        Component={Component}
+    />,
+);

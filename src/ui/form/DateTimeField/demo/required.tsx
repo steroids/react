@@ -9,6 +9,9 @@ import DateTimeField from '../DateTimeField';
 
 export default () => (
     <>
-        <DateTimeField label='Required' required />
+        <DateTimeField
+            label='Required'
+            required
+        />
     </>
 );

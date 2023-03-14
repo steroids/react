@@ -17,7 +17,10 @@ const sizes = {
 export default () => (
     <>
         {Object.keys(sizes).map(size => (
-            <div style={{marginBottom: '30px'}} key={size}>
+            <div
+                style={{marginBottom: '30px'}}
+                key={size}
+            >
                 <Detail
                     title={sizes[size]}
                     size={size}
@@ -27,8 +30,18 @@ export default () => (
                     <DetailItem label="Billing Mode">Prepaid</DetailItem>
                     <DetailItem label="Automatic Renewal">YES</DetailItem>
                     <DetailItem label="Order time">2018-04-24  18:00:00</DetailItem>
-                    <DetailItem label="Usage Time" span={2}>2018-04-24  18:00:00</DetailItem>
-                    <DetailItem label="Status" span={3}>Running</DetailItem>
+                    <DetailItem
+                        label="Usage Time"
+                        span={2}
+                    >
+                        2018-04-24  18:00:00
+                    </DetailItem>
+                    <DetailItem
+                        label="Status"
+                        span={3}
+                    >
+                        Running
+                    </DetailItem>
                     <DetailItem label="Negotaited Amount">$80.00</DetailItem>
                     <DetailItem label="Discount">$20.00</DetailItem>
                     <DetailItem label="Official Receipts">$60.00</DetailItem>

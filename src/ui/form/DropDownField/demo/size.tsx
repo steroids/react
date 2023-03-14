@@ -19,7 +19,10 @@ export default () => (
         <div className='row mb-4'>
             {Object.keys(sizes)
                 .map(size => (
-                    <div className='col' key={size}>
+                    <div
+                        className='col'
+                        key={size}
+                    >
                         <DropDownField
                             label={size}
                             size={size}

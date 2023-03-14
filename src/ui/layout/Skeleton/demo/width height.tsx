@@ -15,8 +15,18 @@ export default () => (
         }}
     >
         <div style={{display: 'flex', gridGap: '10px'}}>
-            <Skeleton animation='wave' type='text' width={50} height={200} />
-            <Skeleton animation='wave' type='circle' width={300} height={200} />
+            <Skeleton
+                animation='wave'
+                type='text'
+                width={50}
+                height={200}
+            />
+            <Skeleton
+                animation='wave'
+                type='circle'
+                width={300}
+                height={200}
+            />
         </div>
     </div>
 );

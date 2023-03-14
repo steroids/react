@@ -9,6 +9,9 @@ import TextField from '../TextField';
 
 export default () => (
     <>
-        <TextField label='Submit On Enter' submitOnEnter />
+        <TextField
+            label='Submit On Enter'
+            submitOnEnter
+        />
     </>
 );

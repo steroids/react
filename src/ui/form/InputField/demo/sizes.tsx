@@ -16,8 +16,14 @@ const sizes = {
 export default () => (
     <div className='row'>
         {Object.keys(sizes).map(size => (
-            <div className='col' key={size}>
-                <InputField label={size} size={size} />
+            <div
+                className='col'
+                key={size}
+            >
+                <InputField
+                    label={size}
+                    size={size}
+                />
             </div>
         ))}
     </div>

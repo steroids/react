@@ -9,6 +9,9 @@ import TimeField from '../TimeField';
 
 export default () => (
     <>
-        <TimeField label='showRemove' showRemove />
+        <TimeField
+            label='showRemove'
+            showRemove
+        />
     </>
 );

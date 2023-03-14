@@ -10,6 +10,9 @@ import NumberField from '../NumberField';
 
 export default () => (
     <>
-        <NumberField label='Disabled' disabled />
+        <NumberField
+            label='Disabled'
+            disabled
+        />
     </>
 );

@@ -17,8 +17,14 @@ export default () => (
     <>
         <div className='row'>
             {Object.keys(sizes).map(size => (
-                <div className='col' key={size}>
-                    <TextField label={sizes[size]} size={size} />
+                <div
+                    className='col'
+                    key={size}
+                >
+                    <TextField
+                        label={sizes[size]}
+                        size={size}
+                    />
                 </div>
             ))}
         </div>

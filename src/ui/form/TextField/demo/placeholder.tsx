@@ -9,6 +9,9 @@ import TextField from '../TextField';
 
 export default () => (
     <>
-        <TextField label='Placeholder' placeholder='Your password...' />
+        <TextField
+            label='Placeholder'
+            placeholder='Your password...'
+        />
     </>
 );

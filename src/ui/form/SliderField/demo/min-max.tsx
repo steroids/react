@@ -9,6 +9,10 @@ import SliderField from '../SliderField';
 
 export default () => (
     <div style={{padding: '20px 30px'}}>
-        <SliderField label='With min and max values' min={10} max={30} />
+        <SliderField
+            label='With min and max values'
+            min={10}
+            max={30}
+        />
     </div>
 );

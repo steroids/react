@@ -9,6 +9,9 @@ import NumberField from '../NumberField';
 
 export default () => (
     <>
-        <NumberField label='Required' required />
+        <NumberField
+            label='Required'
+            required
+        />
     </>
 );

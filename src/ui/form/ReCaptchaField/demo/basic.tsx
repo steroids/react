@@ -16,9 +16,16 @@ export default () => (
             formId='CaptchaForm'
             layout={false}
         >
-            <InputField label='Label' attribute='text' required />
+            <InputField
+                label='Label'
+                attribute='text'
+                required
+            />
             <ReCaptchaField attribute='token' />
-            <Button type='submit' label='Submit' />
+            <Button
+                type='submit'
+                label='Submit'
+            />
         </Form>
     </>
 );

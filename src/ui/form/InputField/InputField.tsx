@@ -83,12 +83,6 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
     addonAfter?: ReactNode | string;
 
     /**
-    * Отображать ли состояние successful на поле
-    * @example {'true'}
-    */
-    successful?: boolean,
-
-    /**
      * Конфигурация маски
      * @example { mask: '+7 (999) 999-99-99' }
      */
@@ -118,7 +112,6 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
     style?: any,
     errors?: string[],
-    successful?: boolean,
     showClear?: boolean,
     leadIcon?: React.ReactElement | string,
     placeholder?: string,
@@ -143,6 +136,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
         maskPlaceholder?: string,
         alwaysShowMask?: boolean,
     },
+    onClear?: () => void,
     onFocus?: (e: Event | React.FocusEvent) => void,
     onBlur?: (e: Event | React.FocusEvent) => void,
     onMouseDown?: (e: Event | React.MouseEvent) => void;
@@ -150,6 +144,10 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
 
 function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
+
+    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+
+    props.onClear = onClear;
 
     const inputProps = useMemo(() => ({
         type: props.type,

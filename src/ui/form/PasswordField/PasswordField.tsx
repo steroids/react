@@ -33,7 +33,6 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         placeholder: string,
         disabled: boolean,
     },
-    showSecurityBar?: boolean,
     errors?: string[],
     className?: CssClassName,
     onClear?: () => void,

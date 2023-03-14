@@ -60,7 +60,7 @@ export interface IFieldLayoutViewProps {
     label: string | boolean | any,
     required: boolean,
     hint: string | boolean,
-    errors: string | string[],
+    errors: string[],
     successful: boolean,
     size: Size,
     layout?: {

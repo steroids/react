@@ -10,6 +10,9 @@ import PasswordField from '../PasswordField';
 
 export default () => (
     <>
-        <PasswordField label='Security' security />
+        <PasswordField
+            label='Security'
+            security
+        />
     </>
 );

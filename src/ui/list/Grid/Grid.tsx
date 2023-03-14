@@ -209,7 +209,14 @@ export default function Grid(props: IGridProps): JSX.Element {
             );
         }
 
-        return <Format item={item} model={props.model} {...column} {...(column.formatter || {})} />;
+        return (
+            <Format
+                item={item}
+                model={props.model}
+                {...column}
+                {...(column.formatter || {})}
+            />
+        );
     }, [props.listId, props.model, props.primaryKey]);
 
     // Columns

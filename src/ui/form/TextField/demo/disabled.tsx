@@ -8,6 +8,9 @@ import TextField from '../TextField';
  */
 export default () => (
     <>
-        <TextField label='Disabled' disabled />
+        <TextField
+            label='Disabled'
+            disabled
+        />
     </>
 );

@@ -10,6 +10,9 @@ import InputField from '../InputField';
 
 export default () => (
     <>
-        <InputField label='Placeholder' placeholder='Your text...' />
+        <InputField
+            label='Placeholder'
+            placeholder='Your text...'
+        />
     </>
 );

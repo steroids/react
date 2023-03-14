@@ -9,6 +9,10 @@ import TextField from '../TextField';
 
 export default () => (
     <>
-        <TextField label='Errors' errors={['Error 1 text', 'Error 2 text']} layout />
+        <TextField
+            label='Errors'
+            errors={['Error 1 text', 'Error 2 text']}
+            layout
+        />
     </>
 );

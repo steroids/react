@@ -10,7 +10,10 @@ import DateTimeField from '../DateTimeField';
 export default () => (
     <>
         <div>
-            <DateTimeField label='Disabled' disabled />
+            <DateTimeField
+                label='Disabled'
+                disabled
+            />
         </div>
     </>
 );

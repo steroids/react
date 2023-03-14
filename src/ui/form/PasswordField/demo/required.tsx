@@ -9,6 +9,9 @@ import PasswordField from '../PasswordField';
 
 export default () => (
     <>
-        <PasswordField label='Required' required />
+        <PasswordField
+            label='Required'
+            required
+        />
     </>
 );

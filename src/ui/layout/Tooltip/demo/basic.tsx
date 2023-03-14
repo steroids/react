@@ -19,23 +19,57 @@ export default () => (
                 padding: '50px',
             }}
         >
-            <Tooltip defaultVisible position='top' content='Всплывающая подсказка сверху.'>
-                <div className='mx-3' style={{width: 'max-content'}}>
-                    <Button className='mx-3' label='Show Tooltip on Top' />
+            <Tooltip
+                defaultVisible
+                position='top'
+                content='Всплывающая подсказка сверху.'
+            >
+                <div
+                    className='mx-3'
+                    style={{width: 'max-content'}}
+                >
+                    <Button
+                        className='mx-3'
+                        label='Show Tooltip on Top'
+                    />
                 </div>
             </Tooltip>
-            <Tooltip defaultVisible position='right' content='Всплывающая подсказка справа.'>
-                <div className='mx-3' style={{width: 'max-content'}}>
-                    <Button className='mx-3' label='Show Tooltip Right' />
+            <Tooltip
+                defaultVisible
+                position='right'
+                content='Всплывающая подсказка справа.'
+            >
+                <div
+                    className='mx-3'
+                    style={{width: 'max-content'}}
+                >
+                    <Button
+                        className='mx-3'
+                        label='Show Tooltip Right'
+                    />
                 </div>
             </Tooltip>
-            <Tooltip defaultVisible position='left' content='Всплывающая подсказка слева.'>
-                <div className='mx-3' style={{width: 'max-content'}}>
+            <Tooltip
+                defaultVisible
+                position='left'
+                content='Всплывающая подсказка слева.'
+            >
+                <div
+                    className='mx-3'
+                    style={{width: 'max-content'}}
+                >
                     <Button label='Show Tooltip Left' />
                 </div>
             </Tooltip>
-            <Tooltip defaultVisible position='bottom' content='Всплывающая подсказка снизу.'>
-                <div className='mx-3' style={{width: 'max-content'}}>
+            <Tooltip
+                defaultVisible
+                position='bottom'
+                content='Всплывающая подсказка снизу.'
+            >
+                <div
+                    className='mx-3'
+                    style={{width: 'max-content'}}
+                >
                     <Button label='Show Tooltip Bottom' />
                 </div>
             </Tooltip>

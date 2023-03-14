@@ -9,6 +9,9 @@ import TextField from '../TextField';
 
 export default () => (
     <>
-        <TextField label='Required' required />
+        <TextField
+            label='Required'
+            required
+        />
     </>
 );

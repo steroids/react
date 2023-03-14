@@ -8,6 +8,9 @@ import InputField from '../InputField';
  */
 export default () => (
     <>
-        <InputField label='Required' required />
+        <InputField
+            label='Required'
+            required
+        />
     </>
 );

@@ -18,9 +18,15 @@ const types = {
 export default () => (
     <div className='row'>
         {Object.keys(types).map(type => (
-            <div className='col' key={type}>
+            <div
+                className='col'
+                key={type}
+            >
                 <p>{type}</p>
-                <InputField label={type} type={type} />
+                <InputField
+                    label={type}
+                    type={type}
+                />
             </div>
         ))}
     </div>

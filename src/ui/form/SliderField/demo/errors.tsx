@@ -9,6 +9,10 @@ import SliderField from '../SliderField';
 
 export default () => (
     <div style={{padding: '20px 30px 10px'}}>
-        <SliderField label='Errors' errors={['Error 1 text', 'Error 2 text']} layout />
+        <SliderField
+            label='Errors'
+            errors={['Error 1 text', 'Error 2 text']}
+            layout
+        />
     </div>
 );

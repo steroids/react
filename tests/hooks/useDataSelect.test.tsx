@@ -19,7 +19,12 @@ const MockResultComponent = (props: any) => (
         ))}
     </div>
 );
-const MockComponent = (props: IDataSelectConfig) => <MockResultComponent {...props} {...useDataSelect(props)} />;
+const MockComponent = (props: IDataSelectConfig) => (
+    <MockResultComponent
+        {...props}
+        {...useDataSelect(props)}
+    />
+);
 
 jest.useFakeTimers();
 

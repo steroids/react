@@ -28,11 +28,29 @@ export const items = [
 
 export default () => (
     <div style={{display: 'flex', gridGap: '10px', alignItems: 'center'}}>
-        <NavField navProps={{layout: 'button'}} items={items} />
-        <NavField navProps={{layout: 'list'}} items={items} />
-        <NavField navProps={{layout: 'link'}} items={items} />
-        <NavField navProps={{layout: 'tabs'}} items={items} />
-        <NavField navProps={{layout: 'navbar'}} items={items} />
-        <NavField navProps={{layout: 'icon'}} items={items} />
+        <NavField
+            navProps={{layout: 'button'}}
+            items={items}
+        />
+        <NavField
+            navProps={{layout: 'list'}}
+            items={items}
+        />
+        <NavField
+            navProps={{layout: 'link'}}
+            items={items}
+        />
+        <NavField
+            navProps={{layout: 'tabs'}}
+            items={items}
+        />
+        <NavField
+            navProps={{layout: 'navbar'}}
+            items={items}
+        />
+        <NavField
+            navProps={{layout: 'icon'}}
+            items={items}
+        />
     </div>
 );

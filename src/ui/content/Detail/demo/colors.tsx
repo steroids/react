@@ -21,7 +21,10 @@ function capitalize(s) {
 export default () => (
     <div style={{display: 'flex', flexWrap: 'wrap'}}>
         {Object.values(colors).map(color => (
-            <div style={{marginRight: '30px', marginBottom: '30px'}} key={color}>
+            <div
+                style={{marginRight: '30px', marginBottom: '30px'}}
+                key={color}
+            >
                 <>
                     <Card
                         style={{width: '320px'}}

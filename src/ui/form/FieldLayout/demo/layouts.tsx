@@ -17,7 +17,11 @@ const layouts = {
 export default () => (
     <div style={{display: 'grid', gridGap: '10px'}}>
         {Object.keys(layouts).map(layout => (
-            <FieldLayout className='col-12 mb-4' key={layout} layout={layout}>
+            <FieldLayout
+                className='col-12 mb-4'
+                key={layout}
+                layout={layout}
+            >
                 <InputField label={layouts[layout]} />
             </FieldLayout>
         ))}

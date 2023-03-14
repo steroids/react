@@ -37,9 +37,15 @@ function Steps(props: IStepsProps): JSX.Element {
     useEffect(() => setIsChangeable(props.isChangeable), [props.isChangeable]);
 
     function getStepStatus(index:number, stepItem: IStepItem) {
-        if (stepItem.isError) return 'error';
-        if (props.currentStep < index) return 'wait';
-        if (props.currentStep === index) return 'active';
+        if (stepItem.isError) {
+            return 'error';
+        }
+        if (props.currentStep < index) {
+            return 'wait';
+        }
+        if (props.currentStep === index) {
+            return 'active';
+        }
         return 'finish';
     }
 
@@ -53,7 +59,11 @@ function Steps(props: IStepsProps): JSX.Element {
                     index: index + 1,
                     status: getStepStatus(index, stepItem),
                     disabled: !isChangeable,
-                    onChange: () => { if (isChangeable) props.onChange(index); },
+                    onChange: () => {
+                        if (isChangeable) {
+                            props.onChange(index);
+                        }
+                    },
                 }),
         )});
 }

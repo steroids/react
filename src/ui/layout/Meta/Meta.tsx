@@ -74,9 +74,24 @@ function Meta(props: IMetaProps) {
         <Helmet>
             <title>{props.title}</title>
             {props.base && <base {...props.base} />}
-            {props.description && <meta name='description' content={props.description} />}
-            {props.meta?.map((attrs, index) => <meta key={index} {...attrs} />)}
-            {props.links?.map((attrs, index) => <link key={index} {...attrs} />)}
+            {props.description && (
+                <meta
+                    name='description'
+                    content={props.description}
+                />
+            )}
+            {props.meta?.map((attrs, index) => (
+                <meta
+                    key={index}
+                    {...attrs}
+                />
+            ))}
+            {props.links?.map((attrs, index) => (
+                <link
+                    key={index}
+                    {...attrs}
+                />
+            ))}
             {props.styles?.map((attrs, index) => (
                 <style
                     key={index}

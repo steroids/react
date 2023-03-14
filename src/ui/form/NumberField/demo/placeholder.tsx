@@ -10,6 +10,9 @@ import NumberField from '../NumberField';
 
 export default () => (
     <>
-        <NumberField label='Placeholder' placeholder='Your number...' />
+        <NumberField
+            label='Placeholder'
+            placeholder='Your number...'
+        />
     </>
 );

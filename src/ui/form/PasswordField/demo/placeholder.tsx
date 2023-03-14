@@ -9,6 +9,9 @@ import PasswordField from '../PasswordField';
 
 export default () => (
     <>
-        <PasswordField label='Placeholder' placeholder='Your password...' />
+        <PasswordField
+            label='Placeholder'
+            placeholder='Your password...'
+        />
     </>
 );

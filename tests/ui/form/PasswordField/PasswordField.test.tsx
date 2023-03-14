@@ -8,8 +8,8 @@ import PasswordFieldMockView from './PasswordFieldMockView';
 describe('PasswordField tests', () => {
     const props = {
         view: PasswordFieldMockView,
-        showClear: true,
-        security: true,
+        showSecurityBar: true,
+        showSecurityIcon: true,
         inputProps: {
             disabled: true,
             name: 'password-test',
@@ -45,7 +45,6 @@ describe('PasswordField tests', () => {
 
         expect(passwordField).toHaveClass(expectedPasswordFieldClass);
         expect(passwordField).toHaveClass(`${expectedPasswordFieldClass}_size_md`);
-        expect(passwordField).toHaveClass(`${expectedPasswordFieldClass}_hasClear`);
         expect(passwordField).toHaveClass(`${expectedPasswordFieldClass}_disabled`);
     });
 
@@ -57,12 +56,7 @@ describe('PasswordField tests', () => {
 
     it('should have controls', () => {
         const {container} = render(JSXWrapper(PasswordField, props));
-
-        const clearIcon = getElementByClassName(container, `${expectedPasswordFieldClass}__icon-clear`);
-
         const eyeIcon = getElementByClassName(container, `${expectedPasswordFieldClass}__icon-eye`);
-
-        expect(clearIcon).toBeInTheDocument();
         expect(eyeIcon).toBeInTheDocument();
     });
 

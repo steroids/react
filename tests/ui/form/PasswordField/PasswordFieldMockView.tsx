@@ -16,47 +16,32 @@ export default function PasswordFieldView(props: IPasswordFieldViewProps & IBemH
                 bem.block({
                     size: props.size,
                     filled: !!props.inputProps.value,
-                    hasClear: props.showClear,
                     disabled: props.inputProps.disabled,
                 }),
                 props.className,
             )}
         >
             <div
-                className={bem(
-                    bem.element('container'),
-                )}
+                className={bem.element('container')}
             >
                 <input
-                    className={bem(
-                        bem.element('input'),
-                    )}
+                    className={bem.element('input')}
                     {...props.inputProps}
                 />
-                <span className={bem.element('controls')}>
-                    {props.showClear && (
+                {props.showSecurityIcon && (
+                    <span
+                        className={bem(bem.element('icon-eye'))}
+                        onMouseDown={props.onShowPassword}
+                        onMouseUp={props.onHidePassword}
+                    >
                         <Icon
                             view={IconMockView}
-                            name="mockIcon"
-                            className={bem.element('icon-clear')}
-                            onClick={props.onClear}
+                            name='mockIcon'
                         />
-                    )}
-                    {props.security && (
-                        <span
-                            className={bem(bem.element('icon-eye'))}
-                            onMouseDown={props.onShowPassword}
-                            onMouseUp={props.onHidePassword}
-                        >
-                            <Icon
-                                view={IconMockView}
-                                name='mockIcon'
-                            />
-                        </span>
-                    )}
-                </span>
+                    </span>
+                )}
             </div>
-            {props.security && (
+            {props.showSecurityBar && (
                 <div className={bem.element('security-bar', props.securityLevel)} />
             )}
         </div>

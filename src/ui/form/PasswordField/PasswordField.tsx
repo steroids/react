@@ -11,16 +11,15 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 export interface IPasswordFieldProps extends IInputFieldProps {
 
     /**
-     * Если true, то отображается шкала сложности пароля и иконка 'отображения' пароля
+     * Если true, то отображается шкала сложности пароля
      * @example true
      */
-    security?: boolean;
+    showSecurityBar?: boolean;
 
     /**
-     * Нужно ли отображать иконку для очищения пароля
+     * Если true, то отображается иконка скрытия/показа пароля
      */
-
-    showClear?: boolean;
+    showSecurityIcon?: boolean;
 
     [key: string]: any;
 }
@@ -34,7 +33,7 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         placeholder: string,
         disabled: boolean,
     },
-    security?: boolean,
+    showSecurityBar?: boolean,
     errors?: string[],
     className?: CssClassName,
     onClear?: () => void,
@@ -87,7 +86,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         ...props.inputProps,
     }), [props.disabled, props.input, props.inputProps, props.placeholder, type]);
-    props.securityLevel = props.security ? checkPassword(props.input.value) : null;
+    props.securityLevel = props.showSecurityBar ? checkPassword(props.input.value) : null;
     props.onShowPassword = () => setType('text');
     props.onHidePassword = () => setType('password');
     props.onClear = onClear;
@@ -97,13 +96,13 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
 PasswordField.defaultProps = {
     disabled: false,
-    security: false,
+    showSecurityBar: false,
+    showSecurityIcon: true,
     required: false,
     className: '',
     placeholder: '',
     errors: null,
     size: 'md',
-    showClear: false,
 };
 
 export default fieldWrapper<IPasswordFieldProps>('PasswordField', PasswordField);

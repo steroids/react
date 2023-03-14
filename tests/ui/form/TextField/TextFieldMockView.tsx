@@ -28,7 +28,14 @@ export default function TextFieldView(props: ITextFieldViewProps & IBemHocOutput
                 )}
                 {...props.inputProps}
             />
-            {props.showClose && <Icon view={IconMockView} className={bem.element('close')} name="mockIcon" onClick={props.onClear} />}
+            {props.showClose && (
+                <Icon
+                    view={IconMockView}
+                    className={bem.element('close')}
+                    name="mockIcon"
+                    onClick={props.onClear}
+                />
+            )}
         </div>
     );
 }

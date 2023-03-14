@@ -56,7 +56,10 @@ export default function NumberFieldView(props: INumberFieldViewProps & IBemHocOu
                         type='button'
                         onClick={onStepUp}
                     >
-                        <Icon view={IconMockView} name='mockIcon' />
+                        <Icon
+                            view={IconMockView}
+                            name='mockIcon'
+                        />
                     </button>
                     <button
                         className={bem.element('arrow', {
@@ -65,7 +68,10 @@ export default function NumberFieldView(props: INumberFieldViewProps & IBemHocOu
                         type='button'
                         onClick={onStepDown}
                     >
-                        <Icon view={IconMockView} name='mockIcon' />
+                        <Icon
+                            view={IconMockView}
+                            name='mockIcon'
+                        />
                     </button>
                 </div>
             )}

@@ -1482,10 +1482,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@steroidsjs/eslint-config@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@steroidsjs/eslint-config/-/eslint-config-2.1.3.tgz#7629ff4e84357aaa1afbba224409bc856b31f6ac"
-  integrity sha512-+UI3knedgMUFjzMz7EVZp6jqCfySGaU2RNj1suY2PBxNFP+dwyMRiXA9aB+581aVMXgr3kn+ObcioeVdr8TFqw==
+"@steroidsjs/eslint-config@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@steroidsjs/eslint-config/-/eslint-config-2.1.4.tgz#38092cc690cc4b720f5730c470e180d9990c5f6a"
+  integrity sha512-7e0WFQ/wfCSzeUOr0/y58+OXC605vHHtgpWk1ubbKtVXTETbDQF4qHZunLFEVlXlYeSVLvpy5NjZvQuQQcOEaA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.49.0"
     "@typescript-eslint/parser" "^5.49.0"

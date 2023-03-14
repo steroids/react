@@ -161,7 +161,12 @@ function Nav(props: INavProps): JSX.Element {
         }
         if (_isFunction(activeItem.content) || _isObject(activeItem.content)) {
             const ContentComponent = activeItem.content;
-            return <ContentComponent {...activeItem} {...activeItem.contentProps} />;
+            return (
+                <ContentComponent
+                    {...activeItem}
+                    {...activeItem.contentProps}
+                />
+            );
         }
         return activeItem.content;
     };

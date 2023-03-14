@@ -8,6 +8,9 @@ import TimeField from '../TimeField';
  */
 export default () => (
     <>
-        <TimeField label='Disabled' disabled />
+        <TimeField
+            label='Disabled'
+            disabled
+        />
     </>
 );

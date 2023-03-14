@@ -9,6 +9,9 @@ import DateRangeField from '../DateRangeField';
 
 export default () => (
     <>
-        <DateRangeField label='Placeholder' placeholder='Your date...' />
+        <DateRangeField
+            label='Placeholder'
+            placeholder='Your date...'
+        />
     </>
 );

@@ -10,8 +10,18 @@ import DateField from '../DateField';
 
 export default () => (
     <>
-        <DateField label='Default' icon />
-        <DateField label='With error' icon='plane' errors={['Error 1 text']} />
-        <DateField label='Custom' icon='dizzy' />
+        <DateField
+            label='Default'
+            icon
+        />
+        <DateField
+            label='With error'
+            icon='plane'
+            errors={['Error 1 text']}
+        />
+        <DateField
+            label='Custom'
+            icon='dizzy'
+        />
     </>
 );

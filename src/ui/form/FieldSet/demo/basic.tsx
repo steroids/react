@@ -13,7 +13,10 @@ import DropDownField from '../../DropDownField';
 
 export default () => (
     <>
-        <Form formId='FieldSetForm' useRedux>
+        <Form
+            formId='FieldSetForm'
+            useRedux
+        >
             <FieldSet
                 fields={[
                     {

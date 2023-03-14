@@ -8,6 +8,9 @@ import Breadcrumbs from '../Breadcrumbs';
  */
 export default () => (
     <>
-        <Breadcrumbs pageId='react' pageTitle='Custom text' />
+        <Breadcrumbs
+            pageId='react'
+            pageTitle='Custom text'
+        />
     </>
 );

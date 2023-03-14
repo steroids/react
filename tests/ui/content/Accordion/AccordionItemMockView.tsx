@@ -10,7 +10,9 @@ export default function AccordionItemView(props: IAccordionCommonViewProps) {
     const bem = useBem('AccordionItemView');
 
     React.useEffect(() => {
-        if (!props.toggleAccordion || !props.toggleCollapse || !props.activeKey) return;
+        if (!props.toggleAccordion || !props.toggleCollapse || !props.activeKey) {
+            return;
+        }
 
         if (props.hasOneOpenItem) {
             props.toggleAccordion(props.activeKey - 1);
@@ -65,7 +67,12 @@ export default function AccordionItemView(props: IAccordionCommonViewProps) {
         }
 
         return typeof props.icon === 'string'
-            ? <Icon name={props.icon} view={IconMockView} />
+            ? (
+                <Icon
+                    name={props.icon}
+                    view={IconMockView}
+                />
+)
             : (
                 <span className={bem.element('custom-icon')}>
                     {props.icon}

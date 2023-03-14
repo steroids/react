@@ -19,7 +19,10 @@ export default () => (
         <div className='row'>
             {Object.keys(sizes)
                 .map(size => (
-                    <div className='col' key={size}>
+                    <div
+                        className='col'
+                        key={size}
+                    >
                         <h6>
                             {sizes[size]}
                         </h6>

@@ -11,10 +11,15 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 export interface IPasswordFieldProps extends IInputFieldProps {
 
     /**
-     * Если true, то отображается шкала сложности пароля и иконка 'отображения' пароля
+     * Если true, то отображается шкала сложности пароля
      * @example true
      */
-    security?: boolean;
+    showSecurityBar?: boolean;
+
+    /**
+     * Если true, то отображается иконка скрытия/показа пароля
+     */
+    showSecurityIcon?: boolean;
 
     [key: string]: any;
 }
@@ -28,9 +33,9 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         placeholder: string,
         disabled: boolean,
     },
-    security?: boolean,
     errors?: string[],
     className?: CssClassName,
+    onClear?: () => void,
     securityLevel?: 'success' | 'warning' | 'danger',
     onShowPassword: () => void,
     onHidePassword: () => void,
@@ -69,6 +74,8 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     const components = useComponents();
 
+    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+
     props.inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value || '',
@@ -78,20 +85,23 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         ...props.inputProps,
     }), [props.disabled, props.input, props.inputProps, props.placeholder, type]);
-    props.securityLevel = props.security ? checkPassword(props.input.value) : null;
+    props.securityLevel = props.showSecurityBar ? checkPassword(props.input.value) : null;
     props.onShowPassword = () => setType('text');
     props.onHidePassword = () => setType('password');
+    props.onClear = onClear;
 
     return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', props);
 }
 
 PasswordField.defaultProps = {
     disabled: false,
-    security: false,
+    showSecurityBar: false,
+    showSecurityIcon: true,
     required: false,
     className: '',
     placeholder: '',
     errors: null,
+    size: 'md',
 };
 
 export default fieldWrapper<IPasswordFieldProps>('PasswordField', PasswordField);

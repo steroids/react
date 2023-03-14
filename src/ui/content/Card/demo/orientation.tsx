@@ -18,7 +18,10 @@ const text = 'Some quick example text to build on the card title and make up the
 export default () => (
     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 2fr'}}>
         {Object.values(orientations).map(orientation => (
-            <div style={{marginRight: '30px'}} key={orientation}>
+            <div
+                style={{marginRight: '30px'}}
+                key={orientation}
+            >
                 <>
                     <Card
                         title='Card title'

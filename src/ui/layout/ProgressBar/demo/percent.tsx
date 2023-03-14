@@ -22,12 +22,30 @@ export default () => {
     return (
         <div style={{display: 'flex', gridGap: '10px', paddingRight: '10px'}}>
             <div style={{display: 'flex', gridGap: '10px'}}>
-                <ProgressBar percent={count} size='small' type='circle' status={count >= 100 ? 'success' : 'normal'} />
-                <ProgressBar percent={10} size='small' type='circle' status='exception' />
+                <ProgressBar
+                    percent={count}
+                    size='small'
+                    type='circle'
+                    status={count >= 100 ? 'success' : 'normal'}
+                />
+                <ProgressBar
+                    percent={10}
+                    size='small'
+                    type='circle'
+                    status='exception'
+                />
             </div>
             <div style={{maxWidth: '70%'}}>
-                <ProgressBar percent={10} size='small' status='exception' />
-                <ProgressBar percent={count} size='small' status={count >= 100 ? 'success' : 'normal'} />
+                <ProgressBar
+                    percent={10}
+                    size='small'
+                    status='exception'
+                />
+                <ProgressBar
+                    percent={count}
+                    size='small'
+                    status={count >= 100 ? 'success' : 'normal'}
+                />
             </div>
         </div>
     );

@@ -49,6 +49,7 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
         isHovered: boolean,
     }[],
     selectedIds: (PrimaryKey | any)[],
+    className?: CssClassName,
     onItemSelect: (id: PrimaryKey | any) => void,
 }
 

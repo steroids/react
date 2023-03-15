@@ -44,6 +44,11 @@ export interface IIconProps {
      */
     view?: React.ComponentType;
 
+    /**
+    *  Должен ли данный элемент участвовать в последовательной навигации
+    */
+    tabIndex?: number,
+
     onClick?: any,
 
     [key: string]: any,

@@ -4,6 +4,7 @@ import Card from './Card';
 import DropDown from './DropDown';
 import Alert from './Alert';
 import Badge from './Badge';
+import Icon from './Icon';
 
 export {
     Avatar,
@@ -14,4 +15,5 @@ export {
     Card,
     DropDown,
     Badge,
+    Icon,
 };

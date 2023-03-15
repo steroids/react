@@ -110,12 +110,6 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
-    style?: any,
-    errors?: string[],
-    showClear?: boolean,
-    leadIcon?: React.ReactElement | string,
-    placeholder?: string,
-    type?: string,
     inputProps: {
         type: string,
         name: string,
@@ -123,18 +117,6 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
         value: string | number,
         placeholder: string,
         disabled: string,
-    },
-
-    textBefore?: number | ReactNode | string,
-    textAfter?: number | ReactNode | string,
-    addonBefore?: ReactNode | string,
-    addonAfter?: ReactNode | string,
-
-    //types for react-input-mask
-    maskProps?: {
-        mask?: string,
-        maskPlaceholder?: string,
-        alwaysShowMask?: boolean,
     },
     onClear?: () => void,
     onFocus?: (e: Event | React.FocusEvent) => void,

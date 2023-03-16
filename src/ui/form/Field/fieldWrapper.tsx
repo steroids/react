@@ -63,6 +63,11 @@ export interface IFieldWrapperInputProps {
      */
     layout?: FormLayout;
 
+    /**
+     * Input ID для связи поля с label
+     */
+    id?: string;
+
     value?: any,
 
     onChange?: (...args: any[]) => any;
@@ -235,6 +240,7 @@ export default function fieldWrapper<T = any>(
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,
                 errors: props.errors,
+                id: props.id,
                 children: (
                     <Component.DynamicField {...props} />
                 ),

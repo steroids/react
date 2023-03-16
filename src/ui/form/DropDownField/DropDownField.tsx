@@ -20,6 +20,18 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     searchPlaceholder?: string;
 
+    /**
+     * Цвет состояния
+     * @example success
+     */
+    color?: ColorName;
+
+    /**
+    * Включает стиль `outline`, когда у DropDownField остается только `border`, а задний фон становится прозрачным
+    * @example true
+    */
+    outline?: boolean;
+
     inputProps?: any;
 
     /**
@@ -40,23 +52,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     view?: any;
 
     /**
-     * Показать кнопку для сброса выбранного значения
-     * @example true
-     */
-    showReset?: boolean;
-
-    /**
      * Атрибут, в котором должны лежать дочерние элементы списка (для группировки)
      * Если аттрибут не задан - группировка не производится
      * @example items
      */
     groupAttribute?: string,
-
-    /**
-     * Включает стиль без 'border'
-     * @example true
-     */
-    noBorder?: boolean;
 
     [key: string]: any;
 }
@@ -84,7 +84,6 @@ export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'item
     onItemHover: (id: PrimaryKey | any) => void,
     onItemRemove: (id: PrimaryKey | any) => void,
     onClose: () => void,
-    placeholder: string,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
 }
@@ -219,6 +218,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
 DropDownField.defaultProps = {
     primaryKey: 'id',
+    outline: false,
+    size: 'md',
+    color: 'basic',
     disabled: false,
     required: false,
     className: '',

@@ -34,7 +34,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: Event | React.ChangeEvent) => void,
+        onChange: (value: string) => void,
         value: number,
         placeholder: string,
         disabled: boolean,
@@ -72,6 +72,7 @@ NumberField.defaultProps = {
     max: null,
     step: null,
     errors: null,
+    size: 'md',
 };
 
 export default fieldWrapper<INumberFieldProps>('NumberField', NumberField);

@@ -200,7 +200,7 @@ export default function fieldWrapper<T = any>(
         attributeSuffixes: optionsConfig.attributeSuffixes || [''],
     };
 
-    const NewComponent = (props: IFieldWrapperInputProps):JSX.Element => {
+    const NewComponent = (props: IFieldWrapperInputProps): JSX.Element => {
         const components = useComponents();
 
         // Get context, formId

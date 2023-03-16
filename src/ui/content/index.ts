@@ -4,6 +4,7 @@ import Card from './Card';
 import DropDown from './DropDown';
 import Alert from './Alert';
 import Badge from './Badge';
+import {Detail, DetailItem} from './Detail';
 import Icon from './Icon';
 
 export {
@@ -15,5 +16,7 @@ export {
     Card,
     DropDown,
     Badge,
+    Detail,
+    DetailItem,
     Icon,
 };

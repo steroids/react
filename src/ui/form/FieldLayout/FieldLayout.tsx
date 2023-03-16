@@ -42,6 +42,12 @@ export interface IFieldLayoutProps {
     errors?: string[];
 
     /**
+     * Отображать ли состояние successful на поле
+     * @example {'true'}
+     */
+    successful?: boolean,
+
+    /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
@@ -54,7 +60,9 @@ export interface IFieldLayoutViewProps {
     label: string | boolean | any,
     required: boolean,
     hint: string | boolean,
-    errors: string | string[],
+    errors: string[],
+    successful: boolean,
+    size: Size,
     layout?: {
         layout: FormLayoutName | boolean,
         className?: string,

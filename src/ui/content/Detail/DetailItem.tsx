@@ -26,7 +26,7 @@ export interface IDetailItemProps {
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
-     */
+    */
     view?: CustomView,
 
     /**

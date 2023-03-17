@@ -5,7 +5,7 @@ import * as React from 'react';
 import {mergeLayoutProp, providers} from '../../../utils/form';
 import {FormContext} from '../Form/Form';
 import FieldLayout from '../FieldLayout/FieldLayout';
-import {useComponents} from '../../../hooks';
+import {useComponents, useUniqueId} from '../../../hooks';
 
 export interface IFieldWrapperInputProps {
     /**
@@ -231,6 +231,10 @@ export default function fieldWrapper<T = any>(
         // Resolve layout
         const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
+        const uniqueId = useUniqueId('input');
+
+        const inputId = props.id || uniqueId;
+
         if (layout !== null) {
             return components.ui.renderView(FieldLayout, {
                 ...attributesProps,
@@ -240,9 +244,9 @@ export default function fieldWrapper<T = any>(
                 label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
                 hint: _has(props, 'hint') ? props.hint : metaProps.hint,
                 errors: props.errors,
-                id: props.id,
+                id: inputId,
                 children: (
-                    <Component.DynamicField {...props} />
+                    <Component.DynamicField {...props} id={inputId} />
                 ),
             });
         }

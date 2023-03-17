@@ -246,7 +246,10 @@ export default function fieldWrapper<T = any>(
                 errors: props.errors,
                 id: inputId,
                 children: (
-                    <Component.DynamicField {...props} id={inputId} />
+                    <Component.DynamicField
+                        {...props}
+                        id={inputId}
+                    />
                 ),
             });
         }

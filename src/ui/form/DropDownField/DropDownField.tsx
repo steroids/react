@@ -65,8 +65,8 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     items: {
         id: number,
         label: string,
-        type?: 'checkbox' | 'radio' | 'dropdown' | 'icon' | 'flag',
-        typeSrc?: 'string' | React.ReactElement,
+        contentType?: 'checkbox' | 'radio' | 'dropdown' | 'icon' | 'img',
+        contentSrc?: 'string' | React.ReactElement,
     }[],
 
     [key: string]: any;
@@ -97,6 +97,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     onOpen: () => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
+    primaryKey?: string,
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {

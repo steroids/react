@@ -11,7 +11,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
  * Выпадающий список для выбора одного или нескольких значений
  */
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
-    IDataProviderConfig,
+    Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'> {
 
     /**
@@ -58,12 +58,22 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     groupAttribute?: string,
 
+    /**
+     * Элементы вложенные внутрь DropDownField
+     * @example {id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}
+     */
+    items: {
+        id: number,
+        label: string,
+        type?: 'checkbox' | 'radio' | 'dropdown' | 'icon' | 'flag',
+        typeSrc?: 'string' | React.ReactElement,
+    }[],
+
     [key: string]: any;
 }
 
-export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'items'> {
+export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     errors?: string[],
-    items: Record<string, unknown>[],
     selectedItems: Record<string, unknown>[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
@@ -84,6 +94,7 @@ export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'item
     onItemHover: (id: PrimaryKey | any) => void,
     onItemRemove: (id: PrimaryKey | any) => void,
     onClose: () => void,
+    onOpen: () => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
 }

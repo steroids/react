@@ -6,6 +6,8 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
+export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
+
 /**
  * DropDownField
  * Выпадающий список для выбора одного или нескольких значений
@@ -62,12 +64,28 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Элементы вложенные внутрь DropDownField
      * @example {id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}
      */
+
+    /**
+     * Свойство которое переключает состояние всех пунктов в определенный тип
+     * @example {type: 'icon', src: 'user'}
+     */
+    contentProperties?: {
+        type: ContentType,
+        src?: 'string' | React.ReactElement;
+    };
+
     items: {
         id: number,
         label: string,
-        contentType?: 'checkbox' | 'radio' | 'dropdown' | 'icon' | 'img',
+        contentType?: ContentType,
         contentSrc?: 'string' | React.ReactElement,
     }[],
+
+    /**
+     * Нужно ли использовать троеточие при переполнении DropDownField
+     * @example {'true'}
+     */
+    ellipses?: boolean,
 
     [key: string]: any;
 }

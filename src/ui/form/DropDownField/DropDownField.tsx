@@ -169,9 +169,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const onItemHover = useCallback((id) => {
         setHoveredId(id);
+        console.log('hover', id);
     }, [setHoveredId]);
 
     const onItemSelect = useCallback((id) => {
+        console.log('select', id);
         setSelectedIds(id);
     }, [setSelectedIds]);
 

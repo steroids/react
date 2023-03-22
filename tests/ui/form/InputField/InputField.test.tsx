@@ -5,7 +5,6 @@ import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpe
 import InputField, {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputField';
 import InputFieldMockView from './InputFieldMockView';
 
-
 describe('InputField tests', () => {
     const props = {
         view: InputFieldMockView,

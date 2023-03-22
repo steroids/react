@@ -116,6 +116,7 @@ RadioListField.defaultProps = {
     required: false,
     className: '',
     errors: null,
+    size: 'md',
 };
 
 export default fieldWrapper<IRadioListFieldProps>('RadioListField', RadioListField);

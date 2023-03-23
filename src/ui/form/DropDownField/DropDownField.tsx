@@ -48,6 +48,12 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     style?: any,
 
     /**
+     * Показать иконку сброса для выбранных значений
+     * @example true
+     */
+    showReset?: boolean,
+
+    /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
@@ -61,19 +67,18 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     groupAttribute?: string,
 
     /**
-     * Элементы вложенные внутрь DropDownField
-     * @example {id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}
-     */
-
-    /**
-     * Свойство которое переключает состояние всех пунктов в определенный тип
+     * Свойство, которое устанавливает один type и src контента для всех пунктов
      * @example {type: 'icon', src: 'user'}
      */
-    contentProperties?: {
+    itemsContent?: {
         type: ContentType,
         src?: 'string' | React.ReactElement;
     };
 
+    /**
+     * Элементы вложенные внутрь DropDownField
+     * @example [{id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}]
+     */
     items: {
         id: number,
         label: string,
@@ -85,7 +90,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Нужно ли использовать троеточие при переполнении DropDownField
      * @example {'true'}
      */
-    ellipses?: boolean,
+    showEllipses?: boolean,
 
     [key: string]: any;
 }
@@ -169,11 +174,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const onItemHover = useCallback((id) => {
         setHoveredId(id);
-        console.log('hover', id);
     }, [setHoveredId]);
 
     const onItemSelect = useCallback((id) => {
-        console.log('select', id);
         setSelectedIds(id);
     }, [setSelectedIds]);
 

@@ -6,7 +6,7 @@ import _isArray from 'lodash-es/isArray';
 import Icon from '../../../../src/ui/content/Icon';
 import {useBem} from '../../../../src/hooks';
 import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
-import DropDownItem from './DropDownItem/DropDownItemMockView';
+import DropDownItem from './DropDownItemMockView';
 import IconMockView from '../../content/Icon/IconMockView';
 
 export default function DropDownFieldView(props: IDropDownFieldViewProps) {
@@ -52,15 +52,18 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                 role='button'
             >
                 {renderPlaceholder()}
-
                 <span
                     className={bem.element('selected-items')}
                 >
-                    {props.ellipses
+                    {props.showEllipses
                         ? (
                             props.selectedItems.map((item, itemIndex) => {
                                 if (props.selectedItems.length === itemIndex + 1) {
-                                    return <React.Fragment key={itemIndex}>{item.label as React.ReactNode}</React.Fragment>;
+                                    return (
+                                        <React.Fragment key={itemIndex}>
+                                            {item.label as React.ReactNode}
+                                        </React.Fragment>
+                                    );
                                 }
 
                                 return (
@@ -81,12 +84,21 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                                     <>
                                         Выбрано
                                         {' '}
-                                        {props.selectedItems.length}
+                                        {`(${props.selectedItems.length})`}
                                     </>
                                 )
                         )}
                 </span>
             </div>
+            {props.showReset && props.selectedIds.length > 0 && (
+                <Icon
+                    view={IconMockView}
+                    name="mockIcon"
+                    className={bem.element('icon-close')}
+                    tabIndex={-1}
+                    onClick={props.onReset}
+                />
+            )}
             <Icon
                 view={IconMockView}
                 name='mockIcon'
@@ -97,7 +109,10 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
             {props.isOpened && (
                 <div className={bem.element('drop-down')}>
                     {props.isAutoComplete && (
-                        <div className={bem.element('search')}>
+                        <div className={bem.element('search', {
+                            size: props.size,
+                        })}
+                        >
                             <Icon
                                 view={IconMockView}
                                 name='mockIcon'
@@ -117,15 +132,9 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                     <div className={bem.element('drop-down-list')}>
                         {props.items.map((item, itemIndex) => (
                             <DropDownItem
+                                {...props}
                                 key={itemIndex}
-                                groupAttribute={props.groupAttribute}
-                                hoveredId={props.hoveredId}
-                                onItemHover={props.onItemHover}
-                                onItemSelect={props.onItemSelect}
-                                primaryKey={props.primaryKey}
-                                selectedIds={props.selectedIds}
                                 item={item}
-                                contentProperties={props.contentProperties}
                             />
                         ))}
                     </div>

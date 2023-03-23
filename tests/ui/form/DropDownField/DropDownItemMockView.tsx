@@ -1,17 +1,20 @@
 import React from 'react';
-import {CheckboxField, RadioListField} from '../../../../../src/ui/form';
-import {ContentType, IDropDownFieldProps} from '../../../../../src/ui/form/DropDownField/DropDownField';
-import Icon from '../../../../../src/ui/content/Icon';
-import {useBem} from '../../../../../src/hooks';
-import IconMockView from '../../../content/Icon/IconMockView';
+import useBem from '../../../../src/hooks/useBem';
+import Icon from '../../../../src/ui/content/Icon';
+import {CheckboxField, RadioListField} from '../../../../src/ui/form';
+import {ContentType, IDropDownFieldProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+import {IFieldWrapperInputProps} from '../../../../src/ui/form/Field/fieldWrapper';
+import {Accordion, AccordionItem} from '../../../../src/ui/content';
+import AccordionMockView from '../../content/Accordion/AccordionMockView';
+import AccordionItemMockView from '../../content/Accordion/AccordionItemMockView';
 
 type PrimaryKey = string | number;
 
-interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'contentProperties'> {
+interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'itemsContent'>, Pick<IFieldWrapperInputProps, 'size'> {
     item: {
         id: number,
         label: string,
-        contentType?: 'checkbox' | 'radio' | 'dropdown' | 'icon' | 'img',
+        contentType?: ContentType,
         contentSrc?: 'string' | React.ReactElement,
     },
     primaryKey?: string,
@@ -20,7 +23,6 @@ interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'contentPrope
     onItemSelect?: (id: PrimaryKey | any) => void,
     onItemHover?: (id: PrimaryKey | any) => void,
     groupAttribute?: string;
-    level?: number;
 }
 
 export default function DropDownItemView(props: IDropDownItemViewProps) {
@@ -30,8 +32,8 @@ export default function DropDownItemView(props: IDropDownItemViewProps) {
         className:
             bem.element('option', {
                 hover: props.primaryKey && props.hoveredId === props.item[props.primaryKey],
-                select: props.primaryKey && props.selectedIds && props.selectedIds.includes(props.item[props.primaryKey]),
-                level: !!props.level,
+                select: props.selectedIds && props.primaryKey && props.selectedIds.includes(props.item[props.primaryKey]),
+                size: props.size,
             }),
         onFocus: () => {
             if (props.onItemHover && props.primaryKey) {
@@ -44,22 +46,21 @@ export default function DropDownItemView(props: IDropDownItemViewProps) {
             }
         },
         onClick: (e) => {
-            e.preventDefault();
             if (props.onItemSelect && props.primaryKey) {
+                e.preventDefault();
                 props.onItemSelect(props.item[props.primaryKey]);
             }
         },
 
     };
 
-    const renderTypeCases = (type: ContentType, src: string | React.ReactElement) => {
+    const renderTypeCases = (type: ContentType | 'group', src: string | React.ReactElement | null) => {
         switch (type) {
             case 'icon':
                 return (
                     <div {...commonProps}>
                         {typeof src === 'string' ? (
                             <Icon
-                                view={IconMockView}
                                 name={src}
                                 className={bem.element('icon')}
                             />
@@ -80,6 +81,7 @@ export default function DropDownItemView(props: IDropDownItemViewProps) {
                         <CheckboxField
                             label={props.item.label}
                             className={bem.element('checkbox')}
+                            size={props.size}
                             inputProps={{
                                 checked: props.selectedIds && props.primaryKey && props.selectedIds.includes(props.item[props.primaryKey]),
                             }}
@@ -108,9 +110,33 @@ export default function DropDownItemView(props: IDropDownItemViewProps) {
                         <RadioListField
                             items={[props.item]}
                             selectedIds={props.selectedIds}
-                            className={bem.element('radio')}
+                            className={bem.element('radio', {
+                                size: props.size,
+                            })}
+                            size={props.size}
                         />
                     </div>
+                );
+
+            case 'group':
+                return (
+                    <Accordion>
+                        <AccordionItem
+                            title={props.item.label}
+                            position="middle"
+                            className={bem.element('group', {
+                                size: props.size,
+                            })}
+                        >
+                            {props.groupAttribute && props.item[props.groupAttribute].map((subItem, itemIndex) => (
+                                <DropDownItemView
+                                    {...props}
+                                    key={itemIndex}
+                                    item={subItem}
+                                />
+                            ))}
+                        </AccordionItem>
+                    </Accordion>
                 );
 
             default:
@@ -118,12 +144,16 @@ export default function DropDownItemView(props: IDropDownItemViewProps) {
         }
     };
 
-    if (props.item.contentType) {
-        return renderTypeCases(props.item.contentType, props.item.contentSrc as string | React.ReactElement);
+    if (props.groupAttribute && Array.isArray(props.item[props.groupAttribute])) {
+        return renderTypeCases('group', props.item[props.groupAttribute]);
     }
 
-    if (props.contentProperties) {
-        return renderTypeCases(props.contentProperties.type, props.contentProperties.src as string | React.ReactElement);
+    if (props.item.contentType) {
+        return renderTypeCases(props.item.contentType, props.item.contentSrc || null);
+    }
+
+    if (props.itemsContent) {
+        return renderTypeCases(props.itemsContent.type, props.itemsContent.src || null);
     }
 
     return (

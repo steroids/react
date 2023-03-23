@@ -10,8 +10,10 @@ describe('DropDownField tests', () => {
         {
             id: 1,
             label: 'First',
-            type: 'icon',
-            src: 'mockIcon',
+            items: [{
+                id: 22,
+                label: 'InnerItem',
+            }],
         },
         {
             id: 2,
@@ -20,19 +22,94 @@ describe('DropDownField tests', () => {
     ];
 
     const props = {
-        color: 'primary',
+        color: 'warning',
         size: 'lg',
         placeholder: 'placeholder',
+        multiple: true,
+        showReset: true,
+        itemsContent: {
+            type: 'checkbox',
+        },
+        groupAttribute: 'items',
+        items,
         view: DropDownFieldMockView,
     } as IDropDownFieldViewProps;
 
-    const expectedDropDownFieldClassName = 'DropDownField';
+    const expectedDropDownFieldClassName = 'DropDownFieldView';
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(DropDownField, props));
-
         const component = getElementByClassName(container, expectedDropDownFieldClassName);
-
         expect(component).toBeInTheDocument();
+    });
+
+    it('should have placeholder', () => {
+        const {getByText} = render(JSXWrapper(DropDownField, props));
+        const placeholderText = getByText(String(props.placeholder));
+        expect(placeholderText).toBeInTheDocument();
+    });
+
+    it('should have items with correct type', () => {
+        const {container} = render(JSXWrapper(DropDownField, props));
+
+        const dropDownTriggerElement = getElementByClassName(container, `${expectedDropDownFieldClassName}__selected-items`);
+
+        fireEvent.click(dropDownTriggerElement);
+
+        const inputs = container.getElementsByTagName('input');
+
+        expect(inputs[0].type).toBe('checkbox');
+        expect(inputs[1].type).toBe('checkbox');
+    });
+
+    it('should have correct color and size', () => {
+        const {container} = render(JSXWrapper(DropDownField, props));
+        const component = getElementByClassName(container, `${expectedDropDownFieldClassName}`);
+        expect(component).toHaveClass(`${expectedDropDownFieldClassName}_size_lg`);
+        expect(component).toHaveClass(`${expectedDropDownFieldClassName}_warning`);
+    });
+
+    it('should have selected items after select options', () => {
+        const {container, getByText} = render(JSXWrapper(DropDownField, props));
+        const totalItemClicksCount = 2;
+        const dropDownTriggerElement = getElementByClassName(container, `${expectedDropDownFieldClassName}__selected-items`);
+
+        fireEvent.click(dropDownTriggerElement);
+        fireEvent.click(getByText('InnerItem'));
+        fireEvent.click(getByText('Second'));
+
+        const itemsCounter = getByText(`Выбрано (${totalItemClicksCount})`);
+
+        expect(itemsCounter).toBeInTheDocument();
+    });
+
+    it('should have autoComplete with placeholder', () => {
+        const searchPlaceholder = 'search';
+        const {container} = render(JSXWrapper(DropDownField, {
+            ...props,
+            autoComplete: true,
+            searchPlaceholder,
+        }));
+
+        const dropDownTriggerElement = getElementByClassName(container, `${expectedDropDownFieldClassName}__selected-items`);
+
+        fireEvent.click(dropDownTriggerElement);
+
+        const search = getElementByClassName(container, `${expectedDropDownFieldClassName}__search`);
+        const searchInput = getElementByClassName(container, `${expectedDropDownFieldClassName}__search-input`) as HTMLInputElement;
+
+        expect(search).toBeInTheDocument();
+        expect(searchInput).toBeInTheDocument();
+        expect(searchInput.placeholder).toBe(searchPlaceholder);
+    });
+
+    it('should have group', () => {
+        const {container} = render(JSXWrapper(DropDownField, props));
+        const dropDownTriggerElement = getElementByClassName(container, `${expectedDropDownFieldClassName}__selected-items`);
+
+        fireEvent.click(dropDownTriggerElement);
+        const group = getElementByClassName(container, 'DropDownItemView__group');
+
+        expect(group).toBeInTheDocument();
     });
 });

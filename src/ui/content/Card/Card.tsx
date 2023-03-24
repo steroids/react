@@ -1,3 +1,4 @@
+import {IButtonProps} from 'src/ui/form/Button/Button';
 import {useComponents} from '../../../hooks';
 
 export interface ICardProps {
@@ -29,21 +30,17 @@ export interface ICardProps {
     header?: string,
 
     /**
-     * Текст для footer
+     * Контент футера
      */
-    footer?: string,
+    footer?: {
+        head: string,
+        subhead: string,
+    },
 
     /**
-     * Ориентация карточки, горизонтальная и вертикальная
-     * @example {'vertical-reverse'}
+     * Коллекция кнопок
      */
-    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal' | string,
-
-    /**
-     * Ориентация карточки, горизонтальная и вертикальная
-     * @example {'vertical-reverse'}
-     */
-    shape?: 'square' | 'circle',
+    buttons: IButtonProps[],
 
     /**
      * Объект CSS стилей

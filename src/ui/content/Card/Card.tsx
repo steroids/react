@@ -2,12 +2,6 @@ import {useComponents} from '../../../hooks';
 
 export interface ICardProps {
     /**
-     * Цвет границы (если передать false, то граница будет скрыта)
-     * @example success
-     */
-    borderColor?: ColorName | 'default' | boolean,
-
-    /**
      * Дополнительный CSS-класс
      */
     className?: CssClassName,
@@ -16,12 +10,6 @@ export interface ICardProps {
      * Дочерние элементы
      */
     children?: CustomView,
-
-    /**
-     * Цвет состояния
-     * @example success
-     */
-    color?: ColorName,
 
     /**
      * Обложка для карточки, нужно передать ссылку на изображение

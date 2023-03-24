@@ -20,11 +20,26 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
         }
     }, [props.isAutoComplete, props.isOpened, props.isSearchAutoFocus]);
 
-    const renderPlaceholder = React.useCallback(() => props.placeholder && !(props.selectedIds && props.selectedIds.length)
+    const renderPlaceholder = React.useCallback(() => props.placeholder && !props.selectedIds?.length
         ? (
             <div className={bem.element('placeholder')}>{props.placeholder}</div>
         )
-        : null, [bem, props.placeholder, props.selectedIds]);
+        : null,
+        [bem, props.placeholder, props.selectedIds]);
+
+    const getSelectedItemsLabel = (selectedItems: Record<string, any>[]): string => (
+        selectedItems
+            .map(selectedItem => selectedItem.label)
+            .join(', ')
+    );
+
+    const getSelectedItemsCount = (selectedItems: Record<string, any>) => {
+        if (selectedItems.length <= 1) {
+            return selectedItems[0]?.label;
+        }
+
+        return `Выбрано (${selectedItems.length})`;
+    };
 
     return (
         <div
@@ -57,36 +72,10 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                 >
                     {props.showEllipses
                         ? (
-                            props.selectedItems.map((item, itemIndex) => {
-                                if (props.selectedItems.length === itemIndex + 1) {
-                                    return (
-                                        <React.Fragment key={itemIndex}>
-                                            {item.label as React.ReactNode}
-                                        </React.Fragment>
-                                    );
-                                }
-
-                                return (
-                                    <React.Fragment key={itemIndex}>
-                                        {`${item.label}, `}
-                                    </React.Fragment>
-                                );
-                            })
+                            getSelectedItemsLabel(props.selectedItems)
                         )
                         : (
-                            props.selectedItems.length <= 1
-                                ? (
-                                    <>
-                                        {props.selectedItems[0]?.label}
-                                    </>
-                                )
-                                : (
-                                    <>
-                                        Выбрано
-                                        {' '}
-                                        {`(${props.selectedItems.length})`}
-                                    </>
-                                )
+                            getSelectedItemsCount(props.selectedItems)
                         )}
                 </span>
             </div>
@@ -97,6 +86,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                     className={bem.element('icon-close')}
                     tabIndex={-1}
                     onClick={props.onReset}
+                    aria-label='Сбросить'
                 />
             )}
             <Icon

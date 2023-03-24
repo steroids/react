@@ -5,8 +5,8 @@ import {CheckboxField, RadioListField} from '../../../../src/ui/form';
 import {ContentType, IDropDownFieldProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import {IFieldWrapperInputProps} from '../../../../src/ui/form/Field/fieldWrapper';
 import {Accordion, AccordionItem} from '../../../../src/ui/content';
-import AccordionMockView from '../../content/Accordion/AccordionMockView';
-import AccordionItemMockView from '../../content/Accordion/AccordionItemMockView';
+
+const GROUP_CONTENT_TYPE = 'group';
 
 type PrimaryKey = string | number;
 
@@ -95,7 +95,7 @@ export default function DropDownItemView(props: IDropDownItemViewProps) {
                         <span className={bem.element('img')}>
                             <img
                                 src={src as string}
-                                alt="flag"
+                                alt="custom source for item"
                             />
                         </span>
                         <span>
@@ -145,7 +145,7 @@ export default function DropDownItemView(props: IDropDownItemViewProps) {
     };
 
     if (props.groupAttribute && Array.isArray(props.item[props.groupAttribute])) {
-        return renderTypeCases('group', props.item[props.groupAttribute]);
+        return renderTypeCases(GROUP_CONTENT_TYPE, props.item[props.groupAttribute]);
     }
 
     if (props.item.contentType) {

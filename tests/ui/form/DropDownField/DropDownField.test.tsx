@@ -56,10 +56,9 @@ describe('DropDownField tests', () => {
 
         fireEvent.click(dropDownTriggerElement);
 
-        const inputs = container.getElementsByTagName('input');
+        const inputs = container.querySelectorAll('input');
 
-        expect(inputs[0].type).toBe('checkbox');
-        expect(inputs[1].type).toBe('checkbox');
+        inputs.forEach(input => expect(input.type).toBe('checkbox'));
     });
 
     it('should have correct color and size', () => {

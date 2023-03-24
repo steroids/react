@@ -50,7 +50,7 @@ declare type Size = 'small' | 'middle' | 'large' | string;
 /**
  * Макет формы или ее части, влияющий на расположение полей
  */
-declare type FormLayoutName = 'default' | 'horizontal' | 'inline' | string;
+declare type FormLayoutName = 'default' | 'vertical' | 'inline' | string;
 
 /**
  * Свойства для настройки макета формы

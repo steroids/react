@@ -183,12 +183,6 @@ export interface IFormProps {
     captchaActionName?: string;
 
     /**
-     * Включает рамки и тень.
-     * @example true
-     */
-    isBordered?: boolean,
-
-    /**
      * Очищать ли данные формы с redux хранилища при размонтировании компонента. По-умолчанию - false
      * @example false
      */

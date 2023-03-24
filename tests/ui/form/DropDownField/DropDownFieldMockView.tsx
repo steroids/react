@@ -6,8 +6,9 @@ import _isArray from 'lodash-es/isArray';
 import Icon from '../../../../src/ui/content/Icon';
 import {useBem} from '../../../../src/hooks';
 import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
-import DropDownItem from './DropDownItemMockView';
+import DropDownItemView from './DropDownItemMockView';
 import IconMockView from '../../content/Icon/IconMockView';
+import {Accordion} from '../../../../src/ui/content';
 
 export default function DropDownFieldView(props: IDropDownFieldViewProps) {
     const bem = useBem('DropDownFieldView');
@@ -40,6 +41,30 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
 
         return `Выбрано (${selectedItems.length})`;
     };
+
+    const renderItems = () => props.groupAttribute
+        ? (
+            <Accordion>
+                {props.items.map((item, itemIndex) => (
+                    <DropDownItemView
+                        {...props}
+                        key={itemIndex}
+                        item={item}
+                    />
+                ))}
+            </Accordion>
+        )
+        : (
+            <>
+                {props.items.map((item, itemIndex) => (
+                    <DropDownItemView
+                        {...props}
+                        key={itemIndex}
+                        item={item}
+                    />
+                ))}
+            </>
+        );
 
     return (
         <div
@@ -120,13 +145,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                         </div>
                     )}
                     <div className={bem.element('drop-down-list')}>
-                        {props.items.map((item, itemIndex) => (
-                            <DropDownItem
-                                {...props}
-                                key={itemIndex}
-                                item={item}
-                            />
-                        ))}
+                        {renderItems()}
                     </div>
                 </div>
             )}

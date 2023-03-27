@@ -107,10 +107,4 @@ function Card(props: ICardProps) {
     });
 }
 
-Card.defaultProps = {
-    borderColor: 'default',
-    orientation: 'vertical',
-    shape: 'circle',
-};
-
 export default Card;

@@ -6,12 +6,21 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
+export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
+
+export interface IDropDownFieldItem {
+    id: number,
+    label: string,
+    contentType?: ContentType,
+    contentSrc?: 'string' | React.ReactElement,
+}
+
 /**
  * DropDownField
  * Выпадающий список для выбора одного или нескольких значений
  */
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
-    IDataProviderConfig,
+    Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'> {
 
     /**
@@ -19,6 +28,18 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * @example Your text...
      */
     searchPlaceholder?: string;
+
+    /**
+     * Цвет состояния
+     * @example success
+     */
+    color?: ColorName;
+
+    /**
+    * Включает стиль `outline`, когда у DropDownField остается только `border`, а задний фон становится прозрачным
+    * @example true
+    */
+    outline?: boolean;
 
     inputProps?: any;
 
@@ -34,16 +55,16 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     style?: any,
 
     /**
+     * Показать иконку сброса для выбранных значений
+     * @example true
+     */
+    showReset?: boolean,
+
+    /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
-
-    /**
-     * Показать кнопку для сброса выбранного значения
-     * @example true
-     */
-    showReset?: boolean;
+    view?: CustomView,
 
     /**
      * Атрибут, в котором должны лежать дочерние элементы списка (для группировки)
@@ -53,17 +74,31 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     groupAttribute?: string,
 
     /**
-     * Включает стиль без 'border'
-     * @example true
+     * Свойство, которое устанавливает один type и src контента для всех пунктов
+     * @example {type: 'icon', src: 'user'}
      */
-    noBorder?: boolean;
+    itemsContent?: {
+        type: ContentType,
+        src?: 'string' | React.ReactElement;
+    };
+
+    /**
+     * Элементы вложенные внутрь DropDownField
+     * @example [{id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}]
+     */
+    items: IDropDownFieldItem[],
+
+    /**
+     * Нужно ли использовать троеточие при переполнении DropDownField
+     * @example {'true'}
+     */
+    showEllipses?: boolean,
 
     [key: string]: any;
 }
 
-export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'items'> {
+export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     errors?: string[],
-    items: Record<string, unknown>[],
     selectedItems: Record<string, unknown>[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
@@ -84,9 +119,25 @@ export interface IDropDownFieldViewProps extends Omit<IDropDownFieldProps, 'item
     onItemHover: (id: PrimaryKey | any) => void,
     onItemRemove: (id: PrimaryKey | any) => void,
     onClose: () => void,
-    placeholder: string,
+    onOpen: () => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
+    primaryKey: string,
+}
+
+export interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'itemsContent'>, Pick<IFieldWrapperInputProps, 'size'> {
+    item: {
+        id: number,
+        label: string,
+        contentType?: ContentType,
+        contentSrc?: 'string' | React.ReactElement,
+    },
+    primaryKey: PrimaryKey,
+    hoveredId: string,
+    selectedIds: (PrimaryKey | any)[];
+    onItemSelect: (id: PrimaryKey | any) => void,
+    onItemHover: (id: PrimaryKey | any) => void,
+    groupAttribute?: string;
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -219,6 +270,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
 DropDownField.defaultProps = {
     primaryKey: 'id',
+    outline: false,
+    size: 'md',
+    color: 'basic',
     disabled: false,
     required: false,
     className: '',

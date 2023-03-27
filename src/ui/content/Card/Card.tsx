@@ -1,5 +1,28 @@
 import {IButtonProps} from 'src/ui/form/Button/Button';
 import {useComponents} from '../../../hooks';
+import {IAvatarProps} from '../Avatar/Avatar';
+
+interface ILink {
+    /**
+    * URL адрес куда ведет ссылка с
+    * @example {'https://steroids.kozhin.dev'}
+    */
+    url: string,
+
+    /**
+    * Отображаемый текст ссылки
+    * @example {'Click me!'}
+    */
+    text: string,
+
+    /**
+     * Отображаемый текст при наведении на ссылку
+     * @example {'Steroids for React'}
+     */
+    title: string,
+
+    target: string,
+}
 
 export interface ICardProps {
     /**
@@ -25,9 +48,14 @@ export interface ICardProps {
     description?: string,
 
     /**
-     * Текст для header
+     * Контент хедера
      */
-    header?: string,
+    header?: {
+        avatar?: IAvatarProps,
+        menu?: boolean,
+        head?: string,
+        subhead?: string,
+    },
 
     /**
      * Контент футера
@@ -36,6 +64,12 @@ export interface ICardProps {
         head: string,
         subhead: string,
     },
+
+    /**
+    * Коллекция ссылок
+    * @example {}
+    */
+    links: ILink[],
 
     /**
      * Коллекция кнопок
@@ -61,7 +95,10 @@ export interface ICardProps {
     view?: CustomView;
 }
 
-export type ICardViewProps = ICardProps
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ICardViewProps extends ICardProps {
+
+}
 
 function Card(props: ICardProps) {
     const components = useComponents();

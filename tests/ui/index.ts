@@ -11,4 +11,7 @@ export default {
     'content.DropDownView': {
         lazy: () => require('./content/DropDown/DropDownMockView').default,
     },
+    'content.AvatarView': {
+        lazy: () => require('./content/Avatar/AvatarMockView').default,
+    },
 };

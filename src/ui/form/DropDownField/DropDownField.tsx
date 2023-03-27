@@ -122,7 +122,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     onOpen: () => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
-    primaryKey?: string,
+    primaryKey: string,
 }
 
 export interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'itemsContent'>, Pick<IFieldWrapperInputProps, 'size'> {
@@ -132,7 +132,7 @@ export interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'items
         contentType?: ContentType,
         contentSrc?: 'string' | React.ReactElement,
     },
-    primaryKey?: PrimaryKey,
+    primaryKey: PrimaryKey,
     hoveredId: string,
     selectedIds: (PrimaryKey | any)[];
     onItemSelect: (id: PrimaryKey | any) => void,

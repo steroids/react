@@ -27,6 +27,12 @@ export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
      */
     view?: CustomView;
 
+    /**
+     * Флаг определяющий включен ли элемент
+     * @example {'true'}
+     */
+    checked?: boolean;
+
     [key: string]: any,
 }
 
@@ -43,20 +49,21 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
 function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    useMount(() => {
-        if (props.input.value === undefined) {
-            props.input.onChange(false);
+    const onChangeHandler = React.useCallback(() => {
+        props.input.onChange(!props.input.value);
+        if (props.onChange) {
+            props.onChange();
         }
-    });
+    }, []);
 
     const inputProps = useMemo(() => ({
         name: props.input.name,
         type: 'checkbox',
         checked: !!props.input.value,
-        onChange: () => props.input.onChange(!props.input.value),
+        onChange: onChangeHandler,
         disabled: props.disabled,
         ...props.inputProps,
-    }), [props.disabled, props.input, props.inputProps]);
+    }), [onChangeHandler, props.disabled, props.input.name, props.input.value, props.inputProps]);
 
     return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props, inputProps});
 }

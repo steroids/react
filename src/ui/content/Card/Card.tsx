@@ -1,12 +1,9 @@
+import {IButtonProps} from 'src/ui/form/Button/Button';
+import {ILinkProps} from 'src/ui/nav/Link/Link';
 import {useComponents} from '../../../hooks';
+import {IAvatarProps} from '../Avatar/Avatar';
 
 export interface ICardProps {
-    /**
-     * Цвет границы (если передать false, то граница будет скрыта)
-     * @example success
-     */
-    borderColor?: ColorName | 'default' | boolean,
-
     /**
      * Дополнительный CSS-класс
      */
@@ -16,12 +13,6 @@ export interface ICardProps {
      * Дочерние элементы
      */
     children?: CustomView,
-
-    /**
-     * Цвет состояния
-     * @example success
-     */
-    color?: ColorName,
 
     /**
      * Обложка для карточки, нужно передать ссылку на изображение
@@ -36,26 +27,33 @@ export interface ICardProps {
     description?: string,
 
     /**
-     * Текст для header
+     * Контент хедера
      */
-    header?: string,
+    header?: {
+        avatar?: IAvatarProps,
+        menu?: boolean,
+        head?: string,
+        subhead?: string,
+    },
 
     /**
-     * Текст для footer
+     * Контент футера
      */
-    footer?: string,
+    footer?: {
+        head: string,
+        subhead: string,
+    },
 
     /**
-     * Ориентация карточки, горизонтальная и вертикальная
-     * @example {'vertical-reverse'}
-     */
-    orientation?: 'vertical' | 'vertical-reverse' | 'horizontal' | string,
+    * Коллекция ссылок
+    * @example {}
+    */
+    links: ILinkProps[],
 
     /**
-     * Ориентация карточки, горизонтальная и вертикальная
-     * @example {'vertical-reverse'}
+     * Коллекция кнопок
      */
-    shape?: 'square' | 'circle',
+    buttons: IButtonProps[],
 
     /**
      * Объект CSS стилей
@@ -84,11 +82,5 @@ function Card(props: ICardProps) {
         ...props,
     });
 }
-
-Card.defaultProps = {
-    borderColor: 'default',
-    orientation: 'vertical',
-    shape: 'circle',
-};
 
 export default Card;

@@ -13,5 +13,13 @@ export default {
     },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
+    'content.AccordionItemView': {
+        lazy: () => require('./content/Accordion/AccordionItemMockView').default,
+    },
+    'content.AccordionView': {
+        lazy: () => require('./content/Accordion/AccordionMockView').default,
+    },
+    'form.CheckboxFieldView': {
+        lazy: () => require('./form/CheckboxField/CheckboxFieldMockView').default,
     },
 };

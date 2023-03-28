@@ -8,6 +8,13 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 
 export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
 
+export interface IDropDownFieldItem {
+    id: number,
+    label: string,
+    contentType?: ContentType,
+    contentSrc?: 'string' | React.ReactElement,
+}
+
 /**
  * DropDownField
  * Выпадающий список для выбора одного или нескольких значений
@@ -57,7 +64,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView,
 
     /**
      * Атрибут, в котором должны лежать дочерние элементы списка (для группировки)
@@ -79,12 +86,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Элементы вложенные внутрь DropDownField
      * @example [{id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}]
      */
-    items: {
-        id: number,
-        label: string,
-        contentType?: ContentType,
-        contentSrc?: 'string' | React.ReactElement,
-    }[],
+    items: IDropDownFieldItem[],
 
     /**
      * Нужно ли использовать троеточие при переполнении DropDownField
@@ -120,7 +122,22 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     onOpen: () => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
-    primaryKey?: string,
+    primaryKey: string,
+}
+
+export interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'itemsContent'>, Pick<IFieldWrapperInputProps, 'size'> {
+    item: {
+        id: number,
+        label: string,
+        contentType?: ContentType,
+        contentSrc?: 'string' | React.ReactElement,
+    },
+    primaryKey: PrimaryKey,
+    hoveredId: string,
+    selectedIds: (PrimaryKey | any)[];
+    onItemSelect: (id: PrimaryKey | any) => void,
+    onItemHover: (id: PrimaryKey | any) => void,
+    groupAttribute?: string;
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {

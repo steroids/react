@@ -86,7 +86,7 @@ export default function calculate(gap, position, parentRef, tooltipSize, arrowSi
         case 'topRight':
         case 'bottomRight':
             // Ширина tooltip больше родителя - стрелка на середину родителя
-            style.right = document.body.clientWidth - parentDimensions.right;
+            style.left = parentDimensions.right - tooltipSize.width;
             if (parentDimensions.width < tooltipSize.width) {
                 arrowPosition = {
                     left: null,

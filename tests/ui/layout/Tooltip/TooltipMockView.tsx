@@ -23,7 +23,6 @@ export default function TooltipView(props: ITooltipMockViewProps & IBemHocOutput
     }, [props.calculatePosition]);
 
     const bem = useBem('TooltipView');
-    console.log(props.isTooltipVisible);
     return (
         <div
             data-testid='tooltip-test'

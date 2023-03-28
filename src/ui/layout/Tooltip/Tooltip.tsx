@@ -66,10 +66,10 @@ export interface ITooltipProps {
     style?: TooltipStylePosition,
 
     /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
+     * Стили для позиционирования стрелки
+     * @example {left: 10}
      */
-    view?: CustomView;
+    arrowPosition?: TooltipArrowPosition,
 
     /**
      * Рассчет позиции подсказки

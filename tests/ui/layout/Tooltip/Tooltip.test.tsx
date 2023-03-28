@@ -12,7 +12,6 @@ import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('Tooltip tests', () => {
     const props = {
-        view: TooltipMockView,
         testId: 'tooltip-test',
         position: 'bottom',
         content: 'test-content',

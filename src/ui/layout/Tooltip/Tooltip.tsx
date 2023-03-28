@@ -72,6 +72,12 @@ export interface ITooltipProps {
     arrowPosition?: TooltipArrowPosition,
 
     /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
+    view?: CustomView;
+
+    /**
      * Рассчет позиции подсказки
      */
     calculatePosition?: (tooltipDimensions: Record<string, any>, arrowDimensions: Record<string, any>) => void,

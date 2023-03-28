@@ -13,6 +13,7 @@ export default {
     },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
+    },
     'content.AccordionItemView': {
         lazy: () => require('./content/Accordion/AccordionItemMockView').default,
     },

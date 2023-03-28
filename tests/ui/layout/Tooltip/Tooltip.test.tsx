@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom';
-import {fireEvent, screen, waitFor} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import Tooltip from '../../../../src/ui/layout/Tooltip/Tooltip';
 import TooltipMockView from './TooltipMockView';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 /*
 * @Todo
@@ -19,7 +18,6 @@ describe('Tooltip tests', () => {
         content: 'test-content',
         children: 'children',
         defaultVisible: true,
-        isTooltipVisible: true,
     };
 
     const expectedTooltipClass = 'TooltipView';
@@ -31,8 +29,6 @@ describe('Tooltip tests', () => {
 
         expect(tooltip).toBeInTheDocument();
         expect(tooltip).toHaveClass(expectedTooltipClass);
-        // console.debug();
-        // expect(tooltip).toHaveClass(`${expectedTooltipClass}_show`);
     });
 
     it('should have correct content', () => {
@@ -62,5 +58,4 @@ describe('Tooltip tests', () => {
         const tooltipArrow = getElementByClassName(tooltip, `${expectedTooltipClass}__arrow`);
         expect(tooltipArrow).toHaveClass(`${expectedTooltipClass}__arrow_position_${props.position}`);
     });
-    //Todo confirm action
 });

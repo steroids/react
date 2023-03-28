@@ -5,18 +5,21 @@ import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpe
 import CardMockView from './CardMockView';
 
 describe('Card tests', () => {
+    const coverSrc = 'https://i.ibb.co/1rTqmJD/image-1.jpg';
+    const avatarSrc = 'https://i.ibb.co/T4j2NMQ/20230325210515-1.jpg';
+
     const props = {
         view: CardMockView,
         header: {
             avatar: {
-                src: 'https://i.ibb.co/T4j2NMQ/20230325210515-1.jpg',
+                src: avatarSrc,
                 status: true,
             },
             head: 'Header',
             subhead: 'Header Subhead',
             menu: true,
         },
-        cover: 'https://i.ibb.co/1rTqmJD/image-1.jpg',
+        cover: coverSrc,
         footer: {
             head: 'Footer',
             subhead: 'Footer Subhead',
@@ -74,13 +77,13 @@ describe('Card tests', () => {
         const button = {
             outline: true,
             color: 'primary',
-            children: 'PRIMARY',
+            label: 'PRIMARY',
             size: 'sm',
         };
 
         const link = {
-            url: 'https://i.ibb.co/',
-            text: 'Link',
+            url: 'https://steroids.kozhin.dev',
+            label: 'Link',
         };
 
         const {container, getByText} = render(JSXWrapper(Card, {
@@ -96,7 +99,7 @@ describe('Card tests', () => {
         const expectedLinksAndButtonsCount = 2;
         const linksAndButtons = container.querySelectorAll('.ButtonView');
         const linkElement = getElementByClassName(container, 'ButtonView_link');
-        const buttonElement = getByText(button.children);
+        const buttonElement = getByText(button.label);
 
         expect(linksAndButtons.length).toBe(expectedLinksAndButtonsCount);
         expect(linkElement).toBeInTheDocument();

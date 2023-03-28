@@ -5,6 +5,7 @@ import {Button} from '../../../../src/ui/form';
 import Avatar from '../../../../src/ui/content/Avatar/Avatar';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../Icon/IconMockView';
+import {Link} from '../../../../src/ui/nav';
 
 export default function CardView(props: ICardViewProps) {
     const bem = useBem('CardView');
@@ -26,10 +27,10 @@ export default function CardView(props: ICardViewProps) {
                                 {props.header.head}
 
                             </h3>
-                            <div className={bem.element('header-subhead')}>
+                            <p className={bem.element('header-subhead')}>
                                 {props.header.subhead}
 
-                            </div>
+                            </p>
                         </div>
                     </div>
                     {props.header.menu && (
@@ -63,9 +64,9 @@ export default function CardView(props: ICardViewProps) {
                     )}
                     <div className={bem.element('content-inner')}>
                         {props.description && (
-                            <div className={bem.element('description')}>
+                            <p className={bem.element('description')}>
                                 {props.description}
-                            </div>
+                            </p>
                         )}
                         {props.buttons && (
                             <div className={bem.element('buttons')}>
@@ -80,14 +81,9 @@ export default function CardView(props: ICardViewProps) {
                         {props.links && (
                             <div className={bem.element('links')}>
                                 {props.links.map((link, linkIndex) => (
-                                    <Button
-                                        link
+                                    <Link
+                                        {...link}
                                         key={linkIndex}
-                                        url={link.url}
-                                        label={link.text}
-                                        target={link.target}
-                                        hint={link.title}
-                                        className={bem.element('links-item')}
                                     />
                                 ))}
                             </div>
@@ -98,7 +94,7 @@ export default function CardView(props: ICardViewProps) {
             {props.footer && (
                 <div className={bem.element('footer')}>
                     <h3 className={bem.element('footer-head')}>{props.footer.head}</h3>
-                    <div className={bem.element('footer-subhead')}>{props.footer.subhead}</div>
+                    <p className={bem.element('footer-subhead')}>{props.footer.subhead}</p>
                 </div>
             )}
         </div>

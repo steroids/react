@@ -15,7 +15,7 @@ export interface IBadgeProps {
     /**
      * Тип badge
      */
-    type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
+    type: ColorName;
 
     /**
      * Стиль скругления
@@ -53,7 +53,7 @@ export interface IBadgeProps {
     /**
      * Размер для badge
      */
-    size: 'small' | 'medium' | 'large';
+    size: Size;
 }
 
 export interface IBadgeViewProps extends IBadgeProps {
@@ -81,7 +81,7 @@ function Badge(props: IBadgeProps): JSX.Element {
 Badge.defaultProps = {
     type: 'primary',
     roundingStyle: 'squarer',
-    size: 'medium',
+    size: 'md',
     counter: false,
     showClose: false,
 };

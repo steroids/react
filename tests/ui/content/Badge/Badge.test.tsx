@@ -32,7 +32,7 @@ describe('Badge tests', () => {
         const badge = getByTestId(props.testId);
 
         expect(badge).toHaveClass(`${expectedBadgeClass}_primary`);
-        expect(badge).toHaveClass(`${expectedBadgeClass}_medium`);
+        expect(badge).toHaveClass(`${expectedBadgeClass}_md`);
         expect(badge).toHaveClass(`${expectedBadgeClass}_squarer`);
         expect(badge).toHaveClass(props.className);
     });

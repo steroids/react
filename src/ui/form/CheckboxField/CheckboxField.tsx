@@ -54,7 +54,7 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         if (props.onChange) {
             props.onChange();
         }
-    }, []);
+    }, [props]);
 
     const inputProps = useMemo(() => ({
         name: props.input.name,

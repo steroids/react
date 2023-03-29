@@ -138,7 +138,7 @@ export interface IButtonProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: React.ComponentType;
+    view?: CustomView;
 
     /**
      * Вложенные элементы

@@ -2,9 +2,9 @@ import React, {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface AvatarGroupProps{
-    view?: any,
+    view?: CustomView,
     children?: CustomView[],
-    style?: React.CSSProperties,
+    style?: CustomStyle,
     maxCount?: number,
 }
 

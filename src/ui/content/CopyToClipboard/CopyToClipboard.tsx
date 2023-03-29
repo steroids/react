@@ -13,7 +13,7 @@ interface ICopyToClipboardProps extends IBemHocOutput, IConnectHocOutput {
         level?: string,
         timeOut?: string,
     },
-    className?: string,
+    className?: CssClassName,
     children?: any,
 }
 

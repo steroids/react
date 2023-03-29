@@ -46,19 +46,19 @@ export interface IControlsProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any,
+    view?: CustomView,
 
     /**
      * Дополнительный CSS-класс для элемента отображения
      * @example MyCustomView
      */
-    className?: string,
+    className?: CssClassName,
 
     [key: string]: any,
 }
 
 export interface IControlsViewProps extends IControlsProps {
-    className?: string,
+    className?: CssClassName,
     items: (IControlItem & {
         icon?: string,
         label?: string | any,

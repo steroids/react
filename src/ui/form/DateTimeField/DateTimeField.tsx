@@ -13,7 +13,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any,
+    style?: CustomStyle,
 
     /**
      * Дополнительный CSS-класс

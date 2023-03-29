@@ -2,7 +2,7 @@ import React from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface ITitleProps {
-    view?: any,
+    view?: CustomView,
     className?: CssClassName,
 
     /**
@@ -32,7 +32,7 @@ export interface ITitleProps {
      */
     color?: ColorName,
 
-    style?: React.CSSProperties,
+    style?: CustomStyle,
 }
 
 export type ITitleViewProps = ITitleProps

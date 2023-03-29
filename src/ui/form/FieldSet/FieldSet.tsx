@@ -37,7 +37,7 @@ export interface IFieldSetProps extends IFormContext {
 }
 
 export interface IFieldSetViewProps {
-    className?: string,
+    className?: CssClassName,
     children?: React.ReactNode,
     label?: string | any,
 }

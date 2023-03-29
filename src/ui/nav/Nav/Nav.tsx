@@ -44,7 +44,7 @@ export interface INavItem extends IButtonProps {
      * Переопределение view React компонента для кастомизации отображения элемента
      * @example MyCustomView
      */
-    view?: any,
+    view?: CustomView,
 
     /**
      * Видимость элемента

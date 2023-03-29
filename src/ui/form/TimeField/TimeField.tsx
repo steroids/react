@@ -39,7 +39,7 @@ export interface ITimeFieldProps extends IDateInputStateInput {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: CustomStyle;
 
     /**
      * Свойства для view компонента

@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface IAlertProps {
-    view?: any,
+    view?: CustomView,
     className?: CssClassName,
 
     /**
@@ -26,7 +26,7 @@ export interface IAlertProps {
      */
     description?: string,
 
-    style?: React.CSSProperties,
+    style?: CustomStyle,
 
     /**
      *  Нужно ли отображать кнопку, чтобы закрыть Оповещение

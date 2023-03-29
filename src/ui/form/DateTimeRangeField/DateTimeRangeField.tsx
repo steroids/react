@@ -50,7 +50,7 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: CustomStyle;
 
     /**
      * Свойства для поля 'from'

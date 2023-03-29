@@ -86,7 +86,7 @@ export interface IDetailProps {
     /**
      * Дополнительный CSS-класс для таблицы
      */
-    className?: string,
+    className?: CssClassName,
 
     /**
      * Дочерние компоненты

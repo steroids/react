@@ -66,7 +66,7 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: CustomStyle;
 
     /**
      * Иконка

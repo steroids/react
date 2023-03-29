@@ -127,7 +127,7 @@ export interface IButtonProps {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: CustomStyle;
 
     /**
      * Дополнительный CSS-класс для кнопки или ссылки

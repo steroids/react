@@ -7,8 +7,8 @@ export interface IAccordionIcon {
 }
 
 export interface IAccordionCommonProps {
-    view?: any,
-    style?: React.CSSProperties,
+    view?: CustomView,
+    style?: CustomStyle,
     children?: any,
 
     /**

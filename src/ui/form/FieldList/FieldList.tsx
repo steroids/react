@@ -96,7 +96,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
      * Переопределение view React компонента для кастомизации отображения списка с группами полей
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      * Пропсы для компонента отображения списка с группами полей - FieldListView

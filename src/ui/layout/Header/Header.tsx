@@ -3,7 +3,7 @@ import {INavProps} from '../../nav/Nav/Nav';
 
 export interface IHeaderProps {
     className?: CssClassName;
-    view?: any;
+    view?: CustomView;
     logo?: {
         title: string,
         linkProps?: Record<string, unknown>,

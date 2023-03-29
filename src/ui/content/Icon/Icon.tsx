@@ -42,7 +42,7 @@ export interface IIconProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: React.ComponentType;
+    view?: CustomView;
 
     /**
     *  Должен ли данный элемент участвовать в последовательной навигации

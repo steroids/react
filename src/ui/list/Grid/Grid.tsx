@@ -87,7 +87,7 @@ export interface IGridProps extends IListConfig {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      * Коллекция с наименованиями и свойствами колонок в таблице

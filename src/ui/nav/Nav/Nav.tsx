@@ -98,7 +98,7 @@ export interface INavProps {
      * Переопределение view React компонента для кастомизации отображения элемента
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      * Обработчик, который вызывается при смене активного элемента навигации

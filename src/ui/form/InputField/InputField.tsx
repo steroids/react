@@ -40,7 +40,7 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      */

@@ -1,11 +1,13 @@
 import _get from 'lodash-es/get';
 import {useCallback, useMemo} from 'react';
 import * as React from 'react';
+import {useUpdateEffect} from 'react-use';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
-import {ListControlPosition} from '../../../hooks/useList';
 import {IButtonProps} from '../../form/Button/Button';
+
+const FIRST_PAGE = 1;
 
 /**
  * Pagination
@@ -110,7 +112,8 @@ export interface IPaginationViewProps extends IPaginationProps {
     onSelectPrev: () => void,
     onSelectLast: () => void,
     onSelectFirst: () => void,
-    currentPage: number,
+    isFirstPage: boolean,
+    isLastPage: boolean,
 }
 
 export const generatePages = (page, totalPages, aroundCount = 3) => {
@@ -133,8 +136,6 @@ export const generatePages = (page, totalPages, aroundCount = 3) => {
 function Pagination(props: IPaginationProps): JSX.Element {
     const components = useComponents();
 
-    // const [currentPage, setCurrentPage] = React.useState<number>(props.defaultValue);
-
     const initialValues = {
         page: props.list?.[props.attribute],
         pageSize: props.list?.[props.sizeAttribute],
@@ -155,6 +156,14 @@ function Pagination(props: IPaginationProps): JSX.Element {
     })) || initialValues;
 
     const totalPages = Math.ceil((props.list?.total || 0) / (pageSize || 1));
+
+    const [isFirstPage, setIsFirstPage] = React.useState(page === FIRST_PAGE);
+    const [isLastPage, setIsLastPage] = React.useState(page === totalPages);
+
+    useUpdateEffect(() => {
+        setIsFirstPage(page === FIRST_PAGE);
+        setIsLastPage(page === totalPages);
+    }, [page, totalPages]);
 
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)
@@ -192,7 +201,7 @@ function Pagination(props: IPaginationProps): JSX.Element {
     }, [onSelect, totalPages]);
 
     const onSelectFirst = useCallback(() => {
-        onSelect(1);
+        onSelect(FIRST_PAGE);
     }, [onSelect]);
 
     if (!props.list || !page || !pageSize || props.list.total <= pageSize) {
@@ -200,7 +209,7 @@ function Pagination(props: IPaginationProps): JSX.Element {
     }
 
     // Do not show in last page in 'loadMore' mode
-    if (props.loadMore && page >= totalPages) {
+    if (props.loadMore && isLastPage) {
         return null;
     }
 
@@ -214,7 +223,8 @@ function Pagination(props: IPaginationProps): JSX.Element {
         onSelectPrev,
         onSelectLast,
         onSelectFirst,
-        currentPage: page,
+        isFirstPage,
+        isLastPage,
     });
 }
 

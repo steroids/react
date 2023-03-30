@@ -58,7 +58,7 @@ describe('Pagination tests', () => {
         }));
 
         const expectedStepButtonsCount = 4;
-        const steps = container.querySelectorAll(`.${expectedPaginationButtonClass}__page_step`);
+        const steps = container.querySelectorAll(`.${expectedPaginationButtonClass}__page_hasIcon`);
 
         expect(steps.length).toBe(expectedStepButtonsCount);
     });

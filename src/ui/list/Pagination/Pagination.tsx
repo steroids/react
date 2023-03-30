@@ -95,11 +95,6 @@ export interface IPaginationProps {
      */
     showEdgeSteps?: boolean,
 
-    /**
-     * Флаг который переводит Pagination в выключенное состояние
-     */
-    disabled?: boolean,
-
     [key: string]: any,
 }
 
@@ -115,6 +110,7 @@ export interface IPaginationViewProps extends IPaginationProps {
     onSelectPrev: () => void,
     onSelectLast: () => void,
     onSelectFirst: () => void,
+    currentPage: number,
 }
 
 export const generatePages = (page, totalPages, aroundCount = 3) => {
@@ -136,6 +132,8 @@ export const generatePages = (page, totalPages, aroundCount = 3) => {
 
 function Pagination(props: IPaginationProps): JSX.Element {
     const components = useComponents();
+
+    // const [currentPage, setCurrentPage] = React.useState<number>(props.defaultValue);
 
     const initialValues = {
         page: props.list?.[props.attribute],
@@ -216,6 +214,7 @@ function Pagination(props: IPaginationProps): JSX.Element {
         onSelectPrev,
         onSelectLast,
         onSelectFirst,
+        currentPage: page,
     });
 }
 

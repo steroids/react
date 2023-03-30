@@ -9,32 +9,29 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
     const bem = useBem('PaginationButtonView');
 
     const renderArrowStep = React.useCallback((
-        callback: () => void,
+        onClick: () => void,
         iconName: string,
         rotate = false,
         rounding?: {
             left?: boolean,
             right?: boolean,
         },
+        disabledStatement?: boolean,
     ) => (
-        <li className={bem(
-            bem.element('page', {
-                step: props.showSteps || props.showEdgeSteps,
-                'rounding-left': !!rounding?.left,
-                'rounding-right': !!rounding?.right,
-                hasIcon: props.showSteps || props.showEdgeSteps,
-                disabled: props.disabled,
-            }),
-        )}
+        <li className={bem.element('page', {
+            step: props.showSteps || props.showEdgeSteps,
+            'rounding-left': !!rounding?.left,
+            'rounding-right': !!rounding?.right,
+            hasIcon: props.showSteps || props.showEdgeSteps,
+            disabled: disabledStatement,
+        })}
         >
             <button
-                className={bem(
-                    bem.element('page-button',
-                        {
-                            hasIcon: props.showSteps || props.showEdgeSteps,
-                        }),
-                )}
-                onClick={() => callback()}
+                className={bem.element('page-button',
+                    {
+                        hasIcon: props.showSteps || props.showEdgeSteps,
+                    })}
+                onClick={() => onClick()}
             >
                 <Icon
                     view={IconMockView}
@@ -42,11 +39,11 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
                     className={bem.element('page-icon', {
                         rotate,
                     })}
-                    name='mockIcon'
+                    name="mockIcon"
                 />
             </button>
         </li>
-    ), [bem, props.showEdgeSteps, props.showSteps]);
+    ), [bem, props]);
 
     return (
         <ul
@@ -58,26 +55,21 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
             )}
         >
             {props.showEdgeSteps
-                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', false, {left: true})}
+                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', false, {left: true}, props.currentPage === 1)}
             {props.showSteps
-                && renderArrowStep(props.onSelectPrev, 'arrow-left')}
+                && renderArrowStep(props.onSelectPrev, 'arrow-left', false, {}, props.currentPage === 1)}
             {props.pages.map((item, index) => (
                 <li
                     key={index}
-                    className={bem(
-                        bem.element('page', {
-                            hidden: !item.page,
-                            active: item.isActive,
-                            disabled: props.disabled,
-                        }),
-                    )}
+                    className={bem.element('page', {
+                        hidden: !item.page,
+                        active: item.isActive,
+                    })}
                 >
                     <button
-                        className={bem(
-                            bem.element('page-button', {
-                                hidden: !item.page,
-                            }),
-                        )}
+                        className={bem.element('page-button', {
+                            hidden: !item.page,
+                        })}
                         onClick={() => props.onSelect(item.page as number)}
                     >
                         {item.label}
@@ -85,9 +77,9 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
                 </li>
             ))}
             {props.showSteps
-                && renderArrowStep(props.onSelectNext, 'arrow-left', true)}
+                && renderArrowStep(props.onSelectNext, 'arrow-left', true, {}, props.currentPage === props.totalPages)}
             {props.showEdgeSteps
-                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', true, {right: true})}
+                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', true, {right: true}, props.currentPage === props.totalPages)}
         </ul>
     );
 }

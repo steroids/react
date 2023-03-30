@@ -1,16 +1,19 @@
 import '@testing-library/jest-dom';
 import {render} from '../../../customRender';
 import Pagination, {IPaginationProps} from '../../../../src/ui/list/Pagination/Pagination';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import PaginationButtonMockView from './PaginationButtonMockView';
+import PaginationMoreMockView from './PaginationMoreMockView';
 
 describe('Pagination tests', () => {
     const props = {
         list: {
             total: 100,
-            page: 2,
+            page: 1,
             pageSize: 10,
         },
         aroundCount: 5,
+        view: PaginationButtonMockView,
     } as IPaginationProps;
 
     const expectedPaginationMoreClass = 'PaginationMoreView';
@@ -26,6 +29,7 @@ describe('Pagination tests', () => {
         const {container} = render(JSXWrapper(Pagination, {
             ...props,
             loadMore: true,
+            view: PaginationMoreMockView,
         }));
 
         const component = getElementByClassName(container, expectedPaginationMoreClass);
@@ -40,13 +44,14 @@ describe('Pagination tests', () => {
 
     it('should have buttons', () => {
         const {container} = render(JSXWrapper(Pagination, props));
-        const expectedPagesCount = 8;
+
+        const expectedPagesCount = 7;
         const pages = container.querySelectorAll(`.${expectedPaginationButtonClass}__page`);
         expect(pages.length).toBe(expectedPagesCount);
     });
 
     it('should have steps buttons', () => {
-        const {container, debug} = render(JSXWrapper(Pagination, {
+        const {container} = render(JSXWrapper(Pagination, {
             ...props,
             showSteps: true,
             showEdgeSteps: true,
@@ -61,10 +66,11 @@ describe('Pagination tests', () => {
     it('should have disabled class', () => {
         const {container} = render(JSXWrapper(Pagination, {
             ...props,
-            disabled: true,
+            showSteps: true,
+            showEdgeSteps: true,
         }));
 
-        const expectedDisabledPagesCount = 8;
+        const expectedDisabledPagesCount = 2;
         const disabledPages = container.querySelectorAll(`.${expectedPaginationButtonClass}__page_disabled`);
 
         expect(disabledPages.length).toBe(expectedDisabledPagesCount);

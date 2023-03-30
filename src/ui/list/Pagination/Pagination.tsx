@@ -53,12 +53,6 @@ export interface IPaginationProps {
      */
     className?: CssClassName;
 
-    /**
-     * Расположение пагинации
-     * @example 'both'
-     */
-    position?: ListControlPosition,
-
     buttonProps?: IButtonProps,
 
     /**
@@ -89,6 +83,23 @@ export interface IPaginationProps {
      */
     list?: any,
 
+    /**
+    * Нужно ли отображать кнопки с шагом в одну страницу
+    * @example {'true'}
+    */
+    showSteps?: boolean,
+
+    /**
+     * Нужно ли отображать кнопки с шагом до первой / последней страницы
+     * @example {'true'}
+     */
+    showEdgeSteps?: boolean,
+
+    /**
+     * Флаг который переводит Pagination в выключенное состояние
+     */
+    disabled?: boolean,
+
     [key: string]: any,
 }
 
@@ -101,6 +112,9 @@ export interface IPaginationViewProps extends IPaginationProps {
     }[],
     onSelect: (page: number) => void,
     onSelectNext: () => void,
+    onSelectPrev: () => void,
+    onSelectLast: () => void,
+    onSelectFirst: () => void,
 }
 
 export const generatePages = (page, totalPages, aroundCount = 3) => {
@@ -171,6 +185,18 @@ function Pagination(props: IPaginationProps): JSX.Element {
         onSelect(page + 1);
     }, [onSelect, page]);
 
+    const onSelectPrev = useCallback(() => {
+        onSelect(page - 1);
+    }, [onSelect, page]);
+
+    const onSelectLast = useCallback(() => {
+        onSelect(totalPages);
+    }, [onSelect, totalPages]);
+
+    const onSelectFirst = useCallback(() => {
+        onSelect(1);
+    }, [onSelect]);
+
     if (!props.list || !page || !pageSize || props.list.total <= pageSize) {
         return null;
     }
@@ -182,10 +208,14 @@ function Pagination(props: IPaginationProps): JSX.Element {
 
     const defaultView = (props.loadMore ? 'list.PaginationMoreView' : 'list.PaginationButtonView');
     return components.ui.renderView(props.view || defaultView, {
+        ...props,
         totalPages,
         pages,
         onSelect,
         onSelectNext,
+        onSelectPrev,
+        onSelectLast,
+        onSelectFirst,
     });
 }
 
@@ -194,6 +224,7 @@ Pagination.defaultProps = {
     attribute: 'page',
     aroundCount: 3,
     defaultValue: 1,
+    size: 'md',
     loadMore: false,
     position: 'bottom',
     sizeAttribute: 'pageSize',

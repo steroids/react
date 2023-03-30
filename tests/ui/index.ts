@@ -26,4 +26,10 @@ export default {
     'form.CheckboxFieldView': {
         lazy: () => require('./form/CheckboxField/CheckboxFieldMockView').default,
     },
+    'list.PaginationMoreView': {
+        lazy: () => require('./list/Pagination/PaginationMoreMockView').default,
+    },
+    'list.PaginationButtonView': {
+        lazy: () => require('./list/Pagination/PaginationButtonMockView').default,
+    },
 };

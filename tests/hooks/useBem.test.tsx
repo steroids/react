@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
-import prepareMiddleware from '../storeMiddlewareMock';
-import mountWithApp from '../mountWithApp';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 import useBem, {IBem} from '../../src/hooks/useBem';
+import mountWithApp from '../mocks/mountWithApp';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 

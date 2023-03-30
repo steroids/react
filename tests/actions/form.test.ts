@@ -23,7 +23,7 @@ import {
     formArrayRemove,
 } from '../../src/actions/form';
 
-import prepareMiddleware from '../storeMiddlewareMock';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});

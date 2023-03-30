@@ -5,6 +5,7 @@ import {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputFiel
 import Icon from '../../../../src/ui/content/Icon';
 import {useBem} from '../../../../src/hooks';
 import IconMockView from '../../content/Icon/IconMockView';
+import renderIcon from '../../../mocks/renderIconMock';
 
 export default function InputFieldView(props: IInputFieldViewProps & IBemHocOutput) {
     const bem = useBem('InputFieldView');
@@ -16,15 +17,11 @@ export default function InputFieldView(props: IInputFieldViewProps & IBemHocOutp
 
         const className = bem.element('lead-icon');
 
-        return typeof props.leadIcon === 'string'
-            ? (
-                <Icon
-                    view={IconMockView}
-                    name='mockIcon'
-                    className={className}
-                />
-            )
-            : <span className={className}>{props.leadIcon}</span>;
+        return renderIcon(props.leadIcon,
+            {
+                className,
+                tabIndex: -1,
+            });
     }, [bem, props.leadIcon]);
 
     return (

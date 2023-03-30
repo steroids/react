@@ -53,7 +53,7 @@ export interface ICardProps {
     /**
      * Коллекция кнопок
      */
-    buttons: IButtonProps[],
+    buttons?: IButtonProps[],
 
     /**
      * Объект CSS стилей

@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import _get from 'lodash-es/get';
 
-import prepareMiddleware from '../storeMiddlewareMock';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 import {
     ROUTER_INIT_ROUTES,

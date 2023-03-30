@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 
-import prepareMiddleware from '../storeMiddlewareMock';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 import {
     FIELDS_SET_META,

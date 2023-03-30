@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {act} from 'react-dom/test-utils';
-import mountWithApp from '../mountWithApp';
 import useDataSelect, {IDataSelectConfig} from '../../src/hooks/useDataSelect';
+import mountWithApp from '../mocks/mountWithApp';
 
 const MockResultComponent = (props: any) => (
     <div className='list'>

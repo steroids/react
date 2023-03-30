@@ -1,7 +1,7 @@
 import 'jest-enzyme';
 import RateFieldView from '@steroidsjs/bootstrap/form/RateField/RateFieldView';
-import mountWithApp from '../../../../tests/mountWithApp';
 import {IRateFieldProps} from './RateField';
+import mountWithApp from '../../../../tests/mocks/mountWithApp';
 
 const RateField = require('./RateField').default;
 

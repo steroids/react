@@ -1,7 +1,7 @@
 import 'jest-enzyme';
 import HtmlFieldView from '@steroidsjs/bootstrap/form/HtmlField/HtmlFieldView';
 import HtmlField from './HtmlField';
-import mountWithApp from '../../../../tests/mountWithApp';
+import mountWithApp from '../../../../tests/mocks/mountWithApp';
 
 describe.skip('HtmlField tests', () => {
     /* @todo we don't want to test CKEditor, consider testing only props that are passed to the HtmlFieldView */

@@ -1,7 +1,7 @@
 import _uniqueId from 'lodash-es/uniqueId';
 
 import configureMockStore from 'redux-mock-store';
-import prepareMiddleware from '../storeMiddlewareMock';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 import {
     closeModal,

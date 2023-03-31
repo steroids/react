@@ -33,6 +33,11 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
      */
     view?: CustomView,
 
+    /**
+     * Ориентация списка
+     */
+    orientation?: 'horizontal' | 'vertical',
+
     [key: string]: any,
 }
 
@@ -51,11 +56,16 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
     }[],
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,
-    onItemHover: (id: PrimaryKey | any) => void,
+    orientation?: 'horizontal' | 'vertical',
 }
 
 function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     const components = useComponents();
+
+    const inputSelectedIds = useMemo(
+        () => props.selectedIds || [].concat(props.input.value || []),
+        [props.input.value, props.selectedIds],
+    );
 
     // Data Provider
     const {items} = useDataProvider({
@@ -64,13 +74,11 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
 
     // Data select
     const {
-        hoveredId,
-        setHoveredId,
         selectedIds,
         setSelectedIds,
     } = useDataSelect({
+        selectedIds: inputSelectedIds,
         multiple: props.multiple,
-        selectedIds: props.selectedIds,
         primaryKey: props.primaryKey,
         items,
         inputValue: props.input.value,
@@ -79,10 +87,6 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     const onItemSelect = useCallback((id) => {
         setSelectedIds(id);
     }, [setSelectedIds]);
-
-    const onItemHover = useCallback((id) => {
-        setHoveredId(id);
-    }, [setHoveredId]);
 
     const inputProps = useMemo(() => ({
         ...props.inputProps,
@@ -115,8 +119,6 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         inputProps,
         onItemSelect,
         selectedIds,
-        onItemHover,
-        hoveredId,
     });
 }
 
@@ -125,6 +127,7 @@ CheckboxListField.defaultProps = {
     required: false,
     className: '',
     multiple: true,
+    orientation: 'vertical',
 };
 
 export default fieldWrapper<ICheckboxListFieldProps>('CheckboxListField', CheckboxListField);

@@ -1,12 +1,20 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
+import Icon from '../../../ui/content/Icon/Icon';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
+const GROUP_CONTENT_TYPE = 'group';
+const CHECKBOX_CONTENT_TYPE = 'checkbox';
+const RADIO_CONTENT_TYPE = 'radio';
+const ICON_CONTENT_TYPE = 'icon';
+const IMG_CONTENT_TYPE = 'img';
+
 export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
+export type ItemSwitchType = ContentType | 'group' | string;
 
 export interface IDropDownFieldItem {
     id: number,
@@ -120,6 +128,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     onItemRemove: (id: PrimaryKey | any) => void,
     onClose: () => void,
     onOpen: () => void,
+    renderItem: (item: IDropDownFieldItem, key: number, itemProps: any, itemBem: any) => JSX.Element;
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
     primaryKey: string,
@@ -246,6 +255,145 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         }
     }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
+    const CheckboxFieldView = components.ui.getView('form.CheckboxFieldView');
+    const RadioFieldView = components.ui.getView('form.RadioListFieldView');
+    const AccordionItemView = components.ui.getView('content.AccordionItemView');
+
+    const switchItem = (
+        item: IDropDownFieldItem,
+        type: ItemSwitchType,
+        src: string | React.ReactElement,
+        options: {
+            itemProps: any,
+            itemKey: number,
+            bem: any,
+        },
+    ) => {
+        switch (type) {
+            case ICON_CONTENT_TYPE:
+                return (
+                    <div
+                        {...options.itemProps}
+                        key={options.itemKey}
+                    >
+                        {typeof src === 'string' ? (
+                            <Icon
+                                name={src}
+                                className={options.bem.element('icon')}
+                            />
+                        ) : (
+                            <span className={options.bem.element('icon')}>
+                                {src}
+                            </span>
+                        )}
+                        <span>
+                            {item.label}
+                        </span>
+                    </div>
+                );
+
+            case CHECKBOX_CONTENT_TYPE:
+                return (
+                    <div
+                        {...options.itemProps}
+                        key={options.itemKey}
+                    >
+                        <CheckboxFieldView
+                            label={item.label}
+                            className={options.bem.element('checkbox')}
+                            size={props.size}
+                            inputProps={{
+                                checked: selectedIds.includes(item[props.primaryKey]),
+                                onChange: () => { },
+                                type: 'checkbox',
+                            }}
+                        />
+                    </div>
+                );
+
+            // case RADIO_CONTENT_TYPE:
+            //     return (
+            //         <div
+            //             {...options.itemProps}
+            //             key={options.itemKey}
+            //         >
+            //             <RadioFieldView
+            //                 items={[item]}
+            //                 selectedIds={selectedIds}
+            //                 className={options.bem.element('radio', {
+            //                     size: props.size,
+            //                 })}
+            //                 size={props.size}
+            //                 onItemSelect={onItemSelect}
+            //                 inputProps={{
+            //                     onChange
+            //                 }}
+            //             />
+            //         </div>
+            //     );
+
+            case IMG_CONTENT_TYPE:
+                return (
+                    <div
+                        {...options.itemProps}
+                        key={options.itemKey}
+                    >
+                        <span className={options.bem.element('img')}>
+                            <img
+                                src={src as string}
+                                alt="custom source for item"
+                            />
+                        </span>
+                        <span>
+                            {item.label}
+                        </span>
+                    </div>
+                );
+
+            default:
+                return (
+                    <div
+                        {...options.itemProps}
+                        key={options.itemKey}
+                    >
+                        {item.label}
+                    </div>
+                );
+        }
+    };
+
+    const renderItem = (item: IDropDownFieldItem, key: number, itemProps: any, bem: any) => {
+        if (props.groupAttribute && Array.isArray(item[props.groupAttribute])) {
+            return switchItem(item, 'group', item[props.groupAttribute], {
+                itemProps,
+                itemKey: key,
+                bem,
+            });
+        }
+
+        if (item.contentType) {
+            return switchItem(item, item.contentType, item.contentSrc, {
+                itemProps,
+                itemKey: key,
+                bem,
+            });
+        }
+
+        if (props.itemsContent) {
+            return switchItem(item, props.itemsContent.type, props.itemsContent.src, {
+                itemProps,
+                itemKey: key,
+                bem,
+            });
+        }
+
+        return switchItem(item, 'default', null, {
+            itemProps,
+            itemKey: key,
+            bem,
+        });
+    };
+
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,
         isAutoComplete,
@@ -265,6 +413,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         onItemRemove,
         onReset,
         onClose,
+        renderItem,
     });
 }
 

@@ -8,6 +8,7 @@ import fieldWrapper, {
 } from '../../../ui/form/Field/fieldWrapper';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
+import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
 /**
  * CheckboxListField
@@ -57,6 +58,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,
     orientation?: 'horizontal' | 'vertical',
+    renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
 }
 
 function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
@@ -113,12 +115,17 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         }
     }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
+    const CheckboxFieldView = components.ui.getView('form.CheckboxFieldView');
+
+    const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => <CheckboxFieldView {...checkboxProps} />;
+
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', {
         ...props,
         items,
         inputProps,
         onItemSelect,
         selectedIds,
+        renderCheckbox,
     });
 }
 

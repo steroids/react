@@ -9,22 +9,35 @@ describe('Breadcrumbs tests', () => {
         view: BreadcrumbsMockView,
     };
 
+    const items = [
+        {id: 'root', title: 'Home'},
+        {id: 'react', title: 'Frontend React'},
+        {id: 'ui', title: 'Ui'},
+    ];
+
     const expectedBreadcrumbsClass = 'BreadcrumbsView';
 
-    it('should be in the document and have a class', () => {
+    it('should be in the document and have class', () => {
         const {container} = render(JSXWrapper(Breadcrumbs, props));
         const breadcrumbs = getElementByClassName(container, expectedBreadcrumbsClass);
 
         expect(breadcrumbs).toBeInTheDocument();
     });
 
+    it('should be in the document and have icon', () => {
+        const showIcon = true;
+        const {container} = render(JSXWrapper(Breadcrumbs, {
+            ...props,
+            showIcon,
+            items,
+        }));
+        const iconView = getElementByClassName(container, 'iconView');
+
+        expect(iconView).toBeInTheDocument();
+    });
+
     it('should be correct rendering of items', () => {
-        const items = [
-            {id: 'root', title: 'Home'},
-            {id: 'react', title: 'Frontend React'},
-            {id: 'ui', title: 'Ui'},
-        ];
-        const {container, getByText} = render(JSXWrapper(Breadcrumbs, {
+        const {getByText} = render(JSXWrapper(Breadcrumbs, {
             ...props,
             items,
         }));
@@ -33,11 +46,6 @@ describe('Breadcrumbs tests', () => {
     });
 
     it('should be correct rendering of items and replacing the last title', () => {
-        const items = [
-            {id: 'root', title: 'Home'},
-            {id: 'react', title: 'Frontend React'},
-            {id: 'ui', title: 'Ui'},
-        ];
         const pageTitle = 'Custom text';
         const {getByText, queryByText} = render(JSXWrapper(Breadcrumbs, {
             ...props,

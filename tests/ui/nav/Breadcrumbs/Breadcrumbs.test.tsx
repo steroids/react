@@ -31,7 +31,7 @@ describe('Breadcrumbs tests', () => {
             showIcon,
             items,
         }));
-        const iconView = getElementByClassName(container, 'iconView');
+        const iconView = getElementByClassName(container, 'IconView');
 
         expect(iconView).toBeInTheDocument();
     });

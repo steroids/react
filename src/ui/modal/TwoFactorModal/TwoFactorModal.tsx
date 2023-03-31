@@ -4,7 +4,7 @@ import useFetch from '../../../hooks/useFetch';
 import Modal from '../Modal';
 
 interface ITwoFactorModalProps {
-    view?: any;
+    view?: CustomView;
     providerName: string,
     onClose?: any,
 }

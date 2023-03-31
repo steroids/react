@@ -8,7 +8,7 @@ import {IBem} from '../hooks/useBem';
  * Прокидывает утилиту `bem` для правильной генерации CSS классов по методологии БЭМ (блок, элемент, модификатор)
  */
 export interface IBemHocInput {
-    style?: any
+    style?: CustomStyle
 }
 
 export interface IBemHocOutput extends IComponentsHocOutput {

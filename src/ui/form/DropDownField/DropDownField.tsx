@@ -52,7 +52,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any,
+    style?: CustomStyle,
 
     /**
      * Показать иконку сброса для выбранных значений

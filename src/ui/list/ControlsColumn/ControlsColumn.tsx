@@ -36,7 +36,7 @@ export interface IControlsColumnProps {
      * Переопределение view React компонента для кастомизации отображения колонки
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     [key: string]: any;
 }

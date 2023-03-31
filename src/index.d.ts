@@ -57,8 +57,8 @@ declare type FormLayoutName = 'default' | 'vertical' | 'inline' | string;
  */
 declare type FormLayout = FormLayoutName | boolean | {
     layout?: FormLayoutName | boolean,
-    className?: string,
-    style?: any,
+    className?: CssClassName,
+    style?: CustomStyle,
     label?: boolean,
     cols?: number[],
     [key: string]: any,

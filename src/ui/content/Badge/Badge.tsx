@@ -48,7 +48,7 @@ export interface IBadgeProps {
      */
     counter: boolean | ICounter;
 
-    style?: React.CSSProperties,
+    style?: CustomStyle,
 
     /**
      * Размер для badge

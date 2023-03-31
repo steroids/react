@@ -96,7 +96,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
      * Переопределение view React компонента для кастомизации отображения списка с группами полей
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      * Пропсы для компонента отображения списка с группами полей - FieldListView
@@ -133,9 +133,9 @@ export interface IFieldListViewProps {
     showRemove?: boolean,
     showAdd?: boolean,
     children?: React.ReactNode,
-    className?: string,
+    className?: CssClassName,
     tableClassName?: string,
-    style?: any,
+    style?: CustomStyle,
     forwardedRef?: any,
     disabled?: boolean,
     size?: Size,

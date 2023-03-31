@@ -66,8 +66,8 @@ export interface IFieldLayoutViewProps {
     size: Size,
     layout?: {
         layout: FormLayoutName | boolean,
-        className?: string,
-        style?: any,
+        className?: CssClassName,
+        style?: CustomStyle,
         label: boolean,
         cols: number[],
         [key: string]: any,

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import _uniqueId from 'lodash-es/uniqueId';
 import useUniqueId from '../../src/hooks/useUniqueId';
-import mountWithApp from '../mountWithApp';
+import mountWithApp from '../mocks/mountWithApp';
 
 const MockResultComponent = (props: any) => <div />;
 const MockComponent = (prefix: string) => (

@@ -40,7 +40,7 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: any;
+    view?: CustomView;
 
     /**
      */
@@ -56,7 +56,7 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: CustomStyle;
 
     /**
      * Изображение или React-нода, которая будет отрендерена слева от поля.

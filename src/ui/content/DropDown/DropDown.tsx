@@ -24,7 +24,7 @@ export interface IDropDownProps extends IAbsolutePositioningInputProps {
      * Переопределение view React компонента для кастомизациии отображения
      * @example MyCustomView
      */
-    view?: any,
+    view?: CustomView,
 
     /**
      * В каком случае закрывать DropDown. По-умолчанию - `click-away`

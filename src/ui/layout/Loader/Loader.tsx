@@ -1,7 +1,7 @@
 import {useComponents} from '../../../hooks';
 
 export interface ILoaderProps {
-    view?: any;
+    view?: CustomView;
     [key: string]: any;
 }
 

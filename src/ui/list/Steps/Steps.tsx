@@ -5,18 +5,18 @@ interface IStepsProps {
     stepItems: IStepItem[];
     currentStep: number;
     isChangeable?: boolean;
-    className?: string;
+    className?: CssClassName;
     onChange?: (index: number) => void;
 }
 
 export interface IStepsViewProps {
-    className?: string;
+    className?: CssClassName;
     children?: React.ReactNode;
 }
 
 export interface IStepItemViewProps {
     stepItem: IStepItem,
-    className?: string,
+    className?: CssClassName,
     index: number,
     status: string,
     disabled: boolean,

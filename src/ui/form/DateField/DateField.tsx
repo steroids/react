@@ -16,7 +16,7 @@ export interface IDateFieldProps extends IDateInputStateInput {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any,
+    style?: CustomStyle,
 
     /**
      * Переопределение view React компонента для кастомизации отображения

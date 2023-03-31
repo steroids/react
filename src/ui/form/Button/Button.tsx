@@ -127,7 +127,7 @@ export interface IButtonProps {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: CustomStyle;
 
     /**
      * Дополнительный CSS-класс для кнопки или ссылки
@@ -138,7 +138,7 @@ export interface IButtonProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: React.ComponentType;
+    view?: CustomView;
 
     /**
      * Вложенные элементы

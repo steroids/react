@@ -2,7 +2,7 @@ import React from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface ITextProps {
-    view?: any,
+    view?: CustomView,
     className?: CssClassName,
 
     /**
@@ -32,7 +32,7 @@ export interface ITextProps {
      */
     content?: string,
 
-    style?: React.CSSProperties,
+    style?: CustomStyle,
 }
 
 export type ITextViewProps = ITextProps

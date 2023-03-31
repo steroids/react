@@ -132,7 +132,7 @@ export interface IFormProps {
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: any;
+    style?: CustomStyle;
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -199,7 +199,7 @@ export interface IFormViewProps {
     className?: CssClassName,
     isBordered?: boolean,
     autoFocus?: boolean,
-    style?: any,
+    style?: CustomStyle,
     layout?: {
         layout: FormLayoutName | boolean,
         className: CssClassName,

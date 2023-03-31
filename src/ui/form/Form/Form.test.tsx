@@ -1,9 +1,9 @@
 import 'jest-enzyme';
-import mountWithApp from '../../../../tests/mountWithApp';
 import Form from './Form';
 import InputField from '../InputField';
 import PasswordField from '../PasswordField';
 import CheckboxField from '../CheckboxField';
+import mountWithApp from '../../../../tests/mocks/mountWithApp';
 
 // @todo tests cause 'Invalid hook call', sort out this problem and then uncomment code and remove '.skip'
 describe.skip('Form tests', () => {

@@ -46,7 +46,7 @@ export interface INotificationsProps {
     notifications?: INotificationItem[];
     closeTimeoutMs?: number;
     className?: CssClassName;
-    view?: any;
+    view?: CustomView;
     itemView?: any;
     position?: string;
     [key: string]: any;

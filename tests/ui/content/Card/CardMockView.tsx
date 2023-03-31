@@ -1,5 +1,4 @@
 import React from 'react';
-import _isEmpty from 'lodash-es/isEmpty';
 import {useBem} from '../../../../src/hooks';
 import {ICardViewProps} from '../../../../src/ui/content/Card/Card';
 import {Button} from '../../../../src/ui/form';
@@ -11,7 +10,7 @@ import {Link} from '../../../../src/ui/nav';
 export default function CardView(props: ICardViewProps) {
     const bem = useBem('CardView');
 
-    const hasContent = Boolean(props.title || props.buttons || props.links || props.description);
+    const hasContent = !!(props.title || props.buttons || props.links || props.description);
 
     return (
         <div
@@ -22,7 +21,7 @@ export default function CardView(props: ICardViewProps) {
             {props.header && (
                 <div className={bem.element('header',
                     {
-                        withoutCover: _isEmpty(props.cover) && hasContent,
+                        withoutCover: !props.cover && hasContent,
                     })}
                 >
                     <div className={bem.element('header-data')}>

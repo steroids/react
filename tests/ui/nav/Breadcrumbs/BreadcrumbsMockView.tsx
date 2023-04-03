@@ -4,7 +4,7 @@ import Link from '../../../../src/ui/nav/Link';
 import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
 import IconMockView from '../../content/Icon/IconMockView';
-import renderIcon from '../../../../../react-bootstrap/src/utils/renderIcon';
+import renderIconMock from '../../../mocks/renderIconMock';
 
 export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
     const bem = useBem('BreadcrumbsView');
@@ -22,7 +22,7 @@ export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
 
     const renderHomeIcon = React.useCallback(() => (
         props.customIcon
-            ? renderIcon(props.customIcon, {className: bem.element('custom-icon')})
+            ? renderIconMock(props.customIcon, {className: bem.element('custom-icon')})
             : (
                 <Icon
                     view={IconMockView}

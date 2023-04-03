@@ -1,13 +1,36 @@
 import * as React from 'react';
 import {IBreadcrumbsViewProps} from '../../../../src/ui/nav/Breadcrumbs/Breadcrumbs';
-import {useBem} from '../../../../src/hooks';
 import Link from '../../../../src/ui/nav/Link';
+import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
 import IconMockView from '../../content/Icon/IconMockView';
+import renderIcon from '../../../../../react-bootstrap/src/utils/renderIcon';
 
 export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
     const bem = useBem('BreadcrumbsView');
     const items = props.items || [];
+
+    const renderLink = React.useCallback((item, children) => (
+        <Link
+            toRoute={item.id}
+            toRouteParams={props.routeParams}
+            href={item.id}
+        >
+            {children}
+        </Link>
+    ), [props.routeParams]);
+
+    const renderHomeIcon = React.useCallback(() => (
+        props.customIcon
+            ? renderIcon(props.customIcon, {className: bem.element('custom-icon')})
+            : (
+                <Icon
+                    view={IconMockView}
+                    name='mockIcon'
+                    className={bem.element('icon')}
+                />
+            )
+    ), [bem, props.customIcon]);
 
     return (
         <nav
@@ -23,31 +46,13 @@ export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
                             key={item.id || index}
                             className={bem.element('item')}
                         >
-                            {isFirstItem && (
-                                <Link
-                                    toRoute={item.id}
-                                    toRouteParams={props.routeParams}
-                                    href={item.id}
-                                >
-                                    {props.showIcon
-                                        ? (
-                                            <Icon
-                                                view={IconMockView}
-                                                name='mockIcon'
-                                                className={bem.element('icon')}
-                                            />
-                                        )
-                                        : item.title}
-                                </Link>
+                            {isFirstItem && item.id && renderLink(
+                                item,
+                                props.showIcon ? renderHomeIcon() : item.title,
                             )}
-                            {!isFirstItem && !isLastItem && item.id && (
-                                <Link
-                                    toRoute={item.id}
-                                    toRouteParams={props.routeParams}
-                                    href={item.id}
-                                >
-                                    {item.title}
-                                </Link>
+                            {!isFirstItem && !isLastItem && item.id && renderLink(
+                                item,
+                                item.title,
                             )}
                             {(isLastItem || !item.id) && (
                                 <span>

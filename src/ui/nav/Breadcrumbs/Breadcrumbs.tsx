@@ -42,7 +42,7 @@ export interface IBreadcrumbsProps {
     /**
      * Кастомная иконка, заменяющая первый роут
      */
-    customIcon: string | React.ReactElement,
+    customIcon?: string | React.ReactElement,
 
     /**
      * Переопределение view React компонента для кастомизации отображения

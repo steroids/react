@@ -9,10 +9,14 @@ describe('Breadcrumbs tests', () => {
         view: BreadcrumbsMockView,
     };
 
+    const title1 = 'Home';
+    const title2 = 'Frontend React';
+    const title3 = 'Ui';
+
     const items = [
-        {id: 'root', title: 'Home'},
-        {id: 'react', title: 'Frontend React'},
-        {id: 'ui', title: 'Ui'},
+        {id: 'root', title: title1},
+        {id: 'react', title: title2},
+        {id: 'ui', title: title3},
     ];
 
     const expectedBreadcrumbsClass = 'BreadcrumbsView';
@@ -52,14 +56,16 @@ describe('Breadcrumbs tests', () => {
             items,
             pageTitle,
         }));
-        const titleOne = getByText('Home');
-        const titleTwo = getByText('Frontend React');
-        const titleThree = queryByText('Ui');
-        const titleReplace = getByText(pageTitle);
 
-        expect(titleOne).toBeInTheDocument();
-        expect(titleTwo).toBeInTheDocument();
-        expect(titleThree).not.toBeInTheDocument();
-        expect(titleReplace).toBeInTheDocument();
+        const expectedTitles = [
+            getByText(title1),
+            getByText(title2),
+            getByText(pageTitle),
+        ];
+
+        const notExistTitle = queryByText(title3);
+
+        expectedTitles.forEach(expectedTitle => expect(expectedTitle).toBeInTheDocument());
+        expect(notExistTitle).not.toBeInTheDocument();
     });
 });

@@ -34,10 +34,15 @@ export interface IBreadcrumbsProps {
     pageTitle?: string,
 
     /**
-     * Иконка заменяющая первый роут.
+     * Показать иконку заменяющую первый роут
      * @example true
      */
     showIcon?: boolean,
+
+    /**
+     * Кастомная иконка, заменяющая первый роут
+     */
+    customIcon: string | React.ReactElement,
 
     /**
      * Переопределение view React компонента для кастомизации отображения

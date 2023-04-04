@@ -26,4 +26,10 @@ export default {
     'form.CheckboxFieldView': {
         lazy: () => require('./form/CheckboxField/CheckboxFieldMockView').default,
     },
+    'form.RadioFieldView': {
+        lazy: () => require('./form/RadioField/RadioFieldMockView').default,
+    },
+    'form.DropDownFieldItemView': {
+        lazy: () => require('./form/DropDownField/DropDownItemMockView').default,
+    },
 };

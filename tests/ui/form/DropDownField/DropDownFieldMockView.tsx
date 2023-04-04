@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import * as React from 'react';
 import {useEffect, useRef} from 'react';
-
 import _isArray from 'lodash-es/isArray';
-import Icon from '../../../../src/ui/content/Icon';
+import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import {useBem} from '../../../../src/hooks';
-import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
-import DropDownItemView from './DropDownItemMockView';
+import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
-import {Accordion} from '../../../../src/ui/content';
 
 const getSelectedItemsLabel = (selectedItems: Record<string, any>[]): string => (
     selectedItems
@@ -23,14 +20,6 @@ const getSelectedItemsCount = (selectedItems: Record<string, any>) => {
 
     return `${__('Выбрано')} (${selectedItems.length})`;
 };
-
-const toDropDownItem = (props: IDropDownFieldViewProps) => (item: IDropDownFieldItem, itemIndex: number) => (
-    <DropDownItemView
-        {...props}
-        key={itemIndex}
-        item={item}
-    />
-);
 
 export default function DropDownFieldView(props: IDropDownFieldViewProps) {
     const bem = useBem('DropDownFieldView');
@@ -49,18 +38,6 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
         )
         : null,
         [bem, props.placeholder, props.selectedIds]);
-
-    const renderItems = React.useCallback(() => props.groupAttribute
-        ? (
-            <Accordion>
-                {props.items.map(toDropDownItem(props))}
-            </Accordion>
-        )
-        : (
-            <>
-                {props.items.map(toDropDownItem(props))}
-            </>
-        ), [props]);
 
     return (
         <div
@@ -103,7 +80,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                     className={bem.element('icon-close')}
                     tabIndex={-1}
                     onClick={props.onReset}
-                    aria-label='Сбросить'
+                    aria-label="Сбросить"
                 />
             )}
             <Icon
@@ -137,7 +114,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                         </div>
                     )}
                     <div className={bem.element('drop-down-list')}>
-                        {renderItems()}
+                        {props.items.map((item) => props.renderItem(item))}
                     </div>
                 </div>
             )}

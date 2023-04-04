@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import PaginationSize from '../PaginationSize';
-import {demoItems} from '../../../../ui/list/List/demo/basic';
+// import {demoItems} from '../../../../ui/list/List/demo/basic';
 
 const sizes = {
     sm: 'Small',
@@ -29,7 +29,7 @@ export default () => (
                         <PaginationSize
                             list={{
                                 pageSize: 3,
-                                items: demoItems,
+                                // items: demoItems,
                             }}
                             enable
                             attribute='pageSize'

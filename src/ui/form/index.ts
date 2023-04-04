@@ -19,6 +19,7 @@ import InputField from './InputField';
 import NavField from './NavField';
 import NumberField from './NumberField';
 import PasswordField from './PasswordField';
+import RadioField from './RadioField';
 import RadioListField from './RadioListField';
 import ReCaptchaField from './ReCaptchaField';
 import SliderField from './SliderField';
@@ -49,6 +50,7 @@ export {
     NavField,
     NumberField,
     PasswordField,
+    RadioField,
     RadioListField,
     ReCaptchaField,
     SliderField,
@@ -80,6 +82,7 @@ export default {
     NavField,
     NumberField,
     PasswordField,
+    RadioField,
     RadioListField,
     ReCaptchaField,
     SliderField,

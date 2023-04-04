@@ -9,6 +9,7 @@ import fieldWrapper, {
 } from '../../form/Field/fieldWrapper';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
+import {IRadioFieldViewProps} from '../RadioField/RadioField';
 
 /**
  * RadioListField
@@ -26,6 +27,11 @@ export interface IRadioListFieldProps extends IFieldWrapperInputProps, IDataProv
      * Дополнительный CSS-класс для элемента отображения
      */
     className?: CssClassName;
+
+    /**
+     * Ориентация списка
+     */
+    orientation?: 'horizontal' | 'vertical',
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -51,6 +57,7 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
     selectedIds: (PrimaryKey | any)[],
     className?: CssClassName,
     onItemSelect: (id: PrimaryKey | any) => void,
+    renderRadio: (radioProps: IRadioFieldViewProps) => JSX.Element;
 }
 
 function RadioListField(props: IRadioListFieldProps): JSX.Element {
@@ -71,6 +78,7 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
         selectedIds,
         setSelectedIds,
     } = useDataSelect({
+        multiple: props.multiple,
         selectedIds: inputSelectedIds,
         selectFirst: props.selectFirst,
         primaryKey: props.primaryKey,
@@ -102,12 +110,17 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.input.onChange, selectedIds]);
 
+    const RadioFieldView = components.ui.getView('form.RadioFieldView');
+
+    const renderRadio = (radioProps: IRadioFieldViewProps) => <RadioFieldView {...radioProps} />;
+
     return components.ui.renderView(props.view || 'form.RadioListFieldView', {
         ...props,
         items,
         inputProps,
         onItemSelect,
         selectedIds,
+        renderRadio,
     });
 }
 
@@ -115,8 +128,10 @@ RadioListField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
+    multiple: false,
     errors: null,
     size: 'md',
+    orientation: 'vertical',
 };
 
 export default fieldWrapper<IRadioListFieldProps>('RadioListField', RadioListField);

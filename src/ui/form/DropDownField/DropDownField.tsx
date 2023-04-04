@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
+import _includes from 'lodash-es/includes';
 import {IAccordionCommonViewProps} from 'src/ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
@@ -17,7 +18,7 @@ export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
 export type ItemSwitchType = ContentType | 'group' | string;
 
 export interface IDropDownFieldItem {
-    id: number,
+    id: number | string,
     label: string,
     contentType?: ContentType,
     contentSrc?: 'string' | React.ReactElement,
@@ -139,6 +140,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     onReset: () => void,
     onOpen: () => void,
     renderItem: (item: IDropDownFieldItem) => JSX.Element;
+    onItemRemove: (id: PrimaryKey | any) => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
     primaryKey: string,
@@ -150,7 +152,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     // Query state
     const [query, setQuery] = useState('');
 
-    const hasGroup = useMemo(() => !!props.groupAttribute, [props.groupAttribute]);
+    const hasGroup = !!props.groupAttribute;
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
 
     const toggleCollapse = indexSelected => {
@@ -217,6 +219,10 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         setSelectedIds(id);
     }, [setSelectedIds]);
 
+    const onItemRemove = useCallback((id) => {
+        setSelectedIds(selectedIds.filter(i => i !== id));
+    }, [selectedIds, setSelectedIds]);
+
     const onReset = useCallback(() => {
         setSelectedIds([]);
     }, [setSelectedIds]);
@@ -281,7 +287,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         itemsContent: props.itemsContent,
         onItemHover,
         onItemSelect,
-        isShowMore: (selectedAccordionItems || []).includes(item.id),
+        isShowMore: _includes(selectedAccordionItems || [], item.id),
         childIndex: item.id,
         toggleCollapse,
     });
@@ -319,6 +325,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         onReset,
         onClose,
         renderItem,
+        onItemRemove,
         hasGroup,
     });
 }

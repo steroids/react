@@ -157,13 +157,8 @@ function Pagination(props: IPaginationProps): JSX.Element {
 
     const totalPages = Math.ceil((props.list?.total || 0) / (pageSize || 1));
 
-    const [isFirstPage, setIsFirstPage] = React.useState(page === FIRST_PAGE);
-    const [isLastPage, setIsLastPage] = React.useState(page === totalPages);
-
-    useUpdateEffect(() => {
-        setIsFirstPage(page === FIRST_PAGE);
-        setIsLastPage(page === totalPages);
-    }, [page, totalPages]);
+    const isFirstPage = React.useMemo(() => page === FIRST_PAGE, [page]);
+    const isLastPage = React.useMemo(() => page === totalPages, [page, totalPages]);
 
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)

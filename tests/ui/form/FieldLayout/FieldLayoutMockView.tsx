@@ -4,6 +4,7 @@ import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {IFieldLayoutViewProps} from '../../../../src/ui/form/FieldLayout/FieldLayout';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
+import IconMockView from '../../content/Icon/IconMockView';
 
 export default function FieldLayoutView(props: IFieldLayoutViewProps & IBemHocOutput) {
     const bem = useBem('FieldLayoutView');
@@ -53,7 +54,8 @@ export default function FieldLayoutView(props: IFieldLayoutViewProps & IBemHocOu
                                 className={bem.element('error-message')}
                             >
                                 <Icon
-                                    name="error"
+                                    view={IconMockView}
+                                    name="mockIcon"
                                     className={bem.element('icon_error')}
                                 />
                                 <span className={bem.element('error-text')}>{error}</span>

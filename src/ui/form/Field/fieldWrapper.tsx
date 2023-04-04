@@ -119,7 +119,7 @@ export interface FieldWrapperComponent<T> {
 
 const getKey = (baseName, attribute) => baseName + _upperFirst(attribute || '');
 
-const createDynamicField = (componentId, Component, options: IFieldWrapperOptions) => {
+const createDynamicField = (componentId: string, Component, options: IFieldWrapperOptions) => {
     const DynamicField = (props: IFieldWrapperInputProps) => {
         const components = useComponents();
 
@@ -194,7 +194,7 @@ const createDynamicField = (componentId, Component, options: IFieldWrapperOption
 
 // Field Wrapper
 export default function fieldWrapper<T = any>(
-    componentId,
+    componentId: string,
     Component: any,
     optionsConfig: IFieldWrapperOptions = {
         attributeSuffixes: [''],

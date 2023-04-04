@@ -20,8 +20,8 @@ export type ItemSwitchType = ContentType | 'group' | string;
 export interface IDropDownFieldItem {
     id: number | string,
     label: string,
-    contentType?: ContentType,
-    contentSrc?: 'string' | React.ReactElement,
+    contentType?: ContentType | string,
+    contentSrc?: string | React.ReactElement,
 }
 
 export interface IDropDownFieldItemViewProps extends IAccordionCommonViewProps, Pick<IDropDownFieldProps, 'itemsContent'> {
@@ -101,8 +101,8 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * @example {type: 'icon', src: 'user'}
      */
     itemsContent?: {
-        type: ContentType,
-        src?: 'string' | React.ReactElement;
+        type: ContentType | string,
+        src?: string | React.ReactElement;
     };
 
     /**

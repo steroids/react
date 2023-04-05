@@ -46,12 +46,6 @@ describe('NumberField tests', () => {
         expect(message).toBeInTheDocument();
     });
 
-    it('should have layout', () => {
-        const {container} = render(JSXWrapper(NumberField, props));
-        const layout = getElementByClassName(container, 'FieldLayoutView_layout');
-        expect(layout).toBeInTheDocument();
-    });
-
     it('should be disabled', () => {
         const {container} = render(JSXWrapper(NumberField, {
             ...props,

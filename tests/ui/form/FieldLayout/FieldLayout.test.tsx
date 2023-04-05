@@ -9,7 +9,6 @@ describe('FieldLayout tests', () => {
         layoutView: FieldLayoutMockView,
         required: true,
         size: 'small',
-        layout: 'vertical',
         children: 'test-children',
         label: 'test-label',
         hint: 'test-hint',
@@ -22,13 +21,6 @@ describe('FieldLayout tests', () => {
         const fieldLayout = getElementByClassName(container, expectedFieldLayoutClass);
 
         expect(fieldLayout).toBeInTheDocument();
-    });
-
-    it('should have correct layout', () => {
-        const {container} = render(JSXWrapper(FieldLayout, props));
-        const fieldLayout = getElementByClassName(container, expectedFieldLayoutClass);
-
-        expect(fieldLayout).toHaveClass(`${expectedFieldLayoutClass}_layout_${props.layout}`);
     });
 
     it('should have correct hint: content, class, size', () => {
@@ -67,14 +59,13 @@ describe('FieldLayout tests', () => {
         }));
 
         const invalidFeedback = getElementByClassName(container, `${expectedFieldLayoutClass}__invalid-feedback`);
+        const errorTextSize = getElementByClassName(container, `${expectedFieldLayoutClass}__error-text_size_${props.size}`);
         const errorMessage = getElementByClassName(container, `${expectedFieldLayoutClass}__error-message`);
         const errorText = getElementByClassName(container, `${expectedFieldLayoutClass}__error-text`);
-        const icon = getElementByClassName(container, 'IconView');
+        const icon = getElementByClassName(container, `${expectedFieldLayoutClass}__icon_error`);
+        const errorClasses = [invalidFeedback, errorTextSize, errorMessage, errorText, icon];
 
-        expect(invalidFeedback).toBeInTheDocument();
-        expect(errorMessage).toBeInTheDocument();
-        expect(errorText).toBeInTheDocument();
-        expect(icon).toBeInTheDocument();
         errors.forEach((error) => expect(getByText(error)).toBeInTheDocument());
+        errorClasses.forEach((errorClass) => expect(errorClass).toBeInTheDocument());
     });
 });

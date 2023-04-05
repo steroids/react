@@ -30,12 +30,6 @@ export interface IFieldLayoutProps {
     required?: boolean;
 
     /**
-     * Выбор шаблона для расположения поля. Если false, то поле будет отрендерено без шаблона
-     * @example 'inline'
-     */
-    layout?: FormLayout;
-
-    /**
      * Ошибки в поле
      * @example 'Field is required'
      */
@@ -64,23 +58,8 @@ export interface IFieldLayoutViewProps {
     successful: boolean,
     id: string,
     size: Size,
-    layout?: {
-        layout: FormLayoutName | boolean,
-        className?: CssClassName,
-        style?: CustomStyle,
-        label: boolean,
-        cols: number[],
-        [key: string]: any,
-    },
     children?: React.ReactNode
 }
-
-const defaultProps = {
-    layout: {
-        layout: 'default',
-        cols: [3, 6],
-    },
-};
 
 function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     const components = useComponents();
@@ -88,15 +67,9 @@ function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     // Error from state
     const errors = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
 
-    const layout = useMemo(() => mergeLayoutProp(defaultProps.layout, props.layout), [props.layout]);
-    if (layout === false) {
-        return props.children;
-    }
-
     return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
         ...props,
         errors: props.errors || errors,
-        layout,
     });
 }
 

@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import {screen} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import Field, {IFieldProps} from '../../../../src/ui/form/Field/Field';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
@@ -26,16 +25,4 @@ describe('Field tests', () => {
 
         expect(fieldComponent).toBeInTheDocument();
     });
-
-    // it('should be in the document with model', () => {
-    //     const model = {attributes: [{attribute: 'category', field: 'PasswordField'}]};
-    //     const {container} = render(JSXWrapper(Field, {
-    //         ...props,
-    //         model,
-    //     }));
-    //     screen.debug();
-    //     const fieldModel = getElementByClassName(container, 'PasswordFieldView');
-
-    //     expect(fieldModel).toBeInTheDocument();
-    // });
 });

@@ -13,7 +13,6 @@ describe('NumberField tests', () => {
         className: externalClassName,
         max: 3,
         min: 1,
-        layout: true,
         hint,
     } as INumberFieldViewProps;
 

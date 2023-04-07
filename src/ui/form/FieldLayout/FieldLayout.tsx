@@ -1,8 +1,6 @@
 import * as React from 'react';
 import _get from 'lodash-es/get';
-import {useMemo} from 'react';
 import {useComponents, useForm} from '../../../hooks';
-import {mergeLayoutProp} from '../../../utils/form';
 
 /**
  * FieldLayout

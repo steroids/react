@@ -210,10 +210,9 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         model: props.model,
         prefix: props.prefix,
         size: props.size,
-        layout: props.layout,
         provider: context.provider,
         reducer: context.reducer,
-    }), [context.provider, context.reducer, props.formId, props.layout, props.model, props.prefix, props.size]);
+    }), [context.provider, context.reducer, props.formId, props.model, props.prefix, props.size]);
 
     const commonProps = {
         showAdd: props.showAdd,

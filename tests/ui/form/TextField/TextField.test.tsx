@@ -21,7 +21,6 @@ describe('TextField tests', () => {
         onClear: jest.fn(),
         placeholder: 'placeholder',
         className: externalClassName,
-        layout: true,
         view: TextFieldMockView,
     };
 

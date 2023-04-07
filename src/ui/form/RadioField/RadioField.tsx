@@ -1,15 +1,8 @@
 import * as React from 'react';
-import {useMount} from 'react-use';
-import {useMemo} from 'react';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-/**
- * CheckboxField
- * Одиночный чекбокс. Используется в формах для отметки булевого значения.
- */
-export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
-
+export interface IRadioFieldProps extends IFieldWrapperInputProps {
     /**
      * Свойства для элемента \<input /\>
      * @example {onKeyDown: ...}
@@ -36,7 +29,7 @@ export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
     [key: string]: any,
 }
 
-export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrapperOutputProps {
+export interface IRadioFieldViewProps extends IRadioFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         name: string,
         type: string,
@@ -46,7 +39,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
     }
 }
 
-function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
+function RadioField(props: IRadioFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     const onChangeHandler = React.useCallback(() => {
@@ -56,19 +49,19 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         }
     }, [props]);
 
-    const inputProps = useMemo(() => ({
+    const inputProps = React.useMemo(() => ({
         name: props.input.name,
-        type: 'checkbox',
+        type: 'radio',
         checked: !!props.input.value,
         onChange: onChangeHandler,
         disabled: props.disabled,
         ...props.inputProps,
     }), [onChangeHandler, props.disabled, props.input.name, props.input.value, props.inputProps]);
 
-    return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props, inputProps});
+    return components.ui.renderView(props.view || 'form.RadioFieldView', {...props, inputProps});
 }
 
-CheckboxField.defaultProps = {
+RadioField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
@@ -76,4 +69,4 @@ CheckboxField.defaultProps = {
     inputProps: {},
 };
 
-export default fieldWrapper<ICheckboxFieldProps>('CheckboxField', CheckboxField, {label: false});
+export default fieldWrapper<IRadioFieldProps>('RadioField', RadioField);

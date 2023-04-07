@@ -28,12 +28,12 @@ export default function InputFieldView(props: IInputFieldViewProps & IBemHocOutp
         <div
             className={bem(
                 bem.block({
-                    disabled: props.inputProps.disabled,
+                    disabled: props.inputProps?.disabled,
                     size: props.size,
                     hasError: !!props.errors,
                     hasLeadIcon: !!props.leadIcon,
                     hasClearIcon: props.showClear && !props.disabled,
-                    filled: !!props.inputProps.value,
+                    filled: !!props.inputProps?.value,
                     hasAddonAfter: !!props.addonAfter,
                     hasAddonBefore: !!props.addonBefore,
                     hasAddon: !!props.addonAfter || !!props.addonBefore,

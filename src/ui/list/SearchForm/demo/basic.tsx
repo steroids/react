@@ -1,6 +1,6 @@
 import * as React from 'react';
 import List from '../../List';
-import {searchForm, items} from '../../List/demo/search-form';
+// import {searchForm, items} from '../../List/demo/search-form';
 
 /**
  * List with search form
@@ -10,8 +10,8 @@ import {searchForm, items} from '../../List/demo/search-form';
 export default () => (
     <List
         listId='ListDemoSearch'
-        items={items}
-        searchForm={searchForm}
+        // items={items}
+        // searchForm={searchForm}
         className='list-group'
         itemView={(props: any) => (
             <div className='list-group-item'>

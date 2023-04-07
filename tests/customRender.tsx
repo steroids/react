@@ -17,6 +17,7 @@ function AllTheProviders({children}: {children: React.ReactNode}) {
         },
         onInit: ({ui}) => {
             ui.addViews(require('./ui/index').default);
+            ui.addFields(require('./ui/fields').default);
             ui.addIcons(require('./ui/content/Icon/mockIcon').default);
         },
     });

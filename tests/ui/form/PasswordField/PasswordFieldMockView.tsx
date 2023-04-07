@@ -15,8 +15,8 @@ export default function PasswordFieldView(props: IPasswordFieldViewProps & IBemH
             className={bem(
                 bem.block({
                     size: props.size,
-                    filled: !!props.inputProps.value,
-                    disabled: props.inputProps.disabled,
+                    filled: !!props.inputProps?.value,
+                    disabled: props.inputProps?.disabled,
                 }),
                 props.className,
             )}

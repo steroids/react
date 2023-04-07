@@ -29,7 +29,7 @@ describe('RadioListField tests', () => {
 
     it('should have external class', () => {
         const {container} = render(JSXWrapper(RadioListField, props));
-        const radioListFieldItem = getElementByClassName(container, `${expectedRadioListFieldClass}__item`);
+        const radioListFieldItem = getElementByClassName(container, `${expectedRadioListFieldClass}`);
         expect(radioListFieldItem).toHaveClass(props.className);
     });
 
@@ -49,6 +49,6 @@ describe('RadioListField tests', () => {
         const {container} = render(JSXWrapper(RadioListField, props));
         const input = getElementByTag(container, 'input');
         fireEvent.click(input);
-        expect(input).toHaveClass(`${expectedRadioListFieldClass}__input_checked`);
+        expect(input).toHaveClass('RadioFieldView__input_checked');
     });
 });

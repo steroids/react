@@ -9,7 +9,7 @@ import 'moment/locale/ru';
  * Locale Component
  * Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны
  *
- * Пример строки: `{  ('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}`
+ * Пример строки: `{__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}`
  */
 export default class LocaleComponent {
     backendTimeDiff: null;

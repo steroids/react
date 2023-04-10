@@ -15,7 +15,7 @@ export interface IFieldLayoutProps {
     label?: string | boolean | any;
 
     /**
-     * Подсказка, которая отображается, когда в поле нет ошибок и layout !== 'inline'
+     * Подсказка, которая отображается, когда в поле нет ошибок
      * @example 'Save'
      */
     hint?: string | boolean;
@@ -43,7 +43,7 @@ export interface IFieldLayoutProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    layoutView?: CustomView;
+    view?: CustomView;
 
     [key: string]: any;
 }
@@ -65,7 +65,7 @@ function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     // Error from state
     const errors = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
 
-    return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
+    return components.ui.renderView(props.view || 'form.FieldLayoutView', {
         ...props,
         errors: props.errors || errors,
     });

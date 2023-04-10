@@ -40,17 +40,6 @@ export const setInWithPath = (state: any, value: any, path: string[], pathIndex 
     };
 };
 
-export const normalizeLayout = layout => (typeof layout === 'object' ? layout : {layout});
-
-export const mergeLayoutProp = (layout1, layout2) => {
-    if (layout2 === false) {
-        return null;
-    }
-    layout1 = layout1 ? normalizeLayout(layout1) : null;
-    layout2 = layout2 ? normalizeLayout(layout2) : null;
-    return layout1 || layout2 ? {...layout1, ...layout2} : null;
-};
-
 export const cleanEmptyObject = object => {
     // if all properties are null substitute the object with null
     if (!Object.values(object).some(x => x !== null)) {

@@ -6,7 +6,7 @@ import FieldLayout from '../../../../src/ui/form/FieldLayout/FieldLayout';
 
 describe('FieldLayout tests', () => {
     const props = {
-        layoutView: FieldLayoutMockView,
+        view: FieldLayoutMockView,
         required: true,
         size: 'small',
         children: 'test-children',

@@ -10,7 +10,6 @@ export default function useForm() {
             model: context.model,
             prefix: context.prefix,
             size: context.size,
-            layout: context.layout,
             formDispatch: context?.dispatch,
             formSelector: (selector: (state, setValue) => any) => context?.provider?.select(context.formId, selector),
         }

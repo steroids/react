@@ -48,23 +48,6 @@ declare type PrimaryKey = number | string;
 declare type Size = 'small' | 'middle' | 'large' | string;
 
 /**
- * Макет формы или ее части, влияющий на расположение полей
- */
-declare type FormLayoutName = 'default' | 'vertical' | 'inline' | string;
-
-/**
- * Свойства для настройки макета формы
- */
-declare type FormLayout = FormLayoutName | boolean | {
-    layout?: FormLayoutName | boolean,
-    className?: CssClassName,
-    style?: CustomStyle,
-    label?: boolean,
-    cols?: number[],
-    [key: string]: any,
-};
-
-/**
  * Объект из свойства `input` от redux-form
  */
 declare type FormInputType = {

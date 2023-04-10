@@ -1,8 +1,6 @@
 import * as React from 'react';
 import _get from 'lodash-es/get';
-import {useMemo} from 'react';
 import {useComponents, useForm} from '../../../hooks';
-import {mergeLayoutProp} from '../../../utils/form';
 
 /**
  * FieldLayout
@@ -17,7 +15,7 @@ export interface IFieldLayoutProps {
     label?: string | boolean | any;
 
     /**
-     * Подсказка, которая отображается, когда в поле нет ошибок и layout !== 'inline'
+     * Подсказка, которая отображается, когда в поле нет ошибок
      * @example 'Save'
      */
     hint?: string | boolean;
@@ -28,12 +26,6 @@ export interface IFieldLayoutProps {
      * @example true
      */
     required?: boolean;
-
-    /**
-     * Выбор шаблона для расположения поля. Если false, то поле будет отрендерено без шаблона
-     * @example 'inline'
-     */
-    layout?: FormLayout;
 
     /**
      * Ошибки в поле
@@ -51,7 +43,7 @@ export interface IFieldLayoutProps {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    layoutView?: CustomView;
+    view?: CustomView;
 
     [key: string]: any;
 }
@@ -64,23 +56,8 @@ export interface IFieldLayoutViewProps {
     successful: boolean,
     id: string,
     size: Size,
-    layout?: {
-        layout: FormLayoutName | boolean,
-        className?: CssClassName,
-        style?: CustomStyle,
-        label: boolean,
-        cols: number[],
-        [key: string]: any,
-    },
     children?: React.ReactNode
 }
-
-const defaultProps = {
-    layout: {
-        layout: 'default',
-        cols: [3, 6],
-    },
-};
 
 function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     const components = useComponents();
@@ -88,15 +65,9 @@ function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     // Error from state
     const errors = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
 
-    const layout = useMemo(() => mergeLayoutProp(defaultProps.layout, props.layout), [props.layout]);
-    if (layout === false) {
-        return props.children;
-    }
-
-    return components.ui.renderView(props.layoutView || 'form.FieldLayoutView', {
+    return components.ui.renderView(props.view || 'form.FieldLayoutView', {
         ...props,
         errors: props.errors || errors,
-        layout,
     });
 }
 

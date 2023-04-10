@@ -14,7 +14,6 @@ export default () => (
     <>
         <Form
             formId='CaptchaForm'
-            layout={false}
         >
             <InputField
                 label='Label'

@@ -1,12 +1,10 @@
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
-import FieldLayout from '../FieldLayout';
 import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {useComponents, useForm} from '../../../hooks';
 import {FormContext, IFormContext} from '../Form/Form';
-import {mergeLayoutProp} from '../../../utils/form';
 
 interface IButtonBadge {
     enable?: boolean,
@@ -159,15 +157,6 @@ export interface IButtonProps {
     toRouteParams?: Record<string, unknown>;
 
     /**
-     * Выбор макета для распложения кнопки в форме. Если кнопка находится внутри `<Form>...</Form>`, то `layout` будет
-     * взят из контекста формы и автоматически применен при отораженн. Для его отключения укажите `false`.
-     * Данное свойство так же может принимать объект, если нужно прокинуть дополнительные свойства в шаблон макета.
-     * Пример: `{layout: 'horizontal', cols: [2,6]}`
-     * @example horizontal
-     */
-    layout?: FormLayout;
-
-    /**
      * ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки
      * при отправке формы.
      */
@@ -201,7 +190,6 @@ export interface IButtonViewProps extends IButtonProps {
     badge?: IButtonBadge,
     url?: string,
     formId?: string,
-    layout?: string,
     disabled?: boolean,
     onClick?: any,
     submitting?: boolean,
@@ -241,7 +229,6 @@ function Button(props: IButtonProps): JSX.Element {
 
     const disabled = submitting || props.disabled;
     const tag = props.tag || (props.link || url ? 'a' : 'button');
-    const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
 
     const failedTimer = useRef(null);
     const onClick = useCallback((e) => {
@@ -309,7 +296,6 @@ function Button(props: IButtonProps): JSX.Element {
     const button = components.ui.renderView(props.view || 'form.ButtonView', {
         ...props,
         badge,
-        layout,
         isFailed,
         isLoading,
         disabled,
@@ -320,14 +306,6 @@ function Button(props: IButtonProps): JSX.Element {
         onClick: !disabled ? onClick : undefined,
         children: props.label || props.children,
     });
-
-    if (layout) {
-        return (
-            <FieldLayout layout={layout}>
-                {button}
-            </FieldLayout>
-        );
-    }
 
     return button;
 }

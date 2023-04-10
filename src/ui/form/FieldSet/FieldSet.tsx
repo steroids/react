@@ -4,7 +4,6 @@ import Field from '../Field';
 import {IFieldProps} from '../Field/Field';
 import {FormContext, IFormContext} from '../Form/Form';
 import {useComponents} from '../../../hooks';
-import {mergeLayoutProp} from '../../../utils/form';
 
 /**
  * FieldSet
@@ -53,11 +52,10 @@ function FieldSet(props: IFieldSetProps): JSX.Element {
             .filter(Boolean)
             .join('.'),
         size: props.size || context.size,
-        layout: mergeLayoutProp(context.layout, props.layout),
         provider: context.provider,
         reducer: context.reducer,
-    }), [context.formId, context.layout, context.model, context.prefix, context.provider, context.reducer,
-        context.size, props.formId, props.layout, props.model, props.prefix, props.size]);
+    }), [context.formId, context.model, context.prefix, context.provider, context.reducer,
+        context.size, props.formId, props.model, props.prefix, props.size]);
 
     const FieldSetView = props.view || components.ui.getView('form.FieldSetView');
 

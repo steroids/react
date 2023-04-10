@@ -17,7 +17,6 @@ describe('RadioListField tests', () => {
                 label: radioLabel,
             },
         ],
-        layout: true,
     } as IRadioListFieldProps;
 
     const expectedRadioListFieldClass = 'RadioListFieldView';

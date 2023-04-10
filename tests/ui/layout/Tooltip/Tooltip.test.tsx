@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {render} from '../../../customRender';
 import Tooltip from '../../../../src/ui/layout/Tooltip/Tooltip';
-import TooltipMockView from './TooltipMockView';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 /*

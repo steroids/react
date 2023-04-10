@@ -11,7 +11,6 @@ describe('InputField tests', () => {
         showClear: true,
         leadIcon: 'mockIcon',
         className: 'externalClass',
-        layout: true,
         placeholder: 'placeholder',
         size: 'sm',
         inputProps: {

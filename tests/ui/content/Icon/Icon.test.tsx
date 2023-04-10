@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import {screen} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import Icon from '../../../../src/ui/content/Icon/Icon';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
@@ -11,10 +10,10 @@ describe('Icon tests', () => {
         name: 'mockIcon',
     };
 
-    it('should be in the document with default', () => {
+    it('should be in the document', () => {
         const {container} = render(JSXWrapper(Icon, props));
         const field = getElementByClassName(container, 'IconView');
-        screen.debug();
+
         expect(field).toBeInTheDocument();
     });
 });

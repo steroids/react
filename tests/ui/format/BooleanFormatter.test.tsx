@@ -11,7 +11,7 @@ describe('BooleanFormatter tests', () => {
     };
 
     it('should be true', () => {
-        const value = '0';
+        const value = 1;
         const {getByText} = render(JSXWrapper(BooleanFormatter, {
             ...props,
             value,

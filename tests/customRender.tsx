@@ -3,11 +3,13 @@ import React, {ReactElement} from 'react';
 import {render, RenderOptions} from '@testing-library/react';
 import useApplication from '../src/hooks/useApplication';
 import HtmlComponent from '../src/components/HtmlComponent';
+import LocaleComponent from '../src/components/LocaleComponent';
 
 function AllTheProviders({children}: {children: React.ReactNode}) {
     const {renderApplication} = useApplication({
         layoutView: () => require('./mockLayout').default,
         components: {
+            locale: LocaleComponent,
             html: {
                 className: HtmlComponent,
             },

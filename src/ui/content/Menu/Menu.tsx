@@ -5,6 +5,9 @@ import DropDown from '../DropDown';
 
 export interface IMenuItemViewProps {
     label: string,
+    /**
+     * Функция при клике
+     */
     onClick?: VoidFunction,
 
     /**
@@ -12,6 +15,9 @@ export interface IMenuItemViewProps {
      */
     icon?: string | React.ReactElement,
 
+    /**
+     * Нижний border
+     */
     hasBorder?: boolean,
 }
 
@@ -44,8 +50,6 @@ export interface IMenuProps extends IAbsolutePositioningInputProps {
 
 function Menu(props: IMenuProps): JSX.Element {
     const components = useComponents();
-    // const forwardedRef = useRef(null);
-    // const DropDownView = components.ui.getView('content.DropDownView');
     const MenuItemView = components.ui.getView('content.MenuItemView');
     const MenuButtonView = components.ui.getView('content.MenuButtonView');
 

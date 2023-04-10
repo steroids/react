@@ -12,8 +12,8 @@ describe('Icon tests', () => {
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(Icon, props));
-        const field = getElementByClassName(container, 'IconView');
+        const icon = getElementByClassName(container, 'IconView');
 
-        expect(field).toBeInTheDocument();
+        expect(icon).toBeInTheDocument();
     });
 });

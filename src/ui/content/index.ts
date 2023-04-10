@@ -6,6 +6,7 @@ import Alert from './Alert';
 import Badge from './Badge';
 import {Detail, DetailItem} from './Detail';
 import Icon from './Icon';
+import Menu from './Menu';
 
 export {
     Avatar,
@@ -19,4 +20,5 @@ export {
     Detail,
     DetailItem,
     Icon,
+    Menu,
 };

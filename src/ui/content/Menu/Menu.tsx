@@ -7,7 +7,7 @@ export interface IMenuItemProps {
     /**
      * Функция при клике
      */
-    onClick?: VoidFunction,
+    onClick: VoidFunction,
 
     /**
      * Кастомная иконка

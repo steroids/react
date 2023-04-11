@@ -1,9 +1,8 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {IAbsolutePositioningInputProps} from '../../../hooks/useAbsolutePositioning';
 import useComponents from '../../../hooks/useComponents';
-import DropDown from '../DropDown';
 
-export interface IMenuItemViewProps {
+export interface IMenuItemProps {
     label: string,
     /**
      * Функция при клике
@@ -11,7 +10,7 @@ export interface IMenuItemViewProps {
     onClick?: VoidFunction,
 
     /**
-     * Кастомная иконка, заменяющая первый роут
+     * Кастомная иконка
      */
     icon?: string | React.ReactElement,
 
@@ -22,9 +21,9 @@ export interface IMenuItemViewProps {
 }
 
 export interface IMenuProps extends IAbsolutePositioningInputProps {
-    items: IMenuItemViewProps[],
+    items: IMenuItemProps[],
 
-    icon?: string | React.ReactNode,
+    icon?: string | React.ReactElement,
 
     /**
      * В каком случае закрывать DropDown. По-умолчанию - `click-away`
@@ -50,35 +49,9 @@ export interface IMenuProps extends IAbsolutePositioningInputProps {
 
 function Menu(props: IMenuProps): JSX.Element {
     const components = useComponents();
-    const MenuItemView = components.ui.getView('content.MenuItemView');
-    const MenuButtonView = components.ui.getView('content.MenuButtonView');
-
-    const renderMenuItems = React.useCallback(() => (
-        <>
-            {props.items.map((item, index) => (
-                <MenuItemView
-                    key={index}
-                    icon={item?.icon}
-                    label={item.label}
-                    onClick={item?.onClick}
-                    hasBorder={item?.hasBorder}
-                />
-            ))}
-        </>
-    ), [MenuItemView, props.items]);
-
-    return (
-        <DropDown
-            className={props.className}
-            closeMode={props.closeMode}
-            content={renderMenuItems}
-            position={props.position}
-        >
-            <div style={{width: 'fit-content'}}>
-                <MenuButtonView />
-            </div>
-        </DropDown>
-    );
+    return components.ui.renderView(props.view || 'content.MenuView', {
+        ...props,
+    });
 }
 
 export default Menu;

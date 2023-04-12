@@ -13,11 +13,11 @@ describe('Menu tests', () => {
     });
 
     const voidFunction = () => {};
-    const labelText = 'Специальная вставка';
+    const labelTest = 'Test';
     const props = {
         items: [
             {
-                label: labelText,
+                label: labelTest,
                 icon: 'mockIcon',
                 hasBorder: true,
                 onClick: voidFunction,
@@ -62,7 +62,7 @@ describe('Menu tests', () => {
         expect(menu).toBeInTheDocument();
         expect(icon).toBeInTheDocument();
 
-        expect(label).toHaveTextContent(labelText);
+        expect(label).toHaveTextContent(labelTest);
         expect(menuItem).toHaveClass(`${expectedMenuItemClass}_hasBorder`);
     });
 

@@ -23,6 +23,9 @@ export default {
     'content.AccordionView': {
         lazy: () => require('./content/Accordion/AccordionMockView').default,
     },
+    'content.MenuView': {
+        lazy: () => require('./content/Menu/MenuMockView').default,
+    },
     'form.CheckboxFieldView': {
         lazy: () => require('./form/CheckboxField/CheckboxFieldMockView').default,
     },

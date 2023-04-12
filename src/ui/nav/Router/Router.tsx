@@ -390,8 +390,7 @@ function Router(props: IRouterProps): JSX.Element {
                 return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
             });
             if (parentRouteId) {
-                // TODO route params?..
-                dispatch(goToRoute(parentRouteId));
+                dispatch(goToRoute(parentRouteId, routeParams) as any);
             }
         }
     });

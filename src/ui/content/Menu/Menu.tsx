@@ -26,7 +26,7 @@ export interface IMenuProps extends IAbsolutePositioningInputProps {
     icon?: string | React.ReactElement,
 
     /**
-     * В каком случае закрывать DropDown. По-умолчанию - `click-away`
+     * В каком случае закрывать Menu. По-умолчанию - `click-away`
      * @example click-any
      */
     closeMode?: 'click-away' | 'click-any',
@@ -40,17 +40,28 @@ export interface IMenuProps extends IAbsolutePositioningInputProps {
      * Переопределение view React компонента для кастомизации отображения
      */
     view?: CustomView;
-
-    /**
-     * Кастомные стили
-     */
-    style?: CustomStyle,
 }
+
+export type IMenuViewProps = IMenuProps
 
 function Menu(props: IMenuProps): JSX.Element {
     const components = useComponents();
+    const MenuItemView = components.ui.getView(props.view || 'content.MenuItemView');
+
+    const renderMenuItems = React.useCallback(() => (
+        <>
+            {props.items.map((item, index) => (
+                <MenuItemView
+                    key={index}
+                    {...item}
+                />
+            ))}
+        </>
+    ), [MenuItemView, props.items]);
+
     return components.ui.renderView(props.view || 'content.MenuView', {
         ...props,
+        renderMenuItems,
     });
 }
 

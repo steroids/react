@@ -26,6 +26,9 @@ export default {
     'content.MenuView': {
         lazy: () => require('./content/Menu/MenuMockView').default,
     },
+    'content.MenuItemView': {
+        lazy: () => require('./content/Menu/MenuItemMockView').default,
+    },
     'form.CheckboxFieldView': {
         lazy: () => require('./form/CheckboxField/CheckboxFieldMockView').default,
     },

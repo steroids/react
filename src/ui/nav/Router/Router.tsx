@@ -306,12 +306,13 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
 
-    const {isInitialized, pathname, route, routeParams, activePath, activeRouteIds} = useSelector(state => ({
+    const {isInitialized, pathname, route, routeParams, activePath, query, activeRouteIds} = useSelector(state => ({
         isInitialized: isRouterInitialized(state),
         pathname: _get(state, 'router.location.pathname'),
         route: getRoute(state),
         routeParams: state.router.params,
         activePath: state.router?.location?.pathname,
+        query: state.router?.location?.query,
         activeRouteIds: getActiveRouteIds(state),
     }));
     const routeId = route?.id || null;
@@ -390,7 +391,7 @@ function Router(props: IRouterProps): JSX.Element {
                 return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
             });
             if (parentRouteId) {
-                dispatch(goToRoute(parentRouteId, routeParams) as any);
+                dispatch(goToRoute(parentRouteId, {...routeParams, ...query}) as any);
             }
         }
     });

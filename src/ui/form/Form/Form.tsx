@@ -12,7 +12,7 @@ import {IApiMethod} from '../../../components/ApiComponent';
 import AutoSaveHelper from './AutoSaveHelper';
 import {IFieldProps} from '../Field/Field';
 import {useComponents, useDispatch} from '../../../hooks';
-import {cleanEmptyObject, normalizeLayout, providers} from '../../../utils/form';
+import {cleanEmptyObject, providers} from '../../../utils/form';
 import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
 
@@ -52,12 +52,6 @@ export interface IFormProps {
      * @example Упс, что-то пошло не так
      */
     submitErrorMessage?: string;
-
-    /**
-     * Шаблон для полей в форме
-     * @example horizontal
-     */
-    layout?: FormLayout;
 
     /**
      * Обработчик события отправки формы
@@ -200,13 +194,6 @@ export interface IFormViewProps {
     isBordered?: boolean,
     autoFocus?: boolean,
     style?: CustomStyle,
-    layout?: {
-        layout: FormLayoutName | boolean,
-        className: CssClassName,
-        label: boolean,
-        cols: number[],
-        [key: string]: any,
-    },
     children?: React.ReactNode,
 }
 
@@ -222,7 +209,6 @@ export interface IFormContext {
     formId?: string;
     model?: any;
     prefix?: string | boolean;
-    layout?: FormLayout;
     size?: Size;
     provider?: any,
     reducer?: { dispatch: React.Dispatch<any>, select: any },
@@ -260,9 +246,6 @@ function Form(props: IFormProps): JSX.Element {
     // Get components and dispatch method
     const components = useComponents();
     const reduxDispatch = useDispatch();
-
-    // Normalize layout
-    const layout = useMemo(() => normalizeLayout(props.layout), [props.layout]);
 
     // Address bar synchronization
     const {
@@ -493,11 +476,10 @@ function Form(props: IFormProps): JSX.Element {
         model: props.model,
         prefix: props.prefix,
         size: props.size,
-        layout: props.layout,
         provider,
         reducer,
         dispatch,
-    }), [dispatch, props.formId, props.layout, props.model, props.prefix, props.size, provider, reducer]);
+    }), [dispatch, props.formId, props.model, props.prefix, props.size, provider, reducer]);
 
     // Wait initialization (only for redux)
     if (values === undefined) {
@@ -512,7 +494,6 @@ function Form(props: IFormProps): JSX.Element {
                     ...props.viewProps,
                     isInvalid,
                     isSubmitting,
-                    layout,
                     onSubmit,
                     submitLabel: props.submitLabel,
                     fields: props.fields,
@@ -530,7 +511,6 @@ function Form(props: IFormProps): JSX.Element {
 Form.defaultProps = {
     actionMethod: 'POST',
     autoStartTwoFactor: true,
-    layout: 'default',
     captchaActionName: 'submit',
 };
 

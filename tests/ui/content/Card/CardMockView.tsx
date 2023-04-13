@@ -10,7 +10,7 @@ import {Link} from '../../../../src/ui/nav';
 export default function CardView(props: ICardViewProps) {
     const bem = useBem('CardView');
 
-    const hasContent = props.title || props.buttons || props.links || props.description;
+    const hasContent = !!(props.title || props.buttons || props.links || props.description);
 
     return (
         <div
@@ -19,9 +19,21 @@ export default function CardView(props: ICardViewProps) {
             style={props.style}
         >
             {props.header && (
-                <div className={bem.element('header')}>
+                <div className={bem.element('header',
+                    {
+                        withoutCover: !props.cover && hasContent,
+                    })}
+                >
                     <div className={bem.element('header-data')}>
-                        {props.header.avatar && <Avatar {...props.header.avatar} />}
+                        {props.header.avatar && (
+                            <Avatar
+                                {...props.header.avatar}
+                                className={bem(
+                                    props.header.avatar.className,
+                                    bem.element('header-avatar'),
+                                )}
+                            />
+                        )}
                         <div className={bem.element('header-text-content')}>
                             <h3 className={bem.element('header-head')}>
                                 {props.header.head}

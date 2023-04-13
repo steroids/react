@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import mountWithApp from '../mountWithApp';
 import {useComponents} from '../../src/hooks';
 import {IComponents} from '../../src/providers/ComponentsProvider';
+import mountWithApp from '../mocks/mountWithApp';
 
 const MockResultComponent = (props: any) => <div />;
 const MockComponent = (props: any) => (

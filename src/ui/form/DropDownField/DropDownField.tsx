@@ -1,18 +1,41 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
+import _includes from 'lodash-es/includes';
+import {IAccordionCommonViewProps} from 'src/ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
+export const GROUP_CONTENT_TYPE = 'group';
+export const CHECKBOX_CONTENT_TYPE = 'checkbox';
+export const RADIO_CONTENT_TYPE = 'radio';
+export const ICON_CONTENT_TYPE = 'icon';
+export const IMG_CONTENT_TYPE = 'img';
+
 export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
+export type ItemSwitchType = ContentType | 'group' | string;
 
 export interface IDropDownFieldItem {
-    id: number,
+    id: number | string,
     label: string,
-    contentType?: ContentType,
-    contentSrc?: 'string' | React.ReactElement,
+    contentType?: ContentType | string,
+    contentSrc?: string | React.ReactElement,
+}
+
+export interface IDropDownFieldItemViewProps extends IAccordionCommonViewProps, Pick<IDropDownFieldProps, 'itemsContent'> {
+    item: IDropDownFieldItem,
+    size: Size,
+    type: ItemSwitchType,
+    selectedIds: (PrimaryKey | any)[]
+    groupAttribute: 'string',
+    primaryKey: PrimaryKey,
+    hoveredId: string,
+    onItemSelect: (id: PrimaryKey | any) => void,
+    onItemHover: (id: PrimaryKey | any) => void,
+
+    [key: string]: any,
 }
 
 /**
@@ -78,8 +101,8 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * @example {type: 'icon', src: 'user'}
      */
     itemsContent?: {
-        type: ContentType,
-        src?: 'string' | React.ReactElement;
+        type: ContentType | string,
+        src?: string | React.ReactElement;
     };
 
     /**
@@ -115,29 +138,12 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isOpened?: boolean,
     isLoading?: boolean,
     onReset: () => void,
-    onItemSelect: (id: PrimaryKey | any) => void,
-    onItemHover: (id: PrimaryKey | any) => void,
-    onItemRemove: (id: PrimaryKey | any) => void,
-    onClose: () => void,
     onOpen: () => void,
+    renderItem: (item: IDropDownFieldItem) => JSX.Element;
+    onItemRemove: (id: PrimaryKey | any) => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
     primaryKey: string,
-}
-
-export interface IDropDownItemViewProps extends Pick<IDropDownFieldProps, 'itemsContent'>, Pick<IFieldWrapperInputProps, 'size'> {
-    item: {
-        id: number,
-        label: string,
-        contentType?: ContentType,
-        contentSrc?: 'string' | React.ReactElement,
-    },
-    primaryKey: PrimaryKey,
-    hoveredId: string,
-    selectedIds: (PrimaryKey | any)[];
-    onItemSelect: (id: PrimaryKey | any) => void,
-    onItemHover: (id: PrimaryKey | any) => void,
-    groupAttribute?: string;
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -145,6 +151,22 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     // Query state
     const [query, setQuery] = useState('');
+
+    const hasGroup = !!props.groupAttribute;
+    const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
+
+    const toggleCollapse = indexSelected => {
+        if (selectedAccordionItems.includes(indexSelected)) {
+            const newState = [...selectedAccordionItems];
+            const indexInArray = selectedAccordionItems.indexOf(indexSelected);
+            newState.splice(indexInArray, 1);
+            setSelectedAccordionItems(newState);
+        } else {
+            const newState = [...selectedAccordionItems];
+            newState.push(indexSelected);
+            setSelectedAccordionItems(newState);
+        }
+    };
 
     const inputSelectedIds = useMemo(
         () => props.selectedIds || [].concat(props.input.value || []),
@@ -246,6 +268,46 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         }
     }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
+    const renderItemView = (
+        item: IDropDownFieldItem,
+        type: ItemSwitchType,
+        src: string | React.ReactElement,
+    ) => components.ui.renderView('form.DropDownFieldItemView', {
+        item: {
+            ...item,
+            contentSrc: src,
+            contentType: type,
+        },
+        selectedIds,
+        size: props.size,
+        groupAttribute: props.groupAttribute,
+        hoveredId,
+        primaryKey: props.primaryKey,
+        type,
+        itemsContent: props.itemsContent,
+        onItemHover,
+        onItemSelect,
+        isShowMore: _includes(selectedAccordionItems || [], item.id),
+        childIndex: item.id,
+        toggleCollapse,
+    });
+
+    const renderItem = (item: IDropDownFieldItem) => {
+        if (hasGroup && Array.isArray(item[props.groupAttribute])) {
+            return renderItemView(item, 'group', item[props.groupAttribute]);
+        }
+
+        if (item.contentType) {
+            return renderItemView(item, item.contentType, item.contentSrc);
+        }
+
+        if (props.itemsContent) {
+            return renderItemView(item, props.itemsContent.type, props.itemsContent.src);
+        }
+
+        return renderItemView(item, 'default', null);
+    };
+
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {
         ...props,
         isAutoComplete,
@@ -260,11 +322,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         selectedItems,
         // TODO onFocus
         // TODO onBlur
-        onItemHover,
-        onItemSelect,
-        onItemRemove,
         onReset,
         onClose,
+        renderItem,
+        onItemRemove,
+        hasGroup,
     });
 }
 

@@ -1,55 +1,6 @@
-import {cleanEmptyObject, mergeLayoutProp, normalizeLayout} from '../../src/utils/form';
+import {cleanEmptyObject} from '../../src/utils/form';
 
 describe('form utils', () => {
-    describe('normalizeLayout', () => {
-        it('layout as object', () => {
-            const layout = {
-                hasBlackBars: true,
-                width: 1024,
-                height: 768,
-            };
-
-            expect(normalizeLayout(layout)).toEqual(layout);
-        });
-
-        it('layout as not object', () => {
-            const layout = 'layout';
-
-            const expectedNormalizedLayout = {
-                [layout]: 'layout',
-            };
-
-            expect(normalizeLayout(layout)).toEqual(expectedNormalizedLayout);
-        });
-    });
-
-    describe('mergeLayoutProp', () => {
-        const firstLayout = {
-            hasBlackBars: true,
-            width: 1024,
-        };
-
-        const secondLayout = {
-            hasRedElements: true,
-            height: 768,
-        };
-
-        it('default behavior', () => {
-            const expectedLayout = {
-                ...firstLayout,
-                ...secondLayout,
-            };
-
-            expect(mergeLayoutProp(firstLayout, secondLayout)).toEqual(expectedLayout);
-        });
-
-        it('secondLayout is false state', () => {
-            const expectedEmptyLayout = null;
-            const falsyLayout = false;
-            expect(mergeLayoutProp(firstLayout, falsyLayout)).toEqual(expectedEmptyLayout);
-        });
-    });
-
     describe('cleanEmptyObject', () => {
         const plainObject = {
             value: null,

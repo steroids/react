@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Grid from '../Grid';
-import {items} from '../../List/demo/sort';
+// import {items} from '../../List/demo/sort';
 
 /**
  * Grid with sorting
@@ -12,7 +12,7 @@ export default () => (
     <>
         <Grid
             listId='GridSortDemo'
-            items={items}
+            // items={items}
             columns={[
                 {
                     attribute: 'title',

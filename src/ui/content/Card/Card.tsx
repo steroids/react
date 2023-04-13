@@ -48,12 +48,12 @@ export interface ICardProps {
     * Коллекция ссылок
     * @example {}
     */
-    links: ILinkProps[],
+    links?: ILinkProps[],
 
     /**
      * Коллекция кнопок
      */
-    buttons: IButtonProps[],
+    buttons?: IButtonProps[],
 
     /**
      * Объект CSS стилей

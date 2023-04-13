@@ -17,7 +17,7 @@ import {
     toggleItem,
     update,
 } from '../../src/actions/list';
-import prepareMiddleware from '../storeMiddlewareMock';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});

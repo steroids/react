@@ -2,7 +2,7 @@ import _has from 'lodash-es/has';
 import _upperFirst from 'lodash-es/upperFirst';
 import {useContext, useMemo} from 'react';
 import * as React from 'react';
-import {mergeLayoutProp, providers} from '../../../utils/form';
+import {providers} from '../../../utils/form';
 import {FormContext} from '../Form/Form';
 import FieldLayout from '../FieldLayout/FieldLayout';
 import {useComponents, useUniqueId} from '../../../hooks';
@@ -55,13 +55,6 @@ export interface IFieldWrapperInputProps {
      * @example Your text...
      */
     placeholder?: string;
-
-    /**
-     * Шаблон для поля, который настраивает его расположение внутри формы.
-     * Если false, то поле будет отрендерено без шаблона.
-     * @example 'horizontal'
-     */
-    layout?: FormLayout;
 
     /**
      * Input ID для связи поля с label
@@ -119,7 +112,7 @@ export interface FieldWrapperComponent<T> {
 
 const getKey = (baseName, attribute) => baseName + _upperFirst(attribute || '');
 
-const createDynamicField = (componentId, Component, options: IFieldWrapperOptions) => {
+const createDynamicField = (componentId: string, Component, options: IFieldWrapperOptions) => {
     const DynamicField = (props: IFieldWrapperInputProps) => {
         const components = useComponents();
 
@@ -194,7 +187,7 @@ const createDynamicField = (componentId, Component, options: IFieldWrapperOption
 
 // Field Wrapper
 export default function fieldWrapper<T = any>(
-    componentId,
+    componentId: string,
     Component: any,
     optionsConfig: IFieldWrapperOptions = {
         attributeSuffixes: [''],
@@ -228,33 +221,25 @@ export default function fieldWrapper<T = any>(
             Component.DynamicField = createDynamicField(componentId, Component, options);
         }
 
-        // Resolve layout
-        const layout = useMemo(() => mergeLayoutProp(context.layout, props.layout), [context.layout, props.layout]);
-
         const uniqueId = useUniqueId('input');
 
         const inputId = props.id || uniqueId;
 
-        if (layout !== null) {
-            return components.ui.renderView(FieldLayout, {
-                ...attributesProps,
-                layout,
-                size: props.size || context.size || null,
-                required: _has(props, 'required') ? props.required : metaProps.required,
-                label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
-                hint: _has(props, 'hint') ? props.hint : metaProps.hint,
-                errors: props.errors,
-                id: inputId,
-                children: (
-                    <Component.DynamicField
-                        {...props}
-                        id={inputId}
-                    />
-                ),
-            });
-        }
-
-        return components.ui.renderView(Component.DynamicField, props);
+        return components.ui.renderView(FieldLayout, {
+            ...attributesProps,
+            size: props.size || context.size || null,
+            required: _has(props, 'required') ? props.required : metaProps.required,
+            label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
+            hint: _has(props, 'hint') ? props.hint : metaProps.hint,
+            errors: props.errors,
+            id: inputId,
+            children: (
+                <Component.DynamicField
+                    {...props}
+                    id={inputId}
+                />
+            ),
+        });
     };
 
     NewComponent.WrappedComponent = Component;

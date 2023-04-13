@@ -1,4 +1,3 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import CheckboxField, {ICheckboxFieldViewProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';
 import CheckboxFieldMockView from './CheckboxFieldMockView';

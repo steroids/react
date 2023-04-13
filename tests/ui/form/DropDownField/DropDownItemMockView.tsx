@@ -1,145 +1,152 @@
 import React from 'react';
 import useBem from '../../../../src/hooks/useBem';
-import Icon from '../../../../src/ui/content/Icon';
-import {CheckboxField, RadioListField} from '../../../../src/ui/form';
-import {ContentType, IDropDownItemViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
-import {AccordionItem} from '../../../../src/ui/content';
-import {IAccordionCommonViewProps} from '../../../../src/ui/content/Accordion/Accordion';
+import {
+    CHECKBOX_CONTENT_TYPE,
+    GROUP_CONTENT_TYPE,
+    ICON_CONTENT_TYPE,
+    IDropDownFieldItemViewProps,
+    IMG_CONTENT_TYPE,
+    RADIO_CONTENT_TYPE,
+} from '../../../../src/ui/form/DropDownField/DropDownField';
+import AccordionItemView from '../../content/Accordion/AccordionItemMockView';
+import CheckboxFieldView from '../CheckboxField/CheckboxFieldMockView';
+import RadioFieldView from '../RadioField/RadioFieldMockView';
+import renderIcon from '../../../mocks/renderIconMock';
 
-const GROUP_CONTENT_TYPE = 'group';
-
-export default function DropDownItemView(props: IDropDownItemViewProps) {
+export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
     const bem = useBem('DropDownItemView');
-
-    const groupProps = props as IAccordionCommonViewProps;
 
     const commonProps = {
         className:
             bem.element('option', {
-                hover: props.primaryKey && props.hoveredId === props.item[props.primaryKey],
-                select: props.selectedIds && props.primaryKey && props.selectedIds.includes(props.item[props.primaryKey]),
+                hover: props.hoveredId === props.item[props.primaryKey],
+                select: props.selectedIds.includes(props.item[props.primaryKey]),
                 size: props.size,
             }),
-        onFocus: () => {
-            props.onItemHover(props.item[props.primaryKey]);
-        },
-        onMouseOver: () => {
-            props.onItemHover(props.item[props.primaryKey]);
-        },
+        onFocus: () => props.onItemHover(props.item[props.primaryKey]),
+        onMouseOver: () => props.onItemHover(props.item[props.primaryKey]),
         onClick: (e) => {
             e.preventDefault();
             props.onItemSelect(props.item[props.primaryKey]);
         },
-
     };
 
-    const renderTypeCases = (type: ContentType | 'group', src: string | React.ReactElement | null) => {
-        switch (type) {
-            case 'icon':
-                return (
-                    <div {...commonProps}>
-                        {typeof src === 'string' ? (
-                            <Icon
-                                name={src}
-                                className={bem.element('icon')}
-                            />
-                        ) : (
-                            <span className={bem.element('icon')}>
-                                {src}
-                            </span>
-                        )}
-                        <span>
-                            {props.item.label}
-                        </span>
-                    </div>
-                );
-
-            case 'checkbox':
-                return (
-                    <div {...commonProps}>
-                        <CheckboxField
-                            label={props.item.label}
-                            className={bem.element('checkbox')}
-                            size={props.size}
-                            inputProps={{
-                                checked: props.selectedIds && props.primaryKey && props.selectedIds.includes(props.item[props.primaryKey]),
-                            }}
-                        />
-                    </div>
-                );
-
-            case 'img':
-                return (
-                    <div {...commonProps}>
-                        <span className={bem.element('img')}>
-                            <img
-                                src={src as string}
-                                alt="custom source for item"
-                            />
-                        </span>
-                        <span>
-                            {props.item.label}
-                        </span>
-                    </div>
-                );
-
-            case 'radio':
-                return (
-                    <div {...commonProps}>
-                        <RadioListField
-                            items={[props.item]}
-                            selectedIds={props.selectedIds}
-                            className={bem.element('radio', {
-                                size: props.size,
-                            })}
-                            size={props.size}
-                        />
-                    </div>
-                );
-
-            case 'group':
-                return (
-                    <AccordionItem
-                        childIndex={groupProps.childIndex}
-                        isShowMore={groupProps.isShowMore}
-                        toggleAccordion={groupProps.toggleAccordion}
-                        toggleCollapse={groupProps.toggleCollapse}
-                        title={props.item.label}
-                        position="middle"
-                        className={bem.element('group', {
+    switch (props.type) {
+        case GROUP_CONTENT_TYPE:
+            return (
+                <AccordionItemView
+                    isShowMore={props.isShowMore}
+                    childIndex={props.childIndex}
+                    toggleCollapse={props.toggleCollapse}
+                    toggleAccordion={() => { }}
+                    showIcon
+                    title={props.item.label}
+                    position="middle"
+                    key={props.item[props.primaryKey]}
+                    className={
+                        bem.element('group', {
                             size: props.size,
-                        })}
-                    >
-                        {props.groupAttribute && props.item[props.groupAttribute].map((subItem, itemIndex) => (
+                        })
+                    }
+                >
+                    {
+                        props.item[props.groupAttribute]?.map((subItem, itemIndex) => (
                             <DropDownItemView
                                 {...props}
+                                type={subItem.type ? subItem.type : props.itemsContent?.type}
                                 key={itemIndex}
                                 item={subItem}
                             />
-                        ))}
-                    </AccordionItem>
-                );
+                        ))
+                    }
+                </AccordionItemView>
+            );
 
-            default:
-                return null;
-        }
-    };
+        case ICON_CONTENT_TYPE:
+            return (
+                <div
+                    {...commonProps}
+                    key={props.item[props.primaryKey]}
+                >
+                    {renderIcon(props.item.contentSrc, {className: bem.element('icon')})}
+                    <span>
+                        {props.item.label}
+                    </span>
+                </div>
+            );
 
-    if (props.groupAttribute && Array.isArray(props.item[props.groupAttribute])) {
-        return renderTypeCases(GROUP_CONTENT_TYPE, props.item[props.groupAttribute]);
+        case CHECKBOX_CONTENT_TYPE:
+            return (
+                <div
+                    {...commonProps}
+                    key={props.item[props.primaryKey]}
+                >
+                    <CheckboxFieldView
+                        label={props.item.label}
+                        className={bem.element('checkbox')}
+                        size={props.size}
+                        inputProps={{
+                            disabled: false,
+                            name: props.item.label,
+                            checked: false,
+                            onChange: () => { },
+                            type: 'checkbox',
+                        }}
+                        checked={props.selectedIds.includes(props.item[props.primaryKey])}
+                    />
+                </div>
+            );
+
+        case RADIO_CONTENT_TYPE:
+            return (
+                <div
+                    {...commonProps}
+                    key={props.item[props.primaryKey]}
+                >
+                    <RadioFieldView
+                        label={props.item.label}
+                        className={bem.element('radio', {
+                            size: props.size,
+                        })}
+                        size={props.size}
+                        inputProps={{
+                            disabled: false,
+                            name: props.item.label,
+                            checked: false,
+                            onChange: () => { },
+                            type: 'radio',
+                        }}
+                        checked={props.selectedIds.includes(props.item[props.primaryKey])}
+                    />
+                </div>
+            );
+
+        case IMG_CONTENT_TYPE:
+            return (
+                <div
+                    {...commonProps}
+                    key={props.item[props.primaryKey]}
+                >
+                    <span className={bem.element('img')}>
+                        <img
+                            src={props.item.contentSrc as string}
+                            alt="custom source for item"
+                        />
+                    </span>
+                    <span>
+                        {props.item.label}
+                    </span>
+                </div>
+            );
+
+        default:
+            return (
+                <div
+                    {...commonProps}
+                    key={props.item[props.primaryKey]}
+                >
+                    {props.item.label}
+                </div>
+            );
     }
-
-    if (props.item.contentType) {
-        return renderTypeCases(props.item.contentType, props.item.contentSrc || null);
-    }
-
-    if (props.itemsContent) {
-        return renderTypeCases(props.itemsContent.type, props.itemsContent.src || null);
-    }
-
-    return (
-        <div {...commonProps}>
-            {props.item.label}
-        </div>
-    );
 }

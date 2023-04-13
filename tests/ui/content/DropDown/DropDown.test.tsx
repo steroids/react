@@ -4,8 +4,6 @@ import {fireEvent} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 import DropDown, {IDropDownProps} from '../../../../src/ui/content/DropDown/DropDown';
-import DropDownMockView from './DropDownMockView';
-import Portal from '../../../../src/ui/layout/Portal';
 
 describe('DropDown tests', () => {
     const console = global.console;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {IBemHocOutput} from '@steroidsjs/core/hoc/bem';
-import {IIconViewProps} from '@steroidsjs/core/ui/content/Icon/Icon';
-import {useBem} from '@steroidsjs/core/hooks';
+import {IBemHocOutput} from '../../../../src/hoc/bem';
+import {IIconViewProps} from '../../../../src/ui/content/Icon/Icon';
+import {useBem} from '../../../../src/hooks';
 
 export default function IconView(props: IIconViewProps & IBemHocOutput) {
     const bem = useBem('IconView');

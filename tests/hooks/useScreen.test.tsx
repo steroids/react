@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import mountWithApp from '../mountWithApp';
 import {useScreen} from '../../src/hooks';
 import {IScreen} from '../../src/providers/ScreenProvider';
+import mountWithApp from '../mocks/mountWithApp';
 
 const MockResultComponent = (props: any) => <div />;
 const MockComponent = (props: any) => (

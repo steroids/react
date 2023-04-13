@@ -150,14 +150,14 @@ export const findRecursive = (
     predicate: string | any,
     pathItems: IRouteItem[] | null = null,
 ): IRouteItem | null => {
-    if ((_isFunction(predicate) && predicate(item)) || predicate === item.id) {
+    if ((_isFunction(predicate) && predicate(item)) || predicate === item?.id) {
         if (pathItems) {
             pathItems.push(item);
         }
         return item;
     }
 
-    if (Array.isArray((item.items))) {
+    if (Array.isArray((item?.items))) {
         const foundedItem = item.items.find(subItem => findRecursive(subItem, predicate, pathItems)) || null;
         if (foundedItem && pathItems) {
             pathItems.push(item);

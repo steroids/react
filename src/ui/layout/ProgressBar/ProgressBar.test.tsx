@@ -1,5 +1,5 @@
 import 'jest-enzyme';
-import mountWithApp from '../../../../tests/mountWithApp';
+import mountWithApp from '../../../../tests/mocks/mountWithApp';
 import ProgressBar from './ProgressBar';
 
 describe.skip('ProgressBar tests', () => {

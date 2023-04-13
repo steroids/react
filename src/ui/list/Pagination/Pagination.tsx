@@ -1,11 +1,13 @@
 import _get from 'lodash-es/get';
 import {useCallback, useMemo} from 'react';
 import * as React from 'react';
+import {useUpdateEffect} from 'react-use';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
-import {ListControlPosition} from '../../../hooks/useList';
 import {IButtonProps} from '../../form/Button/Button';
+
+const FIRST_PAGE = 1;
 
 /**
  * Pagination
@@ -53,12 +55,6 @@ export interface IPaginationProps {
      */
     className?: CssClassName;
 
-    /**
-     * Расположение пагинации
-     * @example 'both'
-     */
-    position?: ListControlPosition,
-
     buttonProps?: IButtonProps,
 
     /**
@@ -89,6 +85,18 @@ export interface IPaginationProps {
      */
     list?: any,
 
+    /**
+    * Нужно ли отображать кнопки с шагом в одну страницу
+    * @example {'true'}
+    */
+    showSteps?: boolean,
+
+    /**
+     * Нужно ли отображать кнопки с шагом до первой / последней страницы
+     * @example {'true'}
+     */
+    showEdgeSteps?: boolean,
+
     [key: string]: any,
 }
 
@@ -101,6 +109,11 @@ export interface IPaginationViewProps extends IPaginationProps {
     }[],
     onSelect: (page: number) => void,
     onSelectNext: () => void,
+    onSelectPrev: () => void,
+    onSelectLast: () => void,
+    onSelectFirst: () => void,
+    isFirstPage: boolean,
+    isLastPage: boolean,
 }
 
 export const generatePages = (page, totalPages, aroundCount = 3) => {
@@ -144,6 +157,9 @@ function Pagination(props: IPaginationProps): JSX.Element {
 
     const totalPages = Math.ceil((props.list?.total || 0) / (pageSize || 1));
 
+    const isFirstPage = React.useMemo(() => page === FIRST_PAGE, [page]);
+    const isLastPage = React.useMemo(() => page === totalPages, [page, totalPages]);
+
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)
             .map((pageItem, index, pagesArray) => {
@@ -171,21 +187,39 @@ function Pagination(props: IPaginationProps): JSX.Element {
         onSelect(page + 1);
     }, [onSelect, page]);
 
+    const onSelectPrev = useCallback(() => {
+        onSelect(page - 1);
+    }, [onSelect, page]);
+
+    const onSelectLast = useCallback(() => {
+        onSelect(totalPages);
+    }, [onSelect, totalPages]);
+
+    const onSelectFirst = useCallback(() => {
+        onSelect(FIRST_PAGE);
+    }, [onSelect]);
+
     if (!props.list || !page || !pageSize || props.list.total <= pageSize) {
         return null;
     }
 
     // Do not show in last page in 'loadMore' mode
-    if (props.loadMore && page >= totalPages) {
+    if (props.loadMore && isLastPage) {
         return null;
     }
 
     const defaultView = (props.loadMore ? 'list.PaginationMoreView' : 'list.PaginationButtonView');
     return components.ui.renderView(props.view || defaultView, {
+        ...props,
         totalPages,
         pages,
         onSelect,
         onSelectNext,
+        onSelectPrev,
+        onSelectLast,
+        onSelectFirst,
+        isFirstPage,
+        isLastPage,
     });
 }
 
@@ -194,6 +228,7 @@ Pagination.defaultProps = {
     attribute: 'page',
     aroundCount: 3,
     defaultValue: 1,
+    size: 'md',
     loadMore: false,
     position: 'bottom',
     sizeAttribute: 'pageSize',

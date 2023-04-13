@@ -2,8 +2,8 @@ import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import useDataProvider, {IDataProviderConfig} from '../../src/hooks/useDataProvider';
-import prepareMiddleware from '../storeMiddlewareMock';
-import mountWithApp from '../mountWithApp';
+import mountWithApp from '../mocks/mountWithApp';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 

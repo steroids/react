@@ -13,7 +13,6 @@ describe('NumberField tests', () => {
         className: externalClassName,
         max: 3,
         min: 1,
-        layout: true,
         hint,
     } as INumberFieldViewProps;
 
@@ -44,12 +43,6 @@ describe('NumberField tests', () => {
         const {getByText} = render(JSXWrapper(NumberField, props));
         const message = getByText(hint);
         expect(message).toBeInTheDocument();
-    });
-
-    it('should have layout', () => {
-        const {container} = render(JSXWrapper(NumberField, props));
-        const layout = getElementByClassName(container, 'FieldLayoutView_layout');
-        expect(layout).toBeInTheDocument();
     });
 
     it('should be disabled', () => {

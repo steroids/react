@@ -40,9 +40,17 @@ export interface IMenuProps extends IAbsolutePositioningInputProps {
      * Переопределение view React компонента для кастомизации отображения
      */
     view?: CustomView;
+
+    renderMenuItem: (item: IMenuItemProps) => React.ReactElement;
 }
 
-export type IMenuViewProps = IMenuProps
+export interface IMenuViewProps extends IMenuProps {
+    items: IMenuItemProps[];
+    renderMenuItem: (item: IMenuItemProps) => React.ReactElement;
+    className?: CssClassName;
+    closeMode?: 'click-away' | 'click-any',
+    icon?: string | React.ReactElement,
+}
 
 function Menu(props: IMenuProps): JSX.Element {
     const components = useComponents();

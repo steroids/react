@@ -109,7 +109,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Элементы вложенные внутрь DropDownField
      * @example [{id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}]
      */
-    items: IDropDownFieldItem[],
+    items?: IDropDownFieldItem[],
 
     /**
      * Нужно ли использовать троеточие при переполнении DropDownField

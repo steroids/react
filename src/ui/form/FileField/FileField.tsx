@@ -7,6 +7,11 @@ import useFile from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
+export enum FilesLayout {
+    list = 'list',
+    wall = 'wall',
+}
+
 export interface IFileFieldProps extends IFieldWrapperInputProps, IFileHocInput, IFileHocOutput {
 
     /**
@@ -14,12 +19,19 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileHocInput,
      * @example true
      */
     showRemove?: boolean,
-    buttonComponent?: React.ReactNode; // TODO May be buttonView ?
+    buttonView?: React.ReactNode;
     buttonProps?: any;
     className?: CssClassName;
     view?: CustomView;
     itemView?: CustomView;
     itemProps?: any;
+
+    /**
+     * Вариант отображения файлов
+     * @example 'list'
+     */
+    filesLayout?: FilesLayout;
+
     [key: string]: any;
 }
 
@@ -45,6 +57,7 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
     title?: string,
     disabled?: boolean,
     showRemove?: boolean,
+    layout?: FilesLayout,
 
     /**
      * Обработчик события удаления файла
@@ -78,7 +91,7 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
 }
 
 export interface IFileFieldViewProps extends IFileFieldProps {
-    buttonComponent?: React.ReactNode | any;
+    buttonView?: React.ReactNode | any;
     imagesOnly?: boolean;
     itemProps?: any;
     buttonProps: {
@@ -114,15 +127,11 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     return (
         <FileFieldView
             {...props}
-            buttonComponent={props.buttonComponent}
+            buttonView={props.buttonView}
             buttonProps={{
-                label: props.imagesOnly
-                    ? props.multiple
-                        ? __('Прикрепить фотографии')
-                        : __('Прикрепить фото')
-                    : props.multiple
-                        ? __('Прикрепить файлы')
-                        : __('Прикрепить файл'),
+                label: props.filesLayout === FilesLayout.wall
+                    ? __('Upload')
+                    : __('Click to Upload'),
                 size: props.size,
                 disabled: props.disabled,
                 onClick: onBrowse,
@@ -181,7 +190,7 @@ FileField.defaultProps = {
     className: '',
     showRemove: true,
     buttonProps: {
-        color: 'secondary',
+        color: 'basic',
         outline: true,
     },
     multiple: false,

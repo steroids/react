@@ -1,9 +1,13 @@
 import React from 'react';
-import {IAbsolutePositioningInputProps} from '../../../hooks/useAbsolutePositioning';
 import useComponents from '../../../hooks/useComponents';
+import {IDropDownProps} from '../DropDown/DropDown';
 
 export interface IMenuItemProps {
+    /**
+     * Заголовок элемента меню
+     */
     label: string,
+
     /**
      * Функция при клике
      */
@@ -20,50 +24,47 @@ export interface IMenuItemProps {
     hasBorder?: boolean,
 }
 
-export interface IMenuProps extends IAbsolutePositioningInputProps {
+export interface IMenuProps {
+    /**
+    *   Элементы меню
+    */
     items: IMenuItemProps[],
 
-    icon?: string | React.ReactElement,
-
     /**
-     * В каком случае закрывать Menu. По-умолчанию - `click-away`
-     * @example click-any
-     */
-    closeMode?: 'click-away' | 'click-any',
+    * Кастомная иконка, по клику на которую открывается меню
+    */
+    icon?: string | React.ReactElement,
 
     /**
     * Дополнительный CSS-класс
     */
-    className?: CssClassName;
+    className?: CssClassName,
+
+    /**
+     * Пропсы для DropDown
+     */
+    dropDownProps?: Omit<IDropDownProps, 'children' | 'content'>
+
+    /**
+     * Переопределение view React элемента меню для кастомизации отображения
+     */
+    itemView?: CustomView | any,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      */
-    view?: CustomView;
+    view?: CustomView,
 }
 
-export interface IMenuViewProps extends IMenuProps{
-    renderMenuItem: () => React.ReactElement;
-}
+export type IMenuViewProps = IMenuProps;
 
 function Menu(props: IMenuProps): JSX.Element {
     const components = useComponents();
-    const MenuItemView = components.ui.getView(props.view || 'content.MenuItemView');
-
-    const renderMenuItems = React.useCallback(() => (
-        <>
-            {props.items.map((item, index) => (
-                <MenuItemView
-                    key={index}
-                    {...item}
-                />
-            ))}
-        </>
-    ), [MenuItemView, props.items]);
+    const MenuItemView = components.ui.getView(props.itemView || 'content.MenuItemView');
 
     return components.ui.renderView(props.view || 'content.MenuView', {
         ...props,
-        renderMenuItems,
+        itemView: MenuItemView,
     });
 }
 

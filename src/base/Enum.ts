@@ -1,5 +1,5 @@
 export default class Enum {
-    static getLabels() {
+    static getLabels(): Record<string, string> {
         return {};
     }
 

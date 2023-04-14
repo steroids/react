@@ -1,39 +1,40 @@
 import React from 'react';
 import {useBem} from '../../../../src/hooks';
 import DropDown from '../../../../src/ui/content/DropDown';
-import {IMenuProps} from '../../../../src/ui/content/Menu/Menu';
+import {IMenuViewProps} from '../../../../src/ui/content/Menu/Menu';
 import renderIcon from '../../../mocks/renderIconMock';
-import MenuItemView from './MenuItemMockView';
+import Icon from '../Icon/IconMockView';
 
-export default function MenuView(props: IMenuProps) {
+export default function MenuView(props: IMenuViewProps) {
     const bem = useBem('MenuView');
+    const MenuItemView = props.itemView;
 
     const renderMenuItems = React.useCallback(() => (
         <>
             {props.items.map((item, index) => (
                 <MenuItemView
                     key={index}
-                    icon={item?.icon}
-                    label={item.label}
-                    onClick={item.onClick}
-                    hasBorder={item?.hasBorder}
+                    {...item}
                 />
             ))}
         </>
-    ), [props.items]);
+    ), [MenuItemView, props.items]);
 
     return (
         <DropDown
-            {...props}
-            className="MenuView"
-            closeMode={props.closeMode}
+            {...props.dropDownProps}
+            className={bem(bem.block(), props.className)}
             content={renderMenuItems}
-            position={props.position}
         >
             <span className={bem.element('button')}>
                 {props.icon
                     ? renderIcon(props.icon, {className: bem.element('icon')})
-                    : renderIcon('mockIcon', {className: bem.element('icon')})}
+                    : (
+                        <Icon
+                            icon='mockIcon'
+                            className={bem.element('icon')}
+                        />
+                    )}
             </span>
         </DropDown>
     );

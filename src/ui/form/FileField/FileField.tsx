@@ -124,6 +124,7 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     const FileFieldView = props.view || components.ui.getView('form.FileFieldView');
     const FileFieldItemView = props.itemView || components.ui.getView('form.FileFieldItemView');
+
     return (
         <FileFieldView
             {...props}
@@ -166,7 +167,7 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
                     }
                 }
                 // Add thumbnail image
-                if (data.images) {
+                if (props.imagesOnly && data.images) {
                     // Image object has properties: url, width, height
                     item.image = data.images[props.imagesProcessor]
                         || _first(_values(data.images));

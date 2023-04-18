@@ -72,7 +72,13 @@ declare type CustomStyle = React.CSSProperties;
  * Переопределение view React компонента для кастомизации отображения
  * @example MyCustomView
  */
-declare type CustomView = React.ReactNode | React.FunctionComponent;
+declare type CustomView = React.ReactNode | React.FunctionComponent | any;
+
+/**
+ * Кастомная иконка
+ * @example custom-icon
+ */
+declare type CustomIcon = string | React.ReactElement;
 
 /**
  * HTTP метод

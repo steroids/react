@@ -6,43 +6,79 @@ import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
 import useFile from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IButtonProps} from '../Button/Button';
 
 export enum FilesLayout {
     list = 'list',
     wall = 'wall',
 }
 
-export interface IFileFieldProps extends IFieldWrapperInputProps, IFileHocInput, IFileHocOutput {
-
+interface IFileFieldCommonProps extends IFileHocInput, IFileHocOutput{
     /**
      * Показать значок удаление файла
      * @example true
      */
     showRemove?: boolean,
-    buttonView?: React.ReactNode;
-    buttonProps?: any;
-    className?: CssClassName;
-    view?: CustomView;
-    itemView?: CustomView;
-    itemProps?: any;
+
+    /**
+     * Кастомная иконка для удаление файла
+     * @example true
+     */
+    customRemoveIcon?: string,
 
     /**
      * Вариант отображения файлов
      * @example 'list'
      */
     filesLayout?: FilesLayout;
+}
+
+export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps {
+    /**
+     * Дополнительный css класс
+     * @example true
+     */
+    className?: CssClassName;
+
+    /**
+     * View компонент
+     * @example true
+     */
+    view?: CustomView;
+
+    /**
+     * View компонент для кнопки
+     * @example true
+     */
+    buttonView?: CustomView;
+
+    /**
+     * Пропсы для кнопки
+     * @example true
+     */
+    buttonProps?: IButtonProps;
+
+    /**
+     * View компонент для элемента списка файлов
+     * @example true
+     */
+    itemView?: CustomView;
+
+    /**
+     * Пропсы для элемента файла
+     * @example true
+     */
+    itemProps?: Record<string, any>;
 
     [key: string]: any;
 }
 
-export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
+export interface IFileFieldItemViewProps extends IFileFieldCommonProps{
     /**
      * Уникальный текстовый идентификатор
      * @example e65f5867-0083-48a7-af43-1121ed9e6280
      */
     uid?: string,
-
-    imagesOnly?: boolean,
 
     /**
      * ID файла
@@ -56,8 +92,6 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
      */
     title?: string,
     disabled?: boolean,
-    showRemove?: boolean,
-    layout?: FilesLayout,
 
     /**
      * Обработчик события удаления файла
@@ -65,6 +99,8 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
      */
     onRemove?: () => void,
     error?: string,
+    size?: number,
+    item?: Record<string, any>,
     image?: {
         /**
          * Url файла
@@ -91,31 +127,7 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
 }
 
 export interface IFileFieldViewProps extends IFileFieldProps {
-    buttonView?: React.ReactNode | any;
-    imagesOnly?: boolean;
-    itemProps?: any;
-    buttonProps: {
-        /**
-         * Название поля
-         * @example Save
-         */
-        label?: string | any,
-        size?: boolean,
-
-        /**
-         * Переводит в неактивное состояние
-         * @example true
-         */
-        disabled?: boolean,
-
-        /**
-         * Обработчик события нажатия
-         * @param e
-         */
-        onClick?: (e: Event) => void,
-    },
-    itemView?: React.ReactNode | any;
-    items: IFileFieldItemViewProps[]
+    items: IFileFieldItemViewProps[],
 }
 
 function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -188,6 +200,7 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 FileField.defaultProps = {
     disabled: false,
     required: false,
+    filesLayout: FilesLayout.list,
     className: '',
     showRemove: true,
     buttonProps: {

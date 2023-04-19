@@ -49,6 +49,11 @@ interface IFieldListItem extends IFieldWrapperInputProps {
      */
     view?: CustomView,
 
+    /**
+     * Заголовок для колонки таблицы.
+     */
+    title?: string,
+
     [key: string]: any,
 }
 
@@ -121,6 +126,11 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
      */
     enableKeyboardNavigation?: boolean;
 
+    /**
+     * Добавляет эффект зебры к таблице
+     */
+    zebra?: boolean,
+
     [key: string]: any;
 }
 
@@ -139,6 +149,7 @@ export interface IFieldListViewProps {
     forwardedRef?: any,
     disabled?: boolean,
     size?: Size,
+    zebra?: boolean,
 }
 
 export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
@@ -217,6 +228,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     const commonProps = {
         showAdd: props.showAdd,
         showRemove: props.showRemove,
+        zebra: props.zebra,
         size: props.size,
         disabled: props.disabled,
         required: props.required,

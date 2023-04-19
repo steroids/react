@@ -207,3 +207,6 @@ export const isSelectedAll = (state, listId) => {
         && _every(getIds(state, listId).map(id => selectedIds.includes(id)))
     );
 };
+
+// deprecated
+export const getCheckedIds = (state, listId) => _get(state, ['list', 'selectedIds', listId]) || [];

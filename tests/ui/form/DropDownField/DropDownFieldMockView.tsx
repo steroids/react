@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {useEffect, useRef} from 'react';
 import _isArray from 'lodash-es/isArray';
-import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
@@ -24,6 +24,7 @@ const getSelectedItemsCount = (selectedItems: Record<string, any>) => {
 export default function DropDownFieldView(props: IDropDownFieldViewProps) {
     const bem = useBem('DropDownFieldView');
     const inputRef = useRef<HTMLInputElement>(null);
+    const items = props.items as unknown as IDropDownFieldItem[];
 
     // Auto focus on search
     useEffect(() => {
@@ -37,7 +38,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
             <div className={bem.element('placeholder')}>{props.placeholder}</div>
         )
         : null,
-        [bem, props.placeholder, props.selectedIds]);
+    [bem, props.placeholder, props.selectedIds]);
 
     return (
         <div
@@ -114,7 +115,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                         </div>
                     )}
                     <div className={bem.element('drop-down-list')}>
-                        {props.items.map((item) => props.renderItem(item))}
+                        {items.map((item) => props.renderItem(item))}
                     </div>
                 </div>
             )}

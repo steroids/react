@@ -144,7 +144,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
     primaryKey: string,
-    items?: IDropDownFieldItem[],
+    items: IDropDownFieldItem[],
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {

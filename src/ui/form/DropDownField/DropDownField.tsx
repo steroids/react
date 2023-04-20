@@ -18,7 +18,7 @@ export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
 export type ItemSwitchType = ContentType | 'group' | string;
 
 export interface IDropDownFieldItem {
-    id: number | string,
+    id: number | string | boolean,
     label: string,
     contentType?: ContentType | string,
     contentSrc?: string | React.ReactElement,
@@ -144,6 +144,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
     primaryKey: string,
+    items?: IDropDownFieldItem[],
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {

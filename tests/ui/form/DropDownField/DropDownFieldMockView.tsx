@@ -37,7 +37,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
             <div className={bem.element('placeholder')}>{props.placeholder}</div>
         )
         : null,
-        [bem, props.placeholder, props.selectedIds]);
+    [bem, props.placeholder, props.selectedIds]);
 
     return (
         <div

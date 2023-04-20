@@ -75,6 +75,12 @@ declare type CustomStyle = React.CSSProperties;
 declare type CustomView = React.ReactNode | React.FunctionComponent;
 
 /**
+ * Кастомная иконка
+ * @example custom-icon
+ */
+declare type CustomIcon = string | React.ReactElement;
+
+/**
  * HTTP метод
  */
 declare type HttpMethod = 'get' | 'post' | 'put' | 'delete' | string;

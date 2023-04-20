@@ -6,31 +6,79 @@ import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
 import useFile from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IButtonProps} from '../Button/Button';
 
-export interface IFileFieldProps extends IFieldWrapperInputProps, IFileHocInput, IFileHocOutput {
+export enum FilesLayout {
+    list = 'list',
+    wall = 'wall',
+}
 
+interface IFileFieldCommonProps extends IFileHocInput, IFileHocOutput{
     /**
      * Показать значок удаление файла
      * @example true
      */
     showRemove?: boolean,
-    buttonComponent?: React.ReactNode; // TODO May be buttonView ?
-    buttonProps?: any;
+
+    /**
+     * Кастомная иконка для удаление файла
+     * @example true
+     */
+    customRemoveIcon?: string,
+
+    /**
+     * Вариант отображения файлов
+     * @example 'list'
+     */
+    filesLayout?: FilesLayout;
+}
+
+export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps {
+    /**
+     * Дополнительный css класс
+     * @example true
+     */
     className?: CssClassName;
+
+    /**
+     * View компонент
+     * @example true
+     */
     view?: CustomView;
-    itemView?: CustomView;
-    itemProps?: any;
+
+    /**
+     * View компонент для кнопки
+     * @example true
+     */
+    buttonView?: any;
+
+    /**
+     * Пропсы для кнопки
+     * @example true
+     */
+    buttonProps?: IButtonProps;
+
+    /**
+     * View компонент для элемента списка файлов
+     * @example true
+     */
+    itemView?: any;
+
+    /**
+     * Пропсы для элемента файла
+     * @example true
+     */
+    itemProps?: Record<string, any>;
+
     [key: string]: any;
 }
 
-export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
+export interface IFileFieldItemViewProps extends IFileFieldCommonProps{
     /**
      * Уникальный текстовый идентификатор
      * @example e65f5867-0083-48a7-af43-1121ed9e6280
      */
     uid?: string,
-
-    imagesOnly?: boolean,
 
     /**
      * ID файла
@@ -44,7 +92,6 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
      */
     title?: string,
     disabled?: boolean,
-    showRemove?: boolean,
 
     /**
      * Обработчик события удаления файла
@@ -52,6 +99,8 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
      */
     onRemove?: () => void,
     error?: string,
+    size?: number,
+    item?: Record<string, any>,
     image?: {
         /**
          * Url файла
@@ -78,51 +127,24 @@ export interface IFileFieldItemViewProps extends IFileHocInput, IFileHocOutput {
 }
 
 export interface IFileFieldViewProps extends IFileFieldProps {
-    buttonComponent?: React.ReactNode | any;
-    imagesOnly?: boolean;
-    itemProps?: any;
-    buttonProps: {
-        /**
-         * Название поля
-         * @example Save
-         */
-        label?: string | any,
-        size?: boolean,
-
-        /**
-         * Переводит в неактивное состояние
-         * @example true
-         */
-        disabled?: boolean,
-
-        /**
-         * Обработчик события нажатия
-         * @param e
-         */
-        onClick?: (e: Event) => void,
-    },
-    itemView?: React.ReactNode | any;
-    items: IFileFieldItemViewProps[]
+    items: IFileFieldItemViewProps[],
 }
 
-function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
+function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const {files, onBrowse, onRemove} = useFile(props);
 
     const FileFieldView = props.view || components.ui.getView('form.FileFieldView');
     const FileFieldItemView = props.itemView || components.ui.getView('form.FileFieldItemView');
+
     return (
         <FileFieldView
             {...props}
-            buttonComponent={props.buttonComponent}
+            buttonView={props.buttonView}
             buttonProps={{
-                label: props.imagesOnly
-                    ? props.multiple
-                        ? __('Прикрепить фотографии')
-                        : __('Прикрепить фото')
-                    : props.multiple
-                        ? __('Прикрепить файлы')
-                        : __('Прикрепить файл'),
+                label: props.filesLayout === FilesLayout.wall
+                    ? __('Upload')
+                    : __('Click to Upload'),
                 size: props.size,
                 disabled: props.disabled,
                 onClick: onBrowse,
@@ -157,7 +179,7 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
                     }
                 }
                 // Add thumbnail image
-                if (data.images) {
+                if (props.imagesOnly && data.images) {
                     // Image object has properties: url, width, height
                     item.image = data.images[props.imagesProcessor]
                         || _first(_values(data.images));
@@ -174,14 +196,24 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         />
     );
 }
+function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    if (process.env.IS_SSR) {
+        return null;
+    }
+
+    return (
+        <FileFieldComponent {...props} />
+    );
+}
 
 FileField.defaultProps = {
     disabled: false,
     required: false,
+    filesLayout: FilesLayout.list,
     className: '',
     showRemove: true,
     buttonProps: {
-        color: 'secondary',
+        color: 'basic',
         outline: true,
     },
     multiple: false,

@@ -130,7 +130,7 @@ export interface IFileFieldViewProps extends IFileFieldProps {
     items: IFileFieldItemViewProps[],
 }
 
-function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
+function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const {files, onBrowse, onRemove} = useFile(props);
 
@@ -194,6 +194,15 @@ function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Eleme
                 return item;
             })}
         />
+    );
+}
+function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    if (process.env.IS_SSR) {
+        return null;
+    }
+
+    return (
+        <FileFieldComponent {...props} />
     );
 }
 

@@ -4,39 +4,24 @@ import _isString from 'lodash-es/isString';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _get from 'lodash-es/get';
 import {useCallback, useMemo} from 'react';
+import {ILinkProps} from 'src/ui/nav/Link/Link';
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, ListControlPosition} from '../../../hooks/useList';
 import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';
 
-interface IColumnCommonPropsView extends IGridColumn {
+export interface IContentColumnViewProps extends IGridColumn {
     item: Record<string, any>,
     size: Size,
     primaryKey: string,
     listId: string,
+    model: string,
 
     [key: string]: any
 }
 
-export type IAvatarColumnViewProps = IColumnCommonPropsView
-
-export interface ISubtitleColumnViewProps extends IColumnCommonPropsView {
-    model: string,
-}
-
-export type ILinkColumnViewProps = IColumnCommonPropsView
-
-export type IIconColumnViewProps = IColumnCommonPropsView
-
-export type IPictureColumnViewProps = IColumnCommonPropsView
-
 export interface IGridColumn {
-
-    /**
-     * Тип колонки
-     */
-    type: string,
 
     /**
      * Атрибут колонки, по которому происходит поиск нужного свойства в items и нужного поля в SearchForm
@@ -93,7 +78,7 @@ export interface IGridColumn {
      * Компонент для кастомизации отображения значения в ячейке
      * @example MyCustomView
      */
-    valueView?: any | 'SubtitleColumnView' | 'AvatarColumnView' | 'LinkColumnView' | 'IconColumnView' | 'PictureColumnView',
+    valueView?: any | 'ContentColumnView',
 
     /**
      * Свойства для компонента отображения значения в ячейке
@@ -112,41 +97,36 @@ export interface IGridColumn {
     sortable?: boolean,
 
     /**
-     * Название свойства для аватара или путь до свойства в items
-     * @example 'avatar'
-     */
-    avatar?: string,
-
-    /**
      * Название свойства в items, которое будет использовано как subtitle
      * @example 'name'
      */
     subtitle?: string,
 
     /**
-    * Название свойства в items, которое будет использовано как link
-    * @example {property: 'name', urlProperty: 'userUrl'}
+     * Параметры для ссылки в колонке
+    * @example {attribute: 'name', linkProps: {target: 'blank'}, url: 'https://kozhindev.com'}
     */
     link: {
-        property: string,
-        urlProperty: string,
+        attribute: string,
+        linkProps?: ILinkProps,
+        url: string,
     },
 
     /**
-    * Название свойства в items, которое будет использовано как icon
-    * @example {property: 'icon', isLeft: true}
+    * Параметры для иконки в колонке
+    * @example {attribute: 'icon', isLeft: true}
     */
     icon: {
-        property: string,
+        attribute: string,
         isLeft?: boolean,
     },
 
     /**
-    * Название свойства в items, которое будет использовано как icon
-    * @example {property: 'icon', isLeft: true}
+    *  Параметры для картинки в колонке
+    * @example {attribute: 'icon', isLeft: true}
     */
     picture: {
-        property: string,
+        attribute: string,
         isLeft?: boolean,
     },
 }
@@ -187,9 +167,9 @@ export interface IGridProps extends IListConfig {
     size?: Size,
 
     /**
-     * Включает стилизацию под зебру для Grid
+     * Включает переменные цвета для строк в таблице
      */
-    isZebra?: boolean,
+    hasAlternatingColors?: boolean,
 
     [key: string]: any;
 }
@@ -284,25 +264,24 @@ export default function Grid(props: IGridProps): JSX.Element {
 
             const ValueView = isValueViewString ? components.ui.getView(`list.${column.valueView}`) : column.valueView;
 
+            const viewProps = {
+                ...column,
+                ...column.valueProps,
+                listId: props.listId,
+                primaryKey: props.primaryKey,
+                item,
+                size: props.size,
+            };
+
             if (isValueViewString) {
                 return components.ui.renderView(ValueView, {
-                    ...column,
-                    ...column.valueProps,
-                    listId: props.listId,
-                    primaryKey: props.primaryKey,
-                    item,
-                    size: props.size,
+                    ...viewProps,
                 });
             }
 
             return (
                 <ValueView
-                    {...column}
-                    {...column.valueProps}
-                    listId={props.listId}
-                    primaryKey={props.primaryKey}
-                    item={item}
-                    size={props.size}
+                    {...viewProps}
                 />
             );
         }
@@ -364,5 +343,5 @@ export default function Grid(props: IGridProps): JSX.Element {
 
 Grid.defaultProps = {
     size: 'md',
-    isZebra: true,
+    hasAlternatingColors: true,
 };

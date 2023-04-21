@@ -38,4 +38,26 @@ export default {
     'form.DropDownFieldItemView': {
         lazy: () => require('./form/DropDownField/DropDownItemMockView').default,
     },
+    'list.PaginationButtonView': {
+        lazy: () => require('./list/Pagination/PaginationButtonMockView').default,
+    },
+    'list.PaginationMoreView': {
+        lazy: () => require('./list/Pagination/PaginationMoreMockView').default,
+    },
+    'list.CheckboxColumnView': {
+        lazy: () => require('./list/Grid/CheckboxColumnMockView').default,
+    },
+    'format.DefaultFormatterView': {
+        lazy: () => require('./format/DefaultFormatterMockView').default,
+    },
+    'list.ContentColumnView': {
+        lazy: () => require('./list/Grid/ContentColumnMockView').default,
+    },
+    'content.IconView': {
+        lazy: () => require('./content/Icon/IconMockView').default,
+    },
+    'form.InputFieldView': {
+        lazy: () => require('./form/InputField/InputFieldMockView').default,
+    },
+
 };

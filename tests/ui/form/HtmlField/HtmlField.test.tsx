@@ -10,12 +10,12 @@ describe('HtmlField tests', () => {
         view: HtmlFieldMockView,
     };
 
-    const expectedHtmlFieldClass = 'HtmlField';
+    const expectedHtmlFieldClass = 'HtmlFieldView';
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(HtmlField, props));
         const htmlField = getElementByClassName(container, expectedHtmlFieldClass);
-
+        screen.debug();
         expect(htmlField).toBeInTheDocument();
     });
 });

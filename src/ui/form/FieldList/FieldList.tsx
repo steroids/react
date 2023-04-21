@@ -129,7 +129,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
     /**
      * Добавляет эффект зебры к таблице
      */
-    zebra?: boolean,
+    hasAlternatingColors?: boolean,
 
     [key: string]: any;
 }
@@ -149,7 +149,7 @@ export interface IFieldListViewProps {
     forwardedRef?: any,
     disabled?: boolean,
     size?: Size,
-    zebra?: boolean,
+    hasAlternatingColors?: boolean,
 }
 
 export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
@@ -228,7 +228,6 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     const commonProps = {
         showAdd: props.showAdd,
         showRemove: props.showRemove,
-        zebra: props.zebra,
         size: props.size,
         disabled: props.disabled,
         required: props.required,
@@ -246,6 +245,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
                 {...commonProps}
                 forwardedRef={nodeRef}
                 onAdd={onAdd}
+                hasAlternatingColors={props.hasAlternatingColors}
             >
                 {_range(props.input.value || 0)
                     .map(index => (

@@ -49,6 +49,11 @@ interface IFieldListItem extends IFieldWrapperInputProps {
      */
     view?: CustomView,
 
+    /**
+     * Заголовок для колонки таблицы.
+     */
+    title?: string,
+
     [key: string]: any,
 }
 
@@ -121,6 +126,11 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
      */
     enableKeyboardNavigation?: boolean;
 
+    /**
+     * Добавляет эффект зебры к таблице
+     */
+    hasAlternatingColors?: boolean,
+
     [key: string]: any;
 }
 
@@ -139,6 +149,7 @@ export interface IFieldListViewProps {
     forwardedRef?: any,
     disabled?: boolean,
     size?: Size,
+    hasAlternatingColors?: boolean,
 }
 
 export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
@@ -234,6 +245,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
                 {...commonProps}
                 forwardedRef={nodeRef}
                 onAdd={onAdd}
+                hasAlternatingColors={props.hasAlternatingColors}
             >
                 {_range(props.input.value || 0)
                     .map(index => (

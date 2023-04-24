@@ -2,9 +2,6 @@ export default {
     'form.FieldLayoutView': {
         lazy: () => require('./form/FieldLayout/FieldLayoutMockView').default,
     },
-    'form.HtmlFieldView': {
-        lazy: () => require('./form/HtmlField/HtmlFieldMockView').default,
-    },
     'nav.NavButtonView': {
         lazy: () => require('./nav/NavButton/NavButtonMockView').default,
     },

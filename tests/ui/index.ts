@@ -38,4 +38,10 @@ export default {
     'form.DropDownFieldItemView': {
         lazy: () => require('./form/DropDownField/DropDownItemMockView').default,
     },
+    'form.InputFieldView': {
+        lazy: () => require('./form/InputField/InputFieldMockView').default,
+    },
+    'form.FormView': {
+        lazy: () => require('./form/FieldList/FormMockView').default,
+    },
 };

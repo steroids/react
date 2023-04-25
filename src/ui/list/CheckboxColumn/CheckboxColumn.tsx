@@ -66,8 +66,10 @@ export default function CheckboxColumn(props: ICheckboxColumnProps): JSX.Element
     }), [onChange, props.listId, value]);
 
     return components.ui.renderView(props.view || 'list.CheckboxColumnView', {
-        ...props,
         input,
+        item: props.item,
+        attribute: props.attribute,
+        size: props.size,
     });
 }
 

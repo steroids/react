@@ -42,7 +42,7 @@ describe('Grid tests', () => {
         const {container} = render(JSXWrapper(Grid, {
             ...props,
             columns,
-            listId: 'should be in the document',
+            listId: 'test1',
         }));
 
         const grid = getElementByClassName(container, expectedGridClass);
@@ -60,7 +60,7 @@ describe('Grid tests', () => {
 
         const {container} = render(JSXWrapper(Grid, {
             ...props,
-            listId: 'should have correct classes',
+            listId: 'test2',
             columns,
         }));
 
@@ -80,7 +80,7 @@ describe('Grid tests', () => {
 
         const {container} = render(JSXWrapper(Grid, {
             ...props,
-            listId: 'should be checkbox column',
+            listId: 'test3',
             columns,
         }));
 
@@ -101,7 +101,7 @@ describe('Grid tests', () => {
 
         const {container} = render(JSXWrapper(Grid, {
             ...props,
-            listId: 'should be icon column',
+            listId: 'test4',
             columns,
         }));
 
@@ -115,14 +115,14 @@ describe('Grid tests', () => {
             label: 'Link',
             link: {
                 attribute: 'name',
-                url: 'url',
+                urlAttribute: 'url',
             },
             valueView: ContentColumnMockView,
         }];
 
         const {container} = render(JSXWrapper(Grid, {
             ...props,
-            listId: 'should be link column',
+            listId: 'test5',
             columns,
         }));
 
@@ -136,13 +136,13 @@ describe('Grid tests', () => {
         const columns = [{
             label: 'Subtitle',
             attribute: 'name',
-            subtitle: 'secondName',
+            subtitleAttribute: 'secondName',
             valueView: ContentColumnMockView,
         }];
 
         const {container} = render(JSXWrapper(Grid, {
             ...props,
-            listId: 'should be subtitle column',
+            listId: 'test6',
             columns,
         }));
 
@@ -166,7 +166,7 @@ describe('Grid tests', () => {
 
         const {container} = render(JSXWrapper(Grid, {
             ...props,
-            listId: 'should be picture column',
+            listId: 'test7',
             columns,
         }));
 
@@ -195,7 +195,7 @@ describe('Grid tests', () => {
 
         const {container, getByText} = render(JSXWrapper(Grid, {
             ...props,
-            listId: 'should have all other props',
+            listId: 'test8',
             columns,
             itemsIndexing: true,
             searchForm,

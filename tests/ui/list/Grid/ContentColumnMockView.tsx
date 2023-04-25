@@ -12,8 +12,8 @@ export default function ContentColumnView(props: IContentColumnViewProps) {
     const hasLink = !!props.link?.attribute;
     const hasPicture = !!props.picture?.attribute;
     const hasIcon = !!props.icon?.attribute;
-    const hasSubtitle = !!props.subtitle;
-    const hasTextData = !!props.attribute || !!props.subtitle || hasLink;
+    const hasSubtitle = !!props.subtitleAttribute;
+    const hasTextData = !!props.attribute || !!props.subtitleAttribute || hasLink;
 
     const renderFormat = () => (
         <Format
@@ -28,7 +28,7 @@ export default function ContentColumnView(props: IContentColumnViewProps) {
             return (
                 <Link
                     {...props.link.linkProps}
-                    url={_get(props.item, props.link?.url)}
+                    url={_get(props.item, props.link?.urlAttribute)}
                     className={bem.element('link')}
                 >
                     {renderFormat()}
@@ -52,7 +52,7 @@ export default function ContentColumnView(props: IContentColumnViewProps) {
             {hasTextData && (
                 <div className={bem.element('data')}>
                     {renderValue()}
-                    {hasSubtitle && <span className={bem.element('subtitle')}>{_get(props.item, props.subtitle)}</span>}
+                    {hasSubtitle && <span className={bem.element('subtitle')}>{_get(props.item, props.subtitleAttribute)}</span>}
                 </div>
             )}
             {hasPicture && (

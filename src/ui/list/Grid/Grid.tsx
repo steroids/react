@@ -30,11 +30,6 @@ export interface IGridColumn {
     attribute?: string,
 
     /**
-     * Атрибут иконки, по которому происходит поиск нужного свойства в items
-     */
-    itemIconAttribute?: string,
-
-    /**
      * Свойства для компонента форматирования
      * @example {component: DateFormatter, format: 'DD MMMM'}
      */
@@ -100,7 +95,7 @@ export interface IGridColumn {
      * Название свойства в items, которое будет использовано как subtitle
      * @example 'name'
      */
-    subtitle?: string,
+    subtitleAttribute?: string,
 
     /**
      * Параметры для ссылки в колонке
@@ -109,7 +104,7 @@ export interface IGridColumn {
     link: {
         attribute: string,
         linkProps?: ILinkProps,
-        url: string,
+        urlAttribute: string,
     },
 
     /**
@@ -274,9 +269,7 @@ export default function Grid(props: IGridProps): JSX.Element {
             };
 
             if (isValueViewString) {
-                return components.ui.renderView(ValueView, {
-                    ...viewProps,
-                });
+                return components.ui.renderView(ValueView, viewProps);
             }
 
             return (

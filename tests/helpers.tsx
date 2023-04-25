@@ -1,5 +1,6 @@
 import React from 'react';
 import Portal from '../src/ui/layout/Portal';
+import Form from '../src/ui/form/Form/Form';
 
 export const getElementByClassName = (
     container: HTMLElement,
@@ -21,6 +22,19 @@ export function JSXWrapper<PropsType>(
             </div>
             {renderPortal && <Portal />}
         </>
+    );
+}
+
+export function FormWrapper<PropsType>(
+    Component: any,
+    props: PropsType,
+) {
+    return (
+        <Form>
+            <Component
+                {...props}
+            />
+        </Form>
     );
 }
 

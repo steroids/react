@@ -15,23 +15,13 @@ export default function ContentColumnView(props: IContentColumnViewProps) {
     const hasSubtitle = !!props.subtitle;
     const hasTextData = !!props.attribute || !!props.subtitle || hasLink;
 
-    const renderFormat = () => {
-        let extendedProps = props;
-
-        if (hasLink) {
-            extendedProps = {
-                ...props,
-                attribute: props.link?.attribute,
-            };
-        }
-
-        return (
-            <Format
-                {...extendedProps}
-                {...(extendedProps.formatter || {})}
-            />
-        );
-    };
+    const renderFormat = () => (
+        <Format
+            {...props}
+            {...(props.formatter || {})}
+            attribute={hasLink ? props.link.attribute : props.attribute}
+        />
+    );
 
     const renderValue = () => {
         if (hasLink) {

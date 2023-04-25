@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {screen} from '@testing-library/dom';
 import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {FormWrapper, getElementByClassName, JSXWrapper} from '../../../helpers';
 import FieldSet from '../../../../src/ui/form/FieldSet';
 import FieldSetMockView from './FieldSetMockView';
 import InputField from '../InputField/InputFieldMockView';
@@ -9,6 +8,7 @@ import InputField from '../InputField/InputFieldMockView';
 describe('FieldSet tests', () => {
     const props = {
         view: FieldSetMockView,
+        className: 'class-test',
         fields: [
             {
                 attribute: 'name',
@@ -16,15 +16,33 @@ describe('FieldSet tests', () => {
                 label: 'Name',
             },
         ],
-        label: 'Label',
+        label: 'label-test',
+        children: 'children-test',
     };
 
     const expectedFieldSetClass = 'FieldSetView';
 
     it('should be in the document', () => {
-        const {container} = render(JSXWrapper(FieldSet, props));
+        const {container} = render(FormWrapper(FieldSet, props));
         const fieldSet = getElementByClassName(container, expectedFieldSetClass);
-        screen.debug();
         expect(fieldSet).toBeInTheDocument();
+    });
+
+    it('should have correct text content', () => {
+        const {container} = render(FormWrapper(FieldSet, props));
+        const legend = getElementByClassName(container, `${expectedFieldSetClass}__legend`);
+        expect(legend).toHaveTextContent(props.label);
+    });
+
+    it('should have className in fieldset', () => {
+        const {container} = render(FormWrapper(FieldSet, props));
+        const fieldset = getElementByClassName(container, expectedFieldSetClass);
+        expect(fieldset).toHaveClass(props.className);
+    });
+
+    it('should have children', () => {
+        const {container} = render(FormWrapper(FieldSet, props));
+        const fieldset = getElementByClassName(container, expectedFieldSetClass);
+        expect(fieldset).toHaveTextContent(props.children);
     });
 });

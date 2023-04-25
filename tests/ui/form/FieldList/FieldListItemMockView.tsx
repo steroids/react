@@ -9,11 +9,11 @@ import {IFieldListItemViewProps} from '../../../../src/ui/form/FieldList/FieldLi
 export default React.memo((props: IFieldListItemViewProps) => {
     const bem = useBem('FieldListItemView');
     return (
-        <tr>
+        <tr className={bem.block()}>
             {props.items.map((field, index) => (
                 <td
                     key={index}
-                    className={bem(bem.block(), field.className)}
+                    className={field.className}
                 >
                     <Field
                         {...field}

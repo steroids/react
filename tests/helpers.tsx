@@ -12,21 +12,29 @@ export function JSXWrapper<PropsType>(
     Component: any,
     props: PropsType,
     renderPortal = false,
-    renderForm = false,
 ) {
     return (
         <>
-            {renderForm ? (
-                <Form formId='formId'>
-                    <Component {...props} />
-                </Form>
-            ) : (
-                <div>
-                    <Component {...props} />
-                </div>
-            )}
+            <div>
+                <Component
+                    {...props}
+                />
+            </div>
             {renderPortal && <Portal />}
         </>
+    );
+}
+
+export function FormWrapper<PropsType>(
+    Component: any,
+    props: PropsType,
+) {
+    return (
+        <Form>
+            <Component
+                {...props}
+            />
+        </Form>
     );
 }
 

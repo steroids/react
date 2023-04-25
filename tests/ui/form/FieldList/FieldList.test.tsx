@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {render} from '../../../customRender';
-import {JSXWrapper, getElementByClassName} from '../../../helpers';
+import {FormWrapper, getElementByClassName} from '../../../helpers';
 import FieldListMockView from './FieldListMockView';
 import FieldListItemMockView from './FieldListItemMockView';
 import FieldList from '../../../../src/ui/form/FieldList/FieldList';
@@ -30,13 +30,13 @@ describe('FieldList tests', () => {
     const expectedFieldListItemClass = 'FieldListItemView';
 
     it('should be in the document', () => {
-        const {container} = render(JSXWrapper(FieldList, props, false, true));
+        const {container} = render(FormWrapper(FieldList, props));
         const fieldList = getElementByClassName(container, expectedFieldListClass);
         expect(fieldList).toBeInTheDocument();
     });
 
     it('should have className and tableClassName', () => {
-        const {container} = render(JSXWrapper(FieldList, props, false, true));
+        const {container} = render(FormWrapper(FieldList, props));
         const className = getElementByClassName(container, props.className);
         const tableClassName = getElementByClassName(container, props.tableClassName);
         expect(className).toBeInTheDocument();
@@ -44,13 +44,13 @@ describe('FieldList tests', () => {
     });
 
     it('should have correct item', () => {
-        const {container} = render(JSXWrapper(FieldList, props, false, true));
+        const {container} = render(FormWrapper(FieldList, props));
         const item = getElementByClassName(container, expectedFieldListItemClass);
         expect(item).toBeInTheDocument();
     });
 
     it('should have correct title in column', () => {
-        const {getByText} = render(JSXWrapper(FieldList, props, false, true));
+        const {getByText} = render(FormWrapper(FieldList, props));
         const title = getByText(titleColum);
         expect(title).toBeInTheDocument();
     });
@@ -58,7 +58,7 @@ describe('FieldList tests', () => {
     it('should have button add/remove', () => {
         const showRemove = true;
         const showAdd = true;
-        const {container} = render(JSXWrapper(FieldList, {...props, showRemove, showAdd}, false, true));
+        const {container} = render(FormWrapper(FieldList, {...props, showRemove, showAdd}));
         const buttonRemove = getElementByClassName(container, `${expectedFieldListItemClass}__remove`);
         const buttonAdd = getElementByClassName(container, `${expectedFieldListClass}__button-add`);
         expect(buttonAdd).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('FieldList tests', () => {
     });
 
     it('should delete item', () => {
-        const {container} = render(JSXWrapper(FieldList, props, false, true));
+        const {container} = render(FormWrapper(FieldList, props));
         const buttonRemove = getElementByClassName(container, `${expectedFieldListItemClass}__remove`);
         const item = getElementByClassName(container, expectedFieldListItemClass);
 
@@ -77,7 +77,7 @@ describe('FieldList tests', () => {
     });
 
     it('should add item', () => {
-        const {container} = render(JSXWrapper(FieldList, props, false, true));
+        const {container} = render(FormWrapper(FieldList, props));
         const buttonAdd = getElementByClassName(container, `${expectedFieldListClass}__button-add`);
         const item = getElementByClassName(container, expectedFieldListItemClass);
 
@@ -89,7 +89,7 @@ describe('FieldList tests', () => {
 
     it('should have class hasAlternatingColors', () => {
         const hasAlternatingColors = true;
-        const {container} = render(JSXWrapper(FieldList, {...props, hasAlternatingColors}, false, true));
+        const {container} = render(FormWrapper(FieldList, {...props, hasAlternatingColors}));
         const fieldList = getElementByClassName(container, expectedFieldListClass);
         expect(fieldList).toHaveClass(`${expectedFieldListClass}_hasAlternatingColors`);
     });

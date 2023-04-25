@@ -20,11 +20,14 @@ export interface IAutoCompleteFieldProps extends IInputFieldProps, IDataProvider
      */
     searchOnFocus?: boolean,
 
+    items: any[],
+
     [key: string]: any,
 }
 
 export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProps, 'items'> {
     items: Record<string, unknown>[],
+    categories: string[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
     forwardedRef: any,
@@ -50,6 +53,14 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
 
     // Query state
     const [query, setQuery] = useState('');
+
+    const getCategories = useCallback(() => props.items.reduce((allCategories, item) => {
+        if (item.category && !allCategories.includes(item.category)) {
+            allCategories.push(item.category);
+        }
+
+        return allCategories;
+    }, []), [props.items]);
 
     // Data provider
     const {
@@ -159,6 +170,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         forwardedRef,
         onItemHover,
         onItemSelect,
+        categories: getCategories(),
     });
 }
 
@@ -169,6 +181,7 @@ AutoCompleteField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
+    size: 'md',
 };
 
 export default fieldWrapper<IAutoCompleteFieldProps>('AutoCompleteField', AutoCompleteField);

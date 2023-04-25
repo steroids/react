@@ -59,7 +59,7 @@ describe('FieldList tests', () => {
 
     it('should have correct item', () => {
         const {container} = render(FormWrapper(FieldList, props));
-        const item = getElementByClassName(container, 'InputFieldView');
+        const item = getElementByClassName(container, expectedFieldListItemClass);
         expect(item).toBeInTheDocument();
     });
 
@@ -82,29 +82,29 @@ describe('FieldList tests', () => {
     it('should delete item', () => {
         const {container} = render(FormWrapper(FieldList, props));
         const buttonRemove = getElementByClassName(container, `${expectedFieldListItemClass}__remove`);
-        const item = getElementByClassName(container, 'InputFieldView');
+        const item = getElementByClassName(container, expectedFieldListItemClass);
 
         expect(item).toBeInTheDocument();
         fireEvent.click(buttonRemove);
-        const countItems = container.querySelectorAll('.InputFieldView');
-        expect(countItems.length).toBe(props.items.length - 1);
+        const countItems = container.querySelectorAll(`.${expectedFieldListItemClass}`).length;
+        expect(countItems).toBe(props.items.length - 1);
     });
 
     it('should add item', () => {
         const {container} = render(FormWrapper(FieldList, props));
         const buttonAdd = getElementByClassName(container, `${expectedFieldListClass}__button-add`);
-        const item = getElementByClassName(container, 'InputFieldView');
+        const item = getElementByClassName(container, expectedFieldListItemClass);
 
         expect(item).toBeInTheDocument();
         fireEvent.click(buttonAdd);
-        const countItems = container.querySelectorAll('.InputFieldView');
-        expect(countItems.length).toBe(props.items.length + 1);
+        const countItems = container.querySelectorAll(`.${expectedFieldListItemClass}`).length;
+        expect(countItems).toBe(props.items.length + 1);
     });
 
     it('should have class hasAlternatingColors', () => {
         const hasAlternatingColors = true;
         const {container} = render(FormWrapper(FieldList, {...props, hasAlternatingColors}));
-        const fieldList = getElementByClassName(container, `${expectedFieldListClass}`);
+        const fieldList = getElementByClassName(container, expectedFieldListClass);
         expect(fieldList).toHaveClass(`${expectedFieldListClass}_hasAlternatingColors`);
     });
 });

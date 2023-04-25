@@ -13,7 +13,7 @@ export default React.memo((props: IFieldListItemViewProps) => {
             {props.items.map((field, index) => (
                 <td
                     key={index}
-                    className={field.className}
+                    className={bem(bem.block(), field.className)}
                 >
                     <Field
                         {...field}

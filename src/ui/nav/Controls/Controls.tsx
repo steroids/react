@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../../form/Button/Button';
@@ -72,31 +73,31 @@ export interface IControlsViewProps extends IControlsProps {
 export default function Controls(props: IControlsProps): JSX.Element {
     const defaultItems = {
         index: {
-            icon: 'back',
+            icon: 'comeback',
             label: __('К списку'),
             color: 'secondary',
             outline: true,
         },
         create: {
-            icon: 'create',
+            icon: 'add',
             label: __('Добавить'),
             color: 'success',
             outline: true,
         },
         view: {
-            icon: 'view',
+            icon: 'show',
             label: __('Просмотр'),
             color: 'secondary',
             outline: true,
         },
         update: {
-            icon: 'update',
+            icon: 'edit',
             label: __('Редактировать'),
             color: 'secondary',
             outline: true,
         },
         delete: {
-            icon: 'delete',
+            icon: 'remove',
             label: __('Удалить'),
             confirm: __('Удалить запись?'),
             color: 'danger',

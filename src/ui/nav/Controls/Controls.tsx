@@ -79,7 +79,7 @@ export default function Controls(props: IControlsProps): JSX.Element {
             outline: true,
         },
         create: {
-            icon: 'add',
+            icon: 'add1',
             label: __('Добавить'),
             color: 'success',
             outline: true,
@@ -91,7 +91,7 @@ export default function Controls(props: IControlsProps): JSX.Element {
             outline: true,
         },
         update: {
-            icon: 'edit',
+            icon: 'edit1',
             label: __('Редактировать'),
             color: 'secondary',
             outline: true,

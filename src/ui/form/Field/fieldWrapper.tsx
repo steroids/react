@@ -83,6 +83,16 @@ export interface IFieldWrapperInputProps {
      */
     size?: Size,
 
+    /**
+     * Дополнительный CSS-класс для обертки FieldLayout
+     */
+    fieldLayoutClassName?: CssClassName;
+
+    /**
+     * Возможность отрендерить поле без обертки в компонент FieldLayout
+     */
+    isRenderWithoutFieldLayout?: boolean,
+
     [key: string]: any,
 }
 
@@ -225,8 +235,13 @@ export default function fieldWrapper<T = any>(
 
         const inputId = props.id || uniqueId;
 
+        if (props.isRenderWithoutFieldLayout) {
+            return components.ui.renderView(Component.DynamicField, props);
+        }
+
         return components.ui.renderView(FieldLayout, {
             ...attributesProps,
+            className: props.fieldLayoutClassName,
             size: props.size || context.size || null,
             required: _has(props, 'required') ? props.required : metaProps.required,
             label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),

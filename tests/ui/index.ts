@@ -59,5 +59,7 @@ export default {
     'form.InputFieldView': {
         lazy: () => require('./form/InputField/InputFieldMockView').default,
     },
-
+    'form.FormView': {
+        lazy: () => require('./form/Form/FormMockView').default,
+    },
 };

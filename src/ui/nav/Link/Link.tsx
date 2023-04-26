@@ -17,6 +17,7 @@ export default function Link(props: ILinkProps): JSX.Element {
         <Button
             tag='a'
             link
+            color='link'
             {...props}
             formId={false}
         />

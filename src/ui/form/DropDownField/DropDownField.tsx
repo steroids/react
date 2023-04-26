@@ -4,7 +4,7 @@ import _isEqual from 'lodash-es/isEqual';
 import _includes from 'lodash-es/includes';
 import {IAccordionCommonViewProps} from 'src/ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
-import {IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
@@ -18,7 +18,7 @@ export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
 export type ItemSwitchType = ContentType | 'group' | string;
 
 export interface IDropDownFieldItem {
-    id: number | string,
+    id: number | string | boolean,
     label: string,
     contentType?: ContentType | string,
     contentSrc?: string | React.ReactElement,
@@ -109,7 +109,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Элементы вложенные внутрь DropDownField
      * @example [{id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}]
      */
-    items?: IDropDownFieldItem[],
+    items?: IDropDownFieldItem[] | DataProviderItems,
 
     /**
      * Нужно ли использовать троеточие при переполнении DropDownField
@@ -144,6 +144,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
     primaryKey: string,
+    items: IDropDownFieldItem[],
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {

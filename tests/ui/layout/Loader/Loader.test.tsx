@@ -7,6 +7,8 @@ import LoaderMockView from './LoaderMockView';
 describe('Loader tests', () => {
     const props = {
         view: LoaderMockView,
+        size: 'small',
+        color: 'primary',
     };
 
     const expectedLoaderClass = 'LoaderView';
@@ -14,8 +16,15 @@ describe('Loader tests', () => {
 
     it('should be in the document', () => {
         const {container} = render(wrapper);
-        const loader = getElementByClassName(container, expectedLoaderClass);
+        const loaderView = getElementByClassName(container, expectedLoaderClass);
 
-        expect(loader).toBeInTheDocument();
+        expect(loaderView).toBeInTheDocument();
+    });
+
+    it('should have correct class size/color', () => {
+        const {container} = render(wrapper);
+        const loader = getElementByClassName(container, `${expectedLoaderClass}__loader`);
+        expect(loader).toHaveClass(`${expectedLoaderClass}__loader_size_${props.size}`);
+        expect(loader).toHaveClass(`${expectedLoaderClass}__loader_color_${props.color}`);
     });
 });

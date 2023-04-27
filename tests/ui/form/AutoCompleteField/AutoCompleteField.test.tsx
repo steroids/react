@@ -63,13 +63,13 @@ describe('AutoCompleteField tests', () => {
     });
 
     it('should have items and category', () => {
-        const {container, getByText} = render(JSXWrapper(AutoCompleteField, props));
+        const {container, getByText, debug} = render(JSXWrapper(AutoCompleteField, props));
         const expectedItemsCount = 2;
 
         const category = getByText(itemWithAdditional.category);
         const additionalText = getByText(itemWithAdditional.additional.text);
         const icon = getElementByClassName(container, 'IconView');
-        const items = container.querySelectorAll(`.${expectedAutoCompleteClassName}__drop-down-item`);
+        const items = container.querySelectorAll(`.${expectedAutoCompleteClassName}__item`);
 
         expect(category).toBeInTheDocument();
         expect(additionalText).toBeInTheDocument();

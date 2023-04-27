@@ -38,4 +38,7 @@ export default {
     'form.DropDownFieldItemView': {
         lazy: () => require('./form/DropDownField/DropDownItemMockView').default,
     },
+    'content.IconView': {
+        lazy: () => require('./content/Icon/IconMockView').default,
+    },
 };

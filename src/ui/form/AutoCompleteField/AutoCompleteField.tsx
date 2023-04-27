@@ -8,6 +8,16 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {IInputFieldProps} from '../InputField/InputField';
 
+export interface IAutoCompleteItem {
+    label: string,
+    id: number,
+    additional?: {
+        icon: string,
+        text: string,
+    }
+    category?: string,
+}
+
 /**
  * AutoComplete
  * Поле ввода текста с подсказками (auto-complete)
@@ -26,7 +36,7 @@ export interface IAutoCompleteFieldProps extends IInputFieldProps, IDataProvider
 }
 
 export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProps, 'items'> {
-    items: Record<string, unknown>[],
+    items: IAutoCompleteItem[],
     categories: string[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
@@ -48,19 +58,19 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
     onItemHover: (id: PrimaryKey | any) => void,
 }
 
+const getCategories = (items: any[]) => items.reduce((allCategories, item) => {
+    if (item.category && !allCategories.includes(item.category)) {
+        allCategories.push(item.category);
+    }
+
+    return allCategories;
+}, []);
+
 function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
     // Query state
     const [query, setQuery] = useState('');
-
-    const getCategories = useCallback(() => props.items.reduce((allCategories, item) => {
-        if (item.category && !allCategories.includes(item.category)) {
-            allCategories.push(item.category);
-        }
-
-        return allCategories;
-    }, []), [props.items]);
 
     // Data provider
     const {
@@ -170,7 +180,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         forwardedRef,
         onItemHover,
         onItemSelect,
-        categories: getCategories(),
+        categories: getCategories(props.items),
     });
 }
 

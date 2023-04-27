@@ -1,6 +1,4 @@
 import '@testing-library/jest-dom';
-import {fireEvent} from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
 import {render} from '../../../customRender';
 import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
 import AutoCompleteField, {IAutoCompleteFieldProps} from '../../../../src/ui/form/AutoCompleteField/AutoCompleteField';
@@ -8,6 +6,7 @@ import AutoCompleteFieldMockView from './AutoCompleteFieldMockView';
 
 describe('AutoCompleteField tests', () => {
     const expectedAutoCompleteClassName = 'AutoCompleteFieldView';
+    const externalClassName = 'externalClassName';
 
     const itemWithAdditional = {
         id: '1',
@@ -24,19 +23,15 @@ describe('AutoCompleteField tests', () => {
         label: 'Egor',
     };
 
-    const items = [
-        itemWithAdditional,
-        defaultItem,
-    ];
-
-    const externalClassName = 'externalClassName';
-
     const externalStyle = {
         width: '30px',
     };
 
     const props: IAutoCompleteFieldProps = {
-        items,
+        items: [
+            itemWithAdditional,
+            defaultItem,
+        ],
         isOpened: true,
         view: AutoCompleteFieldMockView,
         className: externalClassName,
@@ -74,11 +69,11 @@ describe('AutoCompleteField tests', () => {
         const category = getByText(itemWithAdditional.category);
         const additionalText = getByText(itemWithAdditional.additional.text);
         const icon = getElementByClassName(container, 'IconView');
-        const innerItems = container.querySelectorAll(`.${expectedAutoCompleteClassName}__drop-down-item`);
+        const items = container.querySelectorAll(`.${expectedAutoCompleteClassName}__drop-down-item`);
 
         expect(category).toBeInTheDocument();
         expect(additionalText).toBeInTheDocument();
         expect(icon).toBeInTheDocument();
-        expect(innerItems.length).toBe(expectedItemsCount);
+        expect(items.length).toBe(expectedItemsCount);
     });
 });

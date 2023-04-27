@@ -3,6 +3,7 @@ import {useComponents, useSelector} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
 import {toggleAll, toggleItem} from '../../../actions/list';
 import {isSelected, isSelectedAll} from '../../../reducers/list';
+import {IContentColumnViewProps} from '../Grid/Grid';
 
 /**
  * CheckboxColumn
@@ -33,7 +34,7 @@ export interface ICheckboxColumnProps {
     [key: string]: any,
 }
 
-export interface ICheckboxColumnViewProps {
+export interface ICheckboxColumnViewProps extends IContentColumnViewProps {
     fieldProps: Record<string, any>,
     input: {
         name: string,
@@ -66,6 +67,9 @@ export default function CheckboxColumn(props: ICheckboxColumnProps): JSX.Element
 
     return components.ui.renderView(props.view || 'list.CheckboxColumnView', {
         input,
+        item: props.item,
+        attribute: props.attribute,
+        size: props.size,
     });
 }
 

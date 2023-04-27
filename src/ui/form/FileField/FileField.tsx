@@ -30,7 +30,7 @@ interface IFileFieldCommonProps extends IFileHocInput, IFileHocOutput{
      * Вариант отображения файлов
      * @example 'list'
      */
-    filesLayout?: FilesLayout;
+    filesLayout?: FilesLayout | string;
 }
 
 export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps {

@@ -101,7 +101,7 @@ export interface IGridColumn {
      * Параметры для ссылки в колонке
     * @example {attribute: 'name', linkProps: {target: 'blank'}, url: 'https://kozhindev.com'}
     */
-    link: {
+    link?: {
         attribute: string,
         linkProps?: ILinkProps,
         urlAttribute: string,
@@ -111,7 +111,7 @@ export interface IGridColumn {
     * Параметры для иконки в колонке
     * @example {attribute: 'icon', isLeft: true}
     */
-    icon: {
+    icon?: {
         attribute: string,
         isLeft?: boolean,
     },
@@ -120,7 +120,7 @@ export interface IGridColumn {
     *  Параметры для картинки в колонке
     * @example {attribute: 'icon', isLeft: true}
     */
-    picture: {
+    picture?: {
         attribute: string,
         isLeft?: boolean,
     },

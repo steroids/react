@@ -2,8 +2,8 @@ import {useComponents} from '../../../hooks';
 
 export interface ILoaderProps {
     view?: CustomView;
-    size: 'large' |'small';
-    color: 'primary' | 'gray';
+    size?: Size;
+    color?: ColorName;
     [key: string]: any;
 }
 

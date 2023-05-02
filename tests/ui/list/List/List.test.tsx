@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom';
-import {fireEvent, screen, waitFor} from '@testing-library/dom';
 import React from 'react';
-import {act} from 'react-dom/test-utils';
 import {render} from '../../../customRender';
 import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
 import ListMockView from './ListMockView';
@@ -48,14 +46,12 @@ describe('searchForm tests', () => {
         ),
     };
 
-    const expectedListClass = 'ListView';
     const expectedSearchFormClass = 'FormView';
     const expectedInputFieldClass = 'InputFieldView';
-    const expectedButtonClass = 'ButtonView';
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(List, propsList));
-        const SearchForm = getElementByClassName(container, expectedListClass);
+        const SearchForm = getElementByClassName(container, expectedSearchFormClass);
 
         expect(SearchForm).toBeInTheDocument();
     });

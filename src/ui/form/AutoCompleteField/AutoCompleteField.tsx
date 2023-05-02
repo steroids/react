@@ -9,13 +9,14 @@ import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {IInputFieldProps} from '../InputField/InputField';
 
 export interface IAutoCompleteItem {
-    label: string,
-    id: number,
+    id: number | string | boolean,
+    label?: string,
     additional?: {
         icon: string,
         text: string,
     }
     category?: string,
+    [key: string]: unknown,
 }
 
 /**

@@ -5,14 +5,14 @@ import {useBem} from '../../../../src/hooks';
 import {IAutoCompleteFieldViewProps, IAutoCompleteItem} from '../../../../src/ui/form/AutoCompleteField/AutoCompleteField';
 import Text from '../../../../src/ui/typography/Text/Text';
 import {Icon} from '../../../../src/ui/content';
-import IconMockView from '../../content/Icon/IconMockView';
+import {IBem} from '../../../../src/hooks/useBem';
 
 const normalizeItems = (items: IAutoCompleteItem[]) => {
     const categories: {
         [key: string]: IAutoCompleteItem[]
     } = {};
 
-    const itemWithoutCategories: IAutoCompleteItem[] = [];
+    const itemsWithoutCategory: IAutoCompleteItem[] = [];
 
     items.forEach(item => {
         if (item.category) {
@@ -21,68 +21,67 @@ const normalizeItems = (items: IAutoCompleteItem[]) => {
                 return;
             }
 
-            categories[item.category] = [];
-            categories[item.category].push(item);
+            categories[item.category] = [item];
             return;
         }
 
-        itemWithoutCategories.push(item);
+        itemsWithoutCategory.push(item);
     });
 
     return {
         categories,
-        itemWithoutCategories,
+        itemsWithoutCategory,
     };
+};
+
+const renderItem = (item: IAutoCompleteItem, props: IAutoCompleteFieldViewProps & IBemHocOutput, bem: IBem) => {
+    const hasAdditionalIcon = !!item.additional?.icon;
+    const hasAdditionalText = !!item.additional?.text;
+    const hasSomeAdditional = hasAdditionalText || hasAdditionalIcon;
+
+    const uniqId = item[props.primaryKey];
+
+    return (
+        <button
+            key={String(uniqId)}
+            className={bem.element('item', {
+                hover: props.hoveredId === uniqId,
+                select: props.selectedIds.includes(uniqId),
+            })}
+            onClick={() => props.onItemSelect(uniqId)}
+            onFocus={() => props.onItemHover(uniqId)}
+            onMouseOver={() => props.onItemHover(uniqId)}
+        >
+            <span className={bem.element('item-label')}>{item.label}</span>
+            {hasSomeAdditional && (
+                <div className={bem.element('item-additional')}>
+                    {hasAdditionalIcon && (
+                        <Icon
+                            name={item.additional?.icon}
+                            className={bem.element('item-additional-icon')}
+                        />
+                    )}
+                    {hasAdditionalText && (
+                        <span className={bem.element('item-additional-text')}>
+                            {item.additional && item.additional.text}
+                        </span>
+                    )}
+                </div>
+            )}
+        </button>
+    );
 };
 
 export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps & IBemHocOutput) {
     const bem = useBem('AutoCompleteFieldView');
 
-    const normalizedItems = React.useMemo(() => normalizeItems(props.items), [props.items]);
-
-    const renderItem = React.useCallback((item: IAutoCompleteItem) => {
-        const hasAdditionalIcon = !!item.additional?.icon;
-        const hasAdditionalText = !!item.additional?.text;
-        const hasSomeAdditional = hasAdditionalText || hasAdditionalIcon;
-
-        const uniqId = item[props.primaryKey];
-
-        return (
-            <button
-                key={String(uniqId)}
-                className={bem.element('item', {
-                    hover: props.hoveredId === uniqId,
-                    select: props.selectedIds.includes(uniqId),
-                })}
-                onClick={() => props.onItemSelect(uniqId)}
-                onFocus={() => props.onItemHover(uniqId)}
-                onMouseOver={() => props.onItemHover(uniqId)}
-            >
-                <span className={bem.element('item-label')}>{item.label}</span>
-                {hasSomeAdditional && (
-                    <div className={bem.element('item-additional')}>
-                        {hasAdditionalIcon && (
-                            <Icon
-                                name={item.additional?.icon}
-                                className={bem.element('item-additional-icon')}
-                            />
-                        )}
-                        {hasAdditionalText && (
-                            <span className={bem.element('item-additional-text')}>
-                                {item.additional?.text}
-                            </span>
-                        )}
-                    </div>
-                )}
-            </button>
-        );
-    }, [bem, props]);
-
-    const renderItems = () => {
+    const renderItems = React.useCallback(() => {
         if (!_isEmpty(props.categories)) {
+            const {categories, itemsWithoutCategory} = normalizeItems(props.items);
+
             return (
                 <>
-                    {Object.entries(normalizedItems.categories).map(([category, categoryItems]) => (
+                    {Object.entries(categories).map(([category, categoryItems]) => (
                         <div
                             key={category}
                             className={bem.element('category')}
@@ -91,21 +90,21 @@ export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps
                                 {category}
                             </span>
                             <div className={bem.element('category__content')}>
-                                {categoryItems.map(renderItem)}
+                                {categoryItems.map(item => renderItem(item, props, bem))}
                             </div>
                         </div>
                     ))}
-                    {normalizedItems.itemWithoutCategories.map(renderItem)}
+                    {itemsWithoutCategory.map(item => renderItem(item, props, bem))}
                 </>
             );
         }
 
         return (
             <>
-                {props.items.map(renderItem)}
+                {props.items.map(item => renderItem(item, props, bem))}
             </>
         );
-    };
+    }, [bem, props]);
 
     return (
         <div

@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
+import {fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
 import {render} from '../../../customRender';
 import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
 import ListMockView from './ListMockView';
@@ -14,10 +15,6 @@ const items = [
     {
         id: 2,
         name: 'Petr',
-    },
-    {
-        id: 3,
-        name: 'Jhon',
     },
 ];
 
@@ -38,6 +35,7 @@ describe('searchForm tests', () => {
         listId: 'ListDemoSearch',
         items,
         searchForm,
+        pagination: {position: 'mockPosition'},
         className: 'list-group',
         itemView: (props: any) => (
             <div className='list-group-item'>
@@ -71,26 +69,18 @@ describe('searchForm tests', () => {
         expect(fields).toBe(searchForm.fields.length);
     });
 
-    // it('should must be correct filtered items', async () => {
-    //     const {container, getByText} = render(JSXWrapper(List, propsList));
-    //     const input = getElementByTag(container, 'input');
-    //     const button = getElementByTag(container, 'button');
+    it('should must be correct filtered items', async () => {
+        const {container, getByText, queryByText} = render(JSXWrapper(List, propsList));
+        const input = getElementByTag(container, 'input');
+        const button = getElementByTag(container, 'button');
+        const DeletedItem = getByText('Petr');
 
-    //     const item1 = getByText(items[0].name);
-    //     const item2 = getByText(items[1].name);
-    //     const item3 = getByText(items[2].name);
+        expect(DeletedItem).toBeInTheDocument();
 
-    //     await act(async () => {
-    //         fireEvent.change(input, {target: {value: 'Ivan'}});
-    //     });
+        fireEvent.change(input, {target: {value: items[0].name}});
+        fireEvent.click(button);
 
-    //     await act(async () => {
-    //         fireEvent.click(button);
-    //     });
-
-    //     expect(item1).toBeInTheDocument();
-    //     screen.debug();
-    //     expect(item2).not.toBeInTheDocument();
-    //     expect(item3).not.toBeInTheDocument();
-    // });
+        await waitForElementToBeRemoved(() => getByText(items[1].name));
+        expect(queryByText(items[1].name)).not.toBeInTheDocument();
+    });
 });

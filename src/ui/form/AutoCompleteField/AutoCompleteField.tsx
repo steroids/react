@@ -30,8 +30,6 @@ export interface IAutoCompleteFieldProps extends IInputFieldProps, IDataProvider
      */
     searchOnFocus?: boolean,
 
-    items: any[],
-
     [key: string]: any,
 }
 
@@ -58,7 +56,7 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
     onItemHover: (id: PrimaryKey | any) => void,
 }
 
-const getCategories = (items: any[]) => items.reduce((allCategories, item) => {
+const getCategories = (items) => items.reduce((allCategories, item) => {
     if (item.category && !allCategories.includes(item.category)) {
         allCategories.push(item.category);
     }

@@ -98,6 +98,7 @@ DateField.defaultProps = {
     required: false,
     showRemove: true,
     valueFormat: 'YYYY-MM-DD',
+    size: 'md',
 };
 
 export default fieldWrapper<IDateFieldProps>('DateField', DateField);

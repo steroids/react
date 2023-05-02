@@ -46,6 +46,8 @@ describe('searchForm tests', () => {
 
     const expectedSearchFormClass = 'FormView';
     const expectedInputFieldClass = 'InputFieldView';
+    const nameToFilter = items[0].name;
+    const nameToDelete = items[1].name;
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(List, propsList));
@@ -64,23 +66,23 @@ describe('searchForm tests', () => {
 
     it('should have correct fields count', () => {
         const {container} = render(JSXWrapper(List, propsList));
-        const fields = container.querySelectorAll(`.${expectedInputFieldClass}`).length;
+        const fieldsCount = container.querySelectorAll(`.${expectedInputFieldClass}`).length;
 
-        expect(fields).toBe(searchForm.fields.length);
+        expect(fieldsCount).toBe(searchForm.fields.length);
     });
 
     it('should must be correct filtered items', async () => {
         const {container, getByText, queryByText} = render(JSXWrapper(List, propsList));
         const input = getElementByTag(container, 'input');
         const button = getElementByTag(container, 'button');
-        const DeletedItem = getByText('Petr');
+        const DeletedItem = getByText(nameToDelete);
 
         expect(DeletedItem).toBeInTheDocument();
 
-        fireEvent.change(input, {target: {value: items[0].name}});
+        fireEvent.change(input, {target: {value: nameToFilter}});
         fireEvent.click(button);
 
-        await waitForElementToBeRemoved(() => getByText(items[1].name));
-        expect(queryByText(items[1].name)).not.toBeInTheDocument();
+        await waitForElementToBeRemoved(() => getByText(nameToDelete));
+        expect(queryByText(nameToDelete)).not.toBeInTheDocument();
     });
 });

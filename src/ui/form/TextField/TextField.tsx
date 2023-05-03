@@ -1,49 +1,19 @@
 import * as React from 'react';
 import {KeyboardEventHandler, useCallback, useMemo} from 'react';
-import {useDispatch} from 'react-redux';
 import {useComponents} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 /**
  * TextField
  * Поле для ввода нескольких строк теста
  */
-export interface ITextFieldProps extends IFieldWrapperInputProps {
-    /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: string;
-
+export interface ITextFieldProps extends IBaseFieldProps {
     /**
      * Отправлять форму при нажатии на кнопку `enter`
      * @example true
      */
     submitOnEnter?: boolean;
-
-    /**
-     * Свойства для элемента \<input /\>
-     * @example {onKeyDown: ...}
-     */
-    inputProps?: any;
-
-    /**
-     * Дополнительный CSS-класс для тега \<textarea\>
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
-     *  Отображение кнопки очищения поля
-     */
-    showClear?: boolean,
-
-    [key: string]: any;
 }
 
 export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {
@@ -100,12 +70,12 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 }
 
 TextField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    placeholder: '',
-    submitOnEnter: false,
-    errors: null,
+    // disabled: false,
+    // required: false,
+    // className: '',
+    // placeholder: '',
+    // submitOnEnter: false,
+    // errors: null,
 };
 
 export default fieldWrapper<ITextFieldProps>('TextField', TextField);

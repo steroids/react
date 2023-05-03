@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useMemo, useState} from 'react';
-import {IInputFieldProps} from '../InputField/InputField';
+import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -8,7 +8,7 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
  * PasswordField
  * Поле ввода пароля
  */
-export interface IPasswordFieldProps extends IInputFieldProps {
+export interface IPasswordFieldProps extends IBaseFieldProps {
 
     /**
      * Если true, то отображается шкала сложности пароля
@@ -20,8 +20,6 @@ export interface IPasswordFieldProps extends IInputFieldProps {
      * Если true, то отображается иконка скрытия/показа пароля
      */
     showSecurityIcon?: boolean;
-
-    [key: string]: any;
 }
 
 export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrapperOutputProps {
@@ -33,8 +31,6 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         placeholder: string,
         disabled: boolean,
     },
-    errors?: string[],
-    className?: CssClassName,
     onClear?: () => void,
     securityLevel?: 'success' | 'warning' | 'danger',
     onShowPassword: () => void,
@@ -94,13 +90,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 }
 
 PasswordField.defaultProps = {
-    disabled: false,
-    showSecurityBar: false,
     showSecurityIcon: true,
-    required: false,
-    className: '',
-    placeholder: '',
-    errors: null,
     size: 'md',
 };
 

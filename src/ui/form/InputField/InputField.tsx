@@ -8,23 +8,7 @@ type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-lo
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
     | 'text' | 'time' | 'url' | 'week' | string;
 
-/**
- * InputField
- * Поле ввода текста
- */
-export interface IInputFieldProps extends IFieldWrapperInputProps {
-    /**
-     * HTML Тип
-     * @example email
-     */
-    type?: IElementInputType;
-
-    /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: string;
-
+export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Свойства для элемента \<input /\>
      * @example {onKeyDown: ...}
@@ -32,31 +16,30 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
     inputProps?: any;
 
     /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
+     * Показывать иконку очищения поля
+     * @example {'true'}
+    */
+    showClear?: boolean;
 
     /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
+     * Свойства для компонента отображения
+     * @example {customHandler: () => {...}}
      */
-    view?: CustomView;
+    viewProps?: {
+        [key: string]: any,
+    };
+}
 
+/**
+ * InputField
+ * Поле ввода текста
+ */
+export interface IInputFieldProps extends IBaseFieldProps {
     /**
+     * HTML Тип
+     * @example email
      */
-    viewProps?: any;
-
-    /**
-     * Размер Input
-     * @example 'large'
-     */
-    size?: Size;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle;
+    type?: IElementInputType;
 
     /**
      * Изображение или React-нода, которая будет отрендерена слева от поля.
@@ -93,20 +76,9 @@ export interface IInputFieldProps extends IFieldWrapperInputProps {
     };
 
     /**
-     * Показывать иконку очищения поля
-     * @example {'true'}
-    */
-    showClear?: boolean;
-
-    /**
      * Пользовательская иконка svg или название иконки
      */
     leadIcon?: React.ReactElement | string;
-
-    success?: boolean;
-    failed?: boolean;
-
-    [key: string]: any;
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
@@ -181,7 +153,6 @@ InputField.defaultProps = {
     placeholder: '',
     errors: null,
     showClear: false,
-    successful: false,
     textBefore: null,
     textAfter: null,
     addonBefore: null,

@@ -6,7 +6,7 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../../../ui/form/Field/fie
 import {useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import {IInputFieldProps} from '../InputField/InputField';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 export interface IAutoCompleteItem {
     id: number | string | boolean,
@@ -23,15 +23,13 @@ export interface IAutoCompleteItem {
  * AutoComplete
  * Поле ввода текста с подсказками (auto-complete)
  */
-export interface IAutoCompleteFieldProps extends IInputFieldProps, IDataProviderConfig,
+export interface IAutoCompleteFieldProps extends IBaseFieldProps, IDataProviderConfig,
     Omit<IDataSelectConfig, 'items'> {
     /**
      * При фокусировке на поле ввода будет запускаться поиск
      * @example true
      */
     searchOnFocus?: boolean,
-
-    [key: string]: any,
 }
 
 export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProps, 'items'> {
@@ -186,10 +184,6 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
 AutoCompleteField.defaultProps = {
     primaryKey: 'label',
     autoComplete: true,
-    multiple: false,
-    disabled: false,
-    required: false,
-    className: '',
     size: 'md',
 };
 

@@ -1,14 +1,13 @@
-import * as React from 'react';
 import {useMemo} from 'react';
-import {IInputFieldProps} from '../InputField/InputField';
+import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * NumberField
  * Числовое поле ввода
  */
-export interface INumberFieldProps extends IInputFieldProps, IFieldWrapperInputProps {
+export interface INumberFieldProps extends IBaseFieldProps {
     /**
      * Минимальное значение
      * @example 1
@@ -26,8 +25,6 @@ export interface INumberFieldProps extends IInputFieldProps, IFieldWrapperInputP
      * @example 5
      */
     step?: string | number;
-
-    [key: string]: any;
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {

@@ -73,31 +73,31 @@ export interface IControlsViewProps extends IControlsProps {
 export default function Controls(props: IControlsProps): JSX.Element {
     const defaultItems = {
         index: {
-            icon: 'comeback',
+            icon: 'left_12x12',
             label: __('К списку'),
             color: 'secondary',
             outline: true,
         },
         create: {
-            icon: 'add1',
+            icon: 'add_square',
             label: __('Добавить'),
             color: 'success',
             outline: true,
         },
         view: {
-            icon: 'show',
+            icon: 'view',
             label: __('Просмотр'),
             color: 'secondary',
             outline: true,
         },
         update: {
-            icon: 'edit1',
+            icon: 'edit_duotone_8',
             label: __('Редактировать'),
             color: 'secondary',
             outline: true,
         },
         delete: {
-            icon: 'remove',
+            icon: 'cancel_ellips',
             label: __('Удалить'),
             confirm: __('Удалить запись?'),
             color: 'danger',

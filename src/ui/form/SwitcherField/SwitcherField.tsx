@@ -10,12 +10,27 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 
+export interface ISwitcherItem {
+    id: number | string | boolean,
+    label?: string | {
+        checked: string,
+        unchecked: string,
+    },
+    [key: string]: any,
+}
+
 /**
  * SwitcherField
  * Список с кнопками. Используется для выбора одного значения.
  */
 export interface ISwitcherFieldProps extends IFieldWrapperInputProps,
     IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
+
+    /**
+    * Свойства для элемента \<input /\>
+    * @example {onKeyDown: ...}
+    */
+    inputProps?: any,
 
     /**
      * Дополнительный CSS-класс для элемента отображения
@@ -28,21 +43,24 @@ export interface ISwitcherFieldProps extends IFieldWrapperInputProps,
      */
     view?: CustomView;
 
-    /**
-     * Свойства для компонента Button
-     */
-    buttonProps?: any;
+    style?: CustomStyle,
 
     [key: string]: any;
 }
 
 export interface ISwitcherFieldViewProps extends IFieldWrapperOutputProps, Omit<ISwitcherFieldProps, 'items'> {
-    items: Record<string, unknown>[],
+    items: ISwitcherItem[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
     buttonProps?: any,
+    inputProps: {
+        name: string,
+        type: string,
+        disabled?: boolean,
+        onChange: (value: string | React.ChangeEvent) => void,
+    },
 }
 
 function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
@@ -65,6 +83,7 @@ function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
         primaryKey: props.primaryKey,
         items,
         inputValue: props.input.value,
+        multiple: props.multiple,
     });
 
     const onItemHover = useCallback((id) => {
@@ -74,6 +93,13 @@ function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
     const onItemSelect = useCallback((id) => {
         setSelectedIds(id);
     }, [setSelectedIds]);
+
+    const inputProps = React.useMemo(() => ({
+        ...props.inputProps,
+        type: 'checkbox',
+        name: props.input.name,
+        disabled: props.disabled,
+    }), [props.disabled, props.input.name, props.inputProps]);
 
     // Sync with form
     const prevSelectedIds = usePrevious(selectedIds);
@@ -86,6 +112,7 @@ function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
     return components.ui.renderView(props.view || 'form.SwitcherFieldView', {
         ...props,
         items,
+        inputProps,
         hoveredId,
         selectedIds,
         onItemHover,
@@ -99,6 +126,7 @@ SwitcherField.defaultProps = {
     required: false,
     className: '',
     errors: null,
+    size: 'md',
 };
 
 export default fieldWrapper<ISwitcherFieldProps>('SwitcherField', SwitcherField);

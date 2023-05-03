@@ -48,6 +48,11 @@ declare type PrimaryKey = number | string;
 declare type Size = 'small' | 'middle' | 'large' | string;
 
 /**
+ * Ориентация элемента
+ */
+declare type Orientation = 'horizontal' | 'vertical' | string;
+
+/**
  * Объект из свойства `input` от redux-form
  */
 declare type FormInputType = {

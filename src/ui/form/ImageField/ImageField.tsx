@@ -8,9 +8,8 @@ import ReactCropProps, {Crop} from 'react-image-crop';
 import {useComponents} from '../../../hooks';
 import {IModalProps} from '../../modal/Modal/Modal';
 import useDispatch from '../../../hooks/useDispatch';
-import useFile from '../../../hooks/useFile';
+import useFile, {IFileInput} from '../../../hooks/useFile';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
 import {openModal} from '../../../actions/modal';
 
 export interface ICropInputProps {
@@ -34,7 +33,7 @@ export interface ICropInputProps {
 }
 
 export interface IImageFieldProps extends IFieldWrapperInputProps,
-    Omit<IFileHocInput, 'multiple' | 'imagesOnly'>, IFileHocOutput {
+    Omit<IFileInput, 'multiple' | 'imagesOnly'> {
 
     /**
      * Дополнительный CSS-класс для компонента

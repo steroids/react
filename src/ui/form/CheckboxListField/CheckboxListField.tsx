@@ -37,7 +37,7 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
     /**
      * Ориентация списка
      */
-    orientation?: 'horizontal' | 'vertical',
+    orientation?: Orientation,
 
     [key: string]: any,
 }
@@ -57,7 +57,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
     }[],
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,
-    orientation?: 'horizontal' | 'vertical',
+    orientation?: Orientation,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
 }
 

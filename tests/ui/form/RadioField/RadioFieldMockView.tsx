@@ -2,11 +2,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import useUniqueId from '../../../../src/hooks/useUniqueId';
 import {IRadioFieldViewProps} from '../../../../src/ui/form/RadioField/RadioField';
 
-export default function RadioFieldView(props: IRadioFieldViewProps & IBemHocOutput) {
+export default function RadioFieldView(props: IRadioFieldViewProps) {
     const bem = useBem('RadioFieldView');
     const id = useUniqueId('radio');
 

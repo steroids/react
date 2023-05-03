@@ -21,8 +21,6 @@ import {
 } from './utils';
 import {useComponents, useSelector} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
-import {IComponentsHocOutput} from '../../../hoc/components';
-import {IConnectHocOutput} from '../../../hoc/connect';
 import {IFormProps} from '../../form/Form/Form';
 import {IGridProps} from '../../list/Grid/Grid';
 import {IControlItem} from '../../nav/Controls/Controls';
@@ -81,7 +79,7 @@ export interface ICrudProps {
     [key: string]: any,
 }
 
-export interface ICrudChildrenProps extends ICrudProps, IConnectHocOutput, IComponentsHocOutput {
+export interface ICrudChildrenProps extends ICrudProps {
     item?: any,
     recordId?: PrimaryKey,
     action?: string,

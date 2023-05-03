@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import * as React from 'react';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {useBem} from '../../../../src/hooks';
 
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
 import {IPasswordFieldViewProps} from '../../../../src/ui/form/PasswordField/PasswordField';
 
-export default function PasswordFieldView(props: IPasswordFieldViewProps & IBemHocOutput) {
+export default function PasswordFieldView(props: IPasswordFieldViewProps) {
     const bem = useBem('PasswordFieldView');
 
     return (

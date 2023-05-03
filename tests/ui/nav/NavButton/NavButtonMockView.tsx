@@ -1,11 +1,10 @@
 import * as React from 'react';
 
 import Button from '../../../../src/ui/form/Button';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {INavViewProps} from '../../../../src/ui/nav/Nav/Nav';
 import {useBem} from '../../../../src/hooks';
 
-export default function NavButtonView(props: INavViewProps & IBemHocOutput) {
+export default function NavButtonView(props: INavViewProps) {
     const bem = useBem('NavButtonView');
     return (
         <div className={bem(bem.block(), props.className)}>

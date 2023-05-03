@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
 import {ITextFieldViewProps} from '../../../../src/ui/form/TextField/TextField';
 
-export default function TextFieldView(props: ITextFieldViewProps & IBemHocOutput) {
+export default function TextFieldView(props: ITextFieldViewProps) {
     const bem = useBem('TextFieldView');
 
     return (

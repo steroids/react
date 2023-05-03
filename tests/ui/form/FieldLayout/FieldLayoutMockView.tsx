@@ -1,12 +1,11 @@
 import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {IFieldLayoutViewProps} from '../../../../src/ui/form/FieldLayout/FieldLayout';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
 
-export default function FieldLayoutView(props: IFieldLayoutViewProps & IBemHocOutput) {
+export default function FieldLayoutView(props: IFieldLayoutViewProps) {
     const bem = useBem('FieldLayoutView');
 
     return (

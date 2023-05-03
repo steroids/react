@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {IRadioListFieldViewProps} from '../../../../src/ui/form/RadioListField/RadioListField';
 import useUniqueId from '../../../../src/hooks/useUniqueId';
 
-export default function RadioListFieldView(props: IRadioListFieldViewProps & IBemHocOutput) {
+export default function RadioListFieldView(props: IRadioListFieldViewProps) {
     const bem = useBem('RadioListFieldView');
     const prefix = useUniqueId('radio');
 

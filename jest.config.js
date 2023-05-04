@@ -6,6 +6,7 @@ const bootstrapPath = path.join(__dirname, isLocal ? '/react-bootstrap/src/' : '
 
 module.exports = {
     verbose: true,
+    testEnvironment: 'jest-environment-jsdom-fifteen',
     transform: {
         '^.+\\.tsx?$': 'ts-jest',
     },

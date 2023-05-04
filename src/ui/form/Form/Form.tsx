@@ -189,9 +189,7 @@ export interface IFormViewProps {
     submitLabel?: string;
     fields?: (string | IFieldProps)[],
     onSubmit: any,
-    isInvalid?: boolean,
     className?: CssClassName,
-    isBordered?: boolean,
     autoFocus?: boolean,
     style?: CustomStyle,
     children?: React.ReactNode,
@@ -492,13 +490,11 @@ function Form(props: IFormProps): JSX.Element {
             {props.view !== false
                 ? components.ui.renderView(props.view || 'form.FormView', {
                     ...props.viewProps,
-                    isInvalid,
                     isSubmitting,
                     onSubmit,
                     submitLabel: props.submitLabel,
                     fields: props.fields,
                     children: props.children,
-                    isBordered: props.isBordered,
                     className: props.className,
                     style: props.style,
                     autoFocus: props.autoFocus,

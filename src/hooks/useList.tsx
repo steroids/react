@@ -324,7 +324,7 @@ export default function useList(config: IListConfig): IListOutput {
             list={list}
             {...layoutNamesProps}
         />
-);
+    );
 
     // Models
     const defaultSearchModel = useMemo(() => getDefaultSearchModel({

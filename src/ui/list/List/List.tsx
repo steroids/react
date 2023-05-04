@@ -43,6 +43,7 @@ export interface IListViewProps extends Omit<IListProps, 'onFetch'>, Omit<IListO
 
 export interface IListItemViewProps {
     id: PrimaryKey,
+    primaryKey: PrimaryKey,
     item: {
         id?: PrimaryKey,
         title?: string | any,

@@ -88,6 +88,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         disabled: props.disabled,
         className: props.className,
         showRemove: props.showRemove,
+        style: props.style,
     });
 }
 

@@ -17,7 +17,7 @@ export default function DateFieldView(props: IDateFieldViewProps) {
         <DropDown
             content={renderCalendar}
             position='bottomLeft'
-            visible={props.isOpened}
+            visible
             onClose={props.onClose}
         >
             <div

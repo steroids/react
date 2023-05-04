@@ -15,5 +15,7 @@ export default function TooltipPortal(props: ITooltipPortalProps): React.ReactPo
         }
     }, [components]);
 
+    console.log('Portal element', components.ui.getPortalElement());
+
     return createPortal(props.children, components.ui.getPortalElement());
 }

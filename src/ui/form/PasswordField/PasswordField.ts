@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useMemo, useState} from 'react';
+import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -26,7 +25,7 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: Event | React.ChangeEvent) => void,
+        onChange: (value: Event | ChangeEvent) => void,
         value: string | number,
         placeholder: string,
         disabled: boolean,
@@ -70,7 +69,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     const components = useComponents();
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
@@ -90,7 +89,10 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 }
 
 PasswordField.defaultProps = {
+    disabled: false,
+    showSecurityBar: false,
     showSecurityIcon: true,
+    required: false,
     size: 'md',
 };
 

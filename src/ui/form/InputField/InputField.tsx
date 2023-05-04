@@ -149,14 +149,7 @@ InputField.defaultProps = {
     size: 'md',
     disabled: false,
     required: false,
-    className: '',
-    placeholder: '',
-    errors: null,
     showClear: false,
-    textBefore: null,
-    textAfter: null,
-    addonBefore: null,
-    addonAfter: null,
 };
 
 export default fieldWrapper<IInputFieldProps>('InputField', InputField);

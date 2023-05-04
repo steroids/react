@@ -63,12 +63,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 NumberField.defaultProps = {
     disabled: false,
     required: false,
-    className: '',
-    placeholder: '',
-    min: null,
-    max: null,
-    step: null,
-    errors: null,
     size: 'md',
 };
 

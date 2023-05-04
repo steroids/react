@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {KeyboardEventHandler, useCallback, useMemo} from 'react';
+import {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
@@ -19,7 +18,7 @@ export interface ITextFieldProps extends IBaseFieldProps {
 export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         name: string,
-        onChange: (value: string | React.ChangeEvent) => void,
+        onChange: (value: string | ChangeEvent) => void,
         onKeyUp: KeyboardEventHandler<HTMLTextAreaElement>,
         value: string | number,
         placeholder: string,
@@ -50,7 +49,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         [props.input.onChange],
     );
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     const inputProps = useMemo(() => ({
         name: props.input.name,
@@ -70,12 +69,9 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 }
 
 TextField.defaultProps = {
-    // disabled: false,
-    // required: false,
-    // className: '',
-    // placeholder: '',
-    // submitOnEnter: false,
-    // errors: null,
+    disabled: false,
+    required: false,
+    submitOnEnter: false,
 };
 
 export default fieldWrapper<ITextFieldProps>('TextField', TextField);

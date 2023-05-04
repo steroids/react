@@ -1,8 +1,9 @@
 import * as React from 'react';
 
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
-export interface IBlankFieldProps extends IFieldWrapperInputProps {
+export interface IBlankFieldProps extends IBaseFieldProps {
     text?: string | React.ReactNode;
     children?: React.ReactNode;
 }

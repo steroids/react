@@ -46,8 +46,6 @@ describe('searchForm tests', () => {
 
     const expectedSearchFormClass = 'FormView';
     const expectedInputFieldClass = 'InputFieldView';
-    const nameToFilter = items[0].name;
-    const nameToDelete = items[1].name;
 
     it('should be in the document', () => {
         const {container} = render(JSXWrapper(List, propsList));
@@ -72,17 +70,19 @@ describe('searchForm tests', () => {
     });
 
     it('should must be correct filtered items', async () => {
+        const nameToFilter = items[0].name;
+        const nameToRemove = items[1].name;
         const {container, getByText, queryByText} = render(JSXWrapper(List, propsList));
         const input = getElementByTag(container, 'input');
         const button = getElementByTag(container, 'button');
-        const DeletedItem = getByText(nameToDelete);
+        const itemToRemove = getByText(nameToRemove);
 
-        expect(DeletedItem).toBeInTheDocument();
+        expect(itemToRemove).toBeInTheDocument();
 
         fireEvent.change(input, {target: {value: nameToFilter}});
         fireEvent.click(button);
 
-        await waitForElementToBeRemoved(() => getByText(nameToDelete));
-        expect(queryByText(nameToDelete)).not.toBeInTheDocument();
+        await waitForElementToBeRemoved(itemToRemove);
+        expect(queryByText(nameToRemove)).not.toBeInTheDocument();
     });
 });

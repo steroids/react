@@ -11,7 +11,7 @@ import useModel from '../hooks/useModel';
 import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
 import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../actions/list';
 import useDispatch from '../hooks/useDispatch';
-import {formChange} from '../actions/form';
+import {formChange, formDestroy} from '../actions/form';
 import {formSelector} from '../reducers/form';
 import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
 import useInitial from '../hooks/useInitial';
@@ -476,7 +476,10 @@ export default function useList(config: IListConfig): IListOutput {
     useUnmount(() => {
         const autoDestroy = typeof config.autoDestroy === 'boolean' ? config.autoDestroy : defaultConfig.autoDestroy;
         if (autoDestroy) {
-            dispatch(listDestroy(config.listId));
+            dispatch([
+                listDestroy(config.listId),
+                formDestroy(config.listId),
+            ]);
         }
     });
 

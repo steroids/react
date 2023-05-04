@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {IButtonProps} from 'src/ui/form/Button/Button';
 import {useComponents} from '../../../hooks';
 import {IControlItem} from '../../nav/Controls/Controls';
 
@@ -25,10 +26,10 @@ export interface IModalProps {
     componentProps?: any,
 
     /**
-     * Коллекция контролов, которая отобразится в Modal
+     * Коллекция кнопок, которая отобразится в нижней секции Modal
      * @example [{label: __(('Закрыть')), onClick: () => props.onClose()}]
      */
-    controls?: IControlItem[],
+    buttons?: IButtonProps[],
 
     /**
      * Время, в течение которого будет происходить анимация закрытия Modal.
@@ -139,7 +140,7 @@ function Modal(props: IModalProps): JSX.Element {
 }
 
 Modal.defaultProps = {
-    size: 'middle',
+    size: 'md',
     shouldCloseOnEsc: true,
     shouldCloseOnOverlayClick: true,
 };

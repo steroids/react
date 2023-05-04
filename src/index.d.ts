@@ -48,6 +48,11 @@ declare type PrimaryKey = number | string;
 declare type Size = 'small' | 'middle' | 'large' | string;
 
 /**
+ * Ориентация элемента
+ */
+declare type Orientation = 'horizontal' | 'vertical' | string;
+
+/**
  * Объект из свойства `input` от redux-form
  */
 declare type FormInputType = {
@@ -84,3 +89,22 @@ declare type CustomIcon = string | React.ReactElement;
  * HTTP метод
  */
 declare type HttpMethod = 'get' | 'post' | 'put' | 'delete' | string;
+
+declare interface IUiComponent {
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
+    view?: CustomView;
+
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
+    className?: CssClassName;
+
+    /**
+     * Объект CSS стилей
+     * @example {width: '45%'}
+     */
+    style?: CustomStyle;
+}

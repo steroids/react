@@ -1,10 +1,9 @@
 import * as React from 'react';
 import Nav from '../../../../src/ui/nav/Nav/Nav';
 import {useBem} from '../../../../src/hooks';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {IControlsViewProps} from '../../../../src/ui/nav/Controls/Controls';
 
-export default function ControlsView(props: IControlsViewProps & IBemHocOutput) {
+export default function ControlsView(props: IControlsViewProps) {
     const renderControls = (items) => {
         if (items.length === 0) {
             return null;

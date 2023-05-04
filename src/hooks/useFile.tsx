@@ -7,9 +7,32 @@ import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _difference from 'lodash-es/difference';
 import buildURL from 'axios/lib/helpers/buildURL';
-import {IFileHocInput, IFileHocOutput} from '../hoc/file';
 import useInitial from './useInitial';
 import {useComponents, useForm} from './index';
+
+export interface IFileInput {
+    input?: FormInputType,
+    multiple?: boolean;
+    uploader?: any;
+    backendUrl?: any;
+    mimeTypes?: any;
+    imagesOnly?: any;
+    imagesProcessor?: any;
+    imagesExactSize?: any;
+    initialFiles?: any;
+    uploaderConfig?: {
+        useFormData?: boolean,
+        fileFieldName?: string,
+    } | any
+}
+
+export interface IFileOutput {
+    uploader?: any;
+    files?: any[];
+    onBrowse?: any;
+    onRemove?: any;
+    onAdd?: any;
+}
 
 const imagesMimeTypes = [
     'image/gif',
@@ -30,7 +53,7 @@ function generateBackendUrl(props) {
     });
 }
 
-export default function useFile(props: IFileHocInput): IFileHocOutput {
+export default function useFile(props: IFileInput): IFileOutput {
     const {http} = useComponents();
     http.getAccessToken(); // TODO Run promise..
 

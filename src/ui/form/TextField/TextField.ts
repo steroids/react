@@ -1,55 +1,24 @@
-import * as React from 'react';
-import {KeyboardEventHandler, useCallback, useMemo} from 'react';
-import {useDispatch} from 'react-redux';
+import {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
 import {useComponents} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 /**
  * TextField
  * Поле для ввода нескольких строк теста
  */
-export interface ITextFieldProps extends IFieldWrapperInputProps {
-    /**
-     * Placeholder подсказка
-     * @example Your text...
-     */
-    placeholder?: string;
-
+export interface ITextFieldProps extends IBaseFieldProps {
     /**
      * Отправлять форму при нажатии на кнопку `enter`
      * @example true
      */
     submitOnEnter?: boolean;
-
-    /**
-     * Свойства для элемента \<input /\>
-     * @example {onKeyDown: ...}
-     */
-    inputProps?: any;
-
-    /**
-     * Дополнительный CSS-класс для тега \<textarea\>
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
-     *  Отображение кнопки очищения поля
-     */
-    showClear?: boolean,
-
-    [key: string]: any;
 }
 
 export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         name: string,
-        onChange: (value: string | React.ChangeEvent) => void,
+        onChange: (value: string | ChangeEvent) => void,
         onKeyUp: KeyboardEventHandler<HTMLTextAreaElement>,
         value: string | number,
         placeholder: string,
@@ -80,7 +49,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         [props.input.onChange],
     );
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     const inputProps = useMemo(() => ({
         name: props.input.name,
@@ -102,10 +71,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 TextField.defaultProps = {
     disabled: false,
     required: false,
-    className: '',
-    placeholder: '',
     submitOnEnter: false,
-    errors: null,
 };
 
 export default fieldWrapper<ITextFieldProps>('TextField', TextField);

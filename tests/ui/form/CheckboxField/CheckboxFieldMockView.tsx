@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {useBem, useUniqueId} from '../../../../src/hooks';
 import {ICheckboxFieldViewProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';
 
-export default function CheckboxFieldView(props: ICheckboxFieldViewProps & IBemHocOutput) {
+export default function CheckboxFieldView(props: ICheckboxFieldViewProps) {
     const bem = useBem('CheckboxFieldView');
     const id = useUniqueId('checkbox');
 

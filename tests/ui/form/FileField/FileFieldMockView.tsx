@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {FilesLayout, IFileFieldViewProps} from '../../../../src/ui/form/FileField/FileField';
 import Button from '../Button/ButtonMockView';
 
-export default function FileFieldView(props: IFileFieldViewProps & IBemHocOutput) {
+export default function FileFieldView(props: IFileFieldViewProps) {
     const bem = useBem('FileFieldView');
     const ButtonView = props.buttonView || Button;
     const isWall = props.filesLayout === FilesLayout.wall;

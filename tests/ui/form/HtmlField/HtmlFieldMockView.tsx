@@ -2,11 +2,10 @@ import * as React from 'react';
 // import {CKEditor} from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@steroidsjs/ckeditor5/packages/ckeditor5-build-classic';
 
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {IHtmlFieldViewProps} from '../../../../src/ui/form/HtmlField/HtmlField';
 import {useBem} from '../../../../src/hooks';
 
-export default function HtmlFieldView(props: IHtmlFieldViewProps & IBemHocOutput) {
+export default function HtmlFieldView(props: IHtmlFieldViewProps) {
     const bem = useBem('HtmlFieldView');
 
     if (process.env.IS_SSR) {

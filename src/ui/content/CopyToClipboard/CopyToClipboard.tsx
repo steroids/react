@@ -1,11 +1,9 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {IBemHocOutput} from '../../../hoc/bem';
-import {IConnectHocOutput} from '../../../hoc/connect';
 import useDispatch from '../../../hooks/useDispatch';
 
 import {showNotification} from '../../../actions/notifications';
 
-interface ICopyToClipboardProps extends IBemHocOutput, IConnectHocOutput {
+interface ICopyToClipboardProps {
     value: string,
     disabled?: boolean,
     notification?: string | {

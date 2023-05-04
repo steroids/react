@@ -6,25 +6,35 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../../../ui/form/Field/fie
 import {useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import {IInputFieldProps} from '../InputField/InputField';
+import {IBaseFieldProps} from '../InputField/InputField';
+
+export interface IAutoCompleteItem {
+    id: number | string | boolean,
+    label?: string,
+    additional?: {
+        icon: string,
+        text: string,
+    }
+    category?: string,
+    [key: string]: unknown,
+}
 
 /**
  * AutoComplete
  * Поле ввода текста с подсказками (auto-complete)
  */
-export interface IAutoCompleteFieldProps extends IInputFieldProps, IDataProviderConfig,
+export interface IAutoCompleteFieldProps extends IBaseFieldProps, IDataProviderConfig,
     Omit<IDataSelectConfig, 'items'> {
     /**
      * При фокусировке на поле ввода будет запускаться поиск
      * @example true
      */
     searchOnFocus?: boolean,
-
-    [key: string]: any,
 }
 
 export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProps, 'items'> {
-    items: Record<string, unknown>[],
+    items: IAutoCompleteItem[],
+    categories: string[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
     forwardedRef: any,
@@ -44,6 +54,14 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
 }
+
+const getCategories = (items) => items.reduce((allCategories, item) => {
+    if (item.category && !allCategories.includes(item.category)) {
+        allCategories.push(item.category);
+    }
+
+    return allCategories;
+}, []);
 
 function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
@@ -159,6 +177,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         forwardedRef,
         onItemHover,
         onItemSelect,
+        categories: getCategories(props.items),
     });
 }
 
@@ -168,7 +187,7 @@ AutoCompleteField.defaultProps = {
     multiple: false,
     disabled: false,
     required: false,
-    className: '',
+    size: 'md',
 };
 
 export default fieldWrapper<IAutoCompleteFieldProps>('AutoCompleteField', AutoCompleteField);

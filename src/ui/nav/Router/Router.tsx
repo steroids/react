@@ -13,12 +13,10 @@ import {getOpened} from '../../../reducers/modal';
 import {IFetchConfig} from '../../../hooks/useFetch';
 import {IListProps} from '../../list/List/List';
 import {useComponents, useSelector} from '../../../hooks';
-import {fetch} from '../../../hoc';
 import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
 import {buildUrl, getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
-import {IFetchHocConfigFunc} from '../../../hoc/fetch';
 
 export const ROUTER_ROLE_LOGIN = 'login';
 export const ROUTER_ROLE_MODAL = 'modal';
@@ -119,14 +117,6 @@ export interface IRouteItem {
      * @example ['user', 'admin']
      */
     roles?: Array<string | null>,
-
-    /**
-     * Обработчик, который возвращает конфигурацию для осуществления HTTP-запроса. Запрос происходит каждый раз
-     * перед рендерингом страницы, чтобы получить для неё все необходимые данные
-     * @param {*} props
-     * @return {Object} Например, {url: '/api/v1/some-data', key: 'someData'}
-     */
-    fetch?: IFetchHocConfigFunc,
 
     /**
      * Вложенные роуты
@@ -291,10 +281,8 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
         return null;
     }
 
-    let Component = route.component;
-    if (route.fetch) {
-        Component = fetch(route.fetch)(Component);
-    }
+    const Component = route.component;
+
     return (
         <Component
             {...routeProps}

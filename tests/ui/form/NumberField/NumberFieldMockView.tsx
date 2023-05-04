@@ -2,13 +2,12 @@ import * as React from 'react';
 import {useCallback, useRef} from 'react';
 import _isNumber from 'lodash-es/isNumber';
 
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {INumberFieldViewProps} from '../../../../src/ui/form/NumberField/NumberField';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
 
-export default function NumberFieldView(props: INumberFieldViewProps & IBemHocOutput) {
+export default function NumberFieldView(props: INumberFieldViewProps) {
     // Input ref
     const inputRef = useRef<HTMLInputElement>(null);
 

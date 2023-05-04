@@ -31,7 +31,7 @@ export interface IRadioListFieldProps extends IFieldWrapperInputProps, IDataProv
     /**
      * Ориентация списка
      */
-    orientation?: 'horizontal' | 'vertical',
+    orientation?: Orientation,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -56,6 +56,8 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
     }[],
     selectedIds: (PrimaryKey | any)[],
     className?: CssClassName,
+    orientation?: Orientation,
+    size?: Size,
     onItemSelect: (id: PrimaryKey | any) => void,
     renderRadio: (radioProps: IRadioFieldViewProps) => JSX.Element;
 }

@@ -2,8 +2,8 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import {walkRoutesRecursive, findRedirectPathRecursive, treeToList} from '../../../../src/ui/nav/Router/helpers';
 
-describe('walkRoutesRecursive', () => {
-    const mockItem = {
+describe('Function walkRoutesRecursive', () => {
+    const mockRoutes = {
         id: 'home',
         exact: true,
         path: '/',
@@ -12,7 +12,7 @@ describe('walkRoutesRecursive', () => {
         isVisible: true,
         isNavVisible: true,
         layout: 'main',
-        roles: ['user'],
+        roles: ['admin'],
         component: () => <div>Home page</div>,
         componentProps: null,
         items: [
@@ -24,42 +24,73 @@ describe('walkRoutesRecursive', () => {
                 isVisible: true,
                 isNavVisible: true,
                 layout: 'main',
-                roles: ['user'],
+                roles: ['admin', 'user'],
                 component: () => <div>About Us page</div>,
                 componentProps: null,
             },
         ],
     };
 
-    it('should normalize a route object recursively', () => {
-        const normalizedRoute = walkRoutesRecursive(mockItem);
+    it('should recursively normalize an object with an empty object', () => {
+        const item = {};
+        const normalizedRoute = walkRoutesRecursive(item);
+        expect(normalizedRoute.id).toBeUndefined();
+        expect(normalizedRoute.exact).toBeUndefined();
+        expect(normalizedRoute.path).toBeUndefined();
+        expect(normalizedRoute.label).toBeUndefined();
+        expect(normalizedRoute.title).toBeUndefined();
+        expect(normalizedRoute.isVisible).toBeUndefined();
+        expect(normalizedRoute.isNavVisible).toBeUndefined();
+        expect(normalizedRoute.layout).toBeNull();
+        expect(normalizedRoute.roles).toBeNull();
+        expect(normalizedRoute.component).toBeNull();
+        expect(normalizedRoute.componentProps).toBeNull();
+    });
 
-        expect(normalizedRoute.id).toBe('home');
-        expect(normalizedRoute.exact).toBe(true);
-        expect(normalizedRoute.path).toBe('/');
-        expect(normalizedRoute.label).toBe('Home');
-        expect(normalizedRoute.title).toBe('Homepage');
-        expect(normalizedRoute.isVisible).toBe(true);
-        expect(normalizedRoute.isNavVisible).toBe(true);
-        expect(normalizedRoute.layout).toBe('main');
-        expect(normalizedRoute.roles).toEqual(['user']);
+    it('should normalize the object and items recursively without defaultItem/parentItem', () => {
+        const normalizedRoute = walkRoutesRecursive(mockRoutes);
+
+        expect(normalizedRoute.id).toBe(mockRoutes.id);
+        expect(normalizedRoute.exact).toBe(mockRoutes.exact);
+        expect(normalizedRoute.path).toBe(mockRoutes.path);
+        expect(normalizedRoute.label).toBe(mockRoutes.label);
+        expect(normalizedRoute.title).toBe(mockRoutes.title);
+        expect(normalizedRoute.isVisible).toBe(mockRoutes.isVisible);
+        expect(normalizedRoute.isNavVisible).toBe(mockRoutes.isNavVisible);
+        expect(normalizedRoute.layout).toBe(mockRoutes.layout);
+        expect(normalizedRoute.roles).toEqual(mockRoutes.roles);
         expect(normalizedRoute.component).toBeDefined();
         expect(normalizedRoute.componentProps).toBeNull();
         expect(normalizedRoute.items).toHaveLength(1);
-        expect(normalizedRoute.items[0].id).toBe('about');
-        expect(normalizedRoute.items[0].path).toBe('/about');
-        expect(normalizedRoute.items[0].label).toBe('About Us');
-        expect(normalizedRoute.items[0].title).toBe('About Us');
-        expect(normalizedRoute.items[0].isVisible).toBe(true);
-        expect(normalizedRoute.items[0].isNavVisible).toBe(true);
-        expect(normalizedRoute.items[0].layout).toBe('main');
-        expect(normalizedRoute.items[0].roles).toEqual(['user']);
+        expect(normalizedRoute.items[0].id).toBe(mockRoutes.items[0].id);
+        expect(normalizedRoute.items[0].path).toBe(mockRoutes.items[0].path);
+        expect(normalizedRoute.items[0].label).toBe(mockRoutes.items[0].label);
+        expect(normalizedRoute.items[0].title).toBe(mockRoutes.items[0].title);
+        expect(normalizedRoute.items[0].isVisible).toBe(mockRoutes.items[0].isVisible);
+        expect(normalizedRoute.items[0].isNavVisible).toBe(mockRoutes.items[0].isNavVisible);
+        expect(normalizedRoute.items[0].layout).toBe(mockRoutes.items[0].layout);
+        expect(normalizedRoute.items[0].roles).toEqual(mockRoutes.items[0].roles);
         expect(normalizedRoute.items[0].component).toBeDefined();
         expect(normalizedRoute.items[0].componentProps).toBeNull();
     });
+
+    it('should normalize object recursively with defaultItem/parentItem', () => {
+        const defaultItem = {roles: ['admin'], layout: 'test-second', test: 'second-test', isVisible: false, isNavVisible: false};
+        const parentItem = {roles: ['user'], layout: 'test-first', test: 'first-test'};
+        const normalizedRoute = walkRoutesRecursive({}, defaultItem, parentItem);
+
+        expect(normalizedRoute.roles).toBe(parentItem.roles);
+        expect(normalizedRoute.roles).not.toBe(defaultItem.roles);
+
+        expect(normalizedRoute.layout).toBe(parentItem.layout);
+        expect(normalizedRoute.roles).not.toBe(defaultItem.layout);
+
+        expect(normalizedRoute.isVisible).toBe(defaultItem.isVisible);
+        expect(normalizedRoute.isNavVisible).toBe(defaultItem.isNavVisible);
+    });
 });
 
-describe('findRedirectPathRecursive', () => {
+describe('Function findRedirectPathRecursive', () => {
     it('returns null when passed an empty object', () => {
         expect(findRedirectPathRecursive({})).toBeNull();
     });
@@ -97,7 +128,7 @@ describe('findRedirectPathRecursive', () => {
     });
 });
 
-describe('treeToList', () => {
+describe('Function treeToList', () => {
     it('should return an empty array for an empty input', () => {
         const input = [];
         const result = treeToList(input);
@@ -116,7 +147,7 @@ describe('treeToList', () => {
         expect(result).toEqual([input]);
     });
 
-    it('should flatten a tree with one level of nesting', () => {
+    it('should get a leaf from a tree with one level of nesting', () => {
         const input = {
             id: '1',
             path: '/path',
@@ -139,29 +170,41 @@ describe('treeToList', () => {
         expect(result[0].id).toBe('root');
     });
 
-    // it('should flatten a tree with multiple levels of nesting', () => {
-    //     const input = {
-    //         id: '1',
-    //         path: '/path',
-    //         items: [
-    //             {
-    //                 id: '2',
-    //                 path: '/path2',
-    //                 items: [
-    //                     {id: '3', path: '/path3'},
-    //                     {id: '4', path: '/path4'},
-    //                 ],
-    //             },
-    //             {id: '5', path: '/path5'},
-    //         ],
-    //     };
-    //     const result = treeToList(input);
-    //     expect(result).toEqual([
-    //         {id: '1', path: '/path'},
-    //         {id: '2', path: '/path2'},
-    //         {id: '3', path: '/path3'},
-    //         {id: '4', path: '/path4'},
-    //         {id: '5', path: '/path5'},
-    //     ]);
-    // });
+    it('should get a leaf from a tree with several levels of nesting', () => {
+        const input = {
+            id: '1',
+            path: '/path',
+            items: [
+                {
+                    id: '2',
+                    path: '/path2',
+                    items: [{id: '3', path: '/path3'}, {id: '4', path: '/path4'}],
+                },
+                {id: '5', path: '/path5'},
+            ],
+        };
+        const result = treeToList(input);
+        expect(result).toEqual([
+            {
+                id: '1',
+                path: '/path',
+                items: [
+                    {
+                        id: '2',
+                        path: '/path2',
+                        items: [{id: '3', path: '/path3'}, {id: '4', path: '/path4'}],
+                    },
+                    {id: '5', path: '/path5'},
+                ],
+            },
+            {
+                id: '2',
+                path: '/path2',
+                items: [{id: '3', path: '/path3'}, {id: '4', path: '/path4'}],
+            },
+            {id: '3', path: '/path3'},
+            {id: '4', path: '/path4'},
+            {id: '5', path: '/path5'},
+        ]);
+    });
 });

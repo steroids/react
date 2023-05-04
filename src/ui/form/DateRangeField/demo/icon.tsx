@@ -16,12 +16,12 @@ export default () => (
         />
         <DateRangeField
             label='With error'
-            icon='plane'
+            icon='user'
             errors={['Error 1 text']}
         />
         <DateRangeField
             label='Custom'
-            icon='dizzy'
+            icon='map'
         />
     </>
 );

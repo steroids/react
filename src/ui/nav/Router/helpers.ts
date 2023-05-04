@@ -21,7 +21,11 @@ export const findRedirectPathRecursive = (route: IRouteItem) => {
         : null;
 };
 
-export const walkRoutesRecursive = (item, defaultItem: any = {}, parentItem: any = {}) => {
+export const walkRoutesRecursive = (
+    item: IRouteItem | Record<string, any>,
+    defaultItem: any = {},
+    parentItem: any = {},
+) => {
     const normalizedItem = {
         ...defaultItem,
         ...item,
@@ -50,7 +54,7 @@ export const walkRoutesRecursive = (item, defaultItem: any = {}, parentItem: any
 
     let items = null;
     if (_isArray(item.items)) {
-        items = item.items.map(i => walkRoutesRecursive(i, defaultItem, normalizedItem));
+        items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
             .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem));
@@ -61,7 +65,10 @@ export const walkRoutesRecursive = (item, defaultItem: any = {}, parentItem: any
     };
 };
 
-export const treeToList = (item, isRoot = true) => {
+export const treeToList = (
+    item: IRouteItem | Record<string, any>,
+    isRoot = true,
+) => {
     if (_isArray(item)) {
         return item;
     }
@@ -70,8 +77,8 @@ export const treeToList = (item, isRoot = true) => {
     }
     let items = item.path ? [item] : [];
     if (_isArray(item.items)) {
-        item.items.forEach(sub => {
-            items = items.concat(treeToList(sub, false));
+        item.items.forEach(subItem => {
+            items = items.concat(treeToList(subItem, false));
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).forEach(id => {

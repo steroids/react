@@ -55,13 +55,18 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
     onItemHover: (id: PrimaryKey | any) => void,
 }
 
-const getCategories = (items) => items.reduce((allCategories, item) => {
-    if (item.category && !allCategories.includes(item.category)) {
-        allCategories.push(item.category);
+const getCategories = (items) => {
+    if (!items) {
+        return [];
     }
+    return items.reduce((allCategories, item) => {
+        if (item.category && !allCategories.includes(item.category)) {
+            allCategories.push(item.category);
+        }
 
-    return allCategories;
-}, []);
+        return allCategories;
+    }, []);
+};
 
 function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();

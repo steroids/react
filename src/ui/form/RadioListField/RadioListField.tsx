@@ -57,6 +57,7 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
     selectedIds: (PrimaryKey | any)[],
     className?: CssClassName,
     orientation?: Orientation,
+    disabled?: boolean,
     size?: Size,
     onItemSelect: (id: PrimaryKey | any) => void,
     renderRadio: (radioProps: IRadioFieldViewProps) => JSX.Element;

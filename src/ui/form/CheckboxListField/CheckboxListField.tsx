@@ -58,6 +58,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,
     orientation?: Orientation,
+    disabled?: boolean,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
 }
 
@@ -133,7 +134,7 @@ CheckboxListField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    multiple: false,
+    multiple: true,
     orientation: 'vertical',
 };
 

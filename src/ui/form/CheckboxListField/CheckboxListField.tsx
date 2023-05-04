@@ -133,7 +133,7 @@ CheckboxListField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    multiple: false,
+    multiple: true,
     orientation: 'vertical',
 };
 

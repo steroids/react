@@ -184,6 +184,9 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
 AutoCompleteField.defaultProps = {
     primaryKey: 'label',
     autoComplete: true,
+    multiple: false,
+    disabled: false,
+    required: false,
     size: 'md',
 };
 

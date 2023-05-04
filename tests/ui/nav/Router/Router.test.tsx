@@ -6,6 +6,7 @@ import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpe
 import LoaderMockView from '../../layout/Loader/LoaderMockView';
 
 describe('Router tests', () => {
+    const textPage = 'Contacts page';
     const props = {
         wrapperView: 'test-wrapper',
         autoScrollTop: false,
@@ -21,7 +22,7 @@ describe('Router tests', () => {
                 {
                     id: 'contacts',
                     path: '/contacts',
-                    component: () => <div>Contacts page</div>,
+                    component: () => <div>{textPage}</div>,
                 },
             ],
         },
@@ -43,7 +44,7 @@ describe('Router tests', () => {
     it('should redirect', () => {
         props.routes.redirectTo = true;
         const {getByText} = render(JSXWrapper(Router, props));
-        const testComponent = getByText('Contacts page');
+        const testComponent = getByText(textPage);
 
         expect(testComponent).toBeInTheDocument();
     });

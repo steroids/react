@@ -91,7 +91,7 @@ export default function Controls(props: IControlsProps): JSX.Element {
             outline: true,
         },
         update: {
-            icon: 'edit_duotone_8',
+            icon: 'edit',
             label: __('Редактировать'),
             color: 'secondary',
             outline: true,

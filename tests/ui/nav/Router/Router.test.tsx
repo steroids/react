@@ -31,7 +31,6 @@ describe('Router tests', () => {
     const expectedLoaderClass = 'LoaderView__loader';
 
     it('should be component/componentProps and wrapper', () => {
-        props.routes.redirectTo = false;
         const {container} = render(JSXWrapper(Router, props));
         const wrapper = getElementByTag(container, props.wrapperView);
         const component = getElementByClassName(container, expectedLoaderClass);
@@ -44,8 +43,8 @@ describe('Router tests', () => {
     it('should redirect', () => {
         props.routes.redirectTo = true;
         const {getByText} = render(JSXWrapper(Router, props));
-        const testComponent = getByText(textPage);
+        const component = getByText(textPage);
 
-        expect(testComponent).toBeInTheDocument();
+        expect(component).toBeInTheDocument();
     });
 });

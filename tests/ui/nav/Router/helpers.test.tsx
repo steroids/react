@@ -31,9 +31,29 @@ describe('Function walkRoutesRecursive', () => {
         ],
     };
 
+    it('if the isVisible and isNavVisible fields are not set for the child element, then they are set as for the parent props', () => {
+        const route = {isVisible: undefined, isNavVisible: undefined};
+        const defaultItem = {};
+        const parentItem = {isVisible: true, isNavVisible: false};
+        const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
+
+        expect(normalizedRoute.isVisible).toBe(true);
+        expect(normalizedRoute.isNavVisible).toBe(false);
+    });
+
+    it('normalization of the path if the path in the parent and child paths is passed', () => {
+        const route = {path: 'about'};
+        const defaultItem = {};
+        const parentItem = {path: '/root'};
+        const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
+
+        expect(normalizedRoute.path).toBe('/root/about');
+    });
+
     it('should recursively normalize an object with an empty object', () => {
-        const item = {};
-        const normalizedRoute = walkRoutesRecursive(item);
+        const route = {};
+        const normalizedRoute = walkRoutesRecursive(route);
+
         expect(normalizedRoute.id).toBeUndefined();
         expect(normalizedRoute.exact).toBeUndefined();
         expect(normalizedRoute.path).toBeUndefined();
@@ -49,6 +69,9 @@ describe('Function walkRoutesRecursive', () => {
 
     it('should normalize the object and items recursively without defaultItem/parentItem', () => {
         const normalizedRoute = walkRoutesRecursive(mockRoutes);
+        const normalizedRouteItem = normalizedRoute.items[0];
+        const mockRoutesItem = mockRoutes.items[0];
+        const itemsCount = 1;
 
         expect(normalizedRoute.id).toBe(mockRoutes.id);
         expect(normalizedRoute.exact).toBe(mockRoutes.exact);
@@ -61,23 +84,24 @@ describe('Function walkRoutesRecursive', () => {
         expect(normalizedRoute.roles).toEqual(mockRoutes.roles);
         expect(normalizedRoute.component).toBeDefined();
         expect(normalizedRoute.componentProps).toBeNull();
-        expect(normalizedRoute.items).toHaveLength(1);
-        expect(normalizedRoute.items[0].id).toBe(mockRoutes.items[0].id);
-        expect(normalizedRoute.items[0].path).toBe(mockRoutes.items[0].path);
-        expect(normalizedRoute.items[0].label).toBe(mockRoutes.items[0].label);
-        expect(normalizedRoute.items[0].title).toBe(mockRoutes.items[0].title);
-        expect(normalizedRoute.items[0].isVisible).toBe(mockRoutes.items[0].isVisible);
-        expect(normalizedRoute.items[0].isNavVisible).toBe(mockRoutes.items[0].isNavVisible);
-        expect(normalizedRoute.items[0].layout).toBe(mockRoutes.items[0].layout);
-        expect(normalizedRoute.items[0].roles).toEqual(mockRoutes.items[0].roles);
-        expect(normalizedRoute.items[0].component).toBeDefined();
-        expect(normalizedRoute.items[0].componentProps).toBeNull();
+        expect(normalizedRoute.items).toHaveLength(itemsCount);
+        expect(normalizedRouteItem.id).toBe(mockRoutesItem.id);
+        expect(normalizedRouteItem.path).toBe(mockRoutesItem.path);
+        expect(normalizedRouteItem.label).toBe(mockRoutesItem.label);
+        expect(normalizedRouteItem.title).toBe(mockRoutesItem.title);
+        expect(normalizedRouteItem.isVisible).toBe(mockRoutesItem.isVisible);
+        expect(normalizedRouteItem.isNavVisible).toBe(mockRoutesItem.isNavVisible);
+        expect(normalizedRouteItem.layout).toBe(mockRoutesItem.layout);
+        expect(normalizedRouteItem.roles).toEqual(mockRoutesItem.roles);
+        expect(normalizedRouteItem.component).toBeDefined();
+        expect(normalizedRouteItem.componentProps).toBeNull();
     });
 
     it('should normalize object recursively with defaultItem/parentItem', () => {
+        const route = {};
         const defaultItem = {roles: ['admin'], layout: 'test-second', test: 'second-test', isVisible: false, isNavVisible: false};
         const parentItem = {roles: ['user'], layout: 'test-first', test: 'first-test'};
-        const normalizedRoute = walkRoutesRecursive({}, defaultItem, parentItem);
+        const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
 
         expect(normalizedRoute.roles).toBe(parentItem.roles);
         expect(normalizedRoute.roles).not.toBe(defaultItem.roles);
@@ -92,63 +116,72 @@ describe('Function walkRoutesRecursive', () => {
 
 describe('Function findRedirectPathRecursive', () => {
     it('returns null when passed an empty object', () => {
-        expect(findRedirectPathRecursive({})).toBeNull();
+        const emptyRoute = {};
+        expect(findRedirectPathRecursive(emptyRoute)).toBeNull();
     });
 
     it('returns the first nested route path when passed an object with redirectTo equal to true', () => {
+        const nestedPath = '/nested-route';
+        const anotherNestedPath = '/another-nested-route';
         const route = {
             redirectTo: true,
             items: [
-                {path: '/nested-route'},
-                {path: '/another-nested-route'},
+                {path: nestedPath},
+                {path: anotherNestedPath},
             ],
         };
-        const result = findRedirectPathRecursive(route);
-        expect(result).toEqual('/nested-route');
+        const redirectPath = findRedirectPathRecursive(route);
+        expect(redirectPath).toEqual(nestedPath);
     });
 
     it('returns the redirectTo path when passed an object with redirectTo equal to a string', () => {
-        const route = {redirectTo: '/redirect-path'};
-        expect(findRedirectPathRecursive(route)).toBe('/redirect-path');
+        const redirectPath = '/redirect-path';
+        const route = {redirectTo: redirectPath};
+        expect(findRedirectPathRecursive(route)).toBe(redirectPath);
     });
 
     it('returns the path when passed an object with path equal to a string', () => {
-        const route = {path: '/some-path'};
-        expect(findRedirectPathRecursive(route)).toBe('/some-path');
+        const somePath = '/some-path';
+        const route = {path: somePath};
+        expect(findRedirectPathRecursive(route)).toBe(somePath);
     });
 
     it('returns empty string when passed an object with path equal to an empty string', () => {
-        const route = {path: ''};
-        expect(findRedirectPathRecursive(route)).toBe('');
+        const emptyPath = '';
+        const route = {path: emptyPath};
+        expect(findRedirectPathRecursive(route)).toBe(emptyPath);
     });
 
     it('returns null value when passing an object without a path', () => {
-        const route = {items: []};
-        expect(findRedirectPathRecursive(route)).toBeNull();
+        const routeWithoutPath = {id: '1'};
+        expect(findRedirectPathRecursive(routeWithoutPath)).toBeNull();
     });
 });
 
 describe('Function treeToList', () => {
-    it('should return an empty array for an empty input', () => {
-        const input = [];
-        const result = treeToList(input);
-        expect(result).toEqual([]);
+    it('should return an empty array for an empty free', () => {
+        const free = [];
+        const list = treeToList(free);
+        const expectedList = [];
+        expect(list).toEqual(expectedList);
     });
 
     it('should convert a single item to an empty array if he dont have path', () => {
-        const input = {id: '1'};
-        const result = treeToList(input);
-        expect(result).toEqual([]);
+        const free = {id: '1'};
+        const list = treeToList(free);
+        const expectedList = [];
+        expect(list).toEqual(expectedList);
     });
 
     it('should convert a single item to an array if he have path', () => {
-        const input = {id: '1', path: '/path'};
-        const result = treeToList(input);
-        expect(result).toEqual([input]);
+        const free = {id: '1', path: '/path'};
+        const list = treeToList(free);
+        const expectedList = [free];
+        expect(list).toEqual(expectedList);
     });
 
     it('should get a leaf from a tree with one level of nesting', () => {
-        const input = {
+        const free = {
             id: '1',
             path: '/path',
             items: [
@@ -156,8 +189,8 @@ describe('Function treeToList', () => {
                 {id: '3', path: '/path3'},
             ],
         };
-        const result = treeToList(input);
-        expect(result).toEqual([
+        const list = treeToList(free);
+        expect(list).toEqual([
             {id: '1', path: '/path', items: [{id: '2', path: '/path2'}, {id: '3', path: '/path3'}]},
             {id: '2', path: '/path2'},
             {id: '3', path: '/path3'},
@@ -165,13 +198,13 @@ describe('Function treeToList', () => {
     });
 
     it('should add root item with id "root" when isRoot is true and item.id is falsy', () => {
-        const input = {path: '/path'};
-        const result = treeToList(input);
-        expect(result[0].id).toBe('root');
+        const free = {path: '/path'};
+        const list = treeToList(free);
+        expect(list[0].id).toBe('root');
     });
 
     it('should get a leaf from a tree with several levels of nesting', () => {
-        const input = {
+        const free = {
             id: '1',
             path: '/path',
             items: [
@@ -183,8 +216,8 @@ describe('Function treeToList', () => {
                 {id: '5', path: '/path5'},
             ],
         };
-        const result = treeToList(input);
-        expect(result).toEqual([
+        const list = treeToList(free);
+        expect(list).toEqual([
             {
                 id: '1',
                 path: '/path',

@@ -1,14 +1,28 @@
 import * as React from 'react';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isString from 'lodash-es/isString';
+import _isPlainObject from 'lodash-es/isPlainObject';
+import _get from 'lodash-es/get';
 import {useCallback, useMemo} from 'react';
+import {ILinkProps} from 'src/ui/nav/Link/Link';
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, ListControlPosition} from '../../../hooks/useList';
 import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';
 
+export interface IContentColumnViewProps extends IGridColumn {
+    item: Record<string, any>,
+    size: Size,
+    primaryKey: string,
+    listId: string,
+    model: string,
+
+    [key: string]: any
+}
+
 export interface IGridColumn {
+
     /**
      * Атрибут колонки, по которому происходит поиск нужного свойства в items и нужного поля в SearchForm
      * @example 'Name'
@@ -59,7 +73,7 @@ export interface IGridColumn {
      * Компонент для кастомизации отображения значения в ячейке
      * @example MyCustomView
      */
-    valueView?: any,
+    valueView?: any | 'ContentColumnView',
 
     /**
      * Свойства для компонента отображения значения в ячейке
@@ -76,6 +90,40 @@ export interface IGridColumn {
      * @example true
      */
     sortable?: boolean,
+
+    /**
+     * Название свойства в items, которое будет использовано как subtitle
+     * @example 'name'
+     */
+    subtitleAttribute?: string,
+
+    /**
+     * Параметры для ссылки в колонке
+    * @example {attribute: 'name', linkProps: {target: 'blank'}, url: 'https://kozhindev.com'}
+    */
+    link?: {
+        attribute: string,
+        linkProps?: ILinkProps,
+        urlAttribute: string,
+    },
+
+    /**
+    * Параметры для иконки в колонке
+    * @example {attribute: 'icon', isLeft: true}
+    */
+    icon?: {
+        attribute: string,
+        isLeft?: boolean,
+    },
+
+    /**
+    *  Параметры для картинки в колонке
+    * @example {attribute: 'icon', isLeft: true}
+    */
+    picture?: {
+        attribute: string,
+        isLeft?: boolean,
+    },
 }
 
 /**
@@ -107,6 +155,16 @@ export interface IGridProps extends IListConfig {
      * должно быть задано свойство index
      */
     itemsIndexing?: any;
+
+    /**
+     * Размер Grid
+     */
+    size?: Size,
+
+    /**
+     * Включает переменные цвета для строк в таблице
+     */
+    hasAlternatingColors?: boolean,
 
     [key: string]: any;
 }
@@ -194,17 +252,29 @@ export default function Grid(props: IGridProps): JSX.Element {
         return attributeMeta ? attributeMeta.label : _upperFirst(column.attribute);
     }, [model, props.listId, searchModel]);
 
-    const renderValue = useCallback((item, column) => {
+    const renderValue = useCallback((item, column: IGridColumn) => {
         // Custom component
         if (column.valueView) {
-            const ValueView = column.valueView;
+            const isValueViewString = typeof column.valueView === 'string';
+
+            const ValueView = isValueViewString ? components.ui.getView(`list.${column.valueView}`) : column.valueView;
+
+            const viewProps = {
+                ...column,
+                ...column.valueProps,
+                listId: props.listId,
+                primaryKey: props.primaryKey,
+                item,
+                size: props.size,
+            };
+
+            if (isValueViewString) {
+                return components.ui.renderView(ValueView, viewProps);
+            }
+
             return (
                 <ValueView
-                    {...column}
-                    {...column.valueProps}
-                    listId={props.listId}
-                    primaryKey={props.primaryKey}
-                    item={item}
+                    {...viewProps}
                 />
             );
         }
@@ -263,3 +333,8 @@ export default function Grid(props: IGridProps): JSX.Element {
         items: list?.items || [],
     });
 }
+
+Grid.defaultProps = {
+    size: 'md',
+    hasAlternatingColors: true,
+};

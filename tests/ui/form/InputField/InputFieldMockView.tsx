@@ -1,13 +1,12 @@
 import * as React from 'react';
 
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputField';
 import Icon from '../../../../src/ui/content/Icon';
 import {useBem} from '../../../../src/hooks';
 import IconMockView from '../../content/Icon/IconMockView';
 import renderIcon from '../../../mocks/renderIconMock';
 
-export default function InputFieldView(props: IInputFieldViewProps & IBemHocOutput) {
+export default function InputFieldView(props: IInputFieldViewProps) {
     const bem = useBem('InputFieldView');
 
     const renderLeadIcon = React.useCallback(() => {

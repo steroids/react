@@ -9,6 +9,11 @@ import {useComponents, useForm} from '../../../hooks';
 export interface IFieldLayoutProps {
 
     /**
+     * Дополнительный CSS-класс
+     */
+    className?: CssClassName;
+
+    /**
      * Название поля либо отмена отображение поля (false)
      * @example 'Visible'
      */
@@ -57,6 +62,7 @@ export interface IFieldLayoutViewProps {
     id: string,
     size: Size,
     children?: React.ReactNode
+    className?: string,
 }
 
 function FieldLayout(props: IFieldLayoutProps): JSX.Element {

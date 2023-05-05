@@ -1,6 +1,5 @@
-import * as React from 'react';
-import {useMemo, useState} from 'react';
-import {IInputFieldProps} from '../InputField/InputField';
+import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -8,7 +7,7 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
  * PasswordField
  * Поле ввода пароля
  */
-export interface IPasswordFieldProps extends IInputFieldProps {
+export interface IPasswordFieldProps extends IBaseFieldProps {
 
     /**
      * Если true, то отображается шкала сложности пароля
@@ -20,21 +19,17 @@ export interface IPasswordFieldProps extends IInputFieldProps {
      * Если true, то отображается иконка скрытия/показа пароля
      */
     showSecurityIcon?: boolean;
-
-    [key: string]: any;
 }
 
 export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: Event | React.ChangeEvent) => void,
+        onChange: (value: Event | ChangeEvent) => void,
         value: string | number,
         placeholder: string,
         disabled: boolean,
     },
-    errors?: string[],
-    className?: CssClassName,
     onClear?: () => void,
     securityLevel?: 'success' | 'warning' | 'danger',
     onShowPassword: () => void,
@@ -74,7 +69,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     const components = useComponents();
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
@@ -98,9 +93,6 @@ PasswordField.defaultProps = {
     showSecurityBar: false,
     showSecurityIcon: true,
     required: false,
-    className: '',
-    placeholder: '',
-    errors: null,
     size: 'md',
 };
 

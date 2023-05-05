@@ -2,8 +2,7 @@ import * as React from 'react';
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import {IFileHocInput, IFileHocOutput} from '../../../hoc/file';
-import useFile from '../../../hooks/useFile';
+import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IButtonProps} from '../Button/Button';
@@ -13,7 +12,7 @@ export enum FilesLayout {
     wall = 'wall',
 }
 
-interface IFileFieldCommonProps extends IFileHocInput, IFileHocOutput{
+interface IFileFieldCommonProps extends IFileInput {
     /**
      * Показать значок удаление файла
      * @example true
@@ -30,7 +29,7 @@ interface IFileFieldCommonProps extends IFileHocInput, IFileHocOutput{
      * Вариант отображения файлов
      * @example 'list'
      */
-    filesLayout?: FilesLayout;
+    filesLayout?: FilesLayout | string;
 }
 
 export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps {

@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {useEffect, useRef} from 'react';
 import {ITooltipViewProps} from '../../../../src/ui/layout/Tooltip/Tooltip';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {useBem} from '../../../../src/hooks';
 
 interface ITooltipMockViewProps extends ITooltipViewProps {
     testId: string,
 }
 
-export default function TooltipView(props: ITooltipMockViewProps & IBemHocOutput) {
+export default function TooltipView(props: ITooltipMockViewProps) {
     const tooltipRef = useRef(null);
     const arrowRef = useRef(null);
 

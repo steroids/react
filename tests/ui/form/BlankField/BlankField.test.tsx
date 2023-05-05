@@ -3,26 +3,9 @@ import React from 'react';
 import {render} from '../../../customRender';
 import {JSXWrapper, getElementByClassName} from '../../../helpers';
 import BlankField from '../../../../src/ui/form/BlankField';
-import AutoCompleteField from '../../../../src/ui/form/AutoCompleteField';
+import InputField from '../../../../src/ui/form/InputField';
 
 describe('BlankField tests', () => {
-    const items = [
-        {
-            id: '1',
-            label: 'Moscow',
-        },
-        {
-            id: '2',
-            label: 'Krasnoyarsk',
-        },
-        {
-            id: '3',
-            label: 'Krasnodar',
-        },
-    ];
-
-    const expectedAutoCompleteFieldClass = 'AutoCompleteFieldView';
-
     it('should have correct text', () => {
         const text = 'test-text';
         const {getByText} = render(JSXWrapper(BlankField, {text}));
@@ -32,9 +15,10 @@ describe('BlankField tests', () => {
     });
 
     it('should have correct children', () => {
-        const children = <AutoCompleteField items={items} />;
+        const expectedChildrenClass = 'InputFieldView';
+        const children = <InputField />;
         const {container} = render(JSXWrapper(BlankField, {children}));
-        const testChildren = getElementByClassName(container, expectedAutoCompleteFieldClass);
+        const testChildren = getElementByClassName(container, expectedChildrenClass);
 
         expect(testChildren).toBeInTheDocument();
     });

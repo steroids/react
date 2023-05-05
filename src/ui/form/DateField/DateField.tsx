@@ -88,6 +88,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         disabled: props.disabled,
         className: props.className,
         showRemove: props.showRemove,
+        style: props.style,
     });
 }
 
@@ -98,6 +99,7 @@ DateField.defaultProps = {
     required: false,
     showRemove: true,
     valueFormat: 'YYYY-MM-DD',
+    size: 'md',
 };
 
 export default fieldWrapper<IDateFieldProps>('DateField', DateField);

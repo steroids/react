@@ -8,5 +8,5 @@ import DateTimeRangeField from '../DateTimeRangeField';
  */
 
 export default () => (
-    <DateTimeRangeField icon='plane' />
+    <DateTimeRangeField icon='user' />
 );

@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {IBemHocInput} from '../../../../src/hoc/bem';
 import {render} from '../../../customRender';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 import SwitcherField, {ISwitcherFieldProps} from '../../../../src/ui/form/SwitcherField/SwitcherField';
@@ -31,7 +30,7 @@ describe('SwitcherField tests', () => {
         itemWithDefaultLabel, itemWithObjectLabel,
     ];
 
-    const props: ISwitcherFieldProps & IBemHocInput = {
+    const props: ISwitcherFieldProps = {
         view: SwitcherFieldMockView,
         className: externalClassName,
         style: externalStyles,
@@ -79,10 +78,13 @@ describe('SwitcherField tests', () => {
             items: [itemWithObjectLabel],
         }));
 
+        const switcherItemWithUncheckedLabel = getByText(itemWithObjectLabel.label.unchecked);
+        expect(switcherItemWithUncheckedLabel).toBeInTheDocument();
+
         const switcherItemInput = getElementByClassName(container, `${expectedSwitcherFieldClassName}__input`);
         fireEvent.click(switcherItemInput);
 
-        const switcherItemWithChangedText = getByText(itemWithObjectLabel.label.checked);
-        expect(switcherItemWithChangedText).toBeInTheDocument();
+        const switcherItemWithCheckedLabel = getByText(itemWithObjectLabel.label.checked);
+        expect(switcherItemWithCheckedLabel).toBeInTheDocument();
     });
 });

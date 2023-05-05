@@ -24,26 +24,13 @@ export interface ISwitcherItem {
  * Список с кнопками. Используется для выбора одного значения.
  */
 export interface ISwitcherFieldProps extends IFieldWrapperInputProps,
-    IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
+    IDataProviderConfig, Omit<IDataSelectConfig, 'items'>, IUiComponent {
 
     /**
     * Свойства для элемента \<input /\>
     * @example {onKeyDown: ...}
     */
     inputProps?: any,
-
-    /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    style?: CustomStyle,
 }
 
 export interface ISwitcherFieldViewProps extends IFieldWrapperOutputProps, Omit<ISwitcherFieldProps, 'items'> {

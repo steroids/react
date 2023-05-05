@@ -1,10 +1,9 @@
 import * as React from 'react';
 import _isPlainObject from 'lodash-es/isPlainObject';
-import {IBemHocOutput} from '../../../../src/hoc/bem';
 import {ISwitcherFieldViewProps, ISwitcherItem} from '../../../../src/ui/form/SwitcherField/SwitcherField';
 import {useBem, useUniqueId} from '../../../../src/hooks';
 
-export default function SwitcherFieldView(props: ISwitcherFieldViewProps & IBemHocOutput) {
+export default function SwitcherFieldView(props: ISwitcherFieldViewProps) {
     const bem = useBem('SwitcherFieldView');
     const prefix = useUniqueId('switcher');
 

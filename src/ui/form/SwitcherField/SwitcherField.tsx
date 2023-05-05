@@ -44,8 +44,6 @@ export interface ISwitcherFieldProps extends IFieldWrapperInputProps,
     view?: CustomView;
 
     style?: CustomStyle,
-
-    [key: string]: any;
 }
 
 export interface ISwitcherFieldViewProps extends IFieldWrapperOutputProps, Omit<ISwitcherFieldProps, 'items'> {

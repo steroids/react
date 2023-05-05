@@ -6,7 +6,7 @@ import {getElementByClassName, JSXWrapper} from '../../../helpers';
 import SwitcherField, {ISwitcherFieldProps} from '../../../../src/ui/form/SwitcherField/SwitcherField';
 import SwitcherFieldMockView from './SwitcherFieldMockView';
 
-describe('CheckboxField tests', () => {
+describe('SwitcherField tests', () => {
     const expectedSwitcherFieldClassName = 'SwitcherFieldView';
     const externalClassName = 'test-class';
 

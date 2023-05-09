@@ -159,29 +159,29 @@ describe('Function findRedirectPathRecursive', () => {
 });
 
 describe('Function treeToList', () => {
-    it('should return an empty array for an empty free', () => {
-        const free = [];
-        const list = treeToList(free);
+    it('should return an empty array for an empty tree', () => {
+        const tree = [];
+        const list = treeToList(tree);
         const expectedList = [];
         expect(list).toEqual(expectedList);
     });
 
     it('should convert a single item to an empty array if he dont have path', () => {
-        const free = {id: '1'};
-        const list = treeToList(free);
+        const tree = {id: '1'};
+        const list = treeToList(tree);
         const expectedList = [];
         expect(list).toEqual(expectedList);
     });
 
     it('should convert a single item to an array if he have path', () => {
-        const free = {id: '1', path: '/path'};
-        const list = treeToList(free);
-        const expectedList = [free];
+        const tree = {id: '1', path: '/path'};
+        const list = treeToList(tree);
+        const expectedList = [tree];
         expect(list).toEqual(expectedList);
     });
 
     it('should get a leaf from a tree with one level of nesting', () => {
-        const free = {
+        const tree = {
             id: '1',
             path: '/path',
             items: [
@@ -189,7 +189,7 @@ describe('Function treeToList', () => {
                 {id: '3', path: '/path3'},
             ],
         };
-        const list = treeToList(free);
+        const list = treeToList(tree);
         expect(list).toEqual([
             {id: '1', path: '/path', items: [{id: '2', path: '/path2'}, {id: '3', path: '/path3'}]},
             {id: '2', path: '/path2'},
@@ -198,13 +198,13 @@ describe('Function treeToList', () => {
     });
 
     it('should add root item with id "root" when isRoot is true and item.id is falsy', () => {
-        const free = {path: '/path'};
-        const list = treeToList(free);
+        const tree = {path: '/path'};
+        const list = treeToList(tree);
         expect(list[0].id).toBe('root');
     });
 
     it('should get a leaf from a tree with several levels of nesting', () => {
-        const free = {
+        const tree = {
             id: '1',
             path: '/path',
             items: [
@@ -216,7 +216,7 @@ describe('Function treeToList', () => {
                 {id: '5', path: '/path5'},
             ],
         };
-        const list = treeToList(free);
+        const list = treeToList(tree);
         expect(list).toEqual([
             {
                 id: '1',

@@ -91,9 +91,10 @@ export default function Icon(props: IIconProps): JSX.Element {
         }
 
         if (!icon) {
+            const DEFAULT_ICON_NAME = 'default_24x24';
             // eslint-disable-next-line no-console
             console.warn('Not found icon with name "' + name + '"');
-            icon = components.ui.getIcon('default_24x24');
+            icon = components.ui.getIcon(DEFAULT_ICON_NAME);
         }
     }
 

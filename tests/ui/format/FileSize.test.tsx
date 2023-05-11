@@ -5,7 +5,7 @@ import DefaultFormatterMockView from './DefaultFormatterMockView';
 import {JSXWrapper} from '../../helpers';
 import {render} from '../../customRender';
 
-describe('EnumFormatter tests', () => {
+describe('FileSize tests', () => {
     const props = {
         view: DefaultFormatterMockView,
     } as IFileSizeFormatterProps;

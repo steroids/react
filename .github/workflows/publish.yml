@@ -14,9 +14,11 @@ jobs:
           node-version: ^14.15.0 || ^16.10.0 || >=18.0.0
       - run: yarn
       - run: yarn upgrade @steroidsjs/core
+      - run: node build/docs-autogen.js
       - run: yarn tsc
       - run: cp ./{package.json,LICENSE,README.md} dist/
       - run: cp src/index.d.ts dist/
+      - run: cp build/docs-autogen-result.json dist/
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dist/package.json

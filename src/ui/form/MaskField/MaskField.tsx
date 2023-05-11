@@ -1,13 +1,9 @@
 import {useComponents} from '../../../hooks';
 import fieldWrapper from '../Field/fieldWrapper';
+import {IInputFieldProps} from '../InputField/InputField';
 
-export interface IMaskFieldProps extends IUiComponent {
-    view?: CustomView,
+export interface IMaskFieldProps extends IInputFieldProps {
     mask?: string,
-    maskProps?: {
-        maskPlaceholder?: string,
-        alwaysShowMask?: boolean,
-    }
 }
 
 function MaskField(props: IMaskFieldProps): JSX.Element {

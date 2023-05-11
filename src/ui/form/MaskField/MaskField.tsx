@@ -1,7 +1,7 @@
 import {useComponents} from '../../../hooks';
 import fieldWrapper from '../Field/fieldWrapper';
 
-export interface IMaskFieldProps {
+export interface IMaskFieldProps extends IUiComponent {
     view?: CustomView,
     mask?: string,
     maskProps?: {

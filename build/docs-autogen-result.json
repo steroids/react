@@ -1,5 +1,184 @@
 {
     "interfaces": {
+        "IList": {
+            "name": "IList",
+            "moduleName": "actions/list",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "action",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | IApiMethod",
+                    "example": null
+                },
+                {
+                    "name": "actionMethod",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "condition",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "isFetched",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isLoading",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isRemote",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": null
+                },
+                {
+                    "name": "layoutAttribute",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "layoutName",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "null",
+                    "example": null
+                },
+                {
+                    "name": "listId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "loadMore",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "meta",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "onFetch",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "pageAttribute",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "pageSizeAttribute",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "primaryKey",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "scope",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "sortAttribute",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "sourceItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any[]",
+                    "example": null
+                },
+                {
+                    "name": "total",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                }
+            ]
+        },
         "IShowNotificationParameters": {
             "name": "IShowNotificationParameters",
             "moduleName": "actions/notifications",

@@ -21,7 +21,7 @@
   "docs": "node build/docs-autogen.js",
   "test": "jest",
   "lint": "eslint -c ./.eslintrc --ext .js,.jsx,.ts,.tsx ./src ./tests --quiet",
-  "build": "yarn docs && tsc && cp ./{package.json,LICENSE,README.md} dist/ && cp src/index.d.ts dist/ && cp build/docs-autogen-result.json dist/",
+  "build": "tsc && cp ./{package.json,LICENSE,README.md} dist/ && cp src/index.d.ts dist/ && cp build/docs-autogen-result.json dist/",
   "watch": "tsc -p tsconfig-debug.json"
  },
  "dependencies": {

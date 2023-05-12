@@ -12,7 +12,7 @@ export interface ICardProps {
     /**
      * Дочерние элементы
      */
-    children?: CustomView,
+    children?: React.ReactNode,
 
     /**
      * Обложка для карточки, нужно передать ссылку на изображение

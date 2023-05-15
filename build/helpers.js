@@ -278,10 +278,23 @@ const isComponent = (item) => {
         || (kindString === 'Property' && (type.name === 'MemoExoticComponent' || type.name === 'FieldWrapperComponent'));
 };
 
+const changeDeclarationOnType = (interface, declarations) => {
+    const cloneInterface = _.cloneDeep(interface);
+
+    cloneInterface.properties.forEach(property => {
+        if (Object.keys(declarations || {}).includes(property.type)) {
+            property.type = declarations[property.type].type;
+        }
+    });
+
+    return cloneInterface;
+};
+
 module.exports = {
     getInfo,
     getProperty,
     typeToObject,
     typeToString,
     isComponent,
+    changeDeclarationOnType,
 };

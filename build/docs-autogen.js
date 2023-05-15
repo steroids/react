@@ -2,7 +2,7 @@ const path = require('path');
 const typedocModule = require('typedoc');
 const _ = require('lodash');
 const fs = require('fs');
-const {getInfo, getProperty, isComponent} = require('./helpers');
+const {getInfo, getProperty, isComponent, changeDeclarationOnType} = require('./helpers');
 
 const app = new typedocModule.Application();
 
@@ -65,6 +65,10 @@ json.children.forEach(file => {
             docs.declarations[item.name] = getProperty(item);
         }
     });
+});
+
+Object.entries(docs.interfaces).forEach(([interfaceName, interfaceData]) => {
+    docs.interfaces[interfaceName] = changeDeclarationOnType(interfaceData, docs.declarations);
 });
 
 fs.writeFileSync(path.resolve(__dirname, 'docs-autogen-result.json'), JSON.stringify(docs, null, '    '));

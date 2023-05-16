@@ -538,8 +538,8 @@
             "extends": [],
             "properties": []
         },
-        "AutoCompleteConfig": {
-            "name": "AutoCompleteConfig",
+        "IAutoCompleteConfig": {
+            "name": "IAutoCompleteConfig",
             "moduleName": "hooks/useDataProvider",
             "title": "",
             "description": "",
@@ -587,7 +587,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {
@@ -5405,7 +5405,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {
@@ -6929,7 +6929,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {
@@ -9330,7 +9330,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {
@@ -9663,7 +9663,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {
@@ -14621,7 +14621,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {
@@ -16190,7 +16190,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {
@@ -17928,7 +17928,7 @@
                     "decorators": [],
                     "description": "Настройки поиска",
                     "required": false,
-                    "type": "boolean | AutoCompleteConfig",
+                    "type": "boolean | IAutoCompleteConfig",
                     "example": "{enable: true, minLength: 2, delay: 100}"
                 },
                 {

@@ -1449,6 +1449,41 @@
                 }
             ]
         },
+        "ISortProps": {
+            "name": "ISortProps",
+            "moduleName": "hooks/useList",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля сортировки в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "sort"
+                },
+                {
+                    "name": "defaultValue",
+                    "decorators": [],
+                    "description": "Значение сортировки по умолчанию. Нужно указать название свойства, по которому items будут сортироваться,\nа с помощью знака \"-\" задать тип сортировки (со знаком минус - сортировать по убыванию, иначе по возрастанию).",
+                    "required": false,
+                    "type": "string | string[]",
+                    "example": "-price"
+                },
+                {
+                    "name": "enable",
+                    "decorators": [],
+                    "description": "Включить сортировку",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "false"
+                }
+            ]
+        },
         "IUiComponent": {
             "name": "IUiComponent",
             "moduleName": "index",
@@ -2950,6 +2985,33 @@
                 }
             ]
         },
+        "ICounter": {
+            "name": "ICounter",
+            "moduleName": "ui/content/Badge/Badge",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "content",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "isEnable",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                }
+            ]
+        },
         "ICalendarProps": {
             "name": "ICalendarProps",
             "moduleName": "ui/content/Calendar/Calendar",
@@ -3182,6 +3244,49 @@
                 }
             ]
         },
+        "ICardHeader": {
+            "name": "ICardHeader",
+            "moduleName": "ui/content/Card/Card",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "avatar",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IAvatarProps",
+                    "example": null
+                },
+                {
+                    "name": "head",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "menu",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "subhead",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
         "ICardProps": {
             "name": "ICardProps",
             "moduleName": "ui/content/Card/Card",
@@ -3244,7 +3349,7 @@
                     "decorators": [],
                     "description": "Контент хедера",
                     "required": false,
-                    "type": "{avatar: IAvatarProps, head: string, menu: boolean, subhead: string}",
+                    "type": "ICardHeader",
                     "example": null
                 },
                 {
@@ -5883,6 +5988,49 @@
                     "description": "",
                     "required": false,
                     "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IButtonBadge": {
+            "name": "IButtonBadge",
+            "moduleName": "ui/form/Button/Button",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "enable",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
                     "example": null
                 }
             ]
@@ -10449,6 +10597,203 @@
                     "required": true,
                     "type": "boolean",
                     "example": null
+                }
+            ]
+        },
+        "IFieldListItem": {
+            "name": "IFieldListItem",
+            "moduleName": "ui/form/FieldList/FieldList",
+            "title": "FieldList",
+            "description": "Создает список из сгруппированных полей формы",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFieldWrapperInputProps"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для item",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "Какой компонент для item использовать?",
+                    "required": false,
+                    "type": "any",
+                    "example": "NumberField"
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "fieldLayoutClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "headerClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для заголовка",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Input ID для связи поля с label",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "isRenderWithoutFieldLayout",
+                    "decorators": [],
+                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Placeholder подсказка",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок для колонки таблицы.",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения item",
+                    "required": false,
+                    "type": "React.ReactNode | React.FunctionComponent",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "visible",
+                    "decorators": [],
+                    "description": "Будет ли отображён item ?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
                 }
             ]
         },

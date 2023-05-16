@@ -13,7 +13,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
  * FieldList
  * Создает список из сгруппированных полей формы
  */
-interface IFieldListItem extends IFieldWrapperInputProps {
+export interface IFieldListItem extends IFieldWrapperInputProps {
 
     /**
      * Будет ли отображён item ?

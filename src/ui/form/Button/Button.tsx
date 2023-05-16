@@ -6,7 +6,7 @@ import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {useComponents, useForm} from '../../../hooks';
 import {FormContext, IFormContext} from '../Form/Form';
 
-interface IButtonBadge {
+export interface IButtonBadge {
     enable?: boolean,
     value?: number,
     color?: ColorName,

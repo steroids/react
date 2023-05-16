@@ -3,6 +3,13 @@ import {ILinkProps} from 'src/ui/nav/Link/Link';
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../Avatar/Avatar';
 
+export interface ICardHeader {
+    avatar?: IAvatarProps,
+    menu?: boolean,
+    head?: string,
+    subhead?: string,
+}
+
 export interface ICardProps {
     /**
      * Дополнительный CSS-класс
@@ -29,12 +36,7 @@ export interface ICardProps {
     /**
      * Контент хедера
      */
-    header?: {
-        avatar?: IAvatarProps,
-        menu?: boolean,
-        head?: string,
-        subhead?: string,
-    },
+    header?: ICardHeader,
 
     /**
      * Контент футера

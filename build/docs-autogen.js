@@ -2,7 +2,7 @@ const path = require('path');
 const typedocModule = require('typedoc');
 const _ = require('lodash');
 const fs = require('fs');
-const {getInfo, getProperty, isComponent} = require('./helpers');
+const {getInfo, getProperty, isComponent, changeDeclarationOnType} = require('./helpers');
 
 const app = new typedocModule.Application();
 
@@ -54,7 +54,6 @@ json.children.forEach(moduleItem => {
 const docs = {
     interfaces: {},
     declarations: {},
-    demos: {},
     components,
 };
 json.children.forEach(file => {
@@ -66,64 +65,10 @@ json.children.forEach(file => {
             docs.declarations[item.name] = getProperty(item);
         }
     });
+});
 
-    const demoMatch = file.name.match(demoPattern);
-
-    if (demoMatch) {
-        const demoPath = demoMatch[1].split('/');
-        const demoName = demoMatch[2];
-
-        if (file.children) {
-            let order = 0;
-            let col = null;
-            let description = null;
-            const title = null;
-
-            const fileContents = fs
-                .readFileSync(path.resolve(__dirname, '../' + file.sources[0].fileName))
-                .toString();
-
-            const matchOrderTagPattern = /@order\s(.*)$/gmi;
-            const matchColTagPattern = /@col\s(.*)$/gmi;
-            const matchCommentPattern = /[^import]\s\*\s[^@](.*)/gmi;
-
-            const tagMatch = fileContents.match(matchOrderTagPattern);
-            if (tagMatch) {
-                order = tagMatch[0].replace('@order', '').trim();
-            }
-
-            const colMatch = fileContents.match(matchColTagPattern);
-            if (colMatch) {
-                col = colMatch[0].replace('@col', '').trim();
-            }
-
-            const commentMatch = fileContents.match(matchCommentPattern);
-            if (commentMatch) {
-                description = commentMatch.map(cm => cm.replace('*', '').trim()).join('\n');
-            }
-
-            // Store, if not empty
-            if (order > 0 || title || description) {
-                _.set(docs.demos, demoPath.concat(demoName), {
-                    order,
-                    col,
-                    title,
-                    description,
-                });
-            }
-        }
-
-        // Store title, ..
-        /*const {title, description, tags} = findClassDocs(file.children);
-        if (title || description) {
-            _.set(docs.demos, demoPath.concat(demoName), {
-                order: _.toInteger(tags['order']),
-                col: _.toInteger(tags['col']),
-                title,
-                description,
-            });
-        }*/
-    }
+Object.entries(docs.interfaces).forEach(([interfaceName, interfaceData]) => {
+    docs.interfaces[interfaceName] = changeDeclarationOnType(interfaceData, docs.declarations);
 });
 
 fs.writeFileSync(path.resolve(__dirname, 'docs-autogen-result.json'), JSON.stringify(docs, null, '    '));

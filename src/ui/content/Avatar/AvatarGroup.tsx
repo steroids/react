@@ -3,7 +3,7 @@ import {useComponents} from '../../../hooks';
 
 export interface AvatarGroupProps{
     view?: CustomView,
-    children?: CustomView[],
+    children?: React.ReactNode[],
     style?: CustomStyle,
     maxCount?: number,
 }

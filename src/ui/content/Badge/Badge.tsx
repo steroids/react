@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {useComponents} from '../../../hooks';
 
-interface ICounter {
+export interface ICounter {
     isEnable: boolean,
     content: string | number
 }

@@ -14,7 +14,7 @@ import Enum from '../base/Enum';
 import {getDataProviderItems, getEnumLabels} from '../reducers/fields';
 import {smartSearch} from '../utils/text';
 
-export interface AutoCompleteConfig {
+export interface IAutoCompleteConfig {
     /**
      * Подключить autocomplete?
      * @example true
@@ -90,7 +90,7 @@ export interface IDataProviderConfig {
      * Настройки поиска
      * @example {enable: true, minLength: 2, delay: 100}
      */
-    autoComplete?: boolean | AutoCompleteConfig,
+    autoComplete?: boolean | IAutoCompleteConfig,
 
     /**
      * Загрузка данных после любого изменения запроса.
@@ -173,7 +173,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     }, [prevInitialItems, initialItems]);
 
     // Normalize autoComplete
-    const autoComplete: AutoCompleteConfig = useMemo(() => ({
+    const autoComplete: IAutoCompleteConfig = useMemo(() => ({
         ...defaultProps.autoComplete,
         ...(typeof config.autoComplete === 'boolean') ? {enable: config.autoComplete} : config.autoComplete,
     }), [config.autoComplete]);

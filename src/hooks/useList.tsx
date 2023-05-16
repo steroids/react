@@ -23,7 +23,7 @@ import {Model} from '../components/MetaComponent';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
-interface ISortProps {
+export interface ISortProps {
     /**
      * Включить сортировку
      * @example false

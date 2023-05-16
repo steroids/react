@@ -5,7 +5,7 @@ import _isNil from 'lodash-es/isNil';
 import {useCallback, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
-interface IDataSelectItem {
+export interface IDataSelectItem {
     id: number | string | boolean,
     label?: string,
 

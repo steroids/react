@@ -1,4 +1,7 @@
 export default {
+    'form.AutoCompleteFieldView': {
+        lazy: () => require('./form/AutoCompleteField/AutoCompleteFieldMockView').default,
+    },
     'form.FieldLayoutView': {
         lazy: () => require('./form/FieldLayout/FieldLayoutMockView').default,
     },

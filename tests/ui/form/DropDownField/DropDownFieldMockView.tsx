@@ -6,6 +6,7 @@ import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/Dro
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
+import {ITEM_ALL_ID} from '../../../../src/hooks/useDataSelect';
 
 const getSelectedItemsLabel = (selectedItems: Record<string, any>[]): string => (
     selectedItems
@@ -114,6 +115,8 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                         </div>
                     )}
                     <div className={bem.element('drop-down-list')}>
+                        {props.multiple && props.hasSelectAll
+                            && props.renderItem({id: ITEM_ALL_ID, label: __('All')}, true)}
                         {props.items.map((item) => props.renderItem(item))}
                     </div>
                 </div>

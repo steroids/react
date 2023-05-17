@@ -18,7 +18,7 @@ export interface IModalProps {
      * Компонент, который отрендерится внутри Modal
      * @example () => <InnerModalComponent />
      */
-    component?: CustomView,
+    component?: any,
 
     /**
      * Свойства для внутреннего компонента

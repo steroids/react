@@ -38,8 +38,18 @@ describe('CopyToClipBoard', () => {
 
         await act(async () => {
             fireEvent.click(copyToClipboardIcon);
-            expect(clipboardMock.writeText).toBeCalled();
+            expect(clipboardMock.writeText).toBeCalledWith(props.value);
             expect(clipboardMock.readText()).toBe(props.value);
         });
+    });
+
+    it('should be disabled', () => {
+        const {container} = render(JSXWrapper(CopyToClipboard, {
+            ...props,
+            disabled: true,
+        }));
+
+        const copyToClipboard = getElementByClassName(container, expectedCopyToClipBoardClassName);
+        expect(copyToClipboard).toHaveClass(`${expectedCopyToClipBoardClassName}_disabled`);
     });
 });

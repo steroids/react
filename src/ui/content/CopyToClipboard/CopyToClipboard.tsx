@@ -15,7 +15,6 @@ export interface ICopyToClipboardProps extends IUiComponent {
     showCopyIcon?: boolean,
     children?: React.ReactNode,
     onCopy?: VoidFunction,
-
 }
 
 export interface ICopyToClipboardViewProps extends ICopyToClipboardProps {

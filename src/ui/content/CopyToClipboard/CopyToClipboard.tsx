@@ -1,73 +1,68 @@
+/* eslint-disable no-unused-expressions */
 import React, {useCallback, useRef, useState} from 'react';
-import useDispatch from '../../../hooks/useDispatch';
+import {useComponents, useDispatch} from '../../../hooks';
 
-import {showNotification} from '../../../actions/notifications';
+import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';
 
-interface ICopyToClipboardProps {
+export interface ICopyToClipboardProps extends IUiComponent {
     value: string,
     disabled?: boolean,
     notification?: string | {
         message?: string,
         level?: string,
-        timeOut?: string,
+        params?: IShowNotificationParameters,
     },
-    className?: CssClassName,
-    children?: any,
+    showCopyIcon?: boolean,
+    children?: React.ReactNode,
+    onCopy?: VoidFunction,
+
 }
 
-export default function CopyToClipboard(props: ICopyToClipboardProps) {
-    const inputRef = useRef();
+export interface ICopyToClipboardViewProps extends ICopyToClipboardProps {
+    onClick: () => void,
+}
+
+const DEFAULT_NOTIFICATION_LEVEL = 'info';
+
+function CopyToClipboard(props: ICopyToClipboardProps) {
+    const components = useComponents();
     const [isCopied, setIsCopied] = useState(false);
     const dispatch = useDispatch();
 
+    const {notification} = props;
+
     const onClick = useCallback(async () => {
+        if (props.disabled) {
+            return;
+        }
+
         if (!isCopied) {
             if (navigator.clipboard) {
                 await navigator.clipboard.writeText(props.value);
-            } else {
-                const el: any = inputRef.current;
-                if (el) {
-                    el.focus();
-                    el.select();
+
+                if (props.onCopy) {
+                    props.onCopy();
                 }
-                document.execCommand('copy');
             }
-            if (props.notification) {
-                const notification = {
-                    level: 'info',
-                    params: undefined,
-                    ...(typeof props.notification === 'string' ? {message: props.notification} : props.notification),
-                };
-                dispatch(showNotification(notification.message, notification.level, notification.params));
+            if (notification) {
+                typeof notification === 'string'
+                    ? dispatch(showNotification(notification, DEFAULT_NOTIFICATION_LEVEL, undefined))
+                    : dispatch(showNotification(notification.message, notification.level, notification.params));
             }
 
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 1000);
         }
-    }, [dispatch, isCopied, props.notification, props.value]);
+    }, [dispatch, isCopied, notification, props]);
 
-    if (props.disabled) {
-        return props.children;
-    }
-
-    return (
-        <span
-            className={props.className}
-            onClick={onClick}
-            aria-hidden='true'
-        >
-            {props.children}
-            <input
-                ref={inputRef}
-                defaultValue={props.value}
-                style={{
-                    position: 'absolute',
-                    height: 1,
-                    width: 1,
-                    top: 0,
-                    opacity: 0,
-                }}
-            />
-        </span>
-    );
+    return components.ui.renderView(props.view || 'content.CopyToClipboardView', {
+        ...props,
+        onClick,
+    });
 }
+
+CopyToClipboard.defaultProps = {
+    showCopyIcon: true,
+};
+
+export default CopyToClipboard;

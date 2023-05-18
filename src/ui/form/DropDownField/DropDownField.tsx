@@ -24,7 +24,8 @@ export interface IDropDownFieldItem {
     contentSrc?: string | React.ReactElement,
 }
 
-export interface IDropDownFieldItemViewProps extends IAccordionCommonViewProps, Pick<IDropDownFieldProps, 'itemsContent'> {
+export interface IDropDownFieldItemViewProps extends IAccordionCommonViewProps,
+    Pick<IDropDownFieldProps, 'itemsContent'>, Pick<IDropDownFieldProps, 'itemToSelectAll'> {
     item: IDropDownFieldItem,
     size: Size,
     type: ItemSwitchType,
@@ -34,8 +35,7 @@ export interface IDropDownFieldItemViewProps extends IAccordionCommonViewProps, 
     hoveredId: string,
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
-    hasSelectAll: boolean,
-    setAllSelected: VoidFunction,
+    setSelectedAll: VoidFunction,
 
     [key: string]: any,
 }
@@ -120,10 +120,13 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     showEllipses?: boolean,
 
     /**
-    * Добавляет кнопку "Все" в списке пунктов, работает только при multiple: true
-    * @example {'true'}
+    * Добавляет кнопку при нажатии на которую выбираются все элементы, работает только при multiple: true
+    * @example {label: 'All', id: 'all'}
     */
-    hasSelectAll?: boolean,
+    itemToSelectAll?: {
+        label: string,
+        id: string,
+    },
 
     [key: string]: any;
 }
@@ -202,7 +205,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         selectedIds,
         setSelectedIds,
         selectedItems,
-        setAllSelected,
+        setSelectedAll,
     } = useDataSelect({
         multiple: props.multiple,
         selectFirst: props.selectFirst,
@@ -212,6 +215,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         items,
         sourceItems,
         inputValue: props.input.value,
+        customItemSelectAllId: props.itemToSelectAll?.id,
     });
 
     const onOpen = useCallback(() => {
@@ -282,7 +286,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         item: IDropDownFieldItem,
         type: ItemSwitchType,
         src: string | React.ReactElement,
-        hasSelectAll = false,
     ) => components.ui.renderView('form.DropDownFieldItemView', {
         item: {
             ...item,
@@ -301,24 +304,24 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isShowMore: _includes(selectedAccordionItems || [], item.id),
         childIndex: item.id,
         toggleCollapse,
-        hasSelectAll,
-        setAllSelected,
+        setSelectedAll,
+        itemToSelectAll: props.itemToSelectAll,
     });
 
-    const renderItem = (item: IDropDownFieldItem, hasSelectAll = false) => {
+    const renderItem = (item: IDropDownFieldItem) => {
         if (hasGroup && Array.isArray(item[props.groupAttribute])) {
-            return renderItemView(item, 'group', item[props.groupAttribute], hasSelectAll);
+            return renderItemView(item, 'group', item[props.groupAttribute]);
         }
 
         if (item.contentType) {
-            return renderItemView(item, item.contentType, item.contentSrc, hasSelectAll);
+            return renderItemView(item, item.contentType, item.contentSrc);
         }
 
         if (props.itemsContent) {
-            return renderItemView(item, props.itemsContent.type, props.itemsContent.src, hasSelectAll);
+            return renderItemView(item, props.itemsContent.type, props.itemsContent.src);
         }
 
-        return renderItemView(item, 'default', null, hasSelectAll);
+        return renderItemView(item, 'default', null);
     };
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', {

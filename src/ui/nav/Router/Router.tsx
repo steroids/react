@@ -221,7 +221,7 @@ function Router(props: IRouterProps): JSX.Element {
         isInitialized: isRouterInitialized(state),
         pathname: _get(state, 'router.location.pathname'),
         route: getRoute(state),
-        routeParams: state.router.params,
+        routeParams: state.router.match?.params,
         activePath: state.router?.location?.pathname,
         activeRouteIds: getActiveRouteIds(state),
     }));
@@ -301,8 +301,7 @@ function Router(props: IRouterProps): JSX.Element {
                 return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
             });
             if (parentRouteId) {
-                // TODO route params?..
-                dispatch(goToRoute(parentRouteId));
+                dispatch(goToRoute(parentRouteId, routeParams));
             }
         }
     });

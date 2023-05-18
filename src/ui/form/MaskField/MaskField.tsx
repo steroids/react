@@ -20,4 +20,4 @@ function MaskField(props: IMaskFieldProps): JSX.Element {
     );
 }
 
-export default fieldWrapper<IMaskFieldProps>('MaskField', MaskField);
+export default MaskField;

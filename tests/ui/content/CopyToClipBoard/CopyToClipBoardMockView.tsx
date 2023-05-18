@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {ICopyToClipboardViewProps} from '../../../../src/ui/content/CopyToClipboard/CopyToClipboard';
@@ -7,19 +9,19 @@ function CopyToClipBoardView(props: ICopyToClipboardViewProps) {
     const bem = useBem('CopyToClipBoardView');
 
     return (
-        <div className={bem(bem.block({
-            disabled: props.disabled,
-        }))}
+        <div
+            className={bem(bem.block({
+                disabled: props.disabled,
+            }))}
+            onClick={props.onClick}
         >
             {props.children}
             {props.showCopyIcon && (
                 <Icon
-                    name='mockIcon'
-                    onClick={props.onClick}
+                    name="mockIcon"
                     className={bem.element('icon')}
                 />
             )}
-
         </div>
     );
 }

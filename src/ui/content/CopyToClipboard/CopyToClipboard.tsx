@@ -5,15 +5,47 @@ import {useComponents, useDispatch} from '../../../hooks';
 import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';
 
 export interface ICopyToClipboardProps extends IUiComponent {
+
+    /**
+    * Значение, которое будет использоваться при копировании
+    * @example value: 'Steroids.js'
+    */
     value: string,
+
+    /**
+    * Флаг, который отвечает за выключение функции копирования
+    * @example disabled: false
+    */
     disabled?: boolean,
+
     notification?: string | {
         message?: string,
         level?: string,
         params?: IShowNotificationParameters,
     },
+
+    /**
+    * Позволяет включить или выключить отображение иконки
+    * @example showCopyIcon: false
+    */
     showCopyIcon?: boolean,
+
+    /**
+    * Иконка
+    * @example calendar-day
+    */
+    icon?: string | React.ReactElement,
+
+    /**
+    * Дочерний элемент
+    * @example <h1>This message will be copied!</h1>
+    */
     children?: React.ReactNode,
+
+    /**
+    * Callback функция, которая вызывается при копировании
+    * @example {}
+    */
     onCopy?: VoidFunction,
 }
 
@@ -45,8 +77,15 @@ function CopyToClipboard(props: ICopyToClipboardProps) {
             }
             if (notification) {
                 typeof notification === 'string'
-                    ? dispatch(showNotification(notification, DEFAULT_NOTIFICATION_LEVEL, undefined))
-                    : dispatch(showNotification(notification.message, notification.level, notification.params));
+                    ? dispatch(showNotification(
+                        notification,
+                        DEFAULT_NOTIFICATION_LEVEL,
+                    ))
+                    : dispatch(showNotification(
+                        notification.message,
+                        notification.level || DEFAULT_NOTIFICATION_LEVEL,
+                        notification.params,
+                    ));
             }
 
             setIsCopied(true);

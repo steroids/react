@@ -27,6 +27,7 @@ import SwitcherField from './SwitcherField';
 import TextField from './TextField';
 import TimeField from './TimeField';
 import RateField from './RateField';
+import MaskField from './MaskField';
 
 export {
     AutoCompleteField,
@@ -58,6 +59,7 @@ export {
     TextField,
     TimeField,
     RateField,
+    MaskField,
 };
 
 export default {
@@ -90,4 +92,5 @@ export default {
     TextField,
     TimeField,
     RateField,
+    MaskField,
 };

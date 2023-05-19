@@ -18,7 +18,7 @@ import {IRadioFieldViewProps} from '../RadioField/RadioField';
 export interface IRadioListFieldProps extends IFieldWrapperInputProps, IDataProviderConfig,
  Omit<IDataSelectConfig, 'items'> {
     /**
-     * Свойства для элемента \<input /\>
+     * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
     inputProps?: any;

@@ -11,13 +11,13 @@ import {useComponents} from '../../../hooks';
 export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
 
     /**
-     * Свойства для элемента \<input /\>
+     * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
 
     /**
-     * Дополнительный CSS-класс для элемента \<input /\>
+     * Дополнительный CSS-класс для элемента input
      */
     className?: CssClassName;
 

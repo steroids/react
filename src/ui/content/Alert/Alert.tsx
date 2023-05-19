@@ -7,6 +7,7 @@ export interface IAlertProps {
 
     /**
     * Дочерние элементы
+    * @example {<span>children</span>}
     */
     children?: React.ReactNode,
 

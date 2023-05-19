@@ -27,7 +27,7 @@ export interface ISwitcherFieldProps extends IFieldWrapperInputProps,
     IDataProviderConfig, Omit<IDataSelectConfig, 'items'>, IUiComponent {
 
     /**
-    * Свойства для элемента \<input /\>
+    * Свойства для элемента input
     * @example {onKeyDown: ...}
     */
     inputProps?: any,

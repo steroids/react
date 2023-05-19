@@ -15,7 +15,7 @@ import {useComponents} from '../../../hooks';
  * Поле ввода дипазона двух дат со временем, с выпадающим календарём
  */
 export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'inputProps' | 'input'>,
-    Omit<IFieldWrapperInputProps, 'attribute'>
+    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent
 {
     /**
     * Аттрибут (название) поля в форме
@@ -36,23 +36,6 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
     pickerProps?: any;
 
     /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle;
-
-    /**
      * Свойства для поля 'from'
      */
     inputPropsFrom?: Record<string, unknown>,
@@ -71,12 +54,6 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      * Свойства для компонента Calendar
      */
     calendarProps?: ICalendarProps,
-
-    /**
-     * Отключить border вокруг элемента
-     * @example 'true'
-     */
-    noBorder?: boolean,
 
     [key: string]: any;
 }
@@ -251,6 +228,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         disabled: props.disabled,
         noBorder: props.noBorder,
+        style: props.style,
     });
 }
 
@@ -262,6 +240,7 @@ DateTimeRangeField.defaultProps = {
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     showRemove: true,
     icon: true,
+    size: 'md',
 };
 
 export default fieldWrapper<IDateTimeRangeFieldProps>('DateTimeRangeField', DateTimeRangeField,

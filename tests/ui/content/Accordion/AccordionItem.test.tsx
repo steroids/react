@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
 import {render} from '../../../customRender';
 import AccordionItemMockView from './AccordionItemMockView';
-import {IAccordionCommonViewProps} from '../../../../src/ui/content/Accordion/Accordion';
+import {IAccordionViewProps} from '../../../../src/ui/content/Accordion/Accordion';
 import AccordionItem from '../../../../src/ui/content/Accordion/AccordionItem';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 
 describe('AccordionItem', () => {
-    const props: IAccordionCommonViewProps = {
+    const props: IAccordionViewProps = {
         view: AccordionItemMockView,
     };
 

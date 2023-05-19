@@ -3,10 +3,10 @@
 import * as React from 'react';
 import Icon from '../../../../src/ui/content/Icon/Icon';
 import {useBem} from '../../../../src/hooks';
-import {IAccordionCommonViewProps, IAccordionIcon} from '../../../../src/ui/content/Accordion/Accordion';
+import {IAccordionItemViewProps, IAccordionIcon} from '../../../../src/ui/content/Accordion/Accordion';
 import IconMockView from '../Icon/IconMockView';
 
-export default function AccordionItemView(props: IAccordionCommonViewProps) {
+export default function AccordionItemView(props: IAccordionItemViewProps) {
     const bem = useBem('AccordionItemView');
 
     React.useEffect(() => {
@@ -72,7 +72,7 @@ export default function AccordionItemView(props: IAccordionCommonViewProps) {
                     name={props.icon}
                     view={IconMockView}
                 />
-)
+            )
             : (
                 <span className={bem.element('custom-icon')}>
                     {props.icon}

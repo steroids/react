@@ -1,7 +1,7 @@
 import {useComponents} from '../../../hooks';
-import {IAccordionCommonProps, IAccordionCommonViewProps} from './Accordion';
+import {IAccordionItemProps, IAccordionItemViewProps} from './Accordion';
 
-function AccordionItem(props: IAccordionCommonProps) {
+function AccordionItem(props: IAccordionItemProps) {
     const components = useComponents();
     return components.ui.renderView(props.view || 'content.AccordionItemView', {
         ...props,
@@ -13,6 +13,6 @@ AccordionItem.defaultProps = {
     positionStyle: 'top',
     theme: 'light',
     showIcon: true,
-} as IAccordionCommonViewProps;
+} as IAccordionItemViewProps;
 
 export default AccordionItem;

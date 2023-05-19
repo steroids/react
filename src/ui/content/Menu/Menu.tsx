@@ -2,7 +2,7 @@ import React from 'react';
 import useComponents from '../../../hooks/useComponents';
 import {IDropDownProps} from '../DropDown/DropDown';
 
-export interface IMenuItemProps {
+export interface IMenuItem {
     /**
      * Заголовок элемента меню
      */
@@ -28,7 +28,7 @@ export interface IMenuProps {
     /**
     *   Элементы меню
     */
-    items: IMenuItemProps[],
+    items: IMenuItem[],
 
     /**
     * Кастомная иконка, по клику на которую открывается меню
@@ -43,7 +43,7 @@ export interface IMenuProps {
     /**
      * Пропсы для DropDown
      */
-    dropDownProps?: Omit<IDropDownProps, 'children' | 'content'>
+    dropDownProps?: IDropDownProps,
 
     /**
      * Переопределение view React элемента меню для кастомизации отображения

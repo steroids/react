@@ -122,8 +122,6 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     if (props.maskProps) {
         const maskOnChange = e => props.input.onChange(e.target.value);
 
-        console.log(inputProps);
-        console.log(inputProps.onChange);
         return (
             <InputMask
                 {...inputProps}

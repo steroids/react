@@ -31,13 +31,11 @@ describe('DateTimeField tests', () => {
     });
 
     it('should have external styles and class', () => {
-        const {container, debug} = render(JSXWrapper(DateTimeField, props));
+        const {container} = render(JSXWrapper(DateTimeField, props));
         const dateField = getElementByClassName(container, expectedDateTimeFieldClassName);
 
-        console.log(debug());
-
-        // expect(dateField).toHaveClass(externalClass);
-        // expect(dateField).toHaveStyle(externalStyle);
+        expect(dateField).toHaveClass(externalClass);
+        expect(dateField).toHaveStyle(externalStyle);
     });
 
     it('should have placeholder', () => {

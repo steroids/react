@@ -126,8 +126,6 @@ function Calendar(props: ICalendarProps) {
 
     const onDaySelect = useCallback(
         (date) => {
-            console.log(date);
-            console.log('ConvertDate: ', convertDate(date, null, props.valueFormat, false, true));
             props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true));
         },
         [props.onChange, props.valueFormat],

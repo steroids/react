@@ -121,6 +121,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     // react-input-mask HOC for mask
     if (props.maskProps) {
         const maskOnChange = e => props.input.onChange(e.target.value);
+
         return (
             <InputMask
                 {...inputProps}

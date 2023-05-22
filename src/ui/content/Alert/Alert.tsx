@@ -11,7 +11,7 @@ export interface IAlertProps extends IUiComponent {
      * Типы Оповещений
      * @example 'info'
      */
-    type: 'success' | 'info' | 'warning' | 'error' | 'default' | string,
+    type?: 'success' | 'info' | 'warning' | 'error' | 'default' | string,
 
     /** Основное сообщения Оповещения
      * @example 'Sending is confirmed!'

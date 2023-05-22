@@ -12,14 +12,14 @@ import TooltipInnerPortal from './TooltipPortalInner';
 type TooltipPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
     'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
 
-export interface TooltipArrowPosition {
+export interface ITooltipArrowPosition {
     left?: number | string,
     right?: number | string,
     top?: number | string,
     bottom?: number | string,
 }
 
-export interface TooltipStylePosition {
+export interface ITooltipStylePosition {
     left: 'unset' | number,
     right: 'unset' | number,
     top: 'unset' | number,
@@ -63,13 +63,13 @@ export interface ITooltipProps {
     /**
      * Стили для абсолютного позиционирования подсказки
      */
-    style?: TooltipStylePosition,
+    style?: ITooltipStylePosition,
 
     /**
      * Стили для позиционирования стрелки
      * @example {left: 10}
      */
-    arrowPosition?: TooltipArrowPosition,
+    arrowPosition?: ITooltipArrowPosition,
 
     /**
      * Рассчет позиции подсказки
@@ -83,7 +83,7 @@ export interface ITooltipViewProps extends ITooltipProps {
     isTooltipVisible: boolean,
     content: string | any,
     position: TooltipPosition,
-    style: TooltipStylePosition,
+    style: ITooltipStylePosition,
 }
 
 /*
@@ -102,12 +102,12 @@ function Tooltip(props: ITooltipProps): JSX.Element {
 
     const [isComponentExist, setIsComponentExist] = useState(false);
     const [isTooltipVisible, setIsTooltipVisible] = useState(props.defaultVisible);
-    const [style, setStyle] = useState<TooltipStylePosition>({
+    const [style, setStyle] = useState<ITooltipStylePosition>({
         left: null,
         right: null,
         top: null,
     });
-    const [arrowPosition, setArrowPosition] = useState<TooltipArrowPosition>({
+    const [arrowPosition, setArrowPosition] = useState<ITooltipArrowPosition>({
         left: null,
         right: null,
         top: null,

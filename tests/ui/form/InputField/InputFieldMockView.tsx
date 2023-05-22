@@ -67,7 +67,6 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                                     size: props.size,
                                 }),
                             )}
-                            {...props.inputProps}
                             type={props.type}
                             placeholder={props.placeholder}
                             disabled={props.disabled}

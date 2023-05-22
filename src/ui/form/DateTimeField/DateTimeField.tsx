@@ -8,23 +8,7 @@ import useDateInputState, {
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
-export interface IDateTimeFieldProps extends IDateInputStateInput {
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle,
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
+export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent {
 
     /**
      * Свойства для компонента Calendar
@@ -119,6 +103,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         showRemove: props.showRemove,
         isInvalid: props.isInvalid,
         disabled: props.disabled,
+        style: props.style,
     });
 }
 
@@ -130,6 +115,8 @@ DateTimeField.defaultProps = {
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     useUTC: true,
     dateInUTC: false,
+    size: 'md',
+    icon: true,
 };
 
 export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);

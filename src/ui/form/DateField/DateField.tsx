@@ -6,24 +6,7 @@ import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
 
-export interface IDateFieldProps extends IDateInputStateInput {
-    /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName,
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
-
+export interface IDateFieldProps extends IDateInputStateInput, IUiComponent {
     /**
      * Свойства для view компонента
      */
@@ -38,8 +21,7 @@ export interface IDateFieldProps extends IDateInputStateInput {
 }
 
 export interface IDateFieldViewProps extends IDateInputStateOutput,
-    Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps'>
-{
+    Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps'> {
     [key: string]: any,
 }
 

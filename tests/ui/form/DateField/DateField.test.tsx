@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom';
-import {fireEvent} from '@testing-library/dom';
-import userEvent from '@testing-library/user-event';
 import {render} from '../../../customRender';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper} from '../../../helpers';
 import DateField, {IDateFieldProps} from '../../../../src/ui/form/DateField/DateField';
 import DateFieldMockView from './DateFieldMockView';
 
@@ -47,7 +45,7 @@ describe('DateField tests', () => {
     });
 
     it('should be disabled', () => {
-        const {container, debug} = render(JSXWrapper(DateField, {
+        const {container} = render(JSXWrapper(DateField, {
             ...props,
             disabled: true,
         }));
@@ -56,5 +54,5 @@ describe('DateField tests', () => {
         expect(dateField).toHaveClass(`${expectedDateFieldClassName}_disabled`);
     });
 
-    //TODO action
+    //TODO ACTION
 });

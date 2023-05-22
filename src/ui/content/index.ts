@@ -7,6 +7,7 @@ import Badge from './Badge';
 import {Detail, DetailItem} from './Detail';
 import Icon from './Icon';
 import Menu from './Menu';
+import CopyToClipboard from './CopyToClipboard';
 
 export {
     Avatar,
@@ -21,4 +22,5 @@ export {
     DetailItem,
     Icon,
     Menu,
+    CopyToClipboard,
 };

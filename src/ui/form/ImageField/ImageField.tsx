@@ -12,7 +12,7 @@ import useFile, {IFileInput} from '../../../hooks/useFile';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {openModal} from '../../../actions/modal';
 
-export interface ICropInputProps {
+export interface ICropConfig {
     /**
      * Изначальные параметры обрезки изображения
      * @example {unit: 'px', aspect: 1, x: 0, y: 0, width: 200, height: 200}
@@ -60,7 +60,7 @@ export interface IImageFieldProps extends IFieldWrapperInputProps,
     /**
      * Параметры обрезки
      */
-    crop?: ICropInputProps,
+    crop?: ICropConfig,
 
     /**
      * Название кнопки
@@ -71,7 +71,7 @@ export interface IImageFieldProps extends IFieldWrapperInputProps,
     [key: string]: any;
 }
 
-export interface ICropOutputProps extends ICropInputProps {
+export interface ICropOutputProps extends ICropConfig {
     onSubmit: (crop: Crop, imageId: any) => void
 }
 

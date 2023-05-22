@@ -38,6 +38,37 @@ export type DataProviderItems = string
     | ({ new(): Enum })
     | (string | number | { id: string | number | boolean, label: string | any, [key: string]: any })[];
 
+export interface IDataProvider {
+    /**
+     * Уникальный (глобально) идентификатор, под которых будут храниться
+     * подгруженные данные в redux (при включенном флаге useRedux). Если
+     * не задан - данные будут храниться в локальном стейте
+     */
+    reduxId?: string,
+
+    /**
+     * URL для подгрузки новой коллекции данных
+     * @example '/api/v1/search'
+     */
+    action?: string | IApiMethod,
+
+    /**
+     * Параметры запроса
+     * @example {pageSize: 3}
+     */
+    params?: Record<string, unknown>,
+
+    /**
+     * Обработчик, который вызывается для подгрузки данных.
+     * Если обработчик не передан, то по умолчанию отправится post-запрос.
+     * @param {string} action
+     * @param {Object} params
+     * @return {Promise<Array> | Array}
+     */
+    onSearch?: (action: string, params: Record<string, unknown>) => Array<unknown> | Promise<Array<unknown>>,
+
+}
+
 export interface IDataProviderConfig {
     /**
      * Коллекция элементов
@@ -49,36 +80,7 @@ export interface IDataProviderConfig {
      * Конфигурация для подгрузки данных извне.
      * Если dataProvider не передан, то поиск данных по запросу происходит локально.
      */
-    dataProvider?: {
-        /**
-         * Уникальный (глобально) идентификатор, под которых будут храниться
-         * подгруженные данные в redux (при включенном флаге useRedux). Если
-         * не задан - данные будут храниться в локальном стейте
-         */
-        reduxId?: string,
-
-        /**
-         * URL для подгрузки новой коллекции данных
-         * @example '/api/v1/search'
-         */
-        action?: string | IApiMethod,
-
-        /**
-         * Параметры запроса
-         * @example {pageSize: 3}
-         */
-        params?: Record<string, unknown>,
-
-        /**
-         * Обработчик, который вызывается для подгрузки данных.
-         * Если обработчик не передан, то по умолчанию отправится post-запрос.
-         * @param {string} action
-         * @param {Object} params
-         * @return {Promise<Array> | Array}
-         */
-        onSearch?: (action: string, params: Record<string, unknown>) => Array<unknown> | Promise<Array<unknown>>,
-
-    },
+    dataProvider?: IDataProvider,
 
     /**
      * Текст запроса

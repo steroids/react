@@ -65,4 +65,7 @@ export default {
     'form.FormView': {
         lazy: () => require('./form/Form/FormMockView').default,
     },
+    'form.DateRangeFieldView': {
+        lazy: () => require('./form/DateRangeField/DateRangeFieldMockView').default,
+    },
 };

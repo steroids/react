@@ -123,7 +123,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     * Добавляет кнопку при нажатии на которую выбираются все элементы, работает только при multiple: true
     * @example {label: 'All', id: 'all'}
     */
-    itemToSelectAll?: {
+    itemToSelectAll?: boolean | {
         label: string,
         id: string,
     },
@@ -215,7 +215,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         items,
         sourceItems,
         inputValue: props.input.value,
-        customItemSelectAllId: props.itemToSelectAll?.id,
+        customItemSelectAllId: typeof props.itemToSelectAll === 'boolean'
+            ? null
+            : props.itemToSelectAll?.id,
     });
 
     const onOpen = useCallback(() => {

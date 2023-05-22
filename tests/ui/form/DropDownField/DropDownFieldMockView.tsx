@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {useEffect, useRef} from 'react';
 import _isArray from 'lodash-es/isArray';
-import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
@@ -25,6 +25,24 @@ const getSelectedItemsCount = (selectedItems: Record<string, any>) => {
 export default function DropDownFieldView(props: IDropDownFieldViewProps) {
     const bem = useBem('DropDownFieldView');
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const itemToSelectAllProperties = React.useMemo(() => {
+        if (!props.itemToSelectAll) {
+            return {};
+        }
+
+        if (typeof props.itemToSelectAll === 'boolean') {
+            return {
+                id: ITEM_TO_SELECT_ALL_ID,
+                label: 'all',
+            };
+        }
+
+        return {
+            id: props.itemToSelectAll?.id,
+            label: props.itemToSelectAll?.label,
+        };
+    }, [props.itemToSelectAll]);
 
     // Auto focus on search
     useEffect(() => {
@@ -115,8 +133,8 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                         </div>
                     )}
                     <div className={bem.element('drop-down-list')}>
-                        {props.multiple && props.hasSelectAll
-                            && props.renderItem({id: ITEM_TO_SELECT_ALL_ID, label: __('All')}, true)}
+                        {props.multiple && props.itemToSelectAll
+                            && props.renderItem(itemToSelectAllProperties as IDropDownFieldItem)}
                         {props.items.map((item) => props.renderItem(item))}
                     </div>
                 </div>

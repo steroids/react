@@ -6,6 +6,8 @@ import DropDownField, {IDropDownFieldViewProps} from '../../../../src/ui/form/Dr
 import DropDownFieldMockView from './DropDownFieldMockView';
 
 describe('DropDownField tests', () => {
+    const defaultItemToSelectAllLabel = 'all';
+
     const items = [
         {
             id: 1,
@@ -110,5 +112,35 @@ describe('DropDownField tests', () => {
         const group = getElementByClassName(container, 'DropDownItemView__group');
 
         expect(group).toBeInTheDocument();
+    });
+
+    it('should have all item', () => {
+        const {container, getByText} = render(JSXWrapper(DropDownField, {
+            ...props,
+            itemToSelectAll: true,
+        }));
+
+        const dropDownTriggerElement = getElementByClassName(container, `${expectedDropDownFieldClassName}__selected-items`);
+
+        fireEvent.click(dropDownTriggerElement);
+
+        expect(getByText(defaultItemToSelectAllLabel)).toBeInTheDocument();
+    });
+
+    it('should have custom all item', () => {
+        const customAllLabel = 'custom all';
+
+        const {container, getByText} = render(JSXWrapper(DropDownField, {
+            ...props,
+            itemToSelectAll: {
+                id: 'all',
+                label: customAllLabel,
+            },
+        }));
+
+        const dropDownTriggerElement = getElementByClassName(container, `${expectedDropDownFieldClassName}__selected-items`);
+
+        fireEvent.click(dropDownTriggerElement);
+        expect(getByText(customAllLabel)).toBeInTheDocument();
     });
 });

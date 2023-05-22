@@ -1,6 +1,6 @@
 import {useComponents} from '../../../hooks';
 
-export interface IDateFormatterProps extends IUiComponent {
+export interface IDateFormatterProps {
 
     /**
      * Формат даты
@@ -13,6 +13,12 @@ export interface IDateFormatterProps extends IUiComponent {
      * @example 2023-09-11
      */
     value?: any;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения колонки
+     * @example MyCustomView
+     */
+    view?: CustomView;
 
     [key: string]: any;
 }

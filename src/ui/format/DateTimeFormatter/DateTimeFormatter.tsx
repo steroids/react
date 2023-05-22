@@ -2,7 +2,7 @@ import moment from 'moment';
 import {useComponents} from '../../../hooks';
 import {IDateFormatterProps} from '../DateFormatter/DateFormatter';
 
-export interface IDateTimeFormatterProps extends IUiComponent {
+export interface IDateTimeFormatterProps {
     /**
      * Формат даты
      * @example LLL
@@ -20,6 +20,12 @@ export interface IDateTimeFormatterProps extends IUiComponent {
      * @example 2023-09-11
      */
     value?: any;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения колонки
+     * @example MyCustomView
+     */
+    view?: CustomView;
 
     [key: string]: any;
 }

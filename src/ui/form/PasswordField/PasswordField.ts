@@ -7,7 +7,7 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
  * PasswordField
  * Поле ввода пароля
  */
-export interface IPasswordFieldProps extends IBaseFieldProps, IUiComponent {
+export interface IPasswordFieldProps extends IBaseFieldProps {
 
     /**
      * Если true, то отображается шкала сложности пароля

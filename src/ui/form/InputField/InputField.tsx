@@ -34,7 +34,7 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
  * InputField
  * Поле ввода текста
  */
-export interface IInputFieldProps extends IBaseFieldProps, IUiComponent {
+export interface IInputFieldProps extends IBaseFieldProps {
     /**
      * HTML Тип
      * @example email

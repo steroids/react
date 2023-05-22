@@ -24,7 +24,7 @@ export interface IAutoCompleteItem {
  * Поле ввода текста с подсказками (auto-complete)
  */
 export interface IAutoCompleteFieldProps extends IBaseFieldProps, IDataProviderConfig,
-    Omit<IDataSelectConfig, 'items'>, IUiComponent {
+    Omit<IDataSelectConfig, 'items'> {
     /**
      * При фокусировке на поле ввода будет запускаться поиск
      * @example true

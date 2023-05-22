@@ -4,7 +4,7 @@ import _isObject from 'lodash-es/isObject';
 import {useComponents, useDataProvider} from '../../../hooks';
 import {DataProviderItems} from '../../../hooks/useDataProvider';
 
-export interface IEnumFormatterProps extends IUiComponent {
+export interface IEnumFormatterProps {
 
     /**
      * Перечисление элементов.
@@ -18,6 +18,12 @@ export interface IEnumFormatterProps extends IUiComponent {
      * @example unique label
      */
     value?: number | string,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения колонки
+     * @example MyCustomView
+     */
+    view?: CustomView;
 
     [key: string]: any;
 }

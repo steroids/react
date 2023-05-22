@@ -10,7 +10,7 @@ interface ITwoFactorModalProps extends IUiComponent {
     providerName: string,
 
     /**
-    * Функция, которая вызывается после завершения
+    * Функция, которая вызывается при закрытии модального окна
     */
     onClose?: any,
 }

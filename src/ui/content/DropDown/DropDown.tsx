@@ -8,7 +8,7 @@ import useAbsolutePositioning, {
     IAbsolutePositioningOutputProps,
 } from '../../../hooks/useAbsolutePositioning';
 
-export interface IDropDownProps extends IAbsolutePositioningInputProps, IUiComponent {
+export interface IDropDownProps extends IAbsolutePositioningInputProps {
     /**
      * Содержимое DropDown (компонент или jsx-код)
      * @example () => Component
@@ -20,6 +20,17 @@ export interface IDropDownProps extends IAbsolutePositioningInputProps, IUiCompo
      * @example click-any
      */
     closeMode?: 'click-away' | 'click-any',
+
+    /**
+    * Переопределение view React компонента для кастомизациии отображения
+    * @example MyCustomView
+    */
+    view?: CustomView,
+
+    /**
+    * Дополнительный CSS-класс
+    */
+    className?: CssClassName,
 }
 
 export interface IDropDownViewProps extends IDropDownProps, IAbsolutePositioningOutputProps {

@@ -5,9 +5,10 @@ import {useComponents, useDispatch} from '../../../hooks';
 import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';
 
 export interface ICopyToClipboardProps extends IUiComponent {
+
     /**
-    * Значение, которое будет установлено в буфер обмена
-    * @example 'Steroids.js'
+    * Значение, которое будет использоваться при копировании
+    * @example value: 'Steroids.js'
     */
     value: string,
 

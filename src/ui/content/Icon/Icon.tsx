@@ -56,6 +56,8 @@ export interface IIconViewProps extends IIconProps {
     icon: string,
 }
 
+const DEFAULT_ICON_NAME = 'default_24x24';
+
 export default function Icon(props: IIconProps): JSX.Element {
     const components = useComponents();
 
@@ -86,7 +88,9 @@ export default function Icon(props: IIconProps): JSX.Element {
         }
 
         if (!icon) {
-            throw new Error('Not found icon with name "' + name + '"');
+            // eslint-disable-next-line no-console
+            console.warn('Not found icon with name "' + name + '"');
+            icon = components.ui.getIcon(DEFAULT_ICON_NAME);
         }
     }
 

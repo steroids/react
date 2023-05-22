@@ -18,7 +18,7 @@ export interface IModalProps {
      * Компонент, который отрендерится внутри Modal
      * @example () => <InnerModalComponent />
      */
-    component?: () => JSX.Element,
+    component?: (props: React.ComponentProps<any>) => JSX.Element,
 
     /**
      * Свойства для внутреннего компонента

@@ -4,9 +4,28 @@ import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
 
 export interface IButtonGroupProps extends IUiComponent {
+    /**
+     * Элементы для группы кнопок
+     * @example ['button1', 'button2', 'button3']
+     */
     items: DataProviderItems,
+
+    /**
+     * Функция, которая будет вызываться при клике по кнопке
+     * @example setActiveTab
+     */
     onClick: (value: number | string | boolean) => void,
+
+    /**
+     * Активная кнопка
+     * @example 'button1'
+     */
     activeButton?: number | string,
+
+    /**
+     * Общие свойства для всех кнопок группы
+     * @example {outline: true, color: 'secondary'}
+     */
     buttonProps?: IButtonProps,
 }
 

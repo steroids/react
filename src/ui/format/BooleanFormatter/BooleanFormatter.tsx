@@ -1,9 +1,11 @@
 import * as React from 'react';
 import {useComponents} from '../../../hooks';
 
-export interface IBooleanFormatterProps {
+export interface IBooleanFormatterProps extends IUiComponent {
+    /**
+    * Значение для BooleanFormatter
+    */
     value?: string | number | boolean;
-    view?: CustomView;
 
     [key: string]: any;
 }

@@ -10,12 +10,7 @@ export interface ICardHeader {
     subhead?: string,
 }
 
-export interface ICardProps {
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName,
-
+export interface ICardProps extends IUiComponent {
     /**
      * Дочерние элементы
      */
@@ -48,7 +43,6 @@ export interface ICardProps {
 
     /**
     * Коллекция ссылок
-    * @example {}
     */
     links?: ILinkProps[],
 
@@ -58,22 +52,10 @@ export interface ICardProps {
     buttons?: IButtonProps[],
 
     /**
-     * Объект CSS стилей
-     * @example {width: '30px'}
-     */
-    style?: CustomStyle,
-
-    /**
      * Заголовок карточки
      * @example {'Main card'}
      */
     title?: string,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
 }
 
 export type ICardViewProps = ICardProps

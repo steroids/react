@@ -8,28 +8,17 @@ import {useComponents} from '../../../hooks';
  * CheckboxField
  * Одиночный чекбокс. Используется в формах для отметки булевого значения.
  */
-export interface ICheckboxFieldProps extends IFieldWrapperInputProps {
+export interface ICheckboxFieldProps extends IFieldWrapperInputProps, IUiComponent {
 
     /**
-     * Свойства для элемента \<input /\>
+     * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
 
     /**
-     * Дополнительный CSS-класс для элемента \<input /\>
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
      * Флаг определяющий включен ли элемент
-     * @example {'true'}
+     * @example true
      */
     checked?: boolean;
 

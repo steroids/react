@@ -1,15 +1,20 @@
 import {useComponents} from '../../../hooks';
 import {INavProps} from '../../nav/Nav/Nav';
 
-export interface IHeaderProps {
-    className?: CssClassName;
-    view?: CustomView;
+export interface IHeaderProps extends IUiComponent {
+    /**
+    * Свойства для логотипа
+    */
     logo?: {
         title: string,
         linkProps?: Record<string, unknown>,
         icon?: string | any,
         className?: CssClassName,
     };
+
+    /**
+    * Свойства для навигации
+    */
     nav?: INavProps;
 
     /**

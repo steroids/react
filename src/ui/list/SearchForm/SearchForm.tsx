@@ -12,6 +12,9 @@ import {formChange} from '../../../actions/form';
  * после чего в list-компонент подгружаются новые элементы коллекции.
  */
 export interface ISearchFormProps extends IFormProps {
+    /**
+    * Id списка
+    */
     listId?: string,
 }
 

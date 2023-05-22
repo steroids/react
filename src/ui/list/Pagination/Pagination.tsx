@@ -55,6 +55,9 @@ export interface IPaginationProps {
      */
     className?: CssClassName;
 
+    /**
+    * Параметры кнопки
+    */
     buttonProps?: IButtonProps,
 
     /**

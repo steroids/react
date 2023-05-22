@@ -2,7 +2,7 @@ import moment from 'moment';
 import {useComponents} from '../../../hooks';
 import {IDateFormatterProps} from '../DateFormatter/DateFormatter';
 
-export interface IDateTimeFormatterProps {
+export interface IDateTimeFormatterProps extends IUiComponent {
     /**
      * Формат даты
      * @example LLL
@@ -14,7 +14,6 @@ export interface IDateTimeFormatterProps {
      * @example true
      */
     timeZone?: string | boolean;
-    view?: CustomView;
 
     /**
      * Дата

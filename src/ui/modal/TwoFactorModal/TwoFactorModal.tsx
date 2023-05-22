@@ -3,9 +3,15 @@ import useComponents from '../../../hooks/useComponents';
 import useFetch from '../../../hooks/useFetch';
 import Modal from '../Modal';
 
-interface ITwoFactorModalProps {
-    view?: CustomView;
+interface ITwoFactorModalProps extends IUiComponent {
+    /**
+    * Имя провайдера
+    */
     providerName: string,
+
+    /**
+    * Функция, которая вызывается после завершения
+    */
     onClose?: any,
 }
 

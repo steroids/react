@@ -23,7 +23,7 @@ import {useComponents} from '../../../hooks';
  * That get the icon used <Icon name={'icon-name'} />
  */
 
-export interface IIconProps {
+export interface IIconProps extends IUiComponent {
     /**
      * Имя иконки (латиницей). Импорт иконок происходит на старте приложения.
      * @example create
@@ -36,19 +36,14 @@ export interface IIconProps {
      */
     title?: string,
 
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
     /**
     *  Должен ли данный элемент участвовать в последовательной навигации
     */
     tabIndex?: number,
 
+    /**
+    * Функция которая вызывается при клике по иконке
+    */
     onClick?: any,
 
     [key: string]: any,

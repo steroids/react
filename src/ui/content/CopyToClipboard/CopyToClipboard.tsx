@@ -3,16 +3,32 @@ import useDispatch from '../../../hooks/useDispatch';
 
 import {showNotification} from '../../../actions/notifications';
 
-interface ICopyToClipboardProps {
+interface ICopyToClipboardProps extends IUiComponent {
+    /**
+    * Значение, которое будет установлено в буфер обмена
+    * @example 'Steroids.js'
+    */
     value: string,
+
+    /**
+    * Переводит состояние компонента в выключенное
+    * @example true
+    */
     disabled?: boolean,
+
+    /**
+    * Параметры для уведомления, которое появляется после копирования
+    */
     notification?: string | {
         message?: string,
         level?: string,
         timeOut?: string,
     },
-    className?: CssClassName,
-    children?: any,
+
+    /**
+     * Дочерние элементы
+     */
+    children?: React.ReactNode,
 }
 
 export default function CopyToClipboard(props: ICopyToClipboardProps) {

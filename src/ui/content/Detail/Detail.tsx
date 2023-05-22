@@ -40,7 +40,7 @@ export interface IDetailResponsive {
     media: IDetailMedia[]
 }
 
-export interface IDetailProps {
+export interface IDetailProps extends IUiComponent {
     /**
      * Размер ячеек в таблице
      * @example 'sm'
@@ -76,17 +76,6 @@ export interface IDetailProps {
      * @example [{label: __(('Edit')), onClick: () => props.onClick()}]
      */
     controls?: IControlItem[],
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
-
-    /**
-     * Дополнительный CSS-класс для таблицы
-     */
-    className?: CssClassName,
 
     /**
      * Дочерние компоненты

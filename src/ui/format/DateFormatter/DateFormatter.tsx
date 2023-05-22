@@ -1,13 +1,12 @@
 import {useComponents} from '../../../hooks';
 
-export interface IDateFormatterProps {
+export interface IDateFormatterProps extends IUiComponent {
 
     /**
      * Формат даты
      * @example LL
      */
     format?: string;
-    view?: CustomView;
 
     /**
      * Дата

@@ -7,7 +7,7 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
  * NumberField
  * Числовое поле ввода
  */
-export interface INumberFieldProps extends IBaseFieldProps {
+export interface INumberFieldProps extends IBaseFieldProps, IUiComponent {
     /**
      * Минимальное значение
      * @example 1

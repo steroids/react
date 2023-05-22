@@ -1,10 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import {useComponents} from '../../../hooks';
 
-export interface IAlertProps {
-    view?: CustomView,
-    className?: CssClassName,
-
+export interface IAlertProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
@@ -12,21 +9,19 @@ export interface IAlertProps {
 
     /**
      * Типы Оповещений
-     * @example {'info'}
+     * @example 'info'
      */
     type: 'success' | 'info' | 'warning' | 'error' | 'default' | string,
 
     /** Основное сообщения Оповещения
-     * @example {'Sending is confirmed!'}
+     * @example 'Sending is confirmed!'
      */
     message?: string,
 
     /** Дополнительное содрежание сообщения.
-     * @example {'Please, check your email.'}
+     * @example 'Please, check your email.'
      */
     description?: string,
-
-    style?: CustomStyle,
 
     /**
      *  Нужно ли отображать кнопку, чтобы закрыть Оповещение
@@ -35,7 +30,7 @@ export interface IAlertProps {
 
     /**
      * Нужно ли отображать иконку, соответствующую типа Оповещения
-     * @example {true}
+     * @example true
      */
     showIcon?: boolean,
 
@@ -45,14 +40,19 @@ export interface IAlertProps {
      */
     onClose?: () => void,
 
+    /**
+    * Флаг, который включает анимацию
+    * @example true
+    */
     animation?: boolean,
 
     /**
      * Время анимации в миллисекундах
-     * @example {1000}
+     * @example 1000
      */
     animationDuration?: number,
 
+    [key: string]: any;
 }
 
 export interface IAlertViewProps extends IAlertProps {

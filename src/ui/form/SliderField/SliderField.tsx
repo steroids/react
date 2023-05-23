@@ -39,13 +39,13 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
     step?: null | number;
 
     /**
-     * Значение по-умолчанию при первом рендере. Для isRange=false исполуется number, для isRange=true - number[]
+     * Значение по-умолчанию при первом рендере. Для isRange=false используется number, для isRange=true - number[]
      * @example 1
      */
     defaultValue?: number | number[],
 
     /**
-     * Любое строкове значение после значения состояния слайдера в всплывающем окошке.
+     * Любое строковое значение после значения состояния слайдера в всплывающем окошке.
      * @example '%'
      */
     valuePostfix?: string,

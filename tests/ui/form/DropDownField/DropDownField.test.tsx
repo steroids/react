@@ -6,7 +6,7 @@ import DropDownField, {IDropDownFieldViewProps} from '../../../../src/ui/form/Dr
 import DropDownFieldMockView from './DropDownFieldMockView';
 
 describe('DropDownField tests', () => {
-    const defaultItemToSelectAllLabel = 'all';
+    const defaultItemToSelectAllLabel = 'Все';
 
     const items = [
         {

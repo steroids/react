@@ -2,10 +2,12 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import _includes from 'lodash-es/includes';
+import _isPlainObject from 'lodash-es/isPlainObject';
+import {boolean} from 'yargs';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
-import {IDataSelectConfig} from '../../../hooks/useDataSelect';
+import {IDataSelectConfig, ITEM_TO_SELECT_ALL_ID} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
 export const GROUP_CONTENT_TYPE = 'group';
@@ -150,12 +152,16 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isLoading?: boolean,
     onReset: () => void,
     onOpen: () => void,
-    renderItem: (item: IDropDownFieldItem, hasSelectAll?: boolean) => JSX.Element;
+    renderItem: (item: IDropDownFieldItem) => JSX.Element;
     onItemRemove: (id: PrimaryKey | any) => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
     primaryKey: string,
     items: IDropDownFieldItem[],
+    itemToSelectAll: null | {
+        label: string,
+        id: string,
+    }
 }
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -166,6 +172,24 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const hasGroup = !!props.groupAttribute;
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
+
+    const normalizedToSelectAllItem = React.useMemo(() => {
+        if (!props.itemToSelectAll) {
+            return null;
+        }
+
+        if (typeof props.itemToSelectAll !== 'boolean' && _isPlainObject(props.itemToSelectAll)) {
+            return {
+                id: props.itemToSelectAll.id,
+                label: props.itemToSelectAll.label,
+            };
+        }
+
+        return {
+            id: ITEM_TO_SELECT_ALL_ID,
+            label: __('Все'),
+        };
+    }, [props.itemToSelectAll]);
 
     const toggleCollapse = indexSelected => {
         if (selectedAccordionItems.includes(indexSelected)) {
@@ -215,9 +239,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         items,
         sourceItems,
         inputValue: props.input.value,
-        customItemSelectAllId: typeof props.itemToSelectAll === 'boolean'
-            ? null
-            : props.itemToSelectAll?.id,
+        customItemSelectAllId: normalizedToSelectAllItem?.id,
     });
 
     const onOpen = useCallback(() => {
@@ -307,7 +329,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         childIndex: item.id,
         toggleCollapse,
         setSelectedAll,
-        itemToSelectAll: props.itemToSelectAll,
+        itemToSelectAll: normalizedToSelectAllItem,
     });
 
     const renderItem = (item: IDropDownFieldItem) => {
@@ -345,6 +367,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         renderItem,
         onItemRemove,
         hasGroup,
+        itemToSelectAll: normalizedToSelectAllItem,
     });
 }
 
@@ -360,6 +383,7 @@ DropDownField.defaultProps = {
     showReset: false,
     multiple: false,
     isSearchAutoFocus: true,
+    itemToSelectAll: false,
 };
 
 export default fieldWrapper<IDropDownFieldProps>('DropDownField', DropDownField);

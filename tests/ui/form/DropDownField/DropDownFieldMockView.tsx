@@ -26,24 +26,6 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
     const bem = useBem('DropDownFieldView');
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const itemToSelectAllProperties = React.useMemo(() => {
-        if (!props.itemToSelectAll) {
-            return {};
-        }
-
-        if (typeof props.itemToSelectAll === 'boolean') {
-            return {
-                id: ITEM_TO_SELECT_ALL_ID,
-                label: 'all',
-            };
-        }
-
-        return {
-            id: props.itemToSelectAll?.id,
-            label: props.itemToSelectAll?.label,
-        };
-    }, [props.itemToSelectAll]);
-
     // Auto focus on search
     useEffect(() => {
         if (props.isSearchAutoFocus && props.isAutoComplete && props.isOpened && inputRef?.current) {
@@ -134,7 +116,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                     )}
                     <div className={bem.element('drop-down-list')}>
                         {props.multiple && props.itemToSelectAll
-                            && props.renderItem(itemToSelectAllProperties as IDropDownFieldItem)}
+                            && props.renderItem(props.itemToSelectAll)}
                         {props.items.map((item) => props.renderItem(item))}
                     </div>
                 </div>

@@ -17,29 +17,12 @@ export interface ITimePanelViewProps extends Pick<ITimeFieldViewProps,
  * TimeField
  * Поле для выбора времени
  */
-export interface ITimeFieldProps extends IDateInputStateInput {
+export interface ITimeFieldProps extends IDateInputStateInput, IUiComponent {
     /**
      * Отключить border вокруг элемента
      * @example 'true'
      */
     noBorder?: boolean,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle;
 
     /**
      * Свойства для view компонента

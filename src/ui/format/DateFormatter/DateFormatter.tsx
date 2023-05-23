@@ -7,13 +7,18 @@ export interface IDateFormatterProps {
      * @example LL
      */
     format?: string;
-    view?: CustomView;
 
     /**
      * Дата
      * @example 2023-09-11
      */
     value?: any;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения колонки
+     * @example MyCustomView
+     */
+    view?: CustomView;
 
     [key: string]: any;
 }

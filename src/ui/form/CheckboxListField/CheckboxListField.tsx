@@ -15,24 +15,12 @@ import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
  * Список с чекбоксами. Используется в формах для выбора нескольких значений.
  */
 export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
-    IDataProviderConfig, Omit<IDataSelectConfig, 'items'> {
-
+    IDataProviderConfig, Omit<IDataSelectConfig, 'items'>, IUiComponent {
     /**
      * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
     inputProps?: any,
-
-    /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
 
     /**
      * Ориентация списка

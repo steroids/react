@@ -1,10 +1,7 @@
 import React from 'react';
 import {useComponents} from '../../../hooks';
 
-export interface ITextProps {
-    view?: CustomView,
-    className?: CssClassName,
-
+export interface ITextProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
@@ -12,27 +9,25 @@ export interface ITextProps {
 
     /**
      * Тип текста
-     * @example {'body'}
+     * @example 'body'
      */
     type?: 'body' | 'span' | 'boldSpan' | string,
 
     /** HTML тег
-     * @example {'span'}
+     * @example 'span'
      */
     tag?: 'p' | 'span' | string,
 
     /**
      * Цвет текста
-     * @example {'primary'}
+     * @example 'primary'
      */
     color?: ColorName,
 
     /** Текст
-     * @example {'Simple text'}
+     * @example 'Simple text'
      */
     content?: string,
-
-    style?: CustomStyle,
 }
 
 export type ITextViewProps = ITextProps

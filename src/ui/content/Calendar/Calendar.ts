@@ -3,7 +3,7 @@ import {DayPickerProps} from 'react-day-picker';
 import {useComponents} from '../../../hooks';
 import {convertDate} from '../../../utils/calendar';
 
-export interface ICalendarProps {
+export interface ICalendarProps extends IUiComponent {
     /**
      * Значение задает выбранные в календаре дату или диапазон дат.
      * Необходимо передать валидную дату в виде строки (массива строк)
@@ -28,12 +28,6 @@ export interface ICalendarProps {
     pickerProps?: DayPickerProps | any,
 
     /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
-
-    /**
      * Пропсы для компонента отображения
      */
     viewProps?: any,
@@ -48,11 +42,6 @@ export interface ICalendarProps {
      * @example 1
      */
     numberOfMonths?: number,
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName,
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
@@ -125,7 +114,9 @@ function Calendar(props: ICalendarProps) {
     }, [selectedDates]);
 
     const onDaySelect = useCallback(
-        (date) => props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true)),
+        (date) => {
+            props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true));
+        },
         [props.onChange, props.valueFormat],
     );
 

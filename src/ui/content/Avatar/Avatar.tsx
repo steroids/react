@@ -1,18 +1,13 @@
 import {useState, useCallback, useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 
-export interface IAvatarProps {
+export interface IAvatarProps extends IUiComponent {
 
     /**
      * Альтернативный текст для изображения
-     * @example {'default image'}
+     * @example 'default image'
      */
     alt?: string,
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
 
     /**
      * Дочерние элементы
@@ -21,13 +16,13 @@ export interface IAvatarProps {
 
     /**
      * Размер аватара
-     * @example {'md'}
+     * @example 'md'
      */
     size?: Size | number,
 
     /**
      * Форма аватара
-     * @example {'circle'}
+     * @example 'circle'
      */
     shape?: 'circle' | 'square' | string,
 
@@ -47,22 +42,10 @@ export interface IAvatarProps {
     status?: boolean,
 
     /**
-     * Объект CSS стилей
-     * @example {width: '30px'}
-     */
-    style?: CustomStyle,
-
-    /**
      * Заголовок аватарки
      * @example {'Avatar'}
      */
     title?: string,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
 
     /**
      * Наличие обводки вокруг аватара

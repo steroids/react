@@ -2,23 +2,12 @@ import * as React from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-export interface IRadioFieldProps extends IFieldWrapperInputProps {
+export interface IRadioFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
-
-    /**
-     * Дополнительный CSS-класс для элемента input
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
 
     /**
      * Флаг определяющий включен ли элемент

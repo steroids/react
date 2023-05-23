@@ -1,9 +1,9 @@
 import React from 'react';
 import {useBem} from '../../../../src/hooks';
-import {IMenuItemProps} from '../../../../src/ui/content/Menu/Menu';
+import {IMenuItem} from '../../../../src/ui/content/Menu/Menu';
 import renderIcon from '../../../mocks/renderIconMock';
 
-export default function MenuItemView(props:IMenuItemProps) {
+export default function MenuItemView(props: IMenuItem) {
     const bem = useBem('MenuItemView');
     return (
 

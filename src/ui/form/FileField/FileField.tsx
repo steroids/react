@@ -32,19 +32,7 @@ interface IFileFieldCommonProps extends IFileInput {
     filesLayout?: FilesLayout | string;
 }
 
-export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps {
-    /**
-     * Дополнительный css класс
-     * @example true
-     */
-    className?: CssClassName;
-
-    /**
-     * View компонент
-     * @example true
-     */
-    view?: CustomView;
-
+export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps, IUiComponent {
     /**
      * View компонент для кнопки
      * @example true

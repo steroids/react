@@ -1,6 +1,6 @@
 import {useComponents} from '../../../hooks';
 
-export interface IFileSizeFormatterProps {
+export interface IFileSizeFormatterProps extends IUiComponent {
 
     /**
      * Если не указан размер файла, то в случае, если showZero = true
@@ -8,7 +8,6 @@ export interface IFileSizeFormatterProps {
      * @example true
      */
     showZero?: boolean;
-    view?: CustomView;
 
     /**
      * Размер файла

@@ -23,7 +23,7 @@ import {Model} from '../components/MetaComponent';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
-export interface ISortProps {
+export interface ISortConfig {
     /**
      * Включить сортировку
      * @example false
@@ -85,7 +85,7 @@ export interface IListConfig {
      * Подключение сортировки
      * @example {enable: true, defaultSort: 'startDate'}
      */
-    sort?: boolean | ISortProps,
+    sort?: boolean | ISortConfig,
 
     /**
      * Варианты расположения элементов коллекции

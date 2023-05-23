@@ -1,10 +1,7 @@
 import React from 'react';
 import {useComponents} from '../../../hooks';
 
-export interface ITitleProps {
-    view?: CustomView,
-    className?: CssClassName,
-
+export interface ITitleProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
@@ -12,27 +9,25 @@ export interface ITitleProps {
 
     /**
      * Тип заголовка
-     * @example {'h1'}
+     * @example 'h1'
      */
     type?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle' | string,
 
      /** HTML тег
-     * @example {'h2'}
+     * @example 'h2'
      */
     tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
 
     /** Текст заголовка
-     * @example {'Simple text'}
+     * @example 'Simple text'
      */
     content?: string,
 
     /**
      * Цвет заголовка
-     * @example {'primary'}
+     * @example 'primary'
      */
     color?: ColorName,
-
-    style?: CustomStyle,
 }
 
 export type ITitleViewProps = ITitleProps

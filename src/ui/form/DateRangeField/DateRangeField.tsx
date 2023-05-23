@@ -13,7 +13,7 @@ import fieldWrapper, {
  * Поле ввода дипазона двух дат с выпадающим календарём
  */
 export interface IDateRangeFieldProps extends IDateInputStateInput,
-    Omit<IFieldWrapperInputProps, 'attribute'>
+    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent
 {
     /**
      * Аттрибут (название) поля в форме
@@ -46,27 +46,10 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     valueFormat?: string;
 
     /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
      * Placeholder подсказка
      * @example Your text...
      */
     placeholder?: any;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle;
 
     /**
      * Иконка
@@ -80,20 +63,20 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      */
     showRemove?: boolean,
 
+    /**
+    * Свойства для input элемента from
+    */
     inputPropsFrom?: any,
 
+    /**
+    * Свойства для input элемента to
+    */
     inputPropsTo?: any,
 
     /**
      * Свойства для компонента Calendar
      */
     calendarProps?: ICalendarProps,
-
-    /**
-     * Отключить border вокруг элемента
-     * @example 'true'
-     */
-    noBorder?: boolean,
 
     [key: string]: any;
 }
@@ -216,6 +199,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputPropsTo: extendedInputPropsTo,
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
+        style: props.style,
     });
 }
 
@@ -228,6 +212,7 @@ DateRangeField.defaultProps = {
     showRemove: true,
     icon: true,
     noBorder: false,
+    size: 'md',
 };
 
 export default fieldWrapper<IDateRangeFieldProps>('DateRangeField', DateRangeField,

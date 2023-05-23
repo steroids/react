@@ -13,11 +13,14 @@ export interface ICopyToClipboardProps extends IUiComponent {
     value: string,
 
     /**
-    * Флаг, который отвечает за выключение функции копирования
-    * @example disabled: false
+    * Переводит состояние компонента в выключенное
+    * @example true
     */
     disabled?: boolean,
 
+    /**
+    * Параметры для уведомления, которое появляется после копирования
+    */
     notification?: string | {
         message?: string,
         level?: string,
@@ -43,8 +46,7 @@ export interface ICopyToClipboardProps extends IUiComponent {
     children?: React.ReactNode,
 
     /**
-    * Callback функция, которая вызывается при копировании
-    * @example {}
+    * Callback который вызывается при копировании
     */
     onCopy?: VoidFunction,
 }

@@ -6,12 +6,7 @@ export interface ICounter {
     content: string | number
 }
 
-export interface IBadgeProps {
-    /**
-    * Дополнительный CSS-класс
-    */
-    className?: CssClassName;
-
+export interface IBadgeProps extends IUiComponent {
     /**
      * Тип badge
      */
@@ -21,11 +16,6 @@ export interface IBadgeProps {
      * Стиль скругления
      */
     roundingStyle: 'rounder' | 'squarer';
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     */
-    view?: CustomView;
 
     /**
      * Нужно ли отображать кнопку, чтобы закрыть badge
@@ -39,7 +29,7 @@ export interface IBadgeProps {
     onClose?: () => void,
 
     /** Текст для badge
-    * @example {'Sending is confirmed!'}
+    * @example 'Sending is confirmed!'
     */
     message?: string,
 
@@ -47,8 +37,6 @@ export interface IBadgeProps {
      * Нужно ли отображать счетчик
      */
     counter: boolean | ICounter;
-
-    style?: CustomStyle,
 
     /**
      * Размер для badge

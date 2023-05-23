@@ -16,7 +16,7 @@ import {IRadioFieldViewProps} from '../RadioField/RadioField';
  * Список с радиокнопками. Используется в формах для выбора одного значения.
  */
 export interface IRadioListFieldProps extends IFieldWrapperInputProps, IDataProviderConfig,
- Omit<IDataSelectConfig, 'items'> {
+    Omit<IDataSelectConfig, 'items'>, IUiComponent {
     /**
      * Свойства для элемента input
      * @example {onKeyDown: ...}
@@ -24,20 +24,9 @@ export interface IRadioListFieldProps extends IFieldWrapperInputProps, IDataProv
     inputProps?: any;
 
     /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
-
-    /**
      * Ориентация списка
      */
     orientation?: Orientation,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
 }
 
 export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {

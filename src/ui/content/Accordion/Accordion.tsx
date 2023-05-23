@@ -6,7 +6,7 @@ export interface IAccordionIcon {
     close: React.ReactElement | string,
 }
 
-export interface IAccordionCommonProps {
+export interface IAccordionProps {
     view?: CustomView,
     style?: CustomStyle,
     children?: any,
@@ -69,14 +69,17 @@ export interface IAccordionCommonProps {
     showIcon?: boolean,
 }
 
-export interface IAccordionCommonViewProps extends IAccordionCommonProps {
+export interface IAccordionViewProps extends IAccordionProps {
     toggleAccordion?: (number) => void,
     toggleCollapse?: (number) => void;
     childIndex?: number,
     isShowMore?: boolean,
 }
 
-function Accordion(props: IAccordionCommonProps) {
+export type IAccordionItemProps = IAccordionProps;
+export type IAccordionItemViewProps = IAccordionViewProps;
+
+function Accordion(props: IAccordionProps) {
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
 
     React.useEffect(() => {

@@ -92,7 +92,7 @@ export interface IDateInputStateOutput {
         name?: string,
         value?: any,
         onChange: (value: any) => void,
-        [key:string]: any,
+        [key: string]: any,
     },
 }
 
@@ -129,7 +129,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
     }, [propsDisplayValue]);
 
     // Display input change handler
-    const onDisplayValueChange = useCallback(value => {
+    const onDisplayValueChange = useCallback((value: any) => {
         value = value.replace(/[^0-9:. ]/g, '');
 
         setDisplayValue(value);
@@ -152,7 +152,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
                 props.onChange.call(null, value);
             }
         }
-    // eslint-disable-next-line max-len
+        // eslint-disable-next-line max-len
     }, [props.displayFormat, props.input.onChange, props.input.value, props.onChange, props.valueFormat, props.useUTC, props.dateInUTC]);
 
     // Dropdown opened state
@@ -193,7 +193,7 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         onFocus,
         onBlur,
         disabled: props.disabled,
-        placeholder: props.placeholder || props.displayFormat,
+        placeholder: props.placeholder || props.displayFormat.toLowerCase(),
         required: props.required,
         name: props.input.name,
         autoComplete: 'off',

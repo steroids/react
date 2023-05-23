@@ -1,6 +1,6 @@
 {
  "name": "@steroidsjs/core",
- "version": "3.0.0-beta.38",
+"version": "3.0.0-beta.42",
  "description": "",
  "author": "Vladimir Kozhin <hello@kozhindev.com>",
  "repository": {
@@ -43,7 +43,7 @@
   "rc-slider": "9.7.4",
   "react": "^18.2.0",
   "react-click-outside": "^3.0.1",
-  "react-day-picker": "^8.2.1",
+  "react-day-picker": "^8.7.1",
   "react-dom": "^18.2.0",
   "react-grid-gallery": "^0.4.8",
   "react-helmet": "^6.1.0",

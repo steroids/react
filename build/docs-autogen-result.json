@@ -573,6 +573,49 @@
                 }
             ]
         },
+        "IDataProvider": {
+            "name": "IDataProvider",
+            "moduleName": "hooks/useDataProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "action",
+                    "decorators": [],
+                    "description": "URL для подгрузки новой коллекции данных",
+                    "required": false,
+                    "type": "string | IApiMethod",
+                    "example": "'/api/v1/search'"
+                },
+                {
+                    "name": "onSearch",
+                    "decorators": [],
+                    "description": "Обработчик, который вызывается для подгрузки данных.\nЕсли обработчик не передан, то по умолчанию отправится post-запрос.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "params",
+                    "decorators": [],
+                    "description": "Параметры запроса",
+                    "required": false,
+                    "type": "Record",
+                    "example": "{pageSize: 3}"
+                },
+                {
+                    "name": "reduxId",
+                    "decorators": [],
+                    "description": "Уникальный (глобально) идентификатор, под которых будут храниться\nподгруженные данные в redux (при включенном флаге useRedux). Если\nне задан - данные будут храниться в локальном стейте",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
         "IDataProviderConfig": {
             "name": "IDataProviderConfig",
             "moduleName": "hooks/useDataProvider",
@@ -603,7 +646,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -1321,7 +1364,7 @@
                     "decorators": [],
                     "description": "Подключение сортировки",
                     "required": false,
-                    "type": "boolean | ISortProps",
+                    "type": "boolean | ISortConfig",
                     "example": "{enable: true, defaultSort: 'startDate'}"
                 }
             ]
@@ -1449,8 +1492,8 @@
                 }
             ]
         },
-        "ISortProps": {
-            "name": "ISortProps",
+        "ISortConfig": {
+            "name": "ISortConfig",
             "moduleName": "hooks/useList",
             "title": "",
             "description": "",
@@ -1514,7 +1557,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -1979,8 +2022,35 @@
                 }
             ]
         },
-        "IAccordionCommonProps": {
-            "name": "IAccordionCommonProps",
+        "IAccordionIcon": {
+            "name": "IAccordionIcon",
+            "moduleName": "ui/content/Accordion/Accordion",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "close",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string | ReactElement",
+                    "example": null
+                },
+                {
+                    "name": "open",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string | ReactElement",
+                    "example": null
+                }
+            ]
+        },
+        "IAccordionProps": {
+            "name": "IAccordionProps",
             "moduleName": "ui/content/Accordion/Accordion",
             "title": "",
             "description": "",
@@ -2089,20 +2159,20 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
         },
-        "IAccordionCommonViewProps": {
-            "name": "IAccordionCommonViewProps",
+        "IAccordionViewProps": {
+            "name": "IAccordionViewProps",
             "moduleName": "ui/content/Accordion/Accordion",
             "title": "",
             "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IAccordionCommonProps"
+                "IAccordionProps"
             ],
             "properties": [
                 {
@@ -2238,34 +2308,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
-                    "example": null
-                }
-            ]
-        },
-        "IAccordionIcon": {
-            "name": "IAccordionIcon",
-            "moduleName": "ui/content/Accordion/Accordion",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": [
-                {
-                    "name": "close",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "string | ReactElement",
-                    "example": null
-                },
-                {
-                    "name": "open",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "string | ReactElement",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -2372,7 +2415,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -2505,7 +2548,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -2532,7 +2575,7 @@
                     "decorators": [],
                     "description": "Дочерние элементы",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 },
                 {
@@ -2612,7 +2655,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -2641,7 +2684,7 @@
                     "decorators": [],
                     "description": "Дочерние элементы",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 },
                 {
@@ -2745,7 +2788,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -2788,7 +2831,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -2879,7 +2922,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -2980,7 +3023,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -3082,7 +3125,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -3231,7 +3274,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -3381,7 +3424,201 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "ICopyToClipboardProps": {
+            "name": "ICopyToClipboardProps",
+            "moduleName": "ui/content/CopyToClipboard/CopyToClipboard",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерний элемент",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "<h1>This message will be copied!</h1>"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Флаг, который отвечает за выключение функции копирования",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "disabled: false"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": "calendar-day"
+                },
+                {
+                    "name": "notification",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | {level: string, message: string, params: IShowNotificationParameters}",
+                    "example": null
+                },
+                {
+                    "name": "onCopy",
+                    "decorators": [],
+                    "description": "Callback функция, которая вызывается при копировании",
+                    "required": false,
+                    "type": "VoidFunction",
+                    "example": "{}"
+                },
+                {
+                    "name": "showCopyIcon",
+                    "decorators": [],
+                    "description": "Позволяет включить или выключить отображение иконки",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "showCopyIcon: false"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Значение, которое будет использоваться при копировании",
+                    "required": true,
+                    "type": "string",
+                    "example": "value: 'Steroids.js'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "ICopyToClipboardViewProps": {
+            "name": "ICopyToClipboardViewProps",
+            "moduleName": "ui/content/CopyToClipboard/CopyToClipboard",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "ICopyToClipboardProps"
+            ],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерний элемент",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "<h1>This message will be copied!</h1>"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Флаг, который отвечает за выключение функции копирования",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "disabled: false"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": "calendar-day"
+                },
+                {
+                    "name": "notification",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | {level: string, message: string, params: IShowNotificationParameters}",
+                    "example": null
+                },
+                {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onCopy",
+                    "decorators": [],
+                    "description": "Callback функция, которая вызывается при копировании",
+                    "required": false,
+                    "type": "VoidFunction",
+                    "example": "{}"
+                },
+                {
+                    "name": "showCopyIcon",
+                    "decorators": [],
+                    "description": "Позволяет включить или выключить отображение иконки",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "showCopyIcon: false"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Значение, которое будет использоваться при копировании",
+                    "required": true,
+                    "type": "string",
+                    "example": "value: 'Steroids.js'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -3458,7 +3695,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -3568,7 +3805,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -3696,7 +3933,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -3755,7 +3992,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -3856,7 +4093,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизациии отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -4006,7 +4243,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизациии отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -4073,7 +4310,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -4142,13 +4379,13 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
         },
-        "IMenuItemProps": {
-            "name": "IMenuItemProps",
+        "IMenuItem": {
+            "name": "IMenuItem",
             "moduleName": "ui/content/Menu/Menu",
             "title": "",
             "description": "",
@@ -4212,7 +4449,7 @@
                     "decorators": [],
                     "description": "Пропсы для DropDown",
                     "required": false,
-                    "type": "Omit",
+                    "type": "IDropDownProps",
                     "example": null
                 },
                 {
@@ -4236,7 +4473,7 @@
                     "decorators": [],
                     "description": "  Элементы меню",
                     "required": true,
-                    "type": "IMenuItemProps[]",
+                    "type": "IMenuItem[]",
                     "example": null
                 },
                 {
@@ -4244,7 +4481,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -4281,7 +4518,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 },
                 {
@@ -4659,7 +4896,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 },
                 {
@@ -5079,7 +5316,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 },
                 {
@@ -5437,7 +5674,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -5677,7 +5914,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -6265,7 +6502,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -6510,7 +6747,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -6691,7 +6928,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -6897,7 +7134,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -6961,7 +7198,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -7185,7 +7422,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -7531,7 +7768,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -8201,7 +8438,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -8631,7 +8868,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -8838,7 +9075,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -9079,7 +9316,7 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IAccordionCommonViewProps",
+                "IAccordionItemViewProps",
                 "Pick<IDropDownFieldProps",
                 "'itemsContent'>"
             ],
@@ -9297,7 +9534,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -9370,7 +9607,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -9634,7 +9871,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -9703,7 +9940,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -10063,7 +10300,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -10512,7 +10749,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -10784,7 +11021,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения item",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -11130,7 +11367,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения списка с группами полей",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -11346,7 +11583,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -11880,7 +12117,7 @@
                     "decorators": [],
                     "description": "View компонент",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "true"
                 }
             ]
@@ -12189,7 +12426,7 @@
                     "decorators": [],
                     "description": "View компонент",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "true"
                 }
             ]
@@ -12483,7 +12720,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -12839,7 +13076,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -13068,13 +13305,13 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
         },
-        "ICropInputProps": {
-            "name": "ICropInputProps",
+        "ICropConfig": {
+            "name": "ICropConfig",
             "moduleName": "ui/form/ImageField/ImageField",
             "title": "",
             "description": "",
@@ -13116,7 +13353,7 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "ICropInputProps"
+                "ICropConfig"
             ],
             "properties": [
                 {
@@ -13305,7 +13542,7 @@
                     "decorators": [],
                     "description": "Переопределение React-компонента для кастомизации view-отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -13352,7 +13589,7 @@
                     "decorators": [],
                     "description": "Параметры обрезки",
                     "required": false,
-                    "type": "ICropInputProps",
+                    "type": "ICropConfig",
                     "example": null
                 },
                 {
@@ -13480,7 +13717,7 @@
                     "decorators": [],
                     "description": "Переопределение внешнего вида модального окна",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomModalView"
                 },
                 {
@@ -13560,7 +13797,7 @@
                     "decorators": [],
                     "description": "Переопределение внешнего вида компонента",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -13605,7 +13842,7 @@
                     "decorators": [],
                     "description": "Параметры обрезки",
                     "required": false,
-                    "type": "ICropInputProps",
+                    "type": "ICropConfig",
                     "example": null
                 },
                 {
@@ -13741,7 +13978,7 @@
                     "decorators": [],
                     "description": "Переопределение внешнего вида модального окна",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomModalView"
                 },
                 {
@@ -13829,7 +14066,7 @@
                     "decorators": [],
                     "description": "Переопределение внешнего вида компонента",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -14019,7 +14256,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -14272,7 +14509,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -14582,7 +14819,268 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента отображения",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{customHandler: () => {...}}"
+                }
+            ]
+        },
+        "IMaskFieldProps": {
+            "name": "IMaskFieldProps",
+            "moduleName": "ui/form/MaskField/MaskField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IInputFieldProps"
+            ],
+            "properties": [
+                {
+                    "name": "addonAfter",
+                    "decorators": [],
+                    "description": "Текст или React-нода, которая будет отрендерена справа от поля.",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "'.com'"
+                },
+                {
+                    "name": "addonBefore",
+                    "decorators": [],
+                    "description": "Текст или React-нода, которая будет отрендерена слева от поля.",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "'http://'"
+                },
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "fieldLayoutClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Input ID для связи поля с label",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "Свойства для элемента \\<input /\\>",
+                    "required": false,
+                    "type": "any",
+                    "example": "{onKeyDown: ...}"
+                },
+                {
+                    "name": "isRenderWithoutFieldLayout",
+                    "decorators": [],
+                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "leadIcon",
+                    "decorators": [],
+                    "description": "Пользовательская иконка svg или название иконки",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": null
+                },
+                {
+                    "name": "mask",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "maskProps",
+                    "decorators": [],
+                    "description": "Конфигурация маски",
+                    "required": false,
+                    "type": "{alwaysShowMask: boolean, mask: string, maskPlaceholder: string}",
+                    "example": "{ mask: '+7 (999) 999-99-99' }"
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Подсказка для поля",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "showClear",
+                    "decorators": [],
+                    "description": "Показывать иконку очищения поля",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "{'true'}"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "textAfter",
+                    "decorators": [],
+                    "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "require('icon.png') | <component/>"
+                },
+                {
+                    "name": "textBefore",
+                    "decorators": [],
+                    "description": "Изображение или React-нода, которая будет отрендерена слева от поля.",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "require('icon.png') | <component/>"
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "HTML Тип",
+                    "required": false,
+                    "type": "string",
+                    "example": "email"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -14653,7 +15151,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -15034,7 +15532,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -15280,7 +15778,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -15493,7 +15991,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -15763,7 +16261,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -15952,7 +16450,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -16158,7 +16656,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -16222,7 +16720,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -16446,7 +16944,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -16787,7 +17285,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -17041,7 +17539,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -17198,7 +17696,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -17380,7 +17878,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -17617,7 +18115,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -17895,7 +18393,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -17960,7 +18458,7 @@
                     "decorators": [],
                     "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
                     "required": false,
-                    "type": "{action: string | IApiMethod, onSearch: {}, params: Record, reduxId: string}",
+                    "type": "IDataProvider",
                     "example": null
                 },
                 {
@@ -18184,7 +18682,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -18511,7 +19009,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -18749,7 +19247,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -19010,7 +19508,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -19202,7 +19700,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19264,7 +19762,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19307,7 +19805,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19342,7 +19840,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19377,7 +19875,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19495,7 +19993,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19554,7 +20052,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19589,7 +20087,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19717,7 +20215,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -19921,7 +20419,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "\"circle\" | \"text\" | \"rect\"",
+                    "type": "\"circle\" | \"rect\" | \"text\"",
                     "example": null
                 },
                 {
@@ -19980,11 +20478,54 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "\"circle\" | \"text\" | \"rect\"",
+                    "type": "\"circle\" | \"rect\" | \"text\"",
                     "example": null
                 },
                 {
                     "name": "width",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                }
+            ]
+        },
+        "ITooltipArrowPosition": {
+            "name": "ITooltipArrowPosition",
+            "moduleName": "ui/layout/Tooltip/Tooltip",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "bottom",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "left",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "right",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "top",
                     "decorators": [],
                     "description": "",
                     "required": false,
@@ -20015,7 +20556,7 @@
                     "decorators": [],
                     "description": "Стили для позиционирования стрелки",
                     "required": false,
-                    "type": "TooltipArrowPosition",
+                    "type": "ITooltipArrowPosition",
                     "example": "{left: 10}"
                 },
                 {
@@ -20071,7 +20612,42 @@
                     "decorators": [],
                     "description": "Стили для абсолютного позиционирования подсказки",
                     "required": false,
-                    "type": "TooltipStylePosition",
+                    "type": "ITooltipStylePosition",
+                    "example": null
+                }
+            ]
+        },
+        "ITooltipStylePosition": {
+            "name": "ITooltipStylePosition",
+            "moduleName": "ui/layout/Tooltip/Tooltip",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "left",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number | \"unset\"",
+                    "example": null
+                },
+                {
+                    "name": "right",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number | \"unset\"",
+                    "example": null
+                },
+                {
+                    "name": "top",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number | \"unset\"",
                     "example": null
                 }
             ]
@@ -20100,7 +20676,7 @@
                     "decorators": [],
                     "description": "Стили для позиционирования стрелки",
                     "required": false,
-                    "type": "TooltipArrowPosition",
+                    "type": "ITooltipArrowPosition",
                     "example": "{left: 10}"
                 },
                 {
@@ -20164,85 +20740,7 @@
                     "decorators": [],
                     "description": "Стили для абсолютного позиционирования подсказки",
                     "required": true,
-                    "type": "TooltipStylePosition",
-                    "example": null
-                }
-            ]
-        },
-        "TooltipArrowPosition": {
-            "name": "TooltipArrowPosition",
-            "moduleName": "ui/layout/Tooltip/Tooltip",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": [
-                {
-                    "name": "bottom",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string | number",
-                    "example": null
-                },
-                {
-                    "name": "left",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string | number",
-                    "example": null
-                },
-                {
-                    "name": "right",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string | number",
-                    "example": null
-                },
-                {
-                    "name": "top",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string | number",
-                    "example": null
-                }
-            ]
-        },
-        "TooltipStylePosition": {
-            "name": "TooltipStylePosition",
-            "moduleName": "ui/layout/Tooltip/Tooltip",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": [
-                {
-                    "name": "left",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "number | \"unset\"",
-                    "example": null
-                },
-                {
-                    "name": "right",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "number | \"unset\"",
-                    "example": null
-                },
-                {
-                    "name": "top",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "number | \"unset\"",
+                    "type": "ITooltipStylePosition",
                     "example": null
                 }
             ]
@@ -20285,7 +20783,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -20727,7 +21225,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -20778,7 +21276,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения колонки",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -20840,7 +21338,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -21397,7 +21895,7 @@
                     "decorators": [],
                     "description": "Подключение сортировки",
                     "required": false,
-                    "type": "boolean | ISortProps",
+                    "type": "boolean | ISortConfig",
                     "example": "{enable: true, defaultSort: 'startDate'}"
                 },
                 {
@@ -21405,7 +21903,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -21598,7 +22096,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -21790,7 +22288,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента коллекции",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -21894,7 +22392,7 @@
                     "decorators": [],
                     "description": "Подключение сортировки",
                     "required": false,
-                    "type": "boolean | ISortProps",
+                    "type": "boolean | ISortConfig",
                     "example": "{enable: true, defaultSort: 'startDate'}"
                 },
                 {
@@ -21902,7 +22400,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -22161,7 +22659,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -22366,7 +22864,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -22449,7 +22947,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -22550,7 +23048,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -22787,7 +23285,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -23071,7 +23569,7 @@
                     "decorators": [],
                     "description": "Переопределение React-компонента для кастомизации view-отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -23159,7 +23657,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -23226,7 +23724,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -23479,7 +23977,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -23530,7 +24028,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -23575,7 +24073,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -23812,7 +24310,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -24073,7 +24571,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -24156,7 +24654,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -24249,7 +24747,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -24708,7 +25206,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 },
                 {
@@ -24807,7 +25305,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -24908,7 +25406,7 @@
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
                 }
             ]
@@ -24983,7 +25481,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -25058,7 +25556,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "React.ReactNode | React.FunctionComponent",
+                    "type": "React.ReactNode | {}",
                     "example": null
                 }
             ]
@@ -25126,7 +25624,7 @@
             "decorators": [],
             "description": "Переопределение view React компонента для кастомизации отображения",
             "required": true,
-            "type": "React.ReactNode | React.FunctionComponent",
+            "type": "React.ReactNode | {}",
             "example": "MyCustomView"
         },
         "FormInputType": {
@@ -25175,6 +25673,22 @@
             "description": "",
             "required": true,
             "type": "{items: any[], position: string}",
+            "example": null
+        },
+        "IAccordionItemProps": {
+            "name": "IAccordionItemProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "IAccordionProps",
+            "example": null
+        },
+        "IAccordionItemViewProps": {
+            "name": "IAccordionItemViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "IAccordionViewProps",
             "example": null
         },
         "IAvatarGroupViewProps": {
@@ -25912,6 +26426,13 @@
         "ui/form/InputField/InputField": {
             "name": "default",
             "moduleName": "ui/form/InputField/InputField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/MaskField/MaskField": {
+            "name": "default",
+            "moduleName": "ui/form/MaskField/MaskField",
             "title": "",
             "description": "",
             "tags": {}

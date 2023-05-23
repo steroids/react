@@ -125,7 +125,9 @@ function Calendar(props: ICalendarProps) {
     }, [selectedDates]);
 
     const onDaySelect = useCallback(
-        (date) => props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true)),
+        (date) => {
+            props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true));
+        },
         [props.onChange, props.valueFormat],
     );
 

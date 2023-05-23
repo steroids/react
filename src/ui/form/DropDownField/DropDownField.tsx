@@ -3,7 +3,6 @@ import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import _includes from 'lodash-es/includes';
 import _isPlainObject from 'lodash-es/isPlainObject';
-import {boolean} from 'yargs';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';

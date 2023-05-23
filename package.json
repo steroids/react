@@ -1,6 +1,6 @@
 {
  "name": "@steroidsjs/core",
-"version": "3.0.0-beta.38",
+ "version": "3.0.0-beta.38",
  "description": "",
  "author": "Vladimir Kozhin <hello@kozhindev.com>",
  "repository": {
@@ -40,6 +40,7 @@
   "path-to-regexp": "^1.7.0",
   "qs": "^6.9.4",
   "query-string": "^6.14.0",
+  "rc-slider": "9.7.4",
   "react": "^18.2.0",
   "react-click-outside": "^3.0.1",
   "react-day-picker": "^8.2.1",
@@ -86,7 +87,7 @@
   "jest-environment-jsdom-fifteen": "^1.0.2",
   "jest-enzyme": "^7.1.2",
   "ts-jest": "^26.5.1",
-  "typescript": "^4.9.5",
-  "typedoc": "^0.24.7"
+  "typedoc": "^0.24.7",
+  "typescript": "^4.9.5"
  }
 }

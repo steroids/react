@@ -8,22 +8,11 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
  * SliderField
  * Компонент с ползунком для выбора числового значения в пределах указанного промежутка
  */
-export interface ISliderFieldProps extends IFieldWrapperInputProps {
+export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Свойства для компонента слайдера
      */
     sliderProps?: any;
-
-    /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
 
     /**
      * Минимальное значение в слайдере
@@ -109,7 +98,7 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
     // eslint-disable-next-line max-len
     }), [props.min, props.max, props.step, props.marks, props.isRange, props.disabled, props.isVertical, props.input.value, props.input.onChange, props.valuePostfix, props.defaultValue, props.tooltipIsVisible]);
 
-    return components.ui.renderView('form.SliderFieldView', {
+    return components.ui.renderView(props.view || 'form.SliderFieldView', {
         ...props,
         sliderProps,
     });

@@ -71,17 +71,19 @@ export interface IDataSelectResult {
     selectedIds: PrimaryKey[],
     setSelectedIds: (ids: PrimaryKey | PrimaryKey[], skipToggle?: boolean) => void,
     selectedItems: IDataSelectItem[],
+    setSelectedAll: VoidFunction,
+    isSelectedAll: boolean,
 }
 
 const defaultProps = {
     primaryKey: 'id',
 };
 
-export const getLinearItems = (items, groupAttribute) => {
+export const getFlattenedItems = (items, groupAttribute) => {
     let result = [];
     items.forEach(item => {
         if (groupAttribute && Array.isArray(item[groupAttribute])) {
-            result = result.concat(getLinearItems(item[groupAttribute], groupAttribute));
+            result = result.concat(getFlattenedItems(item[groupAttribute], groupAttribute));
         } else {
             result.push(item);
         }
@@ -100,8 +102,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     // Get primary key
     const primaryKey = config.primaryKey || defaultProps.primaryKey;
 
-    const linearItems = useMemo(
-        () => getLinearItems(config.items, config.groupAttribute),
+    const flattenedItems: IDataSelectItem[] = useMemo(
+        () => getFlattenedItems(config.items, config.groupAttribute),
         [config.groupAttribute, config.items],
     );
 
@@ -115,19 +117,19 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             return [].concat(_isArray(config.inputValue) ? config.inputValue : [config.inputValue]);
         }
 
-        return config.selectFirst && linearItems.length > 0
-            ? [linearItems[0][primaryKey]]
+        return config.selectFirst && flattenedItems.length > 0
+            ? [flattenedItems[0][primaryKey]]
             : [];
-    }, [config.selectedIds, config.inputValue, config.selectFirst, linearItems, primaryKey]);
+    }, [config.selectedIds, config.inputValue, config.selectFirst, flattenedItems, primaryKey]);
 
     const initialSelectedItems = useMemo(
-        () => linearItems.length > 0
+        () => flattenedItems.length > 0
         && initialSelectedIds.length > 0
             ? initialSelectedIds
-                .map(selectedId => linearItems.find(item => item.id === selectedId))
+                .map(selectedId => flattenedItems.find(item => item.id === selectedId))
                 .filter(isIdExists)
             : [],
-        [initialSelectedIds, linearItems],
+        [initialSelectedIds, flattenedItems],
     );
 
     // State
@@ -136,12 +138,18 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     const [hoveredId, setHoveredId] = useState(null);
     const [selectedIds, setSelectedIdsInternal] = useState(initialSelectedIds);
     const [selectedItems, setSelectedItemsInternal] = useState(initialSelectedItems);
+    const [isSelectedAll, setIsSelectedAll] = useState(config.items.length === selectedIds.length);
 
     // Handler for select/toggle item by id
     const setSelectedIds = useCallback((ids, skipToggle = false) => {
         if (_isArray(ids)) {
             if (!config.multiple && ids.length > 1) {
                 ids = [ids[0]];
+            }
+
+            if (selectedItems.length === ids.length) {
+                setSelectedIds([]);
+                return;
             }
 
             setSelectedIdsInternal(ids.sort());
@@ -164,7 +172,12 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setIsOpened(false);
             }
         }
-    }, [config.multiple, selectedIds]);
+    }, [config.multiple, selectedIds, selectedItems.length]);
+
+    const setSelectedAll = useCallback(() => {
+        const itemsIds = flattenedItems.map(item => item.id);
+        setSelectedIds(itemsIds);
+    }, [flattenedItems, setSelectedIds]);
 
     // Update selected items on change selectedIds or items or source items
     const prevSelectedIdsLength = usePrevious(selectedIds.length);
@@ -172,7 +185,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         const newSelectedItems = [];
         let hasChanges = false;
         selectedIds.forEach(selectedId => {
-            let finedItem = linearItems.find(item => item[primaryKey] === selectedId);
+            let finedItem = flattenedItems.find(item => item[primaryKey] === selectedId);
             if (!finedItem && config.sourceItems) {
                 finedItem = config.sourceItems.find(item => item[primaryKey] === selectedId);
             }
@@ -190,15 +203,15 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         if (hasChanges || prevSelectedIdsLength !== selectedIds.length) {
             setSelectedItemsInternal(newSelectedItems);
         }
-    }, [linearItems, config.sourceItems, primaryKey, selectedIds, selectedItems, prevSelectedIdsLength]);
+    }, [flattenedItems, config.sourceItems, primaryKey, selectedIds, selectedItems, prevSelectedIdsLength]);
 
     // Select first after fetch data
-    const prevItemsLength = usePrevious(linearItems.length);
+    const prevItemsLength = usePrevious(flattenedItems.length);
     useUpdateEffect(() => {
-        if (config.selectFirst && prevItemsLength === 0 && linearItems.length > 0) {
-            setSelectedIdsInternal([linearItems[0][primaryKey]]);
+        if (config.selectFirst && prevItemsLength === 0 && flattenedItems.length > 0) {
+            setSelectedIdsInternal([flattenedItems[0][primaryKey]]);
         }
-    }, [linearItems, config.selectFirst, prevItemsLength, primaryKey]);
+    }, [flattenedItems, config.selectFirst, prevItemsLength, primaryKey]);
 
     // Update selected items on change value
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);
@@ -215,6 +228,10 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             setSelectedIdsInternal(newSelectedIds);
         }
     }, [config.selectedIds, prevConfigSelectedIds, selectedIds, selectedItems]);
+
+    useUpdateEffect(() => {
+        setIsSelectedAll(config.items.length === selectedIds.length);
+    }, [config.items.length, selectedIds]);
 
     // Global key down handler for navigate on items
     // Support keys:
@@ -246,9 +263,9 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (selectedIds.length > 0) {
                 // Select first selected
                 setSelectedIds(selectedIds[0], true);
-            } else if (linearItems.length > 0) {
+            } else if (flattenedItems.length > 0) {
                 // Select first result
-                setSelectedIds(linearItems[0], true);
+                setSelectedIds(flattenedItems[0], true);
             }
 
             setIsOpened(false);
@@ -276,7 +293,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else {
                 // Navigate on items by keys
                 const direction = isDown ? 1 : -1;
-                const keys: any[] = linearItems.map(item => item.id);
+                const keys: any[] = flattenedItems.map(item => item.id);
 
                 // Get current index
                 let index = hoveredId ? keys.indexOf(hoveredId) : -1;
@@ -293,7 +310,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setHoveredId(keys[newIndex]);
             }
         }
-    }, [isFocused, isOpened, hoveredId, selectedIds, linearItems, setSelectedIds]);
+    }, [isFocused, isOpened, hoveredId, selectedIds, flattenedItems, setSelectedIds]);
     useEvent('keydown', onKeyDown);
 
     return {
@@ -306,5 +323,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         selectedIds,
         setSelectedIds,
         selectedItems,
+        setSelectedAll,
+        isSelectedAll,
     };
 }

@@ -147,6 +147,9 @@ export interface IListConfig {
      */
     addressBar?: boolean | IAddressBarConfig,
 
+    /**
+    * Параметр для загрузки данных списка с сервера
+    */
     scope?: string[],
 
     /**
@@ -155,6 +158,9 @@ export interface IListConfig {
      */
     query?: Record<string, unknown>,
 
+    /**
+    * Модель
+    */
     model?: string,
 
     /**

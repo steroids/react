@@ -9,7 +9,7 @@ export interface IMenuItem {
     label: string,
 
     /**
-     * Функция при клике
+     * Функция вызываемая при клике
      */
     onClick: VoidFunction,
 

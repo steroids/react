@@ -8,7 +8,7 @@ export interface ICopyToClipboardProps extends IUiComponent {
 
     /**
     * Значение, которое будет использоваться при копировании
-    * @example value: 'Steroids.js'
+    * @example 'Steroids.js'
     */
     value: string,
 
@@ -20,6 +20,17 @@ export interface ICopyToClipboardProps extends IUiComponent {
 
     /**
     * Параметры для уведомления, которое появляется после копирования
+    * @example
+    * 'Some value has been copied to buffer'
+    * @example
+    * {
+    *   message: 'Some value has been copied to buffer',
+    *   level: 'info',
+    *   params: {
+    *   position: 'top-left',
+    *   timeOut: 100,
+    *  }
+    * }
     */
     notification?: string | {
         message?: string,
@@ -29,7 +40,7 @@ export interface ICopyToClipboardProps extends IUiComponent {
 
     /**
     * Позволяет включить или выключить отображение иконки
-    * @example showCopyIcon: false
+    * @example false
     */
     showCopyIcon?: boolean,
 

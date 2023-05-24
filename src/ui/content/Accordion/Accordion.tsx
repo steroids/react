@@ -13,6 +13,7 @@ export interface IAccordionProps extends IUiComponent {
     children?: React.ReactNode,
 
     /**
+     * Переводит Accordion в выключенное состояние
      * @example true
      */
     disabled?: boolean,
@@ -42,7 +43,7 @@ export interface IAccordionProps extends IUiComponent {
 
     /**
      * Номер активного AccordionItem, который может меняться динамический или быть статичным
-     * @example
+     * @example 1
      */
     activeKey?: number,
 

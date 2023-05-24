@@ -91,7 +91,7 @@ export interface IButtonProps extends IUiComponent {
 
     /**
      * Ссылка на внешнюю страницу, используется совместно с свойством `link`
-     * @example https://ya.ru
+     * @example https://kozhindev.com
      */
     url?: string;
 

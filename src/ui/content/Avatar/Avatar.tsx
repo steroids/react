@@ -12,7 +12,7 @@ export interface IAvatarProps extends IUiComponent {
     /**
      * Дочерние элементы
      */
-    children?: CustomView,
+    children?: React.ReactNode,
 
     /**
      * Размер аватара
@@ -28,28 +28,31 @@ export interface IAvatarProps extends IUiComponent {
 
     /**
      * Ссылка на изображение для аватара
-     * @example {'https://user/avatar.png'}
+     * @example 'https://user/avatar.png'
      */
     src?: string,
 
     // TODO Список адаптивных разрешений изображения
+    /**
+    * Набор адаптивных изображений
+    */
     srcSet?: string;
 
     /**
      * Статус онлайна
-     * @example {true}
+     * @example true
      */
     status?: boolean,
 
     /**
      * Заголовок аватарки
-     * @example {'Avatar'}
+     * @example 'Avatar'
      */
     title?: string,
 
     /**
      * Наличие обводки вокруг аватара
-     * @example {true}
+     * @example true
      */
     hasBorder?: boolean;
 }

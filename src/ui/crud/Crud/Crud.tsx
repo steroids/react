@@ -57,25 +57,106 @@ export interface ICrudClickProps {
 }
 
 export interface ICrudProps {
+    /**
+    * Id для Crud
+    */
     crudId?: string;
+
+    /**
+    * Режим работы Crud
+    */
     mode?: 'page' | 'modal',
+
+    /**
+    * Ссылка на rest
+    */
     restUrl?: string,
+
+    /**
+    * Методы rest api
+    * @example {}
+    */
     restApi?: IApiRest,
+
+    /**
+    * Первичный ключ
+    */
     primaryKey?: 'id' | string,
+
+    /**
+    * Ключ запроса
+    * @example {}
+    */
     queryKey?: 'id' | string,
+
+    /**
+    * Модель
+    * @example {}
+    */
     model?: string,
+
+    /**
+    * Модель используемая для поиска
+    */
     searchModel?: string,
+
+    /**
+    * Параметры для колонки index
+    */
     index?: boolean | ICrudItem,
+
+    /**
+    * Параметры для колонки create
+    */
     create?: boolean | ICrudItem,
+
+    /**
+    * Параметры для колонки update
+    */
     update?: boolean | ICrudItem,
+
+    /**
+    * Представление
+    */
     view?: boolean | ICrudItem,
+
+    /**
+    * Параметры для колонки delete
+    */
     delete?: boolean | ICrudItem,
+
+    /**
+    * Коллекция элементов
+    */
     items?: ICrudItem[] | { [key: string]: ICrudItem };
+
+    /**
+    * Параметры Grid
+    */
     grid?: IGridProps | React.ReactNode,
+
+    /**
+    * Параметры формы
+    */
     form?: IFormProps | React.ReactNode,
+
+    /**
+    * Параметры для колонки detail
+    */
     detail?: any, //TODO IDetailProps,
+
+    /**
+    * Представление для Crud
+    */
     crudView?: CustomView,
+
+    /**
+    * Функция-обработчик ошибок
+    * @param error - ошибка
+    * @param dispatch - диспатч
+    */
     errorHandler?: (error, dispatch: any) => void,
+
     [key: string]: any,
 }
 

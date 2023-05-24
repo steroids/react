@@ -121,6 +121,7 @@ export interface IFormProps extends IUiComponent {
     initialValues?: any | any[];
 
     /**
+     * Свойства для представления
      * @example {className: 'foo'}
      */
     viewProps?: any;
@@ -190,12 +191,40 @@ export interface IFormReducerState {
 }
 
 export interface IFormContext {
+    /**
+    * Id формы
+    * @example {}
+    */
     formId?: string;
+
+    /**
+    * Модель с полями формы
+    */
     model?: any;
+
+    /**
+    * Префикс для полей формы
+    */
     prefix?: string | boolean;
+
+    /**
+    * Размер компонента
+    */
     size?: Size;
+
+    /**
+    * Провайдер
+    */
     provider?: any,
+
+    /**
+    * Редьюсер
+    */
     reducer?: { dispatch: React.Dispatch<any>, select: any },
+
+    /**
+    * Диспатч
+    */
     dispatch?: any,
 }
 

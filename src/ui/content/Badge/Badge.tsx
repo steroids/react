@@ -2,13 +2,23 @@ import React, {useCallback, useState} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface ICounter {
+    /**
+    * Состояние счетчика
+    * @example true
+    */
     isEnable: boolean,
+
+    /**
+    * Содержимое счетчика
+    * @example 'Counter'
+    */
     content: string | number
 }
 
 export interface IBadgeProps extends IUiComponent {
     /**
      * Тип badge
+     * @example 'primary'
      */
     type: ColorName;
 
@@ -24,7 +34,7 @@ export interface IBadgeProps extends IUiComponent {
 
     /**
      * Callback функция вызываемая при нажатии на кнопку закрытия
-     * @example {() => console.log('this is callback')}
+     * @example () => console.log('Hello from onClose!')
      */
     onClose?: () => void,
 
@@ -35,11 +45,13 @@ export interface IBadgeProps extends IUiComponent {
 
     /**
      * Нужно ли отображать счетчик
+     * @example {isEnable: true, content: 'Hello from counter!'}
      */
     counter: boolean | ICounter;
 
     /**
      * Размер для badge
+     * @example 'md'
      */
     size: Size;
 }

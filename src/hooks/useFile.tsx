@@ -11,15 +11,51 @@ import useInitial from './useInitial';
 import {useComponents, useForm} from './index';
 
 export interface IFileInput {
+    /**
+    * Параметры для input элемента
+    */
     input?: FormInputType,
+
+    /**
+    * Множественный выбор файлов
+    */
     multiple?: boolean;
+
+    /**
+    * Позволяет указать uploader
+    */
     uploader?: any;
+
+    /**
+     * Экшен для отправки на бэкенд
+     * @example '/api/v1/user/avatar/crop'
+     */
     backendUrl?: any;
+
+    /**
+    * Список mime-типов
+    */
     mimeTypes?: any;
+
+    /**
+    * Использовать только изображения
+    */
     imagesOnly?: any;
     imagesProcessor?: any;
+
+    /**
+    * Точные размеры изображений
+    */
     imagesExactSize?: any;
+
+    /**
+    * Начальные файлы
+    */
     initialFiles?: any;
+
+    /**
+    * Параметры для uploader
+    */
     uploaderConfig?: {
         useFormData?: boolean,
         fileFieldName?: string,

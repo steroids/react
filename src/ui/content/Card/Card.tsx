@@ -4,9 +4,32 @@ import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../Avatar/Avatar';
 
 export interface ICardHeader {
+    /**
+    * Параметры для аватара
+    * @example
+    * {
+    *   src: 'Kate.png',
+    *   status: true,
+    * }
+    */
     avatar?: IAvatarProps,
+
+    /**
+    * Отображается ли меню
+    * @example true
+    */
     menu?: boolean,
+
+    /**
+    * Текст шапки (заголовок)
+    * @example 'Steroids.js head'
+    */
     head?: string,
+
+    /**
+    * Текст шапки (заголовок)
+    * @example 'Steroids.js subhead'
+    */
     subhead?: string,
 }
 
@@ -24,12 +47,20 @@ export interface ICardProps extends IUiComponent {
 
     /**
      * Описание карточки
-     * @example {'Scroll to see more...'}
+     * @example 'Scroll to see more...'
      */
     description?: string,
 
     /**
      * Контент хедера
+     * @example
+     * avatar: {
+     * src: 'Kate.png',
+     * status: true,
+     * },
+     * head: 'Header',
+     * subhead: 'Subhead',
+     * menu: true,
      */
     header?: ICardHeader,
 
@@ -53,7 +84,7 @@ export interface ICardProps extends IUiComponent {
 
     /**
      * Заголовок карточки
-     * @example {'Main card'}
+     * @example 'Main card'
      */
     title?: string,
 }

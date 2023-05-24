@@ -26,7 +26,7 @@ export interface IDropDownFieldItem {
 }
 
 export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
-    Pick<IDropDownFieldProps, 'itemsContent' | 'itemToSelectAll'> {
+    Pick<IDropDownFieldProps, 'itemsContent'> {
     item: IDropDownFieldItem,
     size: Size,
     type: ItemSwitchType,

@@ -6,7 +6,6 @@ import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/fo
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
-import {ITEM_TO_SELECT_ALL_ID} from '../../../../src/hooks/useDataSelect';
 
 const getSelectedItemsLabel = (selectedItems: Record<string, any>[]): string => (
     selectedItems

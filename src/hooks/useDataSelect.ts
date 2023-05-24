@@ -5,8 +5,6 @@ import _isNil from 'lodash-es/isNil';
 import {useCallback, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
-export const ITEM_TO_SELECT_ALL_ID = 'all';
-
 export interface IDataSelectItem {
     id: number | string | boolean,
     label?: string,
@@ -61,11 +59,6 @@ export interface IDataSelectConfig {
      *  Список со всеми элементами
      */
     sourceItems?: IDataSelectItem[],
-
-    /**
-    * Позволяет указать пользовательский id для кнопки, которая выбирает все items
-    */
-    customItemSelectAllId?: string,
 }
 
 export interface IDataSelectResult {
@@ -152,7 +145,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 ids = [ids[0]];
             }
 
-            if (selectedItems.length === ids.length - 1) {
+            if (selectedItems.length === ids.length) {
                 setSelectedIds([]);
                 return;
             }
@@ -165,16 +158,10 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else if (config.multiple) {
                 if (selectedIds.indexOf(id) !== -1) {
                     if (!skipToggle) {
-                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id
-                            && itemValue !== (config.customItemSelectAllId ?? ITEM_TO_SELECT_ALL_ID)).sort());
+                        setSelectedIdsInternal(selectedIds.filter(itemValue => itemValue !== id).sort());
                     }
                 } else {
-                    const updatedSelectedIds = [...selectedIds, id].sort();
-                    setSelectedIdsInternal(updatedSelectedIds);
-
-                    if (flattenedItems.length === updatedSelectedIds.length) {
-                        setSelectedIdsInternal([...updatedSelectedIds, config.customItemSelectAllId ?? ITEM_TO_SELECT_ALL_ID].sort());
-                    }
+                    setSelectedIdsInternal([...selectedIds, id].sort());
                 }
             } else {
                 if (selectedIds.length !== 1 || selectedIds[0] !== id) {
@@ -183,13 +170,12 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setIsOpened(false);
             }
         }
-    }, [config.customItemSelectAllId, config.multiple, flattenedItems.length, selectedIds, selectedItems.length]);
+    }, [config.multiple, selectedIds, selectedItems.length]);
 
     const setSelectedAll = useCallback(() => {
         const itemsIds = flattenedItems.map(item => item.id);
-        itemsIds.push(config.customItemSelectAllId ?? ITEM_TO_SELECT_ALL_ID);
         setSelectedIds(itemsIds);
-    }, [config.customItemSelectAllId, flattenedItems, setSelectedIds]);
+    }, [flattenedItems, setSelectedIds]);
 
     // Update selected items on change selectedIds or items or source items
     const prevSelectedIdsLength = usePrevious(selectedIds.length);

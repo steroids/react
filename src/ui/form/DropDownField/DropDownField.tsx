@@ -6,7 +6,7 @@ import _isPlainObject from 'lodash-es/isPlainObject';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
-import {IDataSelectConfig, ITEM_TO_SELECT_ALL_ID} from '../../../hooks/useDataSelect';
+import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
 export const GROUP_CONTENT_TYPE = 'group';
@@ -26,7 +26,7 @@ export interface IDropDownFieldItem {
 }
 
 export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
-    Pick<IDropDownFieldProps, 'itemsContent'>, Pick<IDropDownFieldProps, 'itemToSelectAll'> {
+    Pick<IDropDownFieldProps, 'itemsContent' | 'itemToSelectAll'> {
     item: IDropDownFieldItem,
     size: Size,
     type: ItemSwitchType,
@@ -37,6 +37,8 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
     setSelectedAll: VoidFunction,
+    itemToSelectAllId: null | string,
+    isSelectedAll: boolean,
 
     [key: string]: any,
 }
@@ -160,8 +162,25 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     itemToSelectAll: null | {
         label: string,
         id: string,
-    }
+    },
 }
+
+const normalizeItemToSelectAll = (
+    itemToSelectAll: boolean | {label: string, id: string},
+) => {
+    if (!itemToSelectAll) {
+        return null;
+    }
+
+    if (typeof itemToSelectAll !== 'boolean' && _isPlainObject(itemToSelectAll)) {
+        return itemToSelectAll;
+    }
+
+    return {
+        id: 'all',
+        label: __('Все'),
+    };
+};
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
@@ -172,23 +191,10 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const hasGroup = !!props.groupAttribute;
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
 
-    const normalizedToSelectAllItem = React.useMemo(() => {
-        if (!props.itemToSelectAll) {
-            return null;
-        }
-
-        if (typeof props.itemToSelectAll !== 'boolean' && _isPlainObject(props.itemToSelectAll)) {
-            return {
-                id: props.itemToSelectAll.id,
-                label: props.itemToSelectAll.label,
-            };
-        }
-
-        return {
-            id: ITEM_TO_SELECT_ALL_ID,
-            label: __('Все'),
-        };
-    }, [props.itemToSelectAll]);
+    const normalizedItemToSelectAll = React.useMemo(
+        () => normalizeItemToSelectAll(props.itemToSelectAll),
+        [props.itemToSelectAll],
+    );
 
     const toggleCollapse = indexSelected => {
         if (selectedAccordionItems.includes(indexSelected)) {
@@ -238,7 +244,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         items,
         sourceItems,
         inputValue: props.input.value,
-        customItemSelectAllId: normalizedToSelectAllItem?.id,
     });
 
     const onOpen = useCallback(() => {
@@ -328,7 +333,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         childIndex: item.id,
         toggleCollapse,
         setSelectedAll,
-        itemToSelectAll: normalizedToSelectAllItem,
+        itemToSelectAllId: normalizedItemToSelectAll?.id,
+        isSelectedAll: items.length === selectedIds.length,
     });
 
     const renderItem = (item: IDropDownFieldItem) => {
@@ -366,7 +372,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         renderItem,
         onItemRemove,
         hasGroup,
-        itemToSelectAll: normalizedToSelectAllItem,
+        itemToSelectAll: normalizedItemToSelectAll,
     });
 }
 

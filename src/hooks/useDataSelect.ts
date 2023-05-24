@@ -72,6 +72,7 @@ export interface IDataSelectResult {
     setSelectedIds: (ids: PrimaryKey | PrimaryKey[], skipToggle?: boolean) => void,
     selectedItems: IDataSelectItem[],
     setSelectedAll: VoidFunction,
+    isSelectedAll: boolean,
 }
 
 const defaultProps = {
@@ -137,6 +138,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
     const [hoveredId, setHoveredId] = useState(null);
     const [selectedIds, setSelectedIdsInternal] = useState(initialSelectedIds);
     const [selectedItems, setSelectedItemsInternal] = useState(initialSelectedItems);
+    const [isSelectedAll, setIsSelectedAll] = useState(config.items.length === selectedIds.length);
 
     // Handler for select/toggle item by id
     const setSelectedIds = useCallback((ids, skipToggle = false) => {
@@ -226,6 +228,10 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             setSelectedIdsInternal(newSelectedIds);
         }
     }, [config.selectedIds, prevConfigSelectedIds, selectedIds, selectedItems]);
+
+    useUpdateEffect(() => {
+        setIsSelectedAll(config.items.length === selectedIds.length);
+    }, [config.items.length, selectedIds]);
 
     // Global key down handler for navigate on items
     // Support keys:
@@ -318,5 +324,6 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         setSelectedIds,
         selectedItems,
         setSelectedAll,
+        isSelectedAll,
     };
 }

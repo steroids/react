@@ -36,7 +36,7 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
     hoveredId: string,
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
-    itemToSelectAllId: null | string,
+    isItemToSelectAll: boolean,
     isSelectedAll: boolean,
 
     [key: string]: any,
@@ -234,6 +234,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         setSelectedIds,
         selectedItems,
         setSelectedAll,
+        isSelectedAll,
     } = useDataSelect({
         multiple: props.multiple,
         selectFirst: props.selectFirst,
@@ -336,8 +337,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isShowMore: _includes(selectedAccordionItems || [], item.id),
         childIndex: item.id,
         toggleCollapse,
-        itemToSelectAllId: normalizedItemToSelectAll?.id,
-        isSelectedAll: items.length === selectedIds.length,
+        isItemToSelectAll: item.id === normalizedItemToSelectAll?.id,
+        isSelectedAll,
     });
 
     const renderItem = (item: IDropDownFieldItem) => {

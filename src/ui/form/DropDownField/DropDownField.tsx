@@ -36,7 +36,6 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
     hoveredId: string,
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
-    setSelectedAll: VoidFunction,
     itemToSelectAllId: null | string,
     isSelectedAll: boolean,
 
@@ -258,8 +257,13 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     }, [setHoveredId]);
 
     const onItemSelect = useCallback((id) => {
+        if (id === normalizedItemToSelectAll?.id) {
+            setSelectedAll();
+            return;
+        }
+
         setSelectedIds(id);
-    }, [setSelectedIds]);
+    }, [normalizedItemToSelectAll, setSelectedAll, setSelectedIds]);
 
     const onItemRemove = useCallback((id) => {
         setSelectedIds(selectedIds.filter(i => i !== id));
@@ -332,7 +336,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isShowMore: _includes(selectedAccordionItems || [], item.id),
         childIndex: item.id,
         toggleCollapse,
-        setSelectedAll,
         itemToSelectAllId: normalizedItemToSelectAll?.id,
         isSelectedAll: items.length === selectedIds.length,
     });

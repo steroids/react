@@ -11,11 +11,35 @@ export interface ISkeletonViewProps {
 }
 
 export interface ISkeletonProps {
+    /**
+    * Дополнительные CSS классы
+    * @example my-block
+    */
     className?: CssClassName,
+
+    /**
+    * Дочерние элементы
+    */
     children?: React.ReactNode,
+
+    /**
+    * Тип анимации
+    */
     animation?: 'pulse' | 'wave',
+
+    /**
+    * Тип компонента
+    */
     type?: 'text' | 'rect' | 'circle',
+
+    /**
+    * Высота элемента
+    */
     height?: string | number,
+
+    /**
+    * Ширина элемента
+    */
     width?: string | number
 }
 

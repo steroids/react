@@ -2,7 +2,15 @@ import * as React from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface IBooleanFormatterProps {
+    /**
+    * Значение для BooleanFormatter
+    */
     value?: string | number | boolean;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
 
     [key: string]: any;

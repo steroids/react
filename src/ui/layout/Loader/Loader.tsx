@@ -1,8 +1,14 @@
 import {useComponents} from '../../../hooks';
 
 export interface ILoaderProps {
-    view?: CustomView;
+    /**
+    * Размер элемента
+    */
     size?: Size;
+
+    /**
+     * Название цвета
+     */
     color?: ColorName;
     [key: string]: any;
 }

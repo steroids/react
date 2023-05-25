@@ -2,8 +2,16 @@ import * as React from 'react';
 
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
-export interface IBlankFieldProps extends IFieldWrapperInputProps {
+export interface IBlankFieldProps extends IFieldWrapperInputProps, IUiComponent {
+    /**
+    * Текст для отображения
+    * @example 'Hello World!'
+    */
     text?: string | React.ReactNode;
+
+    /**
+     * Дочерние элементы
+     */
     children?: React.ReactNode;
 }
 

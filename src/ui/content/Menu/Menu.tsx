@@ -9,7 +9,7 @@ export interface IMenuItem {
     label: string,
 
     /**
-     * Функция при клике
+     * Функция вызываемая при клике
      */
     onClick: VoidFunction,
 
@@ -24,7 +24,7 @@ export interface IMenuItem {
     hasBorder?: boolean,
 }
 
-export interface IMenuProps {
+export interface IMenuProps extends IUiComponent {
     /**
     *   Элементы меню
     */
@@ -36,11 +36,6 @@ export interface IMenuProps {
     icon?: string | React.ReactElement,
 
     /**
-    * Дополнительный CSS-класс
-    */
-    className?: CssClassName,
-
-    /**
      * Пропсы для DropDown
      */
     dropDownProps?: IDropDownProps,
@@ -49,11 +44,6 @@ export interface IMenuProps {
      * Переопределение view React элемента меню для кастомизации отображения
      */
     itemView?: CustomView | any,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     */
-    view?: CustomView,
 }
 
 export type IMenuViewProps = IMenuProps;

@@ -33,19 +33,7 @@ export interface ICropConfig {
 }
 
 export interface IImageFieldProps extends IFieldWrapperInputProps,
-    Omit<IFileInput, 'multiple' | 'imagesOnly'> {
-
-    /**
-     * Дополнительный CSS-класс для компонента
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение внешнего вида компонента
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
+    Omit<IFileInput, 'multiple' | 'imagesOnly'>, IUiComponent {
     /**
      * Переопределение внешнего вида модального окна
      * @example MyCustomModalView

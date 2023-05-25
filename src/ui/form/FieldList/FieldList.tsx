@@ -13,8 +13,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
  * FieldList
  * Создает список из сгруппированных полей формы
  */
-export interface IFieldListItem extends IFieldWrapperInputProps {
-
+export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Будет ли отображён item ?
      * @example true
@@ -34,20 +33,9 @@ export interface IFieldListItem extends IFieldWrapperInputProps {
     placeholder?: string,
 
     /**
-     * Дополнительный CSS-класс для item
-     */
-    className?: CssClassName,
-
-    /**
      * Дополнительный CSS-класс для заголовка
      */
     headerClassName?: CssClassName,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения item
-     * @example MyCustomView
-     */
-    view?: CustomView,
 
     /**
      * Заголовок для колонки таблицы.
@@ -57,7 +45,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps {
     [key: string]: any,
 }
 
-export interface IFieldListProps extends IFieldWrapperInputProps {
+export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Начальные значения в полях
      * @example {name: 'Ivan', amount: 5}
@@ -88,20 +76,9 @@ export interface IFieldListProps extends IFieldWrapperInputProps {
     showRemove?: boolean;
 
     /**
-     * Дополнительный CSS-класс для списка с группами полей
-     */
-    className?: CssClassName;
-
-    /**
      * Дополнительный CSS-класс для таблицы
      */
     tableClassName?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения списка с группами полей
-     * @example MyCustomView
-     */
-    view?: CustomView;
 
     /**
      * Пропсы для компонента отображения списка с группами полей - FieldListView

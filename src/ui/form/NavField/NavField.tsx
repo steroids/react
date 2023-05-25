@@ -12,7 +12,7 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
  * NavField
  * Навигация как часть формы
  */
-export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IDataProviderConfig {
+export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IDataProviderConfig, IUiComponent {
     /**
      * Свойства для компонента Nav
      */

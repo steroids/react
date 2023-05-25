@@ -18,7 +18,7 @@ export interface IButtonBadge {
  * Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику (onClick),
  * смена страницы в рамках роутинга (goToRoute), переход по внешней ссылке (url) или отправки формы (submit form)
  */
-export interface IButtonProps {
+export interface IButtonProps extends IUiComponent {
     /**
      * Текст кнопки или ссылки
      * @example Save
@@ -91,7 +91,7 @@ export interface IButtonProps {
 
     /**
      * Ссылка на внешнюю страницу, используется совместно с свойством `link`
-     * @example https://ya.ru
+     * @example https://kozhindev.com
      */
     url?: string;
 
@@ -120,23 +120,6 @@ export interface IButtonProps {
      * @example true
      */
     block?: boolean;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle;
-
-    /**
-     * Дополнительный CSS-класс для кнопки или ссылки
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
 
     /**
      * Вложенные элементы

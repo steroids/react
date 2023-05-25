@@ -6,36 +6,33 @@ export interface IAccordionIcon {
     close: React.ReactElement | string,
 }
 
-export interface IAccordionProps {
-    view?: CustomView,
-    style?: CustomStyle,
-    children?: any,
+export interface IAccordionProps extends IUiComponent {
+    /**
+    * Дочерние элементы
+    */
+    children?: React.ReactNode,
 
     /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
-    /**
-     * @example {true}
+     * Переводит Accordion в выключенное состояние
+     * @example true
      */
     disabled?: boolean,
 
     /**
      * Пользовательская иконка svg или название иконки или объект с иконками open и close
-     * @example {'circle'}
+     * @example 'circle'
      */
     icon?: IAccordionIcon | React.ReactElement | string,
 
     /**
    * Включает режим в котором можно открыть только один AccordionItem
-   * @example {true}
+   * @example true
    */
     hasOneOpenItem?: boolean,
 
     /**
      * Название AccordionItem
-     * @example {'Подробнее'}
+     * @example 'Подробнее'
      */
     title?: string,
 
@@ -46,7 +43,7 @@ export interface IAccordionProps {
 
     /**
      * Номер активного AccordionItem, который может меняться динамический или быть статичным
-     * @example
+     * @example 1
      */
     activeKey?: number,
 
@@ -59,7 +56,7 @@ export interface IAccordionProps {
     /**
      * Стилизация позиционирования.
      * При значении "top" верхняя часть шапки будет закруглена.
-     * @example {'top'}
+     * @example 'top'
      */
     position?: 'bottom' | 'middle' | 'top',
 

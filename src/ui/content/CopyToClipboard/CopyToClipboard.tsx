@@ -8,16 +8,30 @@ export interface ICopyToClipboardProps extends IUiComponent {
 
     /**
     * Значение, которое будет использоваться при копировании
-    * @example value: 'Steroids.js'
+    * @example 'Steroids.js'
     */
     value: string,
 
     /**
-    * Флаг, который отвечает за выключение функции копирования
-    * @example disabled: false
+    * Переводит состояние компонента в выключенное
+    * @example true
     */
     disabled?: boolean,
 
+    /**
+    * Параметры для уведомления, которое появляется после копирования
+    * @example
+    * 'Some value has been copied to buffer'
+    * @example
+    * {
+    *   message: 'Some value has been copied to buffer',
+    *   level: 'info',
+    *   params: {
+    *   position: 'top-left',
+    *   timeOut: 100,
+    *  }
+    * }
+    */
     notification?: string | {
         message?: string,
         level?: string,
@@ -26,7 +40,7 @@ export interface ICopyToClipboardProps extends IUiComponent {
 
     /**
     * Позволяет включить или выключить отображение иконки
-    * @example showCopyIcon: false
+    * @example false
     */
     showCopyIcon?: boolean,
 
@@ -43,8 +57,7 @@ export interface ICopyToClipboardProps extends IUiComponent {
     children?: React.ReactNode,
 
     /**
-    * Callback функция, которая вызывается при копировании
-    * @example {}
+    * Callback который вызывается при копировании
     */
     onCopy?: VoidFunction,
 }

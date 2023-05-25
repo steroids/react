@@ -48,7 +48,8 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
  */
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
-    Omit<IDataSelectConfig, 'items'> {
+    Omit<IDataSelectConfig, 'items'>,
+    IUiComponent {
 
     /**
      * Placeholder подсказка
@@ -68,30 +69,16 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     */
     outline?: boolean;
 
+    /**
+     * Параметры для элемента input
+     */
     inputProps?: any;
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle,
 
     /**
      * Показать иконку сброса для выбранных значений
      * @example true
      */
     showReset?: boolean,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
 
     /**
      * Атрибут, в котором должны лежать дочерние элементы списка (для группировки)
@@ -117,7 +104,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
 
     /**
      * Нужно ли использовать троеточие при переполнении DropDownField
-     * @example {'true'}
+     * @example true
      */
     showEllipses?: boolean,
 

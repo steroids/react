@@ -6,13 +6,7 @@ import {useComponents, useForm} from '../../../hooks';
  * FieldLayout
  * Специальный шаблон для поля, который настраивает его расположение внутри формы, рендерит лейбл, подсказки и ошибки
  */
-export interface IFieldLayoutProps {
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
+export interface IFieldLayoutProps extends IUiComponent {
     /**
      * Название поля либо отмена отображение поля (false)
      * @example 'Visible'
@@ -40,15 +34,9 @@ export interface IFieldLayoutProps {
 
     /**
      * Отображать ли состояние successful на поле
-     * @example {'true'}
+     * @example 'true'
      */
     successful?: boolean,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
 
     [key: string]: any;
 }

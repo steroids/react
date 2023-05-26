@@ -14,7 +14,7 @@ export interface IFlexGridItem {
     order?: number,
 
     /**
-     * Количество ячеек для смещения столбца слева
+     * Количество колонок для смещения столбца слева
      */
     offset?: number,
 
@@ -46,7 +46,7 @@ export interface IFlexGridItem {
 export interface IFlexGridProps extends IUiComponent {
     /**
      * Элементы FlexGrid
-     * @example [{label: 'Name', attribute: 'name'}, {label: 'Work', attribute: 'work'}]
+     * @example [{content: 'Block1', col: 4}, {content: 'Block2', col: 6}]
      */
     items?: IFlexGridItem[];
 

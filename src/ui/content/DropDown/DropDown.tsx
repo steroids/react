@@ -22,6 +22,12 @@ export interface IDropDownProps extends IAbsolutePositioningInputProps {
     closeMode?: 'click-away' | 'click-any',
 
     /**
+    * Позволяет управлять отображением указателя
+    * @example true
+    */
+    hasArrow?: boolean,
+
+    /**
     * Переопределение view React компонента для кастомизациии отображения
     * @example MyCustomView
     */
@@ -113,6 +119,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
                 // TODO Change Portal to global
                 <TooltipInnerPortal>
                     <DropDownView
+                        {...props}
                         className={props.className}
                         forwardedRef={forwardedRef}
                         content={props.content}
@@ -135,6 +142,7 @@ DropDown.defaultProps = {
     gap: 15,
     position: 'bottom',
     closeMode: 'click-away',
+    hasArrow: true,
 };
 
 export default DropDown;

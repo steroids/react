@@ -1,11 +1,12 @@
 import _isArray from 'lodash-es/isArray';
+import {ReactNode} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface IFlexGridItem {
     /**
      * Содержимое элемента FlexGrid
      */
-    content: CustomView,
+    content: ReactNode,
 
     /**
      * Порядок элемента в FlexGrid

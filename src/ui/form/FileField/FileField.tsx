@@ -142,8 +142,8 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
             buttonView={props.buttonView}
             buttonProps={{
                 label: props.filesLayout === FilesLayout.wall
-                    ? __('Upload')
-                    : __('Click to Upload'),
+                    ? __('Загрузить')
+                    : __('Нажмите для загрузки'),
                 size: props.size,
                 disabled: props.disabled,
                 onClick: onBrowse,

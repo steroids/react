@@ -1,29 +1,5 @@
 import _isArray from 'lodash-es/isArray';
-import _isObject from 'lodash-es/isObject';
 import {useComponents} from '../../../hooks';
-
-export interface IAdaptiveGaps {
-    /**
-     * Расстояние между элементами на экранах размером lg
-     * Если передано число, то установится расстояние между строками и между колонками.
-     * Если передан массив, то первый элемент - расстояние между колонками, второй - между строками.
-     */
-    lg?: number | number[],
-
-    /**
-     * Расстояние между элементами на экранах размером md
-     * Если передано число, то установится расстояние между строками и между колонками.
-     * Если передан массив, то первый элемент - расстояние между колонками, второй - между строками.
-     */
-    md?: number | number[],
-
-    /**
-     * Расстояние между элементами на экранах размером sm
-     * Если передано число, то установится расстояние между строками и между колонками.
-     * Если передан массив, то первый элемент - расстояние между колонками, второй - между строками.
-     */
-    sm?: number | number[],
-}
 
 export interface IFlexGridItem {
     /**
@@ -47,17 +23,17 @@ export interface IFlexGridItem {
     col?: number,
 
     /**
-     * Количество колонок, которое занимает элемент на экранах размером lg
+     * Количество колонок, которое занимает элемент на экранах размером lg, максимум 12
      */
     lg?: number,
 
     /**
-     * Количество колонок, которое занимает элемент на экранах размером md
+     * Количество колонок, которое занимает элемент на экранах размером md, максимум 12
      */
     md?: number,
 
     /**
-     * Количество колонок, которое занимает элемент на экранах размером sm
+     * Количество колонок, которое занимает элемент на экранах размером sm, максимум 12
      */
     sm?: number,
 }
@@ -79,11 +55,16 @@ export interface IFlexGridProps extends IUiComponent {
     children?: React.ReactNode,
 
     /**
+     * Дополнительный CSS-класс для элементов FlexGrid
+     */
+    itemClassName?: CssClassName;
+
+    /**
      * Расстояние между элементами в px.
      * Если передано число, то установится расстояние между строками и между колонками.
      * Если передан массив, то первый элемент - расстояние между колонками, второй - между строками.
      */
-    gap?: number | number[] | IAdaptiveGaps,
+    gap?: number | number[],
 
     /**
      * Значение для css-свойства flex-direction
@@ -98,55 +79,34 @@ export interface IFlexGridProps extends IUiComponent {
     /**
      * Значение для css-свойства justify-content
      */
-    justify?: string,
+    justify?: 'center' | 'end' | 'start' | 'stretch' | 'flex-start' | 'flex-end'
+        | 'left' | 'right' | 'space-between' | 'space-around' | 'space-evenly',
 
     /**
      * Значение для css-свойства align-items
      */
-    align?: string,
+    align?: 'center' | 'end' | 'start' | 'stretch' | 'flex-start' | 'flex-end',
 
     [key: string]: any;
 }
 
-interface IGaps {
+export interface IFlexGridViewProps extends IFlexGridProps {
     colGap?: number,
     rowGap?: number,
 }
 
-export interface IFlexGridViewProps extends IFlexGridProps, IGaps {
-    lg?: IGaps,
-    md?: IGaps,
-    sm?: IGaps,
-}
-
-const getGapsFromArray = (gap: number[]) => ({
-    colGap: gap[0],
-    rowGap: gap[1],
-});
-
-const getGapsFromNumber = (gap: number) => ({
-    colGap: gap,
-    rowGap: gap,
-});
-
-const normalizeGap = (gap: number | number[] | IAdaptiveGaps) => {
+const normalizeGap = (gap: number | number[]) => {
     if (_isArray(gap)) {
-        return getGapsFromArray(gap as number[]);
+        return {
+            colGap: gap[0],
+            rowGap: gap[1],
+        };
     }
 
-    if (_isObject(gap)) {
-        Object.entries(gap || {}).forEach(([screenSize, gapValue]) => {
-            if (_isArray(gapValue)) {
-                gap[screenSize] = getGapsFromArray(gapValue);
-            } else {
-                gap[screenSize] = getGapsFromNumber(gapValue);
-            }
-        });
-
-        return gap as object;
-    }
-
-    return getGapsFromNumber(gap as number);
+    return {
+        colGap: gap,
+        rowGap: gap,
+    };
 };
 
 export default function FlexGrid(props: IFlexGridProps): JSX.Element {

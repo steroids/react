@@ -2,7 +2,8 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import _includes from 'lodash-es/includes';
-import {IAccordionItemViewProps} from 'src/ui/content/Accordion/Accordion';
+import _isPlainObject from 'lodash-es/isPlainObject';
+import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
@@ -24,7 +25,8 @@ export interface IDropDownFieldItem {
     contentSrc?: string | React.ReactElement,
 }
 
-export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps, Pick<IDropDownFieldProps, 'itemsContent'> {
+export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
+    Pick<IDropDownFieldProps, 'itemsContent'> {
     item: IDropDownFieldItem,
     size: Size,
     type: ItemSwitchType,
@@ -34,6 +36,8 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps, Pi
     hoveredId: string,
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
+    isItemToSelectAll: boolean,
+    isSelectedAll: boolean,
 
     [key: string]: any,
 }
@@ -44,7 +48,8 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps, Pi
  */
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
-    Omit<IDataSelectConfig, 'items'> {
+    Omit<IDataSelectConfig, 'items'>,
+    IUiComponent {
 
     /**
      * Placeholder подсказка
@@ -64,30 +69,16 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     */
     outline?: boolean;
 
+    /**
+     * Параметры для элемента input
+     */
     inputProps?: any;
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle,
 
     /**
      * Показать иконку сброса для выбранных значений
      * @example true
      */
     showReset?: boolean,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
 
     /**
      * Атрибут, в котором должны лежать дочерние элементы списка (для группировки)
@@ -113,9 +104,18 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
 
     /**
      * Нужно ли использовать троеточие при переполнении DropDownField
-     * @example {'true'}
+     * @example true
      */
     showEllipses?: boolean,
+
+    /**
+    * Добавляет кнопку при нажатии на которую выбираются все элементы, работает только при multiple: true
+    * @example {label: 'All', id: 'all'}
+    */
+    itemToSelectAll?: boolean | {
+        label: string,
+        id: string,
+    },
 
     [key: string]: any;
 }
@@ -145,7 +145,28 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isSearchAutoFocus?: boolean,
     primaryKey: string,
     items: IDropDownFieldItem[],
+    itemToSelectAll: null | {
+        label: string,
+        id: string,
+    },
 }
+
+const normalizeItemToSelectAll = (
+    itemToSelectAll: boolean | {label: string, id: string},
+) => {
+    if (!itemToSelectAll) {
+        return null;
+    }
+
+    if (typeof itemToSelectAll !== 'boolean' && _isPlainObject(itemToSelectAll)) {
+        return itemToSelectAll;
+    }
+
+    return {
+        id: 'all',
+        label: __('Все'),
+    };
+};
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
@@ -155,6 +176,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const hasGroup = !!props.groupAttribute;
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
+
+    const normalizedItemToSelectAll = React.useMemo(
+        () => normalizeItemToSelectAll(props.itemToSelectAll),
+        [props.itemToSelectAll],
+    );
 
     const toggleCollapse = indexSelected => {
         if (selectedAccordionItems.includes(indexSelected)) {
@@ -194,6 +220,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         selectedIds,
         setSelectedIds,
         selectedItems,
+        setSelectedAll,
+        isSelectedAll,
     } = useDataSelect({
         multiple: props.multiple,
         selectFirst: props.selectFirst,
@@ -217,8 +245,13 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     }, [setHoveredId]);
 
     const onItemSelect = useCallback((id) => {
+        if (id === normalizedItemToSelectAll?.id) {
+            setSelectedAll();
+            return;
+        }
+
         setSelectedIds(id);
-    }, [setSelectedIds]);
+    }, [normalizedItemToSelectAll, setSelectedAll, setSelectedIds]);
 
     const onItemRemove = useCallback((id) => {
         setSelectedIds(selectedIds.filter(i => i !== id));
@@ -291,6 +324,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isShowMore: _includes(selectedAccordionItems || [], item.id),
         childIndex: item.id,
         toggleCollapse,
+        isItemToSelectAll: item.id === normalizedItemToSelectAll?.id,
+        isSelectedAll,
     });
 
     const renderItem = (item: IDropDownFieldItem) => {
@@ -328,6 +363,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         renderItem,
         onItemRemove,
         hasGroup,
+        itemToSelectAll: normalizedItemToSelectAll,
     });
 }
 
@@ -343,6 +379,7 @@ DropDownField.defaultProps = {
     showReset: false,
     multiple: false,
     isSearchAutoFocus: true,
+    itemToSelectAll: false,
 };
 
 export default fieldWrapper<IDropDownFieldProps>('DropDownField', DropDownField);

@@ -20,13 +20,16 @@ import {formDestroy, formSetSubmitting} from '../../../actions/form';
  * Form
  * Компонент для создания формы
  */
-export interface IFormProps {
+export interface IFormProps extends IUiComponent {
     /**
      * Идентификатор формы
      * @example BookingForm
      */
     formId?: string;
 
+    /**
+    * Префикс
+    */
     prefix?: string;
 
     /**
@@ -118,23 +121,7 @@ export interface IFormProps {
     initialValues?: any | any[];
 
     /**
-     * Дополнительный CSS-класс для \<form\>...\<\/form\>
-     */
-    className?: CssClassName;
-
-    /**
-     * Объект CSS стилей
-     * @example {width: '45%'}
-     */
-    style?: CustomStyle;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
+     * Свойства для представления
      * @example {className: 'foo'}
      */
     viewProps?: any;
@@ -204,12 +191,40 @@ export interface IFormReducerState {
 }
 
 export interface IFormContext {
+    /**
+    * Id формы
+    * @example {}
+    */
     formId?: string;
+
+    /**
+    * Модель с полями формы
+    */
     model?: any;
+
+    /**
+    * Префикс для полей формы
+    */
     prefix?: string | boolean;
+
+    /**
+    * Размер компонента
+    */
     size?: Size;
+
+    /**
+    * Провайдер
+    */
     provider?: any,
+
+    /**
+    * Редьюсер
+    */
     reducer?: { dispatch: React.Dispatch<any>, select: any },
+
+    /**
+    * Диспатч
+    */
     dispatch?: any,
 }
 

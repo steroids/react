@@ -10,14 +10,14 @@ type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-lo
 
 export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
-     * Свойства для элемента \<input /\>
+     * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
     inputProps?: any;
 
     /**
      * Показывать иконку очищения поля
-     * @example {'true'}
+     * @example true
     */
     showClear?: boolean;
 

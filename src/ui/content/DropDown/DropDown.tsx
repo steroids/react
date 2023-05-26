@@ -10,21 +10,10 @@ import useAbsolutePositioning, {
 
 export interface IDropDownProps extends IAbsolutePositioningInputProps {
     /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName,
-
-    /**
      * Содержимое DropDown (компонент или jsx-код)
      * @example () => Component
      */
     content?: () => React.ReactNode,
-
-    /**
-     * Переопределение view React компонента для кастомизациии отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
 
     /**
      * В каком случае закрывать DropDown. По-умолчанию - `click-away`
@@ -37,6 +26,16 @@ export interface IDropDownProps extends IAbsolutePositioningInputProps {
     * @example true
     */
     hasArrow?: boolean,
+      
+    * Переопределение view React компонента для кастомизациии отображения
+    * @example MyCustomView
+    */
+    view?: CustomView,
+
+    /**
+    * Дополнительный CSS-класс
+    */
+    className?: CssClassName,
 }
 
 export interface IDropDownViewProps extends IDropDownProps, IAbsolutePositioningOutputProps {

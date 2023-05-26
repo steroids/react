@@ -11,17 +11,11 @@ import fieldWrapper, {
  * HtmlField
  * Компонент для создания HTML-разметки, использующий WYSIWYG-реадактор
  */
-export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps {
-
+export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IUiComponent {
     /**
      * Конфигурация wysiwyg реадактора
      */
     editorProps?: any,
-
-    /**
-     * Дополнительный CSS-класс
-     */
-    className?: CssClassName,
 
     /**
      * Url на который будет отправлена форма загрузки файла
@@ -35,12 +29,6 @@ export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperO
      * @example origin
      */
     uploadImagesProcessor?: string,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
 
     /**
      * Обработчик события при фокусе на редактора

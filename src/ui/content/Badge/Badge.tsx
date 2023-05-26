@@ -2,18 +2,23 @@ import React, {useCallback, useState} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface ICounter {
+    /**
+    * Состояние счетчика
+    * @example true
+    */
     isEnable: boolean,
+
+    /**
+    * Содержимое счетчика
+    * @example 'Counter'
+    */
     content: string | number
 }
 
-export interface IBadgeProps {
-    /**
-    * Дополнительный CSS-класс
-    */
-    className?: CssClassName;
-
+export interface IBadgeProps extends IUiComponent {
     /**
      * Тип badge
+     * @example 'primary'
      */
     type: ColorName;
 
@@ -23,35 +28,30 @@ export interface IBadgeProps {
     roundingStyle: 'rounder' | 'squarer';
 
     /**
-     * Переопределение view React компонента для кастомизации отображения
-     */
-    view?: CustomView;
-
-    /**
      * Нужно ли отображать кнопку, чтобы закрыть badge
      */
     showClose?: boolean;
 
     /**
      * Callback функция вызываемая при нажатии на кнопку закрытия
-     * @example {() => console.log('this is callback')}
+     * @example () => console.log('Hello from onClose!')
      */
     onClose?: () => void,
 
     /** Текст для badge
-    * @example {'Sending is confirmed!'}
+    * @example 'Sending is confirmed!'
     */
     message?: string,
 
     /**
      * Нужно ли отображать счетчик
+     * @example {isEnable: true, content: 'Hello from counter!'}
      */
     counter: boolean | ICounter;
 
-    style?: CustomStyle,
-
     /**
      * Размер для badge
+     * @example 'md'
      */
     size: Size;
 }

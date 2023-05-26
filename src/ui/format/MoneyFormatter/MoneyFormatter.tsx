@@ -21,8 +21,11 @@ export interface IMoneyFormatterProps {
      */
     precision?: number;
 
-    view?: CustomView;
+    /**
+    * Значение для MoneyFormatter
+    */
     value?: any;
+
     [key: string]: any;
 }
 

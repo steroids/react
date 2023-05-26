@@ -12,12 +12,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
  * получения токена. Далее этот токен с остальными данными формы отправится на бэкенд.
  * Сам компонент отображает ссылки на политику конфиденциальности и условия использования сервисов Google.
  */
-export interface IReCaptchaFieldProps extends IFieldWrapperInputProps {
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
+export interface IReCaptchaFieldProps extends IFieldWrapperInputProps, IUiComponent {
 
     [key: string]: any;
 }

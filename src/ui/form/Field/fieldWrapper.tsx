@@ -61,8 +61,14 @@ export interface IFieldWrapperInputProps {
      */
     id?: string;
 
+    /**
+    * Значение для поля
+    */
     value?: any,
 
+    /**
+    * Callback-функция, которая вызывается при изменении данных
+    */
     onChange?: (...args: any[]) => any;
 
     /**
@@ -72,11 +78,6 @@ export interface IFieldWrapperInputProps {
     errors?: string[];
 
     date?: any;
-
-    /**
-     * Темная тема
-     */
-    dark?: boolean,
 
     /**
      * Размер поля
@@ -97,9 +98,24 @@ export interface IFieldWrapperInputProps {
 }
 
 export interface IFieldWrapperOutputProps {
+    /**
+    * Id формы
+    */
     formId?: string,
+
+    /**
+    * Id компонента
+    */
     componentId?: string,
+
+    /**
+    * Коллекция ошибок
+    */
     errors?: string[],
+
+    /**
+    * Параметры для input элемента
+    */
     input?: {
         name?: string,
         value?: any,

@@ -16,7 +16,7 @@ export interface IRateFieldItem {
     value: number,
 }
 
-export interface IRateFieldProps extends IFieldWrapperInputProps {
+export interface IRateFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Максимальное количество звезд
      * @example 5
@@ -34,17 +34,6 @@ export interface IRateFieldProps extends IFieldWrapperInputProps {
      * @example false
      */
     allowClear?: boolean,
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
-
-    /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName,
 
     inputProps?: {
         [key: string]: any,

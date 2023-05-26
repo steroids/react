@@ -8,7 +8,7 @@ import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
 import MetaComponent from '../components/MetaComponent';
 import ComponentsProvider, {IComponents} from '../providers/ComponentsProvider';
-import Router, {IRouteItem} from '../ui/nav/Router/Router';
+import Router, {IRouteItem, IRouterProps} from '../ui/nav/Router/Router';
 import MetricsComponent from '../components/MetricsComponent';
 import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider';
 import useComponents from './useComponents';
@@ -34,6 +34,7 @@ export interface IApplicationHookConfig {
     layoutProps?: Record<string, unknown>,
     screen?: Omit<IScreenProviderProps, 'children'>,
 
+    routerProps?: IRouterProps,
     /**
      * These fetch configurations will be used to preload and store for no matter what route matched in case of SSR
      */
@@ -122,6 +123,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                     routes={config.routes()}
                     wrapperView={config.layoutView()}
                     wrapperProps={config.layoutProps}
+                    {...config.routerProps}
                 />
             );
         }

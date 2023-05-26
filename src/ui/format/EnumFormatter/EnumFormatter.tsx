@@ -18,6 +18,11 @@ export interface IEnumFormatterProps {
      * @example unique label
      */
     value?: number | string,
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения колонки
+     * @example MyCustomView
+     */
     view?: CustomView;
 
     [key: string]: any;

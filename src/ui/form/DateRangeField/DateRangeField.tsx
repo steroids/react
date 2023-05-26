@@ -63,8 +63,14 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      */
     showRemove?: boolean,
 
+    /**
+    * Свойства для input элемента from
+    */
     inputPropsFrom?: any,
 
+    /**
+    * Свойства для input элемента to
+    */
     inputPropsTo?: any,
 
     /**

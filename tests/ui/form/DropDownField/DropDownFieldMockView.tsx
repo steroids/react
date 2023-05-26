@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {useEffect, useRef} from 'react';
 import _isArray from 'lodash-es/isArray';
-import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';
@@ -114,6 +114,8 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
                         </div>
                     )}
                     <div className={bem.element('drop-down-list')}>
+                        {props.multiple && props.itemToSelectAll
+                            && props.renderItem(props.itemToSelectAll)}
                         {props.items.map((item) => props.renderItem(item))}
                     </div>
                 </div>

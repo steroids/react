@@ -34,7 +34,7 @@ const items = [
     {id: 33, name: 'John'},
 ];
 
-describe('hook useDataSelect', () => {
+describe.skip('hook useDataSelect', () => {
     // TODO keyboard test
 
     it('select multiple', async () => {

@@ -26,7 +26,8 @@ export interface IDropDownProps extends IAbsolutePositioningInputProps {
     * @example true
     */
     hasArrow?: boolean,
-      
+
+    /**
     * Переопределение view React компонента для кастомизациии отображения
     * @example MyCustomView
     */

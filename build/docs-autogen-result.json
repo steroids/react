@@ -19730,6 +19730,479 @@
                 }
             ]
         },
+        "ITimeRangeFieldProps": {
+            "name": "ITimeRangeFieldProps",
+            "moduleName": "ui/form/TimeRangeField/TimeRangeField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IDateInputStateInput",
+                "Omit<IFieldWrapperInputProps",
+                "'attribute'>",
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "attributeFrom",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'fromTime'"
+                },
+                {
+                    "name": "attributeTo",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'toTime'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "dateInUTC",
+                    "decorators": [],
+                    "description": "Задано ли значение даты в часовом поясе UTC\n(пример: с бэкенда приходит дата в UTC, но нужно отбразить ее в локальном времени.\nВ этом случае dateInUTC = true, а useUTC = false)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "displayFormat",
+                    "decorators": [],
+                    "description": "Формат даты показываемый пользователю",
+                    "required": false,
+                    "type": "string",
+                    "example": "DD.MM.YYYY"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "fieldLayoutClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка, отображаемая в правой части поля",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": "calendar-day"
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Input ID для связи поля с label",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "input",
+                    "decorators": [],
+                    "description": "Свойства поля props.input",
+                    "required": false,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "Свойства, передаваемые для поля во view",
+                    "required": false,
+                    "type": "Record",
+                    "example": null
+                },
+                {
+                    "name": "inputPropsFrom",
+                    "decorators": [],
+                    "description": "Свойства для input элемента from",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "inputPropsTo",
+                    "decorators": [],
+                    "description": "Свойства для input элемента to",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "isRenderWithoutFieldLayout",
+                    "decorators": [],
+                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Дополнительная функция, срабатывающая при изменении props.input",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "pickerProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента DayPickerInput",
+                    "required": false,
+                    "type": "any",
+                    "example": "{dayPickerProps: {showWeekNumbers: true}}"
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Placeholder подсказка",
+                    "required": false,
+                    "type": "any",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "Показывать при наведении на поле иконку для сброса значения поля в начальное состояние",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "timePanelViewProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента панели времени",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "useUTC",
+                    "decorators": [],
+                    "description": "Приводить значение даты к часовому поясу UTC\n(пример: с бэкенда приходит дата в какой-либо временной зоне (не UTC), но нужно отбразить ее\nв часовом поясе UTC. В этом случае dateInUTC = false, а useUTC = true)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Значение для поля",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "valueFormat",
+                    "decorators": [],
+                    "description": "Формат даты отправляемый на сервер",
+                    "required": false,
+                    "type": "string",
+                    "example": "YYYY-MM-DD"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "Свойства для view компонента",
+                    "required": false,
+                    "type": "Record",
+                    "example": null
+                }
+            ]
+        },
+        "ITimeRangeFieldViewProps": {
+            "name": "ITimeRangeFieldViewProps",
+            "moduleName": "ui/form/TimeRangeField/TimeRangeField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IDateInputStateOutput",
+                "Pick<ITimeRangeFieldProps",
+                "'size' | 'errors' | 'showRemove' | 'className' | 'timePanelViewProps' | 'disabled' | 'style' | 'icon'>",
+                "Omit<IFieldWrapperOutputProps",
+                "'input'>"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "componentId",
+                    "decorators": [],
+                    "description": "Id компонента",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "errorsFrom",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "errorsTo",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "Id формы",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка, отображаемая в правой части поля",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": "calendar-day"
+                },
+                {
+                    "name": "inputFrom",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "Свойства для поля во view",
+                    "required": true,
+                    "type": "{name: string, onChange: {}, value: any}",
+                    "example": null
+                },
+                {
+                    "name": "inputTo",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "isOpened",
+                    "decorators": [],
+                    "description": "Показать или скрыть выпадающую панель",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "onClear",
+                    "decorators": [],
+                    "description": "Функция очищает значение поля",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Функция закрывает выпадающую панель",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onNow",
+                    "decorators": [],
+                    "description": "Функция возвращает текущее значение времени (дата + время)",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "showRemove",
+                    "decorators": [],
+                    "description": "Показывать при наведении на поле иконку для сброса значения поля в начальное состояние",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "timePanelFromViewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "ITimePanelViewProps",
+                    "example": null
+                },
+                {
+                    "name": "timePanelToViewProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "ITimePanelViewProps",
+                    "example": null
+                },
+                {
+                    "name": "timePanelViewProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента панели времени",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
         "IBooleanFormatterProps": {
             "name": "IBooleanFormatterProps",
             "moduleName": "ui/format/BooleanFormatter/BooleanFormatter",
@@ -23227,7 +23700,9 @@
             "description": "Компонент для выбора количества элементов в списке",
             "tags": {},
             "defaultProps": null,
-            "extends": [],
+            "extends": [
+                "IUiComponent"
+            ],
             "properties": [
                 {
                     "name": "attribute",
@@ -23236,6 +23711,14 @@
                     "required": false,
                     "type": "string",
                     "example": "pageSize"
+                },
+                {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "Свойства для кнопок пагинации",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
                 },
                 {
                     "name": "className",
@@ -23294,6 +23777,14 @@
                     "example": "[2, 3, 4]"
                 },
                 {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
                     "name": "view",
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения",
@@ -23321,6 +23812,14 @@
                     "required": false,
                     "type": "string",
                     "example": "pageSize"
+                },
+                {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "Свойства для кнопок пагинации",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
                 },
                 {
                     "name": "className",
@@ -23351,7 +23850,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "{isActive: boolean, label: string | number, size: number}[]",
+                    "type": "{id: number, label: string | number}[]",
                     "example": null
                 },
                 {
@@ -23393,6 +23892,14 @@
                     "required": false,
                     "type": "number[]",
                     "example": "[2, 3, 4]"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
                 },
                 {
                     "name": "view",
@@ -27028,6 +27535,13 @@
         "ui/form/TimeField/TimeField": {
             "name": "default",
             "moduleName": "ui/form/TimeField/TimeField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/TimeRangeField/TimeRangeField": {
+            "name": "default",
+            "moduleName": "ui/form/TimeRangeField/TimeRangeField",
             "title": "",
             "description": "",
             "tags": {}

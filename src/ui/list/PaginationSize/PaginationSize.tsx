@@ -1,6 +1,7 @@
 import {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import * as React from 'react';
+import {IButtonProps} from 'src/ui/form/Button/Button';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
@@ -10,7 +11,7 @@ import {ListControlPosition} from '../../../hooks/useList';
  * PaginationSize
  * Компонент для выбора количества элементов в списке
  */
-export interface IPaginationSizeProps {
+export interface IPaginationSizeProps extends IUiComponent {
     /**
      * Подключить выбор количества элементов
      * @example true
@@ -36,20 +37,9 @@ export interface IPaginationSizeProps {
     position?: ListControlPosition,
 
     /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
-
-    /**
      * Значение по-умолчанию
      */
     defaultValue?: number;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
 
     /**
      * Обработчик, который вызывается после смены страницы
@@ -63,14 +53,18 @@ export interface IPaginationSizeProps {
      */
     list?: any,
 
+    /**
+     * Свойства для кнопок пагинации
+     */
+    buttonProps?: IButtonProps,
+
     [key: string]: any,
 }
 
 export interface IPaginationSizeViewProps extends IPaginationSizeProps {
     items: {
-        size: number,
+        id: number,
         label: string | number,
-        isActive: boolean,
     }[],
     onSelect: (size: number) => void,
 }
@@ -78,14 +72,13 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
 function PaginationSize(props: IPaginationSizeProps): JSX.Element {
     const components = useComponents();
 
-    const pageSize = props.list?.pageSize;
     const items = useMemo(() => props.sizes.map(size => ({
-        size,
+        id: size,
         label: size,
-        isActive: pageSize === size,
-    })), [pageSize, props.sizes]);
+    })), [props.sizes]);
 
     const {formId, formDispatch} = useForm();
+
     const onSelect = useCallback((newPage) => {
         if (formDispatch) {
             formDispatch(formChange(formId, props.attribute, newPage));
@@ -113,6 +106,9 @@ PaginationSize.defaultProps = {
     sizes: [30, 50, 100],
     defaultValue: 50,
     position: 'top',
+    buttonProps: {
+        size: 'sm',
+    },
 };
 
 export const normalizePaginationSizeProps = props => ({

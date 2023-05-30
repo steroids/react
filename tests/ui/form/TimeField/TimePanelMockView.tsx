@@ -7,7 +7,7 @@ const getHours = () => {
     const result = [];
     for (let i = 0; i < 24; i += 1) {
         const hour = _padStart(i, 2, '0');
-        result.push(hour as never);
+        result.push(hour);
     }
     return result;
 };
@@ -16,7 +16,7 @@ const getMinutes = () => {
     const result = [];
     for (let i = 0; i < 60; i += 1) {
         const minute = _padStart(i, 2, '0');
-        result.push(minute as never);
+        result.push(minute);
     }
     return result;
 };
@@ -89,9 +89,7 @@ function TimePanelView(props: ITimePanelViewProps) {
                         className={bem.element('button', 'now')}
                         onClick={(e) => {
                             e.preventDefault();
-                            if (props.onNow) {
-                                props.onNow();
-                            }
+                            props.onNow();
                         }}
                     >
                         {__('Текущее')}
@@ -101,9 +99,7 @@ function TimePanelView(props: ITimePanelViewProps) {
                     className={bem.element('button', 'ok')}
                     onClick={(e) => {
                         e.preventDefault();
-                        if (props.onClose) {
-                            props.onClose();
-                        }
+                        props.onClose();
                     }}
                 >
                     {__('Ок')}

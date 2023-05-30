@@ -38,7 +38,7 @@ export interface ITimeFieldProps extends IDateInputStateInput, IUiComponent {
 }
 
 export interface ITimeFieldViewProps extends IDateInputStateOutput,
-    Pick<ITimeFieldProps, 'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps'>
+    Pick<ITimeFieldProps, 'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps' | 'style'>
 {
     [key: string]: any;
 }
@@ -96,12 +96,13 @@ TimeField.defaultProps = {
     displayFormat: 'HH:mm',
     required: false,
     placeholder: 'Select time',
-    noBorder: false,
     showRemove: true,
     type: 'text',
     valueFormat: 'HH:mm',
     useUTC: true,
     dateInUTC: false,
+    size: 'md',
+    icon: true,
 };
 
 export default fieldWrapper<ITimeFieldProps>('TimeField', TimeField);

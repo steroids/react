@@ -11,6 +11,7 @@ import useDispatch from '../../../hooks/useDispatch';
 import useFile, {IFileInput} from '../../../hooks/useFile';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {openModal} from '../../../actions/modal';
+import {IButtonProps} from '../Button/Button';
 
 export interface ICropConfig {
     /**
@@ -55,6 +56,11 @@ export interface IImageFieldProps extends IFieldWrapperInputProps,
      * @example 'Загрузить'
      */
     label?: string,
+
+    /**
+     * Пропсы для кнопки
+     */
+    buttonProps?: IButtonProps;
 
     [key: string]: any;
 }
@@ -215,6 +221,10 @@ ImageField.defaultProps = {
         initialValues: {
             aspect: 1,
         },
+    },
+    buttonProps: {
+        color: 'basic',
+        outline: true,
     },
 };
 

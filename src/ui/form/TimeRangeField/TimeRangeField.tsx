@@ -5,7 +5,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 import useDateRange from '../DateField/useDateRange';
 import {ITimePanelViewProps} from '../TimeField/TimeField';
 
-interface ITimeRangeFieldProps extends IDateInputStateInput,
+export interface ITimeRangeFieldProps extends IDateInputStateInput,
     Omit<IFieldWrapperInputProps, 'attribute'>,
     IUiComponent {
 
@@ -115,8 +115,7 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         placeholder: props.placeholder,
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
-        useUTC: props.useUTC,
-        dateInUTC: props.dateInUTC,
+
     });
 
     // Input 'to'
@@ -135,8 +134,7 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         placeholder: props.placeholder,
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
-        useUTC: props.useUTC,
-        dateInUTC: props.dateInUTC,
+
     });
 
     const {
@@ -161,9 +159,9 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         onNow: onNowFrom,
         onClose: onCloseFrom,
         value: inputPropsFrom.value,
-        onSelect: inputPropsTo.onChange,
+        onSelect: inputPropsFrom.onChange,
         ...props.timePanelViewProps,
-    }), [inputPropsFrom.value, inputPropsTo.onChange, onCloseFrom, onNowFrom, props.timePanelViewProps]);
+    }), [inputPropsFrom.onChange, inputPropsFrom.value, onCloseFrom, onNowFrom, props.timePanelViewProps]);
 
     const timePanelToViewProps = useMemo(() => ({
         onNow: onNowTo,
@@ -189,6 +187,7 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         icon: props.icon,
         disabled: props.disabled,
         showRemove: props.showRemove,
+        className: props.className,
     });
 }
 
@@ -196,13 +195,13 @@ TimeRangeField.defaultProps = {
     disabled: false,
     displayFormat: 'HH:mm',
     required: false,
-    placeholder: 'Select time',
-    noBorder: false,
     showRemove: true,
     type: 'text',
     valueFormat: 'HH:mm',
     useUTC: true,
     dateInUTC: false,
+    size: 'md',
+    icon: true,
 };
 
 export default fieldWrapper<ITimeRangeFieldProps>('TimeRangeField', TimeRangeField, {

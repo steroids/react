@@ -476,6 +476,14 @@
                     "example": null
                 },
                 {
+                    "name": "routerProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IRouterProps",
+                    "example": null
+                },
+                {
                     "name": "routes",
                     "decorators": [],
                     "description": "",
@@ -854,6 +862,14 @@
                     "example": null
                 },
                 {
+                    "name": "isSelectedAll",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "selectedIds",
                     "decorators": [],
                     "description": "",
@@ -891,6 +907,14 @@
                     "description": "",
                     "required": true,
                     "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "setSelectedAll",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
                     "example": null
                 },
                 {
@@ -4111,6 +4135,14 @@
                     "example": null
                 },
                 {
+                    "name": "hasArrow",
+                    "decorators": [],
+                    "description": "Позволяет управлять отображением указателя",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "onClose",
                     "decorators": [],
                     "description": "Срабатывает в \"ручном режиме\", при клике за пределами компонента и целевого элемента.\nВозвращает значение visible.",
@@ -4235,6 +4267,14 @@
                     "required": false,
                     "type": "number",
                     "example": null
+                },
+                {
+                    "name": "hasArrow",
+                    "decorators": [],
+                    "description": "Позволяет управлять отображением указателя",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
                 },
                 {
                     "name": "isComponentExist",
@@ -9421,6 +9461,22 @@
                     "example": "'circle'"
                 },
                 {
+                    "name": "isItemToSelectAll",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isSelectedAll",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "isShowMore",
                     "decorators": [],
                     "description": "",
@@ -9717,6 +9773,14 @@
                     "required": false,
                     "type": "boolean",
                     "example": null
+                },
+                {
+                    "name": "itemToSelectAll",
+                    "decorators": [],
+                    "description": "Добавляет кнопку при нажатии на которую выбираются все элементы, работает только при multiple: true",
+                    "required": false,
+                    "type": "boolean | {id: string, label: string}",
+                    "example": "{label: 'All', id: 'all'}"
                 },
                 {
                     "name": "items",
@@ -10089,6 +10153,14 @@
                     "description": "",
                     "required": false,
                     "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "itemToSelectAll",
+                    "decorators": [],
+                    "description": "Добавляет кнопку при нажатии на которую выбираются все элементы, работает только при multiple: true",
+                    "required": true,
+                    "type": "{id: string, label: string}",
                     "example": null
                 },
                 {
@@ -13590,6 +13662,14 @@
                     "example": "'/api/v1/user/avatar/crop'"
                 },
                 {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "Пропсы для кнопки",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
+                },
+                {
                     "name": "className",
                     "decorators": [],
                     "description": "Дополнительный CSS-класс для элемента отображения",
@@ -13841,6 +13921,14 @@
                     "required": false,
                     "type": "any",
                     "example": "'/api/v1/user/avatar/crop'"
+                },
+                {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "Пропсы для кнопки",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
                 },
                 {
                     "name": "className",
@@ -17877,7 +17965,8 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IFieldWrapperInputProps"
+                "IFieldWrapperInputProps",
+                "IUiComponent"
             ],
             "properties": [
                 {
@@ -17907,7 +17996,7 @@
                 {
                     "name": "defaultValue",
                     "decorators": [],
-                    "description": "Значение по-умолчанию при первом рендере. Для isRange=false исполуется number, для isRange=true - number[]",
+                    "description": "Значение по-умолчанию при первом рендере. Для isRange=false используется number, для isRange=true - number[]",
                     "required": false,
                     "type": "number | number[]",
                     "example": "1"
@@ -18073,6 +18162,14 @@
                     "example": "10"
                 },
                 {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
                     "name": "value",
                     "decorators": [],
                     "description": "Значение для поля",
@@ -18083,7 +18180,7 @@
                 {
                     "name": "valuePostfix",
                     "decorators": [],
-                    "description": "Любое строкове значение после значения состояния слайдера в всплывающем окошке.",
+                    "description": "Любое строковое значение после значения состояния слайдера в всплывающем окошке.",
                     "required": false,
                     "type": "string",
                     "example": "'%'"
@@ -18145,7 +18242,7 @@
                 {
                     "name": "defaultValue",
                     "decorators": [],
-                    "description": "Значение по-умолчанию при первом рендере. Для isRange=false исполуется number, для isRange=true - number[]",
+                    "description": "Значение по-умолчанию при первом рендере. Для isRange=false используется number, для isRange=true - number[]",
                     "required": false,
                     "type": "number | number[]",
                     "example": "1"
@@ -18343,6 +18440,14 @@
                     "example": "10"
                 },
                 {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
                     "name": "value",
                     "decorators": [],
                     "description": "Значение для поля",
@@ -18353,7 +18458,7 @@
                 {
                     "name": "valuePostfix",
                     "decorators": [],
-                    "description": "Любое строкове значение после значения состояния слайдера в всплывающем окошке.",
+                    "description": "Любое строковое значение после значения состояния слайдера в всплывающем окошке.",
                     "required": false,
                     "type": "string",
                     "example": "'%'"
@@ -19470,7 +19575,7 @@
             "extends": [
                 "IDateInputStateOutput",
                 "Pick<ITimeFieldProps",
-                "'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps'>"
+                "'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps' | 'style'>"
             ],
             "properties": [
                 {
@@ -19552,6 +19657,14 @@
                     "required": false,
                     "type": "string",
                     "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
                 },
                 {
                     "name": "timePanelViewProps",
@@ -19964,14 +20077,6 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "dark",
-                    "decorators": [],
-                    "description": "Темная тема",
-                    "required": false,
-                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -21258,7 +21363,9 @@
             "description": "Компонент используется в качестве заглушки в случае, когда пришла пустая коллекция данных.",
             "tags": {},
             "defaultProps": null,
-            "extends": [],
+            "extends": [
+                "IUiComponent"
+            ],
             "properties": [
                 {
                     "name": "className",
@@ -21277,6 +21384,14 @@
                     "example": "true"
                 },
                 {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
                     "name": "text",
                     "decorators": [],
                     "description": "Текст заглушки",
@@ -21291,6 +21406,291 @@
                     "required": false,
                     "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
+                }
+            ]
+        },
+        "IFlexGridItem": {
+            "name": "IFlexGridItem",
+            "moduleName": "ui/list/FlexGrid/FlexGrid",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "col",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "content",
+                    "decorators": [],
+                    "description": "Содержимое элемента FlexGrid",
+                    "required": true,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "lg",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент на экранах размером lg, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "md",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент на экранах размером md, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "offset",
+                    "decorators": [],
+                    "description": "Количество колонок для смещения столбца слева",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "order",
+                    "decorators": [],
+                    "description": "Порядок элемента в FlexGrid",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "sm",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент на экранах размером sm, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                }
+            ]
+        },
+        "IFlexGridProps": {
+            "name": "IFlexGridProps",
+            "moduleName": "ui/list/FlexGrid/FlexGrid",
+            "title": "FlexGrid",
+            "description": "Flex контейнер для элементов и компонентов.",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "align",
+                    "decorators": [],
+                    "description": "Значение для css-свойства align-items",
+                    "required": false,
+                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\"",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "direction",
+                    "decorators": [],
+                    "description": "Значение для css-свойства flex-direction",
+                    "required": false,
+                    "type": "\"column-reverse\" | \"column\" | \"row-reverse\" | \"row\"",
+                    "example": null
+                },
+                {
+                    "name": "gap",
+                    "decorators": [],
+                    "description": "Расстояние между элементами в px.\nЕсли передано число, то установится расстояние между строками и между колонками.\nЕсли передан массив, то первый элемент - расстояние между колонками, второй - между строками.",
+                    "required": false,
+                    "type": "number | number[]",
+                    "example": null
+                },
+                {
+                    "name": "itemClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элементов FlexGrid",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы FlexGrid",
+                    "required": false,
+                    "type": "IFlexGridItem[]",
+                    "example": "[{content: 'Block1', col: 4}, {content: 'Block2', col: 6}]"
+                },
+                {
+                    "name": "justify",
+                    "decorators": [],
+                    "description": "Значение для css-свойства justify-content",
+                    "required": false,
+                    "type": "\"left\" | \"right\" | \"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "wrap",
+                    "decorators": [],
+                    "description": "Автоматический перенос на новую строку",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                }
+            ]
+        },
+        "IFlexGridViewProps": {
+            "name": "IFlexGridViewProps",
+            "moduleName": "ui/list/FlexGrid/FlexGrid",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFlexGridProps"
+            ],
+            "properties": [
+                {
+                    "name": "align",
+                    "decorators": [],
+                    "description": "Значение для css-свойства align-items",
+                    "required": false,
+                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\"",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "colGap",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "direction",
+                    "decorators": [],
+                    "description": "Значение для css-свойства flex-direction",
+                    "required": false,
+                    "type": "\"column-reverse\" | \"column\" | \"row-reverse\" | \"row\"",
+                    "example": null
+                },
+                {
+                    "name": "gap",
+                    "decorators": [],
+                    "description": "Расстояние между элементами в px.\nЕсли передано число, то установится расстояние между строками и между колонками.\nЕсли передан массив, то первый элемент - расстояние между колонками, второй - между строками.",
+                    "required": false,
+                    "type": "number | number[]",
+                    "example": null
+                },
+                {
+                    "name": "itemClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элементов FlexGrid",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы FlexGrid",
+                    "required": false,
+                    "type": "IFlexGridItem[]",
+                    "example": "[{content: 'Block1', col: 4}, {content: 'Block2', col: 6}]"
+                },
+                {
+                    "name": "justify",
+                    "decorators": [],
+                    "description": "Значение для css-свойства justify-content",
+                    "required": false,
+                    "type": "\"left\" | \"right\" | \"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "example": null
+                },
+                {
+                    "name": "rowGap",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "wrap",
+                    "decorators": [],
+                    "description": "Автоматический перенос на новую строку",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 }
             ]
         },
@@ -23685,6 +24085,153 @@
                     "required": false,
                     "type": "boolean",
                     "example": "true"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IButtonGroupProps": {
+            "name": "IButtonGroupProps",
+            "moduleName": "ui/nav/ButtonGroup/ButtonGroup",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "activeButton",
+                    "decorators": [],
+                    "description": "Активная кнопка",
+                    "required": false,
+                    "type": "string | number",
+                    "example": "'button1'"
+                },
+                {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "Общие свойства для всех кнопок группы",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": "{outline: true, color: 'secondary'}"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы для группы кнопок",
+                    "required": true,
+                    "type": "string | {} | string | number | {id: string | number | boolean, label: string | any}[]",
+                    "example": "['button1', 'button2', 'button3']"
+                },
+                {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "Функция, которая будет вызываться при клике по кнопке",
+                    "required": true,
+                    "type": "{}",
+                    "example": "setActiveTab"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IButtonGroupViewProps": {
+            "name": "IButtonGroupViewProps",
+            "moduleName": "ui/nav/ButtonGroup/ButtonGroup",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Omit<IButtonGroupProps",
+                "'items'>"
+            ],
+            "properties": [
+                {
+                    "name": "activeButton",
+                    "decorators": [],
+                    "description": "Активная кнопка",
+                    "required": false,
+                    "type": "string | number",
+                    "example": "'button1'"
+                },
+                {
+                    "name": "buttonProps",
+                    "decorators": [],
+                    "description": "Общие свойства для всех кнопок группы",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": "{outline: true, color: 'secondary'}"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{id: string | number | boolean, label: string}[]",
+                    "example": null
+                },
+                {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "Функция, которая будет вызываться при клике по кнопке",
+                    "required": true,
+                    "type": "{}",
+                    "example": "setActiveTab"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
                 },
                 {
                     "name": "view",
@@ -26597,6 +27144,13 @@
             "description": "",
             "tags": {}
         },
+        "ui/list/FlexGrid/FlexGrid": {
+            "name": "default",
+            "moduleName": "ui/list/FlexGrid/FlexGrid",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
         "ui/list/Grid/Grid": {
             "name": "default",
             "moduleName": "ui/list/Grid/Grid",
@@ -26670,6 +27224,13 @@
         "ui/nav/Breadcrumbs/Breadcrumbs": {
             "name": "default",
             "moduleName": "ui/nav/Breadcrumbs/Breadcrumbs",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/nav/ButtonGroup/ButtonGroup": {
+            "name": "default",
+            "moduleName": "ui/nav/ButtonGroup/ButtonGroup",
             "title": "",
             "description": "",
             "tags": {}

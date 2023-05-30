@@ -22,11 +22,6 @@ export interface IHeaderProps extends IUiComponent {
      */
     size?: Size,
 
-    /**
-     * Темная тема
-     */
-    dark?: boolean,
-
     [key: string]: any;
 }
 

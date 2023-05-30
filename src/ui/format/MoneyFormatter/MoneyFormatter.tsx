@@ -41,12 +41,13 @@ export const moneyFormat = (amount, currency, scale) => {
     });
 };
 
-function MoneyFormatter(props: IMoneyFormatterProps): JSX.Element {
+export default function MoneyFormatter(props: IMoneyFormatterProps): JSX.Element {
+    const components = useComponents();
     const value = props.precision > 0
         ? props.value / 10 ** props.precision
         : props.value;
 
-    return useComponents().ui.renderView(props.view || 'format.DefaultFormatterView', {
+    return components.ui.renderView(props.view || 'format.DefaultFormatterView', {
         value: moneyFormat(
             value,
             props.currency,
@@ -59,5 +60,3 @@ MoneyFormatter.defaultProps = {
     scale: 2,
     precision: 0,
 };
-
-export default MoneyFormatter;

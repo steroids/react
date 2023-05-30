@@ -5,7 +5,7 @@ import {useComponents} from '../../../hooks';
  * Empty
  * Компонент используется в качестве заглушки в случае, когда пришла пустая коллекция данных.
  */
-export interface IEmptyProps {
+export interface IEmptyProps extends IUiComponent{
     /**
      * Показывать заглушку?
      * @example true
@@ -18,16 +18,6 @@ export interface IEmptyProps {
      */
     text?: string | React.ReactNode;
 
-    /**
-     * Дополнительный CSS-класс для элемента отображения
-     */
-    className?: CssClassName;
-
-    /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView,
     [key: string]: any,
 }
 
@@ -39,13 +29,13 @@ function Empty(props: IEmptyProps): JSX.Element {
 
 Empty.defaultProps = {
     enable: true,
-    text: 'Записи не найдены',
+    text: 'Ничего не найдено',
 };
 
 export const normalizeEmptyProps = props => ({
     ...Empty.defaultProps,
     enable: !!props,
-    text: __('Записи не найдены'),
+    text: __('Ничего не найдено'),
     ...(typeof props === 'boolean'
         ? {enable: props}
         : (typeof props === 'string'

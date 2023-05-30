@@ -209,6 +209,7 @@ function Nav(props: INavProps): JSX.Element {
 
 Nav.defaultProps = {
     layout: 'button',
+    size: 'md',
 };
 
 export default Nav;

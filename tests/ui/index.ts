@@ -5,9 +5,6 @@ export default {
     'form.FieldLayoutView': {
         lazy: () => require('./form/FieldLayout/FieldLayoutMockView').default,
     },
-    'nav.NavButtonView': {
-        lazy: () => require('./nav/NavButton/NavButtonMockView').default,
-    },
     'form.ButtonView': {
         lazy: () => require('./form/Button/ButtonMockView').default,
     },
@@ -73,5 +70,23 @@ export default {
     },
     'form.TimeFieldView': {
         lazy: () => require('./form/TimeField/TimeFieldMockView').default,
+    },
+    'nav.NavButtonView': {
+        lazy: () => require('./nav/Nav/NavButtonMockView').default,
+    },
+    'nav.NavIconView': {
+        lazy: () => require('./nav/Nav/NavIconMockView').default,
+    },
+    'nav.NavLinkView': {
+        lazy: () => require('./nav/Nav/NavLinkMockView').default,
+    },
+    'nav.NavTabsView': {
+        lazy: () => require('./nav/Nav/NavTabsMockView').default,
+    },
+    'nav.NavBarView': {
+        lazy: () => require('./nav/Nav/NavBarMockView').default,
+    },
+    'nav.NavListView': {
+        lazy: () => require('./nav/Nav/NavListMockView').default,
     },
 };

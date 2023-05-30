@@ -72,7 +72,7 @@ export interface IControlsViewProps extends IControlsProps {
 
 export default function Controls(props: IControlsProps): JSX.Element {
     const defaultItems = {
-        index: {
+        back: {
             icon: 'left_12x12',
             label: __('К списку'),
             color: 'secondary',

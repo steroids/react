@@ -1,6 +1,7 @@
 import * as React from 'react';
-import InputMask from 'react-input-mask';
 import {ChangeEventHandler, ReactNode, useMemo} from 'react';
+import {useMaskito} from '@maskito/react';
+import {MaskitoOptions} from '@maskito/core';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
@@ -67,13 +68,19 @@ export interface IInputFieldProps extends IBaseFieldProps {
 
     /**
      * Конфигурация маски
-     * @example { mask: '+7 (999) 999-99-99' }
+     * @example: {
+         mask: [
+             ...Array(4).fill(/\d/),
+             '-',
+             ...Array(4).fill(/\d/),
+             '-',
+             ...Array(4).fill(/\d/),
+             '-',
+             ...Array(4).fill(/\d/),
+         ],
+        }
      */
-    maskProps?: {
-        mask?: string,
-        maskPlaceholder?: string,
-        alwaysShowMask?: boolean,
-    };
+    maskOptions?: MaskitoOptions,
 
     /**
      * Пользовательская иконка svg или название иконки
@@ -94,10 +101,16 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     onFocus?: (e: Event | React.FocusEvent) => void,
     onBlur?: (e: Event | React.FocusEvent) => void,
     onMouseDown?: (e: Event | React.MouseEvent) => void;
+    maskedInputRef?: React.RefCallback<HTMLElement>;
+    defaultValue?: string,
 }
 
 function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
+
+    const maskedInputRef = useMaskito({
+        options: props.maskOptions,
+    });
 
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 
@@ -118,30 +131,11 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         return null;
     }
 
-    // react-input-mask HOC for mask
-    if (props.maskProps) {
-        const maskOnChange = e => props.input.onChange(e.target.value);
-
-        return (
-            <InputMask
-                {...inputProps}
-                {...props.maskProps}
-                onChange={maskOnChange}
-            >
-                {components.ui.renderView(props.view || 'form.InputFieldView', {
-                    ...props,
-                    ...props.viewProps,
-                    inputProps,
-                    onChange: maskOnChange,
-                })}
-            </InputMask>
-        );
-    }
-
     return components.ui.renderView(props.view || 'form.InputFieldView', {
         ...props,
         ...props.viewProps,
         inputProps,
+        maskedInputRef,
     });
 }
 

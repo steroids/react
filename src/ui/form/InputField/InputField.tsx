@@ -2,8 +2,29 @@ import * as React from 'react';
 import {ChangeEventHandler, ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
+import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+
+export const MASK_PRESETS = {
+    date: maskitoDateOptionsGenerator({
+        mode: 'dd/mm/yyyy',
+    }),
+    phone: {
+        mask: ['+', '7', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+    },
+    card: {
+        mask: [
+            ...Array(4).fill(/\d/),
+            '-',
+            ...Array(4).fill(/\d/),
+            '-',
+            ...Array(4).fill(/\d/),
+            '-',
+            ...Array(4).fill(/\d/),
+        ],
+    },
+};
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'

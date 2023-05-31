@@ -1,27 +1,13 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import * as React from 'react';
-
 import {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputField';
-import Icon from '../../../../src/ui/content/Icon';
 import {useBem} from '../../../../src/hooks';
-import IconMockView from '../../content/Icon/IconMockView';
+import Icon from '../../../../src/ui/content/Icon';
+
 import renderIcon from '../../../mocks/renderIconMock';
 
 export default function InputFieldView(props: IInputFieldViewProps) {
     const bem = useBem('InputFieldView');
-
-    const renderLeadIcon = React.useCallback(() => {
-        if (!props.leadIcon) {
-            return null;
-        }
-
-        const className = bem.element('lead-icon');
-
-        return renderIcon(props.leadIcon,
-            {
-                className,
-                tabIndex: -1,
-            });
-    }, [bem, props.leadIcon]);
 
     return (
         <div
@@ -55,8 +41,12 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                 </span>
             )}
             <div className={bem.element('input-wrapper')}>
-                {props.leadIcon && renderLeadIcon()}
-                {props.maskProps
+                {props.leadIcon && renderIcon(props.leadIcon,
+                    {
+                        className: bem.element('lead-icon'),
+                        tabIndex: -1,
+                    })}
+                {props.maskOptions
                     ? (
                         <input
                             onBlur={props.onBlur}
@@ -67,10 +57,13 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                                     size: props.size,
                                 }),
                             )}
+                            {...props.inputProps}
                             type={props.type}
                             placeholder={props.placeholder}
                             disabled={props.disabled}
                             required={props.required}
+                            id={props.id}
+                            ref={props.maskOptions ? props.maskedInputRef : null}
                         />
                     )
                     : (
@@ -86,13 +79,14 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                             placeholder={props.placeholder}
                             disabled={props.disabled}
                             required={props.required}
+                            id={props.id}
                         />
                     )}
                 {!props.disabled && props.showClear && !props.maskProps && (
                     <Icon
-                        view={IconMockView}
                         name="mockIcon"
                         className={bem.element('icon-clear')}
+                        tabIndex={-1}
                         onClick={props.onClear}
                     />
                 )}

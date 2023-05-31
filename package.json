@@ -1,6 +1,6 @@
 {
  "name": "@steroidsjs/core",
- "version": "3.0.0-beta.47",
+"version": "3.0.0-beta.48",
  "description": "",
  "author": "Vladimir Kozhin <hello@kozhindev.com>",
  "repository": {
@@ -25,6 +25,9 @@
   "watch": "tsc -p tsconfig-debug.json"
  },
  "dependencies": {
+  "@maskito/core": "^0.12.1",
+  "@maskito/kit": "^0.12.1",
+  "@maskito/react": "^0.12.1",
   "axios": "^0.21.1",
   "connected-react-router": "^6.9.3",
   "domready": "^1.0.8",
@@ -47,7 +50,6 @@
   "react-grid-gallery": "^0.4.8",
   "react-helmet": "^6.1.0",
   "react-image-crop": "^9.0.2",
-  "react-input-mask": "^3.0.0-alpha.2",
   "react-redux": "^8.0.5",
   "react-router": "^5.2.0",
   "react-router-dom": "^5.2.0",

@@ -7,9 +7,28 @@ import {useComponents, useForm} from '../../../hooks';
 import {FormContext, IFormContext} from '../Form/Form';
 
 export interface IButtonBadge {
+    /**
+    * Включить/выключить badge
+    * @example true
+    */
     enable?: boolean,
+
+    /**
+    * Значение badge
+    * @example 'Badge'
+    */
     value?: number,
+
+    /**
+    * Цвет
+    * @example 'secondary'
+    */
     color?: ColorName,
+
+    /**
+    * Пользовательский className
+    * @example bem.element('additional-class')
+    */
     className?: CssClassName,
 }
 

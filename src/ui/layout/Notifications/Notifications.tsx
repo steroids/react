@@ -23,6 +23,9 @@ import {getNotifications, getPosition} from '../../../reducers/notifications';
  */
 
 interface INotificationItem {
+    /**
+    * Идентификатор уведомления
+    */
     id?: number,
 
     /**
@@ -40,15 +43,45 @@ interface INotificationItem {
 }
 
 export interface INotificationsProps {
+    /**
+    * Первоначальные вспышки
+    */
     initialFlashes?: {
         [key: string]: string | any,
     };
+
+    /**
+    * Коллекция уведомлений
+    */
     notifications?: INotificationItem[];
+
+    /**
+    * Задержка перед закрытием
+    */
     closeTimeoutMs?: number;
+
+    /**
+    * Пользовательский className
+    */
     className?: CssClassName;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения
+     * @example MyCustomView
+     */
     view?: CustomView;
+
+    /**
+     * Переопределение view React компонента для кастомизации отображения элемента
+     * @example MyCustomView
+     */
     itemView?: any;
+
+    /**
+    * Позиционирование элемента уведомления
+    */
     position?: string;
+
     [key: string]: any;
 }
 

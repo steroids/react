@@ -13,8 +13,21 @@ import {Model} from '../components/MetaComponent';
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
 export interface IAddressBarConfig {
+    /**
+    * Управление состоянием
+    * @example true
+    */
     enable?: boolean,
+
+    /**
+    * Использовать ли #
+    * @example false
+    */
     useHash?: boolean,
+
+    /**
+    * Модель
+    */
     model?: Model,
 }
 

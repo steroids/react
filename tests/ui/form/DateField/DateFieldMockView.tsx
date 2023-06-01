@@ -36,7 +36,10 @@ export default function DateFieldView(props: IDateFieldViewProps) {
                 <div className={bem.element('body')}>
                     <input
                         {...props.inputProps}
-                        onChange={e => props.inputProps.onChange(e.target.value)}
+                        ref={props.maskInputRef}
+                        onInput={e => {
+                            props.inputProps.onChange(e.currentTarget.value);
+                        }}
                         className={bem(
                             bem.element('input'),
                             props.inputProps.className,

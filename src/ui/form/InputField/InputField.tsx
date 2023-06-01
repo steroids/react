@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ChangeEventHandler, ReactNode, useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
@@ -113,7 +113,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     inputProps: {
         type: string,
         name: string,
-        onChange: ChangeEventHandler<Element>,
+        onChange: (value: any) => void,
         value: string | number,
         placeholder: string,
         disabled: string,

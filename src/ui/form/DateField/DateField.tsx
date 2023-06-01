@@ -21,7 +21,7 @@ export interface IDateFieldProps extends IDateInputStateInput, IUiComponent {
     calendarProps?: ICalendarProps,
 
     /**
-     * Маскирование инпута
+     * Опции маски для поля ввода
      */
     maskOptions?: MaskitoOptions,
 

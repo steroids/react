@@ -18,7 +18,7 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                     hasError: !!props.errors,
                     hasLeadIcon: !!props.leadIcon,
                     hasClearIcon: props.showClear && !props.disabled,
-                    filled: !!props.inputProps?.value,
+                    filled: !!props.input?.value,
                     hasAddonAfter: !!props.addonAfter,
                     hasAddonBefore: !!props.addonBefore,
                     hasAddon: !!props.addonAfter || !!props.addonBefore,
@@ -75,7 +75,7 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                                 }),
                             )}
                             {...props.inputProps}
-                            onChange={e => props.input?.onChange(e.target.value)}
+                            onChange={e => props.inputProps.onChange(e.target.value)}
                             type={props.type}
                             placeholder={props.placeholder}
                             disabled={props.disabled}

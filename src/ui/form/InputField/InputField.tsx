@@ -140,7 +140,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
-        value: props.input.value ?? '',
+        defaultValue: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
         placeholder: props.placeholder,
         disabled: props.disabled,
@@ -166,6 +166,7 @@ InputField.defaultProps = {
     disabled: false,
     required: false,
     showClear: false,
+    maskOptions: null,
 };
 
 export default fieldWrapper<IInputFieldProps>('InputField', InputField);

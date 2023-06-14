@@ -11,7 +11,20 @@ export const MASK_PRESETS = {
         mode: 'dd/mm/yyyy',
     }),
     phone: {
-        mask: ['+', '7', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+        mask: [
+            '+',
+            '7',
+            ' ',
+            '(',
+            ...Array(3).fill(/\d/),
+            ')',
+            ' ',
+            ...Array(3).fill(/\d/),
+            '-',
+            ...Array(2).fill(/\d/),
+            ' ',
+            ...Array(2).fill(/\d/),
+        ],
     },
     card: {
         mask: [

@@ -10,11 +10,111 @@ declare global {
         };
     }
 }
+
+export interface IResourceComponent {
+    /**
+    * Свойство для хранения обратных вызовов.
+    */
+    _callbacks: any;
+
+    /**
+     * Свойство для хранения компонентов.
+     */
+    _components: any;
+
+    /**
+     * API-ключ Google для использования Google Maps и других сервисов.
+     */
+    googleApiKey: string;
+
+    /**
+     * Ключ сайта Google reCAPTCHA.
+     */
+    googleCaptchaSiteKey: string;
+
+    /**
+     * Языковой код, используемый для загрузки ресурсов.
+     */
+    language: string;
+
+    /**
+     * URL для загрузки Google Maps API.
+     */
+    readonly RESOURCE_GOOGLE_MAP_API: string;
+
+    /**
+     * URL для загрузки Yandex Maps API.
+     */
+    readonly RESOURCE_YANDEX_MAP_API: string;
+
+    /**
+     * URL для загрузки Twitter виджетов.
+     */
+    readonly RESOURCE_TWITTER_WIDGET: string;
+
+    /**
+     * URL для загрузки Geetest.
+     */
+    readonly RESOURCE_GEETEST_API: string;
+
+    /**
+     * URL для загрузки Google reCAPTCHA.
+     */
+    readonly RESOURCE_GOOGLE_CAPTCHA: string;
+
+    /**
+     * Метод для загрузки Google reCAPTCHA.
+     * @returns Промис, который разрешается с объектом window.grecaptcha.
+     */
+    loadGoogleCaptcha(): Promise<any>;
+
+    /**
+     * Метод для загрузки Google Maps API.
+     * @returns Промис, который разрешается с объектом window.google.maps.
+     */
+    loadGoogleMapApi(): Promise<any>;
+
+    /**
+     * Метод для загрузки Yandex Maps API.
+     * @returns Промис, который разрешается с объектом window.ymaps.
+     */
+    loadYandexMap(): Promise<any>;
+
+    /**
+     * Метод для загрузки Twitter виджетов.
+     * @returns Промис, который разрешается с объектом window.twttr.
+     */
+    loadTwitterWidget(): Promise<any>;
+
+    /**
+     * Метод для загрузки Geetest.
+     * @returns Промис, который разрешается с объектом window.initGeetest.
+     */
+    loadGeetest(): Promise<any>;
+
+    /**
+     * Метод для загрузки скрипта по указанному URL.
+     * @param url URL скрипта для загрузки.
+     * @param params Параметры запроса для URL скрипта.
+     * @param firstResolver Функция, которая возвращает объект, разрешающий промис.
+     * @returns Промис, который разрешается с результатом первого разрешенного промиса.
+     */
+    loadScript(url: string, params: any, firstResolver: () => any): Promise<any>;
+
+    /**
+     * Метод для ожидания выполнения определенного условия.
+     * @param condition Условие, которое должно быть выполнено.
+     * @param timeout (Необязательный) Таймаут ожидания в миллисекундах (по умолчанию 5000 мс).
+     * @returns Промис, который разрешается с результатом выполнения условия.
+     */
+    wait(condition: () => boolean, timeout?: number): Promise<any>;
+}
+
 /**
  * Resource Component
  * Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...
  */
-export default class ResourceComponent {
+export default class ResourceComponent implements IResourceComponent {
     _callbacks: any;
 
     _components: any;
@@ -25,19 +125,19 @@ export default class ResourceComponent {
 
     language: string;
 
-    static RESOURCE_GOOGLE_MAP_API = '//maps.googleapis.com/maps/api/js';
+    readonly RESOURCE_GOOGLE_MAP_API = '//maps.googleapis.com/maps/api/js';
 
-    static RESOURCE_YANDEX_MAP_API = 'https://api-maps.yandex.ru/2.1/';
+    readonly RESOURCE_YANDEX_MAP_API = 'https://api-maps.yandex.ru/2.1/';
 
-    static RESOURCE_TWITTER_WIDGET = 'https://platform.twitter.com/widgets.js';
+    readonly RESOURCE_TWITTER_WIDGET = 'https://platform.twitter.com/widgets.js';
 
-    static RESOURCE_GEETEST_API = '//static.geetest.com/static/tools/gt.js';
+    readonly RESOURCE_GEETEST_API = '//static.geetest.com/static/tools/gt.js';
 
-    static RESOURCE_GOOGLE_CAPTCHA = 'https://www.google.com/recaptcha/api.js';
+    readonly RESOURCE_GOOGLE_CAPTCHA = 'https://www.google.com/recaptcha/api.js';
 
     constructor(components, config) {
         this.googleApiKey = config.googleApiKey || '';
-        this.googleCaptchaSiteKey = config.googleCaptchaSiteKey || '';
+        this.googleCaptchaSiteKey = process.env.APP_RECAPTCHA_SITE_KEY || '';
         this.language = config.language || '';
         this._callbacks = {};
         this._components = components;
@@ -49,7 +149,7 @@ export default class ResourceComponent {
         }
 
         return this.loadScript(
-            ResourceComponent.RESOURCE_GOOGLE_CAPTCHA,
+            this.RESOURCE_GOOGLE_CAPTCHA,
             {render: this.googleCaptchaSiteKey},
             () => window.grecaptcha,
         );
@@ -63,7 +163,7 @@ export default class ResourceComponent {
             return Promise.resolve(window.google.maps);
         }
         return this.loadScript(
-            ResourceComponent.RESOURCE_GOOGLE_MAP_API,
+            this.RESOURCE_GOOGLE_MAP_API,
             {
                 libraries: 'places,geometry',
                 key: this.googleApiKey,
@@ -84,7 +184,7 @@ export default class ResourceComponent {
                 window.ymaps.ready(() => resolve(window.ymaps)));
         }
         return this.loadScript(
-            ResourceComponent.RESOURCE_YANDEX_MAP_API,
+            this.RESOURCE_YANDEX_MAP_API,
             {
                 lang: this.language || locale.language,
             },
@@ -100,7 +200,7 @@ export default class ResourceComponent {
             return Promise.resolve(window.twttr);
         }
         return this.loadScript(
-            ResourceComponent.RESOURCE_TWITTER_WIDGET,
+            this.RESOURCE_TWITTER_WIDGET,
             {},
             // @ts-ignore
             () => new Promise(resolve => window.twttr.ready(() => resolve(window.twttr))),
@@ -114,7 +214,7 @@ export default class ResourceComponent {
             return Promise.resolve(window.initGeetest);
         }
         return this.loadScript(
-            ResourceComponent.RESOURCE_GEETEST_API + '?_t=' + new Date().getTime(),
+            this.RESOURCE_GEETEST_API + '?_t=' + new Date().getTime(),
             {},
             // @ts-ignore
             () => window.initGeetest,

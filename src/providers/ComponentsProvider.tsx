@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
+import {IResourceComponent} from '../components/ResourceComponent';
 
 declare global {
     interface Window {
@@ -15,7 +16,7 @@ export interface IComponents {
     locale?: any,
     store?: any,
     ui?: any,
-    resource?: any,
+    resource?: IResourceComponent,
     ws?: any,
     pushNotification?: any,
     meta?: any,

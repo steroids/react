@@ -92,4 +92,7 @@ export default {
     'form.TimeRangeFieldView': {
         lazy: () => require('./form/TimeRangeField/TimeRangeFieldMockView').default,
     },
+    'form.RateFieldView': {
+        lazy: () => require('./form/RateField/RateFieldMockView').default,
+    },
 };

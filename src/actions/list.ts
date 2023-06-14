@@ -13,13 +13,13 @@ import {IApiMethod} from '../components/ApiComponent';
 
 export interface IList {
     /**
-    * Действие, связанное с данным списком.
-    * Может быть строкой или экземпляром IApiMethod.
+    * Url, который вернет коллекцию элементов.
+    * @example api/v1/articles
     */
     action?: string | IApiMethod,
 
     /**
-    * Метод, используемый для выполнения действия.
+    * Тип HTTP запроса (GET | POST | PUT | DELETE)
     */
     actionMethod?: string,
 

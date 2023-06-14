@@ -14,7 +14,7 @@ export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
 export interface IAddressBarConfig {
     /**
-    * Управление состоянием
+   * Флаг для управления включением синхронизации с addressBar
     * @example true
     */
     enable?: boolean,

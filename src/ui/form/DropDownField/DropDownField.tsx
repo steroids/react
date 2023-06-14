@@ -25,7 +25,7 @@ export interface IDropDownFieldItem {
     id: number | string | boolean,
 
     /**
-    * Отображаемое имя
+    * Отображаемое название
     */
     label: string,
 

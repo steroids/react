@@ -14,22 +14,22 @@ type TooltipPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' 
 
 export interface ITooltipArrowPosition {
     /**
-    * Позиция стрелочки слева
+    * Позиция стрелки слева
     */
     left?: number | string,
 
     /**
-    * Позиция стрелочки справа
+    * Позиция стрелки справа
     */
     right?: number | string,
 
     /**
-    * Позиция стрелочки сверху
+    * Позиция стрелки сверху
     */
     top?: number | string,
 
     /**
-    * Позиция стрелочки снизу
+    * Позиция стрелки снизу
     */
     bottom?: number | string,
 }

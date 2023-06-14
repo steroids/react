@@ -12,7 +12,7 @@ export interface IDataSelectItem {
     id: number | string | boolean,
 
     /**
-    * Отображаемое имя для IDataSelectItem
+    * Отображаемое название для IDataSelectItem
     */
     label?: string,
 

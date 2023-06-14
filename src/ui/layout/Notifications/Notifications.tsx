@@ -44,7 +44,7 @@ interface INotificationItem {
 
 export interface INotificationsProps {
     /**
-    * Первоначальные вспышки
+    * Исходные уведомления
     */
     initialFlashes?: {
         [key: string]: string | any,
@@ -61,7 +61,7 @@ export interface INotificationsProps {
     closeTimeoutMs?: number;
 
     /**
-    * Пользовательский className
+    * Дополнительный CSS-класс для элемента отображения
     */
     className?: CssClassName;
 

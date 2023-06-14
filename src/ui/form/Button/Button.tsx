@@ -26,7 +26,7 @@ export interface IButtonBadge {
     color?: ColorName,
 
     /**
-    * Пользовательский className
+    * Дополнительный CSS-класс для элемента отображения
     * @example bem.element('additional-class')
     */
     className?: CssClassName,

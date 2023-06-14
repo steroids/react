@@ -26,16 +26,64 @@ import {IGridProps} from '../../list/Grid/Grid';
 import {IControlItem} from '../../nav/Controls/Controls';
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
+    /**
+    * Заголовок
+    * @example 'Title'
+    */
     title?: string,
+
+    /**
+    * Название для action
+    * @example
+    */
     actionName?: string,
+
+    /**
+    * Обязателен ли Personal Key
+    * @example true
+    */
     pkRequired?: boolean,
+
+    /**
+    * Режим отображения
+    * @example 'modal'
+    */
     mode?: 'page' | 'modal',
+
+    /**
+    * Компонент
+    */
     component?: any,
+
+    /**
+    * Свойства компонента
+    */
     componentProps?: any,
+
+    /**
+    * Коллекция Controls
+    */
     controlsInclude?: string[],
+
+    /**
+    * Коллекция исключенных Controls
+    */
     controlsExclude?: string[],
+
+    /**
+    * Управление отображением
+    * @example true
+    */
     visible?: boolean | ((item: any, crudItem: ICrudItem, isGrid: boolean) => boolean),
+
+    /**
+    * Сообщение о подтверждении
+    */
     confirm?: string | ((e: any, props: ICrudClickProps) => any),
+
+    /**
+    * Функция обратного вызова, срабатывает после нажатия
+    */
     onClick?: (e: Event | React.MouseEvent, props: ICrudClickProps) => any,
 }
 

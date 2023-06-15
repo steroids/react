@@ -39,7 +39,7 @@ export default class ClientStorageComponent {
         if (this.sessionStorageAvailable) {
             try {
                 window.sessionStorage.setItem('sessionStorageAvailable', '1');
-                this.sessionStorageAvailable = window.localStorage.getItem('sessionStorageAvailable') === '1';
+                this.sessionStorageAvailable = window.sessionStorage.getItem('sessionStorageAvailable') === '1';
                 window.sessionStorage.removeItem('sessionStorageAvailable');
             } catch (e) {
                 this.sessionStorageAvailable = false;

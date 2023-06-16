@@ -53,6 +53,9 @@ export default {
     'list.ContentColumnView': {
         lazy: () => require('./list/Grid/ContentColumnMockView').default,
     },
+    'list.DiagramColumnView': {
+        lazy: () => require('./list/Grid/DiagramColumnMockView').default,
+    },
     'content.IconView': {
         lazy: () => require('./content/Icon/IconMockView').default,
     },

@@ -11,7 +11,7 @@ import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';
 
-export interface IContentColumnViewProps extends IGridColumn {
+export interface IColumnViewProps extends IGridColumn {
     item: Record<string, any>,
     size: Size,
     primaryKey: string,
@@ -124,6 +124,18 @@ export interface IGridColumn {
         attribute: string,
         isLeft?: boolean,
     },
+
+    /**
+    * Коллекция диаграмм.
+    * Аттрибут содержащий цвет должен соответствовать success | warning | danger | secondary
+    */
+    diagrams?: {
+        type: 'horizontal' | 'vertical' | 'circle',
+        items: {
+            colorAttribute: string,
+            percentageAttribute: string
+        }[]
+    }
 }
 
 /**

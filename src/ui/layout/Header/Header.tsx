@@ -29,7 +29,7 @@ export interface IHeaderProps extends IUiComponent {
     */
     auth?: string | {
         username: string,
-        userAvatar: IAvatarProps,
+        userAvatar: Omit<IAvatarProps, 'size'>,
     }
 
     [key: string]: any;

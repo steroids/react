@@ -1,4 +1,5 @@
 import {IAvatarProps} from 'src/ui/content/Avatar/Avatar';
+import {ILinkProps} from 'src/ui/nav/Link/Link';
 import {useComponents} from '../../../hooks';
 import {INavProps} from '../../nav/Nav/Nav';
 
@@ -8,7 +9,7 @@ export interface IHeaderProps extends IUiComponent {
     */
     logo?: {
         title: string,
-        linkProps?: Record<string, unknown>,
+        linkProps?: Omit<ILinkProps, 'size'>,
         icon?: string | React.ReactElement,
         className?: CssClassName,
     };

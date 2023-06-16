@@ -14,6 +14,9 @@ export default {
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },
+    'layout.HeaderView': {
+        lazy: () => require('./layout/Header/HeaderMockView').default,
+    },
     'content.AvatarView': {
         lazy: () => require('./content/Avatar/AvatarMockView').default,
     },

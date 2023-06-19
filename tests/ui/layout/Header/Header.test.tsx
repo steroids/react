@@ -93,9 +93,29 @@ describe('Header test', () => {
 
     it('should have auth button', () => {
         const {getByText} = render(JSXWrapper(Header, props));
-
         const authButton = getByText(expectedAuthButtonLabel);
-
         expect(authButton).toBeInTheDocument();
+    });
+
+    it('should have user data', () => {
+        const expectedAvatarClassName = 'AvatarView';
+
+        const auth = {
+            username: 'test',
+            userAvatar: {
+                title: 'K D',
+            },
+        };
+
+        const {container, getByText} = render(JSXWrapper(Header, {
+            ...props,
+            auth,
+        }));
+
+        const userName = getByText(auth.username);
+        const avatar = getElementByClassName(container, expectedAvatarClassName);
+
+        expect(userName).toBeInTheDocument();
+        expect(avatar).toBeInTheDocument();
     });
 });

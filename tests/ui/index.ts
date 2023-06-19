@@ -95,4 +95,8 @@ export default {
     'form.TimeRangeFieldView': {
         lazy: () => require('./form/TimeRangeField/TimeRangeFieldMockView').default,
     },
+    'typography.TextView': {
+        lazy: () => require('./typography/Text/TextMockView').default,
+    },
+
 };

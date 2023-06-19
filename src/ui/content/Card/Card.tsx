@@ -2,6 +2,7 @@ import {IButtonProps} from 'src/ui/form/Button/Button';
 import {ILinkProps} from 'src/ui/nav/Link/Link';
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../Avatar/Avatar';
+import {IMenuProps} from '../Menu/Menu';
 
 export interface ICardHeader {
     /**
@@ -15,10 +16,9 @@ export interface ICardHeader {
     avatar?: IAvatarProps,
 
     /**
-    * Отображается ли меню
-    * @example true
+    * Свойства для компонента <Menu/>
     */
-    menu?: boolean,
+    menu?: IMenuProps,
 
     /**
     * Текст шапки (заголовок)
@@ -60,7 +60,20 @@ export interface ICardProps extends IUiComponent {
      * },
      * head: 'Header',
      * subhead: 'Subhead',
-     * menu: true,
+     * menu: {
+     *  dropDownProps: {
+            position: 'bottom',
+            closeMode: 'click-any',
+        },
+        items: [
+            {label: 'Вырезать', icon: 'cut', onClick: voidFunction},
+            {label: 'Копировать', icon: 'copy', hasBorder: true, onClick: voidFunction},
+            {label: 'Показать историю изменений', hasBorder: true, onClick: voidFunction},
+            {label: 'Редактировать', icon: 'edit', onClick: voidFunction},
+            {label: 'Удалить', icon: 'trash', onClick: voidFunction},
+        ],
+        icon: 'menu_dots',
+     * },
      */
     header?: ICardHeader,
 

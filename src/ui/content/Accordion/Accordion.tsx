@@ -2,7 +2,15 @@ import * as React from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface IAccordionIcon {
+    /**
+    * Пользовательская иконка открытия
+    * @example 'user
+    */
     open: React.ReactElement | string,
+    /**
+    * Пользовательская иконка закрытия
+    * @example 'user'
+    */
     close: React.ReactElement | string,
 }
 

@@ -13,15 +13,41 @@ type TooltipPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' 
     'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
 
 export interface ITooltipArrowPosition {
+    /**
+    * Позиция стрелки слева
+    */
     left?: number | string,
+
+    /**
+    * Позиция стрелки справа
+    */
     right?: number | string,
+
+    /**
+    * Позиция стрелки сверху
+    */
     top?: number | string,
+
+    /**
+    * Позиция стрелки снизу
+    */
     bottom?: number | string,
 }
 
 export interface ITooltipStylePosition {
+    /**
+    * Позиция Tooltip слева
+    */
     left: 'unset' | number,
+
+    /**
+    * Позиция Tooltip справа
+    */
     right: 'unset' | number,
+
+    /**
+    * Позиция Tooltip сверху
+    */
     top: 'unset' | number,
 }
 

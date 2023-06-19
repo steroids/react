@@ -6,7 +6,14 @@ import {useCallback, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
 export interface IDataSelectItem {
+    /**
+    * Идентификатор элемента
+    */
     id: number | string | boolean,
+
+    /**
+    * Отображаемое название для IDataSelectItem
+    */
     label?: string,
 
     [key: string]: unknown,

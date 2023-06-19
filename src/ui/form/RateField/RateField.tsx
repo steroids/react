@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 import {useMount} from 'react-use';
 import fieldWrapper, {
@@ -34,6 +33,13 @@ export interface IRateFieldProps extends IFieldWrapperInputProps, IUiComponent {
      * @example false
      */
     allowClear?: boolean,
+
+    /**
+    * Значок (бэйдж) с заголовком.
+    */
+    badge?: {
+        title: string,
+    },
 
     inputProps?: {
         [key: string]: any,
@@ -88,6 +94,7 @@ RateField.defaultProps = {
     allowClear: false,
     itemsCount: 5,
     disabled: false,
+    size: 'md',
 };
 
 export default fieldWrapper<IRateFieldProps>('RateField', RateField);

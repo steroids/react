@@ -19,9 +19,26 @@ export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
 export type ItemSwitchType = ContentType | 'group' | string;
 
 export interface IDropDownFieldItem {
+    /**
+    * Идентификатор элемента
+    */
     id: number | string | boolean,
+
+    /**
+    * Отображаемое название
+    */
     label: string,
+
+    /**
+    * Тип контента для элемента
+    * @example 'img'
+    */
     contentType?: ContentType | string,
+
+    /**
+    * Источник контента
+    * @example 'https://steroids.kozhindev.com/images/icon.png'
+    */
     contentSrc?: string | React.ReactElement,
 }
 

@@ -98,5 +98,7 @@ export default {
     'typography.TextView': {
         lazy: () => require('./typography/Text/TextMockView').default,
     },
-
+    'form.RateFieldView': {
+        lazy: () => require('./form/RateField/RateFieldMockView').default,
+    },
 };

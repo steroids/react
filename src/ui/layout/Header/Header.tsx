@@ -1,23 +1,41 @@
 import {IAvatarProps} from 'src/ui/content/Avatar/Avatar';
 import {ILinkProps} from 'src/ui/nav/Link/Link';
+import {IModalProps} from 'src/ui/modal/Modal/Modal';
+import {IMenuProps} from 'src/ui/content/Menu/Menu';
+import {useCallback, useState} from 'react';
 import {useComponents} from '../../../hooks';
 import {INavProps} from '../../nav/Nav/Nav';
 
 export interface IHeaderProps extends IUiComponent {
     /**
-    * Свойства для логотипа
-    */
+     * Свойства для логотипа.
+     */
     logo?: {
+        /**
+         * Заголовок логотипа.
+         */
         title: string,
-        linkProps?: Omit<ILinkProps, 'size'>,
+
+        /**
+         * Дополнительные свойства ссылки логотипа.
+         */
+        linkProps?: ILinkProps,
+
+        /**
+         * Иконка логотипа в виде строки или компонента React.
+         */
         icon?: string | React.ReactElement,
+
+        /**
+         * Дополнительные классы стилей для логотипа.
+         */
         className?: CssClassName,
     };
 
     /**
     * Свойства для навигации
     */
-    nav?: Omit<INavProps, 'layout' | 'size'>;
+    nav?: INavProps;
 
     /**
      * Размер
@@ -25,26 +43,84 @@ export interface IHeaderProps extends IUiComponent {
     size?: Size,
 
     /**
-    * Параметр авторизации, если в качестве строки передать route то отобразится кнопка "Войти".
-    * Если передать username и userAvatar - отобразятся данные пользователя.
-    */
-    auth?: string | {
-        username: string,
-        userAvatar: Omit<IAvatarProps, 'size'>,
+     * Параметры авторизации.
+     */
+    authParams?: {
+        /**
+         * Флаг для отображения кнопки авторизации
+         */
+        isAuth: boolean,
+
+        /**
+         * Маршрут, на который перенаправлять пользователя при авторизации.
+         */
+        toRoute?: string,
+
+        /**
+         * Свойства для модального окна авторизации.
+         */
+        modal?: IModalProps,
+    },
+
+    /**
+     * Информация о пользователе.
+     */
+    user?: {
+        /**
+         * Имя пользователя.
+         */
+        name?: string,
+
+    /**
+     * Свойства для аватара пользователя.
+     */
+        avatar?: IAvatarProps,
+
+        /**
+         * Свойства для меню пользователя.
+         */
+        menu?: IMenuProps,
     }
+
+    /**
+     * Свойства для бургер-меню.
+     */
+    burgerMenu?: {
+        /**
+         * Контент бургер-меню в виде компонента React.
+         */
+        content?: React.ReactElement,
+
+        /**
+         * Свойства для ссылок бургер-меню.
+         */
+        links?: ILinkProps,
+    };
 
     [key: string]: any;
 }
 
-export type IHeaderViewProps = IHeaderProps
+export interface IHeaderViewProps extends IHeaderProps {
+    toggleBurger: VoidFunction,
+    isBurgerOpened: boolean,
+}
 
 function Header(props: IHeaderProps): JSX.Element {
-    return useComponents().ui.renderView(props.view || 'layout.HeaderView', props);
+    const [isBurgerOpened, setIsBurgerOpened] = useState(false);
+
+    const toggleBurger = useCallback(() => {
+        setIsBurgerOpened(prev => !prev);
+    }, []);
+
+    return useComponents().ui.renderView(props.view || 'layout.HeaderView', {
+        ...props,
+        toggleBurger,
+        isBurgerOpened,
+    });
 }
 
 Header.defaultProps = {
     size: 'md',
-    auth: null,
 };
 
 export default Header;

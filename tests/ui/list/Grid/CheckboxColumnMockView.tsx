@@ -4,9 +4,9 @@ import _get from 'lodash-es/get';
 import {useBem} from '../../../../src/hooks';
 import {ICheckboxColumnViewProps} from '../../../../src/ui/list/CheckboxColumn/CheckboxColumn';
 import CheckboxField from '../../../../src/ui/form/CheckboxField';
-import {IContentColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
+import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
 
-export default function CheckboxColumnView(props: ICheckboxColumnViewProps & IContentColumnViewProps) {
+export default function CheckboxColumnView(props: ICheckboxColumnViewProps & IColumnViewProps) {
     const bem = useBem('CheckboxColumnView');
     const CheckboxFieldInternal = CheckboxField.WrappedComponent;
 

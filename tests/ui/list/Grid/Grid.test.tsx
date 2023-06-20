@@ -3,7 +3,7 @@ import {render} from '../../../customRender';
 import Grid, {IGridProps} from '../../../../src/ui/list/Grid/Grid';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 import GridMockView from './GridMockView';
-import CheckboxColumnView from '../../../../src/ui/list/CheckboxColumn/CheckboxColumn';
+import CheckboxColumnMockView from './CheckboxColumnMockView';
 import ContentColumnMockView from './ContentColumnMockView';
 import InputField from '../../../../src/ui/form/InputField/InputField';
 import DiagramColumnMockView from './DiagramColumnMockView';
@@ -76,7 +76,7 @@ describe('Grid tests', () => {
         const columns = [{
             label: 'Checkbox',
             attribute: 'name',
-            valueView: CheckboxColumnView,
+            valueView: CheckboxColumnMockView,
         }];
 
         const {container} = render(JSXWrapper(Grid, {

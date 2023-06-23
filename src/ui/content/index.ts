@@ -8,6 +8,7 @@ import {Detail, DetailItem} from './Detail';
 import Icon from './Icon';
 import Menu from './Menu';
 import CopyToClipboard from './CopyToClipboard';
+import Chart from './Chart';
 
 export {
     Avatar,
@@ -23,4 +24,5 @@ export {
     Icon,
     Menu,
     CopyToClipboard,
+    Chart,
 };

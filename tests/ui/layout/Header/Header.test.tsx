@@ -30,7 +30,6 @@ describe('Header test', () => {
         nav: {
             items: navItems,
         },
-        auth: 'root',
     };
 
     it('should be in the document ', () => {
@@ -92,7 +91,13 @@ describe('Header test', () => {
     });
 
     it('should have auth button', () => {
-        const {getByText} = render(JSXWrapper(Header, props));
+        const {getByText} = render(JSXWrapper(Header, {
+            ...props,
+            authParams: {
+                isAuth: true,
+                toRoute: 'root',
+            },
+        }));
         const authButton = getByText(expectedAuthButtonLabel);
         expect(authButton).toBeInTheDocument();
     });
@@ -100,19 +105,30 @@ describe('Header test', () => {
     it('should have user data', () => {
         const expectedAvatarClassName = 'AvatarView';
 
-        const auth = {
-            username: 'test',
-            userAvatar: {
+        const user = {
+            name: 'test',
+            avatar: {
                 title: 'K D',
+            },
+            menu: {
+                items: [
+                    {label: 'Профиль', icon: 'user', onClick: () => { }},
+                    {label: 'Настройки', icon: 'setting_line', onClick: () => { }},
+                    {label: 'Выйти', icon: 'menu_left', onClick: () => { }},
+                ],
+                dropDownProps: {
+                    position: 'bottom',
+                    closeMode: 'click-any',
+                },
             },
         };
 
         const {container, getByText} = render(JSXWrapper(Header, {
             ...props,
-            auth,
+            user,
         }));
 
-        const userName = getByText(auth.username);
+        const userName = getByText(user.name);
         const avatar = getElementByClassName(container, expectedAvatarClassName);
 
         expect(userName).toBeInTheDocument();

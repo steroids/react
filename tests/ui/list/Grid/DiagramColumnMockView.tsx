@@ -2,128 +2,82 @@ import React from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
 
-const HORIZONTAL_DIAGRAM_INDEX = 0;
+const enum DiagramType {
+    HORIZONTAL = 'horizontal',
+    VERTICAL = 'vertical',
+    CIRCLE = 'circle',
+}
 
 export default function DiagramColumnView(props: IColumnViewProps) {
     const bem = useBem('DiagramColumnView');
 
-    const isHorizontal = props.diagrams?.type === 'horizontal';
-    const isVertical = props.diagrams?.type === 'vertical';
-    const isCircle = props.diagrams?.type === 'circle';
+    const isHorizontal = props.diagram?.type === DiagramType.HORIZONTAL;
+    const isVertical = props.diagram?.type === DiagramType.VERTICAL;
+    const isCircle = props.diagram?.type === DiagramType.CIRCLE;
 
-    const renderDiagrams = (content: React.ReactElement) => (
+    const getItemData = (item: {color: string, percentageAttribute: string}) => ({
+        itemPercentage: props.item[item?.percentageAttribute],
+        itemColor: item?.color,
+    });
+
+    const renderDiagram = (diagramItems, hasPercentSign: boolean, hasSubtitle: boolean, fillingProperty = '') => (
         <div className={bem(
             bem.block({
                 size: props.size,
-                isHorizontal,
-                isVertical,
-                isCircle,
+                type: props.diagram?.type,
             }),
         )}
         >
-            {content}
-        </div>
-    );
-
-    const getItemData = (item: {colorAttribute: string, percentageAttribute: string}) => ({
-        itemPercentage: props.item[item?.percentageAttribute],
-        itemColor: props.item[item?.colorAttribute],
-    });
-
-    if (isHorizontal) {
-        return (
-            renderDiagrams(
-                <>
-                    {[props.diagrams?.items[HORIZONTAL_DIAGRAM_INDEX]].map((item, itemIndex) => {
-                        const {itemColor, itemPercentage} = getItemData(item as any);
+            <div className={bem.element('wrapper')}>
+                <div className={bem.element('wrapper-diagrams')}>
+                    {diagramItems.map((item, itemIndex) => {
+                        const {itemColor, itemPercentage} = getItemData(item);
 
                         return (
                             <div
                                 key={itemIndex}
                                 className={bem.element('diagram', {
-                                    isHorizontal,
+                                    type: props.diagram?.type,
                                 })}
                             >
                                 <span className={bem.element('diagram-percentage')}>
                                     {itemPercentage}
-                                    %
+                                    {hasPercentSign && ' %'}
                                 </span>
                                 <div
                                     className={bem.element('diagram-filling', {
                                         color: itemColor,
                                     })}
-                                    style={{width: `${itemPercentage}%`}}
+                                    style={{[fillingProperty]: `${itemPercentage}%`}}
                                 />
                             </div>
                         );
                     })}
-                </>,
-            )
+                </div>
+                {hasSubtitle && (
+                    <span className={bem.element('subtitle')}>
+                        {props.item[props.subtitleAttribute as string]}
+                    </span>
+                )}
+            </div>
+        </div>
+    );
+
+    if (isHorizontal) {
+        return (
+            renderDiagram(props.diagram?.items, true, false, 'width')
         );
     }
 
     if (isVertical) {
         return (
-            renderDiagrams(
-                <>
-                    {
-                        props.diagrams?.items.map((item, itemIndex) => {
-                            const {itemColor, itemPercentage} = getItemData(item);
-
-                            return (
-                                <div
-                                    className={bem.element('diagram', {
-                                        isVertical,
-                                    })}
-                                    key={itemIndex}
-                                >
-                                    <span className={bem.element('diagram-percentage')}>
-                                        {itemPercentage}
-                                        %
-                                    </span>
-                                    <div
-                                        className={bem.element('diagram-filling', {
-                                            color: itemColor,
-                                        })}
-                                        style={{height: `${itemPercentage}%`}}
-                                    />
-                                </div>
-                            );
-                        })
-                    }
-                </>,
-            )
+            renderDiagram(props.diagram?.items, true, false, 'height')
         );
     }
 
     if (isCircle) {
         return (
-            renderDiagrams(
-                <div className={bem.element('wrapper')}>
-                    <div className={bem.element('wrapper-diagrams')}>
-                        {
-                            props.diagrams?.items.map((item, itemIndex) => {
-                                const {itemColor, itemPercentage} = getItemData(item);
-
-                                return (
-                                    <div
-                                        className={bem.element('diagram', {
-                                            isCircle,
-                                            color: itemColor,
-                                        })}
-                                        key={itemIndex}
-                                    >
-                                        <span className={bem.element('diagram-percentage')}>
-                                            {itemPercentage}
-                                        </span>
-                                    </div>
-                                );
-                            })
-                        }
-                    </div>
-                    {props.subtitleAttribute && <span className={bem.element('subtitle')}>{props.item[props.subtitleAttribute]}</span>}
-                </div>,
-            )
+            renderDiagram(props.diagram?.items, false, !!props.subtitleAttribute)
         );
     }
 

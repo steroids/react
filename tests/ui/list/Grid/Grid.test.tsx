@@ -219,12 +219,10 @@ describe('Grid tests', () => {
             const horizontalItems = [
                 {
                     id: 1,
-                    color: 'secondary',
                     percentage: 50,
                 },
                 {
                     id: 2,
-                    color: 'danger',
                     percentage: 30,
                 },
             ];
@@ -232,11 +230,11 @@ describe('Grid tests', () => {
                 {
                     label: 'Horizontal',
                     valueView: 'DiagramColumnView',
-                    diagrams: {
+                    diagram: {
                         type: 'horizontal',
                         items: [
                             {
-                                colorAttribute: 'color',
+                                color: 'secondary',
                                 percentageAttribute: 'percentage',
                             },
                         ],
@@ -256,7 +254,7 @@ describe('Grid tests', () => {
 
             expect(diagrams.length).toBe(horizontalItems.length);
             diagrams.forEach((diagram) => {
-                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_isHorizontal`);
+                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_type_horizontal`);
             });
         });
 
@@ -264,10 +262,6 @@ describe('Grid tests', () => {
             const verticalItems = [
                 {
                     id: 1,
-                    healthColor: 'success',
-                    hungerColor: 'warning',
-                    damageColor: 'danger',
-                    manaColor: 'secondary',
                     health: 25,
                     hunger: 35,
                     damage: 45,
@@ -275,10 +269,6 @@ describe('Grid tests', () => {
                 },
                 {
                     id: 2,
-                    healthColor: 'success',
-                    hungerColor: 'warning',
-                    damageColor: 'danger',
-                    manaColor: 'secondary',
                     health: 25,
                     hunger: 35,
                     damage: 45,
@@ -290,23 +280,23 @@ describe('Grid tests', () => {
                 {
                     label: 'Vertical',
                     valueView: 'DiagramColumnView',
-                    diagrams: {
+                    diagram: {
                         type: 'vertical',
                         items: [
                             {
-                                colorAttribute: 'healthColor',
+                                color: 'success',
                                 percentageAttribute: 'health',
                             },
                             {
-                                colorAttribute: 'hungerColor',
+                                color: 'warning',
                                 percentageAttribute: 'hunger',
                             },
                             {
-                                colorAttribute: 'damageColor',
+                                color: 'danger',
                                 percentageAttribute: 'damage',
                             },
                             {
-                                colorAttribute: 'manaColor',
+                                color: 'secondary',
                                 percentageAttribute: 'mana',
                             },
                         ],
@@ -326,7 +316,7 @@ describe('Grid tests', () => {
 
             expect(diagrams.length).toBe(verticalItems.length);
             diagrams.forEach((diagram) => {
-                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_isVertical`);
+                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_type_vertical`);
             });
         });
 
@@ -335,10 +325,6 @@ describe('Grid tests', () => {
                 {
                     id: 1,
                     name: 'John',
-                    healthColor: 'success',
-                    hungerColor: 'warning',
-                    damageColor: 'danger',
-                    manaColor: 'secondary',
                     health: 25,
                     hunger: 35,
                     damage: 45,
@@ -347,10 +333,6 @@ describe('Grid tests', () => {
                 {
                     id: 2,
                     name: 'John',
-                    healthColor: 'success',
-                    hungerColor: 'warning',
-                    damageColor: 'danger',
-                    manaColor: 'secondary',
                     health: 25,
                     hunger: 35,
                     damage: 45,
@@ -362,23 +344,23 @@ describe('Grid tests', () => {
                 {
                     label: 'Circle with subtitle',
                     valueView: 'DiagramColumnView',
-                    diagrams: {
+                    diagram: {
                         type: 'circle',
                         items: [
                             {
-                                colorAttribute: 'healthColor',
+                                color: 'success',
                                 percentageAttribute: 'health',
                             },
                             {
-                                colorAttribute: 'hungerColor',
+                                color: 'warning',
                                 percentageAttribute: 'hunger',
                             },
                             {
-                                colorAttribute: 'damageColor',
+                                color: 'danger',
                                 percentageAttribute: 'damage',
                             },
                             {
-                                colorAttribute: 'manaColor',
+                                color: 'secondary',
                                 percentageAttribute: 'mana',
                             },
                         ],
@@ -387,7 +369,7 @@ describe('Grid tests', () => {
                 },
             ];
 
-            const {container, debug} = render(JSXWrapper(Grid, {
+            const {container} = render(JSXWrapper(Grid, {
                 ...props,
                 listId: 'test11',
                 items: circleItems,
@@ -399,7 +381,7 @@ describe('Grid tests', () => {
 
             expect(diagrams.length).toBe(circleItems.length);
             diagrams.forEach((diagram) => {
-                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_isCircle`);
+                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_type_circle`);
             });
         });
     });

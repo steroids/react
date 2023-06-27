@@ -126,13 +126,14 @@ export interface IGridColumn {
     },
 
     /**
-    * Коллекция диаграмм.
-    * Аттрибут содержащий цвет должен соответствовать success | warning | danger | secondary
+    * Диаграмма.
+    * Цвет должен соответствовать success | warning | danger | secondary.
+    * Цвета можно расширить или изменить через стили (см. colors.scss в react-bootstrap)
     */
-    diagrams?: {
+    diagram?: {
         type: 'horizontal' | 'vertical' | 'circle',
         items: {
-            colorAttribute: string,
+            color: 'success' | 'warning' | 'danger' | 'secondary' | string,
             percentageAttribute: string
         }[]
     }

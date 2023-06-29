@@ -8,6 +8,7 @@ import {Detail, DetailItem} from './Detail';
 import Icon from './Icon';
 import Menu from './Menu';
 import CopyToClipboard from './CopyToClipboard';
+import Slider from './Slider';
 
 export {
     Avatar,
@@ -23,4 +24,5 @@ export {
     Icon,
     Menu,
     CopyToClipboard,
+    Slider,
 };

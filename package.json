@@ -1,6 +1,6 @@
 {
  "name": "@steroidsjs/core",
-"version": "3.0.0-beta.52",
+ "version": "3.0.0-beta.52",
  "description": "",
  "author": "Vladimir Kozhin <hello@kozhindev.com>",
  "repository": {
@@ -28,6 +28,12 @@
   "@maskito/core": "^0.12.1",
   "@maskito/kit": "^0.12.1",
   "@maskito/react": "^0.12.1",
+  "@splidejs/react-splide": "^0.7.12",
+  "@splidejs/splide-extension-auto-scroll": "^0.5.3",
+  "@splidejs/splide-extension-grid": "^0.4.1",
+  "@splidejs/splide-extension-intersection": "^0.2.0",
+  "@splidejs/splide-extension-url-hash": "^0.3.0",
+  "@splidejs/splide-extension-video": "^0.8.0",
   "axios": "^0.21.1",
   "connected-react-router": "^6.9.3",
   "domready": "^1.0.8",

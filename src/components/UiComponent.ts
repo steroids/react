@@ -63,7 +63,7 @@ export interface IUiComponent {
      * @param {string} path - Путь к компоненту представления.
      * @returns {any} Компонент представления или undefined, если не найден.
      */
-    getView(path: string): any;
+    getView(path: any): any;
 
     /**
      * Добавляет компоненты полей формы.

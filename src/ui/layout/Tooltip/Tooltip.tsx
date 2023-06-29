@@ -173,6 +173,10 @@ function Tooltip(props: ITooltipProps): JSX.Element {
             arrowSize,
         );
 
+        if (!result) {
+            return;
+        }
+
         positionRef.current = result.position;
         setStyle(result.style);
         if (result.arrowPosition) {

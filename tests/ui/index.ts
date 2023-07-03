@@ -47,6 +47,9 @@ export default {
     'list.CheckboxColumnView': {
         lazy: () => require('./list/Grid/CheckboxColumnMockView').default,
     },
+    'list.EmptyView': {
+        lazy: () => require('./list/Empty/EmptyMockView').default,
+    },
     'format.DefaultFormatterView': {
         lazy: () => require('./format/DefaultFormatterMockView').default,
     },
@@ -70,6 +73,9 @@ export default {
     },
     'form.TimeFieldView': {
         lazy: () => require('./form/TimeField/TimeFieldMockView').default,
+    },
+    'form.CheckboxListFieldView': {
+        lazy: () => require('./form/CheckboxListField/CheckboxListFieldMockView').default,
     },
     'nav.NavButtonView': {
         lazy: () => require('./nav/Nav/NavButtonMockView').default,

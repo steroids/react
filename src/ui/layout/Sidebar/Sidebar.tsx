@@ -14,7 +14,7 @@ interface ISidebarProps extends IUiComponent {
         name: string;
     },
     menu?: IMenuProps,
-    navItems?: string | INavItem[],
+    items?: string | INavItem[],
 
     hasSeparatedNavItem?: boolean,
 

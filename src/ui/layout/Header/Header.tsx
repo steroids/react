@@ -3,6 +3,7 @@ import {ILinkProps} from 'src/ui/nav/Link/Link';
 import {IModalProps} from 'src/ui/modal/Modal/Modal';
 import {IMenuProps} from 'src/ui/content/Menu/Menu';
 import {useCallback, useState} from 'react';
+import {IButtonProps} from 'src/ui/form/Button/Button';
 import {useComponents} from '../../../hooks';
 import {INavProps} from '../../nav/Nav/Nav';
 
@@ -52,7 +53,7 @@ export interface IHeaderProps extends IUiComponent {
         isAuth: boolean,
 
         /**
-         * Маршрут, на который перенаправлять пользователя при авторизации.
+         * Маршрут, на который перенаправлять пользователя для авторизации.
          */
         toRoute?: string,
 
@@ -60,6 +61,11 @@ export interface IHeaderProps extends IUiComponent {
          * Свойства для модального окна авторизации.
          */
         modal?: IModalProps,
+
+        /**
+        * Параметры для кнопки авторизации
+        */
+        buttonProps?: IButtonProps,
     },
 
     /**
@@ -95,7 +101,7 @@ export interface IHeaderProps extends IUiComponent {
          * Свойства для ссылок бургер-меню.
          */
         links?: ILinkProps,
-    };
+    }
 
     [key: string]: any;
 }

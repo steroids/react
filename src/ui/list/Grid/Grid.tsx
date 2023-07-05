@@ -133,7 +133,7 @@ export interface IGridColumn {
     diagram?: {
         type: 'horizontal' | 'vertical' | 'circle',
         items: {
-            color: Omit<ColorName, 'primary' | 'info' | 'light' | 'dark' | 'basic'> | string,
+            color: 'success' | 'warning' | 'danger' | 'secondary' | string,
             percentageAttribute: string
         }[]
     }

@@ -3,7 +3,7 @@ import {useComponents, useSelector} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
 import {toggleAll, toggleItem} from '../../../actions/list';
 import {isSelected, isSelectedAll} from '../../../reducers/list';
-import {IContentColumnViewProps} from '../Grid/Grid';
+import {IColumnViewProps} from '../Grid/Grid';
 
 /**
  * CheckboxColumn
@@ -34,7 +34,7 @@ export interface ICheckboxColumnProps {
     [key: string]: any,
 }
 
-export interface ICheckboxColumnViewProps extends IContentColumnViewProps {
+export interface ICheckboxColumnViewProps extends IColumnViewProps {
     fieldProps: Record<string, any>,
     input: {
         name: string,

@@ -39,20 +39,20 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
     const components = useComponents();
 
     const onChangeHandler = React.useCallback(() => {
-        props.input.onChange(!props.input.value);
+        props.input.onChange(!props.input?.value);
         if (props.onChange) {
             props.onChange();
         }
     }, [props]);
 
     const inputProps = useMemo(() => ({
-        name: props.input.name,
+        name: props.input?.name,
         type: 'checkbox',
-        checked: !!props.input.value,
+        checked: !!props.input?.value,
         onChange: onChangeHandler,
         disabled: props.disabled,
         ...props.inputProps,
-    }), [onChangeHandler, props.disabled, props.input.name, props.input.value, props.inputProps]);
+    }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps]);
 
     return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props, inputProps});
 }

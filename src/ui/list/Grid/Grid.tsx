@@ -11,7 +11,7 @@ import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';
 
-export interface IContentColumnViewProps extends IGridColumn {
+export interface IColumnViewProps extends IGridColumn {
     item: Record<string, any>,
     size: Size,
     primaryKey: string,
@@ -124,6 +124,19 @@ export interface IGridColumn {
         attribute: string,
         isLeft?: boolean,
     },
+
+    /**
+    * Диаграмма.
+    * Цвет должен соответствовать success | warning | danger | secondary.
+    * Цвета можно расширить или изменить через стили (см. colors.scss в react-bootstrap)
+    */
+    diagram?: {
+        type: 'horizontal' | 'vertical' | 'circle',
+        items: {
+            color: 'success' | 'warning' | 'danger' | 'secondary' | string,
+            percentageAttribute: string
+        }[]
+    }
 }
 
 /**

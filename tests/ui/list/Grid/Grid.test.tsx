@@ -3,9 +3,10 @@ import {render} from '../../../customRender';
 import Grid, {IGridProps} from '../../../../src/ui/list/Grid/Grid';
 import {getElementByClassName, JSXWrapper} from '../../../helpers';
 import GridMockView from './GridMockView';
-import CheckboxColumnView from '../../../../src/ui/list/CheckboxColumn/CheckboxColumn';
+import CheckboxColumnMockView from './CheckboxColumnMockView';
 import ContentColumnMockView from './ContentColumnMockView';
 import InputField from '../../../../src/ui/form/InputField/InputField';
+import DiagramColumnMockView from './DiagramColumnMockView';
 
 describe('Grid tests', () => {
     const expectedGridClass = 'GridView';
@@ -75,7 +76,7 @@ describe('Grid tests', () => {
         const columns = [{
             label: 'Checkbox',
             attribute: 'name',
-            valueView: CheckboxColumnView,
+            valueView: CheckboxColumnMockView,
         }];
 
         const {container} = render(JSXWrapper(Grid, {
@@ -209,5 +210,179 @@ describe('Grid tests', () => {
         expect(indexingHead).toBeInTheDocument();
         expect(searchFormElement).toBeInTheDocument();
         expect(pagination).toBeInTheDocument();
+    });
+
+    describe('should be diagram column', () => {
+        const expectedDiagramColumnClassName = 'DiagramColumnView';
+
+        it('should be horizontal diagrams', () => {
+            const horizontalItems = [
+                {
+                    id: 1,
+                    percentage: 50,
+                },
+                {
+                    id: 2,
+                    percentage: 30,
+                },
+            ];
+            const horizontalColumns = [
+                {
+                    label: 'Horizontal',
+                    valueView: 'DiagramColumnView',
+                    diagram: {
+                        type: 'horizontal',
+                        items: [
+                            {
+                                color: 'secondary',
+                                percentageAttribute: 'percentage',
+                            },
+                        ],
+                    },
+                },
+            ];
+
+            const {container} = render(JSXWrapper(Grid, {
+                ...props,
+                items: horizontalItems,
+                columns: horizontalColumns,
+                valueView: DiagramColumnMockView,
+                listId: 'test9',
+            }));
+
+            const diagrams = container.querySelectorAll(`.${expectedDiagramColumnClassName}`);
+
+            expect(diagrams.length).toBe(horizontalItems.length);
+            diagrams.forEach((diagram) => {
+                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_type_horizontal`);
+            });
+        });
+
+        it('should be vertical diagrams', () => {
+            const verticalItems = [
+                {
+                    id: 1,
+                    health: 25,
+                    hunger: 35,
+                    damage: 45,
+                    mana: 55,
+                },
+                {
+                    id: 2,
+                    health: 25,
+                    hunger: 35,
+                    damage: 45,
+                    mana: 55,
+                },
+            ];
+
+            const verticalColumns = [
+                {
+                    label: 'Vertical',
+                    valueView: 'DiagramColumnView',
+                    diagram: {
+                        type: 'vertical',
+                        items: [
+                            {
+                                color: 'success',
+                                percentageAttribute: 'health',
+                            },
+                            {
+                                color: 'warning',
+                                percentageAttribute: 'hunger',
+                            },
+                            {
+                                color: 'danger',
+                                percentageAttribute: 'damage',
+                            },
+                            {
+                                color: 'secondary',
+                                percentageAttribute: 'mana',
+                            },
+                        ],
+                    },
+                },
+            ];
+
+            const {container} = render(JSXWrapper(Grid, {
+                ...props,
+                items: verticalItems,
+                columns: verticalColumns,
+                valueView: DiagramColumnMockView,
+                listId: 'test10',
+            }));
+
+            const diagrams = container.querySelectorAll(`.${expectedDiagramColumnClassName}`);
+
+            expect(diagrams.length).toBe(verticalItems.length);
+            diagrams.forEach((diagram) => {
+                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_type_vertical`);
+            });
+        });
+
+        it('should be circle diagrams', () => {
+            const circleItems = [
+                {
+                    id: 1,
+                    name: 'John',
+                    health: 25,
+                    hunger: 35,
+                    damage: 45,
+                    mana: 55,
+                },
+                {
+                    id: 2,
+                    name: 'John',
+                    health: 25,
+                    hunger: 35,
+                    damage: 45,
+                    mana: 55,
+                },
+            ];
+
+            const circleColumns = [
+                {
+                    label: 'Circle with subtitle',
+                    valueView: 'DiagramColumnView',
+                    diagram: {
+                        type: 'circle',
+                        items: [
+                            {
+                                color: 'success',
+                                percentageAttribute: 'health',
+                            },
+                            {
+                                color: 'warning',
+                                percentageAttribute: 'hunger',
+                            },
+                            {
+                                color: 'danger',
+                                percentageAttribute: 'damage',
+                            },
+                            {
+                                color: 'secondary',
+                                percentageAttribute: 'mana',
+                            },
+                        ],
+                    },
+                    subtitleAttribute: 'name',
+                },
+            ];
+
+            const {container} = render(JSXWrapper(Grid, {
+                ...props,
+                listId: 'test11',
+                items: circleItems,
+                columns: circleColumns,
+                valueView: DiagramColumnMockView,
+            }));
+
+            const diagrams = container.querySelectorAll(`.${expectedDiagramColumnClassName}`);
+
+            expect(diagrams.length).toBe(circleItems.length);
+            diagrams.forEach((diagram) => {
+                expect(diagram).toHaveClass(`${expectedDiagramColumnClassName}_type_circle`);
+            });
+        });
     });
 });

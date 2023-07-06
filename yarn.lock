@@ -1511,33 +1511,6 @@
   dependencies:
     "@splidejs/splide" "^4.1.3"
 
-"@splidejs/splide-extension-auto-scroll@^0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide-extension-auto-scroll/-/splide-extension-auto-scroll-0.5.3.tgz#3d3f61229b27fae7923dba62bcd13f6e1b798410"
-  integrity sha512-vPJ8Tn4uebnHa6scBcIypW154HTDenkazX9Nw8T1na44n7OtLoz40R4RoirteV7taPWW7w7ZZPCiEpi2ReYFAQ==
-
-"@splidejs/splide-extension-grid@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide-extension-grid/-/splide-extension-grid-0.4.1.tgz#fad32e6a808a0e08979c6003653a3ea882ec4682"
-  integrity sha512-XM3pl5VKvmoybwZRrv4xE8Hff2mT6Chl9GnGd8nQogo4ZtTgxzqAZqBxLvhrl5UuUswIdmNoRmMeeEgx9twrvw==
-
-"@splidejs/splide-extension-intersection@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide-extension-intersection/-/splide-extension-intersection-0.2.0.tgz#e5cb891d7e435a1271bb069b0b1d46c13a79b232"
-  integrity sha512-Gwr7/u2WGINTmXf3nuheONf6zCt9JoQ993nfRpOMX6HJSSpPROaF2nPY26ieoEHKyyGRlUG6jVfkUUk5/EWT9Q==
-
-"@splidejs/splide-extension-url-hash@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide-extension-url-hash/-/splide-extension-url-hash-0.3.0.tgz#47b25a5c0379e63ce5538da5c57f60ec3a321ebf"
-  integrity sha512-BwrVllU6iXMKA8whUakmYoE89QiPjztMXYr5gSKW/sYscUBjOFaYp1b1vMl5U0S3UvC0hgsFf/iIFPZcuJMa9w==
-
-"@splidejs/splide-extension-video@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide-extension-video/-/splide-extension-video-0.8.0.tgz#c460adfdbfcb7f1d1d333826a3df0ea2df905d9e"
-  integrity sha512-/Vu0w5gHegPPfCFh+LEEeDdK+oiJ0aHgLOCxRH70BGK5QM/6IvCePUU4RPpyoSHuQWQfYUj/ovDuImomptNOdA==
-  dependencies:
-    "@vimeo/player" "^2.17.1"
-
 "@splidejs/splide@^4.1.3":
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.1.4.tgz#02d029360569e7d75d28357a9727fc48322015a3"
@@ -2000,14 +1973,6 @@
   dependencies:
     "@typescript-eslint/types" "5.51.0"
     eslint-visitor-keys "^3.3.0"
-
-"@vimeo/player@^2.17.1":
-  version "2.20.1"
-  resolved "https://registry.yarnpkg.com/@vimeo/player/-/player-2.20.1.tgz#b2db8651cfed71009475528019977bf8e8c3dadf"
-  integrity sha512-eoKkqsMY33RQn8lFtlUbb3uo+xDL3V8PTN01SdrJ1E9PI+5pLyqNGh/GO/2EyX9Vr6antLm0/v36ABF2rcwXIQ==
-  dependencies:
-    native-promise-only "0.8.1"
-    weakmap-polyfill "2.0.4"
 
 "@wojtekmaj/enzyme-adapter-react-17@^0.4.1":
   version "0.4.1"
@@ -6041,11 +6006,6 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-native-promise-only@0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/native-promise-only/-/native-promise-only-0.8.1.tgz#20a318c30cb45f71fe7adfbf7b21c99c1472ef11"
-  integrity sha512-zkVhZUA3y8mbz652WrL5x0fB0ehrBkulWT3TomAQ9iDtyXZvzKeEA6GPxAItBYeNYl5yngKRX612qHOhvMkDeg==
-
 natural-compare-lite@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare-lite/-/natural-compare-lite-1.4.0.tgz#17b09581988979fddafe0201e931ba933c96cbb4"
@@ -8160,11 +8120,6 @@ walker@^1.0.7, walker@~1.0.5:
   integrity sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==
   dependencies:
     makeerror "1.0.12"
-
-weakmap-polyfill@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/weakmap-polyfill/-/weakmap-polyfill-2.0.4.tgz#bcc301e4c8eb4eda3e406f08f1a691093e407884"
-  integrity sha512-ZzxBf288iALJseijWelmECm/1x7ZwQn3sMYIkDr2VvZp7r6SEKuT8D0O9Wiq6L9Nl5mazrOMcmiZE/2NCenaxw==
 
 webidl-conversions@^4.0.2:
   version "4.0.2"

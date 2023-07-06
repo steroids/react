@@ -10,7 +10,7 @@ import {IComponents} from '../providers/ComponentsProvider';
  * Ui Component
  * Компонент для подгрузки и конфигурации UI компонентов приложения
  */
-export interface IUiComponent {
+export interface IUiApplicationComponent {
     /**
     * Компоненты приложения.
     */
@@ -158,7 +158,7 @@ export interface IUiComponent {
  * Ui Component
  * Компонент для подгрузки и конфигурации UI компонентов приложения
  */
-export default class UiComponent implements IUiComponent {
+export default class UiComponent implements IUiApplicationComponent {
     components: IComponents;
 
     _components: any;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
-import {IUiComponent} from 'src/components/UiComponent';
+import {IUiApplicationComponent} from 'src/components/UiComponent';
 import {IResourceComponent} from '../components/ResourceComponent';
 
 declare global {
@@ -16,7 +16,7 @@ export interface IComponents {
     http?: any,
     locale?: any,
     store?: any,
-    ui?: IUiComponent,
+    ui?: IUiApplicationComponent,
     resource?: IResourceComponent,
     ws?: any,
     pushNotification?: any,

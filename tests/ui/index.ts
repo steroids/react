@@ -11,6 +11,9 @@ export default {
     'content.DropDownView': {
         lazy: () => require('./content/DropDown/DropDownMockView').default,
     },
+    'content.SliderView': {
+        lazy: () => require('./content/Slider/SliderMockView').default,
+    },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },

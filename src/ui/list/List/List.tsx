@@ -83,6 +83,7 @@ export default function List(props: IListProps): JSX.Element {
         searchForm: props.searchForm,
         autoDestroy: props.autoDestroy,
         onFetch: props.onFetch,
+        onError: props.onError,
         condition: props.condition,
         addressBar: props.addressBar,
         scope: props.scope,

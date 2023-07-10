@@ -429,13 +429,16 @@ function Form(props: IFormProps): JSX.Element {
         } catch (requestError) {
             console.error(requestError); // eslint-disable-line no-console
             dispatch(formSetSubmitting(props.formId, false));
-            props.onError(requestError);
-            reduxDispatch(
-                showNotification(
-                    props.submitErrorMessage || __('Ошибка сервера'),
-                    'danger',
-                ),
-            );
+            if (typeof props.onError === 'function') {
+                props.onError(requestError);
+            } else {
+                reduxDispatch(
+                    showNotification(
+                        props.submitErrorMessage || __('Ошибка сервера'),
+                        'danger',
+                    ),
+                );
+            }
             return null;
         }
 

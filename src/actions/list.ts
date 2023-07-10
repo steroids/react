@@ -32,7 +32,7 @@ export interface IList {
      * Обработчик события ошибки выполнения запроса
      * @param args
      */
-    onError?: (...args: any[]) => any;
+    onError?: (error: any) => void;
 
     /**
     * Функция условия, используемая для определения поведения списка на основе параметров запроса.
@@ -179,9 +179,9 @@ export const httpFetchHandler = (list: IList, query, {api, http}) => {
     return http
         .send(list.actionMethod, url || window.location.pathname, query)
         .then(response => response.data)
-        .catch(errors => {
+        .catch(error => {
             if (typeof list.onError === 'function') {
-                list.onError(errors);
+                list.onError(error);
             }
         });
 };

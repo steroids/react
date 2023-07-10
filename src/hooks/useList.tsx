@@ -135,6 +135,12 @@ export interface IListConfig {
     onFetch?: (list: IList, query: Record<string, unknown>, http: any) => Promise<any>,
 
     /**
+     * Обработчик события ошибки выполнения запроса
+     * @param args
+     */
+    onError?: (...args: any[]) => any;
+
+    /**
      * Обработчик, который составляет список условий для локальной фильтрации элементов коллекции
      * @param {Object} query
      * @return {Array} ['>=', 'age', 18]
@@ -408,6 +414,7 @@ export default function useList(config: IListConfig): IListOutput {
                     action: config.action || config.action === '' ? config.action : null,
                     actionMethod: config.actionMethod || defaultConfig.actionMethod,
                     onFetch: config.onFetch,
+                    onError: config.onError,
                     condition: config.condition,
                     scope: config.scope,
                     items: null,

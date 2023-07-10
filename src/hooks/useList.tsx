@@ -138,7 +138,7 @@ export interface IListConfig {
      * Обработчик события ошибки выполнения запроса
      * @param args
      */
-    onError?: (error: any) => void;
+    onError?: (error: Record<string, any>) => void;
 
     /**
      * Обработчик, который составляет список условий для локальной фильтрации элементов коллекции

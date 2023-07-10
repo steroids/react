@@ -32,7 +32,7 @@ export interface IList {
      * Обработчик события ошибки выполнения запроса
      * @param args
      */
-    onError?: (error: any) => void;
+    onError?: (error: Record<string, any>) => void;
 
     /**
     * Функция условия, используемая для определения поведения списка на основе параметров запроса.

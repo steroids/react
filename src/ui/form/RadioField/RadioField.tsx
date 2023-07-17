@@ -2,6 +2,11 @@ import * as React from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
+/**
+ * RadioField
+ *
+ * Компонент RadioField представляет собой элемент выбора типа "radio". Он позволяет пользователю выбрать один вариант из нескольких предложенных.
+ **/
 export interface IRadioFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Свойства для элемента input

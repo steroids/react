@@ -3,6 +3,9 @@ import {useState} from 'react';
 import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
 
+/**
+ * Компонент ButtonGroup отображает группу кнопок.
+ **/
 export interface IButtonGroupProps extends IUiComponent {
     /**
      * Элементы для группы кнопок

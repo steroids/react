@@ -32,6 +32,14 @@ interface IFileFieldCommonProps extends IFileInput {
     filesLayout?: FilesLayout | string;
 }
 
+/**
+ * FileField
+ *
+ * Компонент `FileField` представляет собой поле формы для загрузки файлов.
+ * Он использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.
+ * Компонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.
+ **/
+
 export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps, IUiComponent {
     /**
      * View компонент для кнопки

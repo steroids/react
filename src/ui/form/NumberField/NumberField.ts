@@ -5,8 +5,9 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * NumberField
- * Числовое поле ввода
- */
+ *
+ * Числовое поле ввода. Этот компонент представляет собой поле ввода для числовых значений.
+ **/
 export interface INumberFieldProps extends IBaseFieldProps {
     /**
      * Минимальное значение

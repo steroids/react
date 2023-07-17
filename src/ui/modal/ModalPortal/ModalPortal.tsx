@@ -7,6 +7,9 @@ import {closeModal, modalMarkClosing} from '../../../actions/modal';
 import {getOpened, MODAL_DEFAULT_GROUP} from '../../../reducers/modal';
 import {IModalProps} from '../Modal/Modal';
 
+/**
+ * Компонент ModalPortal отвечает за отображение модальных окон.
+ **/
 export interface IModalPortalProps {
     /**
      * Время, через которое произойдет закрытие Modal

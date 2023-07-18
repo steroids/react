@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Provider} from 'react-redux';
 import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
-import ThemeProvider, {IThemeProviderProps} from 'src/providers/ThemeProvider';
+import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';

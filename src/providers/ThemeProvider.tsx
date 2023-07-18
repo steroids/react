@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useComponents} from 'src/hooks';
+import {useComponents} from '../hooks';
 
 export interface ITheme {
     theme: string;

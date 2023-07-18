@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Provider} from 'react-redux';
 import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
-import ThemeProvider, {IThemeProviderProps} from 'src/providers/ThemeProvider';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
@@ -34,7 +33,6 @@ export interface IApplicationHookConfig {
     layoutView?: () => CustomView,
     layoutProps?: Record<string, unknown>,
     screen?: Omit<IScreenProviderProps, 'children'>,
-    theme?: Omit<IThemeProviderProps, 'children'>;
 
     routerProps?: IRouterProps,
     /**
@@ -135,14 +133,6 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 <ScreenProvider {...config.screen}>
                     {content}
                 </ScreenProvider>
-            );
-        }
-
-        if (config.theme) {
-            content = (
-                <ThemeProvider {...config.theme}>
-                    {content}
-                </ThemeProvider>
             );
         }
 

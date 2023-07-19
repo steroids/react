@@ -4,6 +4,19 @@ import {useComponents, useDispatch} from '../../../hooks';
 
 import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';
 
+/**
+ * CopyToClipboard
+ *
+ * Компонент, позволяющий копировать заданное значение в буфер обмена при клике.
+ *
+ * Компонент `CopyToClipboard` принимает значение `value` для копирования, а также
+ * может отображать иконку, дополнительный текст или другие дочерние элементы.
+ *
+ * При успешном копировании значения, можно также отобразить уведомление с помощью
+ * параметра `notification`. Можно задать текст уведомления, его уровень и параметры.
+ *
+ * Компонент также поддерживает обработчик `onCopy`, который вызывается при копировании.
+ */
 export interface ICopyToClipboardProps extends IUiComponent {
 
     /**

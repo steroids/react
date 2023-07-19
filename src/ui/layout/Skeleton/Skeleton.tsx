@@ -10,6 +10,10 @@ export interface ISkeletonViewProps {
     width?: string | number
 }
 
+/**
+ * Компонент Skeleton представляет собой заглушку для отображения временных данных
+ * во время загрузки или ожидания загрузки реальных данных.
+ **/
 export interface ISkeletonProps {
     /**
     * Дополнительные CSS классы

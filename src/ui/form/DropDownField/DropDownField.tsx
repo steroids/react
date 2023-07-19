@@ -61,8 +61,13 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
 
 /**
  * DropDownField
- * Выпадающий список для выбора одного или нескольких значений
- */
+ *
+ * Выпадающий список для выбора одного или нескольких значений.
+ *
+ * Компонент `DropDownField` предоставляет возможность создания выпадающего списка для выбора одного или нескольких значений.
+ * Он поддерживает различные типы контента для элементов списка, такие как флажки, радиокнопки, иконки и изображения.
+ *
+**/
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'>,

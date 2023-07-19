@@ -10,7 +10,11 @@ import fieldWrapper, {
 
 /**
  * DateRangeField
- * Поле ввода дипазона двух дат с выпадающим календарём
+ *
+ * Поле ввода дипазона двух дат с выпадающим календарём.
+ *
+ * Компонент `DateRangeField` предоставляет возможность создания поля ввода диапазона двух дат с выпадающим календарём.
+ *  Он позволяет пользователю выбрать начальную и конечную даты с помощью календаря и предоставляет удобный интерфейс для работы с диапазоном дат.
  */
 export interface IDateRangeFieldProps extends IDateInputStateInput,
     Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent

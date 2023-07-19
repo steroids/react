@@ -2,6 +2,12 @@ import moment from 'moment';
 import {useComponents} from '../../../hooks';
 import {IDateFormatterProps} from '../DateFormatter/DateFormatter';
 
+/**
+ * DateTimeFormatter
+ *
+ * Компонент DateTimeFormatter предназначен для форматирования даты и времени с использованием заданного формата.
+ * Он позволяет кастомизировать отображение даты и времени, используя переданный view React компонент.
+ **/
 export interface IDateTimeFormatterProps {
     /**
      * Формат даты

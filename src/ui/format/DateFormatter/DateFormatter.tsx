@@ -1,5 +1,11 @@
 import {useComponents} from '../../../hooks';
 
+/**
+ * DateFormatter
+ *
+ * Компонент DateFormatter предназначен для форматирования даты с использованием заданного формата.
+ * Он позволяет кастомизировать отображение даты, используя переданный view React компонент.
+ **/
 export interface IDateFormatterProps {
 
     /**

@@ -12,7 +12,9 @@ import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
 /**
  * CheckboxListField
+ *
  * Список с чекбоксами. Используется в формах для выбора нескольких значений.
+ *
  */
 export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
     IDataProviderConfig, Omit<IDataSelectConfig, 'items'>, IUiComponent {

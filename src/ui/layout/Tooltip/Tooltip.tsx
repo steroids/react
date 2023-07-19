@@ -51,6 +51,9 @@ export interface ITooltipStylePosition {
     top: 'unset' | number,
 }
 
+/**
+ * Компонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.
+ **/
 export interface ITooltipProps {
     /**
      * Текст подсказки

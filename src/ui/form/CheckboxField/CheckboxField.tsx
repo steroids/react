@@ -6,6 +6,7 @@ import {useComponents} from '../../../hooks';
 
 /**
  * CheckboxField
+ *
  * Одиночный чекбокс. Используется в формах для отметки булевого значения.
  */
 export interface ICheckboxFieldProps extends IFieldWrapperInputProps, IUiComponent {

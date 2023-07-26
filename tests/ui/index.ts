@@ -17,6 +17,9 @@ export default {
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },
+    'layout.HeaderView': {
+        lazy: () => require('./layout/Header/HeaderMockView').default,
+    },
     'content.AvatarView': {
         lazy: () => require('./content/Avatar/AvatarMockView').default,
     },
@@ -103,6 +106,9 @@ export default {
     },
     'form.TimeRangeFieldView': {
         lazy: () => require('./form/TimeRangeField/TimeRangeFieldMockView').default,
+    },
+    'typography.TextView': {
+        lazy: () => require('./typography/Text/TextMockView').default,
     },
     'form.RateFieldView': {
         lazy: () => require('./form/RateField/RateFieldMockView').default,

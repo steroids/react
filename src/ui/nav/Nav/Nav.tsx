@@ -111,11 +111,6 @@ export interface INavProps {
      */
     size?: Size,
 
-    /**
-     * Темная тема
-     */
-    dark?: boolean,
-
     [key: string]: any;
 }
 

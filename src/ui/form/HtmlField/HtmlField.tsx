@@ -9,7 +9,7 @@ import fieldWrapper, {
 
 /**
  * HtmlField
- * Компонент для создания HTML-разметки, использующий WYSIWYG-реадактор
+ * Компонент для создания HTML-разметки, использующий WYSIWYG редактор
  */
 export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IUiComponent {
     /**

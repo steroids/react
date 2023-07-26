@@ -4,6 +4,12 @@ import _isObject from 'lodash-es/isObject';
 import {useComponents, useDataProvider} from '../../../hooks';
 import {DataProviderItems} from '../../../hooks/useDataProvider';
 
+/**
+ * IEnumFormatterProps
+ *
+ * Компонент EnumFormatter предназначен для форматирования перечисления элементов с использованием заданного формата.
+ * Он позволяет кастомизировать отображение элементов, используя переданный view React компонент.
+ **/
 export interface IEnumFormatterProps {
 
     /**

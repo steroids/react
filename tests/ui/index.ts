@@ -11,6 +11,9 @@ export default {
     'content.DropDownView': {
         lazy: () => require('./content/DropDown/DropDownMockView').default,
     },
+    'content.SliderView': {
+        lazy: () => require('./content/Slider/SliderMockView').default,
+    },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },
@@ -50,11 +53,17 @@ export default {
     'list.CheckboxColumnView': {
         lazy: () => require('./list/Grid/CheckboxColumnMockView').default,
     },
+    'list.EmptyView': {
+        lazy: () => require('./list/Empty/EmptyMockView').default,
+    },
     'format.DefaultFormatterView': {
         lazy: () => require('./format/DefaultFormatterMockView').default,
     },
     'list.ContentColumnView': {
         lazy: () => require('./list/Grid/ContentColumnMockView').default,
+    },
+    'list.DiagramColumnView': {
+        lazy: () => require('./list/Grid/DiagramColumnMockView').default,
     },
     'content.IconView': {
         lazy: () => require('./content/Icon/IconMockView').default,
@@ -73,6 +82,9 @@ export default {
     },
     'form.TimeFieldView': {
         lazy: () => require('./form/TimeField/TimeFieldMockView').default,
+    },
+    'form.CheckboxListFieldView': {
+        lazy: () => require('./form/CheckboxListField/CheckboxListFieldMockView').default,
     },
     'nav.NavButtonView': {
         lazy: () => require('./nav/Nav/NavButtonMockView').default,

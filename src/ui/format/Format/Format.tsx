@@ -6,6 +6,12 @@ import useModel from '../../../hooks/useModel';
 import {useComponents} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
 
+/**
+ * IFormatProps
+ *
+ * Компонент Format предназначен для форматирования значения на основе заданного форматтера.
+ * Он позволяет кастомизировать отображение значения, используя переданный view React компонент.
+ **/
 export interface IFormatProps {
     attribute?: string;
     model?: string | ((...args: any[]) => any) | any;

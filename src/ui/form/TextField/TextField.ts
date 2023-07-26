@@ -5,7 +5,7 @@ import {IBaseFieldProps} from '../InputField/InputField';
 
 /**
  * TextField
- * Поле для ввода нескольких строк теста
+ * Поле для ввода нескольких строк текста
  */
 export interface ITextFieldProps extends IBaseFieldProps {
     /**

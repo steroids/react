@@ -1,6 +1,6 @@
 {
  "name": "@steroidsjs/core",
-"version": "3.0.0-beta.51",
+"version": "3.0.0-beta.60",
  "description": "",
  "author": "Vladimir Kozhin <hello@kozhindev.com>",
  "repository": {
@@ -28,6 +28,7 @@
   "@maskito/core": "^0.12.1",
   "@maskito/kit": "^0.12.1",
   "@maskito/react": "^0.12.1",
+  "@splidejs/react-splide": "^0.7.12",
   "axios": "^0.21.1",
   "connected-react-router": "^6.9.3",
   "domready": "^1.0.8",

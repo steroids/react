@@ -1,6 +1,12 @@
 import _round from 'lodash-es/round';
 import {useComponents} from '../../../hooks';
 
+/**
+ * IMoneyFormatterProps
+ *
+ * Компонент MoneyFormatter предназначен для форматирования денежных значений с учетом валюты и округления.
+ * Он позволяет кастомизировать отображение денежного значения, используя переданный view React компонент.
+ **/
 export interface IMoneyFormatterProps {
 
     /**

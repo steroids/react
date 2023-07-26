@@ -5,6 +5,11 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 import useDateRange from '../DateField/useDateRange';
 import {ITimePanelViewProps} from '../TimeField/TimeField';
 
+/**
+ * TimeRangeField
+ *
+ * Компонент TimeRangeField представляет собой поле выбора временного диапазона, состоящего из двух элементов ввода времени (from и to).
+ **/
 export interface ITimeRangeFieldProps extends IDateInputStateInput,
     Omit<IFieldWrapperInputProps, 'attribute'>,
     IUiComponent {

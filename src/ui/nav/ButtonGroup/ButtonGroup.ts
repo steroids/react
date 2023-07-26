@@ -1,8 +1,11 @@
 import {IButtonProps} from 'src/ui/form/Button/Button';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
 
+/**
+ * Компонент ButtonGroup отображает группу кнопок.
+ **/
 export interface IButtonGroupProps extends IUiComponent {
     /**
      * Элементы для группы кнопок
@@ -17,10 +20,15 @@ export interface IButtonGroupProps extends IUiComponent {
     onClick: (value: number | string | boolean) => void,
 
     /**
-     * Активная кнопка
+     * При указании в связке с onClick предоставляет возможность реализовать two-way binding
      * @example 'button1'
      */
     activeButton?: number | string,
+
+    /**
+    * Кнопка по умолчанию.
+    */
+    defaultActiveButton?: number | string;
 
     /**
      * Общие свойства для всех кнопок группы
@@ -47,7 +55,13 @@ function ButtonGroup(props: IButtonGroupProps): JSX.Element {
         items: props.items,
     });
 
-    const [activeButton, setActiveButton] = useState(props.activeButton || items[0].id);
+    const [activeButton, setActiveButton] = useState(props.activeButton || props.defaultActiveButton || items[0]?.id);
+
+    React.useEffect(() => {
+        if (props.activeButton) {
+            setActiveButton(props.activeButton);
+        }
+    }, [props.activeButton]);
 
     const onClick = (buttonId: number | string | boolean) => {
         setActiveButton(buttonId);

@@ -18,7 +18,9 @@ import {formDestroy, formSetSubmitting} from '../../../actions/form';
 
 /**
  * Form
- * Компонент для создания формы
+ *
+ * Компонент для создания формы. Предоставляет управление и синхронизацию состояния формы,
+ * а также позволяет выполнять отправку данных формы на сервер с возможностью валидации и обработки результатов.
  */
 export interface IFormProps extends IUiComponent {
     /**
@@ -429,13 +431,16 @@ function Form(props: IFormProps): JSX.Element {
         } catch (requestError) {
             console.error(requestError); // eslint-disable-line no-console
             dispatch(formSetSubmitting(props.formId, false));
-            props.onError(requestError);
-            reduxDispatch(
-                showNotification(
-                    props.submitErrorMessage || __('Ошибка сервера'),
-                    'danger',
-                ),
-            );
+            if (typeof props.onError === 'function') {
+                props.onError(requestError);
+            } else {
+                reduxDispatch(
+                    showNotification(
+                        props.submitErrorMessage || __('Ошибка сервера'),
+                        'danger',
+                    ),
+                );
+            }
             return null;
         }
 

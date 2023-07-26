@@ -17,6 +17,7 @@ import useScreen from './useScreen';
 import useSelector from './useSelector';
 import useSsr from './useSsr';
 import useUniqueId from './useUniqueId';
+import useTheme from './useTheme';
 
 export {
     useAbsolutePositioning,
@@ -38,4 +39,5 @@ export {
     useSelector,
     useSsr,
     useUniqueId,
+    useTheme,
 };

@@ -23,6 +23,11 @@ import {useComponents} from '../../../hooks';
  * That get the icon used <Icon name={'icon-name'} />
  */
 
+/**
+ * Icon
+ *
+ * Компонент, представляющий иконку. Иконки могут быть импортированы при старте приложения.
+ */
 export interface IIconProps extends IUiComponent {
     /**
      * Имя иконки (латиницей). Импорт иконок происходит на старте приложения.

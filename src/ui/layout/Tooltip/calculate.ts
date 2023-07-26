@@ -1,6 +1,10 @@
 import {ITooltipArrowPosition, ITooltipStylePosition} from '../Tooltip/Tooltip';
 
 export default function calculate(gap, position, parentRef, tooltipSize, arrowSize) {
+    if (process.env.IS_SSR) {
+        return null;
+    }
+
     const style: ITooltipStylePosition = {left: null, right: null, top: null};
     let arrowPosition: ITooltipArrowPosition = null;
 

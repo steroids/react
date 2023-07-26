@@ -12,15 +12,15 @@
                 {
                     "name": "action",
                     "decorators": [],
-                    "description": "",
+                    "description": "Url, который вернет коллекцию элементов.",
                     "required": false,
                     "type": "string | IApiMethod",
-                    "example": null
+                    "example": "api/v1/articles"
                 },
                 {
                     "name": "actionMethod",
                     "decorators": [],
-                    "description": "",
+                    "description": "Тип HTTP запроса (GET | POST | PUT | DELETE)",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -28,7 +28,7 @@
                 {
                     "name": "condition",
                     "decorators": [],
-                    "description": "",
+                    "description": "Функция условия, используемая для определения поведения списка на основе параметров запроса.",
                     "required": false,
                     "type": "{}",
                     "example": null
@@ -36,7 +36,7 @@
                 {
                     "name": "formId",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор формы, связанной с данным списком.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -44,7 +44,7 @@
                 {
                     "name": "isFetched",
                     "decorators": [],
-                    "description": "",
+                    "description": "Логическое значение, указывающее, был ли список получен или нет.",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -52,7 +52,7 @@
                 {
                     "name": "isLoading",
                     "decorators": [],
-                    "description": "",
+                    "description": "Логическое значение, указывающее, находится ли список в процессе загрузки или нет.",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -60,7 +60,7 @@
                 {
                     "name": "isRemote",
                     "decorators": [],
-                    "description": "",
+                    "description": "Логическое значение, указывающее, является ли список удаленным или нет.",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -68,7 +68,7 @@
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "",
+                    "description": "Массив элементов списка.",
                     "required": false,
                     "type": "any[]",
                     "example": null
@@ -76,7 +76,7 @@
                 {
                     "name": "layoutAttribute",
                     "decorators": [],
-                    "description": "",
+                    "description": "Атрибут макета для списка.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -84,7 +84,7 @@
                 {
                     "name": "layoutName",
                     "decorators": [],
-                    "description": "",
+                    "description": "Название макета, связанного с данным списком.",
                     "required": false,
                     "type": "null",
                     "example": null
@@ -92,7 +92,7 @@
                 {
                     "name": "listId",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор списка.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -100,7 +100,7 @@
                 {
                     "name": "loadMore",
                     "decorators": [],
-                    "description": "",
+                    "description": "Логическое значение, указывающее, можно ли загрузить еще элементы для списка.",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -108,15 +108,23 @@
                 {
                     "name": "meta",
                     "decorators": [],
-                    "description": "",
+                    "description": "Дополнительные метаданные для списка.",
                     "required": false,
                     "type": "any",
                     "example": null
                 },
                 {
+                    "name": "onError",
+                    "decorators": [],
+                    "description": "Обработчик события ошибки выполнения запроса",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "onFetch",
                     "decorators": [],
-                    "description": "",
+                    "description": "Функция обратного вызова, вызываемая при получении списка.",
                     "required": false,
                     "type": "{}",
                     "example": null
@@ -124,7 +132,7 @@
                 {
                     "name": "pageAttribute",
                     "decorators": [],
-                    "description": "",
+                    "description": "Атрибут страницы для списка.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -132,7 +140,7 @@
                 {
                     "name": "pageSizeAttribute",
                     "decorators": [],
-                    "description": "",
+                    "description": "Атрибут размера страницы для списка.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -140,7 +148,7 @@
                 {
                     "name": "primaryKey",
                     "decorators": [],
-                    "description": "",
+                    "description": "Первичный ключ для списка.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -148,7 +156,7 @@
                 {
                     "name": "scope",
                     "decorators": [],
-                    "description": "",
+                    "description": "Массив строк, представляющих область списка.",
                     "required": false,
                     "type": "string[]",
                     "example": null
@@ -156,7 +164,7 @@
                 {
                     "name": "sortAttribute",
                     "decorators": [],
-                    "description": "",
+                    "description": "Атрибут сортировки для списка.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -164,7 +172,7 @@
                 {
                     "name": "sourceItems",
                     "decorators": [],
-                    "description": "",
+                    "description": "Массив исходных элементов списка.",
                     "required": false,
                     "type": "any[]",
                     "example": null
@@ -172,7 +180,7 @@
                 {
                     "name": "total",
                     "decorators": [],
-                    "description": "",
+                    "description": "Общее количество элементов в списке.",
                     "required": false,
                     "type": "number",
                     "example": null
@@ -245,6 +253,156 @@
             "defaultProps": null,
             "extends": [],
             "properties": []
+        },
+        "IResourceComponent": {
+            "name": "IResourceComponent",
+            "moduleName": "components/ResourceComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "RESOURCE_GEETEST_API",
+                    "decorators": [],
+                    "description": "URL для загрузки Geetest.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_GOOGLE_CAPTCHA",
+                    "decorators": [],
+                    "description": "URL для загрузки Google reCAPTCHA.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_GOOGLE_MAP_API",
+                    "decorators": [],
+                    "description": "URL для загрузки Google Maps API.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_TWITTER_WIDGET",
+                    "decorators": [],
+                    "description": "URL для загрузки Twitter виджетов.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_YANDEX_MAP_API",
+                    "decorators": [],
+                    "description": "URL для загрузки Yandex Maps API.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "_callbacks",
+                    "decorators": [],
+                    "description": "Свойство для хранения обратных вызовов.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "_components",
+                    "decorators": [],
+                    "description": "Свойство для хранения компонентов.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "googleApiKey",
+                    "decorators": [],
+                    "description": "API-ключ Google для использования Google Maps и других сервисов.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "googleCaptchaSiteKey",
+                    "decorators": [],
+                    "description": "Ключ сайта Google reCAPTCHA.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "language",
+                    "decorators": [],
+                    "description": "Языковой код, используемый для загрузки ресурсов.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IUiApplicationComponent": {
+            "name": "IUiApplicationComponent",
+            "moduleName": "components/UiComponent",
+            "title": "Ui Component",
+            "description": "Компонент для подгрузки и конфигурации UI компонентов приложения",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "_portalElement",
+                    "decorators": [],
+                    "description": "Элемент портала.",
+                    "required": true,
+                    "type": "HTMLElement",
+                    "example": null
+                },
+                {
+                    "name": "_registeredFields",
+                    "decorators": [],
+                    "description": "Зарегистрированные компоненты полей формы.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "components",
+                    "decorators": [],
+                    "description": "Компоненты приложения.",
+                    "required": true,
+                    "type": "IComponents",
+                    "example": null
+                },
+                {
+                    "name": "fields",
+                    "decorators": [],
+                    "description": "Компоненты полей формы для использования в приложении.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "formatters",
+                    "decorators": [],
+                    "description": "Компоненты форматтеры для использования в приложении.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "icons",
+                    "decorators": [],
+                    "description": "Иконки для использования в приложении.",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                }
+            ]
         },
         "IAbsolutePositioningInputProps": {
             "name": "IAbsolutePositioningInputProps",
@@ -368,15 +526,15 @@
                 {
                     "name": "enable",
                     "decorators": [],
-                    "description": "",
+                    "description": "Флаг для управления включением синхронизации с addressBar",
                     "required": false,
                     "type": "boolean",
-                    "example": null
+                    "example": "true"
                 },
                 {
                     "name": "model",
                     "decorators": [],
-                    "description": "",
+                    "description": "Модель",
                     "required": false,
                     "type": "Model",
                     "example": null
@@ -384,10 +542,10 @@
                 {
                     "name": "useHash",
                     "decorators": [],
-                    "description": "",
+                    "description": "Использовать ли #",
                     "required": false,
                     "type": "boolean",
-                    "example": null
+                    "example": "false"
                 }
             ]
         },
@@ -813,7 +971,7 @@
                 {
                     "name": "id",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор элемента",
                     "required": true,
                     "type": "string | number | boolean",
                     "example": null
@@ -821,7 +979,7 @@
                 {
                     "name": "label",
                     "decorators": [],
-                    "description": "",
+                    "description": "Отображаемое название для IDataSelectItem",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -1320,6 +1478,14 @@
                     "example": null
                 },
                 {
+                    "name": "onError",
+                    "decorators": [],
+                    "description": "Обработчик события ошибки выполнения запроса",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "onFetch",
                     "decorators": [],
                     "description": "Обработчик, который вызывается при изменении значений формы, и нужен для подгрузки новых элементов коллекции",
@@ -1656,7 +1822,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IResourceComponent",
                     "example": null
                 },
                 {
@@ -1672,7 +1838,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IUiApplicationComponent",
                     "example": null
                 },
                 {
@@ -2058,26 +2224,26 @@
                 {
                     "name": "close",
                     "decorators": [],
-                    "description": "",
+                    "description": "Пользовательская иконка закрытия",
                     "required": true,
                     "type": "string | ReactElement",
-                    "example": null
+                    "example": "'user'"
                 },
                 {
                     "name": "open",
                     "decorators": [],
-                    "description": "",
+                    "description": "Пользовательская иконка открытия",
                     "required": true,
                     "type": "string | ReactElement",
-                    "example": null
+                    "example": "'user"
                 }
             ]
         },
         "IAccordionProps": {
             "name": "IAccordionProps",
             "moduleName": "ui/content/Accordion/Accordion",
-            "title": "",
-            "description": "",
+            "title": "Accordion",
+            "description": "\nКомпонент-аккордеон позволяет создавать интерактивные списки или контейнеры,\nгде содержимое может быть развернуто или свернуто по требованию пользователя.\nКаждый элемент аккордеона может быть раскрытым или свернутым, и пользователь может\nизменять их состояние путем нажатия на соответствующий заголовок элемента.\n\nКомпонент `Accordion` обычно используется для создания разделов, подразделов или\nсписков, где необходимо показывать или скрывать дополнительную информацию по требованию.\n\nВнутри компонента `Accordion` могут быть использованы дочерние элементы `AccordionItem`,\nкаждый из которых представляет отдельный элемент аккордеона с заголовком и содержимым.\nПри нажатии на заголовок, соответствующий элемент может быть развернут или свернут.\n\nПримечание: В компоненте `Accordion` должен быть указан хотя бы один дочерний элемент `AccordionItem`.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -2342,8 +2508,8 @@
         "IAlertProps": {
             "name": "IAlertProps",
             "moduleName": "ui/content/Alert/Alert",
-            "title": "",
-            "description": "",
+            "title": "Alert",
+            "description": "\nКомпонент оповещения, который отображает сообщения для пользователя.\nОн может быть использован для показа уведомлений, предупреждений или ошибок,\nкоторые требуют внимания пользователя.\n\nКомпонент `Alert` может содержать текстовое сообщение и дополнительное описание,\nа также опциональную кнопку для закрытия оповещения.\n\nОповещения могут иметь различные типы, такие как 'success', 'info', 'warning', 'error'\nили другие пользовательские типы.\n\nКомпонент также предлагает настройки для отображения иконки, анимации, а также\nобратного вызова при закрытии оповещения.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -2584,8 +2750,8 @@
         "IAvatarProps": {
             "name": "IAvatarProps",
             "moduleName": "ui/content/Avatar/Avatar",
-            "title": "",
-            "description": "",
+            "title": "Avatar",
+            "description": "\nКомпонент аватара, который отображает изображение пользователя или иконку.\nОн может использоваться для представления пользователя, контакта или профиля.\n\nКомпонент `Avatar` позволяет указать размер, форму, изображение или иконку,\nа также добавить альтернативный текст и статус онлайна.\n\nЕсли изображение аватара не загружается, можно показать альтернативный текст\nили иконку вместо него.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -2869,8 +3035,8 @@
         "IBadgeProps": {
             "name": "IBadgeProps",
             "moduleName": "ui/content/Badge/Badge",
-            "title": "",
-            "description": "",
+            "title": "Badge",
+            "description": "\nКомпонент бэйджа, который используется для отображения информационных меток на элементах пользовательского интерфейса.\nОн может использоваться для обозначения статуса, количества, типа или любой другой важной информации.\n\nКомпонент `Badge` позволяет указать тип бэйджа, стиль скругления, наличие кнопки для закрытия,\nтекст сообщения, отображение счетчика и размер.\n\nЕсли установлен флаг `showClose`, то пользователь может закрыть бэйдж, вызывая соответствующую callback функцию `onClose`.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -3090,8 +3256,8 @@
         "ICalendarProps": {
             "name": "ICalendarProps",
             "moduleName": "ui/content/Calendar/Calendar",
-            "title": "",
-            "description": "",
+            "title": "Calendar",
+            "description": "\nКомпонент календаря, который позволяет выбирать даты или диапазоны дат.\nОн предоставляет пользователю удобный способ выбора даты и может использоваться для различных целей,\nтаких как выбор даты доставки, даты резервирования и т.д.\n\nКомпонент `Calendar` позволяет указать значение даты или диапазона дат, формат значения, callback функцию при изменении,\nсвойства для компонента `DayPicker`, отображение панели выбора месяца/года, количество отображаемых месяцев и другие свойства.\n\nЕсли установлено значение `showFooter`, то будет отображаться футер с кнопкой \"Today\".\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -3365,10 +3531,10 @@
                 {
                     "name": "menu",
                     "decorators": [],
-                    "description": "Отображается ли меню",
+                    "description": "Свойства для компонента <Menu/>",
                     "required": false,
-                    "type": "boolean",
-                    "example": "true"
+                    "type": "IMenuProps",
+                    "example": null
                 },
                 {
                     "name": "subhead",
@@ -3383,8 +3549,8 @@
         "ICardProps": {
             "name": "ICardProps",
             "moduleName": "ui/content/Card/Card",
-            "title": "",
-            "description": "",
+            "title": "Card",
+            "description": "\nКомпонент карточки, который представляет контент в структурированном формате с заголовком, обложкой, описанием,\nкнопками, ссылками и другими элементами.\n\nКомпонент `Card` позволяет передать дочерние элементы, обложку, описание, заголовок, параметры заголовка,\nфутер, коллекцию ссылок и коллекцию кнопок.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -3445,7 +3611,7 @@
                     "description": "Контент хедера",
                     "required": false,
                     "type": "ICardHeader",
-                    "example": "avatar: {\nsrc: 'Kate.png',\nstatus: true,\n},\nhead: 'Header',\nsubhead: 'Subhead',\nmenu: true,"
+                    "example": "avatar: {\nsrc: 'Kate.png',\nstatus: true,\n},\nhead: 'Header',\nsubhead: 'Subhead',\nmenu: {\n dropDownProps: {\nposition: 'bottom',\ncloseMode: 'click-any',\n},\nitems: [\n{label: 'Вырезать', icon: 'cut', onClick: voidFunction},\n{label: 'Копировать', icon: 'copy', hasBorder: true, onClick: voidFunction},\n{label: 'Показать историю изменений', hasBorder: true, onClick: voidFunction},\n{label: 'Редактировать', icon: 'edit', onClick: voidFunction},\n{label: 'Удалить', icon: 'trash', onClick: voidFunction},\n],\nicon: 'menu_dots',\n},"
                 },
                 {
                     "name": "links",
@@ -3484,8 +3650,8 @@
         "ICopyToClipboardProps": {
             "name": "ICopyToClipboardProps",
             "moduleName": "ui/content/CopyToClipboard/CopyToClipboard",
-            "title": "",
-            "description": "",
+            "title": "CopyToClipboard",
+            "description": "\nКомпонент, позволяющий копировать заданное значение в буфер обмена при клике.\n\nКомпонент `CopyToClipboard` принимает значение `value` для копирования, а также\nможет отображать иконку, дополнительный текст или другие дочерние элементы.\n\nПри успешном копировании значения, можно также отобразить уведомление с помощью\nпараметра `notification`. Можно задать текст уведомления, его уровень и параметры.\n\nКомпонент также поддерживает обработчик `onCopy`, который вызывается при копировании.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -3782,8 +3948,8 @@
         "IDetailProps": {
             "name": "IDetailProps",
             "moduleName": "ui/content/Detail/Detail",
-            "title": "",
-            "description": "",
+            "title": "Detail",
+            "description": "\nПредставление данных в виде таблицы, в которой поля группируются по принципу \"ключ-значение\".\n\nКомпонент `Detail` принимает данные в виде дочерних компонентов `DetailItem`, которые отображаются\nв виде таблицы с ячейками \"ключ-значение\".\n\nКомпонент поддерживает различные настройки, такие как размер ячеек, вариант расположения\nячеек (\"horizontal\" или \"vertical\"), а также респонсивный режим, позволяющий перестраивать\nтаблицу при изменении размеров окна.\n\nКомпонент также может отображать заголовок таблицы и контролы, расположенные рядом с таблицей.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -4070,8 +4236,8 @@
         "IDropDownProps": {
             "name": "IDropDownProps",
             "moduleName": "ui/content/DropDown/DropDown",
-            "title": "",
-            "description": "",
+            "title": "Menu",
+            "description": "\nКомпонент, представляющий меню с элементами, которые могут быть выбраны или нажаты.\nКомпонент позволяет отображать и скрывать содержимое меню, а также управлять его позиционированием.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -4345,8 +4511,8 @@
         "IIconProps": {
             "name": "IIconProps",
             "moduleName": "ui/content/Icon/Icon",
-            "title": "Install the latest free version of Font Awesome via yarn:",
-            "description": "```\n$ yarn add @fortawesome/fontawesome-free\n```\n\nin your root style file (e.g. index.scss) import fontawesome styles\n```\n @import \"~@fortawesome/fontawesome-free/scss/fontawesome\";\n```\n\nand in hoc @application add the following code\n```\n  ui.addIcons(getFontAwesomeIcons())\n```\n\nThat get the icon used <Icon name={'icon-name'} />\n",
+            "title": "Icon",
+            "description": "\nКомпонент, представляющий иконку. Иконки могут быть импортированы при старте приложения.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -4534,8 +4700,8 @@
         "IMenuProps": {
             "name": "IMenuProps",
             "moduleName": "ui/content/Menu/Menu",
-            "title": "",
-            "description": "",
+            "title": "Menu",
+            "description": "\nКомпонент-меню позволяет создавать выпадающие списки с элементами, которые могут быть выбраны\nили выполнить определенные действия при клике на них.\n\nКомпонент `Menu` обычно используется для создания навигационных меню или контекстных меню,\nгде пользователь может выбирать опции или выполнять определенные действия в зависимости от выбранного элемента.\n\nКомпонент `Menu` принимает массив `items`, каждый элемент которого представляет собой отдельный пункт меню.\nКаждый пункт меню имеет заголовок `label`, функцию `onClick`, которая будет вызываться при клике на элемент,\nкастомную иконку `icon` (необязательно) и флаг `hasBorder`, определяющий наличие нижней границы у элемента.\n\nПримечание: Компонент `Menu` требует указания хотя бы одного элемента меню в свойстве `items`.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -4580,6 +4746,69 @@
                     "description": "  Элементы меню",
                     "required": true,
                     "type": "IMenuItem[]",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "ISliderProps": {
+            "name": "ISliderProps",
+            "moduleName": "ui/content/Slider/Slider",
+            "title": "Slider",
+            "description": "\nКомпонент слайдера позволяет создавать слайдшоу, где элементы могут быть пролистаны\nс помощью прокрутки или перетаскивания.\n\nКомпонент `Slider` принимает следующие свойства:\n\n- `sliderOptions`: опции слайдера, используемые для настройки поведения слайдера. (тип: Options)\n- `items`: элементы слайдера, представленные в виде массива записей. (тип: Record<string, any>[])\n- `itemView`: представление элемента слайдера, используемое для кастомизации отображения каждого слайда. (тип: CustomView | any)\n- дополнительные свойства: любые дополнительные свойства, которые могут быть переданы компоненту.\n\nПримечание: Компонент `Slider` требует указания опций слайдера (`sliderOptions`) и элементов слайдера (`items`).\n",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent",
+                "Omit<SplideProps",
+                "'items'>"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "itemView",
+                    "decorators": [],
+                    "description": "Представление элемента слайдера.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы слайдера.",
+                    "required": true,
+                    "type": "Record[]",
+                    "example": null
+                },
+                {
+                    "name": "sliderOptions",
+                    "decorators": [],
+                    "description": "Опции слайдера.",
+                    "required": true,
+                    "type": "Options",
                     "example": null
                 },
                 {
@@ -5313,7 +5542,7 @@
                 {
                     "name": "actionName",
                     "decorators": [],
-                    "description": "",
+                    "description": "Название для action",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -5321,7 +5550,7 @@
                 {
                     "name": "component",
                     "decorators": [],
-                    "description": "",
+                    "description": "Компонент",
                     "required": false,
                     "type": "any",
                     "example": null
@@ -5329,7 +5558,7 @@
                 {
                     "name": "componentProps",
                     "decorators": [],
-                    "description": "",
+                    "description": "Свойства компонента",
                     "required": false,
                     "type": "any",
                     "example": null
@@ -5337,7 +5566,7 @@
                 {
                     "name": "confirm",
                     "decorators": [],
-                    "description": "",
+                    "description": "Сообщение о подтверждении",
                     "required": false,
                     "type": "string | {}",
                     "example": null
@@ -5345,7 +5574,7 @@
                 {
                     "name": "controlsExclude",
                     "decorators": [],
-                    "description": "",
+                    "description": "Коллекция исключенных Controls",
                     "required": false,
                     "type": "string[]",
                     "example": null
@@ -5353,7 +5582,7 @@
                 {
                     "name": "controlsInclude",
                     "decorators": [],
-                    "description": "",
+                    "description": "Коллекция Controls",
                     "required": false,
                     "type": "string[]",
                     "example": null
@@ -5361,15 +5590,15 @@
                 {
                     "name": "mode",
                     "decorators": [],
-                    "description": "",
+                    "description": "Режим отображения",
                     "required": false,
                     "type": "\"page\" | \"modal\"",
-                    "example": null
+                    "example": "'modal'"
                 },
                 {
                     "name": "onClick",
                     "decorators": [],
-                    "description": "",
+                    "description": "Функция обратного вызова, срабатывает после нажатия",
                     "required": false,
                     "type": "{}",
                     "example": null
@@ -5377,34 +5606,34 @@
                 {
                     "name": "pkRequired",
                     "decorators": [],
-                    "description": "",
+                    "description": "Обязателен ли Personal Key",
                     "required": false,
                     "type": "boolean",
-                    "example": null
+                    "example": "true"
                 },
                 {
                     "name": "title",
                     "decorators": [],
-                    "description": "",
+                    "description": "Заголовок",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'Title'"
                 },
                 {
                     "name": "visible",
                     "decorators": [],
-                    "description": "",
+                    "description": "Управление отображением",
                     "required": false,
                     "type": "boolean | {}",
-                    "example": null
+                    "example": "true"
                 }
             ]
         },
         "ICrudProps": {
             "name": "ICrudProps",
             "moduleName": "ui/crud/Crud/Crud",
-            "title": "",
-            "description": "",
+            "title": "Crud",
+            "description": "\nКомпонент CRUD (Create, Read, Update, Delete) предоставляет интерфейс для выполнения операций создания,\nчтения, обновления и удаления записей. Он позволяет создавать, просматривать, редактировать и удалять\nзаписи из некоторой модели данных.\n\nКомпонент `Crud` принимает следующие свойства:\n\n- `crudId`: идентификатор для CRUD (тип: string)\n- `mode`: режим работы CRUD (тип: 'page' | 'modal')\n- `restUrl`: ссылка на REST API (тип: string)\n- `restApi`: методы REST API (тип: IApiRest)\n- `primaryKey`: первичный ключ записей (тип: 'id' | string)\n- `queryKey`: ключ запроса (тип: 'id' | string)\n- `model`: модель данных (тип: string)\n- `searchModel`: модель данных используемая для поиска (тип: string)\n- `index`: параметры для колонки index (тип: boolean | ICrudItem)\n- `create`: параметры для колонки create (тип: boolean | ICrudItem)\n- `update`: параметры для колонки update (тип: boolean | ICrudItem)\n- `view`: параметры для колонки view (тип: boolean | ICrudItem)\n- `delete`: параметры для колонки delete (тип: boolean | ICrudItem)\n- `items`: коллекция элементов (тип: ICrudItem[] | { [key: string]: ICrudItem })\n- `grid`: параметры Grid (тип: IGridProps | React.ReactNode)\n- `form`: параметры формы (тип: IFormProps | React.ReactNode)\n- `detail`: параметры для колонки detail (тип: any)\n- `crudView`: представление для CRUD (тип: CustomView)\n- `errorHandler`: функция-обработчик ошибок (тип: (error, dispatch: any) => void)\n\nПримечание: Компонент `Crud` требует указания идентификатора CRUD (`crudId`) и ссылки на REST API (`restUrl`).\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -5732,8 +5961,8 @@
         "IAutoCompleteFieldProps": {
             "name": "IAutoCompleteFieldProps",
             "moduleName": "ui/form/AutoCompleteField/AutoCompleteField",
-            "title": "AutoComplete",
-            "description": "Поле ввода текста с подсказками (auto-complete)",
+            "title": "AutoCompleteField",
+            "description": "\nПоле ввода текста с подсказками (auto-complete). Он позволяет пользователю вводить текст и предлагает\nварианты автозаполнения на основе предоставленных данных.\n\nКомпонент `AutoCompleteField` принимает следующие свойства:\n\n- `searchOnFocus`: при фокусировке на поле ввода будет запускаться поиск (тип: boolean)\n- все остальные свойства являются наследниками интерфейсов `IBaseFieldProps`, `IDataProviderConfig` и `IDataSelectConfig`\n\nПримечание: Компонент `AutoCompleteField` требует указания списка элементов (`items`) и предоставления\nконфигурации для провайдера данных (`dataProvider`) и выборки данных (`autoComplete` и `autoFetch`).\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -6173,8 +6402,8 @@
         "IBlankFieldProps": {
             "name": "IBlankFieldProps",
             "moduleName": "ui/form/BlankField/BlankField",
-            "title": "",
-            "description": "",
+            "title": "BlankField",
+            "description": "\nПустое поле. Он отображает переданный текст или дочерние элементы.\n\nКомпонент `BlankField` принимает следующие свойства:\n\n- `text`: текст для отображения (тип: string | React.ReactNode)\n- `children`: дочерние элементы (тип: React.ReactNode)\n- все остальные свойства являются наследниками интерфейсов `IFieldWrapperInputProps` и `IUiComponent`\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -6364,34 +6593,34 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "",
+                    "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "bem.element('additional-class')"
                 },
                 {
                     "name": "color",
                     "decorators": [],
-                    "description": "",
+                    "description": "Цвет",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'secondary'"
                 },
                 {
                     "name": "enable",
                     "decorators": [],
-                    "description": "",
+                    "description": "Включить/выключить badge",
                     "required": false,
                     "type": "boolean",
-                    "example": null
+                    "example": "true"
                 },
                 {
                     "name": "value",
                     "decorators": [],
-                    "description": "",
+                    "description": "Значение badge",
                     "required": false,
                     "type": "number",
-                    "example": null
+                    "example": "'Badge'"
                 }
             ]
         },
@@ -6881,7 +7110,7 @@
             "name": "ICheckboxFieldProps",
             "moduleName": "ui/form/CheckboxField/CheckboxField",
             "title": "CheckboxField",
-            "description": "Одиночный чекбокс. Используется в формах для отметки булевого значения.",
+            "description": "\nОдиночный чекбокс. Используется в формах для отметки булевого значения.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -7269,7 +7498,7 @@
             "name": "ICheckboxListFieldProps",
             "moduleName": "ui/form/CheckboxListField/CheckboxListField",
             "title": "CheckboxListField",
-            "description": "Список с чекбоксами. Используется в формах для выбора нескольких значений.",
+            "description": "\nСписок с чекбоксами. Используется в формах для выбора нескольких значений.\n\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -7658,8 +7887,8 @@
         "IDateFieldProps": {
             "name": "IDateFieldProps",
             "moduleName": "ui/form/DateField/DateField",
-            "title": "",
-            "description": "",
+            "title": "DateField",
+            "description": "\nПоле ввода с выпадающим календарём для выбора даты.\n\nКомпонент `DateField` предоставляет возможность создания поля ввода с календарём для выбора даты.\nОн предоставляет пользователю удобный интерфейс для выбора даты с помощью календаря,\nа также поддерживает настройку формата отображения даты и другие параметры.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -7794,6 +8023,14 @@
                     "required": false,
                     "type": "any",
                     "example": "'Visible'"
+                },
+                {
+                    "name": "maskOptions",
+                    "decorators": [],
+                    "description": "Опции маски для поля ввода",
+                    "required": false,
+                    "type": "MaskitoOptions",
+                    "example": null
                 },
                 {
                     "name": "model",
@@ -7960,6 +8197,14 @@
                     "description": "Показать или скрыть выпадающую панель",
                     "required": false,
                     "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "maskInputRef",
+                    "decorators": [],
+                    "description": "Ref для input элемента, который накладывает маску",
+                    "required": false,
+                    "type": "{}",
                     "example": null
                 },
                 {
@@ -8264,7 +8509,7 @@
             "name": "IDateRangeFieldProps",
             "moduleName": "ui/form/DateRangeField/DateRangeField",
             "title": "DateRangeField",
-            "description": "Поле ввода дипазона двух дат с выпадающим календарём",
+            "description": "\nПоле ввода дипазона двух дат с выпадающим календарём.\n\nКомпонент `DateRangeField` предоставляет возможность создания поля ввода диапазона двух дат с выпадающим календарём.\n Он позволяет пользователю выбрать начальную и конечную даты с помощью календаря и предоставляет удобный интерфейс для работы с диапазоном дат.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -8712,8 +8957,8 @@
         "IDateTimeFieldProps": {
             "name": "IDateTimeFieldProps",
             "moduleName": "ui/form/DateTimeField/DateTimeField",
-            "title": "",
-            "description": "",
+            "title": "DateTimeField",
+            "description": "\nПоля ввода с выпадающими списками для выбора даты и времени.\n\nКомпонент `DateTimeField` предоставляет возможность создания полей ввода для выбора даты и времени с помощью выпадающих списков.\n Он объединяет функциональность компонента `DateField` для выбора даты и компонента `TimePanel` для выбора времени.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -9062,7 +9307,7 @@
             "name": "IDateTimeRangeFieldProps",
             "moduleName": "ui/form/DateTimeRangeField/DateTimeRangeField",
             "title": "DateTimeRangeField",
-            "description": "Поле ввода дипазона двух дат со временем, с выпадающим календарём",
+            "description": "\nПоле ввода дипазона двух дат со временем, с выпадающим календарём.\n\nКомпонент `DateTimeRangeField` предоставляет возможность создания поля ввода для выбора диапазона двух дат с временем\nс помощью выпадающих списков и календаря.\nОн объединяет функциональность компонента `DateRangeField` для выбора диапазона дат и компонента `DateTimeField` для выбора времени.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -9344,23 +9589,23 @@
                 {
                     "name": "contentSrc",
                     "decorators": [],
-                    "description": "",
+                    "description": "Источник контента",
                     "required": false,
                     "type": "string | ReactElement",
-                    "example": null
+                    "example": "'https://steroids.kozhindev.com/images/icon.png'"
                 },
                 {
                     "name": "contentType",
                     "decorators": [],
-                    "description": "",
+                    "description": "Тип контента для элемента",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'img'"
                 },
                 {
                     "name": "id",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор элемента",
                     "required": true,
                     "type": "string | number | boolean",
                     "example": null
@@ -9368,7 +9613,7 @@
                 {
                     "name": "label",
                     "decorators": [],
-                    "description": "",
+                    "description": "Отображаемое название",
                     "required": true,
                     "type": "string",
                     "example": null
@@ -9626,7 +9871,7 @@
             "name": "IDropDownFieldProps",
             "moduleName": "ui/form/DropDownField/DropDownField",
             "title": "DropDownField",
-            "description": "Выпадающий список для выбора одного или нескольких значений",
+            "description": "\nВыпадающий список для выбора одного или нескольких значений.\n\nКомпонент `DropDownField` предоставляет возможность создания выпадающего списка для выбора одного или нескольких значений.\nОн поддерживает различные типы контента для элементов списка, такие как флажки, радиокнопки, иконки и изображения.\n\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -10393,7 +10638,7 @@
             "name": "IFieldProps",
             "moduleName": "ui/form/Field/Field",
             "title": "Field",
-            "description": "Компонент, который рендерит соответствующее поле, исходя из переданной модели и названия аттрибута.\nПо дефолту будет отрендерен InputField.\nТакже можно не использовать модель, а передавать компонент поля напрямую через пропсы.",
+            "description": "\nКомпонент, который рендерит соответствующее поле, исходя из переданной модели и названия атрибута.\nПо умолчанию будет отрендерен InputField.\nТакже можно не использовать модель, а передавать компонент поля напрямую через пропсы.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -10759,7 +11004,7 @@
             "name": "IFieldLayoutProps",
             "moduleName": "ui/form/FieldLayout/FieldLayout",
             "title": "FieldLayout",
-            "description": "Специальный шаблон для поля, который настраивает его расположение внутри формы, рендерит лейбл, подсказки и ошибки",
+            "description": "\nСпециальный шаблон для поля, который настраивает его расположение внутри формы, рендерит лейбл, подсказки и ошибки.\n\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -11903,8 +12148,8 @@
         "IFileFieldProps": {
             "name": "IFileFieldProps",
             "moduleName": "ui/form/FileField/FileField",
-            "title": "",
-            "description": "",
+            "title": "FileField",
+            "description": "\nКомпонент `FileField` представляет собой поле формы для загрузки файлов.\nОн использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.\nКомпонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -12583,7 +12828,7 @@
             "name": "IFormProps",
             "moduleName": "ui/form/Form/Form",
             "title": "Form",
-            "description": "Компонент для создания формы",
+            "description": "\nКомпонент для создания формы. Предоставляет управление и синхронизацию состояния формы,\nа также позволяет выполнять отправку данных формы на сервер с возможностью валидации и обработки результатов.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -12938,7 +13183,7 @@
             "name": "IHtmlFieldProps",
             "moduleName": "ui/form/HtmlField/HtmlField",
             "title": "HtmlField",
-            "description": "Компонент для создания HTML-разметки, использующий WYSIWYG-реадактор",
+            "description": "Компонент для создания HTML-разметки, использующий WYSIWYG редактор",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -13634,8 +13879,8 @@
         "IImageFieldProps": {
             "name": "IImageFieldProps",
             "moduleName": "ui/form/ImageField/ImageField",
-            "title": "",
-            "description": "",
+            "title": "ImageField",
+            "description": "\nКомпонент для загрузки изображений с возможностью обрезки и предпросмотра.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -14486,12 +14731,12 @@
                     "example": null
                 },
                 {
-                    "name": "maskProps",
+                    "name": "maskOptions",
                     "decorators": [],
                     "description": "Конфигурация маски",
                     "required": false,
-                    "type": "{alwaysShowMask: boolean, mask: string, maskPlaceholder: string}",
-                    "example": "{ mask: '+7 (999) 999-99-99' }"
+                    "type": "MaskitoOptions",
+                    "example": null
                 },
                 {
                     "name": "model",
@@ -14668,6 +14913,14 @@
                     "example": null
                 },
                 {
+                    "name": "defaultValue",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "disabled",
                     "decorators": [],
                     "description": "Переводит элемент в состояние \"не активен\"",
@@ -14728,7 +14981,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{disabled: string, name: string, onChange: ChangeEventHandler, placeholder: string, type: string, value: string | number}",
+                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
                     "example": null
                 },
                 {
@@ -14756,12 +15009,20 @@
                     "example": null
                 },
                 {
-                    "name": "maskProps",
+                    "name": "maskOptions",
                     "decorators": [],
                     "description": "Конфигурация маски",
                     "required": false,
-                    "type": "{alwaysShowMask: boolean, mask: string, maskPlaceholder: string}",
-                    "example": "{ mask: '+7 (999) 999-99-99' }"
+                    "type": "MaskitoOptions",
+                    "example": null
+                },
+                {
+                    "name": "maskedInputRef",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
                 },
                 {
                     "name": "model",
@@ -14909,264 +15170,11 @@
                 }
             ]
         },
-        "IMaskFieldProps": {
-            "name": "IMaskFieldProps",
-            "moduleName": "ui/form/MaskField/MaskField",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [
-                "IInputFieldProps"
-            ],
-            "properties": [
-                {
-                    "name": "addonAfter",
-                    "decorators": [],
-                    "description": "Текст или React-нода, которая будет отрендерена справа от поля.",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": "'.com'"
-                },
-                {
-                    "name": "addonBefore",
-                    "decorators": [],
-                    "description": "Текст или React-нода, которая будет отрендерена слева от поля.",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": "'http://'"
-                },
-                {
-                    "name": "attribute",
-                    "decorators": [],
-                    "description": "Аттрибут (название) поля в форме",
-                    "required": false,
-                    "type": "string",
-                    "example": "'isVisible'"
-                },
-                {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "Дополнительный CSS-класс для элемента отображения",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "date",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "disabled",
-                    "decorators": [],
-                    "description": "Переводит элемент в состояние \"не активен\"",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "errors",
-                    "decorators": [],
-                    "description": "Ошибки в поле",
-                    "required": false,
-                    "type": "string[]",
-                    "example": "['Error text']"
-                },
-                {
-                    "name": "fieldLayoutClassName",
-                    "decorators": [],
-                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "hint",
-                    "decorators": [],
-                    "description": "Подсказка, которая отобразится рядом с полем",
-                    "required": false,
-                    "type": "string",
-                    "example": "'Only english letters'"
-                },
-                {
-                    "name": "id",
-                    "decorators": [],
-                    "description": "Input ID для связи поля с label",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "inputProps",
-                    "decorators": [],
-                    "description": "Свойства для элемента input",
-                    "required": false,
-                    "type": "any",
-                    "example": "{onKeyDown: ...}"
-                },
-                {
-                    "name": "isRenderWithoutFieldLayout",
-                    "decorators": [],
-                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                },
-                {
-                    "name": "label",
-                    "decorators": [],
-                    "description": "Название поля либо отмена отображение поля (false)",
-                    "required": false,
-                    "type": "any",
-                    "example": "'Visible'"
-                },
-                {
-                    "name": "leadIcon",
-                    "decorators": [],
-                    "description": "Пользовательская иконка svg или название иконки",
-                    "required": false,
-                    "type": "string | ReactElement",
-                    "example": null
-                },
-                {
-                    "name": "mask",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "maskProps",
-                    "decorators": [],
-                    "description": "Конфигурация маски",
-                    "required": false,
-                    "type": "{alwaysShowMask: boolean, mask: string, maskPlaceholder: string}",
-                    "example": "{ mask: '+7 (999) 999-99-99' }"
-                },
-                {
-                    "name": "model",
-                    "decorators": [],
-                    "description": "Модель с полями формы",
-                    "required": false,
-                    "type": "any",
-                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
-                },
-                {
-                    "name": "onChange",
-                    "decorators": [],
-                    "description": "Callback-функция, которая вызывается при изменении данных",
-                    "required": false,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "placeholder",
-                    "decorators": [],
-                    "description": "Подсказка для поля",
-                    "required": false,
-                    "type": "string",
-                    "example": "Your text..."
-                },
-                {
-                    "name": "prefix",
-                    "decorators": [],
-                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
-                    "required": false,
-                    "type": "string | boolean",
-                    "example": null
-                },
-                {
-                    "name": "required",
-                    "decorators": [],
-                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "showClear",
-                    "decorators": [],
-                    "description": "Показывать иконку очищения поля",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "size",
-                    "decorators": [],
-                    "description": "Размер поля",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "Объект CSS стилей",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": "{width: '45%'}"
-                },
-                {
-                    "name": "textAfter",
-                    "decorators": [],
-                    "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
-                },
-                {
-                    "name": "textBefore",
-                    "decorators": [],
-                    "description": "Изображение или React-нода, которая будет отрендерена слева от поля.",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
-                },
-                {
-                    "name": "type",
-                    "decorators": [],
-                    "description": "HTML Тип",
-                    "required": false,
-                    "type": "string",
-                    "example": "email"
-                },
-                {
-                    "name": "value",
-                    "decorators": [],
-                    "description": "Значение для поля",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "view",
-                    "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизации отображения",
-                    "required": false,
-                    "type": "React.ReactNode | {}",
-                    "example": "MyCustomView"
-                },
-                {
-                    "name": "viewProps",
-                    "decorators": [],
-                    "description": "Свойства для компонента отображения",
-                    "required": false,
-                    "type": "{}",
-                    "example": "{customHandler: () => {...}}"
-                }
-            ]
-        },
         "INavFieldProps": {
             "name": "INavFieldProps",
             "moduleName": "ui/form/NavField/NavField",
             "title": "NavField",
-            "description": "Навигация как часть формы",
+            "description": "Компонент навигации как часть формы.\n\nЭтот компонент представляет собой навигационное меню, которое можно использовать\nкак часть формы для выбора различных элементов или вкладок.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -15414,7 +15422,7 @@
             "name": "INumberFieldProps",
             "moduleName": "ui/form/NumberField/NumberField",
             "title": "NumberField",
-            "description": "Числовое поле ввода",
+            "description": "\nЧисловое поле ввода. Этот компонент представляет собой поле ввода для числовых значений.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -15865,7 +15873,7 @@
             "name": "IPasswordFieldProps",
             "moduleName": "ui/form/PasswordField/PasswordField",
             "title": "PasswordField",
-            "description": "Поле ввода пароля",
+            "description": "\nПоле ввода пароля. Этот компонент представляет собой поле ввода для паролей.\n\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -16331,8 +16339,8 @@
         "IRadioFieldProps": {
             "name": "IRadioFieldProps",
             "moduleName": "ui/form/RadioField/RadioField",
-            "title": "",
-            "description": "",
+            "title": "RadioField",
+            "description": "\nКомпонент RadioField представляет собой элемент выбора типа \"radio\". Он позволяет пользователю выбрать один вариант из нескольких предложенных.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -17178,6 +17186,14 @@
                     "example": "'isVisible'"
                 },
                 {
+                    "name": "badge",
+                    "decorators": [],
+                    "description": "Значок (бэйдж) с заголовком.",
+                    "required": false,
+                    "type": "{title: string}",
+                    "example": null
+                },
+                {
                     "name": "className",
                     "decorators": [],
                     "description": "Дополнительный CSS-класс для элемента отображения",
@@ -17374,6 +17390,14 @@
                     "required": false,
                     "type": "string",
                     "example": "'isVisible'"
+                },
+                {
+                    "name": "badge",
+                    "decorators": [],
+                    "description": "Значок (бэйдж) с заголовком.",
+                    "required": false,
+                    "type": "{title: string}",
+                    "example": null
                 },
                 {
                     "name": "className",
@@ -17614,12 +17638,28 @@
             ],
             "properties": [
                 {
+                    "name": "asyncScriptOnLoad",
+                    "decorators": [],
+                    "description": "Функция, вызываемая после загрузки асинхронного скрипта.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "attribute",
                     "decorators": [],
                     "description": "Аттрибут (название) поля в форме",
                     "required": false,
                     "type": "string",
                     "example": "'isVisible'"
+                },
+                {
+                    "name": "badge",
+                    "decorators": [],
+                    "description": "Положение значка ReCaptcha. Может быть 'bottomright' (внизу справа), 'bottomleft' (внизу слева) или 'inline' (встроенный).",
+                    "required": false,
+                    "type": "\"bottomright\" | \"bottomleft\" | \"inline\"",
+                    "example": null
                 },
                 {
                     "name": "className",
@@ -17670,6 +17710,14 @@
                     "example": "'Only english letters'"
                 },
                 {
+                    "name": "hl",
+                    "decorators": [],
+                    "description": "Языковой код для ReCaptcha.",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "id",
                     "decorators": [],
                     "description": "Input ID для связи поля с label",
@@ -17681,6 +17729,14 @@
                     "name": "isRenderWithoutFieldLayout",
                     "decorators": [],
                     "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isolated",
+                    "decorators": [],
+                    "description": "Флаг, указывающий на изоляцию ReCaptcha.",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -17704,9 +17760,25 @@
                 {
                     "name": "onChange",
                     "decorators": [],
-                    "description": "Callback-функция, которая вызывается при изменении данных",
+                    "description": "Обработчик события изменения ReCaptcha.",
                     "required": false,
-                    "type": "{}",
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "onErrored",
+                    "decorators": [],
+                    "description": "Обработчик события ошибки ReCaptcha.",
+                    "required": false,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "onExpired",
+                    "decorators": [],
+                    "description": "Обработчик события истечения срока действия ReCaptcha.",
+                    "required": false,
+                    "type": "VoidFunction",
                     "example": null
                 },
                 {
@@ -17726,6 +17798,14 @@
                     "example": null
                 },
                 {
+                    "name": "ref",
+                    "decorators": [],
+                    "description": "Ссылка на ref-объект React для ReCaptcha.",
+                    "required": false,
+                    "type": "RefObject",
+                    "example": null
+                },
+                {
                     "name": "required",
                     "decorators": [],
                     "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
@@ -17734,9 +17814,25 @@
                     "example": "true"
                 },
                 {
+                    "name": "sitekey",
+                    "decorators": [],
+                    "description": "Ключ сайта ReCaptcha. По умолчанию process.env.APP_RECAPTCHA_SITE_KEY",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "size",
                     "decorators": [],
                     "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "stoken",
+                    "decorators": [],
+                    "description": "Защищенный токен для ReCaptcha.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -17748,6 +17844,22 @@
                     "required": false,
                     "type": "CSSProperties",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tabindex",
+                    "decorators": [],
+                    "description": "Значение tabindex для ReCaptcha.",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "Тип ReCaptcha. Может быть 'image' (изображение) или 'audio' (аудио).",
+                    "required": false,
+                    "type": "\"audio\" | \"image\"",
+                    "example": null
                 },
                 {
                     "name": "value",
@@ -17780,12 +17892,28 @@
             ],
             "properties": [
                 {
+                    "name": "asyncScriptOnLoad",
+                    "decorators": [],
+                    "description": "Функция, вызываемая после загрузки асинхронного скрипта.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "attribute",
                     "decorators": [],
                     "description": "Аттрибут (название) поля в форме",
                     "required": false,
                     "type": "string",
                     "example": "'isVisible'"
+                },
+                {
+                    "name": "badge",
+                    "decorators": [],
+                    "description": "Положение значка ReCaptcha. Может быть 'bottomright' (внизу справа), 'bottomleft' (внизу слева) или 'inline' (встроенный).",
+                    "required": false,
+                    "type": "\"bottomright\" | \"bottomleft\" | \"inline\"",
+                    "example": null
                 },
                 {
                     "name": "className",
@@ -17852,6 +17980,14 @@
                     "example": "'Only english letters'"
                 },
                 {
+                    "name": "hl",
+                    "decorators": [],
+                    "description": "Языковой код для ReCaptcha.",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "id",
                     "decorators": [],
                     "description": "Input ID для связи поля с label",
@@ -17876,6 +18012,14 @@
                     "example": null
                 },
                 {
+                    "name": "isolated",
+                    "decorators": [],
+                    "description": "Флаг, указывающий на изоляцию ReCaptcha.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "label",
                     "decorators": [],
                     "description": "Название поля либо отмена отображение поля (false)",
@@ -17894,9 +18038,25 @@
                 {
                     "name": "onChange",
                     "decorators": [],
-                    "description": "Callback-функция, которая вызывается при изменении данных",
+                    "description": "Обработчик события изменения ReCaptcha.",
                     "required": false,
-                    "type": "{}",
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "onErrored",
+                    "decorators": [],
+                    "description": "Обработчик события ошибки ReCaptcha.",
+                    "required": false,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "onExpired",
+                    "decorators": [],
+                    "description": "Обработчик события истечения срока действия ReCaptcha.",
+                    "required": false,
+                    "type": "VoidFunction",
                     "example": null
                 },
                 {
@@ -17916,6 +18076,22 @@
                     "example": null
                 },
                 {
+                    "name": "recaptchaOptions",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{asyncScriptOnLoad: {}, badge: \"bottomright\" | \"bottomleft\" | \"inline\", hl: string, isolated: boolean, onChange: VoidFunction, onErrored: VoidFunction, onExpired: VoidFunction, ref: RefObject, stoken: string, tabindex: number, type: \"audio\" | \"image\"}",
+                    "example": null
+                },
+                {
+                    "name": "ref",
+                    "decorators": [],
+                    "description": "Ссылка на ref-объект React для ReCaptcha.",
+                    "required": false,
+                    "type": "RefObject",
+                    "example": null
+                },
+                {
                     "name": "required",
                     "decorators": [],
                     "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
@@ -17924,9 +18100,25 @@
                     "example": "true"
                 },
                 {
+                    "name": "sitekey",
+                    "decorators": [],
+                    "description": "Ключ сайта ReCaptcha. По умолчанию process.env.APP_RECAPTCHA_SITE_KEY",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "size",
                     "decorators": [],
                     "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "stoken",
+                    "decorators": [],
+                    "description": "Защищенный токен для ReCaptcha.",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -17938,6 +18130,22 @@
                     "required": false,
                     "type": "CSSProperties",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tabindex",
+                    "decorators": [],
+                    "description": "Значение tabindex для ReCaptcha.",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "Тип ReCaptcha. Может быть 'image' (изображение) или 'audio' (аудио).",
+                    "required": false,
+                    "type": "\"audio\" | \"image\"",
+                    "example": null
                 },
                 {
                     "name": "value",
@@ -18888,7 +19096,7 @@
             "name": "ITextFieldProps",
             "moduleName": "ui/form/TextField/TextField",
             "title": "TextField",
-            "description": "Поле для ввода нескольких строк теста",
+            "description": "Поле для ввода нескольких строк текста",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -19733,8 +19941,8 @@
         "ITimeRangeFieldProps": {
             "name": "ITimeRangeFieldProps",
             "moduleName": "ui/form/TimeRangeField/TimeRangeField",
-            "title": "",
-            "description": "",
+            "title": "TimeRangeField",
+            "description": "\nКомпонент TimeRangeField представляет собой поле выбора временного диапазона, состоящего из двух элементов ввода времени (from и to).\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -20206,8 +20414,8 @@
         "IBooleanFormatterProps": {
             "name": "IBooleanFormatterProps",
             "moduleName": "ui/format/BooleanFormatter/BooleanFormatter",
-            "title": "",
-            "description": "",
+            "title": "BooleanFormatter",
+            "description": "\nКомпонент BooleanFormatter предназначен для форматирования значения типа boolean, string или number.\nОн позволяет кастомизировать отображение значения, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -20260,8 +20468,8 @@
         "IDateFormatterProps": {
             "name": "IDateFormatterProps",
             "moduleName": "ui/format/DateFormatter/DateFormatter",
-            "title": "",
-            "description": "",
+            "title": "DateFormatter",
+            "description": "\nКомпонент DateFormatter предназначен для форматирования даты с использованием заданного формата.\nОн позволяет кастомизировать отображение даты, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -20295,8 +20503,8 @@
         "IDateTimeFormatterProps": {
             "name": "IDateTimeFormatterProps",
             "moduleName": "ui/format/DateTimeFormatter/DateTimeFormatter",
-            "title": "",
-            "description": "",
+            "title": "DateTimeFormatter",
+            "description": "\nКомпонент DateTimeFormatter предназначен для форматирования даты и времени с использованием заданного формата.\nОн позволяет кастомизировать отображение даты и времени, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -20338,8 +20546,8 @@
         "IEnumFormatterProps": {
             "name": "IEnumFormatterProps",
             "moduleName": "ui/format/EnumFormatter/EnumFormatter",
-            "title": "",
-            "description": "",
+            "title": "IEnumFormatterProps",
+            "description": "\nКомпонент EnumFormatter предназначен для форматирования перечисления элементов с использованием заданного формата.\nОн позволяет кастомизировать отображение элементов, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -20373,8 +20581,8 @@
         "IFileSizeFormatterProps": {
             "name": "IFileSizeFormatterProps",
             "moduleName": "ui/format/FileSize/FileSize",
-            "title": "",
-            "description": "",
+            "title": "IFileSizeFormatterProps",
+            "description": "\nКомпонент FileSize предназначен для форматирования размера файла в человеко-читаемом формате.\nОн позволяет кастомизировать отображение размера файла, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -20426,8 +20634,8 @@
         "IFormatProps": {
             "name": "IFormatProps",
             "moduleName": "ui/format/Format/Format",
-            "title": "",
-            "description": "",
+            "title": "IFormatProps",
+            "description": "\nКомпонент Format предназначен для форматирования значения на основе заданного форматтера.\nОн позволяет кастомизировать отображение значения, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -20493,8 +20701,8 @@
         "IMoneyFormatterProps": {
             "name": "IMoneyFormatterProps",
             "moduleName": "ui/format/MoneyFormatter/MoneyFormatter",
-            "title": "",
-            "description": "",
+            "title": "IMoneyFormatterProps",
+            "description": "\nКомпонент MoneyFormatter предназначен для форматирования денежных значений с учетом валюты и округления.\nОн позволяет кастомизировать отображение денежного значения, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -20536,8 +20744,8 @@
         "IHeaderProps": {
             "name": "IHeaderProps",
             "moduleName": "ui/layout/Header/Header",
-            "title": "",
-            "description": "",
+            "title": "IHeaderProps",
+            "description": "\nКомпонент Header представляет собой верхнюю часть макета страницы.\nОн может содержать логотип и навигацию, а также кастомизироваться с помощью переданного view React компонента.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -20597,8 +20805,8 @@
         "ILoaderProps": {
             "name": "ILoaderProps",
             "moduleName": "ui/layout/Loader/Loader",
-            "title": "",
-            "description": "",
+            "title": "ILoaderProps",
+            "description": "\nКомпонент Loader представляет собой индикатор загрузки,\nкоторый может использоваться для обозначения процесса загрузки данных или выполнения операции.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -20635,7 +20843,7 @@
                 {
                     "name": "id",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор уведомления",
                     "required": false,
                     "type": "number",
                     "example": null
@@ -20685,7 +20893,7 @@
         "INotificationsProps": {
             "name": "INotificationsProps",
             "moduleName": "ui/layout/Notifications/Notifications",
-            "title": "",
+            "title": "Компонент Notifications представляет собой контейнер для отображения всплывающих уведомлений.",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -20694,7 +20902,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "",
+                    "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -20702,7 +20910,7 @@
                 {
                     "name": "closeTimeoutMs",
                     "decorators": [],
-                    "description": "",
+                    "description": "Задержка перед закрытием",
                     "required": false,
                     "type": "number",
                     "example": null
@@ -20710,7 +20918,7 @@
                 {
                     "name": "initialFlashes",
                     "decorators": [],
-                    "description": "",
+                    "description": "Исходные уведомления",
                     "required": false,
                     "type": "{}",
                     "example": null
@@ -20718,15 +20926,15 @@
                 {
                     "name": "itemView",
                     "decorators": [],
-                    "description": "",
+                    "description": "Переопределение view React компонента для кастомизации отображения элемента",
                     "required": false,
                     "type": "any",
-                    "example": null
+                    "example": "MyCustomView"
                 },
                 {
                     "name": "notifications",
                     "decorators": [],
-                    "description": "",
+                    "description": "Коллекция уведомлений",
                     "required": false,
                     "type": "INotificationItem[]",
                     "example": null
@@ -20734,7 +20942,7 @@
                 {
                     "name": "position",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиционирование элемента уведомления",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -20742,10 +20950,10 @@
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "",
+                    "description": "Переопределение view React компонента для кастомизации отображения",
                     "required": false,
                     "type": "React.ReactNode | {}",
-                    "example": null
+                    "example": "MyCustomView"
                 }
             ]
         },
@@ -20905,8 +21113,8 @@
         "ISkeletonProps": {
             "name": "ISkeletonProps",
             "moduleName": "ui/layout/Skeleton/Skeleton",
-            "title": "",
-            "description": "",
+            "title": "Компонент Skeleton представляет собой заглушку для отображения временных данных",
+            "description": "во время загрузки или ожидания загрузки реальных данных.",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -21032,7 +21240,7 @@
                 {
                     "name": "bottom",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиция стрелки снизу",
                     "required": false,
                     "type": "string | number",
                     "example": null
@@ -21040,7 +21248,7 @@
                 {
                     "name": "left",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиция стрелки слева",
                     "required": false,
                     "type": "string | number",
                     "example": null
@@ -21048,7 +21256,7 @@
                 {
                     "name": "right",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиция стрелки справа",
                     "required": false,
                     "type": "string | number",
                     "example": null
@@ -21056,7 +21264,7 @@
                 {
                     "name": "top",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиция стрелки сверху",
                     "required": false,
                     "type": "string | number",
                     "example": null
@@ -21066,7 +21274,7 @@
         "ITooltipProps": {
             "name": "ITooltipProps",
             "moduleName": "ui/layout/Tooltip/Tooltip",
-            "title": "",
+            "title": "Компонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -21158,7 +21366,7 @@
                 {
                     "name": "left",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиция Tooltip слева",
                     "required": true,
                     "type": "number | \"unset\"",
                     "example": null
@@ -21166,7 +21374,7 @@
                 {
                     "name": "right",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиция Tooltip справа",
                     "required": true,
                     "type": "number | \"unset\"",
                     "example": null
@@ -21174,7 +21382,7 @@
                 {
                     "name": "top",
                     "decorators": [],
-                    "description": "",
+                    "description": "Позиция Tooltip сверху",
                     "required": true,
                     "type": "number | \"unset\"",
                     "example": null
@@ -21325,7 +21533,7 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IContentColumnViewProps"
+                "IColumnViewProps"
             ],
             "properties": [
                 {
@@ -21342,6 +21550,14 @@
                     "description": "CSS-класс для ячейки со значением",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "diagram",
+                    "decorators": [],
+                    "description": "Диаграмма.\nЦвет должен соответствовать success | warning | danger | secondary.\nЦвета можно расширить или изменить через стили (см. colors.scss в react-bootstrap)",
+                    "required": false,
+                    "type": "{items: {color: string, percentageAttribute: string}[], type: \"circle\" | \"horizontal\" | \"vertical\"}",
                     "example": null
                 },
                 {
@@ -21770,8 +21986,8 @@
         "IControlsColumnProps": {
             "name": "IControlsColumnProps",
             "moduleName": "ui/list/ControlsColumn/ControlsColumn",
-            "title": "ControlsColumn",
-            "description": "Колонка для контролов",
+            "title": "Компонент ControlsColumn предоставляет колонку с контролами.",
+            "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -22167,8 +22383,8 @@
                 }
             ]
         },
-        "IContentColumnViewProps": {
-            "name": "IContentColumnViewProps",
+        "IColumnViewProps": {
+            "name": "IColumnViewProps",
             "moduleName": "ui/list/Grid/Grid",
             "title": "",
             "description": "",
@@ -22192,6 +22408,14 @@
                     "description": "CSS-класс для ячейки со значением",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "diagram",
+                    "decorators": [],
+                    "description": "Диаграмма.\nЦвет должен соответствовать success | warning | danger | secondary.\nЦвета можно расширить или изменить через стили (см. colors.scss в react-bootstrap)",
+                    "required": false,
+                    "type": "{items: {color: string, percentageAttribute: string}[], type: \"circle\" | \"horizontal\" | \"vertical\"}",
                     "example": null
                 },
                 {
@@ -22371,6 +22595,14 @@
                     "description": "CSS-класс для ячейки со значением",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "diagram",
+                    "decorators": [],
+                    "description": "Диаграмма.\nЦвет должен соответствовать success | warning | danger | secondary.\nЦвета можно расширить или изменить через стили (см. colors.scss в react-bootstrap)",
+                    "required": false,
+                    "type": "{items: {color: string, percentageAttribute: string}[], type: \"circle\" | \"horizontal\" | \"vertical\"}",
                     "example": null
                 },
                 {
@@ -22640,6 +22872,14 @@
                     "description": "Модель",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "onError",
+                    "decorators": [],
+                    "description": "Обработчик события ошибки выполнения запроса",
+                    "required": false,
+                    "type": "{}",
                     "example": null
                 },
                 {
@@ -23145,6 +23385,14 @@
                     "description": "Модель",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "onError",
+                    "decorators": [],
+                    "description": "Обработчик события ошибки выполнения запроса",
+                    "required": false,
+                    "type": "{}",
                     "example": null
                 },
                 {
@@ -24435,7 +24683,7 @@
         "IModalPortalProps": {
             "name": "IModalPortalProps",
             "moduleName": "ui/modal/ModalPortal/ModalPortal",
-            "title": "",
+            "title": "Компонент ModalPortal отвечает за отображение модальных окон.",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -24462,7 +24710,7 @@
         "ITwoFactorModalViewProps": {
             "name": "ITwoFactorModalViewProps",
             "moduleName": "ui/modal/TwoFactorModal/TwoFactorModal",
-            "title": "",
+            "title": "Компонент TwoFactorModal отображает модальное окно для двухфакторной аутентификации.",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -24539,8 +24787,8 @@
         "IBreadcrumbsProps": {
             "name": "IBreadcrumbsProps",
             "moduleName": "ui/nav/Breadcrumbs/Breadcrumbs",
-            "title": "Breadcrumbs",
-            "description": "Хлебные крошки",
+            "title": "Компонент Breadcrumbs отображает хлебные крошки.",
+            "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -24606,7 +24854,7 @@
         "IButtonGroupProps": {
             "name": "IButtonGroupProps",
             "moduleName": "ui/nav/ButtonGroup/ButtonGroup",
-            "title": "",
+            "title": "Компонент ButtonGroup отображает группу кнопок.",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -26740,6 +26988,14 @@
             "type": "IMenuProps",
             "example": null
         },
+        "ISliderViewProps": {
+            "name": "ISliderViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "ISliderProps",
+            "example": null
+        },
         "ContentType": {
             "name": "ContentType",
             "decorators": [],
@@ -26754,6 +27010,14 @@
             "description": "",
             "required": true,
             "type": "ContentType | \"group\" | string",
+            "example": null
+        },
+        "IMaskFieldProps": {
+            "name": "IMaskFieldProps",
+            "decorators": [],
+            "description": "MaskField\n\nКомпонент поля ввода текста с маской.\n",
+            "required": true,
+            "type": "IInputFieldProps",
             "example": null
         },
         "IHeaderViewProps": {
@@ -27034,8 +27298,195 @@
             "title": "Resource Component",
             "description": "Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "RESOURCE_GEETEST_API",
+                    "decorators": [],
+                    "description": "URL для загрузки Geetest.",
+                    "required": true,
+                    "type": "\"//static.geetest.com/static/tools/gt.js\"",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_GOOGLE_CAPTCHA",
+                    "decorators": [],
+                    "description": "URL для загрузки Google reCAPTCHA.",
+                    "required": true,
+                    "type": "\"https://www.google.com/recaptcha/api.js\"",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_GOOGLE_MAP_API",
+                    "decorators": [],
+                    "description": "URL для загрузки Google Maps API.",
+                    "required": true,
+                    "type": "\"//maps.googleapis.com/maps/api/js\"",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_TWITTER_WIDGET",
+                    "decorators": [],
+                    "description": "URL для загрузки Twitter виджетов.",
+                    "required": true,
+                    "type": "\"https://platform.twitter.com/widgets.js\"",
+                    "example": null
+                },
+                {
+                    "name": "RESOURCE_YANDEX_MAP_API",
+                    "decorators": [],
+                    "description": "URL для загрузки Yandex Maps API.",
+                    "required": true,
+                    "type": "\"https://api-maps.yandex.ru/2.1/\"",
+                    "example": null
+                },
+                {
+                    "name": "_callbacks",
+                    "decorators": [],
+                    "description": "Свойство для хранения обратных вызовов.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "_components",
+                    "decorators": [],
+                    "description": "Свойство для хранения компонентов.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "googleApiKey",
+                    "decorators": [],
+                    "description": "API-ключ Google для использования Google Maps и других сервисов.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "googleCaptchaSiteKey",
+                    "decorators": [],
+                    "description": "Ключ сайта Google reCAPTCHA.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "language",
+                    "decorators": [],
+                    "description": "Языковой код, используемый для загрузки ресурсов.",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "loadGeetest",
+                    "decorators": [],
+                    "description": "Метод для загрузки Geetest.",
+                    "required": true,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "loadGoogleCaptcha",
+                    "decorators": [],
+                    "description": "Метод для загрузки Google reCAPTCHA.",
+                    "required": true,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "loadGoogleMapApi",
+                    "decorators": [],
+                    "description": "Метод для загрузки Google Maps API.",
+                    "required": true,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "loadScript",
+                    "decorators": [],
+                    "description": "Метод для загрузки скрипта по указанному URL.",
+                    "required": true,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "url",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "firstResolver",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "loadTwitterWidget",
+                    "decorators": [],
+                    "description": "Метод для загрузки Twitter виджетов.",
+                    "required": true,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "loadYandexMap",
+                    "decorators": [],
+                    "description": "Метод для загрузки Yandex Maps API.",
+                    "required": true,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "wait",
+                    "decorators": [],
+                    "description": "Метод для ожидания выполнения определенного условия.",
+                    "required": true,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "condition",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "timeout",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "number",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/SocialComponent": {
             "name": "default",
@@ -27061,8 +27512,385 @@
             "title": "Ui Component",
             "description": "Компонент для подгрузки и конфигурации UI компонентов приложения",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "_portalElement",
+                    "decorators": [],
+                    "description": "Элемент портала.",
+                    "required": true,
+                    "type": "HTMLDivElement",
+                    "example": null
+                },
+                {
+                    "name": "_registeredFields",
+                    "decorators": [],
+                    "description": "Зарегистрированные компоненты полей формы.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "components",
+                    "decorators": [],
+                    "description": "Компоненты приложения.",
+                    "required": true,
+                    "type": "IComponents",
+                    "example": null
+                },
+                {
+                    "name": "fields",
+                    "decorators": [],
+                    "description": "Компоненты полей формы для использования в приложении.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "formatters",
+                    "decorators": [],
+                    "description": "Компоненты форматтеры для использования в приложении.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "icons",
+                    "decorators": [],
+                    "description": "Иконки для использования в приложении.",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "addFields",
+                    "decorators": [],
+                    "description": "Добавляет компоненты полей формы.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "components",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "addFormatters",
+                    "decorators": [],
+                    "description": "Добавляет компоненты форматтеров.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "components",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "addIcons",
+                    "decorators": [],
+                    "description": "Добавляет иконки.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "icons",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "addModels",
+                    "decorators": [],
+                    "description": "Добавляет модели.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "models",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "addViews",
+                    "decorators": [],
+                    "description": "Добавляет компоненты представлений.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "components",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getField",
+                    "decorators": [],
+                    "description": "Возвращает компонент поля формы по указанному пути.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getFieldProps",
+                    "decorators": [],
+                    "description": "Возвращает свойства конфигурации компонента поля формы по указанному пути.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "model",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "attribute",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getFormatter",
+                    "decorators": [],
+                    "description": "Возвращает компонент форматтера по указанному пути.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getFormatterProps",
+                    "decorators": [],
+                    "description": "Возвращает свойства конфигурации компонента форматтера по указанному пути.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getIcon",
+                    "decorators": [],
+                    "description": "Возвращает иконку по указанному имени.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getPortalElement",
+                    "decorators": [],
+                    "description": "Возвращает элемент портала.",
+                    "required": true,
+                    "type": "HTMLDivElement",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getRegisteredFields",
+                    "decorators": [],
+                    "description": "Возвращает зарегистрированные поля формы для указанного идентификатора формы.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "formId",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getView",
+                    "decorators": [],
+                    "description": "Возвращает компонент представления по указанному пути.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "path",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "registerField",
+                    "decorators": [],
+                    "description": "Регистрирует поле формы.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "formId",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "attribute",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "type",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "renderView",
+                    "decorators": [],
+                    "description": "Рендерит компонент представления.",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "Component",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "props",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "forceNode",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "boolean",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setPortalElement",
+                    "decorators": [],
+                    "description": "Задает элемент портала.",
+                    "required": true,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "element",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/WebSocketComponent": {
             "name": "default",

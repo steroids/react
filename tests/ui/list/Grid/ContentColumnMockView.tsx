@@ -1,12 +1,12 @@
 import React from 'react';
 import _get from 'lodash-es/get';
 import useBem from '../../../../src/hooks/useBem';
-import {IContentColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
+import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
 import Format from '../../../../src/ui/format/Format';
 import {Link} from '../../../../src/ui/nav';
 import {Icon} from '../../../../src/ui/content';
 
-export default function ContentColumnView(props: IContentColumnViewProps) {
+export default function ContentColumnView(props: IColumnViewProps) {
     const bem = useBem('ContentColumnView');
 
     const hasLink = !!props.link?.attribute;
@@ -19,7 +19,7 @@ export default function ContentColumnView(props: IContentColumnViewProps) {
         <Format
             {...props}
             {...(props.formatter || {})}
-            attribute={hasLink ? props.link.attribute : props.attribute}
+            attribute={hasLink ? props.link?.attribute : props.attribute}
         />
     );
 
@@ -27,7 +27,7 @@ export default function ContentColumnView(props: IContentColumnViewProps) {
         if (hasLink) {
             return (
                 <Link
-                    {...props.link.linkProps}
+                    {...props.link?.linkProps}
                     url={_get(props.item, props.link?.urlAttribute)}
                     className={bem.element('link')}
                 >
@@ -58,14 +58,14 @@ export default function ContentColumnView(props: IContentColumnViewProps) {
             {hasPicture && (
                 <span className={bem.element('picture')}>
                     <img
-                        src={_get(props.item, props.picture.attribute)}
+                        src={_get(props.item, props.picture?.attribute)}
                         alt="cell element"
                     />
                 </span>
             )}
             {hasIcon && (
                 <Icon
-                    name={_get(props.item, props.icon.attribute)}
+                    name={_get(props.item, props.icon?.attribute)}
                     className={bem.element('icon')}
                 />
             )}

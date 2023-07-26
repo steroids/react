@@ -1,6 +1,12 @@
 import * as React from 'react';
 import {useComponents} from '../../../hooks';
 
+/**
+ * BooleanFormatter
+ *
+ * Компонент BooleanFormatter предназначен для форматирования значения типа boolean, string или number.
+ * Он позволяет кастомизировать отображение значения, используя переданный view React компонент.
+ **/
 export interface IBooleanFormatterProps {
     /**
     * Значение для BooleanFormatter

@@ -8,6 +8,15 @@ import useDateInputState, {
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
+/**
+ * DateTimeField
+ *
+ * Поля ввода с выпадающими списками для выбора даты и времени.
+ *
+ * Компонент `DateTimeField` предоставляет возможность создания полей ввода для выбора даты и времени с помощью выпадающих списков.
+ *  Он объединяет функциональность компонента `DateField` для выбора даты и компонента `TimePanel` для выбора времени.
+ */
+
 export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent {
 
     /**

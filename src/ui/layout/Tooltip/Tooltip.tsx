@@ -51,6 +51,9 @@ export interface ITooltipStylePosition {
     top: 'unset' | number,
 }
 
+/**
+ * Компонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.
+ **/
 export interface ITooltipProps {
     /**
      * Текст подсказки
@@ -172,6 +175,10 @@ function Tooltip(props: ITooltipProps): JSX.Element {
             tooltipSize,
             arrowSize,
         );
+
+        if (!result) {
+            return;
+        }
 
         positionRef.current = result.position;
         setStyle(result.style);

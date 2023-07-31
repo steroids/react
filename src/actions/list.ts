@@ -29,6 +29,12 @@ export interface IList {
     onFetch?: (list: IList, query: Record<string, unknown>, components: any) => Promise<any>,
 
     /**
+     * Обработчик события ошибки выполнения запроса
+     * @param args
+     */
+    onError?: (error: Record<string, any>) => void;
+
+    /**
     * Функция условия, используемая для определения поведения списка на основе параметров запроса.
     */
     condition?: (query: Record<string, unknown>) => any,
@@ -139,6 +145,7 @@ const createList = (listId: string, props: any) => ({
     action: props.action || props.action === '' ? props.action : null,
     actionMethod: props.actionMethod || 'get',
     onFetch: props.onFetch,
+    onError: props.onError,
     condition: props.condition,
     scope: props.scope,
     total: props.total || null,
@@ -171,7 +178,12 @@ export const httpFetchHandler = (list: IList, query, {api, http}) => {
     }
     return http
         .send(list.actionMethod, url || window.location.pathname, query)
-        .then(response => response.data);
+        .then(response => response.data)
+        .catch(error => {
+            if (typeof list.onError === 'function') {
+                list.onError(error);
+            }
+        });
 };
 
 export const localFetchHandler = (list: IList, query: Record<string, unknown>) => {

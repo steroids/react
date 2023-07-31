@@ -5,8 +5,10 @@ import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * PasswordField
- * Поле ввода пароля
- */
+ *
+ * Поле ввода пароля. Этот компонент представляет собой поле ввода для паролей.
+ *
+ **/
 export interface IPasswordFieldProps extends IBaseFieldProps {
 
     /**

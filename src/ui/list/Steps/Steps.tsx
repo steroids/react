@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {useComponents} from '../../../hooks';
 
+/**
+ * Компонент Steps предоставляет шаги для выполнения определенного процесса.
+ **/
 interface IStepsProps {
     stepItems: IStepItem[];
     currentStep: number;

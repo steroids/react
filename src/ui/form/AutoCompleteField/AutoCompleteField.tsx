@@ -20,8 +20,18 @@ export interface IAutoCompleteItem {
 }
 
 /**
- * AutoComplete
- * Поле ввода текста с подсказками (auto-complete)
+ * AutoCompleteField
+ *
+ * Поле ввода текста с подсказками (auto-complete). Он позволяет пользователю вводить текст и предлагает
+ * варианты автозаполнения на основе предоставленных данных.
+ *
+ * Компонент `AutoCompleteField` принимает следующие свойства:
+ *
+ * - `searchOnFocus`: при фокусировке на поле ввода будет запускаться поиск (тип: boolean)
+ * - все остальные свойства являются наследниками интерфейсов `IBaseFieldProps`, `IDataProviderConfig` и `IDataSelectConfig`
+ *
+ * Примечание: Компонент `AutoCompleteField` требует указания списка элементов (`items`) и предоставления
+ * конфигурации для провайдера данных (`dataProvider`) и выборки данных (`autoComplete` и `autoFetch`).
  */
 export interface IAutoCompleteFieldProps extends IBaseFieldProps, IDataProviderConfig,
     Omit<IDataSelectConfig, 'items'> {

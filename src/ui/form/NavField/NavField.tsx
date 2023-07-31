@@ -10,8 +10,11 @@ import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 
 /**
  * NavField
- * Навигация как часть формы
- */
+ * Компонент навигации как часть формы.
+ *
+ * Этот компонент представляет собой навигационное меню, которое можно использовать
+ * как часть формы для выбора различных элементов или вкладок.
+ **/
 export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IDataProviderConfig, IUiComponent {
     /**
      * Свойства для компонента Nav

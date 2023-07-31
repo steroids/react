@@ -11,8 +11,14 @@ export default {
     'content.DropDownView': {
         lazy: () => require('./content/DropDown/DropDownMockView').default,
     },
+    'content.SliderView': {
+        lazy: () => require('./content/Slider/SliderMockView').default,
+    },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
+    },
+    'layout.HeaderView': {
+        lazy: () => require('./layout/Header/HeaderMockView').default,
     },
     'content.AvatarView': {
         lazy: () => require('./content/Avatar/AvatarMockView').default,
@@ -47,11 +53,17 @@ export default {
     'list.CheckboxColumnView': {
         lazy: () => require('./list/Grid/CheckboxColumnMockView').default,
     },
+    'list.EmptyView': {
+        lazy: () => require('./list/Empty/EmptyMockView').default,
+    },
     'format.DefaultFormatterView': {
         lazy: () => require('./format/DefaultFormatterMockView').default,
     },
     'list.ContentColumnView': {
         lazy: () => require('./list/Grid/ContentColumnMockView').default,
+    },
+    'list.DiagramColumnView': {
+        lazy: () => require('./list/Grid/DiagramColumnMockView').default,
     },
     'content.IconView': {
         lazy: () => require('./content/Icon/IconMockView').default,
@@ -70,6 +82,9 @@ export default {
     },
     'form.TimeFieldView': {
         lazy: () => require('./form/TimeField/TimeFieldMockView').default,
+    },
+    'form.CheckboxListFieldView': {
+        lazy: () => require('./form/CheckboxListField/CheckboxListFieldMockView').default,
     },
     'nav.NavButtonView': {
         lazy: () => require('./nav/Nav/NavButtonMockView').default,
@@ -91,6 +106,9 @@ export default {
     },
     'form.TimeRangeFieldView': {
         lazy: () => require('./form/TimeRangeField/TimeRangeFieldMockView').default,
+    },
+    'typography.TextView': {
+        lazy: () => require('./typography/Text/TextMockView').default,
     },
     'form.RateFieldView': {
         lazy: () => require('./form/RateField/RateFieldMockView').default,

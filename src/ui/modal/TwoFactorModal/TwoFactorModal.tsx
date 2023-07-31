@@ -25,6 +25,9 @@ interface ITwoFactorModalPrivateProps extends ITwoFactorModalProps {
     },
 }
 
+/**
+ * Компонент TwoFactorModal отображает модальное окно для двухфакторной аутентификации.
+ **/
 export interface ITwoFactorModalViewProps extends ITwoFactorModalPrivateProps {
     description?: string,
     formProps?: any,

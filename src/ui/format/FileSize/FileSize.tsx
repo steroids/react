@@ -1,5 +1,11 @@
 import {useComponents} from '../../../hooks';
 
+/**
+ * IFileSizeFormatterProps
+ *
+ * Компонент FileSize предназначен для форматирования размера файла в человеко-читаемом формате.
+ * Он позволяет кастомизировать отображение размера файла, используя переданный view React компонент.
+ **/
 export interface IFileSizeFormatterProps extends IUiComponent {
 
     /**

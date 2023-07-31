@@ -90,8 +90,11 @@ function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
     useEffect(() => {
         if (!_isEqual(prevSelectedIds, selectedIds)) {
             props.input.onChange.call(null, selectedIds[0] ?? null);
+            if (props.onChange) {
+                props.onChange(selectedIds);
+            }
         }
-    }, [selectedIds, props.input.onChange, prevSelectedIds]);
+    }, [selectedIds, props.input.onChange, prevSelectedIds, props, items]);
 
     return components.ui.renderView(props.view || 'form.SwitcherFieldView', {
         ...props,

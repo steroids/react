@@ -4,6 +4,8 @@ import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import __isEmpty from 'lodash-es/isEmpty';
+import __isArray from 'lodash-es/isArray';
 import {useComponents, useSelector} from '../../../hooks';
 import {
     getActiveRouteIds, getNavItems, getRouteParams,
@@ -63,6 +65,16 @@ export interface INavItem extends IButtonProps {
      * @example {content: 'Some text'}
      */
     contentProps?: any,
+
+    /**
+    * Вложенные элементы
+    */
+    items?: INavItem[]
+
+    /**
+    * Props для пункта
+    */
+    itemProps?: IButtonProps,
 }
 
 /**
@@ -118,6 +130,7 @@ export interface INavViewProps extends INavProps {
     onClick: (item: Record<string, unknown>, index: number) => void,
     items: (INavItem & {
         isActive: boolean,
+        isActiveNested: boolean,
     })[],
     navClassName?: CssClassName,
 }
@@ -169,29 +182,38 @@ function Nav(props: INavProps): JSX.Element {
     const onClick = useCallback((item, index) => {
         const newActiveTab = _has(item, 'id') ? item.id : index;
         setActiveTab(newActiveTab);
+
         if (props.onChange) {
             props.onChange.call(null, newActiveTab);
         }
     }, [props.onChange]);
 
-    const items = useMemo(() => (
-        Array.isArray(props.items)
-            ? props.items.map((item, index) => ({
+    const formatItems = React.useCallback((items = props.items) => {
+        if (Array.isArray(items)) {
+            return items.map((item, index) => ({
                 ...item,
                 isActive: activeTab === (_has(item, 'id') ? item.id : index),
+                isActiveNested: !__isEmpty(item.items?.filter(nestedItem => nestedItem.id === activeTab)) || false,
+                items: item.items ? formatItems(item.items) : null,
             }))
-                .filter(item => item.visible !== false)
-            : (routes as INavItem[] || []).map(route => ({
-                id: route.id,
-                label: route.label,
-                toRoute: route.id,
-                toRouteParams: routerParams,
-                visible: route.isNavVisible,
-                isActive: (activeRouteIds || []).includes(route.id),
-            }))
-                .filter(item => item.visible !== false)
-    ),
-    [activeRouteIds, activeTab, props.items, routerParams, routes]);
+                .filter(item => item.visible !== false);
+        }
+
+        return (routes as INavItem[] || []).map(route => ({
+            id: route.id,
+            label: route.label,
+            toRoute: route.id,
+            toRouteParams: routerParams,
+            visible: route.isNavVisible,
+            isActive: (activeRouteIds || []).includes(route.id),
+            isActiveNested: (route.items?.filter(nestedItem => activeRouteIds.includes(nestedItem.id))),
+            items: route.items ? formatItems(route.items) : null,
+        }))
+            .filter(item => item.visible !== false);
+    }, [activeRouteIds, activeTab, props.items, routerParams, routes]);
+
+    const items = useMemo(() => formatItems(),
+        [formatItems]);
 
     return components.ui.renderView(props.view || defaultViewMap[props.layout], {
         ...props,

@@ -75,6 +75,8 @@ export interface INavItem extends IButtonProps {
     * Props для пункта
     */
     itemProps?: IButtonProps,
+
+    [key: string]: any,
 }
 
 /**

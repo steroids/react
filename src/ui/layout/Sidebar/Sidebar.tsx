@@ -8,7 +8,7 @@ export interface ISidebarItem extends INavItem {
     /**
     * Наличие верней границы у элемента
     */
-    border: boolean,
+    border?: boolean,
 }
 
 export interface ISidebarProps extends IUiComponent {

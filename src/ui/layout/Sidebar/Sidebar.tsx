@@ -11,7 +11,7 @@ export interface ISidebarItem extends INavItem {
     border: boolean,
 }
 
-interface ISidebarProps extends IUiComponent {
+export interface ISidebarProps extends IUiComponent {
     /**
      * Объект с информацией о логотипе.
      */
@@ -47,9 +47,8 @@ interface ISidebarProps extends IUiComponent {
 
     /**
      * Элементы навигации для компонента Nav.
-     * Может быть строкой или массивом элементов INavItem.
      */
-    items?: string | ISidebarItem[];
+    items?: ISidebarItem[];
 
     /**
      * Флаг, определяющий, следует ли разделять элементы навигации.

@@ -114,8 +114,6 @@ const getProperty = property => ({
     name: property.name,
     decorators: (property.decorators || []).map(decorator => decorator.name),
     description: getComment(property),
-    descriptionRu: getTags(property).ru || null,
-    descriptionEn: getTags(property).en || null,
     required: !property.flags.isOptional,
     type: typeToString(property.type),
     example: getTags(property).example || null,

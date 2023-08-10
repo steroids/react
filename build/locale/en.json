@@ -1,0 +1,4 @@
+{
+    "Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику (onClick), смена страницы в рамках роутинга (goToRoute), переход по внешней ссылке (url) или отправки формы (submit form)": "Button or link. Used in the interface to perform some action on click (onClick), changing the page within the routing (goToRoute), following an external link (url) or submitting a form (submit form)",
+    "Текст кнопки или ссылки": "Text for button or link"
+}

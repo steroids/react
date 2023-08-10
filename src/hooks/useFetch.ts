@@ -20,16 +20,16 @@ export interface IFetchConfig {
     onFetch?: (config: IFetchConfig, components: IComponents, addCancelToken: (token: any) => any) => any,
 }
 
-export interface IFetchResult {
+export interface IFetchResult<T> {
     data?: {
         providerData?: {
             type: string,
             value: string
         },
         [key: string]: unknown
-    } | any,
+    } | T,
     isLoading: boolean,
-    fetch?: (newParams?: Record<string, unknown>) => void,
+    fetch: (newParams?: Record<string, unknown>) => void,
     axiosError: AxiosError | null,
 }
 
@@ -86,7 +86,7 @@ export const fetchData = (config, components, addCancelToken) => (
  * В процесс загрузки HOC будет отображать "Загрузка...", а после уже отрендерит компонент, передав данные в указанный
  * ключ `key`.
  */
-export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
+export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetchResult<T> {
     const components = useComponents();
 
     // Store config in state

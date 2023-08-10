@@ -55,7 +55,7 @@ function ButtonGroup(props: IButtonGroupProps): JSX.Element {
         items: props.items,
     });
 
-    const [activeButton, setActiveButton] = useState(props.activeButton || props.defaultActiveButton || items[0].id);
+    const [activeButton, setActiveButton] = useState(props.activeButton || props.defaultActiveButton || items[0]?.id);
 
     React.useEffect(() => {
         if (props.activeButton) {

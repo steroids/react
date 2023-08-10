@@ -34,12 +34,15 @@ export interface IButtonBadge {
 
 /**
  * Button
- * Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику (onClick),
+ * @ru Кнопка или ссылка. Используется в интерфейсе для выполнения какого-либо действия по клику (onClick),
  * смена страницы в рамках роутинга (goToRoute), переход по внешней ссылке (url) или отправки формы (submit form)
+ * @en button or link. Used in the interface to perform some action on click (onClick),
+ * changing the page within the routing (goToRoute), following an external link (url) or submitting a form (submit form)
  */
 export interface IButtonProps extends IUiComponent {
     /**
-     * Текст кнопки или ссылки
+     * @ru Текст кнопки или ссылки
+     * @en Text for button or link
      * @example Save
      */
     label?: string | any;

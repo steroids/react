@@ -3,6 +3,14 @@ const typedocModule = require('typedoc');
 const _ = require('lodash');
 const fs = require('fs');
 const {getInfo, getProperty, isComponent, changeDeclarationOnType} = require('./helpers');
+const {addKeysToLocalesFiles} = require('./addKeysToLocalesFiles');
+
+// locales
+const enJson = require('./locales/en.json');
+
+const localesMap = {
+    en: enJson,
+};
 
 const app = new typedocModule.Application();
 
@@ -70,5 +78,7 @@ json.children.forEach(file => {
 Object.entries(docs.interfaces).forEach(([interfaceName, interfaceData]) => {
     docs.interfaces[interfaceName] = changeDeclarationOnType(interfaceData, docs.declarations);
 });
+
+addKeysToLocalesFiles(docs, localesMap);
 
 fs.writeFileSync(path.resolve(__dirname, 'docs-autogen-result.json'), JSON.stringify(docs, null, '    '));

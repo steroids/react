@@ -8,15 +8,15 @@ const getPropertiesDescription = (properties) => properties
 
 const getKeysToTranslationFromDocs = (docs) => {
     const uiComponentsDescriptions = Object.keys(docs.interfaces)
-        .map(interface => docs.interfaces[interface].description)
+        .map(interfaceKey => docs.interfaces[interfaceKey].description)
         .filter(Boolean);
 
     const propsDescriptions = Object.keys(docs.interfaces)
-        .map(interface => getPropertiesDescription(docs.interfaces[interface].properties))
-        .filter(propertiesDescription => propertiesDescription.length);
+        .map(interfaceKey => getPropertiesDescription(docs.interfaces[interfaceKey].properties))
+        .filter(propertiesDescription => !!propertiesDescription.length);
 
     const declarationsDescriptions = Object.keys(docs.declarations)
-        .map(declaration => docs.declarations[declaration].description)
+        .map(declarationKey => docs.declarations[declarationKey].description)
         .filter(Boolean);
 
     const componentsDescriptions = Object.keys(docs.components)

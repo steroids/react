@@ -53,7 +53,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     const inputProps = useMemo(() => ({
         name: props.input.name,
-        value: props.input.value || '',
+        defaultValue: props.input.value ?? '',
         onChange,
         onKeyUp,
         placeholder: props.placeholder,

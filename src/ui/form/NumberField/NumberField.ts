@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {ChangeEvent, useMemo} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -32,7 +32,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: string) => void,
+        onChange: (value: ChangeEvent<HTMLInputElement> | string) => void,
         value: number,
         placeholder: string,
         disabled: boolean,
@@ -47,7 +47,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
-        value: props.input.value ?? '',
+        defaultValue: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
         type: 'number',
         min: props.min,

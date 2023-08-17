@@ -19,7 +19,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
     inputProps: {
         name: string,
         onChange: (value: string | ChangeEvent) => void,
-        onKeyUp: KeyboardEventHandler<HTMLTextAreaElement>,
+        onKeyUp: KeyboardEventHandler,
         value: string | number,
         placeholder: string,
         disabled: boolean,
@@ -53,7 +53,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     const inputProps = useMemo(() => ({
         name: props.input.name,
-        value: props.input.value || '',
+        defaultValue: props.input.value ?? '',
         onChange,
         onKeyUp,
         placeholder: props.placeholder,

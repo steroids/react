@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactNode, useMemo} from 'react';
+import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
@@ -48,7 +48,7 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
      * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
-    inputProps?: any;
+    inputProps?: InputHTMLAttributes<HTMLInputElement>;
 
     /**
      * Показывать иконку очищения поля
@@ -129,7 +129,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
         onChange: (value: any) => void,
         value: string | number,
         placeholder: string,
-        disabled: string,
+        disabled: boolean,
     },
     onClear?: () => void,
     onFocus?: (e: Event | React.FocusEvent) => void,

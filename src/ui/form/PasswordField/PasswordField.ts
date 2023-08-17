@@ -75,7 +75,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
-        value: props.input.value || '',
+        defaultValue: props.input.value ?? '',
         onChange: e => props.input.onChange(e.target ? e.target.value : e.nativeEvent.text),
         type,
         placeholder: props.placeholder,

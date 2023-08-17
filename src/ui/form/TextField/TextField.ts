@@ -19,7 +19,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
     inputProps: {
         name: string,
         onChange: (value: string | ChangeEvent) => void,
-        onKeyUp: KeyboardEventHandler<HTMLTextAreaElement>,
+        onKeyUp: KeyboardEventHandler,
         value: string | number,
         placeholder: string,
         disabled: boolean,

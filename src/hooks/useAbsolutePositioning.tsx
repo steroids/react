@@ -11,7 +11,7 @@ interface IStyleObj {
  * Варианты абсолютного позиционирования
  * @example 'top'
  */
-type Position = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
+export type Position = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
     'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
 
 export interface IAbsolutePositioningInputProps {

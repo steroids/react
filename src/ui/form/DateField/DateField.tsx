@@ -2,6 +2,7 @@ import {useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
+import {Position} from 'src/hooks/useAbsolutePositioning';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import {useComponents} from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
@@ -35,12 +36,23 @@ export interface IDateFieldProps extends IDateInputStateInput, IUiComponent {
      */
     maskOptions?: MaskitoOptions,
 
+    /**
+   * Варианты абсолютного позиционирования
+   * @example 'top'
+   */
+    position: Position,
+
     [key: string]: any,
 }
 
 export interface IDateFieldViewProps extends IDateInputStateOutput,
     Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps'> {
 
+    /**
+    * Варианты абсолютного позиционирования
+    * @example 'top'
+    */
+    position: Position,
     /**
      * Ref для input элемента, который накладывает маску
      */
@@ -97,6 +109,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         className: props.className,
         showRemove: props.showRemove,
         style: props.style,
+        position: props.position,
         maskInputRef,
     });
 }
@@ -110,6 +123,7 @@ DateField.defaultProps = {
     valueFormat: 'YYYY-MM-DD',
     maskOptions: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy', separator: '.'}),
     size: 'md',
+    position: 'bottomLeft',
 };
 
 export default fieldWrapper<IDateFieldProps>('DateField', DateField);

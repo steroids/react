@@ -61,5 +61,15 @@ describe('PasswordField tests', () => {
         expect(eyeIcon).toBeInTheDocument();
     });
 
-    //TODO добавить тест на заполнение
+    it('should have filled className after typeing', () => {
+        const {container} = render(JSXWrapper(PasswordField, props));
+
+        const input = getElementByTag(container, 'input');
+
+        fireEvent.change(input, {target: {value: 'test'}});
+
+        const passwordFieldWithFilledClass = getElementByClassName(container, `${expectedPasswordFieldClass}_filled`);
+
+        expect(passwordFieldWithFilledClass).toBeInTheDocument();
+    });
 });

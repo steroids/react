@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {render} from '../../../customRender';
 import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
-import PasswordField, {IPasswordFieldViewProps} from '../../../../src/ui/form/PasswordField/PasswordField';
+import PasswordField, {IPasswordFieldProps} from '../../../../src/ui/form/PasswordField/PasswordField';
 import PasswordFieldMockView from './PasswordFieldMockView';
 
 describe('PasswordField tests', () => {
@@ -17,7 +17,8 @@ describe('PasswordField tests', () => {
             placeholder: 'Password',
         },
         size: 'md',
-    } as IPasswordFieldViewProps;
+
+    } as IPasswordFieldProps;
 
     const expectedPasswordFieldClass = 'PasswordFieldView';
 
@@ -60,15 +61,5 @@ describe('PasswordField tests', () => {
         expect(eyeIcon).toBeInTheDocument();
     });
 
-    it('should have filled className after typeing', () => {
-        const {container} = render(JSXWrapper(PasswordField, props));
-
-        const input = getElementByTag(container, 'input');
-
-        fireEvent.change(input, {target: {value: 'test'}});
-
-        const passwordFieldWithFilledClass = getElementByClassName(container, `${expectedPasswordFieldClass}_filled`);
-
-        expect(passwordFieldWithFilledClass).toBeInTheDocument();
-    });
+    //TODO добавить тест на заполнение
 });

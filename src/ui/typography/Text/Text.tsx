@@ -1,6 +1,11 @@
 import React from 'react';
 import {useComponents} from '../../../hooks';
 
+/**
+* Text
+*
+* Компонент для вывода текстового содержимого, с возможностью настройки тэгов, цвета и типа
+*/
 export interface ITextProps extends IUiComponent {
     /**
     * Дочерние элементы

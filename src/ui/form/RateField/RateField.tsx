@@ -6,15 +6,16 @@ import fieldWrapper, {
 } from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
 
-/**
- * RateField
- * Поле для проставления рейтинга
- */
 export interface IRateFieldItem {
     id: number,
     value: number,
 }
 
+/**
+ * RateField
+ *
+ * Поле для проставления рейтинга
+ */
 export interface IRateFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Максимальное количество звезд

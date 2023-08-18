@@ -52,6 +52,8 @@ export interface ITooltipStylePosition {
 }
 
 /**
+ * Tooltip
+ *
  * Компонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.
  **/
 export interface ITooltipProps {

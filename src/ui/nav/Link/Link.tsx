@@ -4,6 +4,7 @@ import {IButtonProps, IButtonViewProps} from '../../form/Button/Button';
 
 /**
  * Link
+ *
  * Ссылка
  */
 export interface ILinkProps extends IButtonProps {

@@ -10,6 +10,8 @@ export interface IControlsColumnItem extends IButtonProps {
 }
 
 /**
+ * ControlsColumn
+ *
  * Компонент ControlsColumn предоставляет колонку с контролами.
  **/
 export interface IControlsColumnProps {

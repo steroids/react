@@ -4842,7 +4842,7 @@
             "name": "ISliderProps",
             "moduleName": "ui/content/Slider/Slider",
             "title": "Slider",
-            "description": "\nКомпонент слайдера позволяет создавать слайдшоу, где элементы могут быть пролистаны\nс помощью прокрутки или перетаскивания.\n\nКомпонент `Slider` принимает следующие свойства:\n\n- `sliderOptions`: опции слайдера, используемые для настройки поведения слайдера. (тип: Options)\n- `items`: элементы слайдера, представленные в виде массива записей. (тип: Record<string, any>[])\n- `itemView`: представление элемента слайдера, используемое для кастомизации отображения каждого слайда. (тип: CustomView | any)\n- дополнительные свойства: любые дополнительные свойства, которые могут быть переданы компоненту.\n\nПримечание: Компонент `Slider` требует указания опций слайдера (`sliderOptions`) и элементов слайдера (`items`).\n",
+            "description": "\nКомпонент слайдера позволяет создавать слайдшоу, где элементы могут быть пролистаны\nс помощью прокрутки или перетаскивания.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -5705,7 +5705,7 @@
             "name": "ICrudProps",
             "moduleName": "ui/crud/Crud/Crud",
             "title": "Crud",
-            "description": "\nКомпонент CRUD (Create, Read, Update, Delete) предоставляет интерфейс для выполнения операций создания,\nчтения, обновления и удаления записей. Он позволяет создавать, просматривать, редактировать и удалять\nзаписи из некоторой модели данных.\n\nКомпонент `Crud` принимает следующие свойства:\n\n- `crudId`: идентификатор для CRUD (тип: string)\n- `mode`: режим работы CRUD (тип: 'page' | 'modal')\n- `restUrl`: ссылка на REST API (тип: string)\n- `restApi`: методы REST API (тип: IApiRest)\n- `primaryKey`: первичный ключ записей (тип: 'id' | string)\n- `queryKey`: ключ запроса (тип: 'id' | string)\n- `model`: модель данных (тип: string)\n- `searchModel`: модель данных используемая для поиска (тип: string)\n- `index`: параметры для колонки index (тип: boolean | ICrudItem)\n- `create`: параметры для колонки create (тип: boolean | ICrudItem)\n- `update`: параметры для колонки update (тип: boolean | ICrudItem)\n- `view`: параметры для колонки view (тип: boolean | ICrudItem)\n- `delete`: параметры для колонки delete (тип: boolean | ICrudItem)\n- `items`: коллекция элементов (тип: ICrudItem[] | { [key: string]: ICrudItem })\n- `grid`: параметры Grid (тип: IGridProps | React.ReactNode)\n- `form`: параметры формы (тип: IFormProps | React.ReactNode)\n- `detail`: параметры для колонки detail (тип: any)\n- `crudView`: представление для CRUD (тип: CustomView)\n- `errorHandler`: функция-обработчик ошибок (тип: (error, dispatch: any) => void)\n\nПримечание: Компонент `Crud` требует указания идентификатора CRUD (`crudId`) и ссылки на REST API (`restUrl`).\n",
+            "description": "\nКомпонент CRUD (Create, Read, Update, Delete) предоставляет интерфейс для выполнения операций создания,\nчтения, обновления и удаления записей. Он позволяет создавать, просматривать, редактировать и удалять\nзаписи из некоторой модели данных.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -6153,7 +6153,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -14570,7 +14570,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -14775,7 +14775,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -15053,7 +15053,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "type": "{disabled: boolean, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
                     "example": null
                 },
                 {
@@ -15570,7 +15570,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -16021,7 +16021,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -17205,8 +17205,8 @@
         "IRateFieldItem": {
             "name": "IRateFieldItem",
             "moduleName": "ui/form/RateField/RateField",
-            "title": "RateField",
-            "description": "Поле для проставления рейтинга",
+            "title": "",
+            "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -17232,8 +17232,8 @@
         "IRateFieldProps": {
             "name": "IRateFieldProps",
             "moduleName": "ui/form/RateField/RateField",
-            "title": "",
-            "description": "",
+            "title": "RateField",
+            "description": "\nПоле для проставления рейтинга\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -19244,7 +19244,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -20650,10 +20650,10 @@
                 }
             ]
         },
-        "IFileSizeFormatterProps": {
-            "name": "IFileSizeFormatterProps",
+        "IFileSizeProps": {
+            "name": "IFileSizeProps",
             "moduleName": "ui/format/FileSize/FileSize",
-            "title": "IFileSizeFormatterProps",
+            "title": "FileSize",
             "description": "\nКомпонент FileSize предназначен для форматирования размера файла в человеко-читаемом формате.\nОн позволяет кастомизировать отображение размера файла, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
@@ -21090,8 +21090,8 @@
         "INotificationsProps": {
             "name": "INotificationsProps",
             "moduleName": "ui/layout/Notifications/Notifications",
-            "title": "Компонент Notifications представляет собой контейнер для отображения всплывающих уведомлений.",
-            "description": "",
+            "title": "Notifications",
+            "description": "\nКомпонент Notifications представляет собой контейнер для отображения всплывающих уведомлений.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -21603,8 +21603,8 @@
         "ISidebarProps": {
             "name": "ISidebarProps",
             "moduleName": "ui/layout/Sidebar/Sidebar",
-            "title": "",
-            "description": "",
+            "title": "Sidebar",
+            "description": "\nКомпонент Sidebar представляет собой боковое меню с возможностью гибкой настройки\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -22006,8 +22006,8 @@
         "ITooltipProps": {
             "name": "ITooltipProps",
             "moduleName": "ui/layout/Tooltip/Tooltip",
-            "title": "Компонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.",
-            "description": "",
+            "title": "Tooltip",
+            "description": "\nКомпонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -22718,8 +22718,8 @@
         "IControlsColumnProps": {
             "name": "IControlsColumnProps",
             "moduleName": "ui/list/ControlsColumn/ControlsColumn",
-            "title": "Компонент ControlsColumn предоставляет колонку с контролами.",
-            "description": "",
+            "title": "ControlsColumn",
+            "description": "\nКомпонент ControlsColumn предоставляет колонку с контролами.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -25519,8 +25519,8 @@
         "IBreadcrumbsProps": {
             "name": "IBreadcrumbsProps",
             "moduleName": "ui/nav/Breadcrumbs/Breadcrumbs",
-            "title": "Компонент Breadcrumbs отображает хлебные крошки.",
-            "description": "",
+            "title": "Breadcrumbs",
+            "description": "\nКомпонент Breadcrumbs отображает хлебные крошки.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -25586,8 +25586,8 @@
         "IButtonGroupProps": {
             "name": "IButtonGroupProps",
             "moduleName": "ui/nav/ButtonGroup/ButtonGroup",
-            "title": "Компонент ButtonGroup отображает группу кнопок.",
-            "description": "",
+            "title": "ButtonGroup",
+            "description": "\nКомпонент ButtonGroup отображает группу кнопок.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -26099,7 +26099,7 @@
             "name": "ILinkProps",
             "moduleName": "ui/nav/Link/Link",
             "title": "Link",
-            "description": "Ссылка",
+            "description": "\nСсылка\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -27431,8 +27431,8 @@
         "ITextProps": {
             "name": "ITextProps",
             "moduleName": "ui/typography/Text/Text",
-            "title": "",
-            "description": "",
+            "title": "Text",
+            "description": "\nКомпонент для вывода текстового содержимого, с возможностью настройки тэгов, цвета и типа\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -27508,8 +27508,8 @@
         "ITitleProps": {
             "name": "ITitleProps",
             "moduleName": "ui/typography/Title/Title",
-            "title": "",
-            "description": "",
+            "title": "Title",
+            "description": "\nКомпонент предназначен для вывода заголовков, предоставляет возможность для настройки, цвета, типа и тэга.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [

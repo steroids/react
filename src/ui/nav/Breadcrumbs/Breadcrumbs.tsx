@@ -3,6 +3,8 @@ import {getRouteBreadcrumbs, getRouteParams} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
 
 /**
+ * Breadcrumbs
+ *
  * Компонент Breadcrumbs отображает хлебные крошки.
  **/
 export interface IBreadcrumbsProps {

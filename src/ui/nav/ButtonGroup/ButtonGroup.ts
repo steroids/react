@@ -4,6 +4,8 @@ import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
 
 /**
+ * ButtonGroup
+ *
  * Компонент ButtonGroup отображает группу кнопок.
  **/
 export interface IButtonGroupProps extends IUiComponent {

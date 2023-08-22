@@ -291,7 +291,7 @@ function Tree(props: ITreeProps) {
         };
 
         return getItems(items as ITreeItem[]);
-    }, [activeRouteIds, items, onItemClick, openedItems, props.isParentAlwaysOpened, props.itemsKey, props.level, routerParams, selectedUniqId]);
+    }, [activeRouteIds, items, onItemClick, openedItems, props.alwaysOpened, props.itemsKey, props.level, routerParams, selectedUniqId]);
 
     return components.ui.renderView(props.view || 'nav.TreeView', {
         ...props,

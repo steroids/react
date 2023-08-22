@@ -12,7 +12,7 @@ export interface IApiRest {
     update?: IApiMethod,
     delete?: IApiMethod,
     view?: IApiMethod,
-    [key: string]: IApiMethod,
+    [key: string]: IApiMethod | undefined,
 }
 
 /**

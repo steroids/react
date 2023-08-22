@@ -94,6 +94,12 @@ export interface ITreeProps {
      */
     autoSave?: boolean;
 
+    /**
+    *  Используется для управления раскрытием всех элементов в дереве
+    * @example: true
+    */
+    alwaysOpened?: boolean;
+
     [key: string]: any;
 }
 
@@ -119,7 +125,7 @@ function Tree(props: ITreeProps) {
 
     //State
     const [selectedUniqId, setSelectedUniqId] = useState<string>(null);
-    const [openedItems, setOpenedItems] = useState<{ [key: string] : boolean }>({});
+    const [openedItems, setOpenedItems] = useState<{[key: string]: boolean}>({});
 
     //Redux connection
     const {routes, selectedItemId, activeRouteIds, routerParams} = useSelector(state => ({
@@ -254,7 +260,7 @@ function Tree(props: ITreeProps) {
 
             (sourceItems || []).forEach((item, index) => {
                 const uniqId = resolveId(item, index, parentId);
-                const isOpened = !!openedItems[uniqId];
+                const isOpened = props.alwaysOpened || !!openedItems[uniqId];
                 let hasItems = item[props.itemsKey] && item[props.itemsKey].length > 0;
 
                 if (props.level && (level === props.level - 1)) {
@@ -285,7 +291,7 @@ function Tree(props: ITreeProps) {
         };
 
         return getItems(items as ITreeItem[]);
-    }, [activeRouteIds, items, onItemClick, openedItems, props.itemsKey, props.level, routerParams, selectedUniqId]);
+    }, [activeRouteIds, items, onItemClick, openedItems, props.isParentAlwaysOpened, props.itemsKey, props.level, routerParams, selectedUniqId]);
 
     return components.ui.renderView(props.view || 'nav.TreeView', {
         ...props,

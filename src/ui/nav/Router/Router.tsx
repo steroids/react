@@ -4,9 +4,7 @@ import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
-import _isArray from 'lodash-es/isArray';
-import _isObject from 'lodash-es/isObject';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {useEffectOnce, usePrevious, useUpdateEffect} from 'react-use';
 import {closeModal, openModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';
@@ -216,6 +214,7 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
 
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
+    const rememberedPrevRouterParamsRef = useRef<Record<string, string | number> | null>({});
 
     const {isInitialized, pathname, route, routeParams, activePath, activeRouteIds} = useSelector(state => ({
         isInitialized: isRouterInitialized(state),
@@ -246,6 +245,7 @@ function Router(props: IRouterProps): JSX.Element {
     const prevRouteParams = usePrevious(routeParams);
     useEffect(() => {
         if (!_isEqual(prevRouteParams, routeParams)) {
+            rememberedPrevRouterParamsRef.current = prevRouteParams;
             dispatch(initParams(routeParams));
         }
     }, [dispatch, prevRouteParams, routeParams]);
@@ -294,14 +294,17 @@ function Router(props: IRouterProps): JSX.Element {
     const openedModalIds = useMemo(() => (openedModals || []).map(modal => modal.id), [openedModals]);
     const prevOpenedModalIds = usePrevious(openedModalIds);
     useEffect(() => {
-        if (prevOpenedModalIds !== openedModalIds && route && !openedModalIds.includes(route.id)
-        && route.role === ROUTER_ROLE_MODAL) {
+        if (
+            prevOpenedModalIds !== openedModalIds
+            && route
+            && !openedModalIds.includes(route.id)
+        ) {
             const parentRouteId = activeRouteIds.find(activeRouteId => {
                 const activeRoute = routes.find(routeItem => routeItem.id === activeRouteId);
                 return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
             });
             if (parentRouteId) {
-                dispatch(goToRoute(parentRouteId, routeParams));
+                dispatch(goToRoute(parentRouteId, rememberedPrevRouterParamsRef.current));
             }
         }
     });

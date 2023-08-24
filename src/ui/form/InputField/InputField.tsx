@@ -136,7 +136,6 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     onBlur?: (e: Event | React.FocusEvent) => void,
     onMouseDown?: (e: Event | React.MouseEvent) => void;
     maskedInputRef?: React.RefCallback<HTMLElement>;
-    defaultValue?: string,
 }
 
 function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -153,7 +152,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
+        value: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
         placeholder: props.placeholder,
         disabled: props.disabled,

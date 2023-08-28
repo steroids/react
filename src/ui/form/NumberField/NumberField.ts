@@ -36,8 +36,8 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
         value: number,
         placeholder: string,
         disabled: boolean,
-        min: string | number,
-        max: string | number,
+        min: number,
+        max: number,
         step: string | number,
     },
 }

@@ -9,14 +9,13 @@ import _isNil from 'lodash-es/isNil';
 import {formSelector} from '../reducers/form';
 import {formChange, formSetErrors} from '../actions/form';
 import {filterItems} from '../utils/data';
-import {IApiMethod} from '../components/ApiComponent';
 
 export interface IList {
     /**
     * Url, который вернет коллекцию элементов.
     * @example api/v1/articles
     */
-    action?: string | IApiMethod,
+    action?: string,
 
     /**
     * Тип HTTP запроса (GET | POST | PUT | DELETE)
@@ -162,15 +161,7 @@ const createList = (listId: string, props: any) => ({
     layoutAttribute: _get(props, '_layout.attribute') || null,
 });
 
-export const httpFetchHandler = (list: IList, query, {api, http}) => {
-    if (typeof list.action === 'function') {
-        const params = {...query};
-        if (list.scope) {
-            params.scope = list.scope.join(',');
-        }
-        return list.action(api, params).then(response => response.data);
-    }
-
+export const httpFetchHandler = (list: IList, query, {http}) => {
     let url = list.action;
     if (list.scope) {
         url

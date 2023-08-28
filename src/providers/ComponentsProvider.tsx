@@ -10,7 +10,6 @@ declare global {
 }
 
 export interface IComponents {
-    api?: any,
     clientStorage?: any,
     html?: any,
     http?: any,

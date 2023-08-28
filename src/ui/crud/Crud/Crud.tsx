@@ -3,7 +3,6 @@ import _get from 'lodash-es/get';
 import _omit from 'lodash-es/omit';
 import {ReactNode, useCallback, useEffect, useMemo} from 'react';
 import {useUpdateEffect} from 'react-use';
-import {IApiRest} from '../../../components/ApiComponent';
 import CrudModal from './CrudModal';
 import {listRefresh} from '../../../actions/list';
 import {closeModal, openModal} from '../../../actions/modal';
@@ -24,6 +23,15 @@ import useDispatch from '../../../hooks/useDispatch';
 import {IFormProps} from '../../form/Form/Form';
 import {IGridProps} from '../../list/Grid/Grid';
 import {IControlItem} from '../../nav/Controls/Controls';
+
+export interface IApiRest {
+    index?: any,
+    create?: any,
+    update?: any,
+    delete?: any,
+    view?: any,
+    [key: string]: any | undefined,
+}
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
     /**

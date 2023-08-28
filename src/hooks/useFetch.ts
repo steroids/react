@@ -4,7 +4,6 @@ import _trim from 'lodash-es/trim';
 import axios, {AxiosError} from 'axios';
 import {useComponents, useSsr} from './index';
 import {IComponents} from '../providers/ComponentsProvider';
-import {IApiMethod} from '../components/ApiComponent';
 
 declare global {
     interface Window {
@@ -14,7 +13,7 @@ declare global {
 
 export interface IFetchConfig {
     id?: string | number,
-    url?: string | IApiMethod,
+    url?: string,
     method?: 'get' | 'post' | string,
     params?: Record<string, unknown>,
     onFetch?: (config: IFetchConfig, components: IComponents, addCancelToken: (token: any) => any) => any,
@@ -65,9 +64,6 @@ export const defaultFetchHandler = (config, components, addCancelToken) => {
         addCancelToken(cancel);
     });
 
-    if (typeof config.url === 'function') {
-        return config.url(components.api, config.params, config.options).then(result => result.data);
-    }
     return components.http
         .send(config.method, config.url, config.params, {...config.options, cancelToken})
         .then(result => result.data);

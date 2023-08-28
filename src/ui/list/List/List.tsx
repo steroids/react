@@ -48,6 +48,7 @@ export interface IListItemViewProps {
         id?: PrimaryKey,
         title?: string | any,
         label?: string | any,
+        [key: string]: any,
     },
     index: number,
     className?: CssClassName;

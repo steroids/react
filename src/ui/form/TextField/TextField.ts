@@ -1,4 +1,5 @@
 import {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
+import useSaveCursorPosition from 'src/hooks/useSaveCursorPosition';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
@@ -30,6 +31,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
 function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
     // const dispatch = useDispatch();
     const components = useComponents();
+    const {inputRef, onChange} = useSaveCursorPosition(props.input);
 
     const onKeyUp = useCallback(e => {
         if (
@@ -44,20 +46,21 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         }
     }, [props.formId, props.submitOnEnter]);
 
-    const onChange = useCallback(
-        e => props.input.onChange.call(null, e.target ? e.target.value : e.nativeEvent.text),
-        [props.input.onChange],
+    const handleChange = useCallback(
+        event => onChange(event, event.target ? event.target.value : event.nativeEvent.text),
+        [onChange],
     );
 
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     const inputProps = useMemo(() => ({
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
-        onChange,
+        value: props.input.value ?? '',
+        onChange: handleChange,
         onKeyUp,
         placeholder: props.placeholder,
         disabled: props.disabled,
+        ref: inputRef,
         ...props.inputProps,
     }), [onKeyUp, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder]);
 

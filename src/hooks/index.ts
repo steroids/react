@@ -18,6 +18,7 @@ import useSelector from './useSelector';
 import useSsr from './useSsr';
 import useUniqueId from './useUniqueId';
 import useTheme from './useTheme';
+import useSaveCursorPosition from './useSaveCursorPosition';
 
 export {
     useAbsolutePositioning,
@@ -40,4 +41,5 @@ export {
     useSsr,
     useUniqueId,
     useTheme,
+    useSaveCursorPosition,
 };

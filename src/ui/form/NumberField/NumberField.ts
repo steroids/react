@@ -47,7 +47,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
+        value: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
         type: 'number',
         min: props.min,

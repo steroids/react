@@ -1,6 +1,6 @@
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
-import {useComponents} from '../../../hooks';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
@@ -70,18 +70,20 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
     const [type, setType] = useState('password');
 
     const components = useComponents();
+    const {inputRef, onChange} = useSaveCursorPosition(props.input);
 
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
         defaultValue: props.input.value ?? '',
-        onChange: value => props.input.onChange(value),
+        onChange,
         type,
         placeholder: props.placeholder,
         disabled: props.disabled,
+        ref: inputRef,
         ...props.inputProps,
-    }), [props.disabled, props.input, props.inputProps, props.placeholder, type]);
+    }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, type]);
     props.securityLevel = props.showSecurityBar ? checkPassword(props.input.value) : null;
     props.onShowPassword = () => setType('text');
     props.onHidePassword = () => setType('password');

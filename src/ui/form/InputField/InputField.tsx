@@ -3,9 +3,8 @@ import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
-import useSaveCursorPosition from '../../../hooks/useSaveCursorPosition';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {useComponents} from '../../../hooks';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -142,11 +141,17 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
 
 function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
-    const {inputRef, onChange} = useSaveCursorPosition(props.input);
 
     const maskedInputRef = useMaskito({
         options: props.maskOptions,
     });
+
+    const hasMask = !!props.maskOptions;
+
+    const {inputRef, onChange} = useSaveCursorPosition(
+        props.input,
+        hasMask ? maskedInputRef : null,
+    );
 
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 
@@ -170,7 +175,6 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props,
         ...props.viewProps,
         inputProps,
-        maskedInputRef,
         onClear,
     });
 }

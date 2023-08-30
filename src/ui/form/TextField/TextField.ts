@@ -1,6 +1,5 @@
 import {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
-import useSaveCursorPosition from 'src/hooks/useSaveCursorPosition';
-import {useComponents} from '../../../hooks';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
 
@@ -62,7 +61,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         disabled: props.disabled,
         ref: inputRef,
         ...props.inputProps,
-    }), [onKeyUp, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder]);
+    }), [props.input.name, props.input.value, props.placeholder, props.disabled, props.inputProps, handleChange, onKeyUp, inputRef]);
 
     return components.ui.renderView(props.view || 'form.TextFieldView', {
         ...props,

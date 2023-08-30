@@ -1,16 +1,17 @@
 import React, {ChangeEvent} from 'react';
 import {IInputParams} from 'src/ui/form/Field/fieldWrapper';
 
-export default function useSaveCursorPosition(inputParams: IInputParams) {
+export default function useSaveCursorPosition(inputParams: IInputParams, inputRef = null) {
     const [cursor, setCursor] = React.useState(null);
-    const inputRef = React.useRef(null);
+    const _inputRef = React.useRef(null);
+    const currentInputRef = inputRef || _inputRef;
 
     React.useEffect(() => {
-        const inputElement = inputRef.current;
+        const inputElement = currentInputRef.current;
         if (inputElement) {
             inputElement.setSelectionRange(cursor, cursor);
         }
-    }, [inputRef, cursor, inputParams.value]);
+    }, [currentInputRef, cursor, inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
         setCursor(event.target.selectionStart);
@@ -18,7 +19,7 @@ export default function useSaveCursorPosition(inputParams: IInputParams) {
     }, [inputParams]);
 
     return {
-        inputRef,
+        inputRef: currentInputRef,
         onChange,
     };
 }

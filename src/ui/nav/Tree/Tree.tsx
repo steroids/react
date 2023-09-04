@@ -3,7 +3,6 @@ import _isString from 'lodash-es/isString';
 import _omit from 'lodash-es/omit';
 import _isEqual from 'lodash-es/isEqual';
 import _keys from 'lodash-es/keys';
-import {useEffectOnce} from 'react-use';
 import {useCallback, useMemo, useState} from 'react';
 import {useComponents, useSelector} from '../../../hooks';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../../../reducers/router';
@@ -145,7 +144,7 @@ function Tree(props: ITreeProps) {
                 ).filter(r => r.visible);
 
                 return {
-                    id: route.id,
+                    id: route.id.toLowerCase(),
                     label: route.label || route.title,
                     visible: route.isNavVisible !== false,
                     toRoute: routeItems.length === 0 ? route.id : null,
@@ -164,22 +163,22 @@ function Tree(props: ITreeProps) {
     }, [props.items, props.routerParams, routes]);
 
     const findChildById = (sourceItems: ITreeItem[], itemId: string, parentId = '', level = 1) => {
-        let finedItem = null;
+        let foundItem = null;
         if (_isString(sourceItems)) {
             return null;
         }
 
         (sourceItems || []).forEach((item, index) => {
             const uniqId = resolveId(item, index, parentId);
-            if (!finedItem && (item.id === itemId || uniqId === itemId)) {
-                finedItem = {
+            if (!foundItem && (item.id === itemId || uniqId === itemId)) {
+                foundItem = {
                     ...item,
                     uniqId,
                     level,
                 };
             }
-            if (!finedItem) {
-                finedItem = findChildById(
+            if (!foundItem) {
+                foundItem = findChildById(
                     item[props.itemsKey],
                     itemId,
                     uniqId,
@@ -187,7 +186,7 @@ function Tree(props: ITreeProps) {
                 );
             }
         });
-        return finedItem;
+        return foundItem;
     };
 
     const autoOpen = (sourceItems: ITreeItem[], parentId = '', level = 1) => {
@@ -221,7 +220,7 @@ function Tree(props: ITreeProps) {
     };
 
     // Initial opened items
-    useEffectOnce(() => {
+    React.useEffect(() => {
         // TODO add  clientStorage
         // const key = STORAGE_KEY_PREFIX + props.id;
         // const opened = !this.state && this.props.clientStorage.get(key) && this.props.autoSave
@@ -229,10 +228,10 @@ function Tree(props: ITreeProps) {
         //     : this._autoOpen(this.props._items);
 
         const opened = autoOpen(items);
-        const selectedItem = findChildById(items as ITreeItem[], selectedItemId);
         setOpenedItems(opened);
-        setSelectedUniqId(selectedItem ? selectedItemId.uniqId : null);
-    });
+        const selectedItem = findChildById(items as ITreeItem[], selectedItemId);
+        setSelectedUniqId(selectedItem ? selectedItem.uniqId : null);
+    }, [items]);
 
     const onItemClick = useCallback((e, uniqId, item) => {
         e.preventDefault();

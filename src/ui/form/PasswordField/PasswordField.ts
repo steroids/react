@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
@@ -32,10 +33,10 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         placeholder: string,
         disabled: boolean,
     },
+    isShowingPassword: boolean,
+    onShowClick: () => void,
     onClear?: () => void,
     securityLevel?: 'success' | 'warning' | 'danger',
-    onShowPassword: () => void,
-    onHidePassword: () => void,
 }
 
 export const checkPassword = password => {
@@ -73,7 +74,11 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
-    props.inputProps = useMemo(() => ({
+    const onShowClick = useCallback(() => {
+        type === 'password' ? setType('text') : setType('password');
+    }, [type]);
+
+    const inputProps = useMemo(() => ({
         name: props.input.name,
         defaultValue: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
@@ -82,12 +87,14 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         ...props.inputProps,
     }), [props.disabled, props.input, props.inputProps, props.placeholder, type]);
-    props.securityLevel = props.showSecurityBar ? checkPassword(props.input.value) : null;
-    props.onShowPassword = () => setType('text');
-    props.onHidePassword = () => setType('password');
-    props.onClear = onClear;
 
-    return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', props);
+    return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', {
+        ...props,
+        inputProps,
+        securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
+        onClear,
+        onShowClick,
+    });
 }
 
 PasswordField.defaultProps = {

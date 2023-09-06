@@ -434,7 +434,7 @@ function Form(props: IFormProps): JSX.Element {
                 reduxDispatch(
                     showNotification(
                         props.submitErrorMessage || __('Ошибка сервера'),
-                        'danger',
+                        'error',
                     ),
                 );
             }

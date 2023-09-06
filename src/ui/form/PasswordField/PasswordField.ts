@@ -1,7 +1,13 @@
+/* eslint-disable no-unused-expressions */
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+
+export enum InputType {
+    TEXT = 'text',
+    PASSWORD = 'password',
+}
 
 /**
  * PasswordField
@@ -32,10 +38,9 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         placeholder: string,
         disabled: boolean,
     },
+    onShowButtonClick: () => void,
     onClear?: () => void,
     securityLevel?: 'success' | 'warning' | 'danger',
-    onShowPassword: () => void,
-    onHidePassword: () => void,
 }
 
 export const checkPassword = password => {
@@ -67,13 +72,17 @@ export const checkPassword = password => {
 };
 
 function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const [type, setType] = useState('password');
+    const [type, setType] = useState(InputType.PASSWORD);
 
     const components = useComponents();
 
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
-    props.inputProps = useMemo(() => ({
+    const onShowButtonClick = useCallback(() => {
+        type === InputType.PASSWORD ? setType(InputType.TEXT) : setType(InputType.PASSWORD);
+    }, [type]);
+
+    const inputProps = useMemo(() => ({
         name: props.input.name,
         defaultValue: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
@@ -82,12 +91,14 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         ...props.inputProps,
     }), [props.disabled, props.input, props.inputProps, props.placeholder, type]);
-    props.securityLevel = props.showSecurityBar ? checkPassword(props.input.value) : null;
-    props.onShowPassword = () => setType('text');
-    props.onHidePassword = () => setType('password');
-    props.onClear = onClear;
 
-    return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', props);
+    return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', {
+        ...props,
+        inputProps,
+        securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
+        onClear,
+        onShowButtonClick,
+    });
 }
 
 PasswordField.defaultProps = {

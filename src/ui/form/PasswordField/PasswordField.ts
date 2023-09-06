@@ -4,6 +4,11 @@ import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
+export enum InputType {
+    TEXT = 'text',
+    PASSWORD = 'password',
+}
+
 /**
  * PasswordField
  *
@@ -33,8 +38,7 @@ export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrap
         placeholder: string,
         disabled: boolean,
     },
-    isShowingPassword: boolean,
-    onShowClick: () => void,
+    onShowButtonClick: () => void,
     onClear?: () => void,
     securityLevel?: 'success' | 'warning' | 'danger',
 }
@@ -68,14 +72,14 @@ export const checkPassword = password => {
 };
 
 function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const [type, setType] = useState('password');
+    const [type, setType] = useState(InputType.PASSWORD);
 
     const components = useComponents();
 
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
-    const onShowClick = useCallback(() => {
-        type === 'password' ? setType('text') : setType('password');
+    const onShowButtonClick = useCallback(() => {
+        type === InputType.PASSWORD ? setType(InputType.TEXT) : setType(InputType.PASSWORD);
     }, [type]);
 
     const inputProps = useMemo(() => ({
@@ -93,7 +97,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         inputProps,
         securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
         onClear,
-        onShowClick,
+        onShowButtonClick,
     });
 }
 

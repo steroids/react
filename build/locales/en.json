@@ -458,7 +458,7 @@
     "Url на который будет отправлена форма": "URL to which the form will be submitted.",
     "Синхронизация значений формы с адресной строкой": "Synchronize form values with the address bar.",
     "Очищать ли данные формы с redux хранилища при размонтировании компонента. По-умолчанию - false": "Whether to clear form data from the Redux store when the component is unmounted. Default is false.",
-    "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них": "If there are \\ <input\\> elements in the form, automatic focus will occur on the first one.",
+    "Если в форме есть элементы input, то произойдет автоматическая фокусировка на первом из них": "If there are \\ <input\\> elements in the form, automatic focus will occur on the first one.",
     "Сохраняет значения полей формы в LocalStorage": "Saves form field values to LocalStorage.",
     "Автоматически стартовать 2fa аутентификацию (отправлять код)": "Automatically start 2FA authentication (send code).",
     "Название действия, которое передаётся в API Google reCAPTCHA v3, для более детального анализа\nповедения пользователя (https://developers.google.com/recaptcha/docs/v3)": "The name of the action that is passed to the Google reCAPTCHA v3 API for more detailed analysis of user behavior.",

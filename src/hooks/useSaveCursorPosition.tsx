@@ -7,7 +7,7 @@ export default function useSaveCursorPosition(inputParams: IInputParams, inputRe
     const currentInputRef = inputRef || _inputRef;
 
     React.useEffect(() => {
-        const inputElement = currentInputRef.current;
+        const inputElement: HTMLInputElement = currentInputRef.current;
         if (inputElement) {
             inputElement.setSelectionRange(cursor, cursor);
         }

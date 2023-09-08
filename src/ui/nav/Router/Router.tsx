@@ -298,6 +298,7 @@ function Router(props: IRouterProps): JSX.Element {
             prevOpenedModalIds !== openedModalIds
             && route
             && !openedModalIds.includes(route.id)
+            && prevRoute?.role === ROUTER_ROLE_MODAL
         ) {
             const parentRouteId = activeRouteIds.find(activeRouteId => {
                 const activeRoute = routes.find(routeItem => routeItem.id === activeRouteId);

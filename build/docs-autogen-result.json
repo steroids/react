@@ -14,7 +14,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов.",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -213,26 +213,6 @@
                     "example": null
                 }
             ]
-        },
-        "IApiRest": {
-            "name": "IApiRest",
-            "moduleName": "components/ApiComponent",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": []
-        },
-        "IApiSendConfig": {
-            "name": "IApiSendConfig",
-            "moduleName": "components/ApiComponent",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": []
         },
         "Model": {
             "name": "Model",
@@ -761,7 +741,7 @@
                     "decorators": [],
                     "description": "URL для подгрузки новой коллекции данных",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "'/api/v1/search'"
                 },
                 {
@@ -1139,7 +1119,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -1378,7 +1358,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -1769,14 +1749,6 @@
             "defaultProps": null,
             "extends": [],
             "properties": [
-                {
-                    "name": "api",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
                 {
                     "name": "clientStorage",
                     "decorators": [],
@@ -5260,6 +5232,57 @@
                     "required": false,
                     "type": "string",
                     "example": "'Каталог'"
+                }
+            ]
+        },
+        "IApiRest": {
+            "name": "IApiRest",
+            "moduleName": "ui/crud/Crud/Crud",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "create",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "delete",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "update",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -12912,7 +12935,7 @@
                     "decorators": [],
                     "description": "Url на который будет отправлена форма",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/handle-form"
                 },
                 {
@@ -12942,7 +12965,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы input, то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -15808,7 +15831,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{disabled: boolean, max: string | number, min: string | number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: number}",
+                    "type": "{disabled: boolean, max: number, min: number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: number}",
                     "example": null
                 },
                 {
@@ -17701,7 +17724,7 @@
             "name": "IReCaptchaFieldProps",
             "moduleName": "ui/form/ReCaptchaField/ReCaptchaField",
             "title": "ReCaptchaField",
-            "description": "Компонент для использования ReCAPTCHA v3 от Google: https://developers.google.com/recaptcha/docs/v3.\nЧтобы добавить ReCAPTCHA в форму необходимо:\n1) Передать siteKey в ResourceComponent.\n2) Поместить на сайт скрипт от Google с помощью метода экземпляра ResourceComponent\n(скрипт анализирует поведение пользователя).\n3) Разместить ReCaptchaField внутри компонента Form. На событие формы onSubmit отправится запрос в Google для\nполучения токена. Далее этот токен с остальными данными формы отправится на бэкенд.\nСам компонент отображает ссылки на политику конфиденциальности и условия использования сервисов Google.",
+            "description": "Компонент для использования ReCAPTCHA v3 от Google.\nЧтобы добавить ReCAPTCHA в форму необходимо:\n1) Передать siteKey в ResourceComponent.\n2) Поместить на сайт скрипт от Google с помощью метода экземпляра ResourceComponent\n(скрипт анализирует поведение пользователя).\n3) Разместить ReCaptchaField внутри компонента Form. На событие формы onSubmit отправится запрос в Google для\nполучения токена. Далее этот токен с остальными данными формы отправится на бэкенд.\nСам компонент отображает ссылки на политику конфиденциальности и условия использования сервисов Google.",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -23467,7 +23490,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -23980,7 +24003,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -24907,7 +24930,7 @@
                     "decorators": [],
                     "description": "Url на который будет отправлена форма",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/handle-form"
                 },
                 {
@@ -27246,6 +27269,14 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "alwaysOpened",
+                    "decorators": [],
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "autoOpenLevels",
                     "decorators": [],
                     "description": "Максимальный уровень вложенности, до которого все узлы будут отображаться в развёрнутом виде",
@@ -27338,6 +27369,14 @@
                 "ITreeProps"
             ],
             "properties": [
+                {
+                    "name": "alwaysOpened",
+                    "decorators": [],
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
                 {
                     "name": "autoOpenLevels",
                     "decorators": [],
@@ -27584,14 +27623,6 @@
         }
     },
     "declarations": {
-        "IApiMethod": {
-            "name": "IApiMethod",
-            "decorators": [],
-            "description": "",
-            "required": true,
-            "type": "{}",
-            "example": null
-        },
         "ListControlPosition": {
             "name": "ListControlPosition",
             "decorators": [],
@@ -27923,15 +27954,6 @@
                     "parameters": []
                 }
             ]
-        },
-        "components/ApiComponent": {
-            "name": "default",
-            "moduleName": "components/ApiComponent",
-            "title": "Http Component",
-            "description": "Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.",
-            "tags": {},
-            "properties": [],
-            "methods": []
         },
         "components/ClientStorageComponent": {
             "name": "default",

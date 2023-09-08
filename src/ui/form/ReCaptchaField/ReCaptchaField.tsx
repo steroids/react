@@ -5,7 +5,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 
 /**
  * ReCaptchaField
- * Компонент для использования ReCAPTCHA v3 от Google: https://developers.google.com/recaptcha/docs/v3.
+ * Компонент для использования ReCAPTCHA v3 от Google.
  * Чтобы добавить ReCAPTCHA в форму необходимо:
  * 1) Передать siteKey в ResourceComponent.
  * 2) Поместить на сайт скрипт от Google с помощью метода экземпляра ResourceComponent

@@ -63,9 +63,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(
         props.input,
-        null,
-        null,
-        null,
         [validateNumericInput],
     );
 

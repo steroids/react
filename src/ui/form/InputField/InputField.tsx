@@ -126,7 +126,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     inputProps: {
         type: string,
         name: string,
-        onChange: (event: any, value?: string) => void,
+        onInput: (event: any, value?: string) => void,
         value: string | number,
         placeholder: string,
         disabled: boolean,
@@ -135,7 +135,6 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     onFocus?: (e: Event | React.FocusEvent) => void,
     onBlur?: (e: Event | React.FocusEvent) => void,
     onMouseDown?: (e: Event | React.MouseEvent) => void;
-    maskedInputRef?: React.RefCallback<HTMLElement>;
     defaultValue?: string,
 }
 
@@ -146,12 +145,15 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         options: props.maskOptions,
     });
 
-    const hasMask = !!props.maskOptions;
-
     const {inputRef, onChange} = useSaveCursorPosition(
         props.input,
-        hasMask ? maskedInputRef : null,
     );
+
+    React.useEffect(() => {
+        if (inputRef.current) {
+            maskedInputRef(inputRef.current);
+        }
+    }, [inputRef, maskedInputRef]);
 
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 
@@ -159,12 +161,11 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         type: props.type,
         name: props.input.name,
         value: props.input.value ?? '',
-        onChange,
+        onInput: onChange,
         placeholder: props.placeholder,
         disabled: props.disabled,
-        ref: inputRef,
         ...props.inputProps,
-    }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
+    }), [onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
 
     // No render for hidden input
     if (props.type === 'hidden') {
@@ -175,6 +176,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props,
         ...props.viewProps,
         inputProps,
+        inputRef,
         onClear,
     });
 }

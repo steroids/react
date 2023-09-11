@@ -16,7 +16,7 @@ export const convertDate = (
         return null;
     }
 
-    let dayjsDate: dayjs.Dayjs;
+    let dayjsDate;
 
     if (typeof date === 'string' && fromFormats) {
         const validFormat = [].concat(fromFormats || []).find(format => (

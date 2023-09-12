@@ -8,7 +8,7 @@ import fieldWrapper, {
 } from '../../../ui/form/Field/fieldWrapper';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
+import CheckboxField, {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
 /**
  * CheckboxListField
@@ -108,7 +108,11 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
 
     const CheckboxFieldView = components.ui.getView('form.CheckboxFieldView');
 
-    const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => <CheckboxFieldView {...checkboxProps} />;
+    const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => (
+        <CheckboxFieldView
+            {...checkboxProps}
+        />
+    );
 
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', {
         ...props,

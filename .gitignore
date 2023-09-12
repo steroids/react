@@ -68,6 +68,7 @@ Thumbs.db
 .DS_Store
 
 src/docs-autogen-result.json
+src/en.json
 build/docs-autogen-raw.json
 /dist
 

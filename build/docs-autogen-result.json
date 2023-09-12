@@ -14,7 +14,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов.",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -213,26 +213,6 @@
                     "example": null
                 }
             ]
-        },
-        "IApiRest": {
-            "name": "IApiRest",
-            "moduleName": "components/ApiComponent",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": []
-        },
-        "IApiSendConfig": {
-            "name": "IApiSendConfig",
-            "moduleName": "components/ApiComponent",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": []
         },
         "Model": {
             "name": "Model",
@@ -658,6 +638,14 @@
                     "example": null
                 },
                 {
+                    "name": "theme",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Omit",
+                    "example": null
+                },
+                {
                     "name": "useGlobal",
                     "decorators": [],
                     "description": "",
@@ -753,7 +741,7 @@
                     "decorators": [],
                     "description": "URL для подгрузки новой коллекции данных",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "'/api/v1/search'"
                 },
                 {
@@ -1131,7 +1119,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -1158,14 +1146,14 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "T | {providerData: {type: string, value: string}}",
                     "example": null
                 },
                 {
                     "name": "fetch",
                     "decorators": [],
                     "description": "",
-                    "required": false,
+                    "required": true,
                     "type": "{}",
                     "example": null
                 },
@@ -1370,7 +1358,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -1762,14 +1750,6 @@
             "extends": [],
             "properties": [
                 {
-                    "name": "api",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
-                    "example": null
-                },
-                {
                     "name": "clientStorage",
                     "decorators": [],
                     "description": "",
@@ -2047,6 +2027,70 @@
                     "description": "",
                     "required": false,
                     "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "ITheme": {
+            "name": "ITheme",
+            "moduleName": "providers/ThemeProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "setTheme",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Dispatch",
+                    "example": null
+                },
+                {
+                    "name": "theme",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "toggleTheme",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                }
+            ]
+        },
+        "IThemeProviderProps": {
+            "name": "IThemeProviderProps",
+            "moduleName": "providers/ThemeProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "React.PropsWithChildren<any>"
+            ],
+            "properties": [
+                {
+                    "name": "themeStorageKey",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "themes",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
                     "example": null
                 }
             ]
@@ -4770,7 +4814,7 @@
             "name": "ISliderProps",
             "moduleName": "ui/content/Slider/Slider",
             "title": "Slider",
-            "description": "\nКомпонент слайдера позволяет создавать слайдшоу, где элементы могут быть пролистаны\nс помощью прокрутки или перетаскивания.\n\nКомпонент `Slider` принимает следующие свойства:\n\n- `sliderOptions`: опции слайдера, используемые для настройки поведения слайдера. (тип: Options)\n- `items`: элементы слайдера, представленные в виде массива записей. (тип: Record<string, any>[])\n- `itemView`: представление элемента слайдера, используемое для кастомизации отображения каждого слайда. (тип: CustomView | any)\n- дополнительные свойства: любые дополнительные свойства, которые могут быть переданы компоненту.\n\nПримечание: Компонент `Slider` требует указания опций слайдера (`sliderOptions`) и элементов слайдера (`items`).\n",
+            "description": "\nКомпонент слайдера позволяет создавать слайдшоу, где элементы могут быть пролистаны\nс помощью прокрутки или перетаскивания.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -5188,6 +5232,57 @@
                     "required": false,
                     "type": "string",
                     "example": "'Каталог'"
+                }
+            ]
+        },
+        "IApiRest": {
+            "name": "IApiRest",
+            "moduleName": "ui/crud/Crud/Crud",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "create",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "delete",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "update",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
                 }
             ]
         },
@@ -5633,7 +5728,7 @@
             "name": "ICrudProps",
             "moduleName": "ui/crud/Crud/Crud",
             "title": "Crud",
-            "description": "\nКомпонент CRUD (Create, Read, Update, Delete) предоставляет интерфейс для выполнения операций создания,\nчтения, обновления и удаления записей. Он позволяет создавать, просматривать, редактировать и удалять\nзаписи из некоторой модели данных.\n\nКомпонент `Crud` принимает следующие свойства:\n\n- `crudId`: идентификатор для CRUD (тип: string)\n- `mode`: режим работы CRUD (тип: 'page' | 'modal')\n- `restUrl`: ссылка на REST API (тип: string)\n- `restApi`: методы REST API (тип: IApiRest)\n- `primaryKey`: первичный ключ записей (тип: 'id' | string)\n- `queryKey`: ключ запроса (тип: 'id' | string)\n- `model`: модель данных (тип: string)\n- `searchModel`: модель данных используемая для поиска (тип: string)\n- `index`: параметры для колонки index (тип: boolean | ICrudItem)\n- `create`: параметры для колонки create (тип: boolean | ICrudItem)\n- `update`: параметры для колонки update (тип: boolean | ICrudItem)\n- `view`: параметры для колонки view (тип: boolean | ICrudItem)\n- `delete`: параметры для колонки delete (тип: boolean | ICrudItem)\n- `items`: коллекция элементов (тип: ICrudItem[] | { [key: string]: ICrudItem })\n- `grid`: параметры Grid (тип: IGridProps | React.ReactNode)\n- `form`: параметры формы (тип: IFormProps | React.ReactNode)\n- `detail`: параметры для колонки detail (тип: any)\n- `crudView`: представление для CRUD (тип: CustomView)\n- `errorHandler`: функция-обработчик ошибок (тип: (error, dispatch: any) => void)\n\nПримечание: Компонент `Crud` требует указания идентификатора CRUD (`crudId`) и ссылки на REST API (`restUrl`).\n",
+            "description": "\nКомпонент CRUD (Create, Read, Update, Delete) предоставляет интерфейс для выполнения операций создания,\nчтения, обновления и удаления записей. Он позволяет создавать, просматривать, редактировать и удалять\nзаписи из некоторой модели данных.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -6081,7 +6176,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -12840,7 +12935,7 @@
                     "decorators": [],
                     "description": "Url на который будет отправлена форма",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/handle-form"
                 },
                 {
@@ -12870,7 +12965,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы input, то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -14498,7 +14593,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -14703,7 +14798,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -14981,7 +15076,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{disabled: string, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "type": "{disabled: boolean, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
                     "example": null
                 },
                 {
@@ -15498,7 +15593,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -15736,7 +15831,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{disabled: boolean, max: string | number, min: string | number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: number}",
+                    "type": "{disabled: boolean, max: number, min: number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: number}",
                     "example": null
                 },
                 {
@@ -15949,7 +16044,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -17133,8 +17228,8 @@
         "IRateFieldItem": {
             "name": "IRateFieldItem",
             "moduleName": "ui/form/RateField/RateField",
-            "title": "RateField",
-            "description": "Поле для проставления рейтинга",
+            "title": "",
+            "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -17160,8 +17255,8 @@
         "IRateFieldProps": {
             "name": "IRateFieldProps",
             "moduleName": "ui/form/RateField/RateField",
-            "title": "",
-            "description": "",
+            "title": "RateField",
+            "description": "\nПоле для проставления рейтинга\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -17629,7 +17724,7 @@
             "name": "IReCaptchaFieldProps",
             "moduleName": "ui/form/ReCaptchaField/ReCaptchaField",
             "title": "ReCaptchaField",
-            "description": "Компонент для использования ReCAPTCHA v3 от Google: https://developers.google.com/recaptcha/docs/v3.\nЧтобы добавить ReCAPTCHA в форму необходимо:\n1) Передать siteKey в ResourceComponent.\n2) Поместить на сайт скрипт от Google с помощью метода экземпляра ResourceComponent\n(скрипт анализирует поведение пользователя).\n3) Разместить ReCaptchaField внутри компонента Form. На событие формы onSubmit отправится запрос в Google для\nполучения токена. Далее этот токен с остальными данными формы отправится на бэкенд.\nСам компонент отображает ссылки на политику конфиденциальности и условия использования сервисов Google.",
+            "description": "Компонент для использования ReCAPTCHA v3 от Google.\nЧтобы добавить ReCAPTCHA в форму необходимо:\n1) Передать siteKey в ResourceComponent.\n2) Поместить на сайт скрипт от Google с помощью метода экземпляра ResourceComponent\n(скрипт анализирует поведение пользователя).\n3) Разместить ReCaptchaField внутри компонента Form. На событие формы onSubmit отправится запрос в Google для\nполучения токена. Далее этот токен с остальными данными формы отправится на бэкенд.\nСам компонент отображает ссылки на политику конфиденциальности и условия использования сервисов Google.",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -19172,7 +19267,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": false,
-                    "type": "any",
+                    "type": "InputHTMLAttributes",
                     "example": "{onKeyDown: ...}"
                 },
                 {
@@ -20578,10 +20673,10 @@
                 }
             ]
         },
-        "IFileSizeFormatterProps": {
-            "name": "IFileSizeFormatterProps",
+        "IFileSizeProps": {
+            "name": "IFileSizeProps",
             "moduleName": "ui/format/FileSize/FileSize",
-            "title": "IFileSizeFormatterProps",
+            "title": "FileSize",
             "description": "\nКомпонент FileSize предназначен для форматирования размера файла в человеко-читаемом формате.\nОн позволяет кастомизировать отображение размера файла, используя переданный view React компонент.\n",
             "tags": {},
             "defaultProps": null,
@@ -20753,6 +20848,22 @@
             ],
             "properties": [
                 {
+                    "name": "authParams",
+                    "decorators": [],
+                    "description": "Параметры авторизации.",
+                    "required": false,
+                    "type": "{buttonProps: IButtonProps, isAuth: boolean, modal: IModalProps, toRoute: string}",
+                    "example": null
+                },
+                {
+                    "name": "burgerMenu",
+                    "decorators": [],
+                    "description": "Свойства для бургер-меню.",
+                    "required": false,
+                    "type": "{content: ReactElement, links: ILinkProps}",
+                    "example": null
+                },
+                {
                     "name": "className",
                     "decorators": [],
                     "description": "Дополнительный CSS-класс для элемента отображения",
@@ -20763,9 +20874,9 @@
                 {
                     "name": "logo",
                     "decorators": [],
-                    "description": "Свойства для логотипа",
+                    "description": "Свойства для логотипа.",
                     "required": false,
-                    "type": "{className: string, icon: any, linkProps: Record, title: string}",
+                    "type": "{className: string, icon: string | ReactElement, linkProps: ILinkProps, title: string}",
                     "example": null
                 },
                 {
@@ -20791,6 +20902,115 @@
                     "required": false,
                     "type": "CSSProperties",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "user",
+                    "decorators": [],
+                    "description": "Информация о пользователе.",
+                    "required": false,
+                    "type": "{avatar: IAvatarProps, menu: IMenuProps, name: string}",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IHeaderViewProps": {
+            "name": "IHeaderViewProps",
+            "moduleName": "ui/layout/Header/Header",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IHeaderProps"
+            ],
+            "properties": [
+                {
+                    "name": "authParams",
+                    "decorators": [],
+                    "description": "Параметры авторизации.",
+                    "required": false,
+                    "type": "{buttonProps: IButtonProps, isAuth: boolean, modal: IModalProps, toRoute: string}",
+                    "example": null
+                },
+                {
+                    "name": "burgerMenu",
+                    "decorators": [],
+                    "description": "Свойства для бургер-меню.",
+                    "required": false,
+                    "type": "{content: ReactElement, links: ILinkProps}",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "isBurgerOpened",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "logo",
+                    "decorators": [],
+                    "description": "Свойства для логотипа.",
+                    "required": false,
+                    "type": "{className: string, icon: string | ReactElement, linkProps: ILinkProps, title: string}",
+                    "example": null
+                },
+                {
+                    "name": "nav",
+                    "decorators": [],
+                    "description": "Свойства для навигации",
+                    "required": false,
+                    "type": "INavProps",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "toggleBurger",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "user",
+                    "decorators": [],
+                    "description": "Информация о пользователе.",
+                    "required": false,
+                    "type": "{avatar: IAvatarProps, menu: IMenuProps, name: string}",
+                    "example": null
                 },
                 {
                     "name": "view",
@@ -20893,8 +21113,8 @@
         "INotificationsProps": {
             "name": "INotificationsProps",
             "moduleName": "ui/layout/Notifications/Notifications",
-            "title": "Компонент Notifications представляет собой контейнер для отображения всплывающих уведомлений.",
-            "description": "",
+            "title": "Notifications",
+            "description": "\nКомпонент Notifications представляет собой контейнер для отображения всплывающих уведомлений.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -21110,6 +21330,541 @@
                 }
             ]
         },
+        "ISidebarItem": {
+            "name": "ISidebarItem",
+            "moduleName": "ui/layout/Sidebar/Sidebar",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "INavItem"
+            ],
+            "properties": [
+                {
+                    "name": "badge",
+                    "decorators": [],
+                    "description": "Цифра (к примеру, новые сообщения)",
+                    "required": false,
+                    "type": "number | IButtonBadge",
+                    "example": null
+                },
+                {
+                    "name": "block",
+                    "decorators": [],
+                    "description": "Включает стиль `block`, делая размер кнопки на 100% ширины блока",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "border",
+                    "decorators": [],
+                    "description": "Наличие верней границы у элемента",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "Цвет состояния",
+                    "required": false,
+                    "type": "string",
+                    "example": "success"
+                },
+                {
+                    "name": "confirm",
+                    "decorators": [],
+                    "description": "При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное\nокно с текстом подтверждения - `window.confirm('Ваш текст')`.",
+                    "required": false,
+                    "type": "string",
+                    "example": "Удалить запись #512?"
+                },
+                {
+                    "name": "content",
+                    "decorators": [],
+                    "description": "Контент, который отобразиться, если элемент навигации будет активен",
+                    "required": false,
+                    "type": "any",
+                    "example": "ContentComponent"
+                },
+                {
+                    "name": "contentProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента с контентом",
+                    "required": false,
+                    "type": "any",
+                    "example": "{content: 'Some text'}"
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит кнопку в состояние \"не активна\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки\nпри отправке формы.",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, отображается при наведении (через тег title)",
+                    "required": false,
+                    "type": "any",
+                    "example": "Save"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Идентификатор элемента",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "isFailed",
+                    "decorators": [],
+                    "description": "Отобразить кнопку в состоянии неуспешного нажатия (например, при неуспешном ajax запросе)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "isLoading",
+                    "decorators": [],
+                    "description": "Отображать индикатор загрузки?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "itemProps",
+                    "decorators": [],
+                    "description": "Props для пункта",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "INavItem[]",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Текст элемента",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Отзывы'"
+                },
+                {
+                    "name": "link",
+                    "decorators": [],
+                    "description": "Отображать как ссылку?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "Обработчик события нажатия",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "outline",
+                    "decorators": [],
+                    "description": "Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "resetFailedMs",
+                    "decorators": [],
+                    "description": "Через сколько миллисекунд должно исчезнуть состояние \"failed\"",
+                    "required": false,
+                    "type": "number",
+                    "example": "5000"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tag",
+                    "decorators": [],
+                    "description": "Выбор html-тэга, который будет вставлен в DOM",
+                    "required": false,
+                    "type": "\"button\" | \"a\"",
+                    "example": "button"
+                },
+                {
+                    "name": "target",
+                    "decorators": [],
+                    "description": "HTML аттрибут `target`, доступен только для ссылок",
+                    "required": false,
+                    "type": "string",
+                    "example": "_blank"
+                },
+                {
+                    "name": "textColor",
+                    "decorators": [],
+                    "description": "Цвет текста кнопки или ссылки",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "toRoute",
+                    "decorators": [],
+                    "description": "ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров\nиспользуйте свойство `toRouteParams`",
+                    "required": false,
+                    "type": "string",
+                    "example": "profile"
+                },
+                {
+                    "name": "toRouteParams",
+                    "decorators": [],
+                    "description": "Параметры роута, на который необходимо перейти, см. свойство `toRoute`.",
+                    "required": false,
+                    "type": "Record",
+                    "example": "{userId: 52}"
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "HTML Тип",
+                    "required": false,
+                    "type": "\"button\" | \"submit\"",
+                    "example": "submit"
+                },
+                {
+                    "name": "url",
+                    "decorators": [],
+                    "description": "Ссылка на внешнюю страницу",
+                    "required": false,
+                    "type": "string",
+                    "example": "https://ya.ru"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения элемента",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "visible",
+                    "decorators": [],
+                    "description": "Видимость элемента",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                }
+            ]
+        },
+        "ISidebarProps": {
+            "name": "ISidebarProps",
+            "moduleName": "ui/layout/Sidebar/Sidebar",
+            "title": "Sidebar",
+            "description": "\nКомпонент Sidebar представляет собой боковое меню с возможностью гибкой настройки\n",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "footerIcons",
+                    "decorators": [],
+                    "description": "Массив объектов с информацией об иконках для футера.",
+                    "required": false,
+                    "type": "IIconProps[]",
+                    "example": null
+                },
+                {
+                    "name": "hasSeparatedNavItem",
+                    "decorators": [],
+                    "description": "Флаг, определяющий, следует ли разделять элементы навигации.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isOpenedByDefault",
+                    "decorators": [],
+                    "description": "Флаг, определяющий, будет ли сайдбар открытым по умолчанию.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы навигации для компонента Nav.",
+                    "required": false,
+                    "type": "ISidebarItem[]",
+                    "example": null
+                },
+                {
+                    "name": "logo",
+                    "decorators": [],
+                    "description": "Объект с информацией о логотипе.",
+                    "required": false,
+                    "type": "{icon: string | ReactElement, label: string}",
+                    "example": null
+                },
+                {
+                    "name": "menu",
+                    "decorators": [],
+                    "description": "Props для компонента Menu.",
+                    "required": false,
+                    "type": "IMenuProps",
+                    "example": null
+                },
+                {
+                    "name": "onClickItem",
+                    "decorators": [],
+                    "description": "Callback-функция, вызывается при клике на элемент навигации.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onToggleSidebar",
+                    "decorators": [],
+                    "description": "Callback-функция, вызывается при переключении сайдбара.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "user",
+                    "decorators": [],
+                    "description": "Объект с информацией о пользователе.",
+                    "required": false,
+                    "type": "{name: string, picture: string}",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "ISidebarViewProps": {
+            "name": "ISidebarViewProps",
+            "moduleName": "ui/layout/Sidebar/Sidebar",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "ISidebarProps"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "footerIcons",
+                    "decorators": [],
+                    "description": "Массив объектов с информацией об иконках для футера.",
+                    "required": false,
+                    "type": "IIconProps[]",
+                    "example": null
+                },
+                {
+                    "name": "hasSeparatedNavItem",
+                    "decorators": [],
+                    "description": "Флаг, определяющий, следует ли разделять элементы навигации.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isOpened",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isOpenedByDefault",
+                    "decorators": [],
+                    "description": "Флаг, определяющий, будет ли сайдбар открытым по умолчанию.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы навигации для компонента Nav.",
+                    "required": false,
+                    "type": "ISidebarItem[]",
+                    "example": null
+                },
+                {
+                    "name": "logo",
+                    "decorators": [],
+                    "description": "Объект с информацией о логотипе.",
+                    "required": false,
+                    "type": "{icon: string | ReactElement, label: string}",
+                    "example": null
+                },
+                {
+                    "name": "menu",
+                    "decorators": [],
+                    "description": "Props для компонента Menu.",
+                    "required": false,
+                    "type": "IMenuProps",
+                    "example": null
+                },
+                {
+                    "name": "onClickItem",
+                    "decorators": [],
+                    "description": "Callback-функция, вызывается при клике на элемент навигации.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onClickNav",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onToggleSidebar",
+                    "decorators": [],
+                    "description": "Callback-функция, вызывается при переключении сайдбара.",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "toggleSidebar",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "user",
+                    "decorators": [],
+                    "description": "Объект с информацией о пользователе.",
+                    "required": false,
+                    "type": "{name: string, picture: string}",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
         "ISkeletonProps": {
             "name": "ISkeletonProps",
             "moduleName": "ui/layout/Skeleton/Skeleton",
@@ -21274,8 +22029,8 @@
         "ITooltipProps": {
             "name": "ITooltipProps",
             "moduleName": "ui/layout/Tooltip/Tooltip",
-            "title": "Компонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.",
-            "description": "",
+            "title": "Tooltip",
+            "description": "\nКомпонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -21986,8 +22741,8 @@
         "IControlsColumnProps": {
             "name": "IControlsColumnProps",
             "moduleName": "ui/list/ControlsColumn/ControlsColumn",
-            "title": "Компонент ControlsColumn предоставляет колонку с контролами.",
-            "description": "",
+            "title": "ControlsColumn",
+            "description": "\nКомпонент ControlsColumn предоставляет колонку с контролами.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -22735,7 +23490,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -23248,7 +24003,7 @@
                     "decorators": [],
                     "description": "Url, который вернет коллекцию элементов",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/articles"
                 },
                 {
@@ -24175,7 +24930,7 @@
                     "decorators": [],
                     "description": "Url на который будет отправлена форма",
                     "required": false,
-                    "type": "string | IApiMethod",
+                    "type": "string",
                     "example": "api/v1/handle-form"
                 },
                 {
@@ -24787,8 +25542,8 @@
         "IBreadcrumbsProps": {
             "name": "IBreadcrumbsProps",
             "moduleName": "ui/nav/Breadcrumbs/Breadcrumbs",
-            "title": "Компонент Breadcrumbs отображает хлебные крошки.",
-            "description": "",
+            "title": "Breadcrumbs",
+            "description": "\nКомпонент Breadcrumbs отображает хлебные крошки.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -24854,8 +25609,8 @@
         "IButtonGroupProps": {
             "name": "IButtonGroupProps",
             "moduleName": "ui/nav/ButtonGroup/ButtonGroup",
-            "title": "Компонент ButtonGroup отображает группу кнопок.",
-            "description": "",
+            "title": "ButtonGroup",
+            "description": "\nКомпонент ButtonGroup отображает группу кнопок.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -24865,7 +25620,7 @@
                 {
                     "name": "activeButton",
                     "decorators": [],
-                    "description": "Активная кнопка",
+                    "description": "При указании в связке с onClick предоставляет возможность реализовать two-way binding",
                     "required": false,
                     "type": "string | number",
                     "example": "'button1'"
@@ -24884,6 +25639,14 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "defaultActiveButton",
+                    "decorators": [],
+                    "description": "Кнопка по умолчанию.",
+                    "required": false,
+                    "type": "string | number",
                     "example": null
                 },
                 {
@@ -24935,7 +25698,7 @@
                 {
                     "name": "activeButton",
                     "decorators": [],
-                    "description": "Активная кнопка",
+                    "description": "При указании в связке с onClick предоставляет возможность реализовать two-way binding",
                     "required": false,
                     "type": "string | number",
                     "example": "'button1'"
@@ -24954,6 +25717,14 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "defaultActiveButton",
+                    "decorators": [],
+                    "description": "Кнопка по умолчанию.",
+                    "required": false,
+                    "type": "string | number",
                     "example": null
                 },
                 {
@@ -25351,7 +26122,7 @@
             "name": "ILinkProps",
             "moduleName": "ui/nav/Link/Link",
             "title": "Link",
-            "description": "Ссылка",
+            "description": "\nСсылка\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -25724,6 +26495,22 @@
                     "example": "true"
                 },
                 {
+                    "name": "itemProps",
+                    "decorators": [],
+                    "description": "Props для пункта",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "INavItem[]",
+                    "example": null
+                },
+                {
                     "name": "label",
                     "decorators": [],
                     "description": "Текст элемента",
@@ -25879,14 +26666,6 @@
                     "example": null
                 },
                 {
-                    "name": "dark",
-                    "decorators": [],
-                    "description": "Темная тема",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                },
-                {
                     "name": "items",
                     "decorators": [],
                     "description": "Коллекция с элементами навигации. Также можно передать идентификатор роута, тогда компонент найдет все\nвложенные роуты и отобразит их в навигации.",
@@ -25956,19 +26735,11 @@
                     "example": null
                 },
                 {
-                    "name": "dark",
-                    "decorators": [],
-                    "description": "Темная тема",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                },
-                {
                     "name": "items",
                     "decorators": [],
                     "description": "Коллекция с элементами навигации. Также можно передать идентификатор роута, тогда компонент найдет все\nвложенные роуты и отобразит их в навигации.",
                     "required": true,
-                    "type": "INavItem & {isActive: boolean}[]",
+                    "type": "INavItem & {isActive: boolean, isActiveNested: boolean}[]",
                     "example": null
                 },
                 {
@@ -26498,6 +27269,14 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "alwaysOpened",
+                    "decorators": [],
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "autoOpenLevels",
                     "decorators": [],
                     "description": "Максимальный уровень вложенности, до которого все узлы будут отображаться в развёрнутом виде",
@@ -26591,6 +27370,14 @@
             ],
             "properties": [
                 {
+                    "name": "alwaysOpened",
+                    "decorators": [],
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "autoOpenLevels",
                     "decorators": [],
                     "description": "Максимальный уровень вложенности, до которого все узлы будут отображаться в развёрнутом виде",
@@ -26683,8 +27470,8 @@
         "ITextProps": {
             "name": "ITextProps",
             "moduleName": "ui/typography/Text/Text",
-            "title": "",
-            "description": "",
+            "title": "Text",
+            "description": "\nКомпонент для вывода текстового содержимого, с возможностью настройки тэгов, цвета и типа\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -26760,8 +27547,8 @@
         "ITitleProps": {
             "name": "ITitleProps",
             "moduleName": "ui/typography/Title/Title",
-            "title": "",
-            "description": "",
+            "title": "Title",
+            "description": "\nКомпонент предназначен для вывода заголовков, предоставляет возможность для настройки, цвета, типа и тэга.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -26836,14 +27623,6 @@
         }
     },
     "declarations": {
-        "IApiMethod": {
-            "name": "IApiMethod",
-            "decorators": [],
-            "description": "",
-            "required": true,
-            "type": "{}",
-            "example": null
-        },
         "ListControlPosition": {
             "name": "ListControlPosition",
             "decorators": [],
@@ -27020,14 +27799,6 @@
             "type": "IInputFieldProps",
             "example": null
         },
-        "IHeaderViewProps": {
-            "name": "IHeaderViewProps",
-            "decorators": [],
-            "description": "",
-            "required": true,
-            "type": "IHeaderProps",
-            "example": null
-        },
         "ILoaderViewProps": {
             "name": "ILoaderViewProps",
             "decorators": [],
@@ -27183,15 +27954,6 @@
                     "parameters": []
                 }
             ]
-        },
-        "components/ApiComponent": {
-            "name": "default",
-            "moduleName": "components/ApiComponent",
-            "title": "Http Component",
-            "description": "Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.",
-            "tags": {},
-            "properties": [],
-            "methods": []
         },
         "components/ClientStorageComponent": {
             "name": "default",

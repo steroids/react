@@ -10,7 +10,11 @@ export interface ISidebarItem extends INavItem {
     */
     border?: boolean,
 }
-
+/**
+* Sidebar
+*
+* Компонент Sidebar представляет собой боковое меню с возможностью гибкой настройки
+*/
 export interface ISidebarProps extends IUiComponent {
     /**
      * Объект с информацией о логотипе.

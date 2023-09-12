@@ -1,49 +1,52 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/prefer-default-export */
-import moment from 'moment';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 export const convertDate = (
     date: string | Date,
     fromFormats: string | string[],
     toFormat: string = null,
-    utc = false,
+    isUtc = false,
     dateInUtc = false,
 ) => {
     if (!date) {
         return null;
     }
 
-    let momentDate;
+    let dayjsDate;
 
     if (typeof date === 'string' && fromFormats) {
         const validFormat = [].concat(fromFormats || []).find(format => (
             date
             && date.length === format.length
-            && moment(date, format).isValid()
+            && dayjs(date, format).isValid()
         ));
+
         if (!validFormat) {
             return null;
         }
 
         if (dateInUtc) {
-            momentDate = moment.utc(date, validFormat);
+            dayjsDate = dayjs(date, validFormat).utc(true);
         } else {
-            momentDate = moment(date, validFormat);
+            dayjsDate = dayjs(date, validFormat);
         }
     } else if (date instanceof Date) {
-        momentDate = moment(date);
+        dayjsDate = dayjs(date);
     }
 
-    if (!momentDate) {
+    if (!dayjsDate) {
         return null;
     }
 
-    if (utc) {
-        momentDate = momentDate.utc();
-    } else {
-        momentDate = momentDate.local();
+    if (isUtc) {
+        dayjsDate = dayjsDate.utc();
     }
 
-    return toFormat ? momentDate.format(toFormat) : momentDate.toDate();
+    return toFormat ? dayjsDate.format(toFormat) : dayjsDate.toDate();
 };
 
 /**

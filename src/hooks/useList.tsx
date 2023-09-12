@@ -4,7 +4,6 @@ import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import {IApiMethod} from '../components/ApiComponent';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
@@ -61,7 +60,7 @@ export interface IListConfig {
      * Url, который вернет коллекцию элементов
      * @example api/v1/articles
      */
-    action?: string | IApiMethod,
+    action?: string,
 
     /**
      * Тип HTTP запроса (GET | POST | PUT | DELETE)

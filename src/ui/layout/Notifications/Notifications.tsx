@@ -43,9 +43,10 @@ interface INotificationItem {
 }
 
 /**
+ * Notifications
+ *
  * Компонент Notifications представляет собой контейнер для отображения всплывающих уведомлений.
  **/
-
 export interface INotificationsProps {
     /**
     * Исходные уведомления

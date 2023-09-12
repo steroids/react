@@ -1,9 +1,65 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import * as React from 'react';
 import IntlMessageFormat from 'intl-messageformat';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import _isObject from 'lodash-es/isObject';
-import 'moment/locale/it';
-import 'moment/locale/ru';
+import 'dayjs/locale/it';
+import 'dayjs/locale/ru';
+
+/**
+ * Интерфейс для LocaleComponent
+ */
+export interface ILocaleComponent {
+    /**
+     * Разница времени с бекендом (в микросекундах)
+     */
+    backendTimeDiff: null;
+
+    /**
+     * Временная зона бекенда
+     */
+    backendTimeZone: any;
+
+    /**
+     * Язык приложения
+     * @example ru
+     */
+    language: string;
+
+    /**
+     * Исходный язык
+     */
+    sourceLanguage: string;
+
+    /**
+     * Переводы сообщений
+     */
+    translations: any;
+
+    /**
+     * Получение экземпляра `dayjs` с учетом временной зоны бекенда
+     * @param date Дата
+     * @param format Формат даты
+     * @returns Экземпляр `dayjs`
+     */
+    dayjs(date?: string, format?: string): dayjs.Dayjs;
+
+    /**
+     * Алиас для метода `translate`
+     * @param message Сообщение для перевода
+     * @param params Параметры перевода
+     * @returns Переведенное сообщение
+     */
+    t(message: string, params?: Record<string, any>): string;
+
+    /**
+     * Перевод сообщения
+     * @param message Сообщение для перевода
+     * @param params Параметры перевода
+     * @returns Переведенное сообщение
+     */
+    translate(message: string, params?: Record<string, any>): string;
+}
 
 /**
  * Locale Component
@@ -11,7 +67,7 @@ import 'moment/locale/ru';
  *
  * Пример строки: `{__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}`
  */
-export default class LocaleComponent {
+export default class LocaleComponent implements ILocaleComponent {
     backendTimeDiff: null;
 
     backendTimeZone: any;
@@ -43,26 +99,26 @@ export default class LocaleComponent {
     }
 
     /**
-     * Получение экземпляра `moment` с учетом временной зоны бекенда
+     * Получение экземпляра `dayjs` с учетом временной зоны бекенда
      * @param date Дата
      * @param format Формат
      */
-    moment(date: string = undefined, format: string = undefined) {
+    dayjs(date: string = undefined, format: string = undefined): dayjs.Dayjs {
         if (date && this.backendTimeZone) {
             if (
                 date.length === 16
-                && moment(date, 'YYYY-MM-DD HH:mm').isValid()
+                && dayjs(date, 'YYYY-MM-DD HH:mm').isValid()
             ) {
                 date += ':00';
             }
             if (
                 date.length === 19
-                && moment(date, 'YYYY-MM-DD HH:mm:ss').isValid()
+                && dayjs(date, 'YYYY-MM-DD HH:mm:ss').isValid()
             ) {
                 date += this.backendTimeZone;
             }
         }
-        return moment(date, format).locale(this.language);
+        return dayjs(date, format).locale(this.language);
     }
 
     t(message, params = {}) {

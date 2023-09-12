@@ -3,7 +3,6 @@ import _get from 'lodash-es/get';
 import _omit from 'lodash-es/omit';
 import {ReactNode, useCallback, useEffect, useMemo} from 'react';
 import {useUpdateEffect} from 'react-use';
-import {IApiRest} from '../../../components/ApiComponent';
 import CrudModal from './CrudModal';
 import {listRefresh} from '../../../actions/list';
 import {closeModal, openModal} from '../../../actions/modal';
@@ -24,6 +23,15 @@ import useDispatch from '../../../hooks/useDispatch';
 import {IFormProps} from '../../form/Form/Form';
 import {IGridProps} from '../../list/Grid/Grid';
 import {IControlItem} from '../../nav/Controls/Controls';
+
+export interface IApiRest {
+    index?: any,
+    create?: any,
+    update?: any,
+    delete?: any,
+    view?: any,
+    [key: string]: any | undefined,
+}
 
 export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'onClick'> {
     /**
@@ -110,30 +118,6 @@ export interface ICrudClickProps {
  * Компонент CRUD (Create, Read, Update, Delete) предоставляет интерфейс для выполнения операций создания,
  * чтения, обновления и удаления записей. Он позволяет создавать, просматривать, редактировать и удалять
  * записи из некоторой модели данных.
- *
- * Компонент `Crud` принимает следующие свойства:
- *
- * - `crudId`: идентификатор для CRUD (тип: string)
- * - `mode`: режим работы CRUD (тип: 'page' | 'modal')
- * - `restUrl`: ссылка на REST API (тип: string)
- * - `restApi`: методы REST API (тип: IApiRest)
- * - `primaryKey`: первичный ключ записей (тип: 'id' | string)
- * - `queryKey`: ключ запроса (тип: 'id' | string)
- * - `model`: модель данных (тип: string)
- * - `searchModel`: модель данных используемая для поиска (тип: string)
- * - `index`: параметры для колонки index (тип: boolean | ICrudItem)
- * - `create`: параметры для колонки create (тип: boolean | ICrudItem)
- * - `update`: параметры для колонки update (тип: boolean | ICrudItem)
- * - `view`: параметры для колонки view (тип: boolean | ICrudItem)
- * - `delete`: параметры для колонки delete (тип: boolean | ICrudItem)
- * - `items`: коллекция элементов (тип: ICrudItem[] | { [key: string]: ICrudItem })
- * - `grid`: параметры Grid (тип: IGridProps | React.ReactNode)
- * - `form`: параметры формы (тип: IFormProps | React.ReactNode)
- * - `detail`: параметры для колонки detail (тип: any)
- * - `crudView`: представление для CRUD (тип: CustomView)
- * - `errorHandler`: функция-обработчик ошибок (тип: (error, dispatch: any) => void)
- *
- * Примечание: Компонент `Crud` требует указания идентификатора CRUD (`crudId`) и ссылки на REST API (`restUrl`).
  */
 export interface ICrudProps {
     /**

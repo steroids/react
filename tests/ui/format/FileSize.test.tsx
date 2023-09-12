@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import FileSize, {IFileSizeFormatterProps} from '../../../src/ui/format/FileSize/FileSize';
+import FileSize, {IFileSizeProps} from '../../../src/ui/format/FileSize/FileSize';
 import DefaultFormatterMockView from './DefaultFormatterMockView';
 
 import {JSXWrapper} from '../../helpers';
@@ -8,7 +8,7 @@ import {render} from '../../customRender';
 describe('FileSize tests', () => {
     const props = {
         view: DefaultFormatterMockView,
-    } as IFileSizeFormatterProps;
+    } as IFileSizeProps;
 
     it('should have correct value', () => {
         const valueBytes = 23400;

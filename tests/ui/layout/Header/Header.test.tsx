@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import {render} from '../../../customRender';
 import Header, {IHeaderProps} from '../../../../src/ui/layout/Header/Header';
 import {JSXWrapper, getElementByClassName} from '../../../helpers';
+import HeaderMockView from './HeaderMockView';
 
 describe('Header test', () => {
     const expectedHeaderClassName = 'HeaderView';
@@ -26,6 +27,7 @@ describe('Header test', () => {
     ];
 
     const props: IHeaderProps = {
+        view: HeaderMockView,
         logo: {icon: 'kozhinDev', title: 'KozhinDev'},
         nav: {
             items: navItems,

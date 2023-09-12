@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, {ChangeEvent, useMemo, useCallback, useRef} from 'react';
+import {useNumberField} from '../../../hooks/useNumberField';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -52,36 +53,17 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const validateNumericInput = (value) => {
-        if (value === '' || value === null || value === undefined) {
-            return true;
-        }
+    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(props.input);
 
-        const regex = /^-?\d*\.?\d+$/;
-        return regex.test(value);
-    };
-
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(
-        props.input,
-        [validateNumericInput],
+    const {onInputChange} = useNumberField(
+        currentInputRef,
+        {
+            max: props.max,
+            min: props.min,
+            value: props.input.value,
+        },
+        onChange,
     );
-
-    const setValidity = React.useCallback((message: string) => {
-        currentInputRef.current?.setCustomValidity(message);
-    }, [currentInputRef]);
-
-    React.useEffect(() => {
-        const defaultValidity = `The number is not included in the range ${props.min} to ${props.max}`;
-
-        // eslint-disable-next-line no-unused-expressions
-        props.input.value > props.max
-            || props.input.value < props.min
-            || props.input.value === ''
-            || props.input.value === null
-            || props.input.value === undefined
-            ? setValidity(__(defaultValidity))
-            : setValidity('');
-    }, [currentInputRef, props.input.value, props.max, props.min, setValidity]);
 
     const onStepUp = useCallback(() => {
         onChange(null, String(Number(currentInputRef?.current?.value) + Number(props.step || DEFAULT_STEP)));
@@ -102,7 +84,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value ?? '',
-        onChange,
+        onChange: onInputChange,
         type: 'text',
         min: props.min,
         max: props.max,
@@ -112,7 +94,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         autoComplete: 'off',
         onKeyDown,
         ...props.inputProps,
-    }), [props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, props.inputProps, onChange, onKeyDown]);
+    }), [props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, props.inputProps, onInputChange, onKeyDown]);
 
     return components.ui.renderView(props.view || 'form.NumberFieldView', {
         ...props,

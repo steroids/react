@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    <a href="https://steroids.kozhin.dev/">Steroids.kozhin.dev</a> •
+    <a href="https://steroids.kozhindev.com/">Steroids site</a> •
     <a href="https://github.com/steroids/react/issues/new">Submit an Issue</a> •
     <a href="https://t.me/kozhindev_com">Contact Us</a>
 </p>

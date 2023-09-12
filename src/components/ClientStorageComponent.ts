@@ -1,12 +1,42 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-expressions */
 import * as cookie from 'js-cookie';
-import moment from 'moment';
+import dayjs from 'dayjs';
+
+/**
+ * Интерфейс для ClientStorageComponent
+ */
+export interface IClientStorageComponent {
+    /**
+     * Получить значение из хранилища.
+     * @param name Имя записи.
+     * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
+     * @returns Значение записи.
+     */
+    get(name: string, storageName?: 'local' | 'session' | 'cookie'): string | null;
+
+    /**
+     * Установить значение в хранилище.
+     * @param name Имя записи.
+     * @param value Значение записи.
+     * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
+     * @param expires (Необязательный) Срок действия записи в миллисекундах.
+     */
+    set(name: string, value: string, storageName?: 'local' | 'session' | 'cookie', expires?: number | null): void;
+
+    /**
+     * Удалить значение из хранилища.
+     * @param name Имя записи.
+     * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
+     */
+    remove(name: string, storageName?: 'local' | 'session' | 'cookie'): void;
+}
 
 /**
  * Client Storage Component
  * Слой хранения данных в браузере (cookie, local/session storage) или ReactNative
  */
-export default class ClientStorageComponent {
+export default class ClientStorageComponent implements IClientStorageComponent {
     STORAGE_COOKIE: string;
 
     STORAGE_LOCAL: any;
@@ -90,7 +120,7 @@ export default class ClientStorageComponent {
             };
 
             if (expires && process.env.IS_SSR) {
-                options.expires = moment().add(options.expires).utc().toDate();
+                options.expires = dayjs().add(options.expires, 'days').utc().toDate();
             }
 
             process.env.IS_SSR ? this._ssrCookie.set(name, value, options) : cookie.set(name, value, options);

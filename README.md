@@ -7,7 +7,7 @@
 <p align="center">
     <a href="https://steroids.kozhindev.com/">Steroids site</a> •
     <a href="https://github.com/steroids/react/issues/new">Submit an Issue</a> •
-    <a href="https://t.me/kozhindev_com">Contact Us</a>
+    <a href="https://t.me/+R0N4XzKbVSYzOTUy">Contact Us</a>
 </p>
 
 Our Open-Source **Steroids** framework is an ecosystem based on React and Redux with a large set of ready-made components, unique architecture, UI Kit and SSR

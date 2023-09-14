@@ -7,12 +7,26 @@ interface IStyleObj {
     top: 'unset' | number,
 }
 
+export const enum Positions {
+    TOP = 'top',
+    TOP_LEFT = 'topLeft',
+    TOP_RIGHT = 'topRight',
+    BOTTOM = 'bottom',
+    BOTTOM_LEFT = 'bottomLeft',
+    BOTTOM_RIGHT = 'bottomRight',
+    LEFT = 'left',
+    LEFT_TOP = 'leftTop',
+    LEFT_BOTTOM = 'leftBottom',
+    RIGHT = 'right',
+    RIGHT_TOP = 'rightTop',
+    RIGHT_BOTTOM = 'rightBottom',
+}
+
 /**
  * Варианты абсолютного позиционирования
  * @example 'top'
  */
-type Position = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
-    'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
+type Position = (typeof Positions)[keyof typeof Positions] | string;
 
 export interface IAbsolutePositioningInputProps {
     /**
@@ -102,9 +116,9 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
 
         // eslint-disable-next-line default-case
         switch (newPosition) {
-            case 'top':
-            case 'topLeft':
-            case 'topRight':
+            case Positions.TOP:
+            case Positions.TOP_LEFT:
+            case Positions.TOP_RIGHT:
                 // Проверка - выходит ли tooltip за верхний край страницы?
                 // Если да - меняем позицию на bottom
                 if (
@@ -118,9 +132,9 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
                 }
                 break;
 
-            case 'bottom':
-            case 'bottomLeft':
-            case 'bottomRight':
+            case Positions.BOTTOM:
+            case Positions.BOTTOM_LEFT:
+            case Positions.BOTTOM_RIGHT:
                 // Проверка - выходит ли tooltip за нижний край страницы?
                 // Если да - меняем позицию на top
                 if (
@@ -136,9 +150,9 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
                 }
                 break;
 
-            case 'left':
-            case 'leftTop':
-            case 'leftBottom':
+            case Positions.LEFT:
+            case Positions.LEFT_TOP:
+            case Positions.LEFT_BOTTOM:
                 // Проверка - выходит ли tooltip за левый край страницы?
                 // Если да - меняем позицию на right
                 if (useAutoPositioning && (parentDimensions.left <= Math.round(componentSize.width + props.gap))) {
@@ -150,9 +164,9 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
 
                 break;
 
-            case 'right':
-            case 'rightTop':
-            case 'rightBottom':
+            case Positions.RIGHT:
+            case Positions.RIGHT_TOP:
+            case Positions.RIGHT_BOTTOM:
                 // Проверка - выходит ли tooltip за правый край страницы?
                 // Если да - меняем позицию на left
                 if (
@@ -171,36 +185,36 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
 
         // eslint-disable-next-line default-case
         switch (newPosition) {
-            case 'top':
-            case 'bottom':
+            case Positions.TOP:
+            case Positions.BOTTOM:
                 // Выравнивание по середине
                 newStyle.left = (parentDimensions.left + (parentDimensions.width / 2)) - (componentSize.width / 2);
                 break;
 
-            case 'topLeft':
-            case 'bottomLeft':
+            case Positions.TOP_LEFT:
+            case Positions.BOTTOM_LEFT:
                 // Ширина tooltip больше родителя - стрелка на середину родителя
                 newStyle.left = parentDimensions.left;
                 break;
 
-            case 'topRight':
-            case 'bottomRight':
+            case Positions.TOP_RIGHT:
+            case Positions.BOTTOM_RIGHT:
                 // Ширина tooltip больше родителя - стрелка на середину родителя
                 newStyle.right = document.body.clientWidth - parentDimensions.right;
                 break;
 
-            case 'left':
-            case 'right':
+            case Positions.LEFT:
+            case Positions.RIGHT:
                 newStyle.top = (parentDimensions.top + (parentDimensions.height / 2)) - (componentSize.height / 2);
                 break;
 
-            case 'leftTop':
-            case 'rightTop':
+            case Positions.LEFT_TOP:
+            case Positions.RIGHT_TOP:
                 newStyle.top = parentDimensions.top;
                 break;
 
-            case 'leftBottom':
-            case 'rightBottom':
+            case Positions.LEFT_BOTTOM:
+            case Positions.RIGHT_BOTTOM:
                 newStyle.top = parentDimensions.top + parentDimensions.height - componentSize.height;
                 break;
         }

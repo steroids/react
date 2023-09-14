@@ -1,7 +1,7 @@
 import {act, renderHook, waitFor} from '@testing-library/react';
 
 import {useAbsolutePositioning} from '../../src/hooks';
-import {IAbsolutePositioningInputProps} from '../../src/hooks/useAbsolutePositioning';
+import {IAbsolutePositioningInputProps, Positions} from '../../src/hooks/useAbsolutePositioning';
 
 const MOCKED_WINDOW_SCROLL_Y_VALUE = 20;
 const MOCKED_DOCUMENT_BODY_CLIENT_WIDTH_VALUE = 320;
@@ -46,15 +46,8 @@ afterAll(() => {
     });
 });
 
-const enum POSITIONS {
-    top = 'top',
-    bottom= 'bottom',
-    left= 'left',
-    right= 'right'
-}
-
 const DEFAULT_PROPS: IAbsolutePositioningInputProps = {
-    position: POSITIONS.top,
+    position: Positions.TOP,
     autoPositioning: true,
     gap: 5,
     componentDestroyDelay: 100,
@@ -131,7 +124,7 @@ describe('useAbsolutePositioning hook', () => {
         expect(DEFAULT_PROPS.onVisibleChange).toHaveBeenCalledWith(false);
     });
 
-    it('should calculate the top position correctly', () => {
+    it('should calculate value for the top style correctly', () => {
         const {result} = renderHook(() => useAbsolutePositioning(DEFAULT_PROPS));
 
         act(() => {
@@ -156,7 +149,7 @@ describe('useAbsolutePositioning hook', () => {
     });
 
     it('should change position from left to the right correctly', () => {
-        const {result} = renderHook(() => useAbsolutePositioning({...DEFAULT_PROPS, position: POSITIONS.left}));
+        const {result} = renderHook(() => useAbsolutePositioning({...DEFAULT_PROPS, position: Positions.LEFT}));
 
         act(() => {
             const childRef = {
@@ -174,14 +167,14 @@ describe('useAbsolutePositioning hook', () => {
             };
 
             const {calculateAbsolutePosition} = result.current;
-            calculateAbsolutePosition(POSITIONS.left, childRef, componentSize);
+            calculateAbsolutePosition(Positions.LEFT, childRef, componentSize);
         });
 
-        expect(result.current.position).toBe(POSITIONS.right);
+        expect(result.current.position).toBe(Positions.RIGHT);
     });
 
     it('should change position from right to the left correctly', () => {
-        const {result} = renderHook(() => useAbsolutePositioning({...DEFAULT_PROPS, position: POSITIONS.right}));
+        const {result} = renderHook(() => useAbsolutePositioning({...DEFAULT_PROPS, position: Positions.RIGHT}));
 
         act(() => {
             const childRef = {
@@ -199,14 +192,14 @@ describe('useAbsolutePositioning hook', () => {
             };
 
             const {calculateAbsolutePosition} = result.current;
-            calculateAbsolutePosition(POSITIONS.right, childRef, componentSize);
+            calculateAbsolutePosition(Positions.RIGHT, childRef, componentSize);
         });
 
-        expect(result.current.position).toBe(POSITIONS.left);
+        expect(result.current.position).toBe(Positions.LEFT);
     });
 
     it('should change position from bottom to the top correctly', () => {
-        const {result} = renderHook(() => useAbsolutePositioning({...DEFAULT_PROPS, position: POSITIONS.bottom}));
+        const {result} = renderHook(() => useAbsolutePositioning({...DEFAULT_PROPS, position: Positions.BOTTOM}));
 
         act(() => {
             const componentSize = {
@@ -215,10 +208,10 @@ describe('useAbsolutePositioning hook', () => {
             };
 
             const {calculateAbsolutePosition} = result.current;
-            calculateAbsolutePosition(POSITIONS.bottom, DEFAULT_CHILD_REF, componentSize);
+            calculateAbsolutePosition(Positions.BOTTOM, DEFAULT_CHILD_REF, componentSize);
         });
 
-        expect(result.current.position).toBe(POSITIONS.top);
+        expect(result.current.position).toBe(Positions.TOP);
     });
 
     it('should set parent left value when tooltip calculated value less than 0', () => {

@@ -87,7 +87,7 @@ export default class HttpComponent {
             // client storage method 'get' could be asynchronous
             this._accessToken = tokenValue instanceof Promise
                 ? await tokenValue
-                : tokenValue;xr
+                : tokenValue;
 
             if (this._accessToken) {
                 clientStorage.set(

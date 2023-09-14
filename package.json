@@ -1,6 +1,6 @@
 {
   "name": "@steroidsjs/core",
-  "version": "2.3.0-beta.8",
+  "version": "2.3.0-beta.9",
   "description": "",
   "author": "Vladimir Kozhin <hello@kozhindev.com>",
   "repository": {
@@ -27,7 +27,7 @@
     "date-fns": "^2.29.3",
     "domready": "^1.0.8",
     "dot-prop-immutable": "^2.1.0",
-    "fileup-core": "^1.2.2",
+    "fileup-core": "^1.2.7",
     "history": "^4.10.1",
     "intl-messageformat": "^10.1.4",
     "js-cookie": "^2.2.1",

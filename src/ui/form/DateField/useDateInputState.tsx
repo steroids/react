@@ -132,9 +132,14 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         value = value.replace(/[^0-9:. ]/g, '');
 
         setDisplayValue(value);
-        const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC, props.dateInUTC);
-        const newValue = parsedValue || !value ? parsedValue || null : false;
-        if (newValue && newValue !== props.input.value) {
+        let newValue = value;
+
+        if (value !== null) {
+            const parsedValue = convertDate(value, props.displayFormat, props.valueFormat, props.useUTC, props.dateInUTC);
+            newValue = parsedValue || !value ? parsedValue : false;
+        }
+
+        if (newValue !== false && newValue !== props.input.value) {
             props.input.onChange.call(null, newValue);
             if (props.onChange) {
                 props.onChange.call(null, value);

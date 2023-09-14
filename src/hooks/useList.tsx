@@ -100,6 +100,12 @@ export interface IListConfig {
     empty?: boolean | string | IEmptyProps,
 
     /**
+     * Состояние загрузки элементов списка
+     * @example false
+     */
+    isLoading?: boolean,
+
+    /**
      * Форма для поиска элементов
      * @example {fields: ['title'], model: {attributes: ['title:string:Название']}}
      */
@@ -445,7 +451,7 @@ export default function useList(config: IListConfig): IListOutput {
     useUpdateEffect(() => {
         _union(Object.keys(prevQuery), Object.keys(config.query))
             .forEach(key => {
-                if (_isEqual(prevQuery[key], config.query[key])) {
+                if (!_isEqual(prevQuery[key], config.query[key])) {
                     dispatch(formChange(formId, key, config.query[key]));
                 }
             });
@@ -455,7 +461,6 @@ export default function useList(config: IListConfig): IListOutput {
     useUpdateEffect(() => {
         dispatch([
             listSetItems(config.listId, config.items),
-            listLazyFetch(config.listId),
         ]);
     }, [dispatch, config.items, config.listId]);
 

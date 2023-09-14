@@ -94,7 +94,7 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
 
     // Update config in state on raw config updated
     useUpdateEffect(() => {
-        setConfig(rawConfig);
+        setConfig(normalizeConfig(rawConfig));
     }, [rawConfig]);
 
     // Get preloaded data
@@ -137,9 +137,9 @@ export default function useFetch(rawConfig: IFetchConfig = null): IFetchResult {
             } catch (error) {
                 if (error.isAxiosError) {
                     setAxiosError(error);
-                }  
+                }
             }
-            
+
             setIsLoading(false);
         }
     }, [components, config]);

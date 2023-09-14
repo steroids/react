@@ -13,6 +13,7 @@ import {
     LIST_TOGGLE_ITEM,
     LIST_TOGGLE_ALL,
     LIST_SET_LAYOUT,
+    LIST_ITEM_DELETE,
 } from '../actions/list';
 
 const initialState = {
@@ -119,6 +120,18 @@ const reducerMap = {
             },
         },
     }),
+    [LIST_ITEM_DELETE]: (state, action) => ({
+        ...state,
+        lists: {
+            ...state.lists,
+            [action.listId]: {
+                ...state.lists[action.listId],
+                items: state.lists[action.listId].items.filter(
+                    item => !_isMatch(item, action.condition)
+                ),
+            },
+        },
+    }),
     [LIST_DESTROY]: (state, action) => {
         delete state.lists[action.listId];
         return {
@@ -129,12 +142,12 @@ const reducerMap = {
         };
     },
     [LIST_TOGGLE_ITEM]: (state, action) => {
-        const selectedIds = _get(state, ['selectedIds', action.listId]) || [];
+        let selectedIds = _get(state, ['selectedIds', action.listId]) || [];
         const index = selectedIds.indexOf(action.itemId);
         if (index === -1) {
-            selectedIds.push(action.itemId);
+            selectedIds = [...selectedIds, action.itemId];
         } else {
-            selectedIds.splice(index, 1);
+            selectedIds = selectedIds.filter(selectedId => selectedId !== action.itemId);
         }
         return {
             ...state,

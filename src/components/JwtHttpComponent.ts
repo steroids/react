@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {logout} from '../actions/auth';
-import BaseHttpComponent from './HttpComponent';
+import BaseHttpComponent from '@steroidsjs/core/components/HttpComponent';
+import {login, logout} from '@steroidsjs/core/actions/auth';
 
 export default class JwtHttpComponent extends BaseHttpComponent {
     refreshTokenRequest: {
@@ -55,19 +55,24 @@ export default class JwtHttpComponent extends BaseHttpComponent {
                 ) {
                     this.removeAccessToken();
                     const {store} = this._components;
-                    const response = await this.send(
-                        this.refreshTokenRequest.method,
-                        this.refreshTokenRequest.url,
-                        {
-                            [this.refreshTokenKey]: this._refreshToken,
-                        },
-                    );
-                    const accessToken = response?.data?.[this.accessTokenKey];
-                    if (accessToken) {
-                        this.setAccessToken(accessToken);
-                        originalRequest._isRetry = true;
-                        originalRequest.headers.Authorization = 'Bearer ' + accessToken;
-                        return axiosInstance.request(originalRequest);
+
+                    try {
+                        const response = await this.send(
+                            this.refreshTokenRequest.method,
+                            this.refreshTokenRequest.url,
+                            {
+                                [this.refreshTokenKey]: this._refreshToken,
+                            },
+                        );
+                        const accessToken = response?.data?.[this.accessTokenKey];
+                        if (accessToken) {
+                            this.setAccessToken(accessToken);
+                            originalRequest._isRetry = true;
+                            originalRequest.headers.Authorization = 'Bearer ' + accessToken;
+                            return axiosInstance.request(originalRequest);
+                        }
+                    } catch {
+                        store.dispatch(logout());
                     }
                     store.dispatch(logout());
                 }

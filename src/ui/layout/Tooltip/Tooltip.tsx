@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {useCallback, useRef, useState} from 'react';
 import {useMount} from 'react-use';
-import calculate from '../Tooltip/calculate';
+
+import calculateComponentAbsolutePosition from '../../../utils/calculateComponentAbsolutePosition';
 import {useComponents} from '../../../hooks';
 import TooltipInnerPortal from './TooltipPortalInner';
 
@@ -170,7 +171,7 @@ function Tooltip(props: ITooltipProps): JSX.Element {
 
     // Основная функция расчета позиции
     const calculatePosition = useCallback((tooltipSize, arrowSize) => {
-        const result = calculate(
+        const result = calculateComponentAbsolutePosition(
             props.gap,
             positionRef.current,
             childRef.current,

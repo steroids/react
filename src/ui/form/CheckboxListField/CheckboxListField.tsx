@@ -50,6 +50,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
     orientation?: Orientation,
     disabled?: boolean,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
+    size?: Size,
 }
 
 function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
@@ -77,7 +78,10 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         inputValue: props.input.value,
     });
 
+    console.log('All selected IDS: ', selectedIds);
+
     const onItemSelect = useCallback((id) => {
+        console.log('New selected id: ', id);
         setSelectedIds(id);
     }, [setSelectedIds]);
 

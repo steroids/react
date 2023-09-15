@@ -78,6 +78,7 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
         inputValue: props.input.value,
     });
 
+
     const onItemSelect = useCallback((id) => {
         setSelectedIds(id);
     }, [setSelectedIds]);
@@ -120,7 +121,7 @@ RadioListField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    multiple: false,
+    multiple: true,
     errors: null,
     size: 'md',
     orientation: 'vertical',

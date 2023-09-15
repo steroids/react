@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, {ChangeEvent, useMemo, useCallback, useRef} from 'react';
-import {useNumberField} from '../../../hooks/useNumberField';
+import useInputTypeNumber from '../../../hooks/useInputTypeNumber';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -29,7 +29,7 @@ export interface INumberFieldProps extends IBaseFieldProps {
      * Шаг увеличения/уменьшения значения
      * @example 5
      */
-    step?: string | number;
+    step?: number;
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
@@ -55,7 +55,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(props.input);
 
-    const {onInputChange} = useNumberField(
+    const {onInputChange} = useInputTypeNumber(
         currentInputRef,
         {
             max: props.max,
@@ -65,13 +65,19 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         onChange,
     );
 
-    const onStepUp = useCallback(() => {
-        onChange(null, String(Number(currentInputRef?.current?.value) + Number(props.step || DEFAULT_STEP)));
+    const handleStep = useCallback((increment) => {
+        const step = props.step || DEFAULT_STEP;
+
+        onChange(null, String(Number(currentInputRef?.current?.value) + (increment ? step : -step)));
     }, [currentInputRef, onChange, props.step]);
 
+    const onStepUp = useCallback(() => {
+        handleStep(true);
+    }, [handleStep]);
+
     const onStepDown = useCallback(() => {
-        onChange(null, String(Number(currentInputRef?.current?.value) - Number(props.step || DEFAULT_STEP)));
-    }, [currentInputRef, onChange, props.step]);
+        handleStep(false);
+    }, [handleStep]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {

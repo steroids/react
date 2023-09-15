@@ -19,6 +19,7 @@ import useSsr from './useSsr';
 import useUniqueId from './useUniqueId';
 import useTheme from './useTheme';
 import useSaveCursorPosition from './useSaveCursorPosition';
+import useInputTypeNumber from './useInputTypeNumber';
 
 export {
     useAbsolutePositioning,

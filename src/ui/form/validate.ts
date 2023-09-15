@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import _isString from 'lodash-es/isString';
 import _isInteger from 'lodash-es/isInteger';
 import _set from 'lodash-es/set';
@@ -5,7 +6,7 @@ import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
 import _size from 'lodash-es/size';
 import _isFunction from 'lodash-es/isFunction';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const validate = (data, rules) => {
     const errors = {};
@@ -22,7 +23,7 @@ const validate = (data, rules) => {
                     }
                     break;
                 case 'date':
-                    if (value && !moment(value, 'YYYY-MM-DD').isValid()) {
+                    if (value && !dayjs(value, 'YYYY-MM-DD').isValid()) {
                         errors[attribute] = __('Date wrong format');
                     }
                     break;

@@ -1,4 +1,5 @@
-import moment from 'moment';
+/* eslint-disable import/no-extraneous-dependencies */
+import dayjs from 'dayjs';
 import {useComponents} from '../../../hooks';
 import {IDateFormatterProps} from '../DateFormatter/DateFormatter';
 
@@ -44,8 +45,8 @@ function DateTimeFormatter(props: IDateFormatterProps): JSX.Element {
     }
 
     const date = props.timeZone === false
-        ? moment(props.value).locale(components.locale.language)
-        : components.locale.moment(props.value);
+        ? dayjs(props.value).locale(components.locale.language)
+        : components.locale.dayjs(props.value);
 
     return components.ui.renderView(props.view || 'format.DefaultFormatterView', {
         value: date.format(props.format),

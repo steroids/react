@@ -1,5 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import {useCallback, useMemo} from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {convertDate} from '../../../utils/calendar';
 import {IDateInputStateInput} from '../../form/DateField/useDateInputState';
 
@@ -53,7 +54,7 @@ export default function useDateTime(props:IUseDateTimeProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.dateTimeSeparator, props.input.onChange, props.valueFormat, timeValue]);
     const onTimeSelect = useCallback(time => {
-        const result = (dateValue || moment().format(dateValueFormat)) + props.dateTimeSeparator + time;
+        const result = (dateValue || dayjs().format(dateValueFormat)) + props.dateTimeSeparator + time;
 
         props.input.onChange.call(
             null,

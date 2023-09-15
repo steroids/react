@@ -65,19 +65,19 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         onChange,
     );
 
-    const handleStep = useCallback((increment) => {
+    const onStep = useCallback((isIncrement: boolean) => {
         const step = props.step || DEFAULT_STEP;
 
-        onChange(null, String(Number(currentInputRef?.current?.value) + (increment ? step : -step)));
+        onChange(null, String(Number(currentInputRef?.current?.value) + (isIncrement ? step : -step)));
     }, [currentInputRef, onChange, props.step]);
 
     const onStepUp = useCallback(() => {
-        handleStep(true);
-    }, [handleStep]);
+        onStep(true);
+    }, [onStep]);
 
     const onStepDown = useCallback(() => {
-        handleStep(false);
-    }, [handleStep]);
+        onStep(false);
+    }, [onStep]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {

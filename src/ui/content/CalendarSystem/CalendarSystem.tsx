@@ -1,13 +1,49 @@
 /* eslint-disable no-plusplus */
 import React from 'react';
 import __upperFirst from 'lodash-es/upperFirst';
-import {useDateData} from '../../../hooks/useDateData';
-import {convertDate} from '../../../utils/calendar';
+import {useCalendarControls} from '../../../hooks/useCalendarControls';
+import DateControlEnum from '../../../enums/DateControlType';
+import {useDisplayDate} from '../../../hooks/useDisplayDate';
 import {useMonthCalendar} from '../../../hooks/useMonthCalendar';
 import {useComponents} from '../../../hooks';
 import CalendarEnum from '../../../enums/CalendarType';
 
-export const MONTH_CONVERT_FORMAT = 'MMMM YYYY';
+export const WEEK_DAYS = [
+    __('Mo'),
+    __('Tu'),
+    __('We'),
+    __('Th'),
+    __('Fr'),
+    __('Sa'),
+    __('Su'),
+];
+
+export const HOURS = [
+    '00:00',
+    '01:00',
+    '02:00',
+    '03:00',
+    '04:00',
+    '05:00',
+    '06:00',
+    '07:00',
+    '08:00',
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00',
+    '23:00',
+];
 
 export interface Day {
     dayNumber: number;
@@ -37,27 +73,21 @@ export interface ICalendarSystemProps extends IUiComponent {
 }
 
 export interface ICalendarSystemViewProps extends ICalendarSystemProps {
-    currentMonth: string,
     monthCalendar: Day[],
     calendarType: CalendarEnum,
-    allDateInfo: PresentDateInfo,
+    dateToDisplay: string,
     onCreateHandler: VoidFunction,
     onChangeType: (newType: string) => void,
-
-    onClickNextPrev: () => void,
+    onMonthChange: (newDate: Date) => void,
+    onClickControls: (event: React.MouseEvent<HTMLElement>) => void
 }
 
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
-    const {getCurrentMonth, getCurrentYearUTC, getFirstDayOfCurrentMonth} = useDateData();
+    const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.Month);
-    const {calendarArray} = useMonthCalendar();
-
-    const allDateInfo: PresentDateInfo = React.useMemo(() => ({
-        currentYear: getCurrentYearUTC(),
-        currentMonth: getCurrentMonth(),
-        dateToDisplay: __upperFirst(convertDate(getFirstDayOfCurrentMonth(), null, MONTH_CONVERT_FORMAT)),
-    }), [getCurrentMonth, getCurrentYearUTC, getFirstDayOfCurrentMonth]);
+    const {calendarArray, setCurrentMonthDate} = useMonthCalendar();
+    const {applyControl} = useCalendarControls();
 
     const onChangeType = React.useCallback((newType: string) => {
         setCalendarType(CalendarEnum[newType]);
@@ -67,19 +97,30 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         }
     }, [props]);
 
-    const onCreateHandler = React.useCallback(() => {
-        if (props.onCreate) {
-            props.onCreate();
+    const onMonthChange = React.useCallback((newDate: Date) => {
+        setNewDateToDisplay(newDate);
+        setCurrentMonthDate(newDate);
+    }, [setCurrentMonthDate, setNewDateToDisplay]);
+
+    const onClickControls = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
+        const target = event.target as HTMLDivElement;
+        const controlType: DateControlEnum = target.dataset?.control;
+
+        if (!controlType) {
+            return;
         }
-    }, [props]);
+
+        applyControl(controlType);
+    }, [applyControl]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', {
         ...props,
-        allDateInfo,
+        dateToDisplay,
         monthCalendar: calendarArray,
         calendarType,
         onChangeType,
-        onCreateHandler,
+        onMonthChange,
+        onClickControls,
     });
 }
 

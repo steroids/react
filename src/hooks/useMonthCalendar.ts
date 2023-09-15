@@ -7,6 +7,8 @@ const ONE_MONTH = 1;
 const TOTAL_DAYS_IN_CALENDAR = 42;
 
 export const useMonthCalendar = () => {
+    const [currentMonthDate, setCurrentMonthDate] = React.useState<Date | null>(null);
+
     const isToday = (date: Date): boolean => {
         const today = new Date();
         return (
@@ -37,9 +39,9 @@ export const useMonthCalendar = () => {
     }, []);
 
     const getCurrentMonthDataUTC = React.useCallback(() => {
-        const currentYear = new Date().getFullYear();
+        const currentYear = currentMonthDate?.getFullYear() || new Date().getFullYear();
 
-        const month = new Date().getMonth();
+        const month = currentMonthDate?.getMonth() || new Date().getMonth();
         const nextMonthFirstDay = new Date(currentYear, month + ONE_MONTH, FIRST_DAY);
         const lastDayOfCurrentMonth = new Date(nextMonthFirstDay.getTime() - FIRST_DAY).getDate();
         const firstDayOfCurrentMonth = new Date(Date.UTC(currentYear, month, FIRST_DAY));
@@ -58,7 +60,7 @@ export const useMonthCalendar = () => {
             firstDayOfCurrentMonth,
             daysInCurrentMonth,
         };
-    }, []);
+    }, [currentMonthDate]);
 
     const getCalendarArray = React.useCallback(() => {
         const calendarArray: Day[] = [];
@@ -87,7 +89,7 @@ export const useMonthCalendar = () => {
         const daysAfterCurrentMonth = TOTAL_DAYS_IN_CALENDAR - calendarArray.length;
 
         for (let i = 1; i <= daysAfterCurrentMonth; i++) {
-            const currentDate = new Date(new Date().getFullYear(), month + 1, i);
+            const currentDate = new Date(currentMonthDate?.getFullYear() || new Date().getFullYear(), month + 1, i);
 
             calendarArray.push({
                 date: currentDate,
@@ -100,12 +102,13 @@ export const useMonthCalendar = () => {
             ...day,
             isToday: true,
         }) : day);
-    }, [getCurrentMonthDataUTC, getWeekFromDate]);
+    }, [currentMonthDate, getCurrentMonthDataUTC, getWeekFromDate]);
 
     return {
         getCalendarArray,
         getCurrentMonthDataUTC,
         getWeekFromDate,
         calendarArray: getCalendarArray(),
+        setCurrentMonthDate,
     };
 };

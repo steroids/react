@@ -142,14 +142,14 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
     const FileFieldItemView = props.itemView || components.ui.getView('form.FileFieldItemView');
 
     useEffect(() => {
-        setFilesLoaded(files.filter(file => file._status === FILE_STATUS_END).length === files.length);
-    }, [files]);
-
-    useEffect(() => {
         if (filesLoaded) {
             props.onLoad();
         }
     }, [filesLoaded, props]);
+
+    useEffect(() => {
+        setFilesLoaded(files.filter(file => file._status === FILE_STATUS_END).length === files.length);
+    }, [files]);
 
     return (
         <FileFieldView

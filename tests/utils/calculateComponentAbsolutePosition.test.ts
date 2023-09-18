@@ -298,7 +298,14 @@ describe('calculateComponentAbsolutePosition utils', () => {
 
     describe('with autoPositioning', () => {
         it('should change position from TOP to BOTTOM and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(GAP, Positions.TOP, PARENT_AT_THE_TOP_REF, DEFAULT_COMPONENT_SIZE, null, true);
+            const {style, position} = calculateComponentAbsolutePosition(
+                GAP,
+                Positions.TOP,
+                PARENT_AT_THE_TOP_REF,
+                DEFAULT_COMPONENT_SIZE,
+                null,
+                true,
+            );
 
             const {top, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
@@ -1028,4 +1035,4 @@ describe('calculateComponentAbsolutePosition utils', () => {
             expect(position).toEqual(Positions.LEFT_BOTTOM);
         });
     });
-})
+});

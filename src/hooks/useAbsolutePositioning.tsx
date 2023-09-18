@@ -3,10 +3,43 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 
 import calculateComponentAbsolutePosition from '../utils/calculateComponentAbsolutePosition';
 
-interface IStyleObj {
+export interface IComponentStylePosition {
+    /**
+     * Позиция компонента слева
+     */
     left: 'unset' | number,
+
+    /**
+     * Позиция компонента справа
+     */
     right: 'unset' | number,
+
+    /**
+     * Позиция компонента сверху
+     */
     top: 'unset' | number,
+}
+
+export interface IComponentArrowPosition {
+    /**
+     * Позиция стрелки слева
+     */
+    left?: number | string,
+
+    /**
+     * Позиция стрелки справа
+     */
+    right?: number | string,
+
+    /**
+     * Позиция стрелки сверху
+     */
+    top?: number | string,
+
+    /**
+     * Позиция стрелки снизу
+     */
+    bottom?: number | string,
 }
 
 export const enum Positions {
@@ -32,7 +65,6 @@ export type Position = (typeof Positions)[keyof typeof Positions] | string;
 
 export interface IAbsolutePositioningInputProps {
     /**
-     * @deprecated
      * Включает "умное" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом
      * и краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.
      */
@@ -68,6 +100,11 @@ export interface IAbsolutePositioningInputProps {
     visible?: boolean,
 
     /**
+     * Показывать ли подсказку сразу после рендера страницы
+     */
+    defaultVisible?: boolean,
+
+    /**
      * Обработчик изменения свойства isComponentVisible (отображение на странице).
      * Возвращает значение isComponentVisible.
      */
@@ -94,26 +131,47 @@ export interface IAbsolutePositioningOutputProps {
     /**
      * Объект стилей для абсолютного позиционирования
      */
-    style: IStyleObj,
+    style: IComponentStylePosition,
+
+    /**
+     * Объект стилей для позиционирования стрелки
+     */
+    arrowPosition?: IComponentArrowPosition,
 }
 
 export default function useAbsolutePositioning(props: IAbsolutePositioningInputProps) {
     const [isComponentExist, setIsComponentExist] = useState(props.visible);
-    const [isComponentVisible, setIsComponentVisible] = useState(props.visible);
+    const [isComponentVisible, setIsComponentVisible] = useState(props.visible || props.defaultVisible);
     const [position, setPosition] = useState<string>(props.position);
-    const [style, setStyle] = useState<IStyleObj>({
+    const [arrowPosition, setArrowPosition] = useState<IComponentArrowPosition>({
+        left: null,
+        right: null,
+        top: null,
+        bottom: null,
+    });
+    const [style, setStyle] = useState<IComponentStylePosition>({
         left: null,
         right: null,
         top: null,
     });
 
+    const useAutoPositioning = props.autoPositioning ?? true;
+
     const timerRef = useRef(null);
 
-    const calculateAbsolutePosition = useCallback((newPosition: Position, parentRef, componentSize) => {
-        const {style: newStyle, position: calculatedPosition} = calculateComponentAbsolutePosition(props.gap, newPosition, parentRef, componentSize);
+    const calculateAbsolutePosition = useCallback((newPosition: Position, parentRef, componentSize, arrowSize = null) => {
+        const {
+            style: newStyle,
+            position: calculatedPosition,
+            arrowPosition: calculatedArrowPosition,
+        } = calculateComponentAbsolutePosition(props.gap, newPosition, parentRef, componentSize, arrowSize, useAutoPositioning);
 
         setStyle(newStyle);
         setPosition(calculatedPosition);
+
+        if (calculatedArrowPosition) {
+            setArrowPosition(calculatedArrowPosition);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.gap]);
 
@@ -160,6 +218,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
         isComponentVisible,
         style,
         position,
+        arrowPosition,
         calculateAbsolutePosition,
         onShow,
         onHide,

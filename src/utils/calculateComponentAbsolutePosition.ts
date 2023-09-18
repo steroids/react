@@ -1,45 +1,6 @@
-import {Positions} from '../hooks/useAbsolutePositioning';
+import {IComponentArrowPosition, IComponentStylePosition, Positions} from '../hooks/useAbsolutePositioning';
 
-export interface IComponentStylePosition {
-    /**
-     * Позиция компонента слева
-     */
-    left: 'unset' | number,
-
-    /**
-     * Позиция компонента справа
-     */
-    right: 'unset' | number,
-
-    /**
-     * Позиция компонента сверху
-     */
-    top: 'unset' | number,
-}
-
-export interface IComponentArrowPosition {
-    /**
-     * Позиция стрелки слева
-     */
-    left?: number | string,
-
-    /**
-     * Позиция стрелки справа
-     */
-    right?: number | string,
-
-    /**
-     * Позиция стрелки сверху
-     */
-    top?: number | string,
-
-    /**
-     * Позиция стрелки снизу
-     */
-    bottom?: number | string,
-}
-
-export default function calculateComponentAbsolutePosition(gap, position, parentRef, componentSize, arrowSize = null) {
+export default function calculateComponentAbsolutePosition(gap, position, parentRef, componentSize, arrowSize = null, autoPositioning = true) {
     if (process.env.IS_SSR) {
         return null;
     }
@@ -59,7 +20,11 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         case Positions.TOP_RIGHT:
             // Проверка - выходит ли tooltip за верхний край страницы?
             // Если да - меняем позицию на bottom
-            if ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + gap)) {
+            if (
+                autoPositioning
+                && ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + gap)
+                )
+            ) {
                 style.top = parentDimensions.top + parentDimensions.height;
                 position = position.replace(Positions.TOP, Positions.BOTTOM);
             } else {
@@ -72,8 +37,10 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         case Positions.BOTTOM_RIGHT:
             /// Проверка - выходит ли tooltip за нижний край страницы?
             // Если да - меняем позицию на top
-            if ((window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY))
-                <= Math.round(componentSize.height + gap)
+            if (
+                autoPositioning
+                && ((window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY))
+                <= Math.round(componentSize.height + gap))
             ) {
                 style.top = parentDimensions.top - componentSize.height;
                 position = position.replace(Positions.BOTTOM, Positions.TOP);
@@ -87,7 +54,7 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         case Positions.LEFT_BOTTOM:
             // Проверка - выходит ли tooltip за левый край страницы?
             // Если да - меняем позицию на right
-            if (parentDimensions.left <= Math.round(componentSize.width + gap)) {
+            if (autoPositioning && (parentDimensions.left <= Math.round(componentSize.width + gap))) {
                 style.left = parentDimensions.right;
                 position = position.replace(Positions.LEFT, Positions.RIGHT);
             } else {
@@ -100,7 +67,10 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         case Positions.RIGHT_BOTTOM:
             // Проверка - выходит ли tooltip за правый край страницы?
             // Если да - меняем позицию на left
-            if (document.body.clientWidth - parentDimensions.right <= Math.round(componentSize.width + gap)) {
+            if (
+                autoPositioning
+                && (document.body.clientWidth - parentDimensions.right <= Math.round(componentSize.width + gap))
+            ) {
                 style.left = parentDimensions.left - componentSize.width;
                 position = position.replace(Positions.RIGHT, Positions.LEFT);
             } else {
@@ -146,7 +116,7 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         case Positions.LEFT_TOP:
         case Positions.RIGHT_TOP:
             style.top = parentDimensions.top;
-            if (arrowSize && (parentDimensions.height < (componentSize.height))) {
+            if (arrowSize && (parentDimensions.height < componentSize.height)) {
                 arrowPosition = {top: parentDimensions.height / 2};
             }
             break;
@@ -176,9 +146,7 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
                 arrowPosition = {left: parentDimensions.width / 2};
             }
             style.left = parentDimensions.left;
-        }
-
-        if (!position.includes('Right')
+        } else if (!position.includes('Right')
             && (document.body.clientWidth - parentDimensions.right
                 <= Math.round((componentSize.width - parentDimensions.width) + gap))
         ) {
@@ -204,9 +172,7 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
                 arrowPosition = {top: parentDimensions.height / 2};
             }
             style.top = parentDimensions.top;
-        }
-
-        if (!position.includes('Bottom')
+        } else if (!position.includes('Bottom')
             && (window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY)
                 <= Math.round((componentSize.height - parentDimensions.height) + gap)
             )

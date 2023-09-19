@@ -1,0 +1,260 @@
+import configureMockStore from 'redux-mock-store';
+
+import * as authActions from '../../src/actions/auth';
+import * as routerActions from '../../src/actions/router';
+import componentsMock from '../mocks/componentsMock';
+import * as fieldsActions from '../../src/actions/fields';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
+import useLayout, {
+    STATUS_LOADING,
+    STATUS_NOT_FOUND,
+    STATUS_ACCESS_DENIED, runInitAction, ILayout,
+} from '../../src/hooks/useLayout';
+import useSelector from '../../src/hooks/useSelector';
+import useDispatch from '../../src/hooks/useDispatch';
+import useComponents from '../../src/hooks/useComponents';
+import renderHookWithStore from '../renderHookWithStore';
+
+const mockStore = configureMockStore([prepareMiddleware]);
+const store = mockStore({});
+
+jest.mock('../../src/hooks/useSelector');
+jest.mock('../../src/hooks/useDispatch');
+jest.mock('../../src/hooks/useComponents');
+
+const mockedUseDispatch = (useDispatch as jest.Mock);
+const mockedUseSelector = (useSelector as jest.Mock);
+const mockedGoToRoute = jest.spyOn(routerActions, 'goToRoute');
+
+/*
+@TODO add test for case 'should catch error when runInitAction is rejected'
+ */
+
+describe('useLayout Hook', () => {
+    const MOCKED_ROUTE = {
+        roles: ['admin'],
+        id: 'admin-route-id',
+    };
+
+    const MOCKED_USER = {
+        role: 'user',
+    };
+
+    const MOCKED_ADMIN = {
+        role: 'admin',
+    };
+
+    const mockedDispatch = jest.fn();
+
+    beforeEach(() => {
+        mockedUseDispatch.mockReturnValue(mockedDispatch);
+        jest.clearAllMocks();
+    });
+
+    it('should return status "loading" when initializing', () => {
+        mockedUseSelector.mockReturnValueOnce({
+            route: null,
+            user: null,
+            data: null,
+            isInitialized: false, // initializing
+            initializeCounter: 0,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+
+        const {result} = renderHookWithStore(useLayout, store);
+
+        expect(result.current.status).toBe(STATUS_LOADING);
+        expect(result.current.error).toBeNull();
+        expect(result.current.data).toBeNull();
+    });
+
+    it('should handle not found route correctly', () => {
+        mockedUseSelector.mockReturnValueOnce({
+            route: null, // Simulate no route
+            user: null,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 0,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+
+        const {result} = renderHookWithStore(useLayout, store);
+
+        expect(result.current.status).toBe(STATUS_NOT_FOUND);
+    });
+
+    it('should handle access denied route correctly', () => {
+        mockedUseSelector.mockReturnValueOnce({
+            route: MOCKED_ROUTE,
+            user: null,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 1,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+
+        const {result} = renderHookWithStore(useLayout, store);
+
+        expect(result.current.status).toBe(STATUS_ACCESS_DENIED);
+    });
+
+    it('should dispatch goToRoute if user does not have access for this page', () => {
+        const loginRouteId = 'login-route-id';
+
+        mockedUseSelector.mockReturnValueOnce({
+            route: MOCKED_ROUTE,
+            user: null,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 0,
+            redirectPageId: null,
+            loginRouteId,
+        });
+
+        renderHookWithStore(useLayout, store);
+
+        expect(mockedGoToRoute).toHaveBeenCalledWith(loginRouteId);
+    });
+
+    it('should dispatch setUser(null) when call without initAction', () => {
+        mockedUseSelector.mockReturnValueOnce({
+            route: MOCKED_ROUTE,
+            user: MOCKED_USER,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 0,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+        const mockedSetUser = jest.spyOn(authActions, 'setUser');
+
+        renderHookWithStore(useLayout, store);
+
+        expect(mockedSetUser).toHaveBeenCalledWith(null);
+    });
+
+    it('should dispatch init(true) when call with initAction', () => {
+        mockedUseSelector.mockReturnValueOnce({
+            route: MOCKED_ROUTE,
+            user: MOCKED_USER,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 0,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+        const mockRunInitAction = jest.fn();
+        const mockedInitAction = jest.spyOn(authActions, 'init');
+
+        renderHookWithStore<ILayout>(() => useLayout(mockRunInitAction), store);
+
+        expect(mockedInitAction).toHaveBeenCalledWith(true);
+    });
+
+    it('should call initAction', async () => {
+        mockedUseSelector.mockReturnValueOnce({
+            route: MOCKED_ROUTE,
+            user: MOCKED_ADMIN,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 0,
+            redirectPageId: 'route1',
+            loginRouteId: null,
+        });
+        const mockRunInitAction = jest.fn().mockResolvedValue(1);
+        (useComponents as jest.Mock).mockReturnValue(jest.fn());
+
+        const {rerender} = renderHookWithStore<ILayout>(() => useLayout(mockRunInitAction), store);
+
+        mockedUseSelector.mockReturnValueOnce({
+            route: MOCKED_ROUTE,
+            user: MOCKED_ADMIN,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 1,
+            redirectPageId: 'route1',
+            loginRouteId: null,
+        });
+
+        rerender();
+
+        expect(mockRunInitAction).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('runInitAction', () => {
+    const MOCKED_CONFIG = {
+        http: {
+            accessToken: 'token',
+        },
+    };
+
+    const MOCKED_META = {
+        LanguageEnum: {
+            attributes: [
+                {
+                    id: 'ru',
+                    label: 'Russian',
+                },
+            ],
+        },
+    };
+
+    const MOCKED_USER = {
+        name: 'John',
+    };
+
+    const MOCKED_RESULT = {
+        config: MOCKED_CONFIG,
+        meta: MOCKED_META,
+        user: MOCKED_USER,
+    };
+
+    const mockedRunInitAction = jest.fn().mockResolvedValue(MOCKED_RESULT);
+    const mockedDispatch = jest.fn();
+
+    const mockedSetMeta = jest.spyOn(fieldsActions, 'setMeta');
+    const mockedSetUser = jest.spyOn(authActions, 'setUser');
+    const mockedSetData = jest.spyOn(authActions, 'setData');
+
+    it('should call the initAction function with the correct arguments', async () => {
+        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
+
+        expect(mockedRunInitAction).toHaveBeenCalledWith(null, mockedDispatch, componentsMock);
+    });
+
+    it('should call setAccessToken with result value', async () => {
+        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
+
+        expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(MOCKED_CONFIG.http.accessToken);
+    });
+
+    it('should call meta.setModel', async () => {
+        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
+
+        expect(componentsMock.meta.setModel).toHaveBeenCalledWith('LanguageEnum', MOCKED_META.LanguageEnum);
+    });
+
+    it('should dispatch setMeta', async () => {
+        const mockedRunInitActionLocal = jest.fn().mockResolvedValue(MOCKED_RESULT);
+
+        await runInitAction(mockedRunInitActionLocal, componentsMock, mockedDispatch);
+
+        expect(mockedSetMeta).toHaveBeenCalledWith(MOCKED_META);
+    });
+
+    it('should dispatch setData with fulfilled result', async () => {
+        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
+
+        expect(mockedSetData).toHaveBeenCalledWith(MOCKED_RESULT);
+    });
+
+    it('should dispatch setUser', async () => {
+        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
+
+        expect(mockedSetUser).toHaveBeenCalledWith(MOCKED_USER);
+    });
+});

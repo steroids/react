@@ -1,4 +1,5 @@
 import {useCallback, useMemo} from 'react';
+import dayjs from 'dayjs';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import {useComponents} from '../../../hooks';
@@ -117,6 +118,23 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
+        console.log('props.inputTo', props.inputTo);
+        console.log('props.inputFrom', props.inputFrom);
+
+        const inputFrom = new Date(props.inputFrom.value);
+        const inputTo = new Date(props.inputTo.value);
+
+        const pastDate = dayjs(props.inputFrom.value);
+        const futureDate = dayjs(props.inputTo.value);
+
+        console.log('futureDate.isBefore(pastDate)', futureDate.isBefore(pastDate));
+
+        if (inputTo < inputFrom) {
+            console.log('Дата 1 меньше даты 2');
+            props.inputFrom.onChange(inputTo);
+            props.inputTo.onChange(inputFrom);
+        }
+
         if (props.onChange) {
             props.onChange.call(null, {
                 [props.attributeFrom]: props.inputFrom.value,

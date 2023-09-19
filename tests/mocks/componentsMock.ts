@@ -6,4 +6,7 @@ export default {
         onLogin: jest.fn(),
         send: jest.fn(),
     },
+    meta: {
+        setModel: jest.fn(),
+    },
 };

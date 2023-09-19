@@ -142,7 +142,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
 }
 
 DropDown.defaultProps = {
-    autoPositioning: false,
+    autoPositioning: true,
     componentDestroyDelay: 300,
     defaultVisible: false,
     gap: 15,

@@ -3,15 +3,9 @@ import {useCallback, useRef} from 'react';
 import {useMount} from 'react-use';
 
 import {useComponents} from '../../../hooks';
-import TooltipInnerPortal from './TooltipPortalInner';
-import useAbsolutePositioning from '../../../hooks/useAbsolutePositioning';
+import useAbsolutePositioning, {Positions} from '../../../hooks/useAbsolutePositioning';
 
-/**
- * Варианты позиций всплывающей подсказки
- * @example 'top'
- */
-type TooltipPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
-    'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
+import TooltipInnerPortal from './TooltipPortalInner';
 
 export interface ITooltipArrowPosition {
     /**
@@ -72,7 +66,7 @@ export interface ITooltipProps {
     /**
      * Позиционирование подсказки, относительно целевого элемента
      */
-    position?: TooltipPosition,
+    position?: Positions,
 
     /**
      * Показывать ли подсказку сразу после рендера страницы
@@ -114,7 +108,7 @@ export interface ITooltipProps {
 export interface ITooltipViewProps extends ITooltipProps {
     isTooltipVisible: boolean,
     content: string | any,
-    position: TooltipPosition,
+    position: Positions,
     style: ITooltipStylePosition,
 }
 

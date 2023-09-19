@@ -1,4 +1,5 @@
 import React, {PropsWithChildren} from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {renderHook} from '@testing-library/react';
 import type {RenderOptions} from '@testing-library/react';
 import {Provider} from 'react-redux';

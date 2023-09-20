@@ -11,15 +11,9 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
     store?: any
 }
 
-export default function renderHookWithStore<
-    T
->(
+export default function renderHookWithStore<T>(
     hook: (args?: any) => T,
-    {
-        preloadedState = {},
-        store = createStore(asyncReducers, preloadedState),
-        ...renderOptions
-    }: ExtendedRenderOptions = {},
+    {preloadedState = {}, store = createStore(asyncReducers, preloadedState), ...renderOptions}: ExtendedRenderOptions = {},
 ) {
     function Wrapper({children}: PropsWithChildren<object>): JSX.Element {
         return <Provider store={store}>{children}</Provider>;

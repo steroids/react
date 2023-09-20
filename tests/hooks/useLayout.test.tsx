@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import * as authActions from '../../src/actions/auth';
@@ -36,16 +37,16 @@ const mockedUseSsr = (useSsr as jest.Mock);
 const mockedGoToRoute = jest.spyOn(routerActions, 'goToRoute');
 
 describe('useLayout Hook', () => {
-    const MOCKED_ROUTE = {
+    const mockedRoute = {
         roles: ['admin'],
         id: 'admin-route-id',
     };
 
-    const MOCKED_USER = {
+    const mockedUser = {
         role: 'user',
     };
 
-    const MOCKED_ADMIN = {
+    const mockedAdmin = {
         role: 'admin',
     };
 
@@ -77,8 +78,8 @@ describe('useLayout Hook', () => {
 
     it('should return status "ok" when initialized', async () => {
         mockedUseSelector.mockReturnValue({
-            route: MOCKED_ROUTE,
-            user: MOCKED_ADMIN,
+            route: mockedRoute,
+            user: mockedAdmin,
             data: null,
             isInitialized: true,
             initializeCounter: 1,
@@ -97,8 +98,8 @@ describe('useLayout Hook', () => {
         const mockedData = 'mocked data';
 
         mockedUseSelector.mockReturnValue({
-            route: MOCKED_ROUTE,
-            user: MOCKED_ADMIN,
+            route: mockedRoute,
+            user: mockedAdmin,
             data: mockedData,
             isInitialized: true,
             initializeCounter: 1,
@@ -120,8 +121,8 @@ describe('useLayout Hook', () => {
         useStateSpy.mockImplementationOnce(useSateMock);
 
         mockedUseSelector.mockReturnValue({
-            route: MOCKED_ROUTE,
-            user: MOCKED_ADMIN,
+            route: mockedRoute,
+            user: mockedAdmin,
             data: null,
             isInitialized: true,
             initializeCounter: 1,
@@ -155,7 +156,7 @@ describe('useLayout Hook', () => {
 
     it('should handle access denied route correctly', () => {
         mockedUseSelector.mockReturnValueOnce({
-            route: MOCKED_ROUTE,
+            route: mockedRoute,
             user: null,
             data: null,
             isInitialized: true,
@@ -173,7 +174,7 @@ describe('useLayout Hook', () => {
         const loginRouteId = 'login-route-id';
 
         mockedUseSelector.mockReturnValueOnce({
-            route: MOCKED_ROUTE,
+            route: mockedRoute,
             user: null,
             data: null,
             isInitialized: true,
@@ -188,9 +189,11 @@ describe('useLayout Hook', () => {
     });
 
     it('should dispatch setUser(null) when call without initAction', () => {
+        const expectedSetUserArgument = null;
+
         mockedUseSelector.mockReturnValueOnce({
-            route: MOCKED_ROUTE,
-            user: MOCKED_USER,
+            route: mockedRoute,
+            user: mockedUser,
             data: null,
             isInitialized: true,
             initializeCounter: 0,
@@ -201,13 +204,15 @@ describe('useLayout Hook', () => {
 
         renderHookWithStore(useLayout, store);
 
-        expect(mockedSetUser).toHaveBeenCalledWith(null);
+        expect(mockedSetUser).toHaveBeenCalledWith(expectedSetUserArgument);
     });
 
     it('should dispatch init(true) when call with initAction', () => {
+        const expectedInitActionArgument = true;
+
         mockedUseSelector.mockReturnValueOnce({
-            route: MOCKED_ROUTE,
-            user: MOCKED_USER,
+            route: mockedRoute,
+            user: mockedUser,
             data: null,
             isInitialized: true,
             initializeCounter: 0,
@@ -219,13 +224,13 @@ describe('useLayout Hook', () => {
 
         renderHookWithStore<ILayout>(() => useLayout(mockRunInitAction), store);
 
-        expect(mockedInitAction).toHaveBeenCalledWith(true);
+        expect(mockedInitAction).toHaveBeenCalledWith(expectedInitActionArgument);
     });
 
     it('should call initAction', async () => {
         mockedUseSelector.mockReturnValueOnce({
-            route: MOCKED_ROUTE,
-            user: MOCKED_ADMIN,
+            route: mockedRoute,
+            user: mockedAdmin,
             data: null,
             isInitialized: true,
             initializeCounter: 0,
@@ -237,8 +242,8 @@ describe('useLayout Hook', () => {
         const {rerender} = renderHookWithStore<ILayout>(() => useLayout(mockRunInitAction), store);
 
         mockedUseSelector.mockReturnValueOnce({
-            route: MOCKED_ROUTE,
-            user: MOCKED_ADMIN,
+            route: mockedRoute,
+            user: mockedAdmin,
             data: null,
             isInitialized: true,
             initializeCounter: 1,
@@ -253,8 +258,8 @@ describe('useLayout Hook', () => {
 
     it('should handle ssr', async () => {
         mockedUseSelector.mockReturnValue({
-            route: MOCKED_ROUTE,
-            user: MOCKED_ADMIN,
+            route: mockedRoute,
+            user: mockedAdmin,
             data: null,
             isInitialized: true,
             initializeCounter: 1,
@@ -283,7 +288,7 @@ describe('useLayout Hook', () => {
 });
 
 describe('runInitAction', () => {
-    const MOCKED_CONFIG = {
+    const mockedConfig = {
         http: {
             accessToken: 'token',
         },
@@ -295,7 +300,7 @@ describe('runInitAction', () => {
         },
     };
 
-    const MOCKED_META = {
+    const mockedMeta = {
         LanguageEnum: {
             attributes: [
                 {
@@ -306,17 +311,17 @@ describe('runInitAction', () => {
         },
     };
 
-    const MOCKED_USER = {
+    const mockedUser = {
         name: 'John',
     };
 
-    const MOCKED_RESULT = {
-        config: MOCKED_CONFIG,
-        meta: MOCKED_META,
-        user: MOCKED_USER,
+    const mockedResult = {
+        config: mockedConfig,
+        meta: mockedMeta,
+        user: mockedUser,
     };
 
-    const mockedRunInitAction = jest.fn().mockResolvedValue(MOCKED_RESULT);
+    const mockedRunInitAction = jest.fn().mockResolvedValue(mockedResult);
     const mockedDispatch = jest.fn();
 
     const mockedSetMeta = jest.spyOn(fieldsActions, 'setMeta');
@@ -332,30 +337,33 @@ describe('runInitAction', () => {
     });
 
     it('should call setAccessToken with result value', async () => {
-        expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(MOCKED_CONFIG.http.accessToken);
+        expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(mockedConfig.http.accessToken);
     });
 
     it('should add fields to component object', async () => {
-        expect(componentsMock.meta.defaultTypes).toEqual(MOCKED_CONFIG.meta.defaultTypes);
+        expect(componentsMock.meta.defaultTypes).toEqual(mockedConfig.meta.defaultTypes);
     });
 
     it('should replace component object by result object', async () => {
-        expect(componentsMock.meta.defaultKey).toEqual(MOCKED_CONFIG.meta.defaultKey);
+        expect(componentsMock.meta.defaultKey).toEqual(mockedConfig.meta.defaultKey);
     });
 
     it('should call meta.setModel', async () => {
-        expect(componentsMock.meta.setModel).toHaveBeenCalledWith('LanguageEnum', MOCKED_META.LanguageEnum);
+        const expectedModelName = 'LanguageEnum';
+        const expectedModelItem = mockedMeta.LanguageEnum;
+
+        expect(componentsMock.meta.setModel).toHaveBeenCalledWith(expectedModelName, expectedModelItem);
     });
 
     it('should dispatch setMeta', async () => {
-        expect(mockedSetMeta).toHaveBeenCalledWith(MOCKED_META);
+        expect(mockedSetMeta).toHaveBeenCalledWith(mockedMeta);
     });
 
     it('should dispatch setData with fulfilled result', async () => {
-        expect(mockedSetData).toHaveBeenCalledWith(MOCKED_RESULT);
+        expect(mockedSetData).toHaveBeenCalledWith(mockedResult);
     });
 
     it('should dispatch setUser', async () => {
-        expect(mockedSetUser).toHaveBeenCalledWith(MOCKED_USER);
+        expect(mockedSetUser).toHaveBeenCalledWith(mockedUser);
     });
 });

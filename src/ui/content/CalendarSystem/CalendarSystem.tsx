@@ -1,14 +1,16 @@
 /* eslint-disable no-plusplus */
 import React from 'react';
 import __upperFirst from 'lodash-es/upperFirst';
-import {useCalendarControls} from '../../../hooks/useCalendarControls';
+import {IModalProps} from '../../../ui/modal/Modal/Modal';
+import {openModal} from '../../../actions/modal';
+import useCalendarControls from '../../../hooks/useCalendarControls';
 import DateControlEnum from '../../../enums/DateControlType';
-import {useDisplayDate} from '../../../hooks/useDisplayDate';
-import {useMonthCalendar} from '../../../hooks/useMonthCalendar';
-import {useComponents} from '../../../hooks';
+import useDisplayDate from '../../../hooks/useDisplayDate';
+import useMonthCalendar from '../../../hooks/useMonthCalendar';
+import {useComponents, useDispatch, useWeekCalendar} from '../../../hooks';
 import CalendarEnum from '../../../enums/CalendarType';
 
-export const WEEK_DAYS = [
+export const DAYS_OF_WEEK = [
     __('Mo'),
     __('Tu'),
     __('We'),
@@ -50,6 +52,7 @@ export interface Day {
     date: Date;
     outOfRange?: boolean;
     isToday?: boolean;
+    formattedDisplay?: string,
 }
 
 export interface PresentDateInfo {
@@ -69,25 +72,43 @@ export interface ICalendarSystemProps extends IUiComponent {
     onCreate?: () => void;
     onChangeType?: (newType: string) => void;
     calendarsTitle: string;
+    createModalProps: IModalProps,
     [key: string]: any;
 }
 
 export interface ICalendarSystemViewProps extends ICalendarSystemProps {
     monthCalendar: Day[],
+    currentWeek: Day[],
     calendarType: CalendarEnum,
     dateToDisplay: string,
-    onCreateHandler: VoidFunction,
     onChangeType: (newType: string) => void,
     onMonthChange: (newDate: Date) => void,
     onClickControls: (event: React.MouseEvent<HTMLElement>) => void
+    onClickCreate: VoidFunction,
+}
+
+export interface ICalendarSystemModalViewProps extends IModalProps {
+    onCreate: VoidFunction
 }
 
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
+    const dispatch = useDispatch();
+
     const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.Month);
-    const {calendarArray, setCurrentMonthDate} = useMonthCalendar();
-    const {applyControl} = useCalendarControls();
+
+    const {calendarArray, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();
+
+    const {
+        currentWeek,
+        weekControls,
+        forceUpdateWeekOnMonthChange,
+    } = useWeekCalendar(
+        currentMonthDate,
+    );
+
+    const {applyControl} = useCalendarControls(calendarType, weekControls);
 
     const onChangeType = React.useCallback((newType: string) => {
         setCalendarType(CalendarEnum[newType]);
@@ -100,7 +121,8 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
     const onMonthChange = React.useCallback((newDate: Date) => {
         setNewDateToDisplay(newDate);
         setCurrentMonthDate(newDate);
-    }, [setCurrentMonthDate, setNewDateToDisplay]);
+        forceUpdateWeekOnMonthChange(newDate);
+    }, [forceUpdateWeekOnMonthChange, setCurrentMonthDate, setNewDateToDisplay]);
 
     const onClickControls = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         const target = event.target as HTMLDivElement;
@@ -113,14 +135,28 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         applyControl(controlType);
     }, [applyControl]);
 
+    const createModalView = props.createModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
+
+    const createModalProps = React.useMemo(() => ({
+        ...props.createModalProps,
+        component: createModalView,
+    }), [createModalView, props.createModalProps]);
+
+    const onClickCreate = React.useCallback(() => {
+        dispatch(openModal(createModalView, createModalProps));
+    }, [createModalProps, createModalView, dispatch]);
+
     return components.ui.renderView(props.view || 'content.CalendarSystemView', {
         ...props,
         dateToDisplay,
         monthCalendar: calendarArray,
         calendarType,
+        currentWeek,
+        createModalProps,
         onChangeType,
         onMonthChange,
         onClickControls,
+        onClickCreate,
     });
 }
 

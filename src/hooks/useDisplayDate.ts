@@ -11,7 +11,7 @@ const getFirstDayOfCurrentMonth = () => {
 
 const convertDateToRequiredFormat = (date: Date) => convertDate(date, null, MONTH_CONVERT_FORMAT);
 
-export const useDisplayDate = () => {
+const useDisplayDate = () => {
     const [dateToDisplay, setDateToDisplay] = React.useState(convertDateToRequiredFormat(getFirstDayOfCurrentMonth()));
 
     const setNewDateToDisplay = (newDate: Date) => {
@@ -23,3 +23,5 @@ export const useDisplayDate = () => {
         setNewDateToDisplay,
     };
 };
+
+export default useDisplayDate;

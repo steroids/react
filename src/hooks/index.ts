@@ -18,6 +18,10 @@ import useSelector from './useSelector';
 import useSsr from './useSsr';
 import useUniqueId from './useUniqueId';
 import useTheme from './useTheme';
+import useMonthCalendar from './useMonthCalendar';
+import useWeekCalendar from './useWeekCalendar';
+import useDisplayDate from './useDisplayDate';
+import useCalendarControls from './useCalendarControls';
 
 export {
     useAbsolutePositioning,
@@ -40,4 +44,8 @@ export {
     useSsr,
     useUniqueId,
     useTheme,
+    useMonthCalendar,
+    useWeekCalendar,
+    useDisplayDate,
+    useCalendarControls,
 };

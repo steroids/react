@@ -1,5 +1,4 @@
 import {useCallback, useMemo} from 'react';
-import dayjs from 'dayjs';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import {useComponents} from '../../../hooks';

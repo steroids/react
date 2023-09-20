@@ -8,5 +8,7 @@ export default {
     },
     meta: {
         setModel: jest.fn(),
+        defaultTypes: {},
+        defaultKey: 'key',
     },
 };

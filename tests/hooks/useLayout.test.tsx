@@ -1,18 +1,24 @@
+import React from 'react';
 import configureMockStore from 'redux-mock-store';
-
 import * as authActions from '../../src/actions/auth';
 import * as routerActions from '../../src/actions/router';
-import componentsMock from '../mocks/componentsMock';
 import * as fieldsActions from '../../src/actions/fields';
+import componentsMock from '../mocks/componentsMock';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 import useLayout, {
+    STATUS_OK,
     STATUS_LOADING,
     STATUS_NOT_FOUND,
-    STATUS_ACCESS_DENIED, runInitAction, ILayout,
+    STATUS_ACCESS_DENIED,
+    STATUS_HTTP_ERROR,
+    HTTP_STATUS_CODES,
+    runInitAction,
+    ILayout,
 } from '../../src/hooks/useLayout';
 import useSelector from '../../src/hooks/useSelector';
 import useDispatch from '../../src/hooks/useDispatch';
 import useComponents from '../../src/hooks/useComponents';
+import useSsr from '../../src/hooks/useSsr';
 import renderHookWithStore from '../renderHookWithStore';
 
 const mockStore = configureMockStore([prepareMiddleware]);
@@ -21,14 +27,13 @@ const store = mockStore({});
 jest.mock('../../src/hooks/useSelector');
 jest.mock('../../src/hooks/useDispatch');
 jest.mock('../../src/hooks/useComponents');
+jest.mock('../../src/hooks/useSsr');
 
 const mockedUseDispatch = (useDispatch as jest.Mock);
 const mockedUseSelector = (useSelector as jest.Mock);
+const mockedUseComponents = (useComponents as jest.Mock);
+const mockedUseSsr = (useSsr as jest.Mock);
 const mockedGoToRoute = jest.spyOn(routerActions, 'goToRoute');
-
-/*
-@TODO add test for case 'should catch error when runInitAction is rejected'
- */
 
 describe('useLayout Hook', () => {
     const MOCKED_ROUTE = {
@@ -48,6 +53,7 @@ describe('useLayout Hook', () => {
 
     beforeEach(() => {
         mockedUseDispatch.mockReturnValue(mockedDispatch);
+        mockedUseComponents.mockReturnValue(jest.fn());
         jest.clearAllMocks();
     });
 
@@ -56,7 +62,7 @@ describe('useLayout Hook', () => {
             route: null,
             user: null,
             data: null,
-            isInitialized: false, // initializing
+            isInitialized: false,
             initializeCounter: 0,
             redirectPageId: null,
             loginRouteId: null,
@@ -69,9 +75,71 @@ describe('useLayout Hook', () => {
         expect(result.current.data).toBeNull();
     });
 
+    it('should return status "ok" when initialized', async () => {
+        mockedUseSelector.mockReturnValue({
+            route: MOCKED_ROUTE,
+            user: MOCKED_ADMIN,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 1,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+
+        const {result} = renderHookWithStore(useLayout, store);
+
+        expect(result.current.status).toBe(STATUS_OK);
+        expect(result.current.error).toBeNull();
+        expect(result.current.data).toBeNull();
+    });
+
+    it('should return data', async () => {
+        const mockedData = 'mocked data';
+
+        mockedUseSelector.mockReturnValue({
+            route: MOCKED_ROUTE,
+            user: MOCKED_ADMIN,
+            data: mockedData,
+            isInitialized: true,
+            initializeCounter: 1,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+
+        const {result} = renderHookWithStore(useLayout, store);
+
+        expect(result.current.data).toBe(mockedData);
+    });
+
+    it('should handle HTTP error correctly', async () => {
+        const useStateSpy = jest.spyOn(React, 'useState');
+
+        const mockedError = new Error('Test HTTP error');
+        const setStateMock = jest.fn();
+        const useSateMock: any = (useState: any) => [mockedError, setStateMock];
+        useStateSpy.mockImplementationOnce(useSateMock);
+
+        mockedUseSelector.mockReturnValue({
+            route: MOCKED_ROUTE,
+            user: MOCKED_ADMIN,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 1,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+
+        const {result} = renderHookWithStore(useLayout, store);
+
+        expect(result.current.status).toBe(STATUS_HTTP_ERROR);
+        expect(result.current.error).toBe(mockedError);
+
+        useStateSpy.mockClear();
+    });
+
     it('should handle not found route correctly', () => {
         mockedUseSelector.mockReturnValueOnce({
-            route: null, // Simulate no route
+            route: null,
             user: null,
             data: null,
             isInitialized: true,
@@ -165,7 +233,6 @@ describe('useLayout Hook', () => {
             loginRouteId: null,
         });
         const mockRunInitAction = jest.fn().mockResolvedValue(1);
-        (useComponents as jest.Mock).mockReturnValue(jest.fn());
 
         const {rerender} = renderHookWithStore<ILayout>(() => useLayout(mockRunInitAction), store);
 
@@ -183,12 +250,48 @@ describe('useLayout Hook', () => {
 
         expect(mockRunInitAction).toHaveBeenCalledTimes(1);
     });
+
+    it('should handle ssr', async () => {
+        mockedUseSelector.mockReturnValue({
+            route: MOCKED_ROUTE,
+            user: MOCKED_ADMIN,
+            data: null,
+            isInitialized: true,
+            initializeCounter: 1,
+            redirectPageId: null,
+            loginRouteId: null,
+        });
+
+        process.env.IS_SSR = 'true';
+
+        const ssrContextValue = {
+            staticContext: {
+                statusCode: '',
+            },
+        };
+
+        mockedUseSsr.mockReturnValue(ssrContextValue);
+
+        const {result} = renderHookWithStore<ILayout>(useLayout, store);
+
+        expect(mockedUseSsr).toHaveBeenCalledTimes(1);
+        expect(result.current.status).toBe(STATUS_OK);
+        expect(ssrContextValue.staticContext.statusCode).toBe(HTTP_STATUS_CODES[result.current.status]);
+
+        process.env.IS_SSR = undefined;
+    });
 });
 
 describe('runInitAction', () => {
     const MOCKED_CONFIG = {
         http: {
             accessToken: 'token',
+        },
+        meta: {
+            defaultTypes: {
+                type: 'test-type-id',
+            },
+            defaultKey: 'default-key',
         },
     };
 
@@ -220,41 +323,39 @@ describe('runInitAction', () => {
     const mockedSetUser = jest.spyOn(authActions, 'setUser');
     const mockedSetData = jest.spyOn(authActions, 'setData');
 
-    it('should call the initAction function with the correct arguments', async () => {
+    beforeEach(async () => {
         await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
+    });
 
+    it('should call the initAction function with the correct arguments', async () => {
         expect(mockedRunInitAction).toHaveBeenCalledWith(null, mockedDispatch, componentsMock);
     });
 
     it('should call setAccessToken with result value', async () => {
-        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
-
         expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(MOCKED_CONFIG.http.accessToken);
     });
 
-    it('should call meta.setModel', async () => {
-        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
+    it('should add fields to component object', async () => {
+        expect(componentsMock.meta.defaultTypes).toEqual(MOCKED_CONFIG.meta.defaultTypes);
+    });
 
+    it('should replace component object by result object', async () => {
+        expect(componentsMock.meta.defaultKey).toEqual(MOCKED_CONFIG.meta.defaultKey);
+    });
+
+    it('should call meta.setModel', async () => {
         expect(componentsMock.meta.setModel).toHaveBeenCalledWith('LanguageEnum', MOCKED_META.LanguageEnum);
     });
 
     it('should dispatch setMeta', async () => {
-        const mockedRunInitActionLocal = jest.fn().mockResolvedValue(MOCKED_RESULT);
-
-        await runInitAction(mockedRunInitActionLocal, componentsMock, mockedDispatch);
-
         expect(mockedSetMeta).toHaveBeenCalledWith(MOCKED_META);
     });
 
     it('should dispatch setData with fulfilled result', async () => {
-        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
-
         expect(mockedSetData).toHaveBeenCalledWith(MOCKED_RESULT);
     });
 
     it('should dispatch setUser', async () => {
-        await runInitAction(mockedRunInitAction, componentsMock, mockedDispatch);
-
         expect(mockedSetUser).toHaveBeenCalledWith(MOCKED_USER);
     });
 });

@@ -3,7 +3,7 @@ import {useCallback, useRef} from 'react';
 import {useMount} from 'react-use';
 
 import {useComponents} from '../../../hooks';
-import useAbsolutePositioning, {Positions} from '../../../hooks/useAbsolutePositioning';
+import useAbsolutePositioning, {Position} from '../../../hooks/useAbsolutePositioning';
 
 import TooltipInnerPortal from './TooltipPortalInner';
 
@@ -66,7 +66,7 @@ export interface ITooltipProps {
     /**
      * Позиционирование подсказки, относительно целевого элемента
      */
-    position?: Positions,
+    position?: Position,
 
     /**
      * Показывать ли подсказку сразу после рендера страницы
@@ -108,7 +108,7 @@ export interface ITooltipProps {
 export interface ITooltipViewProps extends ITooltipProps {
     isTooltipVisible: boolean,
     content: string | any,
-    position: Positions,
+    position: Position,
     style: ITooltipStylePosition,
 }
 
@@ -137,7 +137,9 @@ function Tooltip(props: ITooltipProps): JSX.Element {
     } = useAbsolutePositioning({
         componentDestroyDelay: props.animationMs,
         position: props.position,
-        ...props,
+        children: props.children,
+        gap: props.gap,
+        defaultVisible: props.defaultVisible,
     });
 
     const childRef = useRef(null);

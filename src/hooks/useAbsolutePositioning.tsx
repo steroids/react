@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import calculateComponentAbsolutePosition from '../utils/calculateComponentAbsolutePosition';
 
@@ -42,7 +42,7 @@ export interface IComponentArrowPosition {
     bottom?: number | string,
 }
 
-export const enum Positions {
+export const enum Position {
     TOP = 'top',
     TOP_LEFT = 'topLeft',
     TOP_RIGHT = 'topRight',
@@ -61,7 +61,7 @@ export const enum Positions {
  * Варианты абсолютного позиционирования
  * @example 'top'
  */
-export type Position = (typeof Positions)[keyof typeof Positions] | string;
+export type PositionType = keyof typeof Position | string;
 
 export interface IAbsolutePositioningInputProps {
     /**
@@ -90,7 +90,7 @@ export interface IAbsolutePositioningInputProps {
     /**
      * Позиционирование компонента, относительно целевого элемента
      */
-    position: Position,
+    position: PositionType,
 
     /**
      * Отобразить или скрыть компонент.
@@ -100,7 +100,7 @@ export interface IAbsolutePositioningInputProps {
     visible?: boolean,
 
     /**
-     * Показывать ли подсказку сразу после рендера страницы
+     * Показывать ли компонент сразу после рендера страницы
      */
     defaultVisible?: boolean,
 
@@ -139,6 +139,8 @@ export interface IAbsolutePositioningOutputProps {
     arrowPosition?: IComponentArrowPosition,
 }
 
+const DEFAULT_AUTO_POSITIONING_VALUE = true;
+
 export default function useAbsolutePositioning(props: IAbsolutePositioningInputProps) {
     const [isComponentExist, setIsComponentExist] = useState(props.visible);
     const [isComponentVisible, setIsComponentVisible] = useState(props.visible || props.defaultVisible);
@@ -155,16 +157,16 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
         top: null,
     });
 
-    const useAutoPositioning = props.autoPositioning ?? true;
+    const hasAutoPositioning = useMemo(() => props.autoPositioning ?? DEFAULT_AUTO_POSITIONING_VALUE, [props.autoPositioning]);
 
     const timerRef = useRef(null);
 
-    const calculateAbsolutePosition = useCallback((newPosition: Position, parentRef, componentSize, arrowSize = null) => {
+    const calculateAbsolutePosition = useCallback((newPosition: PositionType, parentRef, componentSize, arrowSize = null) => {
         const {
             style: newStyle,
             position: calculatedPosition,
             arrowPosition: calculatedArrowPosition,
-        } = calculateComponentAbsolutePosition(props.gap, newPosition, parentRef, componentSize, arrowSize, useAutoPositioning);
+        } = calculateComponentAbsolutePosition(props.gap, newPosition, parentRef, componentSize, arrowSize, hasAutoPositioning);
 
         setStyle(newStyle);
         setPosition(calculatedPosition);
@@ -172,8 +174,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
         if (calculatedArrowPosition) {
             setArrowPosition(calculatedArrowPosition);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.gap]);
+    }, [hasAutoPositioning, props.gap]);
 
     const onShow = useCallback(() => {
         if (timerRef.current) {

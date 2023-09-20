@@ -1,36 +1,41 @@
 import {act, renderHook, waitFor} from '@testing-library/react';
 
 import {useAbsolutePositioning} from '../../src/hooks';
-import {IAbsolutePositioningInputProps, Positions} from '../../src/hooks/useAbsolutePositioning';
-
-const DEFAULT_PROPS: IAbsolutePositioningInputProps = {
-    position: Positions.TOP,
-    gap: 5,
-    componentDestroyDelay: 100,
-    visible: true,
-    onVisibleChange: jest.fn(),
-};
+import {IAbsolutePositioningInputProps, Position} from '../../src/hooks/useAbsolutePositioning';
 
 describe('useAbsolutePositioning hook', () => {
-    it('should return correct position', () => {
-        const {result} = renderHook(() => useAbsolutePositioning(DEFAULT_PROPS));
+    const expectedComponentExist = true;
+    const expectedComponentVisible = true;
+    const expectedComponentNotVisible = false;
+    const expectedComponentNotExist = false;
 
-        expect(result.current.position).toEqual(DEFAULT_PROPS.position);
+    const defaultProps: IAbsolutePositioningInputProps = {
+        position: Position.TOP,
+        gap: 5,
+        componentDestroyDelay: 100,
+        visible: true,
+        onVisibleChange: jest.fn(),
+    };
+
+    it('should return correct position', () => {
+        const {result} = renderHook(() => useAbsolutePositioning(defaultProps));
+
+        expect(result.current.position).toEqual(defaultProps.position);
     });
 
     it('should initialize with the correct visibility state', () => {
-        const {result} = renderHook(() => useAbsolutePositioning(DEFAULT_PROPS));
-        expect(result.current.isComponentExist).toBe(true);
-        expect(result.current.isComponentVisible).toBe(false);
+        const {result} = renderHook(() => useAbsolutePositioning(defaultProps));
+        expect(result.current.isComponentExist).toBe(expectedComponentExist);
+        expect(result.current.isComponentVisible).toBe(expectedComponentNotVisible);
 
         waitFor(() => {
-            expect(result.current.isComponentVisible).toEqual(true);
+            expect(result.current.isComponentVisible).toEqual(expectedComponentVisible);
         });
     });
 
     it('should toggle visibility correctly when `onShow` handler is called', () => {
-        const {result} = renderHook(() => useAbsolutePositioning({visible: false, ...DEFAULT_PROPS}));
-        expect(result.current.isComponentVisible).toBe(false);
+        const {result} = renderHook(() => useAbsolutePositioning({...defaultProps, visible: false}));
+        expect(result.current.isComponentVisible).toBe(expectedComponentNotVisible);
         expect(result.current.onShow).toBeInstanceOf(Function);
 
         act(() => {
@@ -38,31 +43,31 @@ describe('useAbsolutePositioning hook', () => {
         });
 
         waitFor(() => {
-            expect(result.current.isComponentVisible).toEqual(true);
+            expect(result.current.isComponentVisible).toEqual(expectedComponentVisible);
         });
     });
 
     it('should toggle visibility correctly when `onHide` handler is called', () => {
-        const {result} = renderHook(() => useAbsolutePositioning(DEFAULT_PROPS));
+        const {result} = renderHook(() => useAbsolutePositioning(defaultProps));
         expect(result.current.onHide).toBeInstanceOf(Function);
 
         act(() => {
             result.current.onHide();
         });
 
-        expect(result.current.isComponentVisible).toBe(false);
+        expect(result.current.isComponentVisible).toBe(expectedComponentNotVisible);
         waitFor(() => {
-            expect(result.current.isComponentExist).toBe(false);
+            expect(result.current.isComponentExist).toBe(expectedComponentNotExist);
         });
     });
 
     it('should call onVisibleChange callback then isComponentVisible has changed', () => {
-        const {result} = renderHook(() => useAbsolutePositioning(DEFAULT_PROPS));
+        const {result} = renderHook(() => useAbsolutePositioning(defaultProps));
 
         act(() => {
             result.current.onHide();
         });
 
-        expect(DEFAULT_PROPS.onVisibleChange).toHaveBeenCalledWith(false);
+        expect(defaultProps.onVisibleChange).toHaveBeenCalledWith(expectedComponentNotVisible);
     });
 });

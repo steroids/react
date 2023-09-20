@@ -136,20 +136,20 @@ const FILE_STATUS_END = 'end';
 function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const {files, onBrowse, onRemove} = useFile(props);
-    const [filesLoaded, setFilesLoaded] = React.useState(false);
+    const [isFilesLoaded, setIsFilesLoaded] = React.useState(false);
 
     const FileFieldView = props.view || components.ui.getView('form.FileFieldView');
     const FileFieldItemView = props.itemView || components.ui.getView('form.FileFieldItemView');
 
     useEffect(() => {
-        setFilesLoaded(files.filter(file => file._status === FILE_STATUS_END).length === files.length);
+        setIsFilesLoaded(files.filter(file => file._status === FILE_STATUS_END).length === files.length);
     }, [files]);
 
     useEffect(() => {
-        if (filesLoaded) {
+        if (isFilesLoaded && props.onLoad) {
             props.onLoad();
         }
-    }, [filesLoaded, props]);
+    }, [isFilesLoaded, props]);
 
     return (
         <FileFieldView

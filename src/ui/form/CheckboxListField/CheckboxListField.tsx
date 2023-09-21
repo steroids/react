@@ -91,7 +91,11 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     // Sync with form
     useEffect(() => {
         props.input.onChange.call(null, selectedIds);
-    }, [props.input.onChange, selectedIds]);
+
+        if (props.onChange) {
+            props.onChange(selectedIds);
+        }
+    }, [props, props.input.onChange, selectedIds]);
 
     const onReset = useCallback(() => {
         setSelectedIds([]);

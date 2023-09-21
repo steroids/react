@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
 import React from 'react';
 import __upperFirst from 'lodash-es/upperFirst';
+import {convertDate} from 'src/utils/calendar';
+import dayjs from 'dayjs';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {openModal} from '../../../actions/modal';
 import useCalendarControls from '../../../hooks/useCalendarControls';
@@ -47,7 +50,7 @@ export const HOURS = [
     '23:00',
 ];
 
-export interface Day {
+export interface IDay {
     dayNumber: number;
     date: Date;
     outOfRange?: boolean;
@@ -60,31 +63,45 @@ export interface PresentDateInfo {
     currentMonth: number;
     dateToDisplay: string;
 }
+export interface IEvent {
+    date: Date,
+    title: string,
+    color?: string,
+    [key: string]: any,
+}
 
 export interface ICalendar {
-    id: string;
-    label: string;
-    color: string;
+    id: number,
+    label: string,
+    color: string,
+    events: IEvent[],
 }
 
 export interface ICalendarSystemProps extends IUiComponent {
-    calendars?: ICalendar[];
     onCreate?: () => void;
     onChangeType?: (newType: string) => void;
-    calendarsTitle: string;
     createModalProps: IModalProps,
+    calendars: {
+        title: string,
+        items: ICalendar[],
+    },
     [key: string]: any;
 }
 
-export interface ICalendarSystemViewProps extends ICalendarSystemProps {
-    monthCalendar: Day[],
-    currentWeek: Day[],
+export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'calendars'> {
+    monthCalendar: IDay[],
+    currentWeek: IDay[],
     calendarType: CalendarEnum,
     dateToDisplay: string,
+    calendars: ICalendar[],
+    calendarsTitle: string,
+    selectedCalendarsIds: number[],
     onChangeType: (newType: string) => void,
     onMonthChange: (newDate: Date) => void,
     onClickControls: (event: React.MouseEvent<HTMLElement>) => void
     onClickCreate: VoidFunction,
+    getEventsFromDate: (dateFromDay: Date, isMonth: boolean) => IEvent[],
+    onChangeCalendarsIds: (selectedIds: number[]) => void,
 }
 
 export interface ICalendarSystemModalViewProps extends IModalProps {
@@ -94,10 +111,10 @@ export interface ICalendarSystemModalViewProps extends IModalProps {
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
     const dispatch = useDispatch();
-
+    const [innerCalendars, setInnerCalendars] = React.useState<ICalendar[]>(props.calendars.items || []);
+    const [selectedCalendarsIds, setSelectedCalendarsIds] = React.useState<number[]>([]);
     const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.Month);
-
     const {calendarArray, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();
 
     const {
@@ -135,6 +152,50 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         applyControl(controlType);
     }, [applyControl]);
 
+    const onChangeCalendarsIds = (selectedIds: number[]) => {
+        setSelectedCalendarsIds(selectedIds);
+    };
+
+    const getEventsFromDate = (date: Date, isMonth: boolean) => {
+        const result: IEvent[] = [];
+
+        const callingDateDayJs = dayjs(date);
+
+        isMonth
+            ? innerCalendars.forEach(calendar => {
+                calendar.events.forEach(event => {
+                    const eventDateDayJs = dayjs(event.date);
+
+                    if (eventDateDayJs.isSame(callingDateDayJs, 'day') && selectedCalendarsIds.includes(calendar.id)) {
+                        result.push({
+                            ...event,
+                            color: event.color ?? calendar.color,
+                        });
+                    }
+                });
+            })
+            : (
+                innerCalendars.forEach(calendar => {
+                    calendar.events.forEach(event => {
+                        const eventDate = new Date(event.date);
+
+                        eventDate.setHours(eventDate.getHours(), 0, 0, 0);
+
+                        const eventDateDayJs = dayjs(eventDate);
+
+                        if (eventDateDayJs.isSame(callingDateDayJs, 'hours') && selectedCalendarsIds.includes(calendar.id)) {
+                            result.push({
+                                ...event,
+                                color: event.color ?? calendar.color,
+                            });
+                        }
+                    });
+                })
+            );
+
+        return result;
+    };
+
     const createModalView = props.createModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
 
     const createModalProps = React.useMemo(() => ({
@@ -153,10 +214,15 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         calendarType,
         currentWeek,
         createModalProps,
+        calendars: innerCalendars,
+        calendarsTitle: props.calendars.title,
+        selectedCalendarsIds,
         onChangeType,
         onMonthChange,
         onClickControls,
         onClickCreate,
+        getEventsFromDate,
+        onChangeCalendarsIds,
     });
 }
 

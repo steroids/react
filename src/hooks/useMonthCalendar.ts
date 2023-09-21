@@ -1,5 +1,5 @@
 import React from 'react';
-import {Day} from 'src/ui/content/CalendarSystem/CalendarSystem';
+import {IDay} from 'src/ui/content/CalendarSystem/CalendarSystem';
 
 /* eslint-disable no-plusplus */
 export const FIRST_DAY = 1;
@@ -7,7 +7,7 @@ const ONE_MONTH = 1;
 const TOTAL_DAYS_IN_CALENDAR = 42;
 
 export const getWeekFromDate = (date: Date) => {
-    const weekDays: Day[] = [];
+    const weekDays: IDay[] = [];
     const firstDayOfWeek = new Date(date);
     const currentDay = date.getDay();
     const diff = currentDay === 0 ? 6 : currentDay - 1; // Разница между текущим днем и понедельником
@@ -67,7 +67,7 @@ const useMonthCalendar = () => {
     }, [currentMonthDate]);
 
     const getCalendarArray = React.useCallback(() => {
-        const calendarArray: Day[] = [];
+        const calendarArray: IDay[] = [];
 
         const {firstDayOfCurrentMonth, currentMonth: month, daysInCurrentMonth} = getCurrentMonthDataUTC();
 

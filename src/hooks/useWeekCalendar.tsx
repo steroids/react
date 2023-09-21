@@ -1,5 +1,5 @@
 import React from 'react';
-import {Day} from '../ui/content/CalendarSystem/CalendarSystem';
+import {IDay} from '../ui/content/CalendarSystem/CalendarSystem';
 import {convertDate} from '../utils/calendar';
 import {getWeekFromDate, isToday} from './useMonthCalendar';
 import DateControlEnum from '../enums/DateControlType';
@@ -30,7 +30,7 @@ const useWeekCalendar = (currentMonthDate: Date) => {
         setCurrentWeek(getFormattedWeekFromDate(newMonthDate));
     }, []);
 
-    const updateEffect = React.useCallback((formattedWeek: Day[]) => {
+    const updateEffect = React.useCallback((formattedWeek: IDay[]) => {
         const firstDayOfWeek = formattedWeek[0].date;
         const currentMonthNumber = currentMonthDate.getMonth();
 

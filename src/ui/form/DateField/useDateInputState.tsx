@@ -139,11 +139,8 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
         if (value !== null) {
             const parsedValue = convertDate(
                 value,
-                [
-                    props.valueFormat,
-                    props.displayFormat,
-                ],
                 props.displayFormat,
+                props.valueFormat,
                 props.useUTC,
                 props.dateInUTC,
             );

@@ -1,7 +1,10 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {usePrevious} from 'react-use';
+import dayjs from 'dayjs';
+import {convertDate} from '@steroidsjs/core/utils/calendar';
+import {IDateInputStateInput} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
 
-interface IUseDateRangeProps {
+interface IUseDateRangeProps extends Pick<IDateInputStateInput, 'displayFormat' | 'valueFormat' | 'useUTC' | 'dateInUTC'>{
     onCloseFrom: any,
     onCloseTo: any,
     onClearFrom: any,
@@ -77,6 +80,41 @@ export default function useDateRange(props:IUseDateRangeProps) {
         }
     // eslint-disable-next-line max-len
     }, [focus, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value]);
+
+    // Swap start and end dates if start date is later than end date
+    useEffect(() => {
+        if (
+            props.inputFrom.value
+            && props.inputTo.value
+            && (dayjs(props.inputTo.value).isBefore(dayjs(props.inputFrom.value)))
+        ) {
+            const convertedDateFrom = convertDate(
+                props.inputFrom.value,
+                props.valueFormat,
+                props.valueFormat,
+                props.useUTC,
+                props.dateInUTC,
+            );
+
+            const convertedDateTo = convertDate(
+                props.inputTo.value,
+                props.valueFormat,
+                props.valueFormat,
+                props.useUTC,
+                props.dateInUTC,
+            );
+
+            props.inputFrom.onChange.call(null, convertedDateTo);
+            props.inputTo.onChange.call(null, convertedDateFrom);
+        }
+    }, [props.dateInUTC,
+        props.inputFrom.onChange,
+        props.inputFrom.value,
+        props.inputTo.onChange,
+        props.inputTo.value,
+        props.useUTC,
+        props.valueFormat,
+    ]);
 
     return {
         focus,

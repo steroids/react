@@ -59,9 +59,6 @@ describe('useApplication Hook', () => {
         routes: () => (mockedRoutes),
         layoutView: () => require('../mocks/mockLayout').default,
         components: {
-            clientStorage: {
-                className: ClientStorageComponent,
-            },
             http: {
                 apiUrl: 'https://kozhin.dev',
                 refreshTokenRequest: {
@@ -71,45 +68,11 @@ describe('useApplication Hook', () => {
                 className: JwtHttpComponent,
             },
             locale: LocaleComponent,
-            meta: {
-                className: MetaComponent,
-            },
             store: {
                 reducers: require('../../src/reducers/index').default,
-            },
-            ui: {
-                className: UiComponent,
-            },
-            metrics: {
-                className: MetricsComponent,
             },
         },
         onInit: jest.fn(),
-    };
-
-    const configWithoutDefaultComponents = {
-        screen: {
-            media: {},
-        },
-        theme: {
-            themes: {},
-        },
-        routes: () => (mockedRoutes),
-        layoutView: () => require('../mocks/mockLayout').default,
-        components: {
-            http: {
-                apiUrl: 'https://kozhin.dev',
-                refreshTokenRequest: {
-                    url: '/refresh',
-                    method: 'post',
-                },
-                className: JwtHttpComponent,
-            },
-            locale: LocaleComponent,
-            store: {
-                reducers: require('../../src/reducers/index').default,
-            },
-        },
     };
 
     const componentsStub = expect.any(Object);
@@ -154,14 +117,14 @@ describe('useApplication Hook', () => {
     });
 
     it('should take "client storage component" from default components and create', () => {
-        const {result} = renderHook(() => useApplication(configWithoutDefaultComponents));
+        const {result} = renderHook(() => useApplication(config));
 
         expect(ClientStorageComponent).toHaveBeenCalled();
         expect(result.current.components.clientStorage).toBeInstanceOf(ClientStorageComponent);
     });
 
     it('should take "html" from default components and create', () => {
-        const {result} = renderHook(() => useApplication(configWithoutDefaultComponents));
+        const {result} = renderHook(() => useApplication(config));
 
         const {html} = result.current.components;
 
@@ -170,7 +133,7 @@ describe('useApplication Hook', () => {
     });
 
     it('should take "meta" from default components and create', () => {
-        const {result} = renderHook(() => useApplication(configWithoutDefaultComponents));
+        const {result} = renderHook(() => useApplication(config));
 
         const {meta} = result.current.components;
 
@@ -179,7 +142,7 @@ describe('useApplication Hook', () => {
     });
 
     it('should take "ui" from default components and create', () => {
-        const {result} = renderHook(() => useApplication(configWithoutDefaultComponents));
+        const {result} = renderHook(() => useApplication(config));
 
         const {ui} = result.current.components;
 
@@ -188,7 +151,7 @@ describe('useApplication Hook', () => {
     });
 
     it('should take "metrics" from default components and create', () => {
-        const {result} = renderHook(() => useApplication(configWithoutDefaultComponents));
+        const {result} = renderHook(() => useApplication(config));
 
         const {metrics} = result.current.components;
 

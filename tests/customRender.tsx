@@ -1,6 +1,6 @@
 import React, {ReactElement} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import {render, renderHook, RenderOptions} from '@testing-library/react';
+import {render, RenderOptions} from '@testing-library/react';
 import useApplication from '../src/hooks/useApplication';
 import HtmlComponent from '../src/components/HtmlComponent';
 import HttpComponent from '../src/components/HttpComponent';

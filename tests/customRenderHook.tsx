@@ -11,7 +11,7 @@ const customRenderHook = <T, >(
 ) => {
     function MockApplication({children}: {children: React.ReactNode}) {
         const {renderApplication} = useApplication({
-            layoutView: () => require('./mockLayout').default,
+            layoutView: () => require('./mocks/mockLayout').default,
             components: {
                 html: {
                     className: HtmlComponent,

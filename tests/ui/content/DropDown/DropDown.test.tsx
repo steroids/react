@@ -52,7 +52,7 @@ describe('DropDown tests', () => {
         fireEvent.click(dropDownDispatcher);
         const dropDown = getElementByClassName(container, expectedDropDownClass);
 
-        expect(dropDown).toHaveClass(`${expectedDropDownClass}_position-top`);
+        expect(dropDown).toHaveClass(`${expectedDropDownClass}_position-bottom`);
     });
 
     it('should have external class and right content', () => {

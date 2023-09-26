@@ -9,6 +9,7 @@ import Icon from './Icon';
 import Menu from './Menu';
 import CopyToClipboard from './CopyToClipboard';
 import Chart from './Chart';
+import Slider from './Slider';
 
 export {
     Avatar,
@@ -25,4 +26,5 @@ export {
     Menu,
     CopyToClipboard,
     Chart,
+    Slider,
 };

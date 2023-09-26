@@ -5,10 +5,9 @@ import {IFormProps} from '../../form/Form/Form';
 import {CRUD_ACTION_CREATE, CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE} from './utils';
 import {showNotification} from '../../../actions/notifications';
 import useDispatch from '../../../hooks/useDispatch';
-import {ICrudItem} from './Crud';
+import {IApiRest, ICrudItem} from './Crud';
 import Grid from '../../../ui/list/Grid';
 import Form from '../../../ui/form/Form';
-import {IApiRest} from '../../../components/ApiComponent';
 
 export interface ICrudContentProps {
     crudId?: string,

@@ -12,7 +12,12 @@ import {useComponents} from '../../../hooks';
 
 /**
  * DateTimeRangeField
- * Поле ввода дипазона двух дат со временем, с выпадающим календарём
+ *
+ * Поле ввода дипазона двух дат со временем, с выпадающим календарём.
+ *
+ * Компонент `DateTimeRangeField` предоставляет возможность создания поля ввода для выбора диапазона двух дат с временем
+ * с помощью выпадающих списков и календаря.
+ * Он объединяет функциональность компонента `DateRangeField` для выбора диапазона дат и компонента `DateTimeField` для выбора времени.
  */
 export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'inputProps' | 'input'>,
     Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent
@@ -181,6 +186,8 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
         useSmartFocus: false,
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
     });
 
     // Calendar props

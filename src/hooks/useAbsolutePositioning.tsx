@@ -1,18 +1,67 @@
 import * as React from 'react';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-interface IStyleObj {
+import calculateComponentAbsolutePosition from '../utils/calculateComponentAbsolutePosition';
+
+export interface IComponentStylePosition {
+    /**
+     * Позиция компонента слева
+     */
     left: 'unset' | number,
+
+    /**
+     * Позиция компонента справа
+     */
     right: 'unset' | number,
+
+    /**
+     * Позиция компонента сверху
+     */
     top: 'unset' | number,
+}
+
+export interface IComponentArrowPosition {
+    /**
+     * Позиция стрелки слева
+     */
+    left?: number | string,
+
+    /**
+     * Позиция стрелки справа
+     */
+    right?: number | string,
+
+    /**
+     * Позиция стрелки сверху
+     */
+    top?: number | string,
+
+    /**
+     * Позиция стрелки снизу
+     */
+    bottom?: number | string,
+}
+
+export const enum Position {
+    TOP = 'top',
+    TOP_LEFT = 'topLeft',
+    TOP_RIGHT = 'topRight',
+    BOTTOM = 'bottom',
+    BOTTOM_LEFT = 'bottomLeft',
+    BOTTOM_RIGHT = 'bottomRight',
+    LEFT = 'left',
+    LEFT_TOP = 'leftTop',
+    LEFT_BOTTOM = 'leftBottom',
+    RIGHT = 'right',
+    RIGHT_TOP = 'rightTop',
+    RIGHT_BOTTOM = 'rightBottom',
 }
 
 /**
  * Варианты абсолютного позиционирования
  * @example 'top'
  */
-type Position = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
-    'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
+export type PositionType = keyof typeof Position | string;
 
 export interface IAbsolutePositioningInputProps {
     /**
@@ -41,7 +90,7 @@ export interface IAbsolutePositioningInputProps {
     /**
      * Позиционирование компонента, относительно целевого элемента
      */
-    position: Position,
+    position: PositionType,
 
     /**
      * Отобразить или скрыть компонент.
@@ -49,6 +98,11 @@ export interface IAbsolutePositioningInputProps {
      * через измененение данного свойства.
      */
     visible?: boolean,
+
+    /**
+     * Показывать ли компонент сразу после рендера страницы
+     */
+    defaultVisible?: boolean,
 
     /**
      * Обработчик изменения свойства isComponentVisible (отображение на странице).
@@ -77,178 +131,50 @@ export interface IAbsolutePositioningOutputProps {
     /**
      * Объект стилей для абсолютного позиционирования
      */
-    style: IStyleObj,
+    style: IComponentStylePosition,
+
+    /**
+     * Объект стилей для позиционирования стрелки
+     */
+    arrowPosition?: IComponentArrowPosition,
 }
+
+const DEFAULT_AUTO_POSITIONING_VALUE = true;
 
 export default function useAbsolutePositioning(props: IAbsolutePositioningInputProps) {
     const [isComponentExist, setIsComponentExist] = useState(props.visible);
-    const [isComponentVisible, setIsComponentVisible] = useState(props.visible);
+    const [isComponentVisible, setIsComponentVisible] = useState(props.visible || props.defaultVisible);
     const [position, setPosition] = useState<string>(props.position);
-    const [style, setStyle] = useState<IStyleObj>({
+    const [arrowPosition, setArrowPosition] = useState<IComponentArrowPosition>({
+        left: null,
+        right: null,
+        top: null,
+        bottom: null,
+    });
+    const [style, setStyle] = useState<IComponentStylePosition>({
         left: null,
         right: null,
         top: null,
     });
 
+    const hasAutoPositioning = useMemo(() => props.autoPositioning ?? DEFAULT_AUTO_POSITIONING_VALUE, [props.autoPositioning]);
+
     const timerRef = useRef(null);
 
-    const calculateAbsolutePosition = useCallback((newPosition:Position, childRef, componentSize) => {
-        const newStyle: IStyleObj = {left: null, right: null, top: null};
-        const {top, right, left, width, height} = childRef.getBoundingClientRect();
-        const parentDimensions = {top, right, left, width, height};
-        parentDimensions.top += window.scrollY;
+    const calculateAbsolutePosition = useCallback((newPosition: PositionType, parentRef, componentSize, arrowSize = null) => {
+        const {
+            style: newStyle,
+            position: calculatedPosition,
+            arrowPosition: calculatedArrowPosition,
+        } = calculateComponentAbsolutePosition(props.gap, newPosition, parentRef, componentSize, arrowSize, hasAutoPositioning);
 
-        const useAutoPositioning = props.autoPositioning;
-
-        // eslint-disable-next-line default-case
-        switch (newPosition) {
-            case 'top':
-            case 'topLeft':
-            case 'topRight':
-                // Проверка - выходит ли tooltip за верхний край страницы?
-                // Если да - меняем позицию на bottom
-                if (
-                    useAutoPositioning
-                    && ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + props.gap))
-                ) {
-                    newStyle.top = parentDimensions.top + parentDimensions.height;
-                    newPosition = newPosition.replace('top', 'bottom');
-                } else {
-                    newStyle.top = parentDimensions.top - componentSize.height;
-                }
-                break;
-
-            case 'bottom':
-            case 'bottomLeft':
-            case 'bottomRight':
-                // Проверка - выходит ли tooltip за нижний край страницы?
-                // Если да - меняем позицию на top
-                if (
-                    useAutoPositioning
-                    && ((window.innerHeight - (
-                        parentDimensions.top + parentDimensions.height - window.scrollY
-                    ))) <= Math.round(componentSize.height + props.gap)
-                ) {
-                    newStyle.top = parentDimensions.top - componentSize.height;
-                    newPosition = newPosition.replace('bottom', 'top');
-                } else {
-                    newStyle.top = parentDimensions.top + parentDimensions.height;
-                }
-                break;
-
-            case 'left':
-            case 'leftTop':
-            case 'leftBottom':
-                // Проверка - выходит ли tooltip за левый край страницы?
-                // Если да - меняем позицию на right
-                if (useAutoPositioning && (parentDimensions.left <= Math.round(componentSize.width + props.gap))) {
-                    newStyle.left = parentDimensions.right;
-                    newPosition = newPosition.replace('left', 'right');
-                } else {
-                    newStyle.left = parentDimensions.left - componentSize.width;
-                }
-
-                break;
-
-            case 'right':
-            case 'rightTop':
-            case 'rightBottom':
-                // Проверка - выходит ли tooltip за правый край страницы?
-                // Если да - меняем позицию на left
-                if (
-                    useAutoPositioning
-                    && (document.body.clientWidth - parentDimensions.right <= Math.round(
-                        componentSize.width + props.gap,
-                    ))
-                ) {
-                    newStyle.left = parentDimensions.left - componentSize.width;
-                    newPosition = newPosition.replace('right', 'left');
-                } else {
-                    newStyle.left = parentDimensions.right;
-                }
-                break;
-        }
-
-        // eslint-disable-next-line default-case
-        switch (newPosition) {
-            case 'top':
-            case 'bottom':
-                // Выравнивание по середине
-                newStyle.left = (parentDimensions.left + (parentDimensions.width / 2)) - (componentSize.width / 2);
-                break;
-
-            case 'topLeft':
-            case 'bottomLeft':
-                // Ширина tooltip больше родителя - стрелка на середину родителя
-                newStyle.left = parentDimensions.left;
-                break;
-
-            case 'topRight':
-            case 'bottomRight':
-                // Ширина tooltip больше родителя - стрелка на середину родителя
-                newStyle.right = document.body.clientWidth - parentDimensions.right;
-                break;
-
-            case 'left':
-            case 'right':
-                newStyle.top = (parentDimensions.top + (parentDimensions.height / 2)) - (componentSize.height / 2);
-                break;
-
-            case 'leftTop':
-            case 'rightTop':
-                newStyle.top = parentDimensions.top;
-                break;
-
-            case 'leftBottom':
-            case 'rightBottom':
-                newStyle.top = parentDimensions.top + parentDimensions.height - componentSize.height;
-                break;
-        }
-
-        // Проверка - при позиционировании top/bottom tooltip не выходит за пределы страницы по горизонтали
-        if (newPosition.includes('top') || newPosition.includes('bottom')) {
-            if (!newPosition.includes('Left')
-                && (newStyle.left < 0 || parentDimensions.left
-                    <= Math.round((componentSize.width - parentDimensions.width) + props.gap))
-            ) {
-                newStyle.right = null;
-                newPosition = newPosition.replace('Right', 'Left');
-                newStyle.left = parentDimensions.left;
-            }
-
-            if (!newPosition.includes('Right')
-                && (document.body.clientWidth - parentDimensions.right
-                    <= Math.round((componentSize.width - parentDimensions.width) + props.gap))
-            ) {
-                newPosition = newPosition.replace('Left', 'Right');
-                newStyle.left = null;
-                newStyle.right = document.body.clientWidth - parentDimensions.right;
-            }
-        }
-
-        // Проверка - при позиционировании left/right tooltip не выходит за пределы страницы по вертикали
-        if (newPosition.includes('left') || newPosition.includes('right')) {
-            if (!newPosition.includes('Top')
-                && parentDimensions.top - window.scrollY
-                <= Math.round((componentSize.height - parentDimensions.height) + props.gap)
-            ) {
-                newPosition = newPosition.replace('Bottom', 'Top');
-                newStyle.top = parentDimensions.top;
-            }
-
-            if (!newPosition.includes('Bottom')
-                && (window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY)
-                    <= Math.round((componentSize.height - parentDimensions.height) + props.gap)
-                )
-            ) {
-                newPosition = newPosition.replace('Top', 'Bottom');
-                newStyle.top = parentDimensions.top + parentDimensions.height - componentSize.height;
-            }
-        }
         setStyle(newStyle);
-        setPosition(newPosition);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.gap]);
+        setPosition(calculatedPosition);
+
+        if (calculatedArrowPosition) {
+            setArrowPosition(calculatedArrowPosition);
+        }
+    }, [hasAutoPositioning, props.gap]);
 
     const onShow = useCallback(() => {
         if (timerRef.current) {
@@ -293,6 +219,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
         isComponentVisible,
         style,
         position,
+        arrowPosition,
         calculateAbsolutePosition,
         onShow,
         onHide,

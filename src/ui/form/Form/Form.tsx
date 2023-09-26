@@ -8,7 +8,6 @@ import {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
-import {IApiMethod} from '../../../components/ApiComponent';
 import AutoSaveHelper from './AutoSaveHelper';
 import {IFieldProps} from '../Field/Field';
 import {useComponents, useDispatch} from '../../../hooks';
@@ -18,7 +17,9 @@ import {formDestroy, formSetSubmitting} from '../../../actions/form';
 
 /**
  * Form
- * Компонент для создания формы
+ *
+ * Компонент для создания формы. Предоставляет управление и синхронизацию состояния формы,
+ * а также позволяет выполнять отправку данных формы на сервер с возможностью валидации и обработки результатов.
  */
 export interface IFormProps extends IUiComponent {
     /**
@@ -42,7 +43,7 @@ export interface IFormProps extends IUiComponent {
      * Url на который будет отправлена форма
      * @example api/v1/handle-form
      */
-    action?: string | IApiMethod;
+    action?: string;
 
     /**
      * Тип HTTP запроса (GET | POST | PUT | DELETE)
@@ -418,24 +419,25 @@ function Form(props: IFormProps): JSX.Element {
         // Send request
         let response;
         try {
-            response = typeof props.action === 'function'
-                ? await props.action.call(null, components.api, cleanedValues, options)
-                : await components.http.send(
-                    props.actionMethod,
-                    props.action || window.location.pathname,
-                    cleanedValues,
-                    options,
-                );
+            response = await components.http.send(
+                props.actionMethod,
+                props.action || window.location.pathname,
+                cleanedValues,
+                options,
+            );
         } catch (requestError) {
             console.error(requestError); // eslint-disable-line no-console
             dispatch(formSetSubmitting(props.formId, false));
-            props.onError(requestError);
-            reduxDispatch(
-                showNotification(
-                    props.submitErrorMessage || __('Ошибка сервера'),
-                    'danger',
-                ),
-            );
+            if (typeof props.onError === 'function') {
+                props.onError(requestError);
+            } else {
+                reduxDispatch(
+                    showNotification(
+                        props.submitErrorMessage || __('Ошибка сервера'),
+                        'error',
+                    ),
+                );
+            }
             return null;
         }
 
@@ -474,7 +476,7 @@ function Form(props: IFormProps): JSX.Element {
         dispatch(formSetSubmitting(props.formId, false));
         return null;
     }, [dispatch, props, values, components.ui, components.resource,
-        components.http, components.api, reduxDispatch, setErrors]);
+        components.http, reduxDispatch, setErrors]);
 
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);

@@ -4,8 +4,9 @@ import {IRouteItem} from '../Router/Router';
 
 /**
  * Breadcrumbs
- * Хлебные крошки
- */
+ *
+ * Компонент Breadcrumbs отображает хлебные крошки.
+ **/
 export interface IBreadcrumbsProps {
     /**
      * Кастомный CSS-класс

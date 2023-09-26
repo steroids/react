@@ -33,6 +33,11 @@ export interface ICropConfig {
     reactImageCropProps?: ReactCropProps
 }
 
+/**
+ * ImageField
+ *
+ * Компонент для загрузки изображений с возможностью обрезки и предпросмотра.
+ **/
 export interface IImageFieldProps extends IFieldWrapperInputProps,
     Omit<IFileInput, 'multiple' | 'imagesOnly'>, IUiComponent {
     /**

@@ -8,6 +8,12 @@ import useAbsolutePositioning, {
     IAbsolutePositioningOutputProps,
 } from '../../../hooks/useAbsolutePositioning';
 
+/**
+ * Menu
+ *
+ * Компонент, представляющий меню с элементами, которые могут быть выбраны или нажаты.
+ * Компонент позволяет отображать и скрывать содержимое меню, а также управлять его позиционированием.
+ */
 export interface IDropDownProps extends IAbsolutePositioningInputProps {
     /**
      * Содержимое DropDown (компонент или jsx-код)
@@ -136,7 +142,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
 }
 
 DropDown.defaultProps = {
-    autoPositioning: false,
+    autoPositioning: true,
     componentDestroyDelay: 300,
     defaultVisible: false,
     gap: 15,

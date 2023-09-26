@@ -2,6 +2,12 @@ import * as React from 'react';
 import {Provider} from 'react-redux';
 import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
@@ -33,6 +39,7 @@ export interface IApplicationHookConfig {
     layoutView?: () => CustomView,
     layoutProps?: Record<string, unknown>,
     screen?: Omit<IScreenProviderProps, 'children'>,
+    theme?: Omit<IThemeProviderProps, 'children'>;
 
     routerProps?: IRouterProps,
     /**
@@ -75,6 +82,12 @@ export const defaultComponents = {
 
 export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {
     const useGlobal = config.useGlobal !== false;
+
+    //Extending dayjs / day.js with modules that used in steroids
+    dayjs.extend(relativeTime);
+    dayjs.extend(customParseFormat);
+    dayjs.extend(localizedFormat);
+    dayjs.extend(utc);
 
     let components: IComponents = useComponents();
 
@@ -133,6 +146,14 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 <ScreenProvider {...config.screen}>
                     {content}
                 </ScreenProvider>
+            );
+        }
+
+        if (config.theme) {
+            content = (
+                <ThemeProvider {...config.theme}>
+                    {content}
+                </ThemeProvider>
             );
         }
 

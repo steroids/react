@@ -4,7 +4,6 @@ import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import {IApiMethod} from '../components/ApiComponent';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
@@ -61,7 +60,7 @@ export interface IListConfig {
      * Url, который вернет коллекцию элементов
      * @example api/v1/articles
      */
-    action?: string | IApiMethod,
+    action?: string,
 
     /**
      * Тип HTTP запроса (GET | POST | PUT | DELETE)
@@ -133,6 +132,12 @@ export interface IListConfig {
      * @return {Promise}
      */
     onFetch?: (list: IList, query: Record<string, unknown>, http: any) => Promise<any>,
+
+    /**
+     * Обработчик события ошибки выполнения запроса
+     * @param args
+     */
+    onError?: (error: Record<string, any>) => void;
 
     /**
      * Обработчик, который составляет список условий для локальной фильтрации элементов коллекции
@@ -408,6 +413,7 @@ export default function useList(config: IListConfig): IListOutput {
                     action: config.action || config.action === '' ? config.action : null,
                     actionMethod: config.actionMethod || defaultConfig.actionMethod,
                     onFetch: config.onFetch,
+                    onError: config.onError,
                     condition: config.condition,
                     scope: config.scope,
                     items: null,

@@ -9,6 +9,16 @@ import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
 
+/**
+ * DateField
+ *
+ * Поле ввода с выпадающим календарём для выбора даты.
+ *
+ * Компонент `DateField` предоставляет возможность создания поля ввода с календарём для выбора даты.
+ * Он предоставляет пользователю удобный интерфейс для выбора даты с помощью календаря,
+ * а также поддерживает настройку формата отображения даты и другие параметры.
+ */
+
 export interface IDateFieldProps extends IDateInputStateInput, IUiComponent {
     /**
      * Свойства для view компонента

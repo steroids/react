@@ -48,6 +48,7 @@ export interface IListItemViewProps {
         id?: PrimaryKey,
         title?: string | any,
         label?: string | any,
+        [key: string]: any,
     },
     index: number,
     className?: CssClassName;
@@ -83,6 +84,7 @@ export default function List(props: IListProps): JSX.Element {
         searchForm: props.searchForm,
         autoDestroy: props.autoDestroy,
         onFetch: props.onFetch,
+        onError: props.onError,
         condition: props.condition,
         addressBar: props.addressBar,
         scope: props.scope,

@@ -7,7 +7,6 @@ import _uniqBy from 'lodash-es/uniqBy';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {usePrevious} from 'react-use';
 import {fieldsDataProviderSetItems} from '../actions/fields';
-import {IApiMethod} from '../components/ApiComponent';
 import {normalizeItems} from '../utils/data';
 import {useComponents, useDispatch} from './index';
 import Enum from '../base/Enum';
@@ -50,7 +49,7 @@ export interface IDataProvider {
      * URL для подгрузки новой коллекции данных
      * @example '/api/v1/search'
      */
-    action?: string | IApiMethod,
+    action?: string,
 
     /**
      * Параметры запроса
@@ -198,10 +197,9 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     useEffect(() => {
         const fetchRemote = async (isAuto) => {
             const searchHandler = dataProvider.onSearch || (
-                typeof dataProvider.action === 'function'
-                    ? (method: any, params) => method(components.api, params).then(response => response.data)
-                    : (method: any, params) => components.http.send(dataProvider.actionMethod, method, params)
-                        .then(response => response.data)
+                (method: any, params) => components.http
+                    .send(dataProvider.actionMethod, method, params)
+                    .then(response => response.data)
             );
             const result = searchHandler(dataProvider.action, {
                 query: config.query,
@@ -250,7 +248,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.api, components.http, config.autoFetch,
+    }, [autoComplete, components.http, config.autoFetch,
         config.dataProvider, config.initialSelectedIds, config.query, dataProvider,
         dataProvider.action, dataProvider.onSearch, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
 

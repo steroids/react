@@ -1,65 +1,78 @@
-import {ITooltipArrowPosition, ITooltipStylePosition} from '../Tooltip/Tooltip';
+import {IComponentArrowPosition, IComponentStylePosition, Position} from '../hooks/useAbsolutePositioning';
 
-export default function calculate(gap, position, parentRef, tooltipSize, arrowSize) {
-    const style: ITooltipStylePosition = {left: null, right: null, top: null};
-    let arrowPosition: ITooltipArrowPosition = null;
+export default function calculateComponentAbsolutePosition(gap, position, parentRef, componentSize, arrowSize = null, hasAutoPositioning = true) {
+    if (process.env.IS_SSR) {
+        return null;
+    }
+
+    const style: IComponentStylePosition = {left: null, right: null, top: null};
+    let arrowPosition: IComponentArrowPosition = null;
 
     const {top, right, left, width, height} = parentRef.getBoundingClientRect();
     const parentDimensions = {top, right, left, width, height};
+
     parentDimensions.top += window.scrollY;
 
     // eslint-disable-next-line default-case
     switch (position) {
-        case 'top':
-        case 'topLeft':
-        case 'topRight':
+        case Position.TOP:
+        case Position.TOP_LEFT:
+        case Position.TOP_RIGHT:
             // Проверка - выходит ли tooltip за верхний край страницы?
             // Если да - меняем позицию на bottom
-            if ((parentDimensions.top - window.scrollY) <= Math.round(tooltipSize.height + gap)) {
+            if (
+                hasAutoPositioning
+                && ((parentDimensions.top - window.scrollY) <= Math.round(componentSize.height + gap)
+                )
+            ) {
                 style.top = parentDimensions.top + parentDimensions.height;
-                position = position.replace('top', 'bottom');
+                position = position.replace(Position.TOP, Position.BOTTOM);
             } else {
-                style.top = parentDimensions.top - tooltipSize.height;
+                style.top = parentDimensions.top - componentSize.height;
             }
             break;
 
-        case 'bottom':
-        case 'bottomLeft':
-        case 'bottomRight':
+        case Position.BOTTOM:
+        case Position.BOTTOM_LEFT:
+        case Position.BOTTOM_RIGHT:
             /// Проверка - выходит ли tooltip за нижний край страницы?
             // Если да - меняем позицию на top
-            if ((window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY))
-                <= Math.round(tooltipSize.height + gap)
+            if (
+                hasAutoPositioning
+                && ((window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY))
+                <= Math.round(componentSize.height + gap))
             ) {
-                style.top = parentDimensions.top - tooltipSize.height;
-                position = position.replace('bottom', 'top');
+                style.top = parentDimensions.top - componentSize.height;
+                position = position.replace(Position.BOTTOM, Position.TOP);
             } else {
                 style.top = parentDimensions.top + parentDimensions.height;
             }
             break;
 
-        case 'left':
-        case 'leftTop':
-        case 'leftBottom':
+        case Position.LEFT:
+        case Position.LEFT_TOP:
+        case Position.LEFT_BOTTOM:
             // Проверка - выходит ли tooltip за левый край страницы?
             // Если да - меняем позицию на right
-            if (parentDimensions.left <= Math.round(tooltipSize.width + gap)) {
+            if (hasAutoPositioning && (parentDimensions.left <= Math.round(componentSize.width + gap))) {
                 style.left = parentDimensions.right;
-                position = position.replace('left', 'right');
+                position = position.replace(Position.LEFT, Position.RIGHT);
             } else {
-                style.left = parentDimensions.left - tooltipSize.width;
+                style.left = parentDimensions.left - componentSize.width;
             }
-
             break;
 
-        case 'right':
-        case 'rightTop':
-        case 'rightBottom':
+        case Position.RIGHT:
+        case Position.RIGHT_TOP:
+        case Position.RIGHT_BOTTOM:
             // Проверка - выходит ли tooltip за правый край страницы?
             // Если да - меняем позицию на left
-            if (document.body.clientWidth - parentDimensions.right <= Math.round(tooltipSize.width + gap)) {
-                style.left = parentDimensions.left - tooltipSize.width;
-                position = position.replace('right', 'left');
+            if (
+                hasAutoPositioning
+                && (document.body.clientWidth - parentDimensions.right <= Math.round(componentSize.width + gap))
+            ) {
+                style.left = parentDimensions.left - componentSize.width;
+                position = position.replace(Position.RIGHT, Position.LEFT);
             } else {
                 style.left = parentDimensions.right;
             }
@@ -68,26 +81,26 @@ export default function calculate(gap, position, parentRef, tooltipSize, arrowSi
 
     // eslint-disable-next-line default-case
     switch (position) {
-        case 'top':
-        case 'bottom':
+        case Position.TOP:
+        case Position.BOTTOM:
             // Выравнивание по середине
-            style.left = (parentDimensions.left + (parentDimensions.width / 2)) - (tooltipSize.width / 2);
+            style.left = (parentDimensions.left + (parentDimensions.width / 2)) - (componentSize.width / 2);
             break;
 
-        case 'topLeft':
-        case 'bottomLeft':
+        case Position.TOP_LEFT:
+        case Position.BOTTOM_LEFT:
             // Ширина tooltip больше родителя - стрелка на середину родителя
             style.left = parentDimensions.left;
-            if (parentDimensions.width < tooltipSize.width) {
+            if (arrowSize && (parentDimensions.width < componentSize.width)) {
                 arrowPosition = {left: parentDimensions.width / 2};
             }
             break;
 
-        case 'topRight':
-        case 'bottomRight':
+        case Position.TOP_RIGHT:
+        case Position.BOTTOM_RIGHT:
             // Ширина tooltip больше родителя - стрелка на середину родителя
-            style.left = parentDimensions.right - tooltipSize.width;
-            if (parentDimensions.width < tooltipSize.width) {
+            style.left = parentDimensions.right - componentSize.width;
+            if (arrowSize && (parentDimensions.width < componentSize.width)) {
                 arrowPosition = {
                     left: null,
                     right: (parentDimensions.width / 2) - (arrowSize.width / 2),
@@ -95,23 +108,23 @@ export default function calculate(gap, position, parentRef, tooltipSize, arrowSi
             }
             break;
 
-        case 'left':
-        case 'right':
-            style.top = (parentDimensions.top + (parentDimensions.height / 2)) - (tooltipSize.height / 2);
+        case Position.LEFT:
+        case Position.RIGHT:
+            style.top = (parentDimensions.top + (parentDimensions.height / 2)) - (componentSize.height / 2);
             break;
 
-        case 'leftTop':
-        case 'rightTop':
+        case Position.LEFT_TOP:
+        case Position.RIGHT_TOP:
             style.top = parentDimensions.top;
-            if (parentDimensions.height < (tooltipSize.height)) {
+            if (arrowSize && (parentDimensions.height < componentSize.height)) {
                 arrowPosition = {top: parentDimensions.height / 2};
             }
             break;
 
-        case 'leftBottom':
-        case 'rightBottom':
-            style.top = parentDimensions.top + parentDimensions.height - tooltipSize.height;
-            if (parentDimensions.height < tooltipSize.height) {
+        case Position.LEFT_BOTTOM:
+        case Position.RIGHT_BOTTOM:
+            style.top = parentDimensions.top + parentDimensions.height - componentSize.height;
+            if (arrowSize && (parentDimensions.height < componentSize.height)) {
                 arrowPosition = {
                     bottom: (parentDimensions.height / 2) - (arrowSize.height / 2),
                 };
@@ -123,24 +136,22 @@ export default function calculate(gap, position, parentRef, tooltipSize, arrowSi
     if (position.includes('top') || position.includes('bottom')) {
         if (!position.includes('Left')
             && (style.left < 0 || parentDimensions.left <= Math.round(
-                (tooltipSize.width - parentDimensions.width) + gap,
+                (componentSize.width - parentDimensions.width) + gap,
             ))
         ) {
             style.right = null;
             position = position.replace('Right', 'Left');
             // Если ширина tooltip больше ширины родителя - выставить стрелку на середину родителя
-            if (parentDimensions.left < tooltipSize.width) {
+            if (parentDimensions.left < componentSize.width) {
                 arrowPosition = {left: parentDimensions.width / 2};
             }
             style.left = parentDimensions.left;
-        }
-
-        if (!position.includes('Right')
+        } else if (!position.includes('Right')
             && (document.body.clientWidth - parentDimensions.right
-                <= Math.round((tooltipSize.width - parentDimensions.width) + gap))
+                <= Math.round((componentSize.width - parentDimensions.width) + gap))
         ) {
             position = position.replace('Left', 'Right');
-            if (parentDimensions.width < tooltipSize.width) {
+            if (arrowSize && (parentDimensions.width < componentSize.width)) {
                 arrowPosition = {
                     left: null,
                     right: (parentDimensions.width / 2) - (arrowSize.width / 2),
@@ -154,27 +165,25 @@ export default function calculate(gap, position, parentRef, tooltipSize, arrowSi
     // Проверка - при позиционировании left/right tooltip не выходит за пределы страницы по вертикали
     if (position.includes('left') || position.includes('right')) {
         if (!position.includes('Top')
-            && parentDimensions.top - window.scrollY <= Math.round((tooltipSize.height - parentDimensions.height) + gap)
+            && parentDimensions.top - window.scrollY <= Math.round((componentSize.height - parentDimensions.height) + gap)
         ) {
             position = position.replace('Bottom', 'Top');
-            if (parentDimensions.height < tooltipSize.height) {
+            if (parentDimensions.height < componentSize.height) {
                 arrowPosition = {top: parentDimensions.height / 2};
             }
             style.top = parentDimensions.top;
-        }
-
-        if (!position.includes('Bottom')
+        } else if (!position.includes('Bottom')
             && (window.innerHeight - (parentDimensions.top + parentDimensions.height - window.scrollY)
-                <= Math.round((tooltipSize.height - parentDimensions.height) + gap)
+                <= Math.round((componentSize.height - parentDimensions.height) + gap)
             )
         ) {
             position = position.replace('Top', 'Bottom');
-            if (parentDimensions.height < tooltipSize.height) {
+            if (arrowSize && (parentDimensions.height < componentSize.height)) {
                 arrowPosition = {
                     bottom: (parentDimensions.height / 2) - (arrowSize.height / 2),
                 };
             }
-            style.top = parentDimensions.top + parentDimensions.height - tooltipSize.height;
+            style.top = parentDimensions.top + parentDimensions.height - componentSize.height;
         }
     }
 

@@ -1,6 +1,12 @@
 import {useComponents} from '../../../hooks';
 
-export interface IFileSizeFormatterProps extends IUiComponent {
+/**
+ * FileSize
+ *
+ * Компонент FileSize предназначен для форматирования размера файла в человеко-читаемом формате.
+ * Он позволяет кастомизировать отображение размера файла, используя переданный view React компонент.
+ **/
+export interface IFileSizeProps extends IUiComponent {
 
     /**
      * Если не указан размер файла, то в случае, если showZero = true
@@ -44,7 +50,7 @@ export const asHumanFileSize = (bytes, showZero) => {
     return bytes.toFixed(1) + ' ' + units[u];
 };
 
-export default function FileSize(props: IFileSizeFormatterProps): JSX.Element {
+export default function FileSize(props: IFileSizeProps): JSX.Element {
     return useComponents().ui.renderView(props.view || 'format.DefaultFormatterView', {
         value: asHumanFileSize(props.value, props.showZero),
     });

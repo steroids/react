@@ -1,6 +1,11 @@
 import React from 'react';
 import {useComponents} from '../../../hooks';
 
+/**
+* Title
+*
+* Компонент предназначен для вывода заголовков, предоставляет возможность для настройки, цвета, типа и тэга.
+*/
 export interface ITitleProps extends IUiComponent {
     /**
     * Дочерние элементы

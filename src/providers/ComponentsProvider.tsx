@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
+import {IUiApplicationComponent} from 'src/components/UiComponent';
+import {ILocaleComponent} from 'src/components/LocaleComponent';
+import {IClientStorageComponent} from 'src/components/ClientStorageComponent';
 import {IResourceComponent} from '../components/ResourceComponent';
 
 declare global {
@@ -9,13 +12,12 @@ declare global {
 }
 
 export interface IComponents {
-    api?: any,
-    clientStorage?: any,
+    clientStorage?: IClientStorageComponent,
     html?: any,
     http?: any,
-    locale?: any,
+    locale?: ILocaleComponent,
     store?: any,
-    ui?: any,
+    ui?: IUiApplicationComponent,
     resource?: IResourceComponent,
     ws?: any,
     pushNotification?: any,

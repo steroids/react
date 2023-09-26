@@ -2,6 +2,7 @@ import * as React from 'react';
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
+import {useEffect} from 'react';
 import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -31,6 +32,14 @@ interface IFileFieldCommonProps extends IFileInput {
      */
     filesLayout?: FilesLayout | string;
 }
+
+/**
+ * FileField
+ *
+ * Компонент `FileField` представляет собой поле формы для загрузки файлов.
+ * Он использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.
+ * Компонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.
+ **/
 
 export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps, IUiComponent {
     /**
@@ -107,6 +116,11 @@ export interface IFileFieldItemViewProps extends IFileFieldCommonProps{
          */
         height: string,
     },
+    /**
+     * Обработчик события загрузки файлов
+     * @param e
+     */
+    onLoad?: () => void,
     progress?: {
         bytesUploaded: number,
         percent: number,
@@ -117,12 +131,25 @@ export interface IFileFieldViewProps extends IFileFieldProps {
     items: IFileFieldItemViewProps[],
 }
 
+const FILE_STATUS_END = 'end';
+
 function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const {files, onBrowse, onRemove} = useFile(props);
+    const [isFilesLoaded, setIsFilesLoaded] = React.useState(false);
 
     const FileFieldView = props.view || components.ui.getView('form.FileFieldView');
     const FileFieldItemView = props.itemView || components.ui.getView('form.FileFieldItemView');
+
+    useEffect(() => {
+        setIsFilesLoaded(files.filter(file => file._status === FILE_STATUS_END).length === files.length);
+    }, [files]);
+
+    useEffect(() => {
+        if (isFilesLoaded && props.onLoad) {
+            props.onLoad();
+        }
+    }, [isFilesLoaded, props]);
 
     return (
         <FileFieldView

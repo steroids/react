@@ -1,6 +1,18 @@
 import {useState, useCallback, useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 
+/**
+ * Avatar
+ *
+ * Компонент аватара, который отображает изображение пользователя или иконку.
+ * Он может использоваться для представления пользователя, контакта или профиля.
+ *
+ * Компонент `Avatar` позволяет указать размер, форму, изображение или иконку,
+ * а также добавить альтернативный текст и статус онлайна.
+ *
+ * Если изображение аватара не загружается, можно показать альтернативный текст
+ * или иконку вместо него.
+ */
 export interface IAvatarProps extends IUiComponent {
 
     /**
@@ -95,7 +107,7 @@ function Avatar(props: IAvatarProps) {
 }
 
 Avatar.defaultProps = {
-    size: 'middle',
+    size: 'md',
     shape: 'circle',
     status: false,
 };

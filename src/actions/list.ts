@@ -9,14 +9,13 @@ import _isNil from 'lodash-es/isNil';
 import {formSelector} from '../reducers/form';
 import {formChange, formSetErrors} from '../actions/form';
 import {filterItems} from '../utils/data';
-import {IApiMethod} from '../components/ApiComponent';
 
 export interface IList {
     /**
     * Url, который вернет коллекцию элементов.
     * @example api/v1/articles
     */
-    action?: string | IApiMethod,
+    action?: string,
 
     /**
     * Тип HTTP запроса (GET | POST | PUT | DELETE)
@@ -27,6 +26,12 @@ export interface IList {
     * Функция обратного вызова, вызываемая при получении списка.
     */
     onFetch?: (list: IList, query: Record<string, unknown>, components: any) => Promise<any>,
+
+    /**
+     * Обработчик события ошибки выполнения запроса
+     * @param args
+     */
+    onError?: (error: Record<string, any>) => void;
 
     /**
     * Функция условия, используемая для определения поведения списка на основе параметров запроса.
@@ -139,6 +144,7 @@ const createList = (listId: string, props: any) => ({
     action: props.action || props.action === '' ? props.action : null,
     actionMethod: props.actionMethod || 'get',
     onFetch: props.onFetch,
+    onError: props.onError,
     condition: props.condition,
     scope: props.scope,
     total: props.total || null,
@@ -155,15 +161,7 @@ const createList = (listId: string, props: any) => ({
     layoutAttribute: _get(props, '_layout.attribute') || null,
 });
 
-export const httpFetchHandler = (list: IList, query, {api, http}) => {
-    if (typeof list.action === 'function') {
-        const params = {...query};
-        if (list.scope) {
-            params.scope = list.scope.join(',');
-        }
-        return list.action(api, params).then(response => response.data);
-    }
-
+export const httpFetchHandler = (list: IList, query, {http}) => {
     let url = list.action;
     if (list.scope) {
         url
@@ -171,7 +169,12 @@ export const httpFetchHandler = (list: IList, query, {api, http}) => {
     }
     return http
         .send(list.actionMethod, url || window.location.pathname, query)
-        .then(response => response.data);
+        .then(response => response.data)
+        .catch(error => {
+            if (typeof list.onError === 'function') {
+                list.onError(error);
+            }
+        });
 };
 
 export const localFetchHandler = (list: IList, query: Record<string, unknown>) => {

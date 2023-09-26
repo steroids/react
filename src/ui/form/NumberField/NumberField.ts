@@ -1,12 +1,13 @@
-import {useMemo} from 'react';
+import {ChangeEvent, useMemo} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * NumberField
- * Числовое поле ввода
- */
+ *
+ * Числовое поле ввода. Этот компонент представляет собой поле ввода для числовых значений.
+ **/
 export interface INumberFieldProps extends IBaseFieldProps {
     /**
      * Минимальное значение
@@ -31,12 +32,12 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: string) => void,
+        onChange: (value: ChangeEvent<HTMLInputElement> | string) => void,
         value: number,
         placeholder: string,
         disabled: boolean,
-        min: string | number,
-        max: string | number,
+        min: number,
+        max: number,
         step: string | number,
     },
 }
@@ -46,7 +47,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     props.inputProps = useMemo(() => ({
         name: props.input.name,
-        value: props.input.value ?? '',
+        defaultValue: props.input.value ?? '',
         onChange: value => props.input.onChange(value),
         type: 'number',
         min: props.min,

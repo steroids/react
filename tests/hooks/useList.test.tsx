@@ -164,6 +164,14 @@ describe('useList hook', () => {
         },
     };
 
+    const enabledProp = {
+        enable: true,
+    };
+
+    const disabledProp = {
+        enable: false,
+    };
+
     it('should return an object with properties', () => {
         const store = mockStore({
             ...mockedListStore,
@@ -282,31 +290,19 @@ describe('useList hook', () => {
     });
 
     it('should call normalizeSortProps with parameters', () => {
-        const sortProp = {
-            enable: true,
-        };
+        renderHook(() => useList({sort: enabledProp}));
 
-        renderHook(() => useList({sort: sortProp}));
-
-        expect(normalizeSortPropsSpy).toHaveBeenCalledWith(sortProp);
+        expect(normalizeSortPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should call normalizeEmptyProps with parameters', () => {
-        const emptyProp = {
-            enable: true,
-        };
+        renderHook(() => useList({empty: enabledProp}));
 
-        renderHook(() => useList({empty: emptyProp}));
-
-        expect(normalizeEmptyPropsSpy).toHaveBeenCalledWith(emptyProp);
+        expect(normalizeEmptyPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should return "Empty" component if empty is enabled', () => {
-        const emptyProp = {
-            enable: true,
-        };
-
-        const {result} = renderHook(() => useList({empty: emptyProp}));
+        const {result} = renderHook(() => useList({empty: enabledProp}));
 
         const renderedEmpty = result.current.renderEmpty();
 
@@ -314,11 +310,7 @@ describe('useList hook', () => {
     });
 
     it('should return null component if empty is disabled', () => {
-        const emptyProp = {
-            enable: false,
-        };
-
-        const {result} = renderHook(() => useList({empty: emptyProp}));
+        const {result} = renderHook(() => useList({empty: disabledProp}));
 
         const renderedEmpty = result.current.renderEmpty();
 
@@ -326,21 +318,13 @@ describe('useList hook', () => {
     });
 
     it('should call normalizePaginationSizeProps with parameters', () => {
-        const paginationSizeProp = {
-            enable: true,
-        };
+        renderHook(() => useList({paginationSize: enabledProp}));
 
-        renderHook(() => useList({paginationSize: paginationSizeProp}));
-
-        expect(normalizePaginationSizePropsSpy).toHaveBeenCalledWith(paginationSizeProp);
+        expect(normalizePaginationSizePropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should return "PaginationSize" component if pagination size is enabled', () => {
-        const paginationSizeProp = {
-            enable: true,
-        };
-
-        const {result} = renderHook(() => useList({paginationSize: paginationSizeProp}));
+        const {result} = renderHook(() => useList({paginationSize: enabledProp}));
 
         const renderedPaginationSize = result.current.renderPaginationSize();
 
@@ -348,11 +332,7 @@ describe('useList hook', () => {
     });
 
     it('should return null if pagination size is disabled', () => {
-        const paginationSizeProp = {
-            enable: false,
-        };
-
-        const {result} = renderHook(() => useList({paginationSize: paginationSizeProp}));
+        const {result} = renderHook(() => useList({paginationSize: disabledProp}));
 
         const renderedPaginationSize = result.current.renderPaginationSize();
 
@@ -360,21 +340,13 @@ describe('useList hook', () => {
     });
 
     it('should call normalizePaginationProps with parameters', () => {
-        const paginationProp = {
-            enable: true,
-        };
+        renderHook(() => useList({pagination: enabledProp}));
 
-        renderHook(() => useList({pagination: paginationProp}));
-
-        expect(normalizePaginationPropsSpy).toHaveBeenCalledWith(paginationProp);
+        expect(normalizePaginationPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should return "Pagination" component if pagination is enabled', () => {
-        const paginationSProp = {
-            enable: true,
-        };
-
-        const {result} = renderHook(() => useList({pagination: paginationSProp}));
+        const {result} = renderHook(() => useList({pagination: enabledProp}));
 
         const renderedPagination = result.current.renderPagination();
 
@@ -382,11 +354,7 @@ describe('useList hook', () => {
     });
 
     it('should return null if pagination is disabled', () => {
-        const paginationProp = {
-            enable: false,
-        };
-
-        const {result} = renderHook(() => useList({pagination: paginationProp}));
+        const {result} = renderHook(() => useList({pagination: disabledProp}));
 
         const renderedPagination = result.current.renderPagination();
 
@@ -394,21 +362,13 @@ describe('useList hook', () => {
     });
 
     it('should call normalizeLayoutNamesProps with parameters', () => {
-        const layoutNamesProp = {
-            enable: true,
-        };
+        renderHook(() => useList({layout: enabledProp}));
 
-        renderHook(() => useList({layout: layoutNamesProp}));
-
-        expect(normalizeLayoutNamesPropsSpy).toHaveBeenCalledWith(layoutNamesProp);
+        expect(normalizeLayoutNamesPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should render "LayoutNames"', () => {
-        const layoutNamesProp = {
-            enable: true,
-        };
-
-        const {result} = renderHook(() => useList({layout: layoutNamesProp}));
+        const {result} = renderHook(() => useList({layout: enabledProp}));
 
         const renderedLayoutNames = result.current.renderLayoutNames();
 

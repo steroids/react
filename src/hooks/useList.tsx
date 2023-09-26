@@ -284,7 +284,6 @@ export default function useList(config: IListConfig): IListOutput {
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
 
-    console.log('list', list);
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);
 
@@ -437,8 +436,6 @@ export default function useList(config: IListConfig): IListOutput {
             if (!config.initialItems) {
                 toDispatch.push(listLazyFetch(config.listId));
             }
-
-            console.log('toDispatch', toDispatch);
 
             dispatch(toDispatch);
         }

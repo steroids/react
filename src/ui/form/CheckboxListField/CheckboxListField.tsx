@@ -8,13 +8,12 @@ import fieldWrapper, {
 } from '../../../ui/form/Field/fieldWrapper';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import CheckboxField, {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
+import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
 /**
  * CheckboxListField
  *
  * Список с чекбоксами. Используется в формах для выбора нескольких значений.
- *
  */
 export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
     IDataProviderConfig, Omit<IDataSelectConfig, 'items'>, IUiComponent {
@@ -78,10 +77,7 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         inputValue: props.input.value,
     });
 
-    console.log('All selected IDS: ', selectedIds);
-
     const onItemSelect = useCallback((id) => {
-        console.log('New selected id: ', id);
         setSelectedIds(id);
     }, [setSelectedIds]);
 

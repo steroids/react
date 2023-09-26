@@ -78,7 +78,6 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
         inputValue: props.input.value,
     });
 
-
     const onItemSelect = useCallback((id) => {
         setSelectedIds(id);
     }, [setSelectedIds]);

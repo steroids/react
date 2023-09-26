@@ -14,7 +14,6 @@ import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
  * CheckboxListField
  *
  * Список с чекбоксами. Используется в формах для выбора нескольких значений.
- *
  */
 export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
     IDataProviderConfig, Omit<IDataSelectConfig, 'items'>, IUiComponent {
@@ -50,6 +49,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
     orientation?: Orientation,
     disabled?: boolean,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
+    size?: Size,
 }
 
 function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
@@ -108,7 +108,11 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
 
     const CheckboxFieldView = components.ui.getView('form.CheckboxFieldView');
 
-    const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => <CheckboxFieldView {...checkboxProps} />;
+    const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => (
+        <CheckboxFieldView
+            {...checkboxProps}
+        />
+    );
 
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', {
         ...props,

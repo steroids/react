@@ -112,7 +112,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
     const dispatch = useDispatch();
     const [innerCalendars, setInnerCalendars] = React.useState<ICalendar[]>(props.calendars.items || []);
-    const [selectedCalendarsIds, setSelectedCalendarsIds] = React.useState<number[]>([1, 2, 3]);
+    const [selectedCalendarsIds, setSelectedCalendarsIds] = React.useState<number[]>([]);
     const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.Month);
     const {calendarArray, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();

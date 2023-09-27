@@ -39,7 +39,8 @@ export type IChartViewProps = IChartProps;
 
 /**
  * Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.
- * Для работы этого компонента необходимо передать в пропс chartComponent компонент графика из nivo
+ * Для работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.
+ * Компонент графика nivo нужно передать в пропс chartComponent
  */
 export default function Chart(props: IChartProps): JSX.Element {
     const components = useComponents();

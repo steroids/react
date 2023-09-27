@@ -24,19 +24,23 @@ export interface IChartProps extends IUiComponent {
      * Фиксированная высота графика в пикселях
      * @example 500
      */
-    height: number,
+    height?: number,
 
     /**
      * Использовать ли дефолтную конфигурацию для графика типа line
      * @example ResponsiveLine
      */
-    useLineChartConfig?: boolean;
+    useDefaultLineChartConfig?: boolean;
 
     [key: string]: any,
 }
 
-export type IChartViewProps = Omit<IChartProps, 'type'>;
+export type IChartViewProps = IChartProps;
 
+/**
+ * Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.
+ * Для работы этого компонента необходимо передать в пропс chartComponent компонент графика из nivo
+ */
 export default function Chart(props: IChartProps): JSX.Element {
     const components = useComponents();
 

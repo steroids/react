@@ -12,7 +12,7 @@ export interface IChartProps extends IUiComponent {
      * Компонент графика из библиотеки nivo
      * @example ResponsiveLine
      */
-    chartComponent: React.ReactElement;
+    chartComponent: any;
 
     /**
      * Данные для графика

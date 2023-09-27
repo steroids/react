@@ -3,7 +3,7 @@ import {useCallback, useRef} from 'react';
 import {useMount} from 'react-use';
 
 import {useComponents} from '../../../hooks';
-import useAbsolutePositioning, {Position} from '../../../hooks/useAbsolutePositioning';
+import useAbsolutePositioning, {PositionType} from '../../../hooks/useAbsolutePositioning';
 
 import TooltipInnerPortal from './TooltipPortalInner';
 
@@ -66,7 +66,7 @@ export interface ITooltipProps {
     /**
      * Позиционирование подсказки, относительно целевого элемента
      */
-    position?: Position,
+    position?: PositionType,
 
     /**
      * Показывать ли подсказку сразу после рендера страницы
@@ -108,7 +108,7 @@ export interface ITooltipProps {
 export interface ITooltipViewProps extends ITooltipProps {
     isTooltipVisible: boolean,
     content: string | any,
-    position: Position,
+    position: PositionType,
     style: ITooltipStylePosition,
 }
 

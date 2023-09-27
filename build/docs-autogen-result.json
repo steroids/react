@@ -3846,6 +3846,83 @@
                 }
             ]
         },
+        "IChartProps": {
+            "name": "IChartProps",
+            "moduleName": "ui/content/Chart/Chart",
+            "title": "Chart",
+            "description": "Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.\nДля работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.\nКомпонент графика nivo нужно передать в пропс chartComponent",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "chartComponent",
+                    "decorators": [],
+                    "description": "Компонент графика из библиотеки nivo",
+                    "required": true,
+                    "type": "ReactElement",
+                    "example": "ResponsiveLine"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "config",
+                    "decorators": [],
+                    "description": "Конфигурация, настройки отображения графика",
+                    "required": false,
+                    "type": "Record",
+                    "example": "{lineWidth: 3, pointSize: 10}"
+                },
+                {
+                    "name": "data",
+                    "decorators": [],
+                    "description": "Данные для графика",
+                    "required": true,
+                    "type": "Record[]",
+                    "example": "[{id: 1, value: 15}, {id: 2, value: 30}]"
+                },
+                {
+                    "name": "height",
+                    "decorators": [],
+                    "description": "Фиксированная высота графика в пикселях",
+                    "required": false,
+                    "type": "number",
+                    "example": "500"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "useDefaultLineChartConfig",
+                    "decorators": [],
+                    "description": "Использовать ли дефолтную конфигурацию для графика типа line",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "ResponsiveLine"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
         "ICopyToClipboardProps": {
             "name": "ICopyToClipboardProps",
             "moduleName": "ui/content/CopyToClipboard/CopyToClipboard",
@@ -4472,7 +4549,7 @@
                     "decorators": [],
                     "description": "В каком случае закрывать DropDown. По-умолчанию - `click-away`",
                     "required": false,
-                    "type": "\"click-away\" | \"click-any\"",
+                    "type": "string",
                     "example": "click-any"
                 },
                 {
@@ -4614,7 +4691,7 @@
                     "decorators": [],
                     "description": "В каком случае закрывать DropDown. По-умолчанию - `click-away`",
                     "required": false,
-                    "type": "\"click-away\" | \"click-any\"",
+                    "type": "string",
                     "example": "click-any"
                 },
                 {
@@ -27938,6 +28015,14 @@
             "type": "ICardProps",
             "example": null
         },
+        "IChartViewProps": {
+            "name": "IChartViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "IChartProps",
+            "example": null
+        },
         "IMenuViewProps": {
             "name": "IMenuViewProps",
             "decorators": [],
@@ -29002,6 +29087,13 @@
         "ui/content/Badge/Badge": {
             "name": "default",
             "moduleName": "ui/content/Badge/Badge",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/content/Chart/Chart": {
+            "name": "default",
+            "moduleName": "ui/content/Chart/Chart",
             "title": "",
             "description": "",
             "tags": {}

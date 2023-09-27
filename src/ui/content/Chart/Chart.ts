@@ -1,6 +1,12 @@
 import _upperFirst from 'lodash-es/upperFirst';
 import {useComponents} from '../../../hooks';
 
+/**
+ * Chart
+ * Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.
+ * Для работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.
+ * Компонент графика nivo нужно передать в пропс chartComponent
+ */
 export interface IChartProps extends IUiComponent {
     /**
      * Компонент графика из библиотеки nivo
@@ -37,11 +43,6 @@ export interface IChartProps extends IUiComponent {
 
 export type IChartViewProps = IChartProps;
 
-/**
- * Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.
- * Для работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.
- * Компонент графика nivo нужно передать в пропс chartComponent
- */
 export default function Chart(props: IChartProps): JSX.Element {
     const components = useComponents();
 

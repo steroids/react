@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import configureMockStore from 'redux-mock-store';
 import {useSelector} from 'react-redux';
 import * as connectedReactRouter from 'connected-react-router';
@@ -5,6 +6,10 @@ import {renderHook} from '../customRenderHook';
 import {useAddressBar} from '../../src/hooks';
 import {defaultFromStringConverter, defaultToStringConverter, queryRestore, queryReplace} from '../../src/hooks/useAddressBar';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
+
+const ITEM_STUB = null;
+const WITH_HASH = true;
+const WITHOUT_HASH = false;
 
 describe('defaultFromStringConverter function', () => {
     it('should convert from string correctly', () => {
@@ -20,7 +25,7 @@ describe('defaultFromStringConverter function', () => {
         ];
 
         testCases.forEach(({value, type, expectedValue}) => {
-            const convertedValue = defaultFromStringConverter(value, type, null);
+            const convertedValue = defaultFromStringConverter(value, type, ITEM_STUB);
 
             expect(convertedValue).toEqual(expectedValue);
         });
@@ -43,16 +48,12 @@ describe('defaultToStringConverter', () => {
         ];
 
         testCases.forEach(({value, type, expectedValue}) => {
-            const convertedValue = defaultToStringConverter(value, type, null);
+            const convertedValue = defaultToStringConverter(value, type, ITEM_STUB);
 
             expect(convertedValue).toEqual(expectedValue);
         });
     });
 });
-
-const withHash = true;
-
-const withoutHash = false;
 
 describe('queryRestore', () => {
     const mockLocation = {
@@ -78,7 +79,7 @@ describe('queryRestore', () => {
 
         mockLocation.search = '?id=1&name=John&isActive=true';
 
-        const result = queryRestore(mockModel, mockLocation, withoutHash);
+        const result = queryRestore(mockModel, mockLocation, WITHOUT_HASH);
 
         expect(result).toEqual(expectedResult);
     });
@@ -91,7 +92,7 @@ describe('queryRestore', () => {
 
         mockLocation.hash = '#id=2&name=Jane&isActive=false';
 
-        const result = queryRestore(mockModel, mockLocation, withHash);
+        const result = queryRestore(mockModel, mockLocation, WITH_HASH);
 
         expect(result).toEqual(expectedResult);
     });
@@ -111,7 +112,7 @@ describe('queryRestore', () => {
             }],
         };
 
-        const result = queryRestore(customModel, mockLocation, withoutHash);
+        const result = queryRestore(customModel, mockLocation, WITHOUT_HASH);
 
         expect(result).toEqual(expectedResult);
     });
@@ -160,7 +161,7 @@ describe('queryReplace', () => {
     it('should replace query parameters with the given values', () => {
         const expectedQuery = '/example?id=123&isActive=1&name=John';
 
-        queryReplace(mockModel, mockLocation, mockValues, withoutHash);
+        queryReplace(mockModel, mockLocation, mockValues, WITHOUT_HASH);
 
         expect(replaceSpy).toHaveBeenCalledWith(expectedQuery);
     });
@@ -169,7 +170,7 @@ describe('queryReplace', () => {
         const expectedQuery = '#id=123&isActive=1&name=John';
         const expectedResult = [];
 
-        const result = queryReplace(mockModel, mockLocation, mockValues, withHash);
+        const result = queryReplace(mockModel, mockLocation, mockValues, WITH_HASH);
 
         expect(mockLocation.hash).toBe(expectedQuery);
         expect(result).toEqual(expectedResult);
@@ -179,7 +180,7 @@ describe('queryReplace', () => {
         mockLocation.search = '?id=123&isActive=1&name=John';
         const expectedSearchValue = '?id=123&isActive=1&name=John';
 
-        queryReplace(mockModel, mockLocation, mockValues, withoutHash);
+        queryReplace(mockModel, mockLocation, mockValues, WITHOUT_HASH);
 
         expect(replaceSpy).not.toHaveBeenCalled();
         expect(mockLocation.search).toBe(expectedSearchValue);
@@ -194,7 +195,7 @@ describe('queryReplace', () => {
 
         const expectedQuery = '/example?name=John';
 
-        queryReplace(mockModel, mockLocation, defaultValues, withoutHash);
+        queryReplace(mockModel, mockLocation, defaultValues, WITHOUT_HASH);
 
         expect(replaceSpy).toHaveBeenCalledWith(expectedQuery);
     });
@@ -210,7 +211,7 @@ describe('queryReplace', () => {
         const localValues = {isActive: true};
         const expectedQuery = '/example?isActive=active';
 
-        queryReplace(customModel, mockLocation, localValues, withoutHash);
+        queryReplace(customModel, mockLocation, localValues, WITHOUT_HASH);
 
         expect(replaceSpy).toHaveBeenCalledWith(expectedQuery);
     });
@@ -272,7 +273,7 @@ describe('useAddressBar Hook', () => {
 
         implementMockedUseSelectorWithStore(mockedRouterStateWithoutSearch);
 
-        const {result, rerender} = renderHook(() => useAddressBar(configWithDisabledProp), {
+        const {result} = renderHook(() => useAddressBar(configWithDisabledProp), {
             dispatch,
             store: {
                 store,

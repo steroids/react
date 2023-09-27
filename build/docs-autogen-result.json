@@ -214,6 +214,67 @@
                 }
             ]
         },
+        "IClientStorageComponent": {
+            "name": "IClientStorageComponent",
+            "moduleName": "components/ClientStorageComponent",
+            "title": "Интерфейс для ClientStorageComponent",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": []
+        },
+        "ILocaleComponent": {
+            "name": "ILocaleComponent",
+            "moduleName": "components/LocaleComponent",
+            "title": "Интерфейс для LocaleComponent",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "backendTimeDiff",
+                    "decorators": [],
+                    "description": "Разница времени с бекендом (в микросекундах)",
+                    "required": true,
+                    "type": "null",
+                    "example": null
+                },
+                {
+                    "name": "backendTimeZone",
+                    "decorators": [],
+                    "description": "Временная зона бекенда",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "language",
+                    "decorators": [],
+                    "description": "Язык приложения",
+                    "required": true,
+                    "type": "string",
+                    "example": "ru"
+                },
+                {
+                    "name": "sourceLanguage",
+                    "decorators": [],
+                    "description": "Исходный язык",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "translations",
+                    "decorators": [],
+                    "description": "Переводы сообщений",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
         "Model": {
             "name": "Model",
             "moduleName": "components/MetaComponent",
@@ -418,6 +479,14 @@
                     "example": null
                 },
                 {
+                    "name": "defaultVisible",
+                    "decorators": [],
+                    "description": "Показывать ли компонент сразу после рендера страницы",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "gap",
                     "decorators": [],
                     "description": "Промежуток между компонентом и целевым элементом.\nИспользуется в рассчетах позиционирования.",
@@ -469,6 +538,14 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "arrowPosition",
+                    "decorators": [],
+                    "description": "Объект стилей для позиционирования стрелки",
+                    "required": false,
+                    "type": "IComponentArrowPosition",
+                    "example": null
+                },
+                {
                     "name": "isComponentExist",
                     "decorators": [],
                     "description": "Нужно ли рендерить компонент",
@@ -489,7 +566,85 @@
                     "decorators": [],
                     "description": "Объект стилей для абсолютного позиционирования",
                     "required": true,
-                    "type": "IStyleObj",
+                    "type": "IComponentStylePosition",
+                    "example": null
+                }
+            ]
+        },
+        "IComponentArrowPosition": {
+            "name": "IComponentArrowPosition",
+            "moduleName": "hooks/useAbsolutePositioning",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "bottom",
+                    "decorators": [],
+                    "description": "Позиция стрелки снизу",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "left",
+                    "decorators": [],
+                    "description": "Позиция стрелки слева",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "right",
+                    "decorators": [],
+                    "description": "Позиция стрелки справа",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "top",
+                    "decorators": [],
+                    "description": "Позиция стрелки сверху",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                }
+            ]
+        },
+        "IComponentStylePosition": {
+            "name": "IComponentStylePosition",
+            "moduleName": "hooks/useAbsolutePositioning",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "left",
+                    "decorators": [],
+                    "description": "Позиция компонента слева",
+                    "required": true,
+                    "type": "number | \"unset\"",
+                    "example": null
+                },
+                {
+                    "name": "right",
+                    "decorators": [],
+                    "description": "Позиция компонента справа",
+                    "required": true,
+                    "type": "number | \"unset\"",
+                    "example": null
+                },
+                {
+                    "name": "top",
+                    "decorators": [],
+                    "description": "Позиция компонента сверху",
+                    "required": true,
+                    "type": "number | \"unset\"",
                     "example": null
                 }
             ]
@@ -1754,7 +1909,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IClientStorageComponent",
                     "example": null
                 },
                 {
@@ -1778,7 +1933,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "ILocaleComponent",
                     "example": null
                 },
                 {
@@ -2355,7 +2510,7 @@
                     "decorators": [],
                     "description": "Стилизация позиционирования.\nПри значении \"top\" верхняя часть шапки будет закруглена.",
                     "required": false,
-                    "type": "\"top\" | \"bottom\" | \"middle\"",
+                    "type": "\"middle\" | \"top\" | \"bottom\"",
                     "example": "'top'"
                 },
                 {
@@ -2488,7 +2643,7 @@
                     "decorators": [],
                     "description": "Стилизация позиционирования.\nПри значении \"top\" верхняя часть шапки будет закруглена.",
                     "required": false,
-                    "type": "\"top\" | \"bottom\" | \"middle\"",
+                    "type": "\"middle\" | \"top\" | \"bottom\"",
                     "example": "'top'"
                 },
                 {
@@ -4337,6 +4492,14 @@
                     "example": "() => Component"
                 },
                 {
+                    "name": "defaultVisible",
+                    "decorators": [],
+                    "description": "Показывать ли компонент сразу после рендера страницы",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "gap",
                     "decorators": [],
                     "description": "Промежуток между компонентом и целевым элементом.\nИспользуется в рассчетах позиционирования.",
@@ -4407,6 +4570,14 @@
             ],
             "properties": [
                 {
+                    "name": "arrowPosition",
+                    "decorators": [],
+                    "description": "Объект стилей для позиционирования стрелки",
+                    "required": false,
+                    "type": "IComponentArrowPosition",
+                    "example": null
+                },
+                {
                     "name": "autoPositioning",
                     "decorators": [],
                     "description": "Включает \"умное\" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом\nи краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.",
@@ -4461,6 +4632,14 @@
                     "required": false,
                     "type": "{}",
                     "example": "() => Component"
+                },
+                {
+                    "name": "defaultVisible",
+                    "decorators": [],
+                    "description": "Показывать ли компонент сразу после рендера страницы",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "forwardedRef",
@@ -4531,7 +4710,7 @@
                     "decorators": [],
                     "description": "Объект стилей для абсолютного позиционирования",
                     "required": true,
-                    "type": "IStyleObj",
+                    "type": "IComponentStylePosition",
                     "example": null
                 },
                 {
@@ -7593,7 +7772,7 @@
             "name": "ICheckboxListFieldProps",
             "moduleName": "ui/form/CheckboxListField/CheckboxListField",
             "title": "CheckboxListField",
-            "description": "\nСписок с чекбоксами. Используется в формах для выбора нескольких значений.\n\n",
+            "description": "\nСписок с чекбоксами. Используется в формах для выбора нескольких значений.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -7975,6 +8154,14 @@
                     "description": "",
                     "required": true,
                     "type": "any[]",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -9869,7 +10056,7 @@
                     "decorators": [],
                     "description": "Стилизация позиционирования.\nПри значении \"top\" верхняя часть шапки будет закруглена.",
                     "required": false,
-                    "type": "\"top\" | \"bottom\" | \"middle\"",
+                    "type": "\"middle\" | \"top\" | \"bottom\"",
                     "example": "'top'"
                 },
                 {
@@ -12175,6 +12362,14 @@
                     "example": null
                 },
                 {
+                    "name": "onLoad",
+                    "decorators": [],
+                    "description": "Обработчик события загрузки файлов",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "onRemove",
                     "decorators": [],
                     "description": "Обработчик события удаления файла",
@@ -12965,7 +13160,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы input, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -16318,15 +16513,7 @@
                     "example": null
                 },
                 {
-                    "name": "onHidePassword",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "onShowPassword",
+                    "name": "onShowButtonClick",
                     "decorators": [],
                     "description": "",
                     "required": true,
@@ -21699,14 +21886,6 @@
                     "example": null
                 },
                 {
-                    "name": "onToggleSidebar",
-                    "decorators": [],
-                    "description": "Callback-функция, вызывается при переключении сайдбара.",
-                    "required": false,
-                    "type": "{}",
-                    "example": null
-                },
-                {
                     "name": "style",
                     "decorators": [],
                     "description": "Объект CSS стилей",
@@ -21820,14 +21999,6 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "{}",
-                    "example": null
-                },
-                {
-                    "name": "onToggleSidebar",
-                    "decorators": [],
-                    "description": "Callback-функция, вызывается при переключении сайдбара.",
-                    "required": false,
                     "type": "{}",
                     "example": null
                 },
@@ -22096,7 +22267,7 @@
                     "decorators": [],
                     "description": "Позиционирование подсказки, относительно целевого элемента",
                     "required": false,
-                    "type": "string",
+                    "type": "Position",
                     "example": null
                 },
                 {
@@ -22224,7 +22395,7 @@
                     "decorators": [],
                     "description": "Позиционирование подсказки, относительно целевого элемента",
                     "required": true,
-                    "type": "string",
+                    "type": "Position",
                     "example": null
                 },
                 {
@@ -22992,7 +23163,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства justify-content",
                     "required": false,
-                    "type": "\"left\" | \"right\" | \"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"left\" | \"right\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
                     "example": null
                 },
                 {
@@ -23101,7 +23272,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства justify-content",
                     "required": false,
-                    "type": "\"left\" | \"right\" | \"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"left\" | \"right\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
                     "example": null
                 },
                 {
@@ -27623,6 +27794,14 @@
         }
     },
     "declarations": {
+        "PositionType": {
+            "name": "PositionType",
+            "decorators": [],
+            "description": "Варианты абсолютного позиционирования",
+            "required": true,
+            "type": " | string",
+            "example": "'top'"
+        },
         "ListControlPosition": {
             "name": "ListControlPosition",
             "decorators": [],
@@ -27999,21 +28178,53 @@
             "tags": {},
             "properties": [
                 {
+                    "name": "backendTimeDiff",
+                    "decorators": [],
+                    "description": "Разница времени с бекендом (в микросекундах)",
+                    "required": true,
+                    "type": "null",
+                    "example": null
+                },
+                {
+                    "name": "backendTimeZone",
+                    "decorators": [],
+                    "description": "Временная зона бекенда",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
                     "name": "language",
                     "decorators": [],
                     "description": "Язык приложения",
                     "required": true,
                     "type": "string",
                     "example": "ru"
+                },
+                {
+                    "name": "sourceLanguage",
+                    "decorators": [],
+                    "description": "Исходный язык",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "translations",
+                    "decorators": [],
+                    "description": "Переводы сообщений",
+                    "required": true,
+                    "type": "any",
+                    "example": null
                 }
             ],
             "methods": [
                 {
-                    "name": "moment",
+                    "name": "dayjs",
                     "decorators": [],
-                    "description": "Получение экземпляра `moment` с учетом временной зоны бекенда",
+                    "description": "Получение экземпляра `dayjs` с учетом временной зоны бекенда",
                     "required": true,
-                    "type": "Moment",
+                    "type": "Dayjs",
                     "example": null,
                     "parameters": [
                         {
@@ -28030,6 +28241,58 @@
                             "description": "Формат\n",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "t",
+                    "decorators": [],
+                    "description": "Алиас для метода `translate`",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "message",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{}",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "translate",
+                    "decorators": [],
+                    "description": "Перевод сообщения",
+                    "required": true,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "message",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{}",
                             "example": null
                         }
                     ]

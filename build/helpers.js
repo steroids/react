@@ -12,6 +12,7 @@ const typeToString = (type) => {
         case 'intrinsic':
         case 'reference':
         case 'typeParameter':
+        case 'typeOperator':
         case 'unknown':
             return type.name;
 
@@ -37,7 +38,7 @@ const typeToString = (type) => {
             return '{' + (type.declaration.children || []).map(d => d.name + ': ' + typeToString(d.type)).join(', ') + '}';
     }
 
-    throw new Error('Unknown type on convert to string: ' + JSON.stringify(type));
+    throw new Error(`Unknown type on convert to string: ${JSON.stringify(type)}`);
 };
 
 const typeToObject = type => {

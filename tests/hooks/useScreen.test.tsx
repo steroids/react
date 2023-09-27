@@ -1,39 +1,53 @@
-import * as React from 'react';
-
+import '@testing-library/jest-dom';
+import {renderHook} from '../customRenderHook';
 import {useScreen} from '../../src/hooks';
-import {IScreen} from '../../src/providers/ScreenProvider';
-import mountWithApp from '../mocks/mountWithApp';
-
-const MockResultComponent = (props: any) => <div />;
-const MockComponent = (props: any) => (
-    <MockResultComponent screen={useScreen()} />
-);
 
 describe('useScreen hook', () => {
-    it('usage', () => {
-        const wrapper = mountWithApp(MockComponent, {});
-
-        const screen: IScreen = wrapper
-            .find('MockResultComponent')
-            .prop('screen');
-
+    it('should return default width', () => {
         const expectedDefaultWidth = 1024;
-        expect(screen.width).toBe(expectedDefaultWidth);
 
+        const {result} = renderHook(() => useScreen());
+
+        expect(result.current.width).toBe(expectedDefaultWidth);
+    });
+
+    it('should return default phone width', () => {
         const expectedPhoneWidth = 320;
-        expect(screen.media?.phone).toBe(expectedPhoneWidth);
 
+        const {result} = renderHook(() => useScreen());
+
+        expect(result.current.media?.phone).toBe(expectedPhoneWidth);
+    });
+
+    it('should return default tablet width', () => {
         const expectedTabletWidth = 768;
-        expect(screen.media?.tablet).toBe(expectedTabletWidth);
 
+        const {result} = renderHook(() => useScreen());
+
+        expect(result.current.media?.tablet).toBe(expectedTabletWidth);
+    });
+
+    it('should return default desktop width', () => {
         const expectedDesktopWidth = 1024;
-        expect(screen.media?.desktop).toBe(expectedDesktopWidth);
 
-        expect(typeof screen.media).toBe('object');
-        expect(typeof screen.setMedia).toBe('function');
-        expect(typeof screen.isPhone).toBe('function');
-        expect(typeof screen.isTablet).toBe('function');
-        expect(typeof screen.isDesktop).toBe('function');
-        expect(typeof screen.getDeviceType).toBe('function');
+        const {result} = renderHook(() => useScreen());
+
+        expect(result.current.media?.desktop).toBe(expectedDesktopWidth);
+    });
+
+    it('parameters must have a correct type', () => {
+        const expectedFunctionType = 'function';
+        const expectedObjectType = 'object';
+
+        const {result} = renderHook(() => useScreen());
+
+        const {media, setMedia, isPhone, isTablet, isDesktop, getDeviceType} = result.current;
+
+        expect(typeof media).toBe(expectedObjectType);
+        expect(typeof setMedia).toBe(expectedFunctionType);
+        expect(typeof isPhone).toBe(expectedFunctionType);
+        expect(typeof isTablet).toBe(expectedFunctionType);
+        expect(typeof isDesktop).toBe(expectedFunctionType);
+        expect(typeof getDeviceType).toBe(expectedFunctionType);
     });
 });

@@ -6,7 +6,7 @@ import HtmlComponent from '../src/components/HtmlComponent';
 import HttpComponent from '../src/components/HttpComponent';
 import LocaleComponent from '../src/components/LocaleComponent';
 
-function AllTheProviders({children}: {children: React.ReactNode}) {
+function MockApplication({children}: {children: React.ReactNode}) {
     const {renderApplication} = useApplication({
         layoutView: () => require('./mockLayout').default,
         components: {
@@ -34,6 +34,6 @@ function AllTheProviders({children}: {children: React.ReactNode}) {
 const customRender = (
     ui: ReactElement,
     options?: Omit<RenderOptions, 'wrapper'>,
-) => render(ui, {wrapper: AllTheProviders, ...options});
+) => render(ui, {wrapper: MockApplication, ...options});
 
 export {customRender as render};

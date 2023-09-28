@@ -7,7 +7,7 @@ import * as normalizeEmpty from '../../src/ui/list/Empty/Empty';
 import * as paginationSize from '../../src/ui/list/PaginationSize/PaginationSize';
 import * as pagination from '../../src/ui/list/Pagination/Pagination';
 import * as layoutNames from '../../src/ui/list/LayoutNames/LayoutNames';
-import {renderHook} from '../customRenderHook';
+import {renderHook} from '../helpers';
 import {listInit, listSetItems} from '../../src/actions/list';
 import {defaultConfig} from '../../src/hooks/useList';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
@@ -231,7 +231,6 @@ describe('useList hook', () => {
             store: {
                 store,
             },
-            dispatch,
         });
 
         expect(result.current.list).toEqual(mockedListData);
@@ -269,7 +268,6 @@ describe('useList hook', () => {
             store: {
                 store,
             },
-            dispatch,
         });
 
         expect(dispatch).toHaveBeenCalledWith(expectedActions);
@@ -282,9 +280,7 @@ describe('useList hook', () => {
             listSetItems(listId, initialItems),
         ];
 
-        renderHook(() => useList({listId, initialItems}), {
-            dispatch,
-        });
+        renderHook(() => useList({listId, initialItems}));
 
         expect(dispatch).toHaveBeenCalledWith(expectedActions);
     });

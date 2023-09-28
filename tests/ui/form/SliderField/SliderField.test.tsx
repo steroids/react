@@ -1,8 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import SliderField, {ISliderFieldProps} from '../../../../src/ui/form/SliderField/SliderField';
 
 describe('SliderField tests', () => {

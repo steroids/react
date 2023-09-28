@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import {fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
-import {render} from '../../../customRender';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import ListMockView from './ListMockView';
 import List from '../../../../src/ui/list/List/List';
 import InputField from '../../../../src/ui/form/InputField/InputField';

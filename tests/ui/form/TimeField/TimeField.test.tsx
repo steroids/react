@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import TimeField, {ITimeFieldProps} from '../../../../src/ui/form/TimeField/TimeField';
 
 describe('TimeField', () => {

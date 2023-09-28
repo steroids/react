@@ -2,8 +2,7 @@ import '@testing-library/jest-dom';
 import DateTimeFormatter, {IDateTimeFormatterProps} from '../../../src/ui/format/DateTimeFormatter/DateTimeFormatter';
 import DefaultFormatterMockView from './DefaultFormatterMockView';
 
-import {JSXWrapper} from '../../helpers';
-import {render} from '../../customRender';
+import {JSXWrapper, render} from '../../helpers';
 
 describe('DateTimeFormatter tests', () => {
     const props = {

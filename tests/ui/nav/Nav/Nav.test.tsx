@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {JSXWrapper, getElementByClassName, getElementByTag} from '../../../helpers';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 import Nav, {INavProps} from '../../../../src/ui/nav/Nav/Nav';
 
 describe('Nav tests', () => {

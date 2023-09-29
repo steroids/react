@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
-import {JSXWrapper, getElementByClassName, getElementByTag} from '../../../helpers';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 import Link, {ILinkProps} from '../../../../src/ui/nav/Link/Link';
 
 describe('Link tests', () => {

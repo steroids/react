@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom';
-import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import TimeRangeField, {ITimeRangeFieldProps} from '../../../../src/ui/form/TimeRangeField/TimeRangeField';
 
 describe('TimeRangeField', () => {

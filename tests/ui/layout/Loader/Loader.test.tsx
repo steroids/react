@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import Loader from '../../../../src/ui/layout/Loader';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import LoaderMockView from './LoaderMockView';
 
 describe('Loader tests', () => {

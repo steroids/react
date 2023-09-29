@@ -1,8 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import DropDown, {IDropDownProps} from '../../../../src/ui/content/DropDown/DropDown';
 
 describe('DropDown tests', () => {

@@ -1,12 +1,20 @@
 import '@testing-library/jest-dom';
-import {renderHook} from '../customRenderHook';
+import {renderHook} from '../helpers';
 import {useScreen} from '../../src/hooks';
 
 describe('useScreen hook', () => {
+    const renderUseScreen = () => {
+        const {result} = renderHook(() => useScreen(), {
+            screen: {},
+        });
+
+        return result;
+    };
+
     it('should return default width', () => {
         const expectedDefaultWidth = 1024;
 
-        const {result} = renderHook(() => useScreen());
+        const result = renderUseScreen();
 
         expect(result.current.width).toBe(expectedDefaultWidth);
     });
@@ -14,7 +22,7 @@ describe('useScreen hook', () => {
     it('should return default phone width', () => {
         const expectedPhoneWidth = 320;
 
-        const {result} = renderHook(() => useScreen());
+        const result = renderUseScreen();
 
         expect(result.current.media?.phone).toBe(expectedPhoneWidth);
     });
@@ -22,7 +30,7 @@ describe('useScreen hook', () => {
     it('should return default tablet width', () => {
         const expectedTabletWidth = 768;
 
-        const {result} = renderHook(() => useScreen());
+        const result = renderUseScreen();
 
         expect(result.current.media?.tablet).toBe(expectedTabletWidth);
     });
@@ -30,7 +38,7 @@ describe('useScreen hook', () => {
     it('should return default desktop width', () => {
         const expectedDesktopWidth = 1024;
 
-        const {result} = renderHook(() => useScreen());
+        const result = renderUseScreen();
 
         expect(result.current.media?.desktop).toBe(expectedDesktopWidth);
     });
@@ -39,7 +47,7 @@ describe('useScreen hook', () => {
         const expectedFunctionType = 'function';
         const expectedObjectType = 'object';
 
-        const {result} = renderHook(() => useScreen());
+        const result = renderUseScreen();
 
         const {media, setMedia, isPhone, isTablet, isDesktop, getDeviceType} = result.current;
 

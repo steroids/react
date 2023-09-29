@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import DropDownField, {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import DropDownFieldMockView from './DropDownFieldMockView';
 

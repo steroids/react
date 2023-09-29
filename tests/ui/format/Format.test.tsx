@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import {render} from '../../customRender';
-import {JSXWrapper} from '../../helpers';
+import {JSXWrapper, render} from '../../helpers';
 import Format, {IFormatProps} from '../../../src/ui/format/Format/Format';
 
 describe('Format tests', () => {

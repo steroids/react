@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import FieldLayoutMockView from './FieldLayoutMockView';
 import FieldLayout from '../../../../src/ui/form/FieldLayout/FieldLayout';
 

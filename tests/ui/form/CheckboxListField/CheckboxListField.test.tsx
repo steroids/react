@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import CheckboxListField, {ICheckboxListFieldProps} from '../../../../src/ui/form/CheckboxListField/CheckboxListField';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('CheckboxListField tests', () => {
     const expectedCheckboxListFieldClass = 'CheckboxListFieldView';

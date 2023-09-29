@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import CheckboxField, {ICheckboxFieldViewProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';
 import CheckboxFieldMockView from './CheckboxFieldMockView';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('CheckboxField tests', () => {
     const props: ICheckboxFieldViewProps = {

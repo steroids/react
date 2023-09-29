@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import DateTimeRangeField, {IDateTimeRangeFieldProps} from '../../../../src/ui/form/DateTimeRangeField/DateTimeRangeField';
 import DateTimeRangeFieldMockView from './DateTimeRangeFieldMockView';
 

@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import configureMockStore from 'redux-mock-store';
 import {useSelector} from 'react-redux';
 import * as connectedReactRouter from 'connected-react-router';
-import {renderHook} from '../customRenderHook';
+import {renderHook} from '../helpers';
 import {useAddressBar} from '../../src/hooks';
 import {defaultFromStringConverter, defaultToStringConverter, queryRestore, queryReplace} from '../../src/hooks/useAddressBar';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';

@@ -274,7 +274,6 @@ describe('useAddressBar Hook', () => {
         implementMockedUseSelectorWithStore(mockedRouterStateWithoutSearch);
 
         const {result} = renderHook(() => useAddressBar(configWithDisabledProp), {
-            dispatch,
             store: {
                 store,
             },
@@ -292,7 +291,6 @@ describe('useAddressBar Hook', () => {
         implementMockedUseSelectorWithStore(mockedRouterStateWithSearch);
 
         const {result, rerender} = renderHook(() => useAddressBar(configWithEnabledProp), {
-            dispatch,
             store: {
                 store,
             },
@@ -327,7 +325,6 @@ describe('useAddressBar Hook', () => {
         };
 
         const {result, rerender} = renderHook(() => useAddressBar(configWithEnabledProp), {
-            dispatch,
             store: {
                 store,
             },
@@ -373,7 +370,6 @@ describe('useAddressBar Hook', () => {
         };
 
         const {result} = renderHook(() => useAddressBar(mockedProps), {
-            dispatch,
             store: {
                 store,
             },

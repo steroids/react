@@ -6,11 +6,11 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../../ui/form/Field/fieldWrapper';
-import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {DataProviderItem, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
-type CheckboxFieldListItem = DataProviderItems & {color?: string}[]
+type CheckboxFieldListItem = DataProviderItem & {color?: string}
 
 /**
  * CheckboxListField
@@ -35,7 +35,7 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
      * Коллекция элементов
      * @example [{id: 1, label: 'Krasnoyarsk', color: 'red'}, {id: 2, label: 'Moscow', color: 'purple'}]
      */
-    items: CheckboxFieldListItem,
+    items: CheckboxFieldListItem[],
 
     [key: string]: any,
 }

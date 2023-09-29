@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import RadioListField, {IRadioListFieldProps} from '../../../../src/ui/form/RadioListField/RadioListField';
 import RadioListFieldMockView from './RadioListFieldMockView';
 

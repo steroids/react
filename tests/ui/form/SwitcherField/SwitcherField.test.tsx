@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import SwitcherField, {ISwitcherFieldProps} from '../../../../src/ui/form/SwitcherField/SwitcherField';
 import SwitcherFieldMockView from './SwitcherFieldMockView';
 

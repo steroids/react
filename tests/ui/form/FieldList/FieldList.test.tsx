@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {FormWrapper, getElementByClassName} from '../../../helpers';
+import {FormWrapper, getElementByClassName, render} from '../../../helpers';
 import FieldListMockView from './FieldListMockView';
 import FieldListItemMockView from './FieldListItemMockView';
 import FieldList from '../../../../src/ui/form/FieldList/FieldList';

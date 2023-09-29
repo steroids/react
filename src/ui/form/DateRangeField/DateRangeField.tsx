@@ -175,6 +175,8 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
         useSmartFocus: true,
+        displayFormat: props.displayFormat,
+        valueFormat: props.valueFormat,
     });
 
     // Calendar props

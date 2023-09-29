@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import Pagination, {IPaginationProps} from '../../../../src/ui/list/Pagination/Pagination';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import PaginationButtonMockView from './PaginationButtonMockView';
 import PaginationMoreMockView from './PaginationMoreMockView';
 

@@ -4,6 +4,7 @@ import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
@@ -84,6 +85,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
 
     //Extending dayjs / day.js with modules that used in steroids
     dayjs.extend(relativeTime);
+    dayjs.extend(customParseFormat);
     dayjs.extend(localizedFormat);
     dayjs.extend(utc);
 

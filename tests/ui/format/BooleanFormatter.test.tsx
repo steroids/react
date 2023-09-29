@@ -2,8 +2,7 @@ import '@testing-library/jest-dom';
 import BooleanFormatter from '../../../src/ui/format/BooleanFormatter/BooleanFormatter';
 import BooleanFormatterMockView from './BooleanFormatterMockView';
 
-import {JSXWrapper} from '../../helpers';
-import {render} from '../../customRender';
+import {JSXWrapper, render} from '../../helpers';
 
 describe('BooleanFormatter tests', () => {
     const props = {

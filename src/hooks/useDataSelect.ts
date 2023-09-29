@@ -175,6 +175,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             } else {
                 if (selectedIds.length !== 1 || selectedIds[0] !== id) {
                     setSelectedIdsInternal([id]);
+                } else if (selectedIds.length === 1 && selectedIds[0] === id) {
+                    setSelectedIdsInternal([]);
                 }
                 setIsOpened(false);
             }

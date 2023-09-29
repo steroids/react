@@ -2,8 +2,10 @@
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(utc);
+dayjs.extend(customParseFormat);
 
 export const convertDate = (
     date: string | Date,

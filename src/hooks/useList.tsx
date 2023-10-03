@@ -1,9 +1,10 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {ITreeTableItem} from '../ui/list/TreeTable/TreeTable';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
@@ -153,8 +154,8 @@ export interface IListConfig {
     addressBar?: boolean | IAddressBarConfig,
 
     /**
-    * Параметр для загрузки данных списка с сервера
-    */
+     * Параметр для загрузки данных списка с сервера
+     */
     scope?: string[],
 
     /**
@@ -164,8 +165,8 @@ export interface IListConfig {
     query?: Record<string, unknown>,
 
     /**
-    * Модель
-    */
+     * Модель
+     */
     model?: string,
 
     /**
@@ -189,6 +190,11 @@ export interface IListConfig {
      * Количество элементов всего в списке (для отрисовки пагинации), заданное вручную
      */
     initialTotal?: number,
+
+    /**
+     * Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]
+     */
+    hasTreeItems?: boolean,
 }
 
 export interface IListOutput {
@@ -274,6 +280,10 @@ export const createInitialValues = ({
     ...configQuery, // Query from props
 });
 
+const resolveId = (item, parentId) => (parentId || '0') + '.' + String(item.id);
+
+const DEFAULT_CURRENT_LEVEL = 0;
+
 /**
  * useList
  * Добавляет массу возможностей для взаимодействия с коллекциями. Коллекции можно получать как с бекенда,
@@ -283,6 +293,49 @@ export const createInitialValues = ({
 export default function useList(config: IListConfig): IListOutput {
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
+
+    const [openedTreeItems, setOpenedTreeItems] = useState<Record<string, boolean>>({});
+
+    const onTreeItemClick = useCallback((uniqueId: string, item: Record<string, any>) => {
+        if (item.items && item.items.length > 0) {
+            setOpenedTreeItems((prevItems) => (
+                {...prevItems, [uniqueId]: !prevItems[uniqueId]}
+            ));
+        }
+    }, []);
+
+    const getTreeItems = useCallback((sourceItems: ITreeTableItem[], parentId = '', currentLevel = DEFAULT_CURRENT_LEVEL) => {
+        let result = [];
+
+        if (list?.page && list?.pageSize && currentLevel === DEFAULT_CURRENT_LEVEL) {
+            const startIndex = (list.page - 1) * list.pageSize;
+            sourceItems = sourceItems.slice(startIndex, startIndex + list.pageSize);
+        }
+
+        sourceItems.forEach((item, index) => {
+            const uniqueId = resolveId(item, parentId);
+            const isOpened = !!openedTreeItems[uniqueId];
+            const hasItems = item.items && item.items.length > 0;
+
+            result.push({
+                ...item,
+                uniqueId,
+                index: uniqueId,
+                level: currentLevel,
+                isOpened,
+                hasItems,
+                onTreeItemClick,
+            });
+
+            if (isOpened) {
+                result = result.concat(
+                    getTreeItems(item.items, uniqueId, currentLevel + 1),
+                ).filter(Boolean);
+            }
+        });
+
+        return result;
+    }, [onTreeItemClick, openedTreeItems, list]);
 
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);
@@ -407,6 +460,8 @@ export default function useList(config: IListConfig): IListOutput {
     // Init list in redux store
     useMount(() => {
         if (!list) {
+            const sourceItems = config.hasTreeItems ? [...getTreeItems(config.items)] : config.items;
+
             const toDispatch: any = [
                 listInit(config.listId, {
                     listId: config.listId,
@@ -417,7 +472,7 @@ export default function useList(config: IListConfig): IListOutput {
                     condition: config.condition,
                     scope: config.scope,
                     items: null,
-                    sourceItems: config.items || null,
+                    sourceItems: sourceItems || null,
                     total: config.initialTotal,
                     isRemote: !config.items,
                     primaryKey: config.primaryKey || defaultConfig.primaryKey,
@@ -433,6 +488,11 @@ export default function useList(config: IListConfig): IListOutput {
             if (config.initialItems || config.items) {
                 toDispatch.push(listSetItems(config.listId, config.initialItems || config.items));
             }
+
+            if (config.hasTreeItems) {
+                toDispatch.push(listSetItems(config.listId, [...getTreeItems(config.initialItems || config.items)]));
+            }
+
             if (!config.initialItems) {
                 toDispatch.push(listLazyFetch(config.listId));
             }
@@ -479,10 +539,12 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Check change items
     useUpdateEffect(() => {
+        const items = config.hasTreeItems ? [...getTreeItems(config.items)] : config.items;
+
         dispatch([
-            listSetItems(config.listId, config.items),
+            listSetItems(config.listId, items),
         ]);
-    }, [dispatch, config.items, config.listId]);
+    }, [dispatch, config.items, config.listId, openedTreeItems, list?.pageSize, list?.page]);
 
     // Destroy
     useUnmount(() => {

@@ -539,11 +539,17 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Check change items
     useUpdateEffect(() => {
-        const items = config.hasTreeItems ? [...getTreeItems(config.items)] : config.items;
-
         dispatch([
-            listSetItems(config.listId, items),
+            listSetItems(config.listId, config.items),
         ]);
+    }, [dispatch, config.items, config.listId]);
+
+    useUpdateEffect(() => {
+        if (config.hasTreeItems) {
+            dispatch([
+                listSetItems(config.listId, [...getTreeItems(config.items)]),
+            ]);
+        }
     }, [dispatch, config.items, config.listId, openedTreeItems, list?.pageSize, list?.page]);
 
     // Destroy

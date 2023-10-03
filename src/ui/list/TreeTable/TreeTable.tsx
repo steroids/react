@@ -32,7 +32,7 @@ export interface ITreeTableItem {
     uniqueId?: string,
 }
 
-interface ITreeTableProps extends Omit<IGridProps, 'items'> {
+export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
     /**
      * Элементы коллекции
      * @example [{id: 1, name: 'Jane'}, {id: 2, name: 'John', items: [...]}]

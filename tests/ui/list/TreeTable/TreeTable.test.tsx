@@ -55,11 +55,8 @@ describe('TreeTable tests', () => {
     it('should add tree view to the first column', () => {
         const expectedTreeColumnsCount = items.length;
 
-        const mockedView = jest.fn();
-
         const {container} = render(JSXWrapper(TreeTableMock, {
             ...props,
-            view: GridMockView,
             columns,
         }));
 

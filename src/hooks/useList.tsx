@@ -4,6 +4,7 @@ import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {generateUniqIdForTreeItem} from '@steroidsjs/core/utils/list';
 import {ITreeTableItem} from '../ui/list/TreeTable/TreeTable';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
@@ -280,9 +281,55 @@ export const createInitialValues = ({
     ...configQuery, // Query from props
 });
 
-const resolveId = (item, parentId) => (parentId || '0') + '.' + String(item.id);
+const TOP_TREE_LEVEL_VALUE = 0;
 
-const DEFAULT_CURRENT_LEVEL = 0;
+export const prepareItemsToTree = (
+    sourceItems: ITreeTableItem[],
+    openedTreeItems: Record<string, boolean>,
+    currentPage: number | null,
+    itemsOnPage: number | null,
+    onTreeItemClick: (uniqueId: string, item: Record<string, any>) => void,
+    parentId = '',
+    currentLevel = TOP_TREE_LEVEL_VALUE,
+) => {
+    let result = [];
+
+    if (currentPage && itemsOnPage && currentLevel === TOP_TREE_LEVEL_VALUE) {
+        const startIndex = (currentPage - 1) * itemsOnPage;
+        sourceItems = sourceItems.slice(startIndex, startIndex + itemsOnPage);
+    }
+
+    sourceItems.forEach((item, index) => {
+        const uniqueId = generateUniqIdForTreeItem(item, index, parentId);
+        const isOpened = !!openedTreeItems[uniqueId];
+        const hasItems = !!(item.items && item.items.length > 0);
+
+        result.push({
+            ...item,
+            uniqueId,
+            level: currentLevel,
+            isOpened,
+            hasItems,
+            onTreeItemClick,
+        });
+
+        if (isOpened) {
+            result = result.concat(
+                prepareItemsToTree(
+                    item.items,
+                    openedTreeItems,
+                    currentPage,
+                    itemsOnPage,
+                    onTreeItemClick,
+                    uniqueId,
+                    currentLevel + 1,
+                ),
+            ).filter(Boolean);
+        }
+    });
+
+    return result;
+};
 
 /**
  * useList
@@ -304,38 +351,16 @@ export default function useList(config: IListConfig): IListOutput {
         }
     }, []);
 
-    const getTreeItems = useCallback((sourceItems: ITreeTableItem[], parentId = '', currentLevel = DEFAULT_CURRENT_LEVEL) => {
-        let result = [];
-
-        if (list?.page && list?.pageSize && currentLevel === DEFAULT_CURRENT_LEVEL) {
-            const startIndex = (list.page - 1) * list.pageSize;
-            sourceItems = sourceItems.slice(startIndex, startIndex + list.pageSize);
-        }
-
-        sourceItems.forEach((item, index) => {
-            const uniqueId = resolveId(item, parentId);
-            const isOpened = !!openedTreeItems[uniqueId];
-            const hasItems = item.items && item.items.length > 0;
-
-            result.push({
-                ...item,
-                uniqueId,
-                index: uniqueId,
-                level: currentLevel,
-                isOpened,
-                hasItems,
-                onTreeItemClick,
-            });
-
-            if (isOpened) {
-                result = result.concat(
-                    getTreeItems(item.items, uniqueId, currentLevel + 1),
-                ).filter(Boolean);
-            }
-        });
-
-        return result;
-    }, [onTreeItemClick, openedTreeItems, list]);
+    const getTreeItems = useCallback(
+        (sourceItems: ITreeTableItem[]) => prepareItemsToTree(
+            sourceItems,
+            openedTreeItems,
+            list?.page,
+            list?.pageSize,
+            onTreeItemClick,
+        ),
+        [onTreeItemClick, openedTreeItems, list],
+    );
 
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);
@@ -460,7 +485,7 @@ export default function useList(config: IListConfig): IListOutput {
     // Init list in redux store
     useMount(() => {
         if (!list) {
-            const sourceItems = config.hasTreeItems ? [...getTreeItems(config.items)] : config.items;
+            const items = config.hasTreeItems ? getTreeItems(config.items) : config.items;
 
             const toDispatch: any = [
                 listInit(config.listId, {
@@ -472,7 +497,7 @@ export default function useList(config: IListConfig): IListOutput {
                     condition: config.condition,
                     scope: config.scope,
                     items: null,
-                    sourceItems: sourceItems || null,
+                    sourceItems: items || null,
                     total: config.initialTotal,
                     isRemote: !config.items,
                     primaryKey: config.primaryKey || defaultConfig.primaryKey,
@@ -485,12 +510,11 @@ export default function useList(config: IListConfig): IListOutput {
                 }),
             ];
 
-            if (config.initialItems || config.items) {
-                toDispatch.push(listSetItems(config.listId, config.initialItems || config.items));
-            }
-
-            if (config.hasTreeItems) {
-                toDispatch.push(listSetItems(config.listId, [...getTreeItems(config.initialItems || config.items)]));
+            if (config.initialItems) {
+                const initialItems = config.hasTreeItems ? getTreeItems(config.initialItems) : config.initialItems;
+                toDispatch.push(listSetItems(config.listId, initialItems));
+            } else {
+                toDispatch.push(listSetItems(config.listId, items));
             }
 
             if (!config.initialItems) {
@@ -547,7 +571,7 @@ export default function useList(config: IListConfig): IListOutput {
     useUpdateEffect(() => {
         if (config.hasTreeItems) {
             dispatch([
-                listSetItems(config.listId, [...getTreeItems(config.items)]),
+                listSetItems(config.listId, getTreeItems(config.items)),
             ]);
         }
     }, [dispatch, config.items, config.listId, openedTreeItems, list?.pageSize, list?.page]);

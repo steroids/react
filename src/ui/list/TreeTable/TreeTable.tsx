@@ -40,17 +40,17 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
     items?: ITreeTableItem[]
 }
 
+const TREE_COLUMN_VIEW_FIELDS = {
+    valueView: 'TreeColumnView',
+    headerClassName: 'TreeColumnHeader',
+};
+
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
-    // Add tree view to the first column
     const columns = useMemo(() => {
         const newColumns = [...props.columns];
 
-        const additionalFields = {
-            valueView: 'TreeColumnView',
-            headerClassName: 'TreeColumnHeader',
-        };
-
-        _merge(newColumns[0], additionalFields);
+        // Add tree view to the first column
+        _merge(newColumns[0], TREE_COLUMN_VIEW_FIELDS);
 
         return newColumns;
     }, [props.columns]);

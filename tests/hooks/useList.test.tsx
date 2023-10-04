@@ -126,16 +126,18 @@ describe('prepareItemsToTree function', () => {
         {
             id: 1,
             name: 'Item 1',
-            items: [
-                {id: 2, name: 'Item 1.1'},
-            ],
+            items: [{
+                id: 2,
+                name: 'Item 1.1',
+            }],
         },
         {
             id: 4,
             name: 'Item 2',
-            items: [
-                {id: 5, name: 'Item 2.1'},
-            ],
+            items: [{
+                id: 5,
+                name: 'Item 2.1',
+            }],
         },
     ];
 
@@ -154,9 +156,10 @@ describe('prepareItemsToTree function', () => {
                 isOpened: false,
                 hasItems: true,
                 onTreeItemClick,
-                items: [
-                    {id: 2, name: 'Item 1.1'},
-                ],
+                items: [{
+                    id: 2,
+                    name: 'Item 1.1',
+                }],
             },
             {
                 id: 4,
@@ -166,9 +169,10 @@ describe('prepareItemsToTree function', () => {
                 isOpened: false,
                 hasItems: true,
                 onTreeItemClick,
-                items: [
-                    {id: 5, name: 'Item 2.1'},
-                ],
+                items: [{
+                    id: 5,
+                    name: 'Item 2.1',
+                }],
             },
         ];
 
@@ -190,9 +194,10 @@ describe('prepareItemsToTree function', () => {
                 isOpened: true,
                 hasItems: true,
                 onTreeItemClick,
-                items: [
-                    {id: 2, name: 'Item 1.1'},
-                ],
+                items: [{
+                    id: 2,
+                    name: 'Item 1.1',
+                }],
             },
             {
                 id: 2,
@@ -211,9 +216,10 @@ describe('prepareItemsToTree function', () => {
                 isOpened: false,
                 hasItems: true,
                 onTreeItemClick,
-                items: [
-                    {id: 5, name: 'Item 2.1'},
-                ],
+                items: [{
+                    id: 5,
+                    name: 'Item 2.1',
+                }],
             },
         ];
 
@@ -239,9 +245,10 @@ describe('prepareItemsToTree function', () => {
                 isOpened: true,
                 hasItems: true,
                 onTreeItemClick,
-                items: [
-                    {id: 5, name: 'Item 2.1'},
-                ],
+                items: [{
+                    id: 5,
+                    name: 'Item 2.1',
+                }],
             },
             {
                 id: 5,
@@ -260,6 +267,65 @@ describe('prepareItemsToTree function', () => {
 
         expect(treeItems[0]).toEqual(expectedResult[0]);
         expect(treeItems[1]).toEqual(expectedResult[1]);
+    });
+
+    it('should calculate items when ids are equal correctly', () => {
+        const items = [
+            {
+                id: 1,
+                name: 'Item 1',
+                items: [{
+                    id: 1,
+                    name: 'Item 1.1',
+                }],
+            },
+            {
+                id: 1,
+                name: 'Item 2',
+            },
+        ];
+
+        const expectedResult = [
+            {
+                id: 1,
+                name: 'Item 1',
+                uniqueId: '0.1',
+                level: 0,
+                isOpened: true,
+                hasItems: true,
+                onTreeItemClick,
+                items: [{
+                    id: 1,
+                    name: 'Item 1.1',
+                }],
+            },
+            {
+                id: 1,
+                name: 'Item 1.1',
+                uniqueId: '0.1.1',
+                level: 1,
+                isOpened: false,
+                hasItems: false,
+                onTreeItemClick,
+            },
+            {
+                id: 1,
+                name: 'Item 2',
+                uniqueId: '0.1',
+                level: 0,
+                isOpened: true,
+                hasItems: false,
+                onTreeItemClick,
+            },
+        ];
+
+        const openedTreeItems = {0.1: true};
+
+        const treeItems = prepareItemsToTree(items, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+
+        expect(treeItems).toHaveLength(expectedResult.length);
+
+        expect(treeItems).toEqual(expectedResult);
     });
 });
 

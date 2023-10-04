@@ -299,7 +299,7 @@ export const prepareItemsToTree = (
         sourceItems = sourceItems.slice(startIndex, startIndex + itemsOnPage);
     }
 
-    sourceItems.forEach((item, index) => {
+    (sourceItems || []).forEach((item, index) => {
         const uniqueId = getTreeItemUniqId(item, index, parentId);
         const isOpened = !!openedTreeItems[uniqueId];
         const hasItems = !!(item.items && item.items.length > 0);

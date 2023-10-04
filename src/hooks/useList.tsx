@@ -513,7 +513,7 @@ export default function useList(config: IListConfig): IListOutput {
             if (config.initialItems) {
                 const initialItems = config.hasTreeItems ? getTreeItems(config.initialItems) : config.initialItems;
                 toDispatch.push(listSetItems(config.listId, initialItems));
-            } else {
+            } else if (config.items) {
                 toDispatch.push(listSetItems(config.listId, items));
             }
 

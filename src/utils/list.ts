@@ -1,1 +1,1 @@
-export const generateUniqIdForTreeItem = (item, index, parentId) => (parentId || '0') + '.' + String(item.id || index);
+export const getTreeItemUniqId = (item, index, parentId) => (parentId || '0') + '.' + String(item.id || index);

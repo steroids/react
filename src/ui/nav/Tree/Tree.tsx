@@ -4,7 +4,7 @@ import _omit from 'lodash-es/omit';
 import _isEqual from 'lodash-es/isEqual';
 import _keys from 'lodash-es/keys';
 import {useCallback, useMemo, useState} from 'react';
-import {generateUniqIdForTreeItem} from '@steroidsjs/core/utils/list';
+import {getTreeItemUniqId} from '../../../utils/list';
 import {useComponents, useSelector} from '../../../hooks';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
@@ -168,7 +168,7 @@ function Tree(props: ITreeProps) {
         }
 
         (sourceItems || []).forEach((item, index) => {
-            const uniqId = generateUniqIdForTreeItem(item, index, parentId);
+            const uniqId = getTreeItemUniqId(item, index, parentId);
             if (!foundItem && (item.id === itemId || uniqId === itemId)) {
                 foundItem = {
                     ...item,
@@ -192,7 +192,7 @@ function Tree(props: ITreeProps) {
         let opened = {};
 
         (sourceItems || []).forEach((item, index) => {
-            const uniqId = generateUniqIdForTreeItem(item, index, parentId);
+            const uniqId = getTreeItemUniqId(item, index, parentId);
             if (props.autoOpenLevels >= level) {
                 opened[uniqId] = true;
             }
@@ -257,7 +257,7 @@ function Tree(props: ITreeProps) {
             }
 
             (sourceItems || []).forEach((item, index) => {
-                const uniqId = generateUniqIdForTreeItem(item, index, parentId);
+                const uniqId = getTreeItemUniqId(item, index, parentId);
                 const isOpened = props.alwaysOpened || !!openedItems[uniqId];
                 let hasItems = item[props.itemsKey] && item[props.itemsKey].length > 0;
 

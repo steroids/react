@@ -4,7 +4,7 @@ import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import {generateUniqIdForTreeItem} from '@steroidsjs/core/utils/list';
+import {getTreeItemUniqId} from '../utils/list';
 import {ITreeTableItem} from '../ui/list/TreeTable/TreeTable';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
@@ -300,7 +300,7 @@ export const prepareItemsToTree = (
     }
 
     sourceItems.forEach((item, index) => {
-        const uniqueId = generateUniqIdForTreeItem(item, index, parentId);
+        const uniqueId = getTreeItemUniqId(item, index, parentId);
         const isOpened = !!openedTreeItems[uniqueId];
         const hasItems = !!(item.items && item.items.length > 0);
 

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import React from 'react';
+import * as React from 'react';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import useList, * as listHelpers from '../../src/hooks/useList';
@@ -172,7 +172,7 @@ describe('prepareItemsToTree function', () => {
             },
         ];
 
-        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClickStub);
 
         expect(treeItems).toHaveLength(expectedResult.length);
         expect(treeItems[0]).toEqual(expectedResult[0]);

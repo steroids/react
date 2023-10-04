@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import {render} from '../../../customRender';
-import {JSXWrapper, getElementByClassName} from '../../../helpers';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 import BlankField from '../../../../src/ui/form/BlankField';
 import InputField from '../../../../src/ui/form/InputField';
 

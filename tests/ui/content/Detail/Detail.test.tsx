@@ -1,7 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
-import {render} from '../../../customRender';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import {Detail, DetailItem} from '../../../../src/ui/content/Detail';
 import {DetailLayoutEnum, IDetailViewProps} from '../../../../src/ui/content/Detail/Detail';
 import DetailMockView from './DetailMockView';

@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {act} from '@testing-library/react';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import CopyToClipboard, {ICopyToClipboardProps} from '../../../../src/ui/content/CopyToClipboard/CopyToClipboard';
 import CopyToClipBoardMockView from './CopyToClipBoardMockView';
 

@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import Grid, {IGridProps} from '../../../../src/ui/list/Grid/Grid';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import GridMockView from './GridMockView';
 import CheckboxColumnMockView from './CheckboxColumnMockView';
 import ContentColumnMockView from './ContentColumnMockView';

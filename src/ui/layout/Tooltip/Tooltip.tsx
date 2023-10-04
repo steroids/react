@@ -1,16 +1,11 @@
 import * as React from 'react';
-import {useCallback, useRef, useState} from 'react';
+import {useCallback, useRef} from 'react';
 import {useMount} from 'react-use';
-import calculate from '../Tooltip/calculate';
-import {useComponents} from '../../../hooks';
-import TooltipInnerPortal from './TooltipPortalInner';
 
-/**
- * Варианты позиций всплывающей подсказки
- * @example 'top'
- */
-type TooltipPosition = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' |
-    'left' | 'leftTop' | 'leftBottom' | 'right' | 'rightTop' | 'rightBottom' | string;
+import {useComponents} from '../../../hooks';
+import useAbsolutePositioning, {PositionType} from '../../../hooks/useAbsolutePositioning';
+
+import TooltipInnerPortal from './TooltipPortalInner';
 
 export interface ITooltipArrowPosition {
     /**
@@ -71,7 +66,7 @@ export interface ITooltipProps {
     /**
      * Позиционирование подсказки, относительно целевого элемента
      */
-    position?: TooltipPosition,
+    position?: PositionType,
 
     /**
      * Показывать ли подсказку сразу после рендера страницы
@@ -113,7 +108,7 @@ export interface ITooltipProps {
 export interface ITooltipViewProps extends ITooltipProps {
     isTooltipVisible: boolean,
     content: string | any,
-    position: TooltipPosition,
+    position: PositionType,
     style: ITooltipStylePosition,
 }
 
@@ -130,68 +125,33 @@ export interface ITooltipViewProps extends ITooltipProps {
 
 function Tooltip(props: ITooltipProps): JSX.Element {
     const components = useComponents();
-
-    const [isComponentExist, setIsComponentExist] = useState(false);
-    const [isTooltipVisible, setIsTooltipVisible] = useState(props.defaultVisible);
-    const [style, setStyle] = useState<ITooltipStylePosition>({
-        left: null,
-        right: null,
-        top: null,
+    const {
+        isComponentExist,
+        isComponentVisible,
+        calculateAbsolutePosition,
+        onShow,
+        onHide,
+        position,
+        arrowPosition,
+        style,
+    } = useAbsolutePositioning({
+        componentDestroyDelay: props.animationMs,
+        position: props.position,
+        children: props.children,
+        gap: props.gap,
+        defaultVisible: props.defaultVisible,
     });
-    const [arrowPosition, setArrowPosition] = useState<ITooltipArrowPosition>({
-        left: null,
-        right: null,
-        top: null,
-        bottom: null,
-    });
 
-    const timerRef = useRef(null);
-    const positionRef = useRef(props.position);
     const childRef = useRef(null);
 
-    const onShowTooltip = useCallback(() => {
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-        }
-        setIsComponentExist(true);
-        setIsTooltipVisible(false);
-
-        // TODO: How to wait setState callback?
-        setTimeout(() => setIsTooltipVisible(true));
+    const calculatePosition = useCallback((tooltipSize, arrowSize) => {
+        calculateAbsolutePosition(position, childRef.current, tooltipSize, arrowSize);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const onHideTooltip = useCallback(() => {
-        setIsTooltipVisible(false);
-        if (timerRef.current) {
-            clearTimeout(timerRef.current);
-        }
-        timerRef.current = setTimeout(() => setIsComponentExist(false), props.animationMs);
-    }, [props.animationMs]);
-
-    // Основная функция расчета позиции
-    const calculatePosition = useCallback((tooltipSize, arrowSize) => {
-        const result = calculate(
-            props.gap,
-            positionRef.current,
-            childRef.current,
-            tooltipSize,
-            arrowSize,
-        );
-
-        if (!result) {
-            return;
-        }
-
-        positionRef.current = result.position;
-        setStyle(result.style);
-        if (result.arrowPosition) {
-            setArrowPosition(result.arrowPosition);
-        }
-    }, [props.gap]);
-
     useMount(() => {
-        if (isTooltipVisible) {
-            onShowTooltip();
+        if (isComponentVisible) {
+            onShow();
         }
     });
 
@@ -203,21 +163,22 @@ function Tooltip(props: ITooltipProps): JSX.Element {
     const childrenElement: any = typeof props.children === 'object'
         ? React.Children.only(props.children)
         : undefined;
+
     return (
         <>
             {childrenElement
                 ? React.cloneElement(childrenElement, {
                     ref: childRef,
-                    onMouseOver: onShowTooltip,
-                    onMouseOut: onHideTooltip,
+                    onMouseOver: onShow,
+                    onMouseOut: onHide,
                 })
                 : (
                     <span
                         ref={childRef}
-                        onFocus={onShowTooltip}
-                        onMouseOver={onShowTooltip}
-                        onBlur={onHideTooltip}
-                        onMouseOut={onHideTooltip}
+                        onFocus={onShow}
+                        onMouseOver={onShow}
+                        onBlur={onHide}
+                        onMouseOut={onHide}
                     >
                         {props.children}
                     </span>
@@ -225,9 +186,9 @@ function Tooltip(props: ITooltipProps): JSX.Element {
             {isComponentExist && (
                 <TooltipInnerPortal>
                     <TooltipView
-                        isTooltipVisible={isTooltipVisible}
+                        isTooltipVisible={isComponentVisible}
                         content={props.content}
-                        position={positionRef.current}
+                        position={position}
                         style={style}
                         arrowPosition={arrowPosition}
                         calculatePosition={calculatePosition}

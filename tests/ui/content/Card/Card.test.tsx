@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import Card from '../../../../src/ui/content/Card/Card';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
 import CardMockView from './CardMockView';
 
 describe('Card tests', () => {

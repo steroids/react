@@ -8,6 +8,7 @@ import {Detail, DetailItem} from './Detail';
 import Icon from './Icon';
 import Menu from './Menu';
 import CopyToClipboard from './CopyToClipboard';
+import Chart from './Chart';
 import Slider from './Slider';
 import CalendarSystem from './CalendarSystem';
 
@@ -25,6 +26,7 @@ export {
     Icon,
     Menu,
     CopyToClipboard,
+    Chart,
     Slider,
     CalendarSystem,
 };

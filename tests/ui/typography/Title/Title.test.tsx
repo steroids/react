@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import {Title} from '../../../../src/ui/typography';
 import TitleMockView from './TitleMockView';
-import {getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Title tests', () => {
     const requiredPropsForTest = {

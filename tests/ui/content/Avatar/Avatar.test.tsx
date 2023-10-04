@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
+import {JSXWrapper, render} from '../../../helpers';
 import Avatar from '../../../../src/ui/content/Avatar/Avatar';
 import AvatarView from './AvatarMockView';
-import {JSXWrapper} from '../../../helpers';
 
 describe('Avatar tests', () => {
     const props = {

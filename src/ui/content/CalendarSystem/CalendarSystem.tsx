@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
 import React from 'react';
-import __upperFirst from 'lodash-es/upperFirst';
 import dayjs from 'dayjs';
 import _concat from 'lodash-es/concat';
 import _slice from 'lodash-es/slice';

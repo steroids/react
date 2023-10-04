@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import Icon from '../../../../src/ui/content/Icon/Icon';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import IconMockView from './IconMockView';
 
 describe('Icon tests', () => {

@@ -120,7 +120,7 @@ RadioListField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    multiple: false,
+    multiple: true,
     errors: null,
     size: 'md',
     orientation: 'vertical',

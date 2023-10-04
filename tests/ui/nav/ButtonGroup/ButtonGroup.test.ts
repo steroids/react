@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
 import ButtonGroupMockView from './ButtonGroupMockView';
-import {JSXWrapper, getElementByClassName, getElementByTag} from '../../../helpers';
+import {JSXWrapper, getElementByClassName, getElementByTag, render} from '../../../helpers';
 import ButtonGroup from '../../../../src/ui/nav/ButtonGroup/ButtonGroup';
 
 describe('ButtonGroup tests', () => {

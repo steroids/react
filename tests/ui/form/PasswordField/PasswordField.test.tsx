@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {render} from '../../../customRender';
-import {getElementByClassName, getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import PasswordField, {IPasswordFieldProps} from '../../../../src/ui/form/PasswordField/PasswordField';
 import PasswordFieldMockView from './PasswordFieldMockView';
 

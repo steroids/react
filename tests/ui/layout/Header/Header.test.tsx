@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import Header, {IHeaderProps} from '../../../../src/ui/layout/Header/Header';
-import {JSXWrapper, getElementByClassName} from '../../../helpers';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 import HeaderMockView from './HeaderMockView';
 
 describe('Header test', () => {

@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import {Text} from '../../../../src/ui/typography';
 import TextMockView from './TextMockView';
-import {getElementByTag, JSXWrapper} from '../../../helpers';
+import {getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Text tests', () => {
     const requiredPropsForTest = {

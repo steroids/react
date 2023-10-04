@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import {render} from '../../../customRender';
-import {getElementByClassName, JSXWrapper} from '../../../helpers';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import Empty from '../../../../src/ui/list/Empty/Empty';
 
 describe('Empty tests', () => {

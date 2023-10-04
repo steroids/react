@@ -5,6 +5,7 @@ import {useCallback} from 'react';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import localeData from 'dayjs/plugin/localeData';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
@@ -86,6 +87,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
 
     //Extending dayjs / day.js with modules that used in steroids
     dayjs.extend(relativeTime);
+    dayjs.extend(customParseFormat);
     dayjs.extend(localizedFormat);
     dayjs.extend(utc);
     dayjs.extend(localeData);

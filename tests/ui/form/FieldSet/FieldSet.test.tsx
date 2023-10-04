@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
-import {FormWrapper, getElementByClassName, JSXWrapper} from '../../../helpers';
+import {FormWrapper, getElementByClassName, render} from '../../../helpers';
 import FieldSet from '../../../../src/ui/form/FieldSet';
 import FieldSetMockView from './FieldSetMockView';
 import InputField from '../InputField/InputFieldMockView';

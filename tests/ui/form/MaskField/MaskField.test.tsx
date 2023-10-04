@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
-import {JSXWrapper} from '../../../helpers';
+import {JSXWrapper, render} from '../../../helpers';
 import MaskField from '../../../../src/ui/form/MaskField/MaskField';
 import {MASK_PRESETS} from '../../../../src/ui/form/InputField/InputField';
 

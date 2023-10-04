@@ -38,12 +38,15 @@ export default class HttpComponent {
 
     _promises: any;
 
+    _isWindowAvailable: boolean;
+
     constructor(components, config: any = {}) {
         this._components = components;
 
+        this._isWindowAvailable = !process.env.IS_SSR && process.env.PLATFORM !== 'mobile';
         this.apiUrl = config.apiUrl
             //|| process.env.APP_BACKEND_URL
-            || (!process.env.IS_SSR ? window.location.protocol + '//' + window.location.host : '');
+            || (this._isWindowAvailable ? window.location.protocol + '//' + window.location.host : '');
         this.accessTokenKey = config.accessTokenKey || 'accessToken';
         this.clientStorageName = config.clientStorageName || this._components.clientStorage.STORAGE_COOKIE;
         this.clientStorageExpiresIn = config.clientStorageExpiresIn || 180;
@@ -167,7 +170,7 @@ export default class HttpComponent {
     }
 
     getUrl(method) {
-        if (method === null && !process.env.IS_SSR) {
+        if (method === null && this._isWindowAvailable) {
             method = window.location.pathname;
         }
         if (method.indexOf('://') === -1) {
@@ -290,7 +293,7 @@ export default class HttpComponent {
         }
 
         // Ajax redirect
-        if (response.data.redirectUrl && !process.env.IS_SSR) {
+        if (response.data.redirectUrl && this._isWindowAvailable) {
             if (window.location.href === response.data.redirectUrl.split('#')[0]) {
                 window.location.href = response.data.redirectUrl;
                 window.location.reload();

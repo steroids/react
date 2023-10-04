@@ -70,12 +70,6 @@ export interface ISidebarProps extends IUiComponent {
     isOpenedByDefault?: boolean;
 
     /**
-     * Callback-функция, вызывается при переключении сайдбара.
-     * @param toggleState - текущее состояние сайдбара (открыт или закрыт).
-     */
-    onToggleSidebar?: (toggleState: boolean) => void;
-
-    /**
      * Callback-функция, вызывается при клике на элемент навигации.
      * @param itemId - идентификатор элемента навигации, по которому произошел клик.
      */
@@ -98,11 +92,7 @@ export default function Sidebar(props: ISidebarProps) {
     const toggleSidebar = useCallback(() => {
         const newState = !isOpened;
         setIsOpened(newState);
-
-        if (props?.onToggleSidebar) {
-            props.onToggleSidebar(newState);
-        }
-    }, [isOpened, props]);
+    }, [isOpened]);
 
     const onClickNav = React.useCallback((itemId: number) => {
         if (props?.onClickItem) {

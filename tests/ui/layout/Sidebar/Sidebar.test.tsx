@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {render} from '../../../customRender';
 import Sidebar from '../../../../src/ui/layout/Sidebar/Sidebar';
-import {JSXWrapper, getElementByClassName} from '../../../helpers';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 import SidebarMockView from './SidebarMockView';
 
 describe('Sidebar tests', () => {

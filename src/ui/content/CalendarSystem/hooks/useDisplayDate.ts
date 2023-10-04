@@ -1,5 +1,5 @@
 import React from 'react';
-import {convertDate} from '../utils/calendar';
+import {convertDate} from '../../../../utils/calendar';
 
 export const MONTH_CONVERT_FORMAT = 'MMMM YYYY';
 

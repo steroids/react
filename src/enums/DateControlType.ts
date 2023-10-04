@@ -1,29 +1,29 @@
 import Enum from '../base/Enum';
 
 export default class DateControlType extends Enum {
-    static PrevDouble = 'PrevDouble';
+    static PREV_DOUBLE = 'PREV_DOUBLE';
 
-    static PrevOne = 'PrevOne';
+    static PREV_ONE = 'PREV_ONE';
 
-    static NextOne = 'NextOne';
+    static NEXT_ONE = 'NEXT_ONE';
 
-    static NextDouble = 'NextDouble';
+    static NEXT_DOUBLE = 'NEXT_DOUBLE';
 
     static getLabels(): Record<string, string> {
         return {
-            [this.PrevDouble]: __('PrevDouble'),
-            [this.PrevOne]: __('PrevOne'),
-            [this.NextOne]: __('NextOne'),
-            [this.NextDouble]: __('NextDouble'),
+            [this.PREV_DOUBLE]: __('PREV_DOUBLE'),
+            [this.PREV_ONE]: __('PREV_ONE'),
+            [this.NEXT_ONE]: __('NEXT_ONE'),
+            [this.NEXT_DOUBLE]: __('NEXT_DOUBLE'),
         };
     }
 
     static getIcons() {
         return {
-            [this.PrevDouble]: 'double_arrow_left',
-            [this.PrevOne]: 'arrow_left_24x24',
-            [this.NextOne]: 'arrow_right_24x24',
-            [this.NextDouble]: 'double_arrow_right',
+            [this.PREV_DOUBLE]: 'double_arrow_left',
+            [this.PREV_ONE]: 'arrow_left_24x24',
+            [this.NEXT_ONE]: 'arrow_right_24x24',
+            [this.NEXT_DOUBLE]: 'double_arrow_right',
         };
     }
 }

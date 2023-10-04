@@ -18,10 +18,10 @@ import useSelector from './useSelector';
 import useSsr from './useSsr';
 import useUniqueId from './useUniqueId';
 import useTheme from './useTheme';
-import useMonthCalendar from './useMonthCalendar';
-import useWeekCalendar from './useWeekCalendar';
-import useDisplayDate from './useDisplayDate';
-import useCalendarControls from './useCalendarControls';
+import useMonthCalendar from '../ui/content/CalendarSystem/hooks/useMonthCalendar';
+import useWeekCalendar from '../ui/content/CalendarSystem/hooks/useWeekCalendar';
+import useDisplayDate from '../ui/content/CalendarSystem/hooks/useDisplayDate';
+import useCalendarControls from '../ui/content/CalendarSystem/hooks/useCalendarControls';
 
 export {
     useAbsolutePositioning,

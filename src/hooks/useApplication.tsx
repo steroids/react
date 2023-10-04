@@ -4,8 +4,10 @@ import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import localeData from 'dayjs/plugin/localeData';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import isToday from 'dayjs/plugin/isToday';
 import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
@@ -86,6 +88,8 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     dayjs.extend(relativeTime);
     dayjs.extend(localizedFormat);
     dayjs.extend(utc);
+    dayjs.extend(localeData);
+    dayjs.extend(isToday);
 
     let components: IComponents = useComponents();
 

@@ -2,53 +2,31 @@
 /* eslint-disable no-plusplus */
 import React from 'react';
 import __upperFirst from 'lodash-es/upperFirst';
-import {convertDate} from 'src/utils/calendar';
 import dayjs from 'dayjs';
+import _concat from 'lodash-es/concat';
+import _slice from 'lodash-es/slice';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {openModal} from '../../../actions/modal';
-import useCalendarControls from '../../../hooks/useCalendarControls';
-import DateControlEnum from '../../../enums/DateControlType';
-import useDisplayDate from '../../../hooks/useDisplayDate';
-import useMonthCalendar from '../../../hooks/useMonthCalendar';
+import useCalendarControls from './hooks/useCalendarControls';
+import useDisplayDate from './hooks/useDisplayDate';
+import useMonthCalendar from './hooks/useMonthCalendar';
 import {useComponents, useDispatch, useWeekCalendar} from '../../../hooks';
 import CalendarEnum from '../../../enums/CalendarType';
 
-export const DAYS_OF_WEEK = [
-    __('Mo'),
-    __('Tu'),
-    __('We'),
-    __('Th'),
-    __('Fr'),
-    __('Sa'),
-    __('Su'),
-];
+export const DAYS_OF_WEEK = (() => {
+    const unformattedDaysOfWeek = dayjs.weekdaysMin();
 
-export const HOURS = [
-    '00:00',
-    '01:00',
-    '02:00',
-    '03:00',
-    '04:00',
-    '05:00',
-    '06:00',
-    '07:00',
-    '08:00',
-    '09:00',
-    '10:00',
-    '11:00',
-    '12:00',
-    '13:00',
-    '14:00',
-    '15:00',
-    '16:00',
-    '17:00',
-    '18:00',
-    '19:00',
-    '20:00',
-    '21:00',
-    '22:00',
-    '23:00',
-];
+    return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]);
+})();
+
+export const HOURS = (() => {
+    const hoursArray = [];
+    for (let i = 0; i < 24; i++) {
+        const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
+        hoursArray.push(formattedHour);
+    }
+    return hoursArray;
+})();
 
 export interface IDay {
     dayNumber: number;
@@ -58,7 +36,7 @@ export interface IDay {
     formattedDisplay?: string,
 }
 
-export interface PresentDateInfo {
+export interface IPresentDateInfo {
     currentYear: number;
     currentMonth: number;
     dateToDisplay: string;
@@ -70,68 +48,66 @@ export interface IEvent {
     [key: string]: any,
 }
 
-export interface ICalendar {
+export interface ICalendarGroups {
     id: number,
     label: string,
-    color: string,
+    color?: string,
     events: IEvent[],
 }
 
 export interface ICalendarSystemProps extends IUiComponent {
-    onCreate?: () => void;
+    onCreateEvent?: () => void;
     onChangeType?: (newType: string) => void;
-    createModalProps: IModalProps,
-    calendars: {
+    createEventModalProps: IModalProps,
+    calendarGroups: {
         title: string,
-        items: ICalendar[],
+        items: ICalendarGroups[],
     },
     [key: string]: any;
 }
 
-export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'calendars'> {
-    monthCalendar: IDay[],
-    currentWeek: IDay[],
+export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'calendarGroups'> {
+    monthCalendarDays: IDay[],
+    currentWeekDays: IDay[],
     calendarType: CalendarEnum,
     dateToDisplay: string,
-    calendars: ICalendar[],
-    calendarsTitle: string,
-    selectedCalendarsIds: number[],
-    onChangeType: (newType: string) => void,
+    calendarGroups: ICalendarGroups[],
+    calendarGroupsTitle: string,
+    selectedCalendarGroupsIds: number[],
+    onChangeType: (newType: 'Month' | 'Week') => void,
     onMonthChange: (newDate: Date) => void,
     onClickControls: (event: React.MouseEvent<HTMLElement>) => void
     onClickCreate: VoidFunction,
     getEventsFromDate: (dateFromDay: Date, isMonth: boolean) => IEvent[],
-    onChangeCalendarsIds: (selectedIds: number[]) => void,
+    onChangeCalendarGroupsIds: (selectedIds: number[]) => void,
 }
 
-export interface ICalendarSystemModalViewProps extends IModalProps {
-    onCreate: VoidFunction
-}
+export type ICalendarSystemModalViewProps = IModalProps
 
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
     const dispatch = useDispatch();
-    const [innerCalendars, setInnerCalendars] = React.useState<ICalendar[]>(props.calendars.items || []);
-    const [selectedCalendarsIds, setSelectedCalendarsIds] = React.useState<number[]>([]);
+    const [innerCalendarGroups, setInnerCalendarGroups] = React.useState<ICalendarGroups[]>(props.calendarGroups.items || []);
+    const [selectedCalendarGroupsIds, setSelectedCalendarGroupsIds] = React.useState<number[]>([]);
     const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
-    const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.Month);
-    const {calendarArray, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();
+    const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.MONTH);
+    const {calendarArray: monthCalendarDays, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();
 
     const {
-        currentWeek,
+        currentWeek: currentWeekDays,
         weekControls,
         forceUpdateWeekOnMonthChange,
     } = useWeekCalendar(
         currentMonthDate,
     );
 
-    const {applyControl} = useCalendarControls(calendarType, weekControls);
+    const {onClickControls} = useCalendarControls(calendarType, weekControls);
 
-    const onChangeType = React.useCallback((newType: string) => {
-        setCalendarType(CalendarEnum[newType]);
+    const onChangeType = React.useCallback((newType: 'Month' | 'Week') => {
+        setCalendarType(newType);
 
         if (props.onChangeType) {
-            props.onChangeType(CalendarEnum[newType]);
+            props.onChangeType(newType);
         }
     }, [props]);
 
@@ -141,67 +117,54 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         forceUpdateWeekOnMonthChange(newDate);
     }, [forceUpdateWeekOnMonthChange, setCurrentMonthDate, setNewDateToDisplay]);
 
-    const onClickControls = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
-        const target = event.target as HTMLDivElement;
-        const controlType: DateControlEnum = target.dataset?.control;
-
-        if (!controlType) {
-            return;
-        }
-
-        applyControl(controlType);
-    }, [applyControl]);
-
-    const onChangeCalendarsIds = (selectedIds: number[]) => {
-        setSelectedCalendarsIds(selectedIds);
-    };
-
     const getEventsFromDate = (date: Date, isMonth: boolean) => {
-        const result: IEvent[] = [];
+        const eventsOnDate: IEvent[] = [];
 
-        const callingDateDayJs = dayjs(date);
+        const sourceDateInDayJs = dayjs(date);
+
+        const addEventIfMatchDate = (
+            eventDateDayJs: dayjs.Dayjs,
+            calendarGroup: ICalendarGroups,
+            originalEvent: IEvent,
+            unit: 'hours' | 'day',
+        ) => {
+            if (eventDateDayJs.isSame(sourceDateInDayJs, unit) && selectedCalendarGroupsIds.includes(calendarGroup.id)) {
+                eventsOnDate.push({
+                    ...originalEvent,
+                    color: originalEvent.color ?? calendarGroup.color,
+                });
+            }
+        };
 
         isMonth
-            ? innerCalendars.forEach(calendar => {
-                calendar.events.forEach(event => {
+            ? innerCalendarGroups.forEach(calendarGroup => {
+                calendarGroup.events.forEach(event => {
                     const eventDateDayJs = dayjs(event.date);
 
-                    if (eventDateDayJs.isSame(callingDateDayJs, 'day') && selectedCalendarsIds.includes(calendar.id)) {
-                        result.push({
-                            ...event,
-                            color: event.color ?? calendar.color,
-                        });
-                    }
+                    addEventIfMatchDate(eventDateDayJs, calendarGroup, event, 'day');
                 });
             })
             : (
-                innerCalendars.forEach(calendar => {
-                    calendar.events.forEach(event => {
+                innerCalendarGroups.forEach(calendarGroup => {
+                    calendarGroup.events.forEach(event => {
                         const eventDate = new Date(event.date);
-
                         eventDate.setHours(eventDate.getHours(), 0, 0, 0);
 
                         const eventDateDayJs = dayjs(eventDate);
-
-                        if (eventDateDayJs.isSame(callingDateDayJs, 'hours') && selectedCalendarsIds.includes(calendar.id)) {
-                            result.push({
-                                ...event,
-                                color: event.color ?? calendar.color,
-                            });
-                        }
+                        addEventIfMatchDate(eventDateDayJs, calendarGroup, event, 'hours');
                     });
                 })
             );
 
-        return result;
+        return eventsOnDate;
     };
 
-    const createModalView = props.createModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
+    const createModalView = props.createEventModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
 
     const createModalProps = React.useMemo(() => ({
-        ...props.createModalProps,
+        ...props.createEventModalProps,
         component: createModalView,
-    }), [createModalView, props.createModalProps]);
+    }), [createModalView, props.createEventModalProps]);
 
     const onClickCreate = React.useCallback(() => {
         dispatch(openModal(createModalView, createModalProps));
@@ -210,22 +173,18 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
     return components.ui.renderView(props.view || 'content.CalendarSystemView', {
         ...props,
         dateToDisplay,
-        monthCalendar: calendarArray,
+        monthCalendarDays,
         calendarType,
-        currentWeek,
+        currentWeekDays,
         createModalProps,
-        calendars: innerCalendars,
-        calendarsTitle: props.calendars.title,
-        selectedCalendarsIds,
+        calendarGroups: innerCalendarGroups,
+        calendarGroupsTitle: props.calendarGroups.title,
+        selectedCalendarGroupsIds,
         onChangeType,
         onMonthChange,
         onClickControls,
         onClickCreate,
         getEventsFromDate,
-        onChangeCalendarsIds,
+        onChangeCalendarGroupsIds: (newSelectedCalendarGroupsIds: number[]) => setSelectedCalendarGroupsIds(newSelectedCalendarGroupsIds),
     });
 }
-
-CalendarSystem.defaultProps = {
-    calendarsTitle: 'My Calendars',
-};

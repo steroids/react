@@ -1,39 +1,12 @@
-import React from 'react';
-import {IDay} from 'src/ui/content/CalendarSystem/CalendarSystem';
-
 /* eslint-disable no-plusplus */
-export const FIRST_DAY = 1;
+/* eslint-disable import/order */
+import React from 'react';
+import {IDay} from '../CalendarSystem';
+import {getWeekDaysFromDate, isDateIsToday} from '../utils';
+
+const FIRST_DAY = 1;
 const ONE_MONTH = 1;
 const TOTAL_DAYS_IN_CALENDAR = 42;
-
-export const getWeekFromDate = (date: Date) => {
-    const weekDays: IDay[] = [];
-    const firstDayOfWeek = new Date(date);
-    const currentDay = date.getDay();
-    const diff = currentDay === 0 ? 6 : currentDay - 1; // Разница между текущим днем и понедельником
-
-    firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diff); // Устанавливаем первый день недели (понедельник)
-
-    for (let i = 0; i < 7; i++) {
-        const currentDate = new Date(firstDayOfWeek);
-        currentDate.setDate(currentDate.getDate() + i);
-        weekDays.push({
-            dayNumber: currentDate.getDate(),
-            date: new Date(currentDate),
-        });
-    }
-
-    return weekDays;
-};
-
-export const isToday = (date: Date): boolean => {
-    const today = new Date();
-    return (
-        date.getDate() === today.getDate()
-        && date.getMonth() === today.getMonth()
-        && date.getFullYear() === today.getFullYear()
-    );
-};
 
 const useMonthCalendar = () => {
     const [currentMonthDate, setCurrentMonthDate] = React.useState<Date | null>(null);
@@ -53,6 +26,7 @@ const useMonthCalendar = () => {
         const daysInCurrentMonth = [];
 
         // Пройдемся по всем дням месяца и добавим их в массив
+
         for (let dayNumber = 1; dayNumber <= lastDayOfCurrentMonth; dayNumber++) {
             const date = new Date(Date.UTC(currentYear, month, dayNumber));
             daysInCurrentMonth.push({date, dayNumber});
@@ -71,7 +45,7 @@ const useMonthCalendar = () => {
 
         const {firstDayOfCurrentMonth, currentMonth: month, daysInCurrentMonth} = getCurrentMonthDataUTC();
 
-        const firstWeekInMonth = getWeekFromDate(firstDayOfCurrentMonth);
+        const firstWeekInMonth = getWeekDaysFromDate(firstDayOfCurrentMonth);
 
         firstWeekInMonth.forEach((day) => calendarArray.push({
             date: day.date,
@@ -102,7 +76,7 @@ const useMonthCalendar = () => {
             });
         }
 
-        return calendarArray.map((day) => isToday(day.date) ? ({
+        return calendarArray.map((day) => isDateIsToday(day.date) ? ({
             ...day,
             isToday: true,
         }) : day);
@@ -111,7 +85,7 @@ const useMonthCalendar = () => {
     return {
         getCalendarArray,
         getCurrentMonthDataUTC,
-        getWeekFromDate,
+        getWeekFromDate: getWeekDaysFromDate,
         calendarArray: getCalendarArray(),
         setCurrentMonthDate,
         currentMonthDate,

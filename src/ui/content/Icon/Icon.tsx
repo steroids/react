@@ -28,7 +28,7 @@ import {useComponents} from '../../../hooks';
  *
  * Компонент, представляющий иконку. Иконки могут быть импортированы при старте приложения.
  */
-export interface IIconProps extends IUiComponent {
+export interface IIconProps extends Omit<IUiComponent, 'className' | 'style'>, Partial<HTMLElement> {
     /**
      * Имя иконки (латиницей). Импорт иконок происходит на старте приложения.
      * @example create

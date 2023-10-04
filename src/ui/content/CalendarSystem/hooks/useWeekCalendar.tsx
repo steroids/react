@@ -1,23 +1,23 @@
 import React from 'react';
-import {IDay} from '../ui/content/CalendarSystem/CalendarSystem';
-import {convertDate} from '../utils/calendar';
-import {getWeekFromDate, isToday} from './useMonthCalendar';
-import DateControlEnum from '../enums/DateControlType';
+import {IDay} from '../CalendarSystem';
+import {convertDate} from '../../../../utils/calendar';
+import DateControlEnum from '../../../../enums/DateControlType';
 import {getCalendarControl} from './useCalendarControls';
+import {getWeekDaysFromDate, isDateIsToday} from '../utils';
 
 const WEEK_DAY_FORMAT = 'dd, D MMM';
 
 const ONE_DAY = 1;
 
 const getFormattedWeekFromDate = (fromDate: Date = null) => {
-    const currentWeek = getWeekFromDate(fromDate || new Date());
+    const currentWeek = getWeekDaysFromDate(fromDate || new Date());
 
     return currentWeek.map(dayOfWeek => {
         const copyOfDayWeek = {...dayOfWeek};
 
         copyOfDayWeek.formattedDisplay = convertDate(dayOfWeek.date, null, WEEK_DAY_FORMAT);
         // eslint-disable-next-line no-unused-expressions
-        isToday(copyOfDayWeek.date) ? copyOfDayWeek.isToday = true : copyOfDayWeek.isToday = false;
+        isDateIsToday(copyOfDayWeek.date) ? copyOfDayWeek.isToday = true : copyOfDayWeek.isToday = false;
 
         return copyOfDayWeek;
     });
@@ -30,7 +30,7 @@ const useWeekCalendar = (currentMonthDate: Date) => {
         setCurrentWeek(getFormattedWeekFromDate(newMonthDate));
     }, []);
 
-    const updateEffect = React.useCallback((formattedWeek: IDay[]) => {
+    const changeMonthAfterWeekChanged = React.useCallback((formattedWeek: IDay[]) => {
         const firstDayOfWeek = formattedWeek[0].date;
         const currentMonthNumber = currentMonthDate.getMonth();
 
@@ -43,13 +43,13 @@ const useWeekCalendar = (currentMonthDate: Date) => {
         if (currentMonthNumber - firstDayOfWeek.getMonth() === 1) {
             const lastDayOfWeekInNewMonth = formattedWeek[formattedWeek.length - 1].date;
 
-            const prevMonthControl = getCalendarControl(DateControlEnum.PrevOne);
+            const prevMonthControl = getCalendarControl(DateControlEnum.PREV_ONE);
             prevMonthControl.click();
             forceUpdateWeekOnMonthChange(lastDayOfWeekInNewMonth);
         } else {
             const firstDayOfWeekInNewMonth = formattedWeek[0].date;
 
-            const nextMonthControl = getCalendarControl(DateControlEnum.NextOne);
+            const nextMonthControl = getCalendarControl(DateControlEnum.NEXT_ONE);
             nextMonthControl.click();
             forceUpdateWeekOnMonthChange(firstDayOfWeekInNewMonth);
         }
@@ -62,8 +62,8 @@ const useWeekCalendar = (currentMonthDate: Date) => {
         const formattedNextWeek = getFormattedWeekFromDate(lastDayOfWeek);
 
         setCurrentWeek(formattedNextWeek);
-        updateEffect(formattedNextWeek);
-    }, [currentWeek, updateEffect]);
+        changeMonthAfterWeekChanged(formattedNextWeek);
+    }, [currentWeek, changeMonthAfterWeekChanged]);
 
     const setPrevWeek = React.useCallback(() => {
         const firstDayOfWeek = currentWeek[0].date;
@@ -72,16 +72,16 @@ const useWeekCalendar = (currentMonthDate: Date) => {
         const formattedPrevWeek = getFormattedWeekFromDate(firstDayOfWeek);
 
         setCurrentWeek(formattedPrevWeek);
-        updateEffect(formattedPrevWeek);
-    }, [currentWeek, updateEffect]);
+        changeMonthAfterWeekChanged(formattedPrevWeek);
+    }, [currentWeek, changeMonthAfterWeekChanged]);
 
     return {
         currentWeek,
         weekControls: {
-            [DateControlEnum.NextDouble]: null,
-            [DateControlEnum.NextOne]: setNextWeek,
-            [DateControlEnum.PrevOne]: setPrevWeek,
-            [DateControlEnum.PrevDouble]: null,
+            [DateControlEnum.NEXT_DOUBLE]: null,
+            [DateControlEnum.NEXT_ONE]: setNextWeek,
+            [DateControlEnum.PREV_ONE]: setPrevWeek,
+            [DateControlEnum.PREV_DOUBLE]: null,
         },
         forceUpdateWeekOnMonthChange,
     };

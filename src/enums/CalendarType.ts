@@ -1,14 +1,14 @@
 import Enum from '../base/Enum';
 
 export default class CalendarType extends Enum {
-    static Week = 'Week';
+    static WEEK = 'Week';
 
-    static Month = 'Month';
+    static MONTH = 'Month';
 
     static getLabels(): Record<string, string> {
         return {
-            [this.Week]: __('Week'),
-            [this.Month]: __('Month'),
+            [this.WEEK]: __('Week'),
+            [this.MONTH]: __('Month'),
         };
     }
 }

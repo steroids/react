@@ -141,7 +141,7 @@ describe('prepareItemsToTree function', () => {
 
     const currentPageStub = null;
     const itemsOnPageStub = null;
-    const onTreeItemClickStub = jest.fn();
+    const onTreeItemClick = jest.fn();
 
     it('should prepare tree items correctly', () => {
         const openedTreeItems = {};
@@ -153,7 +153,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: false,
                 hasItems: true,
-                onTreeItemClickStub,
+                onTreeItemClick,
                 items: [
                     {id: 2, name: 'Item 1.1'},
                 ],
@@ -165,14 +165,14 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: false,
                 hasItems: true,
-                onTreeItemClickStub,
+                onTreeItemClick,
                 items: [
                     {id: 5, name: 'Item 2.1'},
                 ],
             },
         ];
 
-        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClickStub);
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
 
         expect(treeItems).toHaveLength(expectedResult.length);
         expect(treeItems[0]).toEqual(expectedResult[0]);
@@ -189,7 +189,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: true,
                 hasItems: true,
-                onTreeItemClickStub,
+                onTreeItemClick,
                 items: [
                     {id: 2, name: 'Item 1.1'},
                 ],
@@ -201,7 +201,7 @@ describe('prepareItemsToTree function', () => {
                 level: 1,
                 isOpened: false,
                 hasItems: false,
-                onTreeItemClickStub,
+                onTreeItemClick,
             },
             {
                 id: 4,
@@ -210,14 +210,14 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: false,
                 hasItems: true,
-                onTreeItemClickStub,
+                onTreeItemClick,
                 items: [
                     {id: 5, name: 'Item 2.1'},
                 ],
             },
         ];
 
-        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClickStub);
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
 
         expect(treeItems).toHaveLength(expectedResult.length);
 
@@ -238,7 +238,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: true,
                 hasItems: true,
-                onTreeItemClickStub,
+                onTreeItemClick,
                 items: [
                     {id: 5, name: 'Item 2.1'},
                 ],
@@ -250,11 +250,11 @@ describe('prepareItemsToTree function', () => {
                 level: 1,
                 isOpened: false,
                 hasItems: false,
-                onTreeItemClickStub,
+                onTreeItemClick,
             },
         ];
 
-        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPage, itemsOnPage, onTreeItemClickStub);
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPage, itemsOnPage, onTreeItemClick);
 
         expect(treeItems).toHaveLength(expectedResult.length);
 

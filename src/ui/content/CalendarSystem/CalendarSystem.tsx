@@ -5,6 +5,7 @@ import __upperFirst from 'lodash-es/upperFirst';
 import dayjs from 'dayjs';
 import _concat from 'lodash-es/concat';
 import _slice from 'lodash-es/slice';
+import localeData from 'dayjs/plugin/localeData';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {openModal} from '../../../actions/modal';
 import useCalendarControls from './hooks/useCalendarControls';
@@ -12,6 +13,8 @@ import useDisplayDate from './hooks/useDisplayDate';
 import useMonthCalendar from './hooks/useMonthCalendar';
 import {useComponents, useDispatch, useWeekCalendar} from '../../../hooks';
 import CalendarEnum from '../../../enums/CalendarType';
+
+dayjs.extend(localeData);
 
 export const DAYS_OF_WEEK = (() => {
     const unformattedDaysOfWeek = dayjs.weekdaysMin();

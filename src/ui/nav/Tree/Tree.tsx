@@ -117,8 +117,6 @@ export interface ITreeViewProps extends ITreeProps {
     levelPadding?: number
 }
 
-//const resolveId = (item, index, parentId) => (parentId ? parentId + '.' : '') + String(item.id || index);
-
 function Tree(props: ITreeProps) {
     const components = useComponents();
     const STORAGE_KEY_PREFIX = 'tree_';

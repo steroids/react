@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import _concat from 'lodash-es/concat';
 import _slice from 'lodash-es/slice';
 import localeData from 'dayjs/plugin/localeData';
+import _upperFirst from 'lodash-es/upperFirst';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {openModal} from '../../../actions/modal';
 import useCalendarControls from './hooks/useCalendarControls';
@@ -19,7 +20,7 @@ dayjs.extend(localeData);
 export const DAYS_OF_WEEK = (() => {
     const unformattedDaysOfWeek = dayjs.weekdaysMin();
 
-    return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]);
+    return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]).map(weekDay => __(`${_upperFirst(weekDay)}`));
 })();
 
 export const HOURS = (() => {

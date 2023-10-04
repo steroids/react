@@ -131,12 +131,11 @@ function Calendar(props: ICalendarProps) {
         }
     }, [selectedDates]);
 
-    const onDaySelect = useCallback(
-        (date) => {
+    const onDaySelect = useCallback((date) => {
+        if (props.onChange) {
             props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true));
-        },
-        [props.onChange, props.valueFormat],
-    );
+        }
+    }, [props.onChange, props.valueFormat]);
 
     const toggleCaptionPanel = useCallback(() => {
         setIsCaptionPanelVisible(!isCaptionPanelVisible);

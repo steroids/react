@@ -7,8 +7,8 @@ export default class CalendarType extends Enum {
 
     static getLabels(): Record<string, string> {
         return {
-            [this.WEEK]: __('Week'),
-            [this.MONTH]: __('Month'),
+            [this.WEEK]: __('Неделя'),
+            [this.MONTH]: __('Месяц'),
         };
     }
 }

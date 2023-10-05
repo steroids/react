@@ -1,4 +1,4 @@
-import Enum from '../base/Enum';
+import Enum from '../../../../base/Enum';
 
 export default class CalendarType extends Enum {
     static WEEK = 'Week';

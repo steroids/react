@@ -2,7 +2,7 @@
 /* eslint-disable import/order */
 import React from 'react';
 import {IDay} from '../CalendarSystem';
-import {getWeekDaysFromDate, isDateIsToday} from '../utils';
+import {getWeekDaysFromDate, isDateIsToday} from '../utils/utils';
 
 const FIRST_DAY = 1;
 const ONE_MONTH = 1;

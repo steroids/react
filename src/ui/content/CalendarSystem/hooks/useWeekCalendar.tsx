@@ -1,9 +1,9 @@
 import React from 'react';
 import {IDay} from '../CalendarSystem';
 import {convertDate} from '../../../../utils/calendar';
-import DateControlEnum from '../../../../enums/DateControlType';
-import {getCalendarControl} from './useCalendarControls';
-import {getWeekDaysFromDate, isDateIsToday} from '../utils';
+import DateControlEnum from '../enums/DateControlType';
+import {getSourceCalendarControl} from './useCalendarControls';
+import {getWeekDaysFromDate, isDateIsToday} from '../utils/utils';
 
 const WEEK_DAY_FORMAT = 'dd, D MMM';
 
@@ -43,13 +43,13 @@ const useWeekCalendar = (currentMonthDate: Date) => {
         if (currentMonthNumber - firstDayOfWeek.getMonth() === 1) {
             const lastDayOfWeekInNewMonth = formattedWeek[formattedWeek.length - 1].date;
 
-            const prevMonthControl = getCalendarControl(DateControlEnum.PREV_ONE);
+            const prevMonthControl = getSourceCalendarControl(DateControlEnum.PREV_ONE);
             prevMonthControl.click();
             forceUpdateWeekOnMonthChange(lastDayOfWeekInNewMonth);
         } else {
             const firstDayOfWeekInNewMonth = formattedWeek[0].date;
 
-            const nextMonthControl = getCalendarControl(DateControlEnum.NEXT_ONE);
+            const nextMonthControl = getSourceCalendarControl(DateControlEnum.NEXT_ONE);
             nextMonthControl.click();
             forceUpdateWeekOnMonthChange(firstDayOfWeekInNewMonth);
         }
@@ -78,11 +78,11 @@ const useWeekCalendar = (currentMonthDate: Date) => {
     return {
         currentWeek,
         weekControls: {
-            [DateControlEnum.NEXT_DOUBLE]: null,
+            [DateControlEnum.NEXT_DOUBLE]: DateControlEnum.NEXT_ONE,
             [DateControlEnum.NEXT_ONE]: setNextWeek,
             [DateControlEnum.PREV_ONE]: setPrevWeek,
-            [DateControlEnum.PREV_DOUBLE]: null,
-        },
+            [DateControlEnum.PREV_DOUBLE]: DateControlEnum.PREV_ONE,
+        } as {[key: string]: () => void | DateControlEnum},
         forceUpdateWeekOnMonthChange,
     };
 };

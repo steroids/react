@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import {IDay} from '../CalendarSystem';
 
 const SIX_DAYS_DIFF = 6;
-const DAYS_IN_WEEK = 7;
+const MAX_DAYS_DIFF_IN_WEEK = 7;
 
 export const getWeekDaysFromDate = (date: Date) => {
     const weekDays: IDay[] = [];
@@ -13,7 +13,7 @@ export const getWeekDaysFromDate = (date: Date) => {
 
     firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diff); // Устанавливаем первый день недели (понедельник)
 
-    for (let i = 0; i < DAYS_IN_WEEK; i++) {
+    for (let i = 0; i < MAX_DAYS_DIFF_IN_WEEK; i++) {
         const currentDate = new Date(firstDayOfWeek);
         currentDate.setDate(currentDate.getDate() + i);
         weekDays.push({

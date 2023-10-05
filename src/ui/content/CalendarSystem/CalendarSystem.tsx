@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
 import React from 'react';
@@ -12,15 +13,10 @@ import useCalendarControls from './hooks/useCalendarControls';
 import useDisplayDate from './hooks/useDisplayDate';
 import useMonthCalendar from './hooks/useMonthCalendar';
 import {useComponents, useDispatch, useWeekCalendar} from '../../../hooks';
-import CalendarEnum from '../../../enums/CalendarType';
+import {addEventIfMatchDate} from './helpers';
+import CalendarEnum from './enums/CalendarType';
 
 dayjs.extend(localeData);
-
-export const DAYS_OF_WEEK = (() => {
-    const unformattedDaysOfWeek = dayjs.weekdaysMin();
-
-    return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]).map(weekDay => __(`${_upperFirst(weekDay)}`));
-})();
 
 export const HOURS = (() => {
     const hoursArray = [];
@@ -51,7 +47,7 @@ export interface IEvent {
     [key: string]: any,
 }
 
-export interface ICalendarGroups {
+export interface IEventGroup {
     id: number,
     label: string,
     color?: string,
@@ -60,11 +56,11 @@ export interface ICalendarGroups {
 
 export interface ICalendarSystemProps extends IUiComponent {
     onCreateEvent?: () => void;
-    onChangeType?: (newType: string) => void;
+    onChangeCalendarType?: (newType: string) => void;
     createEventModalProps: IModalProps,
     calendarGroups: {
-        title: string,
-        items: ICalendarGroups[],
+        eventGroupsTitle: string,
+        eventGroups: IEventGroup[],
     },
     [key: string]: any;
 }
@@ -74,15 +70,16 @@ export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'ca
     currentWeekDays: IDay[],
     calendarType: CalendarEnum,
     dateToDisplay: string,
-    calendarGroups: ICalendarGroups[],
+    calendarGroups: IEventGroup[],
     calendarGroupsTitle: string,
     selectedCalendarGroupsIds: number[],
-    onChangeType: (newType: 'Month' | 'Week') => void,
+    onChangeCalendarType: (newType: string) => void,
     onMonthChange: (newDate: Date) => void,
-    onClickControls: (event: React.MouseEvent<HTMLElement>) => void
+    applyControl: (event: React.MouseEvent<HTMLElement>) => void
     onClickCreate: VoidFunction,
     getEventsFromDate: (dateFromDay: Date, isMonth: boolean) => IEvent[],
-    onChangeCalendarGroupsIds: (selectedIds: number[]) => void,
+    onChangeEventGroupsIds: (selectedIds: number[]) => void,
+    weekDays: string[],
 }
 
 export type ICalendarSystemModalViewProps = IModalProps
@@ -90,8 +87,8 @@ export type ICalendarSystemModalViewProps = IModalProps
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
     const dispatch = useDispatch();
-    const [innerCalendarGroups, setInnerCalendarGroups] = React.useState<ICalendarGroups[]>(props.calendarGroups.items || []);
-    const [selectedCalendarGroupsIds, setSelectedCalendarGroupsIds] = React.useState<number[]>([]);
+    const [innerEventGroups, _] = React.useState<IEventGroup[]>(props.calendarGroups.eventGroups || []);
+    const [selectedEventGroupsIds, setSelectedEventGroupsIds] = React.useState<number[]>([]);
     const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.MONTH);
     const {calendarArray: monthCalendarDays, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();
@@ -104,13 +101,13 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         currentMonthDate,
     );
 
-    const {onClickControls} = useCalendarControls(calendarType, weekControls);
+    const applyControl = useCalendarControls(calendarType, weekControls);
 
-    const onChangeType = React.useCallback((newType: 'Month' | 'Week') => {
+    const onChangeCalendarType = React.useCallback((newType: string) => {
         setCalendarType(newType);
 
-        if (props.onChangeType) {
-            props.onChangeType(newType);
+        if (props.onChangeCalendarType) {
+            props.onChangeCalendarType(newType);
         }
     }, [props]);
 
@@ -120,47 +117,63 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         forceUpdateWeekOnMonthChange(newDate);
     }, [forceUpdateWeekOnMonthChange, setCurrentMonthDate, setNewDateToDisplay]);
 
-    const getEventsFromDate = (date: Date, isMonth: boolean) => {
+    const getEventsFromDate = (date: Date, currentCalendarType: CalendarEnum) => {
         const eventsOnDate: IEvent[] = [];
 
-        const sourceDateInDayJs = dayjs(date);
+        const dayjsDate = dayjs(date);
 
-        const addEventIfMatchDate = (
-            eventDateDayJs: dayjs.Dayjs,
-            calendarGroup: ICalendarGroups,
-            originalEvent: IEvent,
-            unit: 'hours' | 'day',
-        ) => {
-            if (eventDateDayJs.isSame(sourceDateInDayJs, unit) && selectedCalendarGroupsIds.includes(calendarGroup.id)) {
-                eventsOnDate.push({
-                    ...originalEvent,
-                    color: originalEvent.color ?? calendarGroup.color,
+        switch (currentCalendarType) {
+            case CalendarEnum.MONTH: {
+                innerEventGroups.forEach(calendarGroup => {
+                    calendarGroup.events.forEach(event => {
+                        const eventDateDayJs = dayjs(event.date);
+
+                        addEventIfMatchDate(
+                            eventDateDayJs,
+                            dayjsDate,
+                            calendarGroup,
+                            event,
+                            'day',
+                            selectedEventGroupsIds,
+                            eventsOnDate,
+                        );
+                    });
                 });
+                break;
             }
-        };
 
-        isMonth
-            ? innerCalendarGroups.forEach(calendarGroup => {
-                calendarGroup.events.forEach(event => {
-                    const eventDateDayJs = dayjs(event.date);
-
-                    addEventIfMatchDate(eventDateDayJs, calendarGroup, event, 'day');
-                });
-            })
-            : (
-                innerCalendarGroups.forEach(calendarGroup => {
+            case CalendarEnum.WEEK: {
+                innerEventGroups.forEach(calendarGroup => {
                     calendarGroup.events.forEach(event => {
                         const eventDate = new Date(event.date);
                         eventDate.setHours(eventDate.getHours(), 0, 0, 0);
 
                         const eventDateDayJs = dayjs(eventDate);
-                        addEventIfMatchDate(eventDateDayJs, calendarGroup, event, 'hours');
-                    });
-                })
-            );
 
+                        addEventIfMatchDate(
+                            eventDateDayJs,
+                            dayjsDate,
+                            calendarGroup,
+                            event,
+                            'hours',
+                            selectedEventGroupsIds,
+                            eventsOnDate,
+                        );
+                    });
+                });
+                break;
+            }
+        }
+
+        // eslint-disable-next-line consistent-return
         return eventsOnDate;
     };
+
+    const weekDays = React.useMemo(() => {
+        const unformattedDaysOfWeek = dayjs.weekdaysMin();
+
+        return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]).map(weekDay => __(`${_upperFirst(weekDay)}`));
+    }, []);
 
     const createModalView = props.createEventModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
 
@@ -180,14 +193,15 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         calendarType,
         currentWeekDays,
         createModalProps,
-        calendarGroups: innerCalendarGroups,
-        calendarGroupsTitle: props.calendarGroups.title,
-        selectedCalendarGroupsIds,
-        onChangeType,
+        calendarGroups: innerEventGroups,
+        calendarGroupsTitle: props.calendarGroups.eventGroupsTitle,
+        selectedEventGroupsIds,
+        onChangeCalendarType,
         onMonthChange,
-        onClickControls,
+        applyControl,
         onClickCreate,
         getEventsFromDate,
-        onChangeCalendarGroupsIds: (newSelectedCalendarGroupsIds: number[]) => setSelectedCalendarGroupsIds(newSelectedCalendarGroupsIds),
+        onChangeEventGroupsIds: (newSelectedEventGroupsIds: number[]) => setSelectedEventGroupsIds(newSelectedEventGroupsIds),
+        weekDays,
     });
 }

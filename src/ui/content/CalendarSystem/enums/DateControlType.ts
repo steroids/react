@@ -1,4 +1,4 @@
-import Enum from '../base/Enum';
+import Enum from '../../../../base/Enum';
 
 export default class DateControlType extends Enum {
     static PREV_DOUBLE = 'PREV_DOUBLE';
@@ -8,15 +8,6 @@ export default class DateControlType extends Enum {
     static NEXT_ONE = 'NEXT_ONE';
 
     static NEXT_DOUBLE = 'NEXT_DOUBLE';
-
-    static getLabels(): Record<string, string> {
-        return {
-            [this.PREV_DOUBLE]: __('PREV_DOUBLE'),
-            [this.PREV_ONE]: __('PREV_ONE'),
-            [this.NEXT_ONE]: __('NEXT_ONE'),
-            [this.NEXT_DOUBLE]: __('NEXT_DOUBLE'),
-        };
-    }
 
     static getIcons() {
         return {

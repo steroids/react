@@ -5,7 +5,7 @@ import {IButtonProps} from 'src/ui/form/Button/Button';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
-import {ListControlPosition} from '../../../hooks/useList';
+import {ListControlPosition} from '../../../hooks/useList/useList';
 
 /**
  * PaginationSize

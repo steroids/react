@@ -4,21 +4,24 @@ import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import useSelector from '../hooks/useSelector';
-import {getList} from '../reducers/list';
-import useModel from '../hooks/useModel';
-import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
-import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../actions/list';
-import useDispatch from '../hooks/useDispatch';
-import {formChange, formDestroy} from '../actions/form';
-import {formSelector} from '../reducers/form';
-import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
-import useInitial from '../hooks/useInitial';
-import {IPaginationProps, normalizePaginationProps} from '../ui/list/Pagination/Pagination';
-import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
-import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
-import {IFormProps} from '../ui/form/Form/Form';
-import {Model} from '../components/MetaComponent';
+import useSelector from '../useSelector';
+import {getList} from '../../reducers/list';
+import useModel from '../useModel';
+import useAddressBar, {IAddressBarConfig} from '../useAddressBar';
+import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../../actions/list';
+import useDispatch from '../useDispatch';
+import {formChange, formDestroy} from '../../actions/form';
+import {formSelector} from '../../reducers/form';
+import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../../ui/list/LayoutNames/LayoutNames';
+import useInitial from '../useInitial';
+import {IPaginationProps, normalizePaginationProps} from '../../ui/list/Pagination/Pagination';
+import {IPaginationSizeProps, normalizePaginationSizeProps} from '../../ui/list/PaginationSize/PaginationSize';
+import {IEmptyProps, normalizeEmptyProps} from '../../ui/list/Empty/Empty';
+import {IFormProps} from '../../ui/form/Form/Form';
+import {Model} from '../../components/MetaComponent';
+import {normalizeSortProps} from './helpers/normalizeSortProps';
+import {getDefaultSearchModel} from './helpers/getDefaultSearchModel';
+import {createInitialValues} from './helpers/createInitialValues';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -218,61 +221,6 @@ export const defaultConfig = {
         defaultValue: null,
     },
 };
-
-export const normalizeSortProps = (props: IListConfig['sort']) => ({
-    ...defaultConfig.sort,
-    enable: !!props,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
-});
-
-export const getDefaultSearchModel = ({
-    paginationProps,
-    paginationSizeProps,
-    sort,
-    layoutNamesProps,
-}) => ({
-    attributes: [ // default attributes
-        paginationProps.enable && {
-            type: 'number',
-            attribute: paginationProps.attribute,
-            defaultValue: paginationProps.defaultValue,
-        },
-        paginationSizeProps.enable && {
-            type: 'number',
-            attribute: paginationSizeProps.attribute,
-            defaultValue: paginationSizeProps.defaultValue,
-        },
-        sort.enable && {
-            type: 'string', // TODO Need list of strings
-            jsType: 'string[]',
-            attribute: sort.attribute,
-            defaultValue: sort.defaultValue,
-        },
-        layoutNamesProps.enable && {
-            type: 'string',
-            attribute: layoutNamesProps.attribute,
-            defaultValue: layoutNamesProps.defaultValue,
-        },
-    ].filter(Boolean),
-});
-
-export const createInitialValues = ({
-    paginationProps,
-    paginationSizeProps,
-    sort,
-    layoutNamesProps,
-    initialQuery,
-    configQuery,
-}) => ({
-    [paginationProps.attribute]: paginationProps.defaultValue,
-    [paginationSizeProps.attribute]: paginationSizeProps.defaultValue,
-    [sort.attribute]: sort.defaultValue,
-    [layoutNamesProps.attribute]: layoutNamesProps.defaultValue,
-    // TODO [this.props._layout.attribute]:
-    //  this.props.clientStorage.get(this.props._layout.attribute) || this.props._layout.defaultValue,
-    ...initialQuery, // Address bar
-    ...configQuery, // Query from props
-});
 
 /**
  * useList

@@ -97,6 +97,12 @@ export interface IFieldWrapperInputProps {
     [key: string]: any,
 }
 
+export interface IInputParams {
+    name?: string,
+    value?: any,
+    onChange: (value: any) => void,
+}
+
 export interface IFieldWrapperOutputProps {
     /**
     * Id формы
@@ -116,11 +122,7 @@ export interface IFieldWrapperOutputProps {
     /**
     * Параметры для input элемента
     */
-    input?: {
-        name?: string,
-        value?: any,
-        onChange: (value: any) => void,
-    },
+    input?: IInputParams,
 }
 
 interface IFieldWrapperOptions {

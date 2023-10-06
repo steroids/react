@@ -1,7 +1,11 @@
-import {ChangeEvent, useMemo} from 'react';
+/* eslint-disable max-len */
+import React, {ChangeEvent, useMemo, useCallback, useRef} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
-import {useComponents} from '../../../hooks';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import useInputTypeNumber from './hooks/useInputTypeNumber';
+
+const DEFAULT_STEP = 1;
 
 /**
  * NumberField
@@ -25,7 +29,7 @@ export interface INumberFieldProps extends IBaseFieldProps {
      * Шаг увеличения/уменьшения значения
      * @example 5
      */
-    step?: string | number;
+    step?: number;
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
@@ -40,25 +44,71 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
         max: number,
         step: string | number,
     },
+    inputRef: React.MutableRefObject<any>,
+    onStepUp: VoidFunction,
+    onStepDown: VoidFunction,
+    onKeyDown: VoidFunction,
 }
 
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    props.inputProps = useMemo(() => ({
+    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(props.input);
+
+    const {onInputChange} = useInputTypeNumber(
+        currentInputRef,
+        {
+            max: props.max,
+            min: props.min,
+            value: props.input.value,
+        },
+        onChange,
+    );
+
+    const onStep = useCallback((isIncrement: boolean) => {
+        const step = props.step || DEFAULT_STEP;
+
+        onChange(null, String(Number(currentInputRef?.current?.value) + (isIncrement ? step : -step)));
+    }, [currentInputRef, onChange, props.step]);
+
+    const onStepUp = useCallback(() => {
+        onStep(true);
+    }, [onStep]);
+
+    const onStepDown = useCallback(() => {
+        onStep(false);
+    }, [onStep]);
+
+    const onKeyDown = useCallback((event: KeyboardEvent) => {
+        if (event.key === 'ArrowUp') {
+            onStepUp();
+        } else if (event.key === 'ArrowDown') {
+            onStepDown();
+        }
+    }, [onStepDown, onStepUp]);
+
+    const inputProps = useMemo(() => ({
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
-        onChange: value => props.input.onChange(value),
-        type: 'number',
+        value: props.input.value ?? '',
+        onChange: onInputChange,
+        type: 'text',
         min: props.min,
         max: props.max,
         step: props.step,
         placeholder: props.placeholder,
         disabled: props.disabled,
+        autoComplete: 'off',
+        onKeyDown,
         ...props.inputProps,
-    }), [props.disabled, props.input, props.inputProps, props.placeholder, props.min, props.max, props.step]);
+    }), [props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, props.inputProps, onInputChange, onKeyDown]);
 
-    return components.ui.renderView(props.view || 'form.NumberFieldView', props);
+    return components.ui.renderView(props.view || 'form.NumberFieldView', {
+        ...props,
+        inputProps,
+        onStepUp,
+        onStepDown,
+        inputRef: currentInputRef,
+    });
 }
 
 NumberField.defaultProps = {

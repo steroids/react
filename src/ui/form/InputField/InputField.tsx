@@ -4,7 +4,7 @@ import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {useComponents} from '../../../hooks';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -126,7 +126,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: any) => void,
+        onInput: (event: any, value?: string) => void,
         value: string | number,
         placeholder: string,
         disabled: boolean,
@@ -135,7 +135,6 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     onFocus?: (e: Event | React.FocusEvent) => void,
     onBlur?: (e: Event | React.FocusEvent) => void,
     onMouseDown?: (e: Event | React.MouseEvent) => void;
-    maskedInputRef?: React.RefCallback<HTMLElement>;
     defaultValue?: string,
 }
 
@@ -146,19 +145,27 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         options: props.maskOptions,
     });
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const {inputRef, onChange} = useSaveCursorPosition(
+        props.input,
+    );
 
-    props.onClear = onClear;
+    React.useEffect(() => {
+        if (inputRef.current) {
+            maskedInputRef(inputRef.current);
+        }
+    }, [inputRef, maskedInputRef]);
+
+    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
-        onChange: value => props.input.onChange(value),
+        value: props.input.value ?? '',
+        onInput: onChange,
         placeholder: props.placeholder,
         disabled: props.disabled,
         ...props.inputProps,
-    }), [props.disabled, props.input, props.inputProps, props.placeholder, props.type]);
+    }), [onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
 
     // No render for hidden input
     if (props.type === 'hidden') {
@@ -169,7 +176,8 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props,
         ...props.viewProps,
         inputProps,
-        maskedInputRef,
+        inputRef,
+        onClear,
     });
 }
 

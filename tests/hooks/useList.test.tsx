@@ -1,9 +1,12 @@
 import '@testing-library/jest-dom';
-import React from 'react';
+import * as React from 'react';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import useList from '../../src/hooks/useList';
 import listHelpers from '../../src/hooks/useList/helpers';
+import * as normalizeSortProps from '../../src/hooks/useList/helpers/normalizeSortProps';
+import * as getDefaultSearchModel from '../../src/hooks/useList/helpers/getDefaultSearchModel';
+import * as createInitialValues from '../../src/hooks/useList/helpers/createInitialValues';
 import * as normalizeEmpty from '../../src/ui/list/Empty/Empty';
 import * as paginationSize from '../../src/ui/list/PaginationSize/PaginationSize';
 import * as pagination from '../../src/ui/list/Pagination/Pagination';
@@ -13,8 +16,6 @@ import {listInit, listSetItems} from '../../src/actions/list';
 import {defaultConfig} from '../../src/hooks/useList/useList';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
-const {normalizeSortProps, getDefaultSearchModel} = listHelpers;
-
 describe('normalizeSortProps function', () => {
     it('should return a normalized sort object', () => {
         const sortProps = {
@@ -23,7 +24,7 @@ describe('normalizeSortProps function', () => {
             defaultValue: 'asc',
         };
 
-        const normalizedSortProps = normalizeSortProps(sortProps);
+        const normalizedSortProps = listHelpers.normalizeSortProps(sortProps);
 
         expect(normalizedSortProps).toEqual(sortProps);
     });
@@ -34,7 +35,7 @@ describe('normalizeSortProps function', () => {
             ...defaultConfig.sort,
         };
 
-        const normalizedSortProps = normalizeSortProps(sortProps);
+        const normalizedSortProps = listHelpers.normalizeSortProps(sortProps);
 
         expect(normalizedSortProps).toEqual(expectedNormalizedSortProps);
     });
@@ -73,7 +74,7 @@ describe('getDefaultSearchModel function', () => {
             },
         ];
 
-        const searchModel = getDefaultSearchModel(parameters);
+        const searchModel = listHelpers.getDefaultSearchModel(parameters);
 
         expect(searchModel).toBeDefined();
         expect(searchModel.attributes).toEqual(expectedAttributes);
@@ -100,7 +101,7 @@ describe('getDefaultSearchModel function', () => {
             },
         ];
 
-        const searchModel = getDefaultSearchModel(parameters);
+        const searchModel = listHelpers.getDefaultSearchModel(parameters);
 
         expect(searchModel).toBeDefined();
         expect(searchModel.attributes).toEqual(expectedEnabledAttributes);
@@ -115,16 +116,16 @@ describe('getDefaultSearchModel function', () => {
         };
         const expectedEmptyAttributes = [];
 
-        const searchModel = getDefaultSearchModel(parameters);
+        const searchModel = listHelpers.getDefaultSearchModel(parameters);
 
         expect(searchModel).toBeDefined();
         expect(searchModel.attributes).toEqual(expectedEmptyAttributes);
     });
 });
 
-const normalizeSortPropsSpy = jest.spyOn(listHelpers, 'normalizeSortProps');
-const getDefaultSearchModelSpy = jest.spyOn(listHelpers, 'getDefaultSearchModel');
-const createInitialValuesSpy = jest.spyOn(listHelpers, 'createInitialValues');
+const normalizeSortPropsSpy = jest.spyOn(normalizeSortProps, 'normalizeSortProps');
+const getDefaultSearchModelSpy = jest.spyOn(getDefaultSearchModel, 'getDefaultSearchModel');
+const createInitialValuesSpy = jest.spyOn(createInitialValues, 'createInitialValues');
 const normalizeEmptyPropsSpy = jest.spyOn(normalizeEmpty, 'normalizeEmptyProps');
 const normalizePaginationSizePropsSpy = jest.spyOn(paginationSize, 'normalizePaginationSizeProps');
 const normalizePaginationPropsSpy = jest.spyOn(pagination, 'normalizePaginationProps');

@@ -2,14 +2,15 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import useList, * as listHelpers from '../../src/hooks/useList';
+import useList from '../../src/hooks/useList';
+import listHelpers from '../../src/hooks/useList/helpers';
 import * as normalizeEmpty from '../../src/ui/list/Empty/Empty';
 import * as paginationSize from '../../src/ui/list/PaginationSize/PaginationSize';
 import * as pagination from '../../src/ui/list/Pagination/Pagination';
 import * as layoutNames from '../../src/ui/list/LayoutNames/LayoutNames';
 import {renderHook} from '../helpers';
 import {listInit, listSetItems} from '../../src/actions/list';
-import {defaultConfig} from '../../src/hooks/useList';
+import {defaultConfig} from '../../src/hooks/useList/useList';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const {normalizeSortProps, getDefaultSearchModel} = listHelpers;

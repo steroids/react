@@ -236,7 +236,7 @@ export default function useList(config: IListConfig): IListOutput {
     const sort = normalizeSortProps(config.sort);
 
     // Empty
-    const Empty = require('../ui/list/Empty').default;
+    const Empty = require('../../ui/list/Empty').default;
     const emptyProps = normalizeEmptyProps(config.empty);
     const renderEmpty = () => {
         if (!emptyProps.enable || list?.isLoading || list?.items?.length > 0) {
@@ -251,7 +251,7 @@ export default function useList(config: IListConfig): IListOutput {
     };
 
     // Pagination size
-    const PaginationSize = require('../ui/list/PaginationSize').default;
+    const PaginationSize = require('../../ui/list/PaginationSize').default;
     const paginationSizeProps = normalizePaginationSizeProps(config.paginationSize);
     const renderPaginationSize = () => paginationSizeProps.enable
         ? (
@@ -263,7 +263,7 @@ export default function useList(config: IListConfig): IListOutput {
         : null;
 
     // Pagination
-    const Pagination = require('../ui/list/Pagination').default;
+    const Pagination = require('../../ui/list/Pagination').default;
     const paginationProps = normalizePaginationProps(config.pagination);
     const renderPagination = () => paginationProps.enable
         ? (
@@ -276,7 +276,7 @@ export default function useList(config: IListConfig): IListOutput {
         : null;
 
     // Layout switcher
-    const LayoutNames = require('../ui/list/LayoutNames').default;
+    const LayoutNames = require('../../ui/list/LayoutNames').default;
     const layoutNamesProps = normalizeLayoutNamesProps(config.layout);
     const renderLayoutNames = () => (
         <LayoutNames
@@ -307,7 +307,7 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Outside search form
     const searchFormFields = config.searchForm?.fields;
-    const SearchForm = require('../ui/list/SearchForm').default;
+    const SearchForm = require('../../ui/list/SearchForm').default;
     const initialValuesSearchForm = useMemo(() => (searchFormFields || []).reduce((acc, field) => {
         const attribute = typeof field === 'string' ? field : field.attribute;
         acc[attribute] = initialQuery?.[attribute];
@@ -339,7 +339,7 @@ export default function useList(config: IListConfig): IListOutput {
     const initialValues = useInitial(() => _initialValues);
 
     const renderList = useCallback((children: any) => {
-        const Form = require('../ui/form/Form').default;
+        const Form = require('../../ui/form/Form').default;
         return (
             <Form
                 formId={formId}

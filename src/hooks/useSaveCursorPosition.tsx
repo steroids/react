@@ -1,8 +1,8 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
 import React, {ChangeEvent} from 'react';
-import {IInputParams} from 'src/ui/form/Field/fieldWrapper';
 import _isNull from 'lodash-es/isNull';
+import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
 export default function useSaveCursorPosition(
     inputParams: IInputParams,

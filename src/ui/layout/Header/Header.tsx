@@ -1,9 +1,9 @@
-import {IAvatarProps} from 'src/ui/content/Avatar/Avatar';
-import {ILinkProps} from 'src/ui/nav/Link/Link';
-import {IModalProps} from 'src/ui/modal/Modal/Modal';
-import {IMenuProps} from 'src/ui/content/Menu/Menu';
 import {useCallback, useState} from 'react';
-import {IButtonProps} from 'src/ui/form/Button/Button';
+import {IButtonProps} from '../../form/Button/Button';
+import {IAvatarProps} from '../../content/Avatar/Avatar';
+import {ILinkProps} from '../../nav/Link/Link';
+import {IModalProps} from '../../modal/Modal/Modal';
+import {IMenuProps} from '../../content/Menu/Menu';
 import {useComponents} from '../../../hooks';
 import {INavProps} from '../../nav/Nav/Nav';
 

@@ -1,5 +1,5 @@
-import {IButtonProps} from 'src/ui/form/Button/Button';
-import {ILinkProps} from 'src/ui/nav/Link/Link';
+import {ILinkProps} from '../../nav/Link/Link';
+import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../Avatar/Avatar';
 import {IMenuProps} from '../Menu/Menu';

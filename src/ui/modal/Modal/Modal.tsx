@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IButtonProps} from 'src/ui/form/Button/Button';
+import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 import {IControlItem} from '../../nav/Controls/Controls';
 

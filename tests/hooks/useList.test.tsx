@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import React from 'react';
+import * as React from 'react';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import useList, * as listHelpers from '../../src/hooks/useList';
@@ -12,7 +12,7 @@ import {listInit, listSetItems} from '../../src/actions/list';
 import {defaultConfig} from '../../src/hooks/useList';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
-const {normalizeSortProps, getDefaultSearchModel} = listHelpers;
+const {normalizeSortProps, getDefaultSearchModel, prepareItemsToTree} = listHelpers;
 
 describe('normalizeSortProps function', () => {
     it('should return a normalized sort object', () => {
@@ -118,6 +118,214 @@ describe('getDefaultSearchModel function', () => {
 
         expect(searchModel).toBeDefined();
         expect(searchModel.attributes).toEqual(expectedEmptyAttributes);
+    });
+});
+
+describe('prepareItemsToTree function', () => {
+    const sourceItems = [
+        {
+            id: 1,
+            name: 'Item 1',
+            items: [{
+                id: 2,
+                name: 'Item 1.1',
+            }],
+        },
+        {
+            id: 4,
+            name: 'Item 2',
+            items: [{
+                id: 5,
+                name: 'Item 2.1',
+            }],
+        },
+    ];
+
+    const currentPageStub = null;
+    const itemsOnPageStub = null;
+    const onTreeItemClick = jest.fn();
+
+    it('should prepare tree items correctly', () => {
+        const openedTreeItems = {};
+        const expectedResult = [
+            {
+                id: 1,
+                name: 'Item 1',
+                uniqueId: '0.1',
+                level: 0,
+                isOpened: false,
+                hasItems: true,
+                onTreeItemClick,
+                items: [{
+                    id: 2,
+                    name: 'Item 1.1',
+                }],
+            },
+            {
+                id: 4,
+                name: 'Item 2',
+                uniqueId: '0.4',
+                level: 0,
+                isOpened: false,
+                hasItems: true,
+                onTreeItemClick,
+                items: [{
+                    id: 5,
+                    name: 'Item 2.1',
+                }],
+            },
+        ];
+
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+
+        expect(treeItems).toHaveLength(expectedResult.length);
+        expect(treeItems[0]).toEqual(expectedResult[0]);
+        expect(treeItems[1]).toEqual(expectedResult[1]);
+    });
+
+    it('should push nested elements after parent when parent is open', () => {
+        const openedTreeItems = {0.1: true};
+        const expectedResult = [
+            {
+                id: 1,
+                name: 'Item 1',
+                uniqueId: '0.1',
+                level: 0,
+                isOpened: true,
+                hasItems: true,
+                onTreeItemClick,
+                items: [{
+                    id: 2,
+                    name: 'Item 1.1',
+                }],
+            },
+            {
+                id: 2,
+                name: 'Item 1.1',
+                uniqueId: '0.1.2',
+                level: 1,
+                isOpened: false,
+                hasItems: false,
+                onTreeItemClick,
+            },
+            {
+                id: 4,
+                name: 'Item 2',
+                uniqueId: '0.4',
+                level: 0,
+                isOpened: false,
+                hasItems: true,
+                onTreeItemClick,
+                items: [{
+                    id: 5,
+                    name: 'Item 2.1',
+                }],
+            },
+        ];
+
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+
+        expect(treeItems).toHaveLength(expectedResult.length);
+
+        expect(treeItems[0]).toEqual(expectedResult[0]);
+        expect(treeItems[1]).toEqual(expectedResult[1]);
+        expect(treeItems[2]).toEqual(expectedResult[2]);
+    });
+
+    it('should calculate items with pagination correctly', () => {
+        const openedTreeItems = {0.4: true};
+        const currentPage = 2;
+        const itemsOnPage = 1;
+        const expectedResult = [
+            {
+                id: 4,
+                name: 'Item 2',
+                uniqueId: '0.4',
+                level: 0,
+                isOpened: true,
+                hasItems: true,
+                onTreeItemClick,
+                items: [{
+                    id: 5,
+                    name: 'Item 2.1',
+                }],
+            },
+            {
+                id: 5,
+                name: 'Item 2.1',
+                uniqueId: '0.4.5',
+                level: 1,
+                isOpened: false,
+                hasItems: false,
+                onTreeItemClick,
+            },
+        ];
+
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPage, itemsOnPage, onTreeItemClick);
+
+        expect(treeItems).toHaveLength(expectedResult.length);
+
+        expect(treeItems[0]).toEqual(expectedResult[0]);
+        expect(treeItems[1]).toEqual(expectedResult[1]);
+    });
+
+    it('should calculate items when ids are equal correctly', () => {
+        const items = [
+            {
+                id: 1,
+                name: 'Item 1',
+                items: [{
+                    id: 1,
+                    name: 'Item 1.1',
+                }],
+            },
+            {
+                id: 1,
+                name: 'Item 2',
+            },
+        ];
+
+        const expectedResult = [
+            {
+                id: 1,
+                name: 'Item 1',
+                uniqueId: '0.1',
+                level: 0,
+                isOpened: true,
+                hasItems: true,
+                onTreeItemClick,
+                items: [{
+                    id: 1,
+                    name: 'Item 1.1',
+                }],
+            },
+            {
+                id: 1,
+                name: 'Item 1.1',
+                uniqueId: '0.1.1',
+                level: 1,
+                isOpened: false,
+                hasItems: false,
+                onTreeItemClick,
+            },
+            {
+                id: 1,
+                name: 'Item 2',
+                uniqueId: '0.1',
+                level: 0,
+                isOpened: true,
+                hasItems: false,
+                onTreeItemClick,
+            },
+        ];
+
+        const openedTreeItems = {0.1: true};
+
+        const treeItems = prepareItemsToTree(items, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+
+        expect(treeItems).toHaveLength(expectedResult.length);
+
+        expect(treeItems).toEqual(expectedResult);
     });
 });
 

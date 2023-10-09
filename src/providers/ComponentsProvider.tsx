@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
-import {IUiApplicationComponent} from 'src/components/UiComponent';
-import {ILocaleComponent} from 'src/components/LocaleComponent';
-import {IClientStorageComponent} from 'src/components/ClientStorageComponent';
+import {IClientStorageComponent} from '../components/ClientStorageComponent';
+import {ILocaleComponent} from '../components/LocaleComponent';
+import {IUiApplicationComponent} from '../components/UiComponent';
 import {IResourceComponent} from '../components/ResourceComponent';
 
 declare global {

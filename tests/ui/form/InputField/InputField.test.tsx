@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import InputField, {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputField';
+import InputField, {IInputFieldProps} from '../../../../src/ui/form/InputField/InputField';
 import InputFieldMockView from './InputFieldMockView';
 
 describe('InputField tests', () => {
@@ -15,7 +15,7 @@ describe('InputField tests', () => {
         inputProps: {
             name: 'inputField-test',
         },
-    } as IInputFieldViewProps;
+    } as IInputFieldProps;
 
     const expectedInputFieldClass = 'InputFieldView';
 
@@ -30,7 +30,7 @@ describe('InputField tests', () => {
 
         const input = getElementByTag(container, 'input');
 
-        expect(input).toHaveAttribute('name', props.inputProps.name);
+        expect(input).toHaveAttribute('name', props.inputProps?.name);
         expect(input).toHaveAttribute('placeholder', props.placeholder);
     });
 
@@ -64,7 +64,7 @@ describe('InputField tests', () => {
     it('should have filled class after typing', () => {
         const {container} = render(JSXWrapper(InputField, props));
 
-        const input = getElementByTag(container, 'input');
+        const input = getElementByClassName(container, 'InputFieldView__input');
 
         fireEvent.change(input, {target: {value: 'test'}});
 

@@ -621,7 +621,7 @@
     "CSS-класс для ячейки со значением": "CSS class for cell with value",
     "Диаграмма.\nЦвет должен соответствовать success | warning | danger | secondary.\nЦвета можно расширить или изменить через стили (см. colors.scss в react-bootstrap)": "Diagram.\nThe color must correspond to success | warning | danger | secondary.\nColors can be extended or changed using styles (see colors.scss in react-bootstrap)",
     "Свойства для компонента форматирования": "Props for formatting component",
-    "CSS-класс для ячейки с заголовком колонки <th>...</th>": "CSS class for cell with column header <th>...</th>",
+    "CSS-класс для ячейки с заголовком колонки \\<th\\>...\\</th\\>": "CSS class for cell with column header <th>...</th>",
     "Свойства для компонента отображения заголовка колонки": "Props for component to display column header",
     "Компонент для кастомизации отображения заголовка колонки": "Component for customizing the display of the column header",
     "Подсказка": "Tooltip",
@@ -804,5 +804,6 @@
     "Данные для графика": "Data for the chart",
     "Фиксированная высота графика в пикселях": "Fixed chart height in pixels",
     "Использовать ли дефолтную конфигурацию для графика типа line": "Use default configuration for the line chart",
-    "Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.\nДля работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.\nКомпонент графика nivo нужно передать в пропс chartComponent": "This component allows you to create various types of graphics in your project. Under the hood, the nivo library is used for charts. \nTo use this component, you need to install dependencies @nivo/core and a specific nivo chart package, for example, @nivo/line. \nPass the nivo chart component as the chartComponent prop"
+    "Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.\nДля работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.\nКомпонент графика nivo нужно передать в пропс chartComponent": "This component allows you to create various types of graphics in your project. Under the hood, the nivo library is used for charts. \nTo use this component, you need to install dependencies @nivo/core and a specific nivo chart package, for example, @nivo/line. \nPass the nivo chart component as the chartComponent prop",
+    "Компонент для представления данных коллекции в виде иерархической структуры.": "A component for representing collection data in the form of a hierarchical structure."
 }

@@ -13,19 +13,10 @@ import useCalendarControls from './hooks/useCalendarControls';
 import useDisplayDate from './hooks/useDisplayDate';
 import useMonthCalendar from './hooks/useMonthCalendar';
 import {useComponents, useDispatch, useWeekCalendar} from '../../../hooks';
-import {addEventIfMatchDate} from './helpers';
+import {addEventIfMatchDate} from './helpers/addEventIfMatchDate';
 import CalendarEnum from './enums/CalendarType';
 
 dayjs.extend(localeData);
-
-export const HOURS = (() => {
-    const hoursArray = [];
-    for (let i = 0; i < 24; i++) {
-        const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
-        hoursArray.push(formattedHour);
-    }
-    return hoursArray;
-})();
 
 export interface IDay {
     dayNumber: number;
@@ -58,7 +49,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     onCreateEvent?: () => void;
     onChangeCalendarType?: (newType: string) => void;
     createEventModalProps: IModalProps,
-    calendarGroups: {
+    eventBlock: {
         eventGroupsTitle: string,
         eventGroups: IEventGroup[],
     },
@@ -68,10 +59,11 @@ export interface ICalendarSystemProps extends IUiComponent {
 export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'calendarGroups'> {
     monthCalendarDays: IDay[],
     currentWeekDays: IDay[],
+    allHours: string[],
     calendarType: CalendarEnum,
     dateToDisplay: string,
-    calendarGroups: IEventGroup[],
-    calendarGroupsTitle: string,
+    eventGroups: IEventGroup[],
+    eventGroupsTitle: string,
     selectedCalendarGroupsIds: number[],
     onChangeCalendarType: (newType: string) => void,
     onMonthChange: (newDate: Date) => void,
@@ -87,7 +79,7 @@ export type ICalendarSystemModalViewProps = IModalProps
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
     const dispatch = useDispatch();
-    const [innerEventGroups, _] = React.useState<IEventGroup[]>(props.calendarGroups.eventGroups || []);
+    const [innerEventGroups, _] = React.useState<IEventGroup[]>(props.eventBlock.eventGroups || []);
     const [selectedEventGroupsIds, setSelectedEventGroupsIds] = React.useState<number[]>([]);
     const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.MONTH);
@@ -122,44 +114,48 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
 
         const dayjsDate = dayjs(date);
 
+        const iterateEventGroups = (callback: (event: IEvent, eventGroup: IEventGroup) => void) => {
+            innerEventGroups.forEach(eventGroup => {
+                eventGroup.events.forEach(event => {
+                    callback(event, eventGroup);
+                });
+            });
+        };
+
         switch (currentCalendarType) {
             case CalendarEnum.MONTH: {
-                innerEventGroups.forEach(calendarGroup => {
-                    calendarGroup.events.forEach(event => {
-                        const eventDateDayJs = dayjs(event.date);
+                iterateEventGroups((event, eventGroup) => {
+                    const eventDateDayJs = dayjs(event.date);
 
-                        addEventIfMatchDate(
-                            eventDateDayJs,
-                            dayjsDate,
-                            calendarGroup,
-                            event,
-                            'day',
-                            selectedEventGroupsIds,
-                            eventsOnDate,
-                        );
-                    });
+                    addEventIfMatchDate(
+                        eventDateDayJs,
+                        dayjsDate,
+                        eventGroup,
+                        event,
+                        'day',
+                        selectedEventGroupsIds,
+                        eventsOnDate,
+                    );
                 });
                 break;
             }
 
             case CalendarEnum.WEEK: {
-                innerEventGroups.forEach(calendarGroup => {
-                    calendarGroup.events.forEach(event => {
-                        const eventDate = new Date(event.date);
-                        eventDate.setHours(eventDate.getHours(), 0, 0, 0);
+                iterateEventGroups((event, eventGroup) => {
+                    const eventDate = new Date(event.date);
+                    eventDate.setHours(eventDate.getHours(), 0, 0, 0);
 
-                        const eventDateDayJs = dayjs(eventDate);
+                    const eventDateDayJs = dayjs(eventDate);
 
-                        addEventIfMatchDate(
-                            eventDateDayJs,
-                            dayjsDate,
-                            calendarGroup,
-                            event,
-                            'hours',
-                            selectedEventGroupsIds,
-                            eventsOnDate,
-                        );
-                    });
+                    addEventIfMatchDate(
+                        eventDateDayJs,
+                        dayjsDate,
+                        eventGroup,
+                        event,
+                        'hours',
+                        selectedEventGroupsIds,
+                        eventsOnDate,
+                    );
                 });
                 break;
             }
@@ -173,6 +169,15 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         const unformattedDaysOfWeek = dayjs.weekdaysMin();
 
         return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]).map(weekDay => __(`${_upperFirst(weekDay)}`));
+    }, []);
+
+    const allHours = React.useMemo(() => {
+        const hoursArray = [];
+        for (let i = 0; i < 24; i++) {
+            const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
+            hoursArray.push(formattedHour);
+        }
+        return hoursArray;
     }, []);
 
     const createModalView = props.createEventModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
@@ -193,8 +198,9 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         calendarType,
         currentWeekDays,
         createModalProps,
-        calendarGroups: innerEventGroups,
-        calendarGroupsTitle: props.calendarGroups.eventGroupsTitle,
+        eventGroups: innerEventGroups,
+        eventGroupsTitle: props.eventBlock.eventGroupsTitle,
+        allHours,
         selectedEventGroupsIds,
         onChangeCalendarType,
         onMonthChange,

@@ -1,7 +1,7 @@
 import {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import * as React from 'react';
-import {IButtonProps} from 'src/ui/form/Button/Button';
+import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';

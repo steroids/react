@@ -241,6 +241,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         initialItems: props.initialItems,
         initialTotal: props.initialTotal,
         autoFetchOnFormChanges: props.autoFetchOnFormChanges,
+        hasTreeItems: props.hasTreeItems,
     });
 
     const renderLabel = useCallback((column) => {

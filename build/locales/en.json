@@ -805,5 +805,6 @@
     "Фиксированная высота графика в пикселях": "Fixed chart height in pixels",
     "Использовать ли дефолтную конфигурацию для графика типа line": "Use default configuration for the line chart",
     "Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.\nДля работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.\nКомпонент графика nivo нужно передать в пропс chartComponent": "This component allows you to create various types of graphics in your project. Under the hood, the nivo library is used for charts. \nTo use this component, you need to install dependencies @nivo/core and a specific nivo chart package, for example, @nivo/line. \nPass the nivo chart component as the chartComponent prop",
-    "Компонент для представления данных коллекции в виде иерархической структуры.": "A component for representing collection data in the form of a hierarchical structure."
+    "Компонент для представления данных коллекции в виде иерархической структуры.": "A component for representing collection data in the form of a hierarchical structure.",
+    "Уникальный идентификатор,\nиспользуется для сохранения состояния открыта или закрыта ячейка": "Unique identifier \nused to save the open or closed state of a cell"
 }

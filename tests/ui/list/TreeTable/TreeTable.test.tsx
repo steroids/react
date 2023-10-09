@@ -4,8 +4,40 @@ import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../
 import Grid from '../../../../src/ui/list/Grid';
 import GridMockView from '../Grid/GridMockView';
 import TreeColumnView from './TreeColumnMockView';
-import {ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';
+import {addTreeColumnFieldsToFirstColumn, ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';
 import TreeTableMock from './TreeTableMock';
+
+describe('addTreeColumnFieldsToFirstColumn function', () => {
+    it('should add tree column fields to first column', () => {
+        const columns = [
+            {
+                label: 'Name',
+                attribute: 'name',
+            },
+            {
+                label: 'Surname',
+                attribute: 'surname',
+            },
+        ];
+
+        const expectedColumns = [
+            {
+                label: 'Name',
+                attribute: 'name',
+                valueView: 'TreeColumnView',
+                headerClassName: 'TreeColumnHeader',
+            },
+            {
+                label: 'Surname',
+                attribute: 'surname',
+            },
+        ];
+
+        const result = addTreeColumnFieldsToFirstColumn(columns);
+
+        expect(result).toEqual(expectedColumns);
+    });
+});
 
 describe('TreeTable tests', () => {
     const expectedTreeColumnViewClass = 'TreeColumnView';

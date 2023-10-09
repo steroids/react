@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
 import Format from '../../../../src/ui/format/Format';
 import {Icon} from '../../../../src/ui/content';

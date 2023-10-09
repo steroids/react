@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useMemo} from 'react';
 import _merge from 'lodash-es/merge';
 
-import {IColumnViewProps, IGridProps} from '../Grid/Grid';
+import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 import Grid from '../Grid';
 
 export interface ITreeColumnViewProps extends IColumnViewProps {
@@ -45,15 +45,20 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[]) => {
+    const newColumns = [...columns];
+
+    // Add tree view to the first column
+    _merge(newColumns[0], TREE_COLUMN_VIEW_FIELDS);
+
+    return newColumns;
+};
+
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
-    const columns = useMemo(() => {
-        const newColumns = [...props.columns];
-
-        // Add tree view to the first column
-        _merge(newColumns[0], TREE_COLUMN_VIEW_FIELDS);
-
-        return newColumns;
-    }, [props.columns]);
+    const columns = useMemo(
+        () => addTreeColumnFieldsToFirstColumn(props.columns),
+        [props.columns],
+    );
 
     return (
         <Grid

@@ -292,7 +292,7 @@ export const prepareItemsToTree = (
     parentId = '',
     currentLevel = TOP_TREE_LEVEL_VALUE,
 ) => {
-    let result = [];
+    let treeItems = [];
 
     if (currentPage && itemsOnPage && currentLevel === TOP_TREE_LEVEL_VALUE) {
         const startIndex = (currentPage - 1) * itemsOnPage;
@@ -304,7 +304,7 @@ export const prepareItemsToTree = (
         const isOpened = !!openedTreeItems[uniqueId];
         const hasItems = !!(item.items && item.items.length > 0);
 
-        result.push({
+        treeItems.push({
             ...item,
             uniqueId,
             level: currentLevel,
@@ -314,7 +314,7 @@ export const prepareItemsToTree = (
         });
 
         if (isOpened) {
-            result = result.concat(
+            treeItems = treeItems.concat(
                 prepareItemsToTree(
                     item.items,
                     openedTreeItems,
@@ -328,7 +328,7 @@ export const prepareItemsToTree = (
         }
     });
 
-    return result;
+    return treeItems;
 };
 
 /**
@@ -344,7 +344,7 @@ export default function useList(config: IListConfig): IListOutput {
     const [openedTreeItems, setOpenedTreeItems] = useState<Record<string, boolean>>({});
 
     const onTreeItemClick = useCallback((uniqueId: string, item: Record<string, any>) => {
-        if (item.items && item.items.length > 0) {
+        if (item.items?.length > 0) {
             setOpenedTreeItems((prevItems) => (
                 {...prevItems, [uniqueId]: !prevItems[uniqueId]}
             ));

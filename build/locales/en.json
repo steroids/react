@@ -817,5 +817,8 @@
     "Чт": "Th",
     "Пт": "Fr",
     "Сб": "Sa",
-    "Вс": "Su"
+    "Вс": "Su",
+    "Компонент для представления данных коллекции в виде иерархической структуры.": "A component for representing collection data in the form of a hierarchical structure.",
+    "Уникальный идентификатор,\nиспользуется для сохранения состояния открыта или закрыта ячейка": "Unique identifier \nused to save the open or closed state of a cell",
+    "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]": ""
 }

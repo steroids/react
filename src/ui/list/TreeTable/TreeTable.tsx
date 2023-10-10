@@ -54,6 +54,11 @@ export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[]) => {
     return newColumns;
 };
 
+/**
+ * TreeTable
+ * Компонент для представления данных коллекции в виде иерархической структуры.
+ */
+
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
     const columns = useMemo(
         () => addTreeColumnFieldsToFirstColumn(props.columns),

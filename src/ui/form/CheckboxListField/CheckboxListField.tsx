@@ -1,16 +1,19 @@
 import * as React from 'react';
 import {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
+import Enum from '../../../base/Enum';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../../ui/form/Field/fieldWrapper';
-import {DataProviderItem, IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
-type CheckboxFieldListItem = DataProviderItem & {color?: string}
+type CheckboxFieldListItems = string
+    | ({new(): Enum})
+    | (string | number | {id: string | number | boolean, label: string | any, color?: string, [key: string]: any})[];
 
 /**
  * CheckboxListField
@@ -34,7 +37,7 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
      * Коллекция элементов
      * @example [{id: 1, label: 'Krasnoyarsk', color: 'red'}, {id: 2, label: 'Moscow', color: 'purple'}]
      */
-    items: CheckboxFieldListItem[],
+    items: CheckboxFieldListItems,
 
     [key: string]: any,
 }
@@ -71,7 +74,7 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
 
     // Data Provider
     const {items} = useDataProvider({
-        items: props.items,
+        items: props.items as DataProviderItems,
     });
 
     // Data select

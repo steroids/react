@@ -50,7 +50,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     onChangeCalendarType?: (newType: string) => void;
     createEventModalProps: IModalProps,
     eventBlock: {
-        eventGroupsTitle: string,
+        title: string,
         eventGroups: IEventGroup[],
     },
     [key: string]: any;
@@ -199,7 +199,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         currentWeekDays,
         createModalProps,
         eventGroups: innerEventGroups,
-        eventGroupsTitle: props.eventBlock.eventGroupsTitle,
+        eventGroupsTitle: props.eventBlock.title,
         allHours,
         selectedEventGroupsIds,
         onChangeCalendarType,

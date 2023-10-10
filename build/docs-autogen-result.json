@@ -1565,6 +1565,14 @@
                     "example": "{text: 'Записи не найдены'}"
                 },
                 {
+                    "name": "hasTreeItems",
+                    "decorators": [],
+                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "initialItems",
                     "decorators": [],
                     "description": "Начальные элементы. Используется для подгрузки нескольких списков в один запрос, при этом не отменяя пагинацию\nи последующие запросы на бекенд для 2-й и следующих страниц",
@@ -3862,7 +3870,7 @@
                     "decorators": [],
                     "description": "Компонент графика из библиотеки nivo",
                     "required": true,
-                    "type": "ReactElement",
+                    "type": "any",
                     "example": "ResponsiveLine"
                 },
                 {
@@ -7744,7 +7752,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -8182,7 +8190,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -11354,7 +11362,42 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
+                    "example": null
+                }
+            ]
+        },
+        "IInputParams": {
+            "name": "IInputParams",
+            "moduleName": "ui/form/Field/fieldWrapper",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "name",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
                     "example": null
                 }
             ]
@@ -11757,7 +11800,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -13652,7 +13695,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -13881,7 +13924,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -15340,7 +15383,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -15348,7 +15391,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{disabled: boolean, name: string, onChange: {}, placeholder: string, type: string, value: string | number}",
+                    "type": "{disabled: boolean, name: string, onInput: {}, placeholder: string, type: string, value: string | number}",
                     "example": null
                 },
                 {
@@ -15381,14 +15424,6 @@
                     "description": "Конфигурация маски",
                     "required": false,
                     "type": "MaskitoOptions",
-                    "example": null
-                },
-                {
-                    "name": "maskedInputRef",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "{}",
                     "example": null
                 },
                 {
@@ -15668,7 +15703,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -15961,7 +15996,7 @@
                     "decorators": [],
                     "description": "Шаг увеличения/уменьшения значения",
                     "required": false,
-                    "type": "string | number",
+                    "type": "number",
                     "example": "5"
                 },
                 {
@@ -16095,7 +16130,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -16104,6 +16139,14 @@
                     "description": "Свойства для элемента input",
                     "required": true,
                     "type": "{disabled: boolean, max: number, min: number, name: string, onChange: {}, placeholder: string, step: string | number, type: string, value: number}",
+                    "example": null
+                },
+                {
+                    "name": "inputRef",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "MutableRefObject",
                     "example": null
                 },
                 {
@@ -16155,6 +16198,30 @@
                     "example": null
                 },
                 {
+                    "name": "onKeyDown",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "onStepDown",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "onStepUp",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
                     "name": "placeholder",
                     "decorators": [],
                     "description": "Подсказка для поля",
@@ -16199,7 +16266,7 @@
                     "decorators": [],
                     "description": "Шаг увеличения/уменьшения значения",
                     "required": false,
-                    "type": "string | number",
+                    "type": "number",
                     "example": "5"
                 },
                 {
@@ -16538,7 +16605,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -16982,7 +17049,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -17428,7 +17495,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -17843,7 +17910,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -18359,7 +18426,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -18867,7 +18934,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -19379,7 +19446,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -19745,7 +19812,7 @@
                     "decorators": [],
                     "description": "Параметры для input элемента",
                     "required": false,
-                    "type": "{name: string, onChange: {}, value: any}",
+                    "type": "IInputParams",
                     "example": null
                 },
                 {
@@ -22344,7 +22411,7 @@
                     "decorators": [],
                     "description": "Позиционирование подсказки, относительно целевого элемента",
                     "required": false,
-                    "type": "Position",
+                    "type": "string",
                     "example": null
                 },
                 {
@@ -22472,7 +22539,7 @@
                     "decorators": [],
                     "description": "Позиционирование подсказки, относительно целевого элемента",
                     "required": true,
-                    "type": "Position",
+                    "type": "string",
                     "example": null
                 },
                 {
@@ -23814,6 +23881,14 @@
                     "example": null
                 },
                 {
+                    "name": "hasTreeItems",
+                    "decorators": [],
+                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "initialItems",
                     "decorators": [],
                     "description": "Начальные элементы. Используется для подгрузки нескольких списков в один запрос, при этом не отменяя пагинацию\nи последующие запросы на бекенд для 2-й и следующих страниц",
@@ -24317,6 +24392,14 @@
                     "required": false,
                     "type": "string | boolean | IEmptyProps",
                     "example": "{text: 'Записи не найдены'}"
+                },
+                {
+                    "name": "hasTreeItems",
+                    "decorators": [],
+                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 },
                 {
                     "name": "initialItems",
@@ -25541,6 +25624,252 @@
                     "required": false,
                     "type": "string",
                     "example": null
+                }
+            ]
+        },
+        "ITreeColumnViewProps": {
+            "name": "ITreeColumnViewProps",
+            "moduleName": "ui/list/TreeTable/TreeTable",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IColumnViewProps"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Атрибут колонки, по которому происходит поиск нужного свойства в items и нужного поля в SearchForm",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Name'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "CSS-класс для ячейки со значением",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "diagram",
+                    "decorators": [],
+                    "description": "Диаграмма.\nЦвет должен соответствовать success | warning | danger | secondary.\nЦвета можно расширить или изменить через стили (см. colors.scss в react-bootstrap)",
+                    "required": false,
+                    "type": "{items: {color: string, percentageAttribute: string}[], type: \"circle\" | \"horizontal\" | \"vertical\"}",
+                    "example": null
+                },
+                {
+                    "name": "formatter",
+                    "decorators": [],
+                    "description": "Свойства для компонента форматирования",
+                    "required": false,
+                    "type": "Record",
+                    "example": "{component: DateFormatter, format: 'DD MMMM'}"
+                },
+                {
+                    "name": "headerClassName",
+                    "decorators": [],
+                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "headerProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента отображения заголовка колонки",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "headerView",
+                    "decorators": [],
+                    "description": "Компонент для кастомизации отображения заголовка колонки",
+                    "required": false,
+                    "type": "any",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "'Some text'"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Параметры для иконки в колонке",
+                    "required": false,
+                    "type": "{attribute: string, isLeft: boolean}",
+                    "example": "{attribute: 'icon', isLeft: true}"
+                },
+                {
+                    "name": "item",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{onTreeItemClick: {}}",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Заголовок колонки",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "'Name'"
+                },
+                {
+                    "name": "link",
+                    "decorators": [],
+                    "description": "Параметры для ссылки в колонке",
+                    "required": false,
+                    "type": "{attribute: string, linkProps: ILinkProps, urlAttribute: string}",
+                    "example": "{attribute: 'name', linkProps: {target: 'blank'}, url: 'https://kozhindev.com'}"
+                },
+                {
+                    "name": "listId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "picture",
+                    "decorators": [],
+                    "description": " Параметры для картинки в колонке",
+                    "required": false,
+                    "type": "{attribute: string, isLeft: boolean}",
+                    "example": "{attribute: 'icon', isLeft: true}"
+                },
+                {
+                    "name": "primaryKey",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "sortable",
+                    "decorators": [],
+                    "description": "Включить возможность сортировки по данным в колонке",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "subtitleAttribute",
+                    "decorators": [],
+                    "description": "Название свойства в items, которое будет использовано как subtitle",
+                    "required": false,
+                    "type": "string",
+                    "example": "'name'"
+                },
+                {
+                    "name": "valueProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента отображения значения в ячейке",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "valueView",
+                    "decorators": [],
+                    "description": "Компонент для кастомизации отображения значения в ячейке",
+                    "required": false,
+                    "type": "any",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "visible",
+                    "decorators": [],
+                    "description": "Скрыть или показать колонку",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                }
+            ]
+        },
+        "ITreeTableItem": {
+            "name": "ITreeTableItem",
+            "moduleName": "ui/list/TreeTable/TreeTable",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Идентификатор узла",
+                    "required": false,
+                    "type": "string | number",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any[]",
+                    "example": "items: [{id: 3, name: 'Ivan'}]"
+                },
+                {
+                    "name": "uniqueId",
+                    "decorators": [],
+                    "description": "Уникальный идентификатор,\nиспользуется для сохранения состояния открыта или закрыта ячейка",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "ITreeTableProps": {
+            "name": "ITreeTableProps",
+            "moduleName": "ui/list/TreeTable/TreeTable",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Omit<IGridProps",
+                "'items'>"
+            ],
+            "properties": [
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы коллекции",
+                    "required": false,
+                    "type": "ITreeTableItem[]",
+                    "example": "[{id: 1, name: 'Jane'}, {id: 2, name: 'John', items: [...]}]"
                 }
             ]
         },
@@ -28149,7 +28478,7 @@
                     "name": "getCssClass",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28167,7 +28496,7 @@
                     "name": "getCssClasses",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "{}",
                     "example": null,
                     "parameters": []
@@ -28176,7 +28505,7 @@
                     "name": "getDropdownItems",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "{id: string, label: string}[]",
                     "example": null,
                     "parameters": []
@@ -28185,7 +28514,7 @@
                     "name": "getKeys",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "string[]",
                     "example": null,
                     "parameters": []
@@ -28194,7 +28523,7 @@
                     "name": "getLabel",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": null,
                     "parameters": [
@@ -28212,7 +28541,7 @@
                     "name": "getLabels",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "Record",
                     "example": null,
                     "parameters": []
@@ -28308,7 +28637,7 @@
                     "name": "dayjs",
                     "decorators": [],
                     "description": "Получение экземпляра `dayjs` с учетом временной зоны бекенда",
-                    "required": true,
+                    "required": false,
                     "type": "Dayjs",
                     "example": null,
                     "parameters": [
@@ -28334,7 +28663,7 @@
                     "name": "t",
                     "decorators": [],
                     "description": "Алиас для метода `translate`",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28360,7 +28689,7 @@
                     "name": "translate",
                     "decorators": [],
                     "description": "Перевод сообщения",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28495,7 +28824,7 @@
                     "name": "loadGeetest",
                     "decorators": [],
                     "description": "Метод для загрузки Geetest.",
-                    "required": true,
+                    "required": false,
                     "type": "Promise",
                     "example": null,
                     "parameters": []
@@ -28504,7 +28833,7 @@
                     "name": "loadGoogleCaptcha",
                     "decorators": [],
                     "description": "Метод для загрузки Google reCAPTCHA.",
-                    "required": true,
+                    "required": false,
                     "type": "Promise",
                     "example": null,
                     "parameters": []
@@ -28513,7 +28842,7 @@
                     "name": "loadGoogleMapApi",
                     "decorators": [],
                     "description": "Метод для загрузки Google Maps API.",
-                    "required": true,
+                    "required": false,
                     "type": "Promise",
                     "example": null,
                     "parameters": []
@@ -28522,7 +28851,7 @@
                     "name": "loadScript",
                     "decorators": [],
                     "description": "Метод для загрузки скрипта по указанному URL.",
-                    "required": true,
+                    "required": false,
                     "type": "Promise",
                     "example": null,
                     "parameters": [
@@ -28556,7 +28885,7 @@
                     "name": "loadTwitterWidget",
                     "decorators": [],
                     "description": "Метод для загрузки Twitter виджетов.",
-                    "required": true,
+                    "required": false,
                     "type": "Promise",
                     "example": null,
                     "parameters": []
@@ -28565,7 +28894,7 @@
                     "name": "loadYandexMap",
                     "decorators": [],
                     "description": "Метод для загрузки Yandex Maps API.",
-                    "required": true,
+                    "required": false,
                     "type": "Promise",
                     "example": null,
                     "parameters": []
@@ -28574,7 +28903,7 @@
                     "name": "wait",
                     "decorators": [],
                     "description": "Метод для ожидания выполнения определенного условия.",
-                    "required": true,
+                    "required": false,
                     "type": "Promise",
                     "example": null,
                     "parameters": [
@@ -28677,7 +29006,7 @@
                     "name": "addFields",
                     "decorators": [],
                     "description": "Добавляет компоненты полей формы.",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -28695,7 +29024,7 @@
                     "name": "addFormatters",
                     "decorators": [],
                     "description": "Добавляет компоненты форматтеров.",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -28713,7 +29042,7 @@
                     "name": "addIcons",
                     "decorators": [],
                     "description": "Добавляет иконки.",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -28731,7 +29060,7 @@
                     "name": "addModels",
                     "decorators": [],
                     "description": "Добавляет модели.",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -28749,7 +29078,7 @@
                     "name": "addViews",
                     "decorators": [],
                     "description": "Добавляет компоненты представлений.",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -28767,7 +29096,7 @@
                     "name": "getField",
                     "decorators": [],
                     "description": "Возвращает компонент поля формы по указанному пути.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28785,7 +29114,7 @@
                     "name": "getFieldProps",
                     "decorators": [],
                     "description": "Возвращает свойства конфигурации компонента поля формы по указанному пути.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28819,7 +29148,7 @@
                     "name": "getFormatter",
                     "decorators": [],
                     "description": "Возвращает компонент форматтера по указанному пути.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28837,7 +29166,7 @@
                     "name": "getFormatterProps",
                     "decorators": [],
                     "description": "Возвращает свойства конфигурации компонента форматтера по указанному пути.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28855,7 +29184,7 @@
                     "name": "getIcon",
                     "decorators": [],
                     "description": "Возвращает иконку по указанному имени.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28873,7 +29202,7 @@
                     "name": "getPortalElement",
                     "decorators": [],
                     "description": "Возвращает элемент портала.",
-                    "required": true,
+                    "required": false,
                     "type": "HTMLDivElement",
                     "example": null,
                     "parameters": []
@@ -28882,7 +29211,7 @@
                     "name": "getRegisteredFields",
                     "decorators": [],
                     "description": "Возвращает зарегистрированные поля формы для указанного идентификатора формы.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28900,7 +29229,7 @@
                     "name": "getView",
                     "decorators": [],
                     "description": "Возвращает компонент представления по указанному пути.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28918,7 +29247,7 @@
                     "name": "registerField",
                     "decorators": [],
                     "description": "Регистрирует поле формы.",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -28952,7 +29281,7 @@
                     "name": "renderView",
                     "decorators": [],
                     "description": "Рендерит компонент представления.",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -28986,7 +29315,7 @@
                     "name": "setPortalElement",
                     "decorators": [],
                     "description": "Задает элемент портала.",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -29280,7 +29609,7 @@
                     "name": "remove",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -29306,7 +29635,7 @@
                     "name": "restore",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
@@ -29340,7 +29669,7 @@
                     "name": "save",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "void",
                     "example": null,
                     "parameters": [
@@ -29655,6 +29984,13 @@
         "ui/list/Steps/Steps": {
             "name": "default",
             "moduleName": "ui/list/Steps/Steps",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/list/TreeTable/TreeTable": {
+            "name": "default",
+            "moduleName": "ui/list/TreeTable/TreeTable",
             "title": "",
             "description": "",
             "tags": {}

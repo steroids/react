@@ -111,11 +111,11 @@ const getTags = item => {
     return {title, description, tags};
 };*/
 
-const getProperty = property => ({
+const getProperty = (property, isMethod = false) => ({
     name: property.name,
     decorators: (property.decorators || []).map(decorator => decorator.name),
     description: getComment(property),
-    required: !property.flags.isOptional,
+    required: !isMethod && !property.flags.isOptional,
     type: typeToString(property.type),
     example: getTags(property).example || null,
 });
@@ -249,7 +249,7 @@ const getInfo = (filesMap, moduleItem, item) => {
                     return false;
                 }
 
-                const methodInfo = getProperty(method.signatures[0]);
+                const methodInfo = getProperty(method.signatures[0], true);
 
                 // Skip props without jsoc for components
                 if (!methodInfo.description && moduleName.match(/^components\//)) {

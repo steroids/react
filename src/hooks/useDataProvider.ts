@@ -33,11 +33,9 @@ export interface IAutoCompleteConfig {
     delay?: number,
 }
 
-export type DataProviderItem = string
+export type DataProviderItems = string
     | ({new(): Enum})
-    | (string | number | {id: string | number | boolean, label: string | any, [key: string]: any});
-
-export type DataProviderItems = DataProviderItem[];
+    | (string | number | {id: string | number | boolean, label: string | any, [key: string]: any})[];
 
 export interface IDataProvider {
     /**

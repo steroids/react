@@ -48,7 +48,7 @@ export interface IEventGroup {
 export interface ICalendarSystemProps extends IUiComponent {
     onCreateEvent?: () => void;
     onChangeCalendarType?: (newType: string) => void;
-    createEventModalProps: IModalProps,
+    createEventModalProps?: IModalProps,
     eventBlock: {
         title: string,
         eventGroups: IEventGroup[],

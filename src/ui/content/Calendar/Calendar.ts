@@ -54,6 +54,12 @@ export interface ICalendarProps extends IUiComponent {
      * @example 1
      */
     numberOfMonths?: number,
+
+    /**
+    * Callback вызываемый при нажатии на смену года или месяца в шапке Calendar
+    * @param newDate - дата первого дня нового месяца
+    */
+    onMonthChange?: (newDate: Date) => void;
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
@@ -125,12 +131,11 @@ function Calendar(props: ICalendarProps) {
         }
     }, [selectedDates]);
 
-    const onDaySelect = useCallback(
-        (date) => {
+    const onDaySelect = useCallback((date) => {
+        if (props.onChange) {
             props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true));
-        },
-        [props.onChange, props.valueFormat],
-    );
+        }
+    }, [props.onChange, props.valueFormat]);
 
     const toggleCaptionPanel = useCallback(() => {
         setIsCaptionPanelVisible(!isCaptionPanelVisible);
@@ -138,7 +143,10 @@ function Calendar(props: ICalendarProps) {
 
     const onMonthSelect = useCallback(newMonth => {
         setMonth(newMonth);
-    }, []);
+        if (props.onMonthChange) {
+            props.onMonthChange(newMonth);
+        }
+    }, [props]);
 
     return components.ui.renderView(props.view || 'content.CalendarView', {
         ...props.viewProps,

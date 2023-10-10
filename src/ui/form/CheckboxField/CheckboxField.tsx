@@ -23,6 +23,11 @@ export interface ICheckboxFieldProps extends IFieldWrapperInputProps, IUiCompone
      */
     checked?: boolean;
 
+    /**
+    * Пользовательский цвет для чекбокса
+    */
+    color?: string;
+
     [key: string]: any,
 }
 

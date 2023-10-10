@@ -6,9 +6,11 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../../ui/form/Field/fieldWrapper';
-import {IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {DataProviderItem, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
+
+type CheckboxFieldListItem = DataProviderItem & {color?: string}
 
 /**
  * CheckboxListField
@@ -16,7 +18,7 @@ import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
  * Список с чекбоксами. Используется в формах для выбора нескольких значений.
  */
 export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
-    IDataProviderConfig, Omit<IDataSelectConfig, 'items'>, IUiComponent {
+    Omit<IDataProviderConfig, 'items'>, Omit<IDataSelectConfig, 'items'>, IUiComponent {
     /**
      * Свойства для элемента input
      * @example {onKeyDown: ...}
@@ -27,6 +29,12 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
      * Ориентация списка
      */
     orientation?: Orientation,
+
+    /**
+     * Коллекция элементов
+     * @example [{id: 1, label: 'Krasnoyarsk', color: 'red'}, {id: 2, label: 'Moscow', color: 'purple'}]
+     */
+    items: CheckboxFieldListItem[],
 
     [key: string]: any,
 }
@@ -43,6 +51,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
         label?: string,
         isSelected: boolean,
         isHovered: boolean,
+        color?: string,
     }[],
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,
@@ -91,7 +100,11 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     // Sync with form
     useEffect(() => {
         props.input.onChange.call(null, selectedIds);
-    }, [props.input.onChange, selectedIds]);
+
+        if (props.onChange) {
+            props.onChange(selectedIds);
+        }
+    }, [props, props.input.onChange, selectedIds]);
 
     const onReset = useCallback(() => {
         setSelectedIds([]);

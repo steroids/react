@@ -102,6 +102,11 @@ export interface ITooltipProps {
      */
     calculatePosition?: (tooltipDimensions: Record<string, any>, arrowDimensions: Record<string, any>) => void,
 
+    /**
+     * Дополнительный CSS-класс для элемента отображения
+     */
+    className?: CssClassName,
+
     [key: string]: any,
 }
 
@@ -110,6 +115,7 @@ export interface ITooltipViewProps extends ITooltipProps {
     content: string | any,
     position: PositionType,
     style: ITooltipStylePosition,
+    className?: CssClassName,
 }
 
 /*
@@ -192,6 +198,7 @@ function Tooltip(props: ITooltipProps): JSX.Element {
                         style={style}
                         arrowPosition={arrowPosition}
                         calculatePosition={calculatePosition}
+                        className={props.className}
                     />
                 </TooltipInnerPortal>
             )}

@@ -5,7 +5,7 @@ import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {useEffectOnce, usePrevious, useUpdateEffect} from 'react-use';
+import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
 import {closeModal, openModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';
 import {IFetchConfig} from '../../../hooks/useFetch';
@@ -13,7 +13,7 @@ import {IListProps} from '../../list/List/List';
 import {useComponents, useSelector} from '../../../hooks';
 import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
-import {buildUrl, getActiveRouteIds, getRoute, isRouterInitialized} from '../../../reducers/router';
+import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized} from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {findRedirectPathRecursive, treeToList, walkRoutesRecursive} from './helpers';
 
@@ -214,13 +214,12 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
 
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
-    const rememberedPrevRouterParamsRef = useRef<Record<string, string | number> | null>({});
+    const routeParams = useSelector(getRouteParams);
 
-    const {isInitialized, pathname, route, routeParams, activePath, activeRouteIds} = useSelector(state => ({
+    const {isInitialized, pathname, route, activePath, activeRouteIds} = useSelector(state => ({
         isInitialized: isRouterInitialized(state),
         pathname: _get(state, 'router.location.pathname'),
         route: getRoute(state),
-        routeParams: state.router.match?.params,
         activePath: state.router?.location?.pathname,
         activeRouteIds: getActiveRouteIds(state),
     }));
@@ -242,10 +241,10 @@ function Router(props: IRouterProps): JSX.Element {
     });
 
     // Sync route params with redux
-    const prevRouteParams = usePrevious(routeParams);
+    const prevRouteParams = usePreviousDistinct(routeParams);
+
     useEffect(() => {
         if (!_isEqual(prevRouteParams, routeParams)) {
-            rememberedPrevRouterParamsRef.current = prevRouteParams;
             dispatch(initParams(routeParams));
         }
     }, [dispatch, prevRouteParams, routeParams]);
@@ -293,6 +292,7 @@ function Router(props: IRouterProps): JSX.Element {
     const openedModals = useSelector(state => getOpened(state));
     const openedModalIds = useMemo(() => (openedModals || []).map(modal => modal.id), [openedModals]);
     const prevOpenedModalIds = usePrevious(openedModalIds);
+
     useEffect(() => {
         if (
             prevOpenedModalIds !== openedModalIds
@@ -305,7 +305,7 @@ function Router(props: IRouterProps): JSX.Element {
                 return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
             });
             if (parentRouteId) {
-                dispatch(goToRoute(parentRouteId, rememberedPrevRouterParamsRef.current));
+                dispatch(goToRoute(parentRouteId, prevRouteParams));
             }
         }
     });

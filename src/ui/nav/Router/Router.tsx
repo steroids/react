@@ -242,9 +242,6 @@ function Router(props: IRouterProps): JSX.Element {
 
     // Sync route params with redux
     const prevRouteParams = usePreviousDistinct(routeParams);
-    React.useEffect(() => {
-        console.log(routeParams, 'routeParams', prevRouteParams, 'prevRouteParams');
-    }, [routeParams, prevRouteParams]);
 
     useEffect(() => {
         if (!_isEqual(prevRouteParams, routeParams)) {

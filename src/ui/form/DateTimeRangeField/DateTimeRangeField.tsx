@@ -156,6 +156,8 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         valueFormat: props.valueFormat,
         dateTimeSeparator: DATE_TIME_SEPARATOR,
         input: props.inputFrom,
+        useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
     });
 
     const {
@@ -246,6 +248,8 @@ DateTimeRangeField.defaultProps = {
     displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     showRemove: true,
+    useUTC: false,
+    dateInUTC: false,
     icon: true,
     size: 'md',
 };

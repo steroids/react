@@ -23,6 +23,7 @@ import useWeekCalendar from '../ui/content/CalendarSystem/hooks/useWeekCalendar'
 import useDisplayDate from '../ui/content/CalendarSystem/hooks/useDisplayDate';
 import useCalendarControls from '../ui/content/CalendarSystem/hooks/useCalendarControls';
 import useSaveCursorPosition from './useSaveCursorPosition';
+import useExpand from './useExpand';
 
 export {
     useAbsolutePositioning,
@@ -50,4 +51,5 @@ export {
     useDisplayDate,
     useCalendarControls,
     useSaveCursorPosition,
+    useExpand,
 };

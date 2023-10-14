@@ -27,6 +27,29 @@ export interface IKanbanConfig {
     onDragEnd: (result: any) => void;
 }
 
+export const DEFAULT_COLUMNS = [
+    {
+        id: 'column-1',
+        title: 'TO DO',
+        tasks: [],
+    },
+    {
+        id: 'column-2',
+        title: 'IN PROGRESS',
+        tasks: [],
+    },
+    {
+        id: 'column-3',
+        title: 'IN REVIEW',
+        tasks: [],
+    },
+    {
+        id: 'column-4',
+        title: 'DONE',
+        tasks: [],
+    },
+];
+
 export default function useKanban(config: IKanbanConfig) {
     // Get kanban from redux state
     const kanban = useSelector(state => getKanban(state, config.kanbanId));
@@ -44,12 +67,12 @@ export default function useKanban(config: IKanbanConfig) {
     }, [config.kanbanId, dispatch]);
 
     const onDragEnd = (result) => {
-        // drop outside the column
-        if (!result.destination) { return; }
-
         if (config.onDragEnd) {
             config.onDragEnd.call(null, result);
         }
+
+        // drop outside the column
+        if (!result.destination) { return; }
 
         const {source, destination} = result;
 
@@ -67,7 +90,7 @@ export default function useKanban(config: IKanbanConfig) {
         if (!kanban) {
             dispatch(kanbanInit(config.kanbanId, {
                 kanbanId: config.kanbanId,
-                columns: config.columns || null,
+                columns: config.columns || DEFAULT_COLUMNS,
             }));
         }
     });

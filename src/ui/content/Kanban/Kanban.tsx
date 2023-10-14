@@ -65,12 +65,28 @@ interface IKanbanProps extends IUiComponent {
      *             }
      *          ]
      */
-    columns: IKanbanColumn[];
+    columns?: IKanbanColumn[];
 
     /**
      * Обработчик события окончания перетаскивания карточки или колонки
+     * В result передается объект с информацией о событии
+     * @example {
+     *     draggableId: "1",
+     *     "type": "task",
+     *     "source": {
+     *         "index": 0,
+     *         "droppableId": "2"
+     *     },
+     *     "reason": "DROP",
+     *     "mode": "FLUID",
+     *     "destination": {
+     *         "droppableId": "2",
+     *         "index": 1
+     *     },
+     *     "combine": null
+     * }
      */
-    onDragEnd: (result: any) => void;
+    onDragEnd?: (result: any) => void;
 
     [key: string]: any;
 }

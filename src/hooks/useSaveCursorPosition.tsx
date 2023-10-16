@@ -4,6 +4,8 @@ import React, {ChangeEvent} from 'react';
 import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
+const NOT_ALLOWED_SELECTION_TYPES = ['email', 'color', 'number'];
+
 export default function useSaveCursorPosition(
     inputParams: IInputParams,
 ) {
@@ -12,7 +14,7 @@ export default function useSaveCursorPosition(
 
     React.useEffect(() => {
         const inputElement: HTMLInputElement = inputRef.current;
-        if (inputElement) {
+        if (inputElement && !NOT_ALLOWED_SELECTION_TYPES.includes(inputElement.type)) {
             inputElement.setSelectionRange(cursor, cursor);
         }
     }, [cursor, inputParams.value]);

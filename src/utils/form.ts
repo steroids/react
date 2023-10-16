@@ -195,3 +195,9 @@ export const providers = {
         },
     },
 };
+
+export const checkIsValueFalsy = (value) => value === '' || value === null || value === undefined;
+
+export const setCustomValidity = (inputRef: React.MutableRefObject<HTMLInputElement>, message: string) => {
+    inputRef.current?.setCustomValidity(message);
+};

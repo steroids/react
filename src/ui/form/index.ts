@@ -28,6 +28,7 @@ import TextField from './TextField';
 import TimeField from './TimeField';
 import RateField from './RateField';
 import MaskField from './MaskField';
+import EmailField from './EmailField';
 
 export {
     AutoCompleteField,
@@ -60,6 +61,7 @@ export {
     TimeField,
     RateField,
     MaskField,
+    EmailField,
 };
 
 export default {
@@ -93,4 +95,5 @@ export default {
     TimeField,
     RateField,
     MaskField,
+    EmailField,
 };

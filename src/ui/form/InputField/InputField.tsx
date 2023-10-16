@@ -5,6 +5,7 @@ import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import EmailField from '../EmailField/EmailField';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -37,6 +38,10 @@ export const MASK_PRESETS = {
             ...Array(4).fill(/\d/),
         ],
     },
+};
+
+export const CUSTOM_FIELDS_HASH = {
+    email: EmailField,
 };
 
 type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
@@ -170,6 +175,19 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     // No render for hidden input
     if (props.type === 'hidden') {
         return null;
+    }
+
+    if (Object.keys(CUSTOM_FIELDS_HASH).includes(props.type)) {
+        const CustomInputFieldType = CUSTOM_FIELDS_HASH[props.type];
+
+        const customInputFieldProps = {...props};
+
+        //If component is intercepted, removing duplicated label relayed with fieldWrapper
+        if (props.label) {
+            customInputFieldProps.label = null;
+        }
+
+        return <CustomInputFieldType {...customInputFieldProps} />;
     }
 
     return components.ui.renderView(props.view || 'form.InputFieldView', {

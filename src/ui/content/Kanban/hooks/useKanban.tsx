@@ -1,7 +1,7 @@
 import {useMount} from 'react-use';
 import React, {useCallback} from 'react';
 import {useSelector, useDispatch} from '../../../../hooks';
-import {IKanbanColumn} from '../Kanban';
+import {IDragEndResult, IKanbanColumn} from '../Kanban';
 import {getKanban} from '../reducer';
 import {
     kanbanInit,
@@ -24,8 +24,10 @@ export interface IKanbanConfig {
     /**
      * Обработчик события окончания перетаскивания карточки или колонки
      */
-    onDragEnd: (result: any) => void;
+    onDragEnd: (result: IDragEndResult) => void;
 }
+
+const COLUMNS_DROPPABLE_ID = 'all-columns';
 
 export const DEFAULT_COLUMNS = [
     {
@@ -68,7 +70,7 @@ export default function useKanban(config: IKanbanConfig) {
 
     const onDragEnd = (result) => {
         if (config.onDragEnd) {
-            config.onDragEnd.call(null, result);
+            config.onDragEnd(result);
         }
 
         // drop outside the column
@@ -76,7 +78,7 @@ export default function useKanban(config: IKanbanConfig) {
 
         const {source, destination} = result;
 
-        if (source.droppableId === 'all-columns') {
+        if (source.droppableId === COLUMNS_DROPPABLE_ID) {
             // handle the column movement
             moveColumn(source, destination);
         } else {

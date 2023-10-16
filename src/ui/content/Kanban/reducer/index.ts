@@ -26,21 +26,23 @@ const reducerMap = {
 
             // move task to different column
             if (action.source.droppableId !== action.destination.droppableId) {
-                const [sourceColumn] = columns.filter(({id}) => id === action.source.droppableId);
-                const [destinationColumn] = columns.filter(({id}) => id === action.destination.droppableId);
+                const sourceColumn = columns.find((column) => column.id === action.source.droppableId)
+                const destinationColumn = columns.find((column) => column.id === action.destination.droppableId);
 
                 const sourceTask = sourceColumn.tasks;
                 const destinationTask = destinationColumn.tasks;
 
-                const [removed] = sourceTask.splice(action.source.index, 1);
+                const [removedTask] = sourceTask.splice(action.source.index, 1);
 
-                destinationTask.splice(action.destination.index, 0, removed);
+                destinationTask.splice(action.destination.index, 0, removedTask);
             } else {
-                const [{tasks}] = columns.filter(({id}) => id === action.source.droppableId);
+                const sourceColumn = columns.find((column) => column.id === action.source.droppableId)
 
-                const [removed] = tasks.splice(action.source.index, 1);
+                const sourceTask = sourceColumn.tasks;
 
-                tasks.splice(action.destination.index, 0, removed);
+                const [removedTask] = sourceTask.splice(action.source.index, 1);
+
+                sourceTask.splice(action.destination.index, 0, removedTask);
             }
 
             return {
@@ -60,9 +62,9 @@ const reducerMap = {
         if (state.kanbans[action.kanbanId]) {
             const columns = _get(state, ['kanbans', action.kanbanId, 'columns']) || [];
 
-            const [removed] = columns.splice(action.source.index, 1);
+            const [removedColumn] = columns.splice(action.source.index, 1);
 
-            columns.splice(action.destination.index, 0, removed);
+            columns.splice(action.destination.index, 0, removedColumn);
 
             return {
                 ...state,

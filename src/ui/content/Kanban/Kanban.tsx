@@ -19,6 +19,22 @@ export interface IKanbanTask {
     status?: any;
 }
 
+export interface IDragEndResult {
+    draggableId: number,
+    type: string,
+    source: {
+        index: number,
+        droppableId: number,
+    },
+    reason: string,
+    mode: string,
+    destination: {
+        droppableId: number,
+        index: number,
+    },
+    combine: null
+}
+
 export interface IKanbanColumn {
     id: string;
     title: string;
@@ -45,12 +61,6 @@ interface IKanbanProps extends IUiComponent {
     dndContext: any;
 
     /**
-     * Переопределение view React компонента для кастомизации отображения
-     * @example MyCustomView
-     */
-    view?: CustomView;
-
-    /**
      * Коллекция с наименованиями и свойствами колонок в таблице
      * @example [
      *             {
@@ -71,22 +81,22 @@ interface IKanbanProps extends IUiComponent {
      * Обработчик события окончания перетаскивания карточки или колонки
      * В result передается объект с информацией о событии
      * @example {
-     *     draggableId: "1",
-     *     "type": "task",
-     *     "source": {
-     *         "index": 0,
-     *         "droppableId": "2"
+     *     draggableId: 1,
+     *     type: 'task',
+     *     source: {
+     *         index: 0,
+     *         droppableId: 2
      *     },
-     *     "reason": "DROP",
-     *     "mode": "FLUID",
-     *     "destination": {
-     *         "droppableId": "2",
-     *         "index": 1
+     *     reason: 'DROP',
+     *     mode: 'FLUID',
+     *     destination: {
+     *         droppableId: 2,
+     *         index: 1
      *     },
-     *     "combine": null
+     *     combine: null
      * }
      */
-    onDragEnd?: (result: any) => void;
+    onDragEnd?: (result: IDragEndResult) => void;
 
     [key: string]: any;
 }
@@ -102,7 +112,7 @@ export interface IKanbanColumnViewProps {
     columnIndex: number
     droppableComponent: any;
     draggableComponent: any;
-    renderTask: (task, index) => any;
+    renderTask: (task: IKanbanTask, index: number) => JSX.Element;
 }
 
 export type IKanbanViewProps = IKanbanProps;

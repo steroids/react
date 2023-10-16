@@ -10,7 +10,7 @@ import {useComponents} from '../../../hooks';
 export interface IMoneyFormatterProps {
 
     /**
-     * Валюта @enum {eur, rub, usd}
+     * Валюта @enum '{eur, rub, usd}'
      * @example rub
      */
     currency?: string;

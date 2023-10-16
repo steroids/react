@@ -48,7 +48,7 @@ export interface IGridColumn {
     hint?: React.ReactNode,
 
     /**
-     * CSS-класс для ячейки с заголовком колонки <th>...</th>
+     * CSS-класс для ячейки с заголовком колонки '<th>...</th>'
      */
     headerClassName?: CssClassName,
 

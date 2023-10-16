@@ -84,7 +84,7 @@ export interface IInputFieldProps extends IBaseFieldProps {
 
     /**
      * Изображение или React-нода, которая будет отрендерена справа от поля.
-     * @example require('icon.png') | <component/>
+     * @example require('icon.png') | '<component/>'
      */
     textAfter?: number | ReactNode | string;
 

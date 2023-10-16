@@ -6,16 +6,14 @@ import list from './list';
 import notifications from './notifications';
 import modal from './modal';
 import router from './router';
-import kanban from '../ui/content/Kanban/reducer';
 
 export {
-    form, auth, fields, list, notifications, modal, router, kanban,
+    form, auth, fields, list, notifications, modal, router,
 };
 export default asyncReducers => combineReducers({
     form,
     auth,
     fields,
-    kanban,
     list,
     notifications,
     modal,

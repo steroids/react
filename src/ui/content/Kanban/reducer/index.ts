@@ -26,7 +26,7 @@ const reducerMap = {
 
             // move task to different column
             if (action.source.droppableId !== action.destination.droppableId) {
-                const sourceColumn = columns.find((column) => column.id === action.source.droppableId)
+                const sourceColumn = columns.find((column) => column.id === action.source.droppableId);
                 const destinationColumn = columns.find((column) => column.id === action.destination.droppableId);
 
                 const sourceTask = sourceColumn.tasks;
@@ -36,7 +36,7 @@ const reducerMap = {
 
                 destinationTask.splice(action.destination.index, 0, removedTask);
             } else {
-                const sourceColumn = columns.find((column) => column.id === action.source.droppableId)
+                const sourceColumn = columns.find((column) => column.id === action.source.droppableId);
 
                 const sourceTask = sourceColumn.tasks;
 

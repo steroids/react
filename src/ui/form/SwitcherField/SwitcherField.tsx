@@ -55,8 +55,6 @@ function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
         items: props.items,
     });
 
-    console.log('SwitcherField', props)
-
     // Data select
     const {
         hoveredId,

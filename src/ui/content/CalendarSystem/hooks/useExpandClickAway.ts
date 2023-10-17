@@ -1,7 +1,7 @@
 import React from 'react';
 import {useClickAway} from 'react-use';
 
-const useExpand = () => {
+const useExpandClickAway = () => {
     const [isExpanded, setIsExpanded] = React.useState(false);
     const triggerRef = React.useRef<any>(null);
 
@@ -20,4 +20,4 @@ const useExpand = () => {
     };
 };
 
-export default useExpand;
+export default useExpandClickAway;

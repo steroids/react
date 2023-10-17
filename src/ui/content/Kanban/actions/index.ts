@@ -1,22 +1,17 @@
-export const KANBAN_INIT = '@kanban/init';
-export const KANBAN_MOVE_TASK = '@kanban/move_task';
-export const KANBAN_MOVE_COLUMN = '@kanban/move_column';
+import {
+    KANBAN_MOVE_COLUMN,
+    KANBAN_INIT,
+    KANBAN_MOVE_TASK,
+    kanbanInit,
+    kanbanMoveColumn,
+    kanbanMoveTask,
+} from './kanban';
 
-export const kanbanInit = (kanbanId, payload) => ({
-    type: KANBAN_INIT,
-    payload,
-});
-
-export const kanbanMoveTask = (kanbanId, source, destination) => ({
-    type: KANBAN_MOVE_TASK,
-    kanbanId,
-    source,
-    destination,
-});
-
-export const kanbanMoveColumn = (kanbanId, source, destination) => ({
-    type: KANBAN_MOVE_COLUMN,
-    kanbanId,
-    source,
-    destination,
-});
+export {
+    KANBAN_MOVE_COLUMN,
+    KANBAN_INIT,
+    KANBAN_MOVE_TASK,
+    kanbanInit,
+    kanbanMoveColumn,
+    kanbanMoveTask,
+};

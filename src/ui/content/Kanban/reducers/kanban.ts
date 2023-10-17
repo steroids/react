@@ -26,17 +26,17 @@ const reducerMap = {
             const columns = getKanbanColumns(state, action.kanbanId);
 
             const sourceColumn = columns.find((column) => column.id === action.source.droppableId);
-            const sourceTask = sourceColumn.tasks;
-            const [removedTask] = sourceTask.splice(action.source.index, 1);
+            const sourceTasks = sourceColumn.tasks;
+            const [removedTask] = sourceTasks.splice(action.source.index, 1);
 
             // move task to different column
             if (action.source.droppableId !== action.destination.droppableId) {
                 const destinationColumn = columns.find((column) => column.id === action.destination.droppableId);
-                const destinationTask = destinationColumn.tasks;
+                const destinationTasks = destinationColumn.tasks;
 
-                destinationTask.splice(action.destination.index, 0, removedTask);
+                destinationTasks.splice(action.destination.index, 0, removedTask);
             } else {
-                sourceTask.splice(action.destination.index, 0, removedTask);
+                sourceTasks.splice(action.destination.index, 0, removedTask);
             }
 
             return {

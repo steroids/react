@@ -2,7 +2,7 @@ import {useMount} from 'react-use';
 import React, {useCallback} from 'react';
 import {useSelector, useDispatch} from '../../../../hooks';
 import {IDragEndResult, IKanbanColumn} from '../Kanban';
-import {getKanban} from '../reducer';
+import {getKanban} from '../reducers';
 import {
     kanbanInit,
     kanbanMoveTask,

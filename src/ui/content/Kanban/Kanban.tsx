@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {useComponents} from '@steroidsjs/core/hooks';
+import {useComponents} from '../../../hooks';
 import {useKanban} from './hooks';
 
 export interface ITaskTag {

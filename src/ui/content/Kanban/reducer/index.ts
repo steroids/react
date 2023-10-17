@@ -1,5 +1,4 @@
 import _get from 'lodash-es/get';
-
 import {
     KANBAN_INIT,
     KANBAN_MOVE_TASK,
@@ -9,6 +8,8 @@ import {
 const initialState = {
     kanbans: {},
 };
+
+const getKanbanColumns = (state, kanbanId) => _get(state, ['kanbans', kanbanId, 'columns']) || [];
 
 const reducerMap = {
     [KANBAN_INIT]: (state, action) => ({
@@ -22,26 +23,19 @@ const reducerMap = {
     }),
     [KANBAN_MOVE_TASK]: (state, action) => {
         if (state.kanbans[action.kanbanId]) {
-            const columns = _get(state, ['kanbans', action.kanbanId, 'columns']) || [];
+            const columns = getKanbanColumns(state, action.kanbanId);
+
+            const sourceColumn = columns.find((column) => column.id === action.source.droppableId);
+            const sourceTask = sourceColumn.tasks;
+            const [removedTask] = sourceTask.splice(action.source.index, 1);
 
             // move task to different column
             if (action.source.droppableId !== action.destination.droppableId) {
-                const sourceColumn = columns.find((column) => column.id === action.source.droppableId);
                 const destinationColumn = columns.find((column) => column.id === action.destination.droppableId);
-
-                const sourceTask = sourceColumn.tasks;
                 const destinationTask = destinationColumn.tasks;
-
-                const [removedTask] = sourceTask.splice(action.source.index, 1);
 
                 destinationTask.splice(action.destination.index, 0, removedTask);
             } else {
-                const sourceColumn = columns.find((column) => column.id === action.source.droppableId);
-
-                const sourceTask = sourceColumn.tasks;
-
-                const [removedTask] = sourceTask.splice(action.source.index, 1);
-
                 sourceTask.splice(action.destination.index, 0, removedTask);
             }
 
@@ -60,7 +54,7 @@ const reducerMap = {
     },
     [KANBAN_MOVE_COLUMN]: (state, action) => {
         if (state.kanbans[action.kanbanId]) {
-            const columns = _get(state, ['kanbans', action.kanbanId, 'columns']) || [];
+            const columns = getKanbanColumns(state, action.kanbanId);
 
             const [removedColumn] = columns.splice(action.source.index, 1);
 
@@ -81,7 +75,6 @@ const reducerMap = {
     },
 };
 
-// TODO connect only when use
 export default (state = initialState, action) => reducerMap[action.type]
     ? reducerMap[action.type](state, action)
     : state;

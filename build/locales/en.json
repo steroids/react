@@ -818,5 +818,8 @@
     "Вс": "Su",
     "Компонент для представления данных коллекции в виде иерархической структуры.": "A component for representing collection data in the form of a hierarchical structure.",
     "Уникальный идентификатор,\nиспользуется для сохранения состояния открыта или закрыта ячейка": "Unique identifier \nused to save the open or closed state of a cell",
-    "Включает обработку вложенных данных из items": "Enables the processing of nested data from items"
+    "Включает обработку вложенных данных из items": "Enables the processing of nested data from items",
+    "Callback вызываемый при нажатии на смену года или месяца в шапке Calendar": "",
+    "Пользовательский цвет для чекбокса": "",
+    "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: ['{'id: 1, label: \"London\"'}']": ""
 }

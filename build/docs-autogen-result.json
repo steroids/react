@@ -1567,7 +1567,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -3496,6 +3496,14 @@
                     "example": null
                 },
                 {
+                    "name": "onMonthChange",
+                    "decorators": [],
+                    "description": "Callback вызываемый при нажатии на смену года или месяца в шапке Calendar",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "pickerProps",
                     "decorators": [],
                     "description": "Свойства для компонента DayPickerInput",
@@ -3621,6 +3629,14 @@
                     "example": null
                 },
                 {
+                    "name": "onMonthChange",
+                    "decorators": [],
+                    "description": "Callback вызываемый при нажатии на смену года или месяца в шапке Calendar",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "onMonthSelect",
                     "decorators": [],
                     "description": "Функция обновляет значение выбранного месяца",
@@ -3706,6 +3722,373 @@
                     "description": "Пропсы для компонента отображения",
                     "required": false,
                     "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "ICalendarSystemProps": {
+            "name": "ICalendarSystemProps",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "createEventModalProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IModalProps",
+                    "example": null
+                },
+                {
+                    "name": "eventBlock",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{eventGroups: IEventGroup[], title: string}",
+                    "example": null
+                },
+                {
+                    "name": "onChangeCalendarType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onCreateEvent",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "ICalendarSystemViewProps": {
+            "name": "ICalendarSystemViewProps",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Omit<ICalendarSystemProps",
+                "'calendarGroups'>"
+            ],
+            "properties": [
+                {
+                    "name": "allHours",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "applyControl",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "calendarType",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "default",
+                    "example": null
+                },
+                {
+                    "name": "currentWeekDays",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IDay[]",
+                    "example": null
+                },
+                {
+                    "name": "dateToDisplay",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "eventGroups",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IEventGroup[]",
+                    "example": null
+                },
+                {
+                    "name": "eventGroupsTitle",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "getEventsFromDate",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "monthCalendarDays",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IDay[]",
+                    "example": null
+                },
+                {
+                    "name": "onChangeCalendarType",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onChangeEventGroupsIds",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onClickCreate",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "onMonthChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "selectedCalendarGroupsIds",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number[]",
+                    "example": null
+                },
+                {
+                    "name": "weekDays",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string[]",
+                    "example": null
+                }
+            ]
+        },
+        "IDay": {
+            "name": "IDay",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "dayNumber",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "formattedDisplay",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "isToday",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "outOfRange",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                }
+            ]
+        },
+        "IEvent": {
+            "name": "IEvent",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IEventGroup": {
+            "name": "IEventGroup",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "events",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IEvent[]",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IPresentDateInfo": {
+            "name": "IPresentDateInfo",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "currentMonth",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "currentYear",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "dateToDisplay",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -4824,17 +5207,11 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IUiComponent"
+                "Omit<IUiComponent",
+                "'className' | 'style'>",
+                "Partial<HTMLElement>"
             ],
             "properties": [
-                {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "Дополнительный CSS-класс для элемента отображения",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
                 {
                     "name": "name",
                     "decorators": [],
@@ -4850,14 +5227,6 @@
                     "required": false,
                     "type": "any",
                     "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "Объект CSS стилей",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": "{width: '45%'}"
                 },
                 {
                     "name": "tabIndex",
@@ -4897,14 +5266,6 @@
             ],
             "properties": [
                 {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "Дополнительный CSS-класс для элемента отображения",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
                     "name": "icon",
                     "decorators": [],
                     "description": "",
@@ -4927,14 +5288,6 @@
                     "required": false,
                     "type": "any",
                     "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "Объект CSS стилей",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": "{width: '45%'}"
                 },
                 {
                     "name": "tabIndex",
@@ -7159,7 +7512,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -7404,7 +7757,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -7497,6 +7850,14 @@
                     "name": "className",
                     "decorators": [],
                     "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "Пользовательский цвет для чекбокса",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -7684,6 +8045,14 @@
                     "example": null
                 },
                 {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "Пользовательский цвет для чекбокса",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "componentId",
                     "decorators": [],
                     "description": "Id компонента",
@@ -7862,7 +8231,8 @@
             "defaultProps": null,
             "extends": [
                 "IFieldWrapperInputProps",
-                "IDataProviderConfig",
+                "Omit<IDataProviderConfig",
+                "'items'>",
                 "Omit<IDataSelectConfig",
                 "'items'>",
                 "IUiComponent"
@@ -8000,9 +8370,9 @@
                     "name": "items",
                     "decorators": [],
                     "description": "Коллекция элементов",
-                    "required": false,
-                    "type": "string | {} | string | number | {id: string | number | boolean, label: string | any}[]",
-                    "example": "[{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]"
+                    "required": true,
+                    "type": "CheckboxFieldListItems",
+                    "example": "[{id: 1, label: 'Krasnoyarsk', color: 'red'}, {id: 2, label: 'Moscow', color: 'purple'}]"
                 },
                 {
                     "name": "label",
@@ -8206,7 +8576,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "{id: string | number | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
+                    "type": "{color: string, id: string | number | boolean, isHovered: boolean, isSelected: boolean, label: string}[]",
                     "example": null
                 },
                 {
@@ -12228,7 +12598,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для \\<fieldset\\>...\\<\\/fieldset\\>",
+                    "description": "Дополнительный CSS-класс для '<fieldset>...</fieldset>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -13280,7 +13650,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -15218,7 +15588,7 @@
                     "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
                     "required": false,
                     "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
+                    "example": "require('icon.png') | '<component/>'"
                 },
                 {
                     "name": "textBefore",
@@ -15528,7 +15898,7 @@
                     "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
                     "required": false,
                     "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
+                    "example": "require('icon.png') | '<component/>'"
                 },
                 {
                     "name": "textBefore",
@@ -18702,7 +19072,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -18964,7 +19334,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -20981,7 +21351,7 @@
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: [{id: 1, label: \"London\"}]",
+                    "description": "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: ['{'id: 1, label: \"London\"'}']",
                     "required": false,
                     "type": "string | {} | string | number | {id: string | number | boolean, label: string | any}[]",
                     "example": null
@@ -21136,7 +21506,7 @@
                 {
                     "name": "currency",
                     "decorators": [],
-                    "description": "Валюта @enum {eur, rub, usd}",
+                    "description": "Валюта @enum '{eur, rub, usd}'",
                     "required": false,
                     "type": "string",
                     "example": "rub"
@@ -21885,7 +22255,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -22383,6 +22753,14 @@
                     "example": null
                 },
                 {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
                     "name": "content",
                     "decorators": [],
                     "description": "Текст подсказки",
@@ -22500,6 +22878,14 @@
                     "description": "Вложенные элементы",
                     "required": false,
                     "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
                     "example": null
                 },
                 {
@@ -22649,7 +23035,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -22984,7 +23370,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -23499,7 +23885,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -23686,7 +24072,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -23883,7 +24269,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -24396,7 +24782,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -25291,7 +25677,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -25673,7 +26059,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -26538,7 +26924,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -26871,7 +27257,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -27148,7 +27534,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -27701,10 +28087,10 @@
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "Вложенные элементы\n[{id: 2, label: 'Nested element', items: [...]}]",
+                    "description": "Вложенные элементы",
                     "required": false,
                     "type": "any[]",
-                    "example": null
+                    "example": "[{id: 2, label: 'Nested element', items: [...]}]"
                 },
                 {
                     "name": "label",
@@ -27767,7 +28153,7 @@
                     "decorators": [],
                     "description": "Выбор html-тэга, который будет вставлен в DOM",
                     "required": false,
-                    "type": "\"button\" | \"a\"",
+                    "type": "\"a\" | \"button\"",
                     "example": "button"
                 },
                 {
@@ -28334,6 +28720,14 @@
             "description": "",
             "required": true,
             "type": "AvatarGroupProps",
+            "example": null
+        },
+        "ICalendarSystemModalViewProps": {
+            "name": "ICalendarSystemModalViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "IModalProps",
             "example": null
         },
         "ICardViewProps": {
@@ -29419,6 +29813,229 @@
             "title": "",
             "description": "",
             "tags": {}
+        },
+        "ui/content/CalendarSystem/enums/CalendarType": {
+            "name": "default",
+            "moduleName": "ui/content/CalendarSystem/enums/CalendarType",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "MONTH",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "WEEK",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getCssClass",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getCssClasses",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDropdownItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, label: string}[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getKeys",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getLabels",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Record",
+                    "example": null,
+                    "parameters": []
+                }
+            ]
+        },
+        "ui/content/CalendarSystem/enums/DateControlType": {
+            "name": "default",
+            "moduleName": "ui/content/CalendarSystem/enums/DateControlType",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "NEXT_DOUBLE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "NEXT_ONE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "PREV_DOUBLE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "PREV_ONE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getCssClass",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getCssClasses",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDropdownItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, label: string}[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getIcons",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getKeys",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getLabels",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Record",
+                    "example": null,
+                    "parameters": []
+                }
+            ]
         },
         "ui/content/Chart/Chart": {
             "name": "default",

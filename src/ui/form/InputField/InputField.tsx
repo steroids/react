@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable max-len */
 import * as React from 'react';
 import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
+import {doesSupportSetSelectionRange} from '../../../hooks/useSaveCursorPosition';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import EmailField from '../EmailField/EmailField';
@@ -155,9 +158,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     );
 
     React.useEffect(() => {
-        if (inputRef.current) {
-            maskedInputRef(inputRef.current);
-        }
+        doesSupportSetSelectionRange(inputRef.current, props.type) ? maskedInputRef(inputRef.current) : null;
     }, [inputRef, maskedInputRef]);
 
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
@@ -175,19 +176,6 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     // No render for hidden input
     if (props.type === 'hidden') {
         return null;
-    }
-
-    if (Object.keys(CUSTOM_FIELDS_HASH).includes(props.type)) {
-        const CustomInputFieldType = CUSTOM_FIELDS_HASH[props.type];
-
-        const customInputFieldProps = {...props};
-
-        //If component is intercepted, removing duplicated label relayed with fieldWrapper
-        if (props.label) {
-            customInputFieldProps.label = null;
-        }
-
-        return <CustomInputFieldType {...customInputFieldProps} />;
     }
 
     return components.ui.renderView(props.view || 'form.InputFieldView', {

@@ -158,7 +158,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     );
 
     React.useEffect(() => {
-        doesSupportSetSelectionRange(inputRef.current, props.type) ? maskedInputRef(inputRef.current) : null;
+        doesSupportSetSelectionRange(inputRef.current) ? maskedInputRef(inputRef.current) : null;
     }, [inputRef, maskedInputRef]);
 
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);

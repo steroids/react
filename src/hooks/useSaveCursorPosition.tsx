@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unneeded-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
@@ -6,7 +7,7 @@ import React, {ChangeEvent} from 'react';
 import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
-export const doesSupportSetSelectionRange = (inputElement: HTMLInputElement, inputType: string) => {
+export const doesSupportSetSelectionRange = (inputElement: HTMLInputElement) => {
     if (!inputElement) {
         return;
     }
@@ -18,7 +19,7 @@ export const doesSupportSetSelectionRange = (inputElement: HTMLInputElement, inp
     } catch (err) {
         if (err instanceof DOMException && err.name === 'InvalidStateError') {
             error = err;
-            console.warn(`<InputField /> with "${inputType}" type does not support setSelectionRange() method. Try to use certain UI Component instead.`);
+            console.warn(`<InputField /> with "${inputElement.type}" type does not support setSelectionRange() method. Try to use certain UI Component instead.`);
         } else {
             throw err;
         }
@@ -36,7 +37,7 @@ export default function useSaveCursorPosition(
     React.useEffect(() => {
         const inputElement: HTMLInputElement = inputRef.current;
 
-        doesSupportSetSelectionRange(inputRef.current, inputRef.current.type) ? inputElement.setSelectionRange(cursor, cursor) : null;
+        doesSupportSetSelectionRange(inputRef.current) ? inputElement.setSelectionRange(cursor, cursor) : null;
     }, [cursor, inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {

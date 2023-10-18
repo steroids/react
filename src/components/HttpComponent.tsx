@@ -13,11 +13,129 @@ interface IHttpRequestOptions {
     responseType?: string,
 }
 
+export interface IHttpComponentConfig {
+    /**
+     * Url для http запросов
+     */
+    apiUrl?: string,
+
+    /**
+     * Ключ для хранения токена в куках
+     */
+    accessTokenKey?: string,
+
+    /**
+     * Имя хранилища для токена (local, session, или cookie)
+     */
+    clientStorageName?: string,
+
+    /**
+     * Срок хранения токена в хранилище в днях
+     */
+    clientStorageExpiresIn?: number,
+}
+
+export interface IHttpComponent extends IHttpComponentConfig {
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    getAxiosConfig(): any;
+
+    /**
+     * Изменение csrf токена
+     * @param {string} value
+     */
+    setCsrfToken(value: string): void;
+
+    /**
+     * Удаление токена
+     * @returns Конфиг для axios
+     */
+    removeAccessToken(): void;
+    /**
+     * Получение конфига для axios
+     * @param {string} value
+     * @returns Конфиг для axios
+     */
+    setAccessToken(value: string): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    getAccessToken(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    resetConfig(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    onLogout(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    onLogin()
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    getUrl(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    getAxiosInstance(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    get(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    post(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    delete(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    send(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    _send(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    _sendAxios(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    afterRequest(): any;
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    _onTwoFactor(): any;
+}
+
 /**
  * Http Component
  * Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.
  */
-export default class HttpComponent {
+export default class HttpComponent implements IHttpComponent {
     accessTokenKey = 'accessToken';
 
     apiUrl: string;
@@ -104,10 +222,7 @@ export default class HttpComponent {
         return config;
     }
 
-    /**
-     * @param {string} value
-     */
-    setCsrfToken(value) {
+    setCsrfToken(value: string) {
         this._csrfToken = value;
         this.resetConfig();
     }
@@ -121,10 +236,7 @@ export default class HttpComponent {
         );
     }
 
-    /**
-     * @param {string} value
-     */
-    setAccessToken(value) {
+    setAccessToken(value: string) {
         this._accessToken = value;
         this.resetConfig();
         this._components.clientStorage.set(

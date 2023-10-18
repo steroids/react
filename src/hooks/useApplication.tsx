@@ -9,6 +9,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
+import {IHttpComponentConfig} from 'src/components/HttpComponent';
 import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
@@ -22,6 +23,10 @@ import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider'
 import useComponents from './useComponents';
 import {IFetchConfig} from '../hooks/useFetch';
 
+export interface IComponentConfig {
+    className: any,
+}
+
 /**
  * Application HOC
  * Обертка над корневым компонентом приложения, используется только в `Application.tsx`. Добавляет через React Context
@@ -29,11 +34,22 @@ import {IFetchConfig} from '../hooks/useFetch';
  */
 export interface IApplicationHookConfig {
     components?: {
+        clientStorage?: any,
+        html?: any,
+        http?: IHttpComponentConfig & IComponentConfig,
+        locale?: any,
+        store?: any,
+        ui?: any,
+        resource?: any,
+        ws?: any,
+        pushNotification?: any,
+        meta?: any,
+
         [key: string]: {
             className: any,
             [key: string]: any,
         } | any,
-    } | any
+    } | any,
     onInit?: (components: IComponents) => void,
     useGlobal?: boolean,
     reducers?: any,

@@ -20,7 +20,7 @@ export interface IClientStorageComponent {
      * @param name Имя записи.
      * @param value Значение записи.
      * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
-     * @param expires (Необязательный) Срок действия записи в миллисекундах.
+     * @param expires (Необязательный) Срок действия записи в днях.
      */
     set(name: string, value: string, storageName?: 'local' | 'session' | 'cookie', expires?: number | null): void;
 

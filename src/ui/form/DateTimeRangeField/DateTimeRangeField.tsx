@@ -125,6 +125,8 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         placeholder: props.placeholder,
         required: props.required,
         inputProps: props.inputPropsFrom,
+        useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
         onChange,
     });
 
@@ -142,6 +144,8 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         placeholder: props.placeholder,
         required: props.required,
         inputProps: props.inputPropsTo,
+        useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
         onChange,
     });
 
@@ -155,6 +159,8 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
         dateTimeSeparator: DATE_TIME_SEPARATOR,
+        useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
         input: props.inputFrom,
     });
 
@@ -167,6 +173,8 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
         dateTimeSeparator: DATE_TIME_SEPARATOR,
+        useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
         input: props.inputTo,
     });
 
@@ -246,6 +254,8 @@ DateTimeRangeField.defaultProps = {
     displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     showRemove: true,
+    useUTC: false,
+    dateInUTC: false,
     icon: true,
     size: 'md',
 };

@@ -1,9 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
-import {checkIsValueFalsy, setCustomValidity} from '../../../../utils/form';
 
 const DEFAULT_VALIDITY = __('Неправильный формат адреса электронной почты.');
+
+const checkIsValueFalsy = (value) => value === '' || value === null || value === undefined;
+
+const setCustomValidity = (inputRef: React.MutableRefObject<HTMLInputElement>, message: string) => {
+    inputRef.current?.setCustomValidity(message);
+};
 
 const useInputTypeEmail = (
     currentInputRef: React.MutableRefObject<HTMLInputElement>,

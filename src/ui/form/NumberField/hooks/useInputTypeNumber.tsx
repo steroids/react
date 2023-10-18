@@ -1,11 +1,16 @@
 import React from 'react';
-import {setCustomValidity, checkIsValueFalsy} from '../../../../utils/form';
 
 interface IInputTypeNumberProps {
     max: any,
     min: any,
     value: any,
 }
+
+const checkIsValueFalsy = (value) => value === '' || value === null || value === undefined;
+
+const setCustomValidity = (inputRef: React.MutableRefObject<HTMLInputElement>, message: string) => {
+    inputRef.current?.setCustomValidity(message);
+};
 
 const useInputTypeNumber = (
     currentInputRef: React.MutableRefObject<HTMLInputElement>,

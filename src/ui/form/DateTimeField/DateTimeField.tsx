@@ -85,7 +85,8 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         value: dateValue,
         onChange: onDateSelect,
         valueFormat: dateValueFormat,
-    }), [dateValue, dateValueFormat, onDateSelect]);
+        ...props.calendarProps,
+    }), [dateValue, dateValueFormat, onDateSelect, props.calendarProps]);
 
     // TimePanel props
     const timePanelViewProps = useMemo(() => ({
@@ -122,7 +123,7 @@ DateTimeField.defaultProps = {
     className: '',
     displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
-    useUTC: true,
+    useUTC: false,
     dateInUTC: false,
     size: 'md',
     icon: true,

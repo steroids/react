@@ -5315,6 +5315,331 @@
                 }
             ]
         },
+        "IDragEndResult": {
+            "name": "IDragEndResult",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "combine",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "null",
+                    "example": null
+                },
+                {
+                    "name": "destination",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{droppableId: number, index: number}",
+                    "example": null
+                },
+                {
+                    "name": "draggableId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "mode",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "reason",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "source",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{droppableId: number, index: number}",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IKanbanColumn": {
+            "name": "IKanbanColumn",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "tasks",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IKanbanTask[]",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IKanbanColumnViewProps": {
+            "name": "IKanbanColumnViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "column",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IKanbanColumn",
+                    "example": null
+                },
+                {
+                    "name": "columnIndex",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "draggableComponent",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "droppableComponent",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "renderTask",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                }
+            ]
+        },
+        "IKanbanTask": {
+            "name": "IKanbanTask",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "assigner",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "priority",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "tags",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ITaskTag[]",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IKanbanTaskViewProps": {
+            "name": "IKanbanTaskViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "draggableComponent",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "task",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IKanbanTask",
+                    "example": null
+                }
+            ]
+        },
+        "ITaskTag": {
+            "name": "ITaskTag",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "message",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IKanbanConfig": {
+            "name": "IKanbanConfig",
+            "moduleName": "ui/content/Kanban/hooks/useKanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "columns",
+                    "decorators": [],
+                    "description": "Колонки канбан доски",
+                    "required": false,
+                    "type": "IKanbanColumn[]",
+                    "example": null
+                },
+                {
+                    "name": "kanbanId",
+                    "decorators": [],
+                    "description": "Идентификатор канбан доски",
+                    "required": false,
+                    "type": "string",
+                    "example": "TasksKanban"
+                },
+                {
+                    "name": "onDragEnd",
+                    "decorators": [],
+                    "description": "Обработчик события окончания перетаскивания карточки или колонки",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                }
+            ]
+        },
         "IMenuItem": {
             "name": "IMenuItem",
             "moduleName": "ui/content/Menu/Menu",
@@ -12929,7 +13254,7 @@
             "name": "IFileFieldProps",
             "moduleName": "ui/form/FileField/FileField",
             "title": "FileField",
-            "description": "\nКомпонент `FileField` представляет собой поле формы для загрузки файлов.\nОн использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.\nКомпонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.\n",
+            "description": "\nКомпонент `FileField` представляет собой поле формы для загрузки файлов.\nОн использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.\nКомпонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.\nНа backendUrl по дефолту файл отправляется в теле запроса в виде бинарного кода.\nЧтобы отправлять файл в виде form-data (например в таком виде принимает файл FileModule в библиотеке steroidsjs/nest),\nнужно передать в `FileField` пропс uploaderConfig, в котором нужно указать поле useFormData: true.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -28744,6 +29069,14 @@
             "description": "",
             "required": true,
             "type": "IChartProps",
+            "example": null
+        },
+        "IKanbanViewProps": {
+            "name": "IKanbanViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "IKanbanProps",
             "example": null
         },
         "IMenuViewProps": {

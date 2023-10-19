@@ -40,7 +40,7 @@ export interface IHttpComponent extends IHttpComponentConfig {
      * Получение конфига для axios
      * @returns Конфиг для axios
      */
-    getAxiosConfig(): any;
+    getAxiosConfig(): Promise<any>;
 
     /**
      * Изменение csrf токена
@@ -50,85 +50,74 @@ export interface IHttpComponent extends IHttpComponentConfig {
 
     /**
      * Удаление токена
-     * @returns Конфиг для axios
      */
     removeAccessToken(): void;
+
     /**
-     * Получение конфига для axios
+     * Изменение токена
      * @param {string} value
-     * @returns Конфиг для axios
      */
     setAccessToken(value: string): any;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Получение токена
+     * @returns {string}
      */
-    getAccessToken(): any;
+    getAccessToken(): Promise<any>;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Сбросить конфиг
      */
-    resetConfig(): any;
+    resetConfig(): void;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Метод, который можно вызвать при logout
      */
-    onLogout(): any;
+    onLogout(): void;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Метод, который можно вызвать при login
+     * @param {{accessToken: string}} params
      */
-    onLogin()
+    onLogin(params: {accessToken: string}): void;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Получение url по методу
+     * @param {string} method
+     * @returns {string} url
      */
-    getUrl(): any;
+    getUrl(method: string): string;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Получение экземпляра axios
+     * @returns Экземпляр axios
      */
-    getAxiosInstance(): any;
+    getAxiosInstance(): Promise<any>;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Вызов метода get
      */
-    get(): any;
+    get(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Вызов метода post
      */
-    post(): any;
+    post(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Вызов метода delete
      */
-    delete(): any;
+    delete(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Вызов http-метода
      */
-    send(): any;
+    send(method: string, url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
     /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
+     * Метод, который вызывается после запроса
      */
-    _send(): any;
-    /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
-     */
-    _sendAxios(): any;
-    /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
-     */
-    afterRequest(): any;
-    /**
-     * Получение конфига для axios
-     * @returns Конфиг для axios
-     */
-    _onTwoFactor(): any;
+    afterRequest(response: any, config: Record<string, any>, options: IHttpRequestOptions): Promise<any>;
 }
 
 /**
@@ -247,9 +236,6 @@ export default class HttpComponent implements IHttpComponent {
         );
     }
 
-    /**
-     * @returns {string}
-     */
     async getAccessToken() {
         if (this._accessToken === false) {
             this._accessToken = await this._components.clientStorage.get(
@@ -281,7 +267,7 @@ export default class HttpComponent implements IHttpComponent {
         return this._axios;
     }
 
-    getUrl(method) {
+    getUrl(method: string) {
         if (method === null && this._isWindowAvailable) {
             method = window.location.pathname;
         }
@@ -336,7 +322,7 @@ export default class HttpComponent implements IHttpComponent {
         );
     }
 
-    _send(method, config, options: IHttpRequestOptions) {
+    private _send(method, config, options: IHttpRequestOptions) {
         const axiosConfig = {
             ...config,
             url: this.getUrl(method),
@@ -378,7 +364,7 @@ export default class HttpComponent implements IHttpComponent {
         return this._sendAxios(axiosConfig, options);
     }
 
-    _sendAxios(config, options: IHttpRequestOptions) {
+    private _sendAxios(config, options: IHttpRequestOptions) {
         return this.getAxiosInstance()
             .then(instance => instance(config))
             .then(response => this.afterRequest(response, config, options).then(newResponse => newResponse || response))
@@ -440,7 +426,7 @@ export default class HttpComponent implements IHttpComponent {
         return response;
     }
 
-    _onTwoFactor(providerName) {
+    private _onTwoFactor(providerName) {
         return new Promise((resolve) => {
             const store = this._components.store;
             const TwoFactorModal = require('../ui/modal/TwoFactorModal').default;

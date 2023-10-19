@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
 import {IHttpComponentConfig} from 'src/components/HttpComponent';
+import {IWebSocketComponentConfig} from 'src/components/WebSocketComponent';
 import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
 import ClientStorageComponent from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
@@ -25,6 +26,7 @@ import {IFetchConfig} from '../hooks/useFetch';
 
 export interface IComponentConfig {
     className: any,
+    [key: string]: any,
 }
 
 /**
@@ -35,13 +37,13 @@ export interface IComponentConfig {
 export interface IApplicationHookConfig {
     components?: {
         clientStorage?: any,
-        html?: any,
+        html?: IComponentConfig,
         http?: IHttpComponentConfig & IComponentConfig,
         locale?: any,
         store?: any,
         ui?: any,
         resource?: any,
-        ws?: any,
+        ws?: IWebSocketComponentConfig & IComponentConfig,
         pushNotification?: any,
         meta?: any,
 

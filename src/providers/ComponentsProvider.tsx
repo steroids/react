@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
+import {IHttpComponent} from 'src/components/HttpComponent';
+import {IHtmlComponent} from 'src/components/HtmlComponent';
+import {IWebSocketComponent} from 'src/components/WebSocketComponent';
 import {IClientStorageComponent} from '../components/ClientStorageComponent';
 import {ILocaleComponent} from '../components/LocaleComponent';
 import {IUiApplicationComponent} from '../components/UiComponent';
@@ -13,13 +16,13 @@ declare global {
 
 export interface IComponents {
     clientStorage?: IClientStorageComponent,
-    html?: any,
-    http?: any,
+    html?: IHtmlComponent,
+    http?: IHttpComponent,
     locale?: ILocaleComponent,
     store?: any,
     ui?: IUiApplicationComponent,
     resource?: IResourceComponent,
-    ws?: any,
+    ws?: IWebSocketComponent,
     pushNotification?: any,
     meta?: any,
     [key: string]: any,

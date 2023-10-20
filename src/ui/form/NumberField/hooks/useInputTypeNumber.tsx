@@ -3,14 +3,10 @@ import React from 'react';
 interface IInputTypeNumberProps {
     max: any,
     min: any,
-    value: any,
+    value: string | undefined | null,
 }
 
 const checkIsValueFalsy = (value) => value === '' || value === null || value === undefined;
-
-const setCustomValidity = (inputRef: React.MutableRefObject<HTMLInputElement>, message: string) => {
-    inputRef.current?.setCustomValidity(message);
-};
 
 const useInputTypeNumber = (
     currentInputRef: React.MutableRefObject<HTMLInputElement>,
@@ -18,14 +14,15 @@ const useInputTypeNumber = (
     onChange: (event: React.ChangeEvent<HTMLInputElement>, value?: any) => void,
 ) => {
     React.useEffect(() => {
-        const defaultValidity = 'The number is not included in the range';
+        const defaultValidity = 'The number is not valid.';
 
-        // eslint-disable-next-line no-unused-expressions
-        inputTypeNumberProps.value > inputTypeNumberProps.max
+        const errorMessage = inputTypeNumberProps.value > inputTypeNumberProps.max
             || inputTypeNumberProps.value < inputTypeNumberProps.min
             || checkIsValueFalsy(inputTypeNumberProps.value)
-            ? setCustomValidity(currentInputRef, __(defaultValidity) + ` ${inputTypeNumberProps.min} — ${inputTypeNumberProps.max}`)
-            : setCustomValidity(currentInputRef, '');
+            ? __(defaultValidity)
+            : '';
+
+        currentInputRef.current?.setCustomValidity(errorMessage);
     }, [currentInputRef, inputTypeNumberProps.value, inputTypeNumberProps.max, inputTypeNumberProps.min]);
 
     const isValueNumeric = (value) => {

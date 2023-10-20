@@ -4,29 +4,26 @@ import React from 'react';
 
 const DEFAULT_VALIDITY = __('Неправильный формат адреса электронной почты.');
 
-const checkIsValueFalsy = (value) => value === '' || value === null || value === undefined;
-
-const setCustomValidity = (inputRef: React.MutableRefObject<HTMLInputElement>, message: string) => {
-    inputRef.current?.setCustomValidity(message);
-};
-
 const useInputTypeEmail = (
     currentInputRef: React.MutableRefObject<HTMLInputElement>,
     onChange: (event: React.ChangeEvent<HTMLInputElement>, value?: any) => void,
-    currentValue: string,
+    currentValue: string | null | undefined,
 ) => {
     const isValueEmail = (value: string) => {
-        if (checkIsValueFalsy(value)) {
-            return true;
+        //In that case it's testing if value is empty string or not defined
+        if (value === '' || value === null || value === undefined) {
+            return false;
         }
 
         const emailRegexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return emailRegexp.test(value.toLowerCase());
     };
 
+    const errorMessage = isValueEmail(currentValue) ? '' : DEFAULT_VALIDITY;
+
     React.useEffect(() => {
-        isValueEmail(currentValue) ? setCustomValidity(currentInputRef, '') : setCustomValidity(currentInputRef, DEFAULT_VALIDITY);
-    }, [currentInputRef, currentValue]);
+        currentInputRef.current?.setCustomValidity(errorMessage);
+    }, [currentInputRef, currentValue, errorMessage]);
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event);

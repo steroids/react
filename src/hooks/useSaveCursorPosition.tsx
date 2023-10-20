@@ -7,27 +7,6 @@ import React, {ChangeEvent} from 'react';
 import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
-export const doesSupportSetSelectionRange = (inputElement: HTMLInputElement) => {
-    if (!inputElement) {
-        return;
-    }
-
-    let error;
-
-    try {
-        inputElement.setSelectionRange(0, 0);
-    } catch (err) {
-        if (err instanceof DOMException && err.name === 'InvalidStateError') {
-            error = err;
-            console.warn(`<InputField /> with "${inputElement.type}" type does not support setSelectionRange() method. Try to use certain UI Component instead.`);
-        } else {
-            throw err;
-        }
-    }
-
-    return error ? false : true;
-};
-
 export default function useSaveCursorPosition(
     inputParams: IInputParams,
 ) {
@@ -36,8 +15,9 @@ export default function useSaveCursorPosition(
 
     React.useEffect(() => {
         const inputElement: HTMLInputElement = inputRef.current;
-
-        doesSupportSetSelectionRange(inputRef.current) ? inputElement.setSelectionRange(cursor, cursor) : null;
+        if (inputElement) {
+            inputElement.setSelectionRange(cursor, cursor);
+        }
     }, [cursor, inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {

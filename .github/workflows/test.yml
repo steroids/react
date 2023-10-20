@@ -10,6 +10,9 @@ jobs:
           repository: steroids/react-bootstrap
           ref: master
           path: react-bootstrap
-      - run: yarn
-      - run: cd react-bootstrap && yarn
-      - run: yarn test
+      - run: |
+          echo "::set-env name=NODE_OPTIONS::--max-old-space-size=4096"
+          yarn
+          cd react-bootstrap && yarn test
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096

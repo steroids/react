@@ -10,6 +10,10 @@ jobs:
           repository: steroids/react-bootstrap
           ref: master
           path: react-bootstrap
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ^14.15.0 || ^16.10.0 || >=18.0.0
       - run: yarn
       - run: cd react-bootstrap && yarn
       - run: yarn test

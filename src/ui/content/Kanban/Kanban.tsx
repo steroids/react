@@ -1,4 +1,7 @@
 import React, {useCallback} from 'react';
+import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
+import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
+import {IModalProps} from '../../modal/Modal/Modal';
 import {useComponents} from '../../../hooks';
 import {useKanban} from './hooks';
 
@@ -8,31 +11,44 @@ export interface ITaskTag {
     type: string;
 }
 
-// TODO add types
+export interface ITaskAssigner {
+    id: number;
+    firstName: string;
+    lastName: string;
+    avatar: {
+        src: string;
+    };
+}
+
+export interface ITaskPriority {
+    id: number;
+    type: string;
+}
+
 export interface IKanbanTask {
     id: string;
     title: string;
     description?: string;
-    priority?: string;
-    assigner?: any;
+    fullDescription?: string;
+    priority?: ITaskPriority;
+    assigner?: ITaskAssigner;
     tags?: ITaskTag[];
-    status?: any;
 }
 
 export interface IDragEndResult {
-    draggableId: number,
-    type: string,
+    draggableId: number;
+    type: string;
     source: {
-        index: number,
-        droppableId: number,
-    },
-    reason: string,
-    mode: string,
+        index: number;
+        droppableId: number;
+    };
+    reason: string;
+    mode: string;
     destination: {
-        droppableId: number,
-        index: number,
-    },
-    combine: null
+        droppableId: number;
+        index: number;
+    };
+    combine: null;
 }
 
 export interface IKanbanColumn {
@@ -41,7 +57,28 @@ export interface IKanbanColumn {
     tasks: IKanbanTask[];
 }
 
-interface IKanbanProps extends IUiComponent {
+export interface ICreateOrEditTaskModalContentViewProps {
+    columnId: string;
+    columns: IKanbanColumn[];
+    task?: IKanbanTask;
+    tags?: ITaskTag[];
+    onSubmit: (id: string | null, data: any) => void;
+    submitButtonLabel: string;
+    formId: string;
+    assigners: IDropDownFieldItem[];
+}
+
+export interface IKanbanTaskDetailsModalViewProps extends IModalProps {
+    columnId?: string;
+    columns?: IKanbanColumn[];
+    task?: IKanbanTask;
+    tags?: ITaskTag[];
+    assigners?: ITaskAssigner[];
+    onCreateTask: (data: any) => void;
+    onOpenEditTaskModal: any;
+}
+
+interface IKanbanProps extends IKanbanConfig, IUiComponent {
     /**
      * Компонент обертка для инициализации области куда можно переместить элемент из библиотеки react-beautiful-dnd
      * @example Droppable
@@ -60,59 +97,25 @@ interface IKanbanProps extends IUiComponent {
      */
     dndContext: any;
 
-    /**
-     * Коллекция с наименованиями и свойствами колонок в таблице
-     * @example [
-     *             {
-     *              id: 'column-1',
-     *              title: 'col1',
-     *              tasks: [{ content: 'item1', id: 'task-1' }],
-     *             },
-     *             {
-     *              id: 'column-2',
-     *              title: 'col2',
-     *              tasks: [],
-     *             }
-     *          ]
-     */
-    columns?: IKanbanColumn[];
-
-    /**
-     * Обработчик события окончания перетаскивания карточки или колонки
-     * В result передается объект с информацией о событии
-     * @example {
-     *     draggableId: 1,
-     *     type: 'task',
-     *     source: {
-     *         index: 0,
-     *         droppableId: 2
-     *     },
-     *     reason: 'DROP',
-     *     mode: 'FLUID',
-     *     destination: {
-     *         droppableId: 2,
-     *         index: 1
-     *     },
-     *     combine: null
-     * }
-     */
-    onDragEnd?: (result: IDragEndResult) => void;
-
     [key: string]: any;
 }
 
 export interface IKanbanTaskViewProps {
-    task: IKanbanTask
-    index: number
+    task: IKanbanTask;
+    columnId: string;
+    index: number;
     draggableComponent: any;
+    onOpenTaskDetailsModal: (task: IKanbanTask, columnId: string) => void;
 }
 
 export interface IKanbanColumnViewProps {
-    column: IKanbanColumn
-    columnIndex: number
+    column: IKanbanColumn;
+    columnIndex: number;
     droppableComponent: any;
     draggableComponent: any;
-    renderTask: (task: IKanbanTask, index: number) => JSX.Element;
+    task?: IKanbanTask;
+    renderTask: (task: IKanbanTask, columnId: string, index: number) => JSX.Element;
+    onOpenCreateTaskModal: (columnId: string) => void;
 }
 
 export type IKanbanViewProps = IKanbanProps;
@@ -125,22 +128,27 @@ export default function Kanban(props: IKanbanProps) {
     const {
         columns,
         onDragEnd,
+        onOpenTaskDetailsModal,
+        onOpenCreateTaskModal,
     } = useKanban({
         kanbanId: props.kanbanId,
         columns: props.columns,
+        lastTaskId: props.lastTaskId,
         onDragEnd: props.onDragEnd,
     });
 
     // Task
     const Task = components.ui.getView('content.KanbanTaskView');
-    const renderTask = useCallback((task, index) => (
+    const renderTask = useCallback((task, columnId, index) => (
         <Task
             key={task.id}
             task={task}
+            columnId={columnId}
             index={index}
             draggableComponent={props.draggableComponent}
+            onOpenTaskDetailsModal={onOpenTaskDetailsModal}
         />
-    ), [Task, props.draggableComponent]);
+    ), [Task, onOpenTaskDetailsModal, props.draggableComponent]);
 
     // Column
     const Column = components.ui.getView('content.KanbanColumnView');
@@ -152,8 +160,9 @@ export default function Kanban(props: IKanbanProps) {
             draggableComponent={props.draggableComponent}
             droppableComponent={props.droppableComponent}
             renderTask={renderTask}
+            onOpenCreateTaskModal={onOpenCreateTaskModal}
         />
-    ), [Column, props.draggableComponent, props.droppableComponent, renderTask]);
+    ), [Column, onOpenCreateTaskModal, props.draggableComponent, props.droppableComponent, renderTask]);
 
     return (
         <DragDropContext

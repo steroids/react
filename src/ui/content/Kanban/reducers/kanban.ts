@@ -3,13 +3,16 @@ import {
     KANBAN_INIT,
     KANBAN_MOVE_TASK,
     KANBAN_MOVE_COLUMN,
+    KANBAN_ADD_TASK,
+    KANBAN_EDIT_TASK,
+    KANBAN_INCREASE_TASK_ID,
 } from '../actions';
 
 const initialState = {
     kanbans: {},
 };
 
-const getKanbanColumns = (state, kanbanId) => _get(state, ['kanbans', kanbanId, 'columns']) || [];
+export const getKanbanColumns = (state, kanbanId) => _get(state, ['kanbans', kanbanId, 'columns']) || [];
 
 const reducerMap = {
     [KANBAN_INIT]: (state, action) => ({
@@ -73,6 +76,74 @@ const reducerMap = {
         }
         return [];
     },
+    [KANBAN_ADD_TASK]: (state, action) => {
+        if (state.kanbans[action.kanbanId]) {
+            const columns = getKanbanColumns(state, action.kanbanId);
+
+            return {
+                ...state,
+                kanbans: {
+                    ...state.kanbans,
+                    [action.kanbanId]: {
+                        ...state.kanbans[action.kanbanId],
+                        columns: columns.map(column => {
+                            if (column.id === action.columnId) {
+                                return {
+                                    ...column,
+                                    tasks: [action.task, ...column.tasks],
+                                };
+                            }
+                            return column;
+                        }),
+                    },
+                },
+            };
+        }
+        return [];
+    },
+    [KANBAN_EDIT_TASK]: (state, action) => {
+        if (state.kanbans[action.kanbanId]) {
+            const columns = getKanbanColumns(state, action.kanbanId);
+
+            return {
+                ...state,
+                kanbans: {
+                    ...state.kanbans,
+                    [action.kanbanId]: {
+                        ...state.kanbans[action.kanbanId],
+                        columns: columns.map(column => {
+                            if (column.id === action.columnId) {
+                                return {
+                                    ...column,
+                                    tasks: column.tasks.map(task => {
+                                        if (task.id === action.task.id) {
+                                            return {
+                                                ...task,
+                                                ...action.task,
+                                            };
+                                        }
+                                        return task;
+                                    }),
+                                };
+                            }
+                            return column;
+                        }),
+                    },
+                },
+            };
+        }
+        return [];
+    },
+    [KANBAN_INCREASE_TASK_ID]: (state, action) => ({
+        ...state,
+        kanbans: {
+            ...state.kanbans,
+            [action.kanbanId]: {
+                ...state.kanbans[action.kanbanId],
+                lastTaskId: action.lastTaskId,
+            },
+        },
+    }),
 };
 
 export default (state = initialState, action) => reducerMap[action.type]
@@ -80,3 +151,9 @@ export default (state = initialState, action) => reducerMap[action.type]
     : state;
 
 export const getKanban = (state, kanbanId) => _get(state, ['kanban', 'kanbans', kanbanId]) || null;
+
+export const getLastTaskId = (state, kanbanId) => _get(state, ['kanban', 'kanbans', kanbanId, 'lastTaskId']) || null;
+
+export const getKanbanTags = (state, kanbanId) => _get(state, ['kanban', 'kanbans', kanbanId, 'tags']) || null;
+
+export const getKanbanPriorities = (state, kanbanId) => _get(state, ['kanban', 'kanbans', kanbanId, 'priorities']) || null;

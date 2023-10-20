@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14 # выберите подходящую версию Node.js
+          node-version: 14
       - run: yarn
       - run: cd react-bootstrap && yarn
       - run: yarn test

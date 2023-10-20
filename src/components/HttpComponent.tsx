@@ -118,6 +118,8 @@ export interface IHttpComponent extends IHttpComponentConfig {
      * Метод, который вызывается после запроса
      */
     afterRequest(response: any, config: Record<string, any>, options: IHttpRequestOptions): Promise<any>;
+
+    [key: string]: any,
 }
 
 /**

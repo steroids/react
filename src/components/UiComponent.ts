@@ -5,6 +5,7 @@ import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
 import {ReactNode} from 'react';
 import {IComponents} from '../providers/ComponentsProvider';
+import {Model} from './MetaComponent';
 
 /**
  * Ui Component
@@ -205,7 +206,7 @@ export default class UiComponent implements IUiApplicationComponent {
         return this._getComponent('fields', path);
     }
 
-    getFieldProps(path, model = null, attribute = null) {
+    getFieldProps(path: string, model: string = null, attribute: string = null) {
         return {
             ...this._getPropsConfig('fields', path),
             ...this.components.meta.getModel(model)?.attributes?.[attribute],

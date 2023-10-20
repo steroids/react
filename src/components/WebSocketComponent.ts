@@ -6,6 +6,7 @@
 import {IComponents} from '../providers/ComponentsProvider';
 
 type TStream = string | [string, string|number[]];
+type TStreams = string[] | [string, string|number[]][];
 
 export interface IWebSocketComponentConfig {
     /**
@@ -16,7 +17,7 @@ export interface IWebSocketComponentConfig {
     /**
      * Массив streams
      */
-    streams?: TStream[];
+    streams?: TStreams;
 
     /**
      * Хендлер для авторизации
@@ -58,7 +59,7 @@ export interface IWebSocketComponent extends IWebSocketComponentConfig{
     /**
      * Подписка на streams
      */
-    subscribe(streams: TStream[]): void;
+    subscribe(streams: TStreams): void;
 
     /**
      * Отписка от stream
@@ -68,7 +69,7 @@ export interface IWebSocketComponent extends IWebSocketComponentConfig{
     /**
      * Отписка от streams
      */
-    unsubscribe(streams: TStream[]): void;
+    unsubscribe(streams: TStreams): void;
 }
 
 const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;
@@ -76,7 +77,7 @@ const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;
 export default class WebSocketComponent implements IWebSocketComponent {
     wsUrl: string;
 
-    streams: TStream[];
+    streams: TStreams;
 
     authHandler: (components: IComponents) => Promise<string>;
 

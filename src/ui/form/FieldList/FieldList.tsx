@@ -3,6 +3,7 @@ import _isBoolean from 'lodash-es/isBoolean';
 import _range from 'lodash-es/range';
 import {useEvent, useMount} from 'react-use';
 import {useCallback, useContext, useMemo, useRef} from 'react';
+import {ModelAttribute} from 'src/components/MetaComponent';
 import {useComponents} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
 import {formArrayAdd, formArrayRemove} from '../../../actions/form';
@@ -146,7 +147,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     const context = useContext(FormContext);
 
     // Resolve model
-    const modelAttributes = components.meta.getModel(props.model)?.attributes;
+    const modelAttributes = components.meta.getModel(props.model)?.attributes as ModelAttribute[];
 
     const dispatch = context.provider.useDispatch();
 

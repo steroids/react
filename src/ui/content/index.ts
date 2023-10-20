@@ -6,6 +6,7 @@ import Alert from './Alert';
 import Badge from './Badge';
 import {Detail, DetailItem} from './Detail';
 import Icon from './Icon';
+import Kanban from './Kanban';
 import Menu from './Menu';
 import CopyToClipboard from './CopyToClipboard';
 import Chart from './Chart';
@@ -24,6 +25,7 @@ export {
     Detail,
     DetailItem,
     Icon,
+    Kanban,
     Menu,
     CopyToClipboard,
     Chart,

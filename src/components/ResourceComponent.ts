@@ -11,31 +11,23 @@ declare global {
     }
 }
 
-export interface IResourceComponent {
-    /**
-    * Свойство для хранения обратных вызовов.
-    */
-    _callbacks: any;
-
-    /**
-     * Свойство для хранения компонентов.
-     */
-    _components: any;
-
+export interface IResourceComponentConfig {
     /**
      * API-ключ Google для использования Google Maps и других сервисов.
      */
-    googleApiKey: string;
-
-    /**
-     * Ключ сайта Google reCAPTCHA.
-     */
-    googleCaptchaSiteKey: string;
+    googleApiKey?: string;
 
     /**
      * Языковой код, используемый для загрузки ресурсов.
      */
-    language: string;
+    language?: string;
+}
+
+export interface IResourceComponent extends IResourceComponentConfig {
+    /**
+     * Ключ сайта Google reCAPTCHA.
+     */
+    googleCaptchaSiteKey: string;
 
     /**
      * URL для загрузки Google Maps API.
@@ -115,9 +107,9 @@ export interface IResourceComponent {
  * Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...
  */
 export default class ResourceComponent implements IResourceComponent {
-    _callbacks: any;
+    private _callbacks: any;
 
-    _components: any;
+    private _components: any;
 
     googleApiKey: string;
 

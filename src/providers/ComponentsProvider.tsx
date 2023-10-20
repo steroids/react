@@ -3,6 +3,7 @@ import {PropsWithChildren} from 'react';
 import {IHttpComponent} from 'src/components/HttpComponent';
 import {IHtmlComponent} from 'src/components/HtmlComponent';
 import {IWebSocketComponent} from 'src/components/WebSocketComponent';
+import {IMetaComponent} from 'src/components/MetaComponent';
 import {IClientStorageComponent} from '../components/ClientStorageComponent';
 import {ILocaleComponent} from '../components/LocaleComponent';
 import {IUiApplicationComponent} from '../components/UiComponent';
@@ -24,12 +25,12 @@ export interface IComponents {
     resource?: IResourceComponent,
     ws?: IWebSocketComponent,
     pushNotification?: any,
-    meta?: any,
+    meta?: IMetaComponent,
     [key: string]: any,
 }
 
 export interface IComponentsProviderProps extends PropsWithChildren<any> {
-    components: IComponents
+    components: IComponents,
 }
 
 export const ComponentsContext = React.createContext({} as IComponents);

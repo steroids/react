@@ -11,8 +11,11 @@ import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
 import {IHttpComponentConfig} from 'src/components/HttpComponent';
 import {IWebSocketComponentConfig} from 'src/components/WebSocketComponent';
+import {ILocaleComponentConfig} from 'src/components/LocaleComponent';
+import {IJwtHttpComponentConfig} from 'src/components/JwtHttpComponent';
+import {IResourceComponentConfig} from 'src/components/ResourceComponent';
 import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
-import ClientStorageComponent from '../components/ClientStorageComponent';
+import ClientStorageComponent, {IClientStorageComponentConfig} from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
@@ -25,7 +28,7 @@ import useComponents from './useComponents';
 import {IFetchConfig} from '../hooks/useFetch';
 
 export interface IComponentConfig {
-    className: any,
+    className?: Record<string, any>,
     [key: string]: any,
 }
 
@@ -36,22 +39,19 @@ export interface IComponentConfig {
  */
 export interface IApplicationHookConfig {
     components?: {
-        clientStorage?: any,
+        clientStorage?: IClientStorageComponentConfig & IComponentConfig,
         html?: IComponentConfig,
-        http?: IHttpComponentConfig & IComponentConfig,
-        locale?: any,
-        store?: any,
-        ui?: any,
-        resource?: any,
+        http?: IHttpComponentConfig & IJwtHttpComponentConfig & IComponentConfig,
+        locale?: ILocaleComponentConfig & IComponentConfig,
+        store?: IComponentConfig,
+        ui?: IComponentConfig,
+        resource?: IResourceComponentConfig & IComponentConfig,
         ws?: IWebSocketComponentConfig & IComponentConfig,
-        pushNotification?: any,
-        meta?: any,
+        pushNotification?: IComponentConfig,
+        meta?: IComponentConfig,
 
-        [key: string]: {
-            className: any,
-            [key: string]: any,
-        } | any,
-    } | any,
+        [key: string]: IComponentConfig,
+    },
     onInit?: (components: IComponents) => void,
     useGlobal?: boolean,
     reducers?: any,

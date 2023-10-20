@@ -11,32 +11,32 @@ export interface IWebSocketComponentConfig {
     /**
      * url для websocket
      */
-    wsUrl: string;
+    wsUrl?: string;
 
     /**
      * Массив streams
      */
-    streams: TStream[];
+    streams?: TStream[];
 
     /**
      * Хендлер для авторизации
      */
-    authHandler: (components: IComponents) => Promise<string>;
+    authHandler?: (components: IComponents) => Promise<string>;
 
     /**
      * Функция, которая вызывается на открытие соединения
      */
-    onOpen: (event: any, components: IComponents) => any;
+    onOpen?: (event: any, components: IComponents) => any;
 
     /**
      * Функция, которая вызывается на закрытие соединения
      */
-    onClose: (event: any, components: IComponents) => any;
+    onClose?: (event: any, components: IComponents) => any;
 
     /**
      * Функция, которая вызывается на отправку сообщения
      */
-    onMessage: (data: Record<string, unknown>, components: IComponents) => any;
+    onMessage?: (data: Record<string, unknown>, components: IComponents) => any;
 }
 
 export interface IWebSocketComponent extends IWebSocketComponentConfig{

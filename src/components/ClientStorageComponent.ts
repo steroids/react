@@ -3,10 +3,22 @@
 import * as cookie from 'js-cookie';
 import dayjs from 'dayjs';
 
+export interface IClientStorageComponentConfig {
+    /**
+     * Кастомный домен
+     */
+    domain?: string,
+
+    /**
+     * Куки для режима ssr
+     */
+    ssrCookie?: any,
+}
+
 /**
  * Интерфейс для ClientStorageComponent
  */
-export interface IClientStorageComponent {
+export interface IClientStorageComponent extends IClientStorageComponentConfig {
     /**
      * Получить значение из хранилища.
      * @param name Имя записи.

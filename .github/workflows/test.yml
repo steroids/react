@@ -3,6 +3,8 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
@@ -10,9 +12,9 @@ jobs:
           repository: steroids/react-bootstrap
           ref: master
           path: react-bootstrap
-      - run: |
-          echo "::set-env name=NODE_OPTIONS::--max-old-space-size=4096"
-          yarn
-          cd react-bootstrap && yarn test
-        env:
-          NODE_OPTIONS: --max-old-space-size=4096
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: yarn
+      - run: cd react-bootstrap && yarn test

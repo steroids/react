@@ -3,9 +3,13 @@ import Enum from '../../../../base/Enum';
 export default class KanbanModalsEnum extends Enum {
     static CREATE_TASK_MODAL_ID = 'CreateKanbanTaskModal';
 
-    static EDIT_TASK_MODAL_ID = 'EitKanbanTaskModal';
+    static CREATE_TASK_FORM_ID = 'CreateTaskForm';
 
-    static EDIT_TASK_TITLE = __('Редактировать задачу');
+    static CREATE_TASK_BUTTON_ICON = 'edit';
 
-    static CREATE_TASK_TITLE = __('Новая задача');
+    static EDIT_TASK_MODAL_ID = 'EditKanbanTaskModal';
+
+    static EDIT_TASK_FORM_ID = 'EditTaskForm';
+
+    static EDIT_TASK_BUTTON_ICON = 'expand_left_double';
 }

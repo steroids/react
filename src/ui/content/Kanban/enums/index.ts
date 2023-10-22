@@ -1,7 +1,9 @@
 import KanbanModalsEnum from './KanbanModalsEnum';
-import PriorityEnum from './PriorityEnum';
+import KanbanPrioritiesEnum from './KanbanPrioritiesEnum';
+import KanbanModalTypeEnum from './KanbanModalTypeEnum';
 
 export {
     KanbanModalsEnum,
-    PriorityEnum,
+    KanbanPrioritiesEnum,
+    KanbanModalTypeEnum,
 };

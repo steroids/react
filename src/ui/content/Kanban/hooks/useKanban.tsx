@@ -1,11 +1,10 @@
 import React, {useCallback} from 'react';
 import {useMount} from 'react-use';
-import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
-import Modal from '../../../modal/Modal';
+import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
 import {closeModal, openModal} from '../../../../actions/modal';
 import {useSelector, useDispatch, useComponents} from '../../../../hooks';
 import {IDragEndResult, IKanbanColumn, ITaskAssigner, ITaskPriority, ITaskTag} from '../Kanban';
-import {KanbanModalsEnum} from '../enums';
+import {KanbanModalsEnum, KanbanModalTypeEnum} from '../enums';
 import {getKanban, getKanbanPriorities, getKanbanTags, getLastTaskId} from '../reducers';
 import {
     kanbanInit,
@@ -104,8 +103,8 @@ const DEFAULT_COLUMNS = [
 export const DEFAULT_USERS: ITaskAssigner[] = [
     {
         id: 1,
-        firstName: 'Ivan',
-        lastName: 'Ivanov',
+        firstName: 'James',
+        lastName: 'Harris',
         avatar: {
             src: 'https://i.ibb.co/FDkpf8Z/image.png',
         },
@@ -120,10 +119,34 @@ export const DEFAULT_USERS: ITaskAssigner[] = [
     },
     {
         id: 3,
-        firstName: 'Geoge',
-        lastName: 'Vyazov',
+        firstName: 'Anna',
+        lastName: 'Kovalenko',
         avatar: {
-            src: 'https://i.ibb.co/VVZtPPm/image.png',
+            src: 'https://i.ibb.co/qC5GVh0/image.png',
+        },
+    },
+    {
+        id: 4,
+        firstName: 'Olga',
+        lastName: 'Petrova',
+        avatar: {
+            src: 'https://i.ibb.co/Lkhb810/image.png',
+        },
+    },
+    {
+        id: 5,
+        firstName: 'Dmitri',
+        lastName: 'Kuznetsov',
+        avatar: {
+            src: 'https://i.ibb.co/cw3vqCV/image.png',
+        },
+    },
+    {
+        id: 6,
+        firstName: 'Natalia',
+        lastName: 'Kuznetsova',
+        avatar: {
+            src: 'https://i.ibb.co/bWbpRz8/image.png',
         },
     },
 ];
@@ -136,7 +159,7 @@ const DEFAULT_TAGS: ITaskTag[] = [
     },
     {
         id: 2,
-        message: 'Marketing',
+        message: 'Database',
         type: 'danger',
     },
     {
@@ -153,6 +176,11 @@ const DEFAULT_TAGS: ITaskTag[] = [
         id: 5,
         message: 'New issue',
         type: 'info',
+    },
+    {
+        id: 6,
+        message: 'Backend',
+        type: 'secondary',
     },
 ];
 
@@ -236,75 +264,64 @@ export default function useKanban(config: IKanbanConfig) {
         dispatch(toDispatch);
     }, [config.kanbanId, dispatch, priorities, tags]);
 
-    // create task modal
-    const createOrEditTaskModalContent = components.ui.getView('content.CreateOrEditTaskModalContentView');
-    const createCreateTaskModalProps = React.useMemo(() => ({
-        modalId: KanbanModalsEnum.CREATE_TASK_MODAL_ID,
-        formId: 'CreateTaskForm',
-        className: 'CreateOrEditTaskModalContentView',
-        title: KanbanModalsEnum.CREATE_TASK_TITLE,
+    // common modal
+    const createKanbanModal = components.ui.getView('content.KanbanModalView');
+    const createOrEditTaskCommonModalProps = React.useMemo(() => ({
         columns: kanban?.columns,
-        size: 'lg',
         assigners: normalizeUsersForDropDownItems(DEFAULT_USERS),
         tags,
-        submitButtonLabel: __('Создать'),
-        onSubmit: onCreateTask,
-        component: createOrEditTaskModalContent,
-    }), [createOrEditTaskModalContent, kanban?.columns, onCreateTask, tags]);
+    }), [kanban?.columns, tags]);
 
+    // create task modal
     const onOpenCreateTaskModal = React.useCallback((columnId) => {
         if (columnId) {
-            dispatch(openModal(Modal, {
-                ...createCreateTaskModalProps,
+            dispatch(openModal(createKanbanModal, {
+                ...createOrEditTaskCommonModalProps,
+                modalId: KanbanModalsEnum.CREATE_TASK_MODAL_ID,
+                modalType: KanbanModalTypeEnum.CREATE,
+                title: KanbanModalTypeEnum.getLabels()[KanbanModalTypeEnum.CREATE],
+                formId: KanbanModalsEnum.CREATE_TASK_FORM_ID,
                 columnId,
+                onSubmit: onCreateTask,
             }));
         }
-    }, [createCreateTaskModalProps, dispatch]);
+    }, [createKanbanModal, createOrEditTaskCommonModalProps, dispatch, onCreateTask]);
 
     // task details modal
-    const taskDetailsModalContent = components.ui.getView('content.TaskDetailsModalContentView');
     const onOpenTaskDetailsModal = React.useCallback((task, columnId) => {
         if (task && columnId) {
-            dispatch(openModal(Modal, {
+            dispatch(openModal(createKanbanModal, {
                 modalId: KanbanModalsEnum.EDIT_TASK_MODAL_ID,
-                size: 'lg',
-                columns: kanban?.columns,
+                modalType: KanbanModalTypeEnum.DETAILS,
                 title: `#${task.id} ${task.title}`,
-                columnId,
                 task,
-                className: 'TaskDetailsModalContentView',
-                component: taskDetailsModalContent,
                 buttons: [{
-                    icon: 'edit',
+                    icon: KanbanModalsEnum.CREATE_TASK_BUTTON_ICON,
                     // eslint-disable-next-line @typescript-eslint/no-use-before-define
                     onClick: () => onOpenEditTaskModal(task, columnId),
                 }],
             }));
         }
-    }, [dispatch, kanban?.columns, tags, taskDetailsModalContent]);
+    }, [createKanbanModal, dispatch, kanban]);
 
     // edit task modal
     const onOpenEditTaskModal = React.useCallback((task, columnId) => {
         if (task && columnId) {
-            dispatch(openModal(Modal, {
+            dispatch(openModal(createKanbanModal, {
+                ...createOrEditTaskCommonModalProps,
                 modalId: KanbanModalsEnum.EDIT_TASK_MODAL_ID,
-                size: 'lg',
-                columns: kanban?.columns,
-                formId: 'EditTaskForm',
-                className: 'CreateOrEditTaskModalContentView',
-                title: KanbanModalsEnum.EDIT_TASK_TITLE,
-                assigners: normalizeUsersForDropDownItems(DEFAULT_USERS),
-                tags,
+                modalType: KanbanModalTypeEnum.EDIT,
+                title: KanbanModalTypeEnum.getLabels()[KanbanModalTypeEnum.EDIT],
+                formId: KanbanModalsEnum.EDIT_TASK_FORM_ID,
+                columnId,
                 onSubmit: onEditTask,
-                submitButtonLabel: __('Сохранить'),
-                component: createOrEditTaskModalContent,
                 buttons: [{
-                    icon: 'expand_left_double',
+                    icon: KanbanModalsEnum.EDIT_TASK_BUTTON_ICON,
                     onClick: () => onOpenTaskDetailsModal(task, columnId),
                 }],
             }));
         }
-    }, [createOrEditTaskModalContent, dispatch, kanban?.columns, onEditTask, onOpenTaskDetailsModal, tags]);
+    }, [createKanbanModal, createOrEditTaskCommonModalProps, dispatch, onEditTask, onOpenTaskDetailsModal]);
 
     const onDragEnd = (result) => {
         if (config.onDragEnd) {

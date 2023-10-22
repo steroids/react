@@ -1,6 +1,6 @@
 import Enum from '../../../../base/Enum';
 
-export default class PriorityEnum extends Enum {
+export default class KanbanPrioritiesEnum extends Enum {
     static HIGH = 'high';
 
     static MIDDLE = 'middle';

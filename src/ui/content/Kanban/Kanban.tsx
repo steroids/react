@@ -1,6 +1,8 @@
 import React, {useCallback} from 'react';
 import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
 import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
+import {KanbanModalTypeEnum} from '@steroidsjs/core/ui/content/Kanban/enums';
+import {IBem} from '@steroidsjs/core/hooks/useBem';
 import {IModalProps} from '../../modal/Modal/Modal';
 import {useComponents} from '../../../hooks';
 import {useKanban} from './hooks';
@@ -57,25 +59,25 @@ export interface IKanbanColumn {
     tasks: IKanbanTask[];
 }
 
-export interface ICreateOrEditTaskModalContentViewProps {
-    columnId: string;
+export interface IKanbanModalViewProps extends IModalProps {
+    modalType: KanbanModalTypeEnum;
+    formId: string;
     columns: IKanbanColumn[];
+    columnId: string;
+    assigners: IDropDownFieldItem[];
+    submitButtonLabel: string;
+    onSubmit: (id: string | null, data: any) => void;
     task?: IKanbanTask;
     tags?: ITaskTag[];
-    onSubmit: (id: string | null, data: any) => void;
-    submitButtonLabel: string;
-    formId: string;
-    assigners: IDropDownFieldItem[];
+}
+
+export interface ICreateOrEditTaskModalContentViewProps extends Omit<IKanbanModalViewProps, 'modalType'> {
+    bem: IBem;
 }
 
 export interface IKanbanTaskDetailsModalViewProps extends IModalProps {
-    columnId?: string;
-    columns?: IKanbanColumn[];
-    task?: IKanbanTask;
-    tags?: ITaskTag[];
-    assigners?: ITaskAssigner[];
-    onCreateTask: (data: any) => void;
-    onOpenEditTaskModal: any;
+    bem: IBem;
+    task: IKanbanTask;
 }
 
 interface IKanbanProps extends IKanbanConfig, IUiComponent {

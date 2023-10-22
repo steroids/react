@@ -66,7 +66,7 @@ export interface IKanbanModalViewProps extends IModalProps {
     columnId: string;
     assigners: IDropDownFieldItem[];
     submitButtonLabel: string;
-    onSubmit: (id: string | null, data: any) => void;
+    onSubmit: (id: string | null, data: any, columnId: string) => void;
     task?: IKanbanTask;
     tags?: ITaskTag[];
 }

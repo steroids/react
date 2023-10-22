@@ -253,11 +253,11 @@ export default function useKanban(config: IKanbanConfig) {
         dispatch(toDispatch);
     }, [config.kanbanId, dispatch, lastTaskId, priorities, tags]);
 
-    const onEditTask = React.useCallback((id, data) => {
+    const onEditTask = React.useCallback((id, data, prevColumnId) => {
         const editedTaskFields = normalizeEditTaskFormForState(id, data, tags, priorities);
 
         const toDispatch = [
-            kanbanEditTask(config.kanbanId, data.columnId, editedTaskFields),
+            kanbanEditTask(config.kanbanId, data.columnId, prevColumnId, editedTaskFields),
             closeModal(KanbanModalsEnum.EDIT_TASK_MODAL_ID),
         ];
 

@@ -31,10 +31,11 @@ export const kanbanAddTask = (kanbanId, columnId, task) => ({
     task,
 });
 
-export const kanbanEditTask = (kanbanId, columnId, task) => ({
+export const kanbanEditTask = (kanbanId, columnId, prevColumnId, task) => ({
     type: KANBAN_EDIT_TASK,
     kanbanId,
     columnId,
+    prevColumnId,
     task,
 });
 

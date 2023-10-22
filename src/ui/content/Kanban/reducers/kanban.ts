@@ -80,21 +80,18 @@ const reducerMap = {
         if (state.kanbans[action.kanbanId]) {
             const columns = getKanbanColumns(state, action.kanbanId);
 
+            const sourceColumn = columns.find(column => column.id === action.columnId);
+            const sourceTasks = sourceColumn.tasks;
+
+            sourceTasks.unshift(action.task);
+
             return {
                 ...state,
                 kanbans: {
                     ...state.kanbans,
                     [action.kanbanId]: {
                         ...state.kanbans[action.kanbanId],
-                        columns: columns.map(column => {
-                            if (column.id === action.columnId) {
-                                return {
-                                    ...column,
-                                    tasks: [action.task, ...column.tasks],
-                                };
-                            }
-                            return column;
-                        }),
+                        columns: [...columns],
                     },
                 },
             };
@@ -105,29 +102,34 @@ const reducerMap = {
         if (state.kanbans[action.kanbanId]) {
             const columns = getKanbanColumns(state, action.kanbanId);
 
+            const sourceColumn = columns.find(column => column.tasks.find(task => task.id === action.task.id));
+            const sourceTasks = sourceColumn.tasks;
+
+            // move to different column
+            if (action.columnId !== action.prevColumnId) {
+                const destinationColumn = columns.find(column => column.id === action.columnId);
+
+                const destinationTasks = destinationColumn.tasks;
+
+                const taskIndex = sourceTasks.findIndex(task => task.id === action.task.id);
+                const [removedTask] = sourceTasks.splice(taskIndex, 1);
+
+                destinationTasks.unshift(removedTask);
+
+                Object.assign(removedTask, action.task);
+            } else {
+                const sourceTask = sourceTasks.find(task => task.id === action.task.id);
+
+                Object.assign(sourceTask, action.task);
+            }
+
             return {
                 ...state,
                 kanbans: {
                     ...state.kanbans,
                     [action.kanbanId]: {
                         ...state.kanbans[action.kanbanId],
-                        columns: columns.map(column => {
-                            if (column.id === action.columnId) {
-                                return {
-                                    ...column,
-                                    tasks: column.tasks.map(task => {
-                                        if (task.id === action.task.id) {
-                                            return {
-                                                ...task,
-                                                ...action.task,
-                                            };
-                                        }
-                                        return task;
-                                    }),
-                                };
-                            }
-                            return column;
-                        }),
+                        columns: [...columns],
                     },
                 },
             };

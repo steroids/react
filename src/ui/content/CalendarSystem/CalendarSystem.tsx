@@ -9,6 +9,7 @@ import localeData from 'dayjs/plugin/localeData';
 import _upperFirst from 'lodash-es/upperFirst';
 import _take from 'lodash-es/take';
 import _omit from 'lodash-es/omit';
+import _maxBy from 'lodash-es/maxBy';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {openModal} from '../../../actions/modal';
 import useCalendarControls from './hooks/useCalendarControls';
@@ -20,7 +21,7 @@ import CalendarEnum from './enums/CalendarType';
 
 dayjs.extend(localeData);
 
-type ModalDefaultAttribute = 'name' | 'eventGroup' | 'date' | 'label';
+type ModalDefaultAttribute = 'name' | 'eventGroup' | 'date' | 'label' | 'description';
 
 export interface IDay {
     dayNumber: number;
@@ -36,9 +37,11 @@ export interface IPresentDateInfo {
     dateToDisplay: string;
 }
 export interface IEvent {
+    id: number,
     date: Date,
     title: string,
     color?: string,
+    description?: string,
     [key: string]: any,
 }
 
@@ -75,6 +78,7 @@ export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'ca
     openCreateModal: VoidFunction,
     getEventsFromDate: (dateFromDay: Date, isMonth: boolean) => IEvent[],
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
+    openEventModal: (event: IEvent) => void;
     weekDays: string[],
 }
 
@@ -123,6 +127,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         const indexOfChangeableEventGroup = currentEventGroups.indexOf(changeableEventGroup);
 
         changeableEventGroup.events.push({
+            id: _maxBy(changeableEventGroup.events, (event) => event.id).id + 1,
             date: new Date(fields.date),
             title: fields.name,
             color: changeableEventGroup.color,
@@ -139,7 +144,6 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             ..._slice(currentEventGroups, indexOfChangeableEventGroup + 1),
         ];
 
-        console.log(newEventGroups);
         setInnerEventGroups(newEventGroups);
     }, [innerEventGroups]);
 
@@ -232,6 +236,10 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         dispatch(openModal(createModalView, createModalProps(false)));
     }, [createModalProps, createModalView, dispatch]);
 
+    const openEventModal = React.useCallback((event: IEvent) => {
+
+    }, []);
+
     return components.ui.renderView(props.view || 'content.CalendarSystemView', {
         ...props,
         dateToDisplay,
@@ -249,6 +257,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         openCreateModal,
         getEventsFromDate,
         onChangeEventGroupsIds: (newSelectedEventGroupsIds: number[]) => setSelectedEventGroupsIds(newSelectedEventGroupsIds),
+        openEventModal,
         weekDays,
     });
 }

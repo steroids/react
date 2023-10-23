@@ -17,7 +17,7 @@ export interface ITaskAssigner {
     id: number;
     firstName: string;
     lastName: string;
-    avatar: {
+    avatar?: {
         src: string;
     };
 }
@@ -67,6 +67,7 @@ export interface IKanbanModalViewProps extends IModalProps {
     assigners: IDropDownFieldItem[];
     submitButtonLabel: string;
     onSubmit: (id: string | null, data: any, columnId: string) => void;
+    onToggleModalType?: () => void;
     task?: IKanbanTask;
     tags?: ITaskTag[];
 }
@@ -135,6 +136,8 @@ export default function Kanban(props: IKanbanProps) {
     } = useKanban({
         kanbanId: props.kanbanId,
         columns: props.columns,
+        assigners: props.assigners,
+        tags: props.tags,
         lastTaskId: props.lastTaskId,
         onDragEnd: props.onDragEnd,
     });

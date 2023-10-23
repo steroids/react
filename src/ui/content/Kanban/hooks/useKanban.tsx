@@ -3,16 +3,23 @@ import {useMount} from 'react-use';
 import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
 import {closeModal, openModal} from '../../../../actions/modal';
 import {useSelector, useDispatch, useComponents} from '../../../../hooks';
-import {IDragEndResult, IKanbanColumn, ITaskAssigner, ITaskPriority, ITaskTag} from '../Kanban';
-import {KanbanModalsEnum, KanbanModalTypeEnum} from '../enums';
-import {getKanban, getKanbanPriorities, getKanbanTags, getLastTaskId} from '../reducers';
+import {IDragEndResult, IKanbanColumn, IKanbanTask, ITaskAssigner, ITaskTag} from '../Kanban';
+import {KanbanModalTypeEnum, KanbanPrioritiesEnum} from '../enums';
+import {getKanban, getKanbanTags, getLastTaskId} from '../reducers';
 import {
     kanbanInit,
     kanbanMoveTask,
     kanbanMoveColumn,
     kanbanAddTask,
-    kanbanEditTask, kanbanIncreaseTaskId,
+    kanbanEditTask,
+    kanbanIncreaseTaskId,
 } from '../actions';
+import {
+    CREATE_TASK_FORM_ID,
+    CREATE_TASK_MODAL_ID,
+    EDIT_TASK_FORM_ID,
+    EDIT_TASK_MODAL_ID,
+} from '../constants/modalAndFormIds';
 
 export interface IKanbanConfig {
     /**
@@ -39,14 +46,14 @@ export interface IKanbanConfig {
     columns?: IKanbanColumn[];
 
     /**
-     * Массив тегов для задач, по умолчанию будут установлены предоставляемые теги
+     * Массив тегов для задач
      */
     tags?: ITaskTag[];
 
     /**
-     * Массив приоритетов для задач, по умолчанию будут установлены предоставляемые приоритеты
+     * Массив исполнителей, которых можно назначить для выполнения задачи
      */
-    priorities?: ITaskPriority[];
+    assigners?: ITaskAssigner[];
 
     /**
      * Обработчик события окончания перетаскивания карточки или колонки
@@ -68,6 +75,16 @@ export interface IKanbanConfig {
      * }
      */
     onDragEnd?: (result: IDragEndResult) => void;
+
+    /**
+     * Обработчик события создания карточки
+     */
+    onCreateTask?: (kanbanId: string, columnId: number, task: IKanbanTask) => void;
+
+    /**
+     * Обработчик события редактирования карточки
+     */
+    onEditTask?: (task: IKanbanTask) => void;
 
     /**
      * Идентификатор последней созданной задачи, нужен для определения последовательности id для новых задач
@@ -100,130 +117,30 @@ const DEFAULT_COLUMNS = [
     },
 ];
 
-export const DEFAULT_USERS: ITaskAssigner[] = [
-    {
-        id: 1,
-        firstName: 'James',
-        lastName: 'Harris',
-        avatar: {
-            src: 'https://i.ibb.co/FDkpf8Z/image.png',
-        },
-    },
-    {
-        id: 2,
-        firstName: 'Sophia',
-        lastName: 'Miller',
-        avatar: {
-            src: 'https://i.ibb.co/xjkhs5Q/image.png',
-        },
-    },
-    {
-        id: 3,
-        firstName: 'Anna',
-        lastName: 'Kovalenko',
-        avatar: {
-            src: 'https://i.ibb.co/qC5GVh0/image.png',
-        },
-    },
-    {
-        id: 4,
-        firstName: 'Olga',
-        lastName: 'Petrova',
-        avatar: {
-            src: 'https://i.ibb.co/Lkhb810/image.png',
-        },
-    },
-    {
-        id: 5,
-        firstName: 'Dmitri',
-        lastName: 'Kuznetsov',
-        avatar: {
-            src: 'https://i.ibb.co/cw3vqCV/image.png',
-        },
-    },
-    {
-        id: 6,
-        firstName: 'Natalia',
-        lastName: 'Kuznetsova',
-        avatar: {
-            src: 'https://i.ibb.co/bWbpRz8/image.png',
-        },
-    },
-];
+const INITIAL_TASK_ID = 1;
 
-const DEFAULT_TAGS: ITaskTag[] = [
-    {
-        id: 1,
-        message: 'Design',
-        type: 'warning',
-    },
-    {
-        id: 2,
-        message: 'Database',
-        type: 'danger',
-    },
-    {
-        id: 3,
-        message: 'Simplify Navigation',
-        type: 'primary',
-    },
-    {
-        id: 4,
-        message: 'Frontend',
-        type: 'success',
-    },
-    {
-        id: 5,
-        message: 'New issue',
-        type: 'info',
-    },
-    {
-        id: 6,
-        message: 'Backend',
-        type: 'secondary',
-    },
-];
-
-const DEFAULT_PRIORITIES: ITaskPriority[] = [
-    {
-        id: 1,
-        type: 'high',
-    },
-    {
-        id: 2,
-        type: 'middle',
-    },
-    {
-        id: 3,
-        type: 'default',
-    },
-];
-
-const INITIAL_LAST_TASK_ID = 1;
-
-const normalizeUsersForDropDownItems = (users: ITaskAssigner[]): IDropDownFieldItem[] => users.map((user) => ({
-    id: user.id,
-    label: `${user.firstName} ${user.lastName}`,
-    contentType: 'img',
-    contentSrc: user.avatar.src,
+const normalizeAssignersForDropDownItems = (assigners: ITaskAssigner[]): IDropDownFieldItem[] => assigners.map((assigner) => ({
+    id: assigner.id,
+    label: `${assigner.firstName || ''} ${assigner.lastName || ''}`,
+    contentType: assigner.avatar ? 'img' : 'icon',
+    contentSrc: assigner.avatar?.src ?? 'user',
 }));
 
-const normalizeEditTaskFormForState = (id, data, tags, priorities) => ({
+const normalizeEditTaskFormForState = (id, data, assigners, tags) => ({
     id,
     title: data.title || '',
     description: data.description || '',
     fullDescription: data.fullDescription || '',
-    priority: priorities.find((priority) => priority.id === data.priority),
-    assigner: DEFAULT_USERS.find((user) => user.id === data.assigner),
-    tags: data.tags && tags.filter((tag) => data.tags.includes(tag.id)),
+    priority: KanbanPrioritiesEnum.getPriorityById(data.priority),
+    assigner: assigners.find((user) => user.id === data.assigner) || null,
+    tags: data.tags && tags && tags.filter((tag) => data.tags.includes(tag.id)),
 });
 
 export default function useKanban(config: IKanbanConfig) {
-    const {kanban, lastTaskId, tags, priorities} = useSelector(state => ({
+    const {kanban, lastTaskId, tags} = useSelector(state => ({
         kanban: getKanban(state, config.kanbanId),
         lastTaskId: getLastTaskId(state, config.kanbanId),
         tags: getKanbanTags(state, config.kanbanId),
-        priorities: getKanbanPriorities(state, config.kanbanId),
     }));
 
     const dispatch = useDispatch();
@@ -241,87 +158,90 @@ export default function useKanban(config: IKanbanConfig) {
     const components = useComponents();
 
     const onCreateTask = React.useCallback((_, data) => {
-        const newTaskId = lastTaskId + 1;
-        const newTask = normalizeEditTaskFormForState(newTaskId, data, tags, priorities);
+        const newTaskId = lastTaskId ? lastTaskId + 1 : INITIAL_TASK_ID;
+        const newTask = normalizeEditTaskFormForState(newTaskId, data, config.assigners, tags);
+
+        if (config.onCreateTask) {
+            config.onCreateTask(config.kanbanId, data.columnId, newTask);
+        }
 
         const toDispatch = [
             kanbanAddTask(config.kanbanId, data.columnId, newTask),
             kanbanIncreaseTaskId(config.kanbanId, newTaskId),
-            closeModal(KanbanModalsEnum.CREATE_TASK_MODAL_ID),
+            closeModal(CREATE_TASK_MODAL_ID),
         ];
 
         dispatch(toDispatch);
-    }, [config.kanbanId, dispatch, lastTaskId, priorities, tags]);
+    }, [config, dispatch, lastTaskId, tags]);
 
     const onEditTask = React.useCallback((id, data, prevColumnId) => {
-        const editedTaskFields = normalizeEditTaskFormForState(id, data, tags, priorities);
+        const editedTask = normalizeEditTaskFormForState(id, data, config.assigners, tags);
+
+        if (config.onEditTask) {
+            config.onEditTask(editedTask);
+        }
 
         const toDispatch = [
-            kanbanEditTask(config.kanbanId, data.columnId, prevColumnId, editedTaskFields),
-            closeModal(KanbanModalsEnum.EDIT_TASK_MODAL_ID),
+            kanbanEditTask(config.kanbanId, data.columnId, prevColumnId, editedTask),
+            closeModal(EDIT_TASK_MODAL_ID),
         ];
 
         dispatch(toDispatch);
-    }, [config.kanbanId, dispatch, priorities, tags]);
+    }, [config, dispatch, tags]);
 
     // common modal
-    const createKanbanModal = components.ui.getView('content.KanbanModalView');
+    const KanbanModalView = components.ui.getView('content.KanbanModalView');
     const createOrEditTaskCommonModalProps = React.useMemo(() => ({
         columns: kanban?.columns,
-        assigners: normalizeUsersForDropDownItems(DEFAULT_USERS),
+        assigners: normalizeAssignersForDropDownItems(config.assigners || []),
         tags,
-    }), [kanban?.columns, tags]);
+    }), [config.assigners, kanban?.columns, tags]);
 
     // create task modal
     const onOpenCreateTaskModal = React.useCallback((columnId) => {
         if (columnId) {
-            dispatch(openModal(createKanbanModal, {
+            dispatch(openModal(KanbanModalView, {
                 ...createOrEditTaskCommonModalProps,
-                modalId: KanbanModalsEnum.CREATE_TASK_MODAL_ID,
+                modalId: CREATE_TASK_MODAL_ID,
                 modalType: KanbanModalTypeEnum.CREATE,
-                title: KanbanModalTypeEnum.getLabels()[KanbanModalTypeEnum.CREATE],
-                formId: KanbanModalsEnum.CREATE_TASK_FORM_ID,
+                title: KanbanModalTypeEnum.getLabel(KanbanModalTypeEnum.CREATE),
+                formId: CREATE_TASK_FORM_ID,
                 columnId,
                 onSubmit: onCreateTask,
             }));
         }
-    }, [createKanbanModal, createOrEditTaskCommonModalProps, dispatch, onCreateTask]);
+    }, [KanbanModalView, createOrEditTaskCommonModalProps, dispatch, onCreateTask]);
 
     // task details modal
     const onOpenTaskDetailsModal = React.useCallback((task, columnId) => {
         if (task && columnId) {
-            dispatch(openModal(createKanbanModal, {
-                modalId: KanbanModalsEnum.EDIT_TASK_MODAL_ID,
+            dispatch(openModal(KanbanModalView, {
+                modalId: EDIT_TASK_MODAL_ID,
                 modalType: KanbanModalTypeEnum.DETAILS,
                 title: `#${task.id} ${task.title}`,
                 task,
-                buttons: [{
-                    icon: KanbanModalsEnum.CREATE_TASK_BUTTON_ICON,
-                    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-                    onClick: () => onOpenEditTaskModal(task, columnId),
-                }],
+                tags,
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
+                onToggleModalType: () => onOpenEditTaskModal(task, columnId),
             }));
         }
-    }, [createKanbanModal, dispatch, kanban]);
+    }, [KanbanModalView, dispatch, kanban]);
 
     // edit task modal
     const onOpenEditTaskModal = React.useCallback((task, columnId) => {
         if (task && columnId) {
-            dispatch(openModal(createKanbanModal, {
+            dispatch(openModal(KanbanModalView, {
                 ...createOrEditTaskCommonModalProps,
-                modalId: KanbanModalsEnum.EDIT_TASK_MODAL_ID,
+                modalId: EDIT_TASK_MODAL_ID,
                 modalType: KanbanModalTypeEnum.EDIT,
-                title: KanbanModalTypeEnum.getLabels()[KanbanModalTypeEnum.EDIT],
-                formId: KanbanModalsEnum.EDIT_TASK_FORM_ID,
+                title: KanbanModalTypeEnum.getLabel(KanbanModalTypeEnum.EDIT),
+                formId: EDIT_TASK_FORM_ID,
                 columnId,
                 onSubmit: onEditTask,
-                buttons: [{
-                    icon: KanbanModalsEnum.EDIT_TASK_BUTTON_ICON,
-                    onClick: () => onOpenTaskDetailsModal(task, columnId),
-                }],
+                onToggleModalType: () => onOpenTaskDetailsModal(task, columnId),
             }));
         }
-    }, [createKanbanModal, createOrEditTaskCommonModalProps, dispatch, onEditTask, onOpenTaskDetailsModal]);
+    }, [KanbanModalView, createOrEditTaskCommonModalProps, dispatch, onEditTask, onOpenTaskDetailsModal]);
 
     const onDragEnd = (result) => {
         if (config.onDragEnd) {
@@ -348,9 +268,8 @@ export default function useKanban(config: IKanbanConfig) {
             dispatch(kanbanInit(config.kanbanId, {
                 kanbanId: config.kanbanId,
                 columns: config.columns || DEFAULT_COLUMNS,
-                tags: config.tags || DEFAULT_TAGS,
-                priorities: config.priorities || DEFAULT_PRIORITIES,
-                lastTaskId: config.lastTaskId || INITIAL_LAST_TASK_ID,
+                tags: config.tags || null,
+                lastTaskId: config.lastTaskId || null,
             }));
         }
     });

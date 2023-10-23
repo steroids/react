@@ -1,3 +1,5 @@
+import _find from 'lodash-es/find';
+import {ITaskPriority} from '../Kanban';
 import Enum from '../../../../base/Enum';
 
 export default class KanbanPrioritiesEnum extends Enum {
@@ -15,7 +17,11 @@ export default class KanbanPrioritiesEnum extends Enum {
         };
     }
 
-    static getColorByType() {
+    static getLabel(id) {
+        return this.getLabels()[id || this.DEFAULT] || '';
+    }
+
+    static getColorsByType() {
         return {
             [this.HIGH]: 'danger',
             [this.MIDDLE]: 'warning',
@@ -23,7 +29,33 @@ export default class KanbanPrioritiesEnum extends Enum {
         };
     }
 
+    static getColorByType(type) {
+        return this.getColorsByType()[type || this.DEFAULT] || '';
+    }
+
+    static getPrioritiesArray(): ITaskPriority[] {
+        return [
+            {
+                id: 1,
+                type: this.HIGH,
+            },
+            {
+                id: 2,
+                type: this.MIDDLE,
+            },
+            {
+                id: 3,
+                type: this.DEFAULT,
+            },
+        ];
+    }
+
+    static getPriorityById(id) {
+        return _find(this.getPrioritiesArray(), {id}) || null;
+    }
+
     static getDefaultSelectedPriorityId() {
-        return [3];
+        const defaultPriority = _find(this.getPrioritiesArray(), {type: this.DEFAULT});
+        return defaultPriority ? defaultPriority.id : null;
     }
 }

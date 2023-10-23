@@ -16,7 +16,7 @@ export interface ITextProps extends IUiComponent {
      * Тип текста
      * @example 'body'
      */
-    type?: 'body' | 'body2' | 'body3' | 'span' | 'boldSpan' | string,
+    type?: 'body' | 'body2' | 'span' | 'boldSpan' | string,
 
     /** HTML тег
      * @example 'span'

@@ -13,4 +13,15 @@ export default class KanbanModalTypeEnum extends Enum {
             [this.CREATE]: __('Новая задача'),
         };
     }
+
+    static getModalIcons() {
+        return {
+            [this.EDIT]: 'expand_left_double',
+            [this.DETAILS]: 'edit',
+        };
+    }
+
+    static getModalIconByType(type) {
+        return this.getModalIcons()[type] || '';
+    }
 }

@@ -5,30 +5,9 @@ import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
-import {useMount} from 'react-use';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import EmailField from '../EmailField/EmailField';
-
-const INPUT_TYPES_SUPPORTED_SELECTION = ['text', 'search', 'tel', 'url', 'password'];
-
-const INPUT_TYPES_REPLACEMENT_HASH = {
-    email: 'EmailField',
-    date: 'DateField',
-    month: 'DateField',
-    week: 'CalendarSystem',
-    time: 'DateTimeField',
-    'datetime-local': 'DateField',
-    number: 'NumberField',
-    range: 'SliderField',
-    checkbox: 'CheckboxField',
-    radio: 'RadioField',
-    button: 'Button',
-    file: 'FileField',
-    submit: 'Button',
-    image: 'Button',
-    reset: 'Button',
-};
+import {useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -63,11 +42,7 @@ export const MASK_PRESETS = {
     },
 };
 
-export const CUSTOM_FIELDS_HASH = {
-    email: EmailField,
-};
-
-type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
+export type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
     | 'text' | 'time' | 'url' | 'week' | string;
 
@@ -183,15 +158,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         }
     }, [inputRef, maskedInputRef]);
 
-    useMount(() => {
-        if (!INPUT_TYPES_SUPPORTED_SELECTION.includes(props.type)) {
-            const recommendedUiComponent = `<${INPUT_TYPES_REPLACEMENT_HASH[props.type]} />`;
-
-            INPUT_TYPES_REPLACEMENT_HASH[props.type]
-                ? console.warn(`<InputField /> with "${props.type}" type does not support setSelectionRange() method. Try to use ${recommendedUiComponent} instead.`)
-                : console.warn(`< InputField /> with "${props.type}" type does not support setSelectionRange() method.Try to use predefined Steroids component.`);
-        }
-    });
+    const {INPUT_TYPES_SUPPORTED_SELECTION} = useInputFieldWarningByType(props.type);
 
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 

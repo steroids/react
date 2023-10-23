@@ -1,6 +1,6 @@
 import 'jest-enzyme';
-import mountWithApp from '../../../../tests/mocks/mountWithApp';
-import ProgressBar from './ProgressBar';
+import mountWithApp from '../../../mocks/mountWithApp';
+import ProgressBar from '../../../../src/ui/layout/ProgressBar/ProgressBar';
 
 describe.skip('ProgressBar tests', () => {
     it('should render something without props and views', () => {

@@ -17,8 +17,8 @@ jobs:
       - run: yarn tsc
       - run: cp ./{package.json,LICENSE,README.md} dist/
       - run: cp src/index.d.ts dist/
-      - run: cp build/docs-autogen-result.json dist/
-      - run: cp build/locales/en.json dist/
+      - run: cp docs/docs-autogen-result.json dist/
+      - run: cp docs/locales/en.json dist/
       - uses: JS-DevTools/npm-publish@v1
         with:
           package: ./dist/package.json

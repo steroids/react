@@ -6,8 +6,6 @@ interface IInputTypeNumberProps {
     value: string | undefined | null,
 }
 
-const checkIsValueFalsy = (value) => value === '' || value === null || value === undefined;
-
 const useInputTypeNumber = (
     currentInputRef: React.MutableRefObject<HTMLInputElement>,
     inputTypeNumberProps: IInputTypeNumberProps,
@@ -18,7 +16,7 @@ const useInputTypeNumber = (
 
         const errorMessage = inputTypeNumberProps.value > inputTypeNumberProps.max
             || inputTypeNumberProps.value < inputTypeNumberProps.min
-            || checkIsValueFalsy(inputTypeNumberProps.value)
+            || !inputTypeNumberProps.value
             ? __(defaultValidity)
             : '';
 
@@ -26,7 +24,7 @@ const useInputTypeNumber = (
     }, [currentInputRef, inputTypeNumberProps.value, inputTypeNumberProps.max, inputTypeNumberProps.min]);
 
     const isValueNumeric = (value) => {
-        if (checkIsValueFalsy(value)) {
+        if (!value) {
             return true;
         }
 

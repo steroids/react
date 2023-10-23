@@ -11,7 +11,7 @@ const useInputTypeEmail = (
 ) => {
     const isValueEmail = (value: string) => {
         //In that case it's testing if value is empty string or not defined
-        if (value === '' || value === null || value === undefined) {
+        if (!value) {
             return false;
         }
 

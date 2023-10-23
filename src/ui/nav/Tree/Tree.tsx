@@ -18,7 +18,7 @@ export interface ITreeItem extends IButtonProps {
 
     /**
      * Вложенные элементы
-     * [{id: 2, label: 'Nested element', items: [...]}]
+     * @example [{id: 2, label: 'Nested element', items: [...]}]
      */
     items?: any[],
 

@@ -1567,7 +1567,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -12923,7 +12923,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для \\<fieldset\\>...\\<\\/fieldset\\>",
+                    "description": "Дополнительный CSS-класс для '<fieldset>...</fieldset>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -13975,7 +13975,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -15913,7 +15913,7 @@
                     "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
                     "required": false,
                     "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
+                    "example": "require('icon.png') | '<component/>'"
                 },
                 {
                     "name": "textBefore",
@@ -16223,7 +16223,7 @@
                     "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
                     "required": false,
                     "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
+                    "example": "require('icon.png') | '<component/>'"
                 },
                 {
                     "name": "textBefore",
@@ -19397,7 +19397,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -19659,7 +19659,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -21676,7 +21676,7 @@
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: [{id: 1, label: \"London\"}]",
+                    "description": "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: ['{'id: 1, label: \"London\"'}']",
                     "required": false,
                     "type": "string | {} | string | number | {id: string | number | boolean, label: string | any}[]",
                     "example": null
@@ -21831,7 +21831,7 @@
                 {
                     "name": "currency",
                     "decorators": [],
-                    "description": "Валюта @enum {eur, rub, usd}",
+                    "description": "Валюта @enum '{eur, rub, usd}'",
                     "required": false,
                     "type": "string",
                     "example": "rub"
@@ -23360,7 +23360,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -24210,7 +24210,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -24397,7 +24397,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -24594,7 +24594,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -25107,7 +25107,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -26002,7 +26002,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -26384,7 +26384,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -28412,10 +28412,10 @@
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "Вложенные элементы\n[{id: 2, label: 'Nested element', items: [...]}]",
+                    "description": "Вложенные элементы",
                     "required": false,
                     "type": "any[]",
-                    "example": null
+                    "example": "[{id: 2, label: 'Nested element', items: [...]}]"
                 },
                 {
                     "name": "label",

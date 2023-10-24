@@ -81,7 +81,7 @@ export interface IKanbanTaskDetailsModalViewProps extends IModalProps {
     task: IKanbanTask;
 }
 
-interface IKanbanProps extends IKanbanConfig, IUiComponent {
+export interface IKanbanProps extends IKanbanConfig, IUiComponent {
     /**
      * Компонент обертка для инициализации области куда можно переместить элемент из библиотеки react-beautiful-dnd
      * @example Droppable

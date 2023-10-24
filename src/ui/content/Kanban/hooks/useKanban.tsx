@@ -32,18 +32,18 @@ export interface IKanbanConfig {
      * Коллекция с наименованиями и свойствами колонок в таблице
      * @example [
      *             {
-     *              id: 'column-1',
-     *              title: 'col1',
-     *              tasks: [{ content: 'item1', id: 'task-1' }],
+     *              id: 1,
+     *              title: 'column 1',
+     *              tasks: [{ content: 'item 1', id: 1 }],
      *             },
      *             {
-     *              id: 'column-2',
-     *              title: 'col2',
+     *              id: 2,
+     *              title: 'column 2',
      *              tasks: [],
      *             }
      *          ]
      */
-    columns?: IKanbanColumn[];
+    columns: IKanbanColumn[];
 
     /**
      * Массив тегов для задач
@@ -93,29 +93,6 @@ export interface IKanbanConfig {
 }
 
 const COLUMNS_DROPPABLE_ID = 'all-columns';
-
-const DEFAULT_COLUMNS = [
-    {
-        id: 'column-1',
-        title: 'TO DO',
-        tasks: [],
-    },
-    {
-        id: 'column-2',
-        title: 'IN PROGRESS',
-        tasks: [],
-    },
-    {
-        id: 'column-3',
-        title: 'IN REVIEW',
-        tasks: [],
-    },
-    {
-        id: 'column-4',
-        title: 'DONE',
-        tasks: [],
-    },
-];
 
 const INITIAL_TASK_ID = 1;
 
@@ -267,7 +244,7 @@ export default function useKanban(config: IKanbanConfig) {
         if (!kanban) {
             dispatch(kanbanInit(config.kanbanId, {
                 kanbanId: config.kanbanId,
-                columns: config.columns || DEFAULT_COLUMNS,
+                columns: config.columns || null,
                 tags: config.tags || null,
                 lastTaskId: config.lastTaskId || null,
             }));

@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 import dayjs from 'dayjs';
-import {IDay} from '../CalendarSystem';
+import _omit from 'lodash-es/omit';
+import {IDay, IEvent, IEventGroup} from '../CalendarSystem';
 
 const SIX_DAYS_DIFF = 6;
 const MAX_DAYS_DIFF_IN_WEEK = 7;
@@ -26,3 +27,7 @@ export const getWeekDaysFromDate = (date: Date) => {
 };
 
 export const isDateIsToday = (date: Date): boolean => dayjs(date).isToday();
+
+export const getOmittedEvent = (event: IEvent | Omit<IEvent, 'color'>) => _omit(event, ['color', 'eventGroupId']);
+
+export const sortEventsInGroup = (group: IEventGroup) => group.events.sort((eventA, eventB) => eventA.date.getTime() - eventB.date.getTime());

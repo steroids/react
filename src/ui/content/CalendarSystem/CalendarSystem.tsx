@@ -1,7 +1,8 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable default-case */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
-import React from 'react';
+import React, {useEffect} from 'react';
 import dayjs from 'dayjs';
 import _concat from 'lodash-es/concat';
 import _slice from 'lodash-es/slice';
@@ -10,18 +11,27 @@ import _upperFirst from 'lodash-es/upperFirst';
 import _take from 'lodash-es/take';
 import _omit from 'lodash-es/omit';
 import _maxBy from 'lodash-es/maxBy';
+import _isEqual from 'lodash-es/isEqual';
+import _set from 'lodash-es/set';
+import _pullAt from 'lodash-es/pullAt';
+import _indexOf from 'lodash-es/indexOf';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
-import {openModal} from '../../../actions/modal';
+import {closeModal, openModal} from '../../../actions/modal';
 import useCalendarControls from './hooks/useCalendarControls';
 import useDisplayDate from './hooks/useDisplayDate';
 import useMonthCalendar from './hooks/useMonthCalendar';
 import {useComponents, useDispatch, useWeekCalendar} from '../../../hooks';
 import {addEventIfMatchDate} from './helpers/addEventIfMatchDate';
 import CalendarEnum from './enums/CalendarType';
+import {getOmittedEvent, sortEventsInGroup} from './utils/utils';
 
 dayjs.extend(localeData);
 
-type ModalDefaultAttribute = 'name' | 'eventGroup' | 'date' | 'label' | 'description';
+const DEFAULT_ID = 0;
+
+export type CalendarSystemModalFields = 'title' | 'eventGroupId' | 'date' | 'description';
+
+export type EventInitialValues = IEvent & {eventGroupId: string};
 
 export interface IDay {
     dayNumber: number;
@@ -49,7 +59,7 @@ export interface IEventGroup {
     id: number,
     label: string,
     color?: string,
-    events: IEvent[],
+    events: Omit<IEvent, 'color'>[],
 }
 
 export interface ICalendarSystemProps extends IUiComponent {
@@ -84,8 +94,9 @@ export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'ca
 
 export interface ICalendarSystemModalViewProps extends IModalProps {
     eventGroups: IEventGroup[],
-    onEventCreate: (args) => void;
+    onEventSubmit: (fields: Record<CalendarSystemModalFields, string>, eventInitialValues?: EventInitialValues) => void,
     isCreate: boolean,
+    eventInitialValues?: any,
 }
 
 export default function CalendarSystem(props: ICalendarSystemProps) {
@@ -96,6 +107,8 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
     const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.MONTH);
     const {calendarArray: monthCalendarDays, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();
+
+    const createModalView = props.createEventModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
 
     const {
         currentWeek: currentWeekDays,
@@ -121,22 +134,60 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         forceUpdateWeekOnMonthChange(newDate);
     }, [forceUpdateWeekOnMonthChange, setCurrentMonthDate, setNewDateToDisplay]);
 
-    const onEventCreate = React.useCallback((fields: Record<ModalDefaultAttribute, any>) => {
-        const currentEventGroups = [...innerEventGroups];
-        const [changeableEventGroup] = currentEventGroups.filter((group) => group.id === fields.eventGroup);
+    const onEventSubmit = React.useCallback((
+        fields: Record<CalendarSystemModalFields, string | number>,
+        eventInitialValues?: EventInitialValues,
+    ) => {
+        let currentEventGroups = [...innerEventGroups];
+        const [changeableEventGroup] = currentEventGroups.filter((group) => group.id === fields.eventGroupId);
         const indexOfChangeableEventGroup = currentEventGroups.indexOf(changeableEventGroup);
 
+        if (eventInitialValues) {
+            if (fields.eventGroupId === eventInitialValues.eventGroupId) {
+                const changeableEvents = changeableEventGroup.events
+                    .filter(event => !_isEqual(getOmittedEvent(event), getOmittedEvent(eventInitialValues)));
+
+                changeableEvents.push({
+                    id: eventInitialValues.id,
+                    date: new Date(fields.date),
+                    title: fields.title as string,
+                    description: fields.description as string,
+                });
+
+                changeableEventGroup.events = changeableEvents;
+                changeableEventGroup.events = sortEventsInGroup(changeableEventGroup);
+
+                const newEventGroups: IEventGroup[] = [
+                    ..._take(currentEventGroups, indexOfChangeableEventGroup),
+                    changeableEventGroup,
+                    ..._slice(currentEventGroups, indexOfChangeableEventGroup + 1),
+                ];
+
+                setInnerEventGroups(newEventGroups);
+                return;
+            }
+
+            const [previousGroup] = currentEventGroups.filter(group => group.id === Number(eventInitialValues.eventGroupId));
+            const indexOfPreviousEventGroup = currentEventGroups.indexOf(previousGroup);
+
+            previousGroup.events = previousGroup.events
+                .filter(event => !_isEqual(getOmittedEvent(event), getOmittedEvent(eventInitialValues)));
+
+            currentEventGroups = [
+                ..._take(currentEventGroups, indexOfPreviousEventGroup),
+                previousGroup,
+                ..._slice(currentEventGroups, indexOfPreviousEventGroup + 1),
+            ];
+        }
+
         changeableEventGroup.events.push({
-            id: _maxBy(changeableEventGroup.events, (event) => event.id).id + 1,
+            id: _maxBy(changeableEventGroup.events, (event) => event.id)?.id || DEFAULT_ID + 1,
             date: new Date(fields.date),
-            title: fields.name,
-            color: changeableEventGroup.color,
-            additionalData: {
-                ..._omit(fields, ['name', 'eventGroup', 'date']),
-            },
+            title: fields.title as string,
+            description: fields.description as string,
         });
 
-        changeableEventGroup.events = changeableEventGroup.events.sort((eventA, eventB) => eventA.date.getTime() - eventB.date.getTime());
+        changeableEventGroup.events = sortEventsInGroup(changeableEventGroup);
 
         const newEventGroups: IEventGroup[] = [
             ..._take(currentEventGroups, indexOfChangeableEventGroup),
@@ -155,7 +206,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         const iterateEventGroups = (callback: (event: IEvent, eventGroup: IEventGroup) => void) => {
             innerEventGroups.forEach(eventGroup => {
                 eventGroup.events.forEach(event => {
-                    callback(event, eventGroup);
+                    callback(event as IEvent, eventGroup);
                 });
             });
         };
@@ -218,27 +269,36 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         return hoursArray;
     }, []);
 
-    const createModalView = props.createEventModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
-
-    const createModalProps = React.useCallback((isCreate: boolean) => ({
+    const createModalProps = React.useCallback((
+        isCreate: boolean,
+        eventInitialValues?: IEvent & {eventGroupId: number},
+    ) => ({
         ...props.createEventModalProps,
         component: createModalView,
         eventGroups: innerEventGroups,
-        onEventCreate,
+            onEventSubmit,
         isCreate,
-    }) as ICalendarSystemModalViewProps, [createModalView, innerEventGroups, onEventCreate, props.createEventModalProps]);
+            eventInitialValues,
+        }) as ICalendarSystemModalViewProps, [createModalView, innerEventGroups, onEventSubmit, props.createEventModalProps]);
 
     const openCreateModal = React.useCallback(() => {
         dispatch(openModal(createModalView, createModalProps(true)));
     }, [createModalProps, createModalView, dispatch]);
 
-    const openEditModal = React.useCallback(() => {
-        dispatch(openModal(createModalView, createModalProps(false)));
-    }, [createModalProps, createModalView, dispatch]);
+    const getEventFromGroup = React.useCallback((event: IEvent) => {
+        const eventGroup = innerEventGroups
+            .find(group => group.events
+                .some(groupEvent => _isEqual(getOmittedEvent(groupEvent), getOmittedEvent(event))));
+
+        return eventGroup;
+    }, [innerEventGroups]);
 
     const openEventModal = React.useCallback((event: IEvent) => {
-
-    }, []);
+        dispatch(openModal(createModalView, createModalProps(false, {
+            ...event,
+            eventGroupId: getEventFromGroup(event).id,
+        })));
+    }, [createModalProps, createModalView, dispatch, getEventFromGroup]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', {
         ...props,

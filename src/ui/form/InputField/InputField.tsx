@@ -7,7 +7,7 @@ import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import {useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
+import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -158,7 +158,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         }
     }, [inputRef, maskedInputRef]);
 
-    const {INPUT_TYPES_SUPPORTED_SELECTION} = useInputFieldWarningByType(props.type);
+    useInputFieldWarningByType(props.type);
 
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 

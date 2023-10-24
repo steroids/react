@@ -3,7 +3,7 @@
 import {useMount} from 'react-use';
 import {IElementInputType} from '../InputField';
 
-const INPUT_TYPES_SUPPORTED_SELECTION = ['text', 'search', 'tel', 'url', 'password'];
+export const INPUT_TYPES_SUPPORTED_SELECTION = ['text', 'search', 'tel', 'url', 'password'];
 
 const INPUT_TYPES_REPLACEMENT_HASH = {
     email: 'EmailField',
@@ -33,8 +33,4 @@ export const useInputFieldWarningByType = (type: IElementInputType) => {
                 : console.warn(`< InputField /> with "${type}" type does not support setSelectionRange() method.Try to use native <input /> tag.`);
         }
     });
-
-    return {
-        INPUT_TYPES_SUPPORTED_SELECTION,
-    };
 };

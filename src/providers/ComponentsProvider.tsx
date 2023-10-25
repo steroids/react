@@ -4,6 +4,7 @@ import {IHttpComponent} from 'src/components/HttpComponent';
 import {IHtmlComponent} from 'src/components/HtmlComponent';
 import {IWebSocketComponent} from 'src/components/WebSocketComponent';
 import {IMetaComponent} from 'src/components/MetaComponent';
+import {IStoreComponent} from 'src/components/StoreComponent';
 import {IClientStorageComponent} from '../components/ClientStorageComponent';
 import {ILocaleComponent} from '../components/LocaleComponent';
 import {IUiApplicationComponent} from '../components/UiComponent';
@@ -20,7 +21,7 @@ export interface IComponents {
     html?: IHtmlComponent,
     http?: IHttpComponent,
     locale?: ILocaleComponent,
-    store?: any,
+    store?: IStoreComponent,
     ui?: IUiApplicationComponent,
     resource?: IResourceComponent,
     ws?: IWebSocketComponent,

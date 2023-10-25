@@ -1,10 +1,38 @@
 import _isString from 'lodash-es/isString';
 
+export interface IHtmlComponent {
+    /**
+     * Утилита для создания css-классов по БЭМ
+     */
+    bem(blockName: string): any;
+
+    /**
+     * Метод для соединения нескольких classNames
+     */
+    classNames(...names: string[]): string;
+
+    /**
+     * Метод для добавления css-класса к элементу
+     * @param node Элемент, к которому нужно добавить класс
+     * @param className Название класса
+     */
+    addClass(node: React.ReactNode, className: string): void;
+
+    /**
+     * Метод для удаления css-класса у элемента
+     * @param node Элемент, у которого нужно удалить класс
+     * @param className Название класса
+     */
+    removeClass(node: React.ReactNode, className: string): void;
+
+    closest(element: any, className: string): any;
+}
+
 /**
  * Html Component
  * Хелпер для работы с БЭМ классами и DOM элементами
  */
-export default class HtmlComponent {
+export default class HtmlComponent implements IHtmlComponent {
     _instances: any;
 
     namespace = '';
@@ -62,7 +90,7 @@ export default class HtmlComponent {
         return element;
     }
 
-    _applyModifiers(entity, modifiers) {
+    private _applyModifiers(entity, modifiers) {
         let result = [];
         result.push(entity);
         if (typeof modifiers === 'string') {

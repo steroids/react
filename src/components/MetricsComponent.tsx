@@ -23,7 +23,29 @@ type ConfigType = {
     enable?: boolean
 }
 
-export default class MetricsComponent {
+export interface IMetricsComponent {
+    /**
+     * Отписаться от метрик
+     */
+    unsubscribe: VoidFunction;
+
+    /**
+     * Отменить прослушивание метрик
+     */
+    unlisten: VoidFunction;
+
+    /**
+     * Поменять счетчики
+     * @param values Значения
+     */
+    setCounters(values: any): void;
+}
+
+/**
+ * Metrics Component
+ * Компонент для добавления метрик в приложение (например яндекс метрики)
+ */
+export default class MetricsComponent implements IMetricsComponent {
     _components: any;
 
     _prevUrl: string;

@@ -9,8 +9,13 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
+import {IHttpComponentConfig} from 'src/components/HttpComponent';
+import {IWebSocketComponentConfig} from 'src/components/WebSocketComponent';
+import {ILocaleComponentConfig} from 'src/components/LocaleComponent';
+import {IJwtHttpComponentConfig} from 'src/components/JwtHttpComponent';
+import {IResourceComponentConfig} from 'src/components/ResourceComponent';
 import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
-import ClientStorageComponent from '../components/ClientStorageComponent';
+import ClientStorageComponent, {IClientStorageComponentConfig} from '../components/ClientStorageComponent';
 import HtmlComponent from '../components/HtmlComponent';
 import StoreComponent from '../components/StoreComponent';
 import UiComponent from '../components/UiComponent';
@@ -22,6 +27,11 @@ import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider'
 import useComponents from './useComponents';
 import {IFetchConfig} from '../hooks/useFetch';
 
+export interface IComponentConfig {
+    className?: Record<string, any>,
+    [key: string]: any,
+}
+
 /**
  * Application HOC
  * Обертка над корневым компонентом приложения, используется только в `Application.tsx`. Добавляет через React Context
@@ -29,11 +39,19 @@ import {IFetchConfig} from '../hooks/useFetch';
  */
 export interface IApplicationHookConfig {
     components?: {
-        [key: string]: {
-            className: any,
-            [key: string]: any,
-        } | any,
-    } | any
+        clientStorage?: IClientStorageComponentConfig & IComponentConfig,
+        html?: IComponentConfig,
+        http?: IHttpComponentConfig & IJwtHttpComponentConfig & IComponentConfig,
+        locale?: ILocaleComponentConfig & IComponentConfig,
+        store?: IComponentConfig,
+        ui?: IComponentConfig,
+        resource?: IResourceComponentConfig & IComponentConfig,
+        ws?: IWebSocketComponentConfig & IComponentConfig,
+        pushNotification?: IComponentConfig,
+        meta?: IComponentConfig,
+
+        [key: string]: IComponentConfig,
+    },
     onInit?: (components: IComponents) => void,
     useGlobal?: boolean,
     reducers?: any,

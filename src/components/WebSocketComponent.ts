@@ -5,12 +5,83 @@
  */
 import {IComponents} from '../providers/ComponentsProvider';
 
+type TStream = string | [string, string|number[]];
+type TStreams = string[] | [string, string|number[]][];
+
+export interface IWebSocketComponentConfig {
+    /**
+     * url для websocket
+     */
+    wsUrl?: string;
+
+    /**
+     * Массив streams
+     */
+    streams?: TStreams;
+
+    /**
+     * Хендлер для авторизации
+     */
+    authHandler?: (components: IComponents) => Promise<string>;
+
+    /**
+     * Функция, которая вызывается на открытие соединения
+     */
+    onOpen?: (event: any, components: IComponents) => any;
+
+    /**
+     * Функция, которая вызывается на закрытие соединения
+     */
+    onClose?: (event: any, components: IComponents) => any;
+
+    /**
+     * Функция, которая вызывается на отправку сообщения
+     */
+    onMessage?: (data: Record<string, unknown>, components: IComponents) => any;
+}
+
+export interface IWebSocketComponent extends IWebSocketComponentConfig{
+    /**
+     * Открытие websocket соединения
+     */
+    open(closePrevious?: boolean): void;
+
+    /**
+     * Закрытие websocket соединения
+     */
+    close(): void;
+
+    /**
+     * Подписка на stream
+     */
+    subscribeStream(stream: TStream, id: string | number): void;
+
+    /**
+     * Подписка на streams
+     */
+    subscribe(streams: TStreams): void;
+
+    /**
+     * Отписка от stream
+     */
+    unsubscribeStream(stream: TStream, id: string | number): void;
+
+    /**
+     * Отписка от streams
+     */
+    unsubscribe(streams: TStreams): void;
+}
+
 const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;
 
-export default class WebSocketComponent {
+/**
+ * WebSocket Component
+ * Компонент для создания websocket взаимодействия
+ */
+export default class WebSocketComponent implements IWebSocketComponent {
     wsUrl: string;
 
-    streams: string[] | [string, string|number[]][];
+    streams: TStreams;
 
     authHandler: (components: IComponents) => Promise<string>;
 
@@ -172,7 +243,7 @@ export default class WebSocketComponent {
         }
     }
 
-    async _connect() {
+    private async _connect() {
         if (!this._authToken) {
             const token = await this.authHandler(this._components);
             if (token) {
@@ -189,7 +260,7 @@ export default class WebSocketComponent {
         }
     }
 
-    _reConnect() {
+    private _reConnect() {
         let delay = 1000;
         if (this._tryCount > 10) {
             delay = 2000;
@@ -205,7 +276,7 @@ export default class WebSocketComponent {
         setTimeout(this._connect, delay);
     }
 
-    _onOpen(event) {
+    private _onOpen(event) {
         this._tryCount = 0;
 
         if (this.onOpen) {
@@ -213,13 +284,13 @@ export default class WebSocketComponent {
         }
     }
 
-    _onMessage(message) {
+    private _onMessage(message) {
         if (this.onMessage) {
             this.onMessage(JSON.parse(message.data), this._components);
         }
     }
 
-    _onClose(event) {
+    private _onClose(event) {
         if (this.onClose) {
             this.onClose(event, this._components);
         }

@@ -2,11 +2,29 @@ import axios from 'axios';
 import BaseHttpComponent from '@steroidsjs/core/components/HttpComponent';
 import {logout} from '@steroidsjs/core/actions/auth';
 
-export default class JwtHttpComponent extends BaseHttpComponent {
-    refreshTokenRequest: {
-        url: string,
-        method: string,
-    };
+export interface IRefreshTokenRequest {
+    url: string,
+    method: string,
+}
+
+export interface IJwtHttpComponentConfig {
+    /**
+     * Запрос на обновление токена авторизации
+     */
+    refreshTokenRequest?: IRefreshTokenRequest,
+
+    /**
+     * Ключ токена авторизации для локального хранилища
+     */
+    refreshTokenKey?: string,
+}
+
+/**
+ * JwtHttpComponent
+ * Вариация HttpComponent с функционалом обновления токена авторизации
+ */
+export default class JwtHttpComponent extends BaseHttpComponent implements IJwtHttpComponentConfig {
+    refreshTokenRequest: IRefreshTokenRequest;
 
     refreshTokenKey = 'refreshToken';
 

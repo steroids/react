@@ -6,7 +6,7 @@ import _isFunction from 'lodash-es/isFunction';
 import {useComponents} from '../../../hooks';
 import {FormContext} from '../Form/Form';
 import {IFieldWrapperInputProps} from './fieldWrapper';
-import {Model} from '../../../components/MetaComponent';
+import {Model, ModelAttribute} from '../../../components/MetaComponent';
 
 /**
  * Field
@@ -44,7 +44,8 @@ function Field(props: IFieldProps): JSX.Element {
     const context = useContext(FormContext);
     const fieldModel = useMemo(() => {
         const model = props.model || context.model;
-        const result = (components.meta.getModel(model)?.attributes || [])
+        const modelAttributes = (components.meta.getModel(model)?.attributes || []) as ModelAttribute[];
+        const result = modelAttributes
             .find(field => field.attribute === props.attribute);
 
         return result || {};

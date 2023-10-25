@@ -221,6 +221,187 @@
             "description": "",
             "tags": {},
             "defaultProps": null,
+            "extends": [
+                "IClientStorageComponentConfig"
+            ],
+            "properties": [
+                {
+                    "name": "domain",
+                    "decorators": [],
+                    "description": "Кастомный домен",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "ssrCookie",
+                    "decorators": [],
+                    "description": "Куки для режима ssr",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IClientStorageComponentConfig": {
+            "name": "IClientStorageComponentConfig",
+            "moduleName": "components/ClientStorageComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "domain",
+                    "decorators": [],
+                    "description": "Кастомный домен",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "ssrCookie",
+                    "decorators": [],
+                    "description": "Куки для режима ssr",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IHtmlComponent": {
+            "name": "IHtmlComponent",
+            "moduleName": "components/HtmlComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": []
+        },
+        "IHttpComponent": {
+            "name": "IHttpComponent",
+            "moduleName": "components/HttpComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IHttpComponentConfig"
+            ],
+            "properties": [
+                {
+                    "name": "accessTokenKey",
+                    "decorators": [],
+                    "description": "Ключ для хранения токена в куках",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "apiUrl",
+                    "decorators": [],
+                    "description": "Url для http запросов",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageExpiresIn",
+                    "decorators": [],
+                    "description": "Срок хранения токена в хранилище в днях",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageName",
+                    "decorators": [],
+                    "description": "Имя хранилища для токена (local, session, или cookie)",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IHttpComponentConfig": {
+            "name": "IHttpComponentConfig",
+            "moduleName": "components/HttpComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "accessTokenKey",
+                    "decorators": [],
+                    "description": "Ключ для хранения токена в куках",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "apiUrl",
+                    "decorators": [],
+                    "description": "Url для http запросов",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageExpiresIn",
+                    "decorators": [],
+                    "description": "Срок хранения токена в хранилище в днях",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageName",
+                    "decorators": [],
+                    "description": "Имя хранилища для токена (local, session, или cookie)",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IJwtHttpComponentConfig": {
+            "name": "IJwtHttpComponentConfig",
+            "moduleName": "components/JwtHttpComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "refreshTokenKey",
+                    "decorators": [],
+                    "description": "Ключ токена авторизации для локального хранилища",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "refreshTokenRequest",
+                    "decorators": [],
+                    "description": "Запрос на обновление токена авторизации",
+                    "required": false,
+                    "type": "IRefreshTokenRequest",
+                    "example": null
+                }
+            ]
+        },
+        "IRefreshTokenRequest": {
+            "name": "IRefreshTokenRequest",
+            "moduleName": "components/JwtHttpComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
             "extends": [],
             "properties": []
         },
@@ -231,13 +412,15 @@
             "description": "",
             "tags": {},
             "defaultProps": null,
-            "extends": [],
+            "extends": [
+                "ILocaleComponentConfig"
+            ],
             "properties": [
                 {
                     "name": "backendTimeDiff",
                     "decorators": [],
                     "description": "Разница времени с бекендом (в микросекундах)",
-                    "required": true,
+                    "required": false,
                     "type": "null",
                     "example": null
                 },
@@ -245,7 +428,7 @@
                     "name": "backendTimeZone",
                     "decorators": [],
                     "description": "Временная зона бекенда",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null
                 },
@@ -253,7 +436,7 @@
                     "name": "language",
                     "decorators": [],
                     "description": "Язык приложения",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": "ru"
                 },
@@ -261,7 +444,7 @@
                     "name": "sourceLanguage",
                     "decorators": [],
                     "description": "Исходный язык",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": null
                 },
@@ -269,11 +452,72 @@
                     "name": "translations",
                     "decorators": [],
                     "description": "Переводы сообщений",
-                    "required": true,
+                    "required": false,
                     "type": "any",
                     "example": null
                 }
             ]
+        },
+        "ILocaleComponentConfig": {
+            "name": "ILocaleComponentConfig",
+            "moduleName": "components/LocaleComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "backendTimeDiff",
+                    "decorators": [],
+                    "description": "Разница времени с бекендом (в микросекундах)",
+                    "required": false,
+                    "type": "null",
+                    "example": null
+                },
+                {
+                    "name": "backendTimeZone",
+                    "decorators": [],
+                    "description": "Временная зона бекенда",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "language",
+                    "decorators": [],
+                    "description": "Язык приложения",
+                    "required": false,
+                    "type": "string",
+                    "example": "ru"
+                },
+                {
+                    "name": "sourceLanguage",
+                    "decorators": [],
+                    "description": "Исходный язык",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "translations",
+                    "decorators": [],
+                    "description": "Переводы сообщений",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IMetaComponent": {
+            "name": "IMetaComponent",
+            "moduleName": "components/MetaComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": []
         },
         "Model": {
             "name": "Model",
@@ -295,6 +539,33 @@
             "extends": [],
             "properties": []
         },
+        "IMetricsComponent": {
+            "name": "IMetricsComponent",
+            "moduleName": "components/MetricsComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "unlisten",
+                    "decorators": [],
+                    "description": "Отменить прослушивание метрик",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "unsubscribe",
+                    "decorators": [],
+                    "description": "Отписаться от метрик",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                }
+            ]
+        },
         "IResourceComponent": {
             "name": "IResourceComponent",
             "moduleName": "components/ResourceComponent",
@@ -302,7 +573,9 @@
             "description": "",
             "tags": {},
             "defaultProps": null,
-            "extends": [],
+            "extends": [
+                "IResourceComponentConfig"
+            ],
             "properties": [
                 {
                     "name": "RESOURCE_GEETEST_API",
@@ -345,26 +618,10 @@
                     "example": null
                 },
                 {
-                    "name": "_callbacks",
-                    "decorators": [],
-                    "description": "Свойство для хранения обратных вызовов.",
-                    "required": true,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "_components",
-                    "decorators": [],
-                    "description": "Свойство для хранения компонентов.",
-                    "required": true,
-                    "type": "any",
-                    "example": null
-                },
-                {
                     "name": "googleApiKey",
                     "decorators": [],
                     "description": "API-ключ Google для использования Google Maps и других сервисов.",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": null
                 },
@@ -380,8 +637,81 @@
                     "name": "language",
                     "decorators": [],
                     "description": "Языковой код, используемый для загрузки ресурсов.",
-                    "required": true,
+                    "required": false,
                     "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IResourceComponentConfig": {
+            "name": "IResourceComponentConfig",
+            "moduleName": "components/ResourceComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "googleApiKey",
+                    "decorators": [],
+                    "description": "API-ключ Google для использования Google Maps и других сервисов.",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "language",
+                    "decorators": [],
+                    "description": "Языковой код, используемый для загрузки ресурсов.",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "ISocialComponent": {
+            "name": "ISocialComponent",
+            "moduleName": "components/SocialComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "providers",
+                    "decorators": [],
+                    "description": "Провайдеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IStoreComponent": {
+            "name": "IStoreComponent",
+            "moduleName": "components/StoreComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "reducers",
+                    "decorators": [],
+                    "description": "Редьюсеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "store",
+                    "decorators": [],
+                    "description": "Хранилище",
+                    "required": true,
+                    "type": "any",
                     "example": null
                 }
             ]
@@ -395,22 +725,6 @@
             "defaultProps": null,
             "extends": [],
             "properties": [
-                {
-                    "name": "_portalElement",
-                    "decorators": [],
-                    "description": "Элемент портала.",
-                    "required": true,
-                    "type": "HTMLElement",
-                    "example": null
-                },
-                {
-                    "name": "_registeredFields",
-                    "decorators": [],
-                    "description": "Зарегистрированные компоненты полей формы.",
-                    "required": true,
-                    "type": "any",
-                    "example": null
-                },
                 {
                     "name": "components",
                     "decorators": [],
@@ -441,6 +755,126 @@
                     "description": "Иконки для использования в приложении.",
                     "required": true,
                     "type": "{}",
+                    "example": null
+                }
+            ]
+        },
+        "IWebSocketComponent": {
+            "name": "IWebSocketComponent",
+            "moduleName": "components/WebSocketComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IWebSocketComponentConfig"
+            ],
+            "properties": [
+                {
+                    "name": "authHandler",
+                    "decorators": [],
+                    "description": "Хендлер для авторизации",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на закрытие соединения",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onMessage",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на отправку сообщения",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onOpen",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на открытие соединения",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "streams",
+                    "decorators": [],
+                    "description": "Массив streams",
+                    "required": false,
+                    "type": "TStreams",
+                    "example": null
+                },
+                {
+                    "name": "wsUrl",
+                    "decorators": [],
+                    "description": "url для websocket",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IWebSocketComponentConfig": {
+            "name": "IWebSocketComponentConfig",
+            "moduleName": "components/WebSocketComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "authHandler",
+                    "decorators": [],
+                    "description": "Хендлер для авторизации",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на закрытие соединения",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onMessage",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на отправку сообщения",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onOpen",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на открытие соединения",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "streams",
+                    "decorators": [],
+                    "description": "Массив streams",
+                    "required": false,
+                    "type": "TStreams",
+                    "example": null
+                },
+                {
+                    "name": "wsUrl",
+                    "decorators": [],
+                    "description": "url для websocket",
+                    "required": false,
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -725,7 +1159,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "{clientStorage: IClientStorageComponentConfig & IComponentConfig, html: IComponentConfig, http: IHttpComponentConfig & IJwtHttpComponentConfig & IComponentConfig, locale: ILocaleComponentConfig & IComponentConfig, meta: IComponentConfig, pushNotification: IComponentConfig, resource: IResourceComponentConfig & IComponentConfig, store: IComponentConfig, ui: IComponentConfig, ws: IWebSocketComponentConfig & IComponentConfig}",
                     "example": null
                 },
                 {
@@ -833,6 +1267,25 @@
                     "description": "",
                     "required": true,
                     "type": "{}",
+                    "example": null
+                }
+            ]
+        },
+        "IComponentConfig": {
+            "name": "IComponentConfig",
+            "moduleName": "hooks/useApplication",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Record",
                     "example": null
                 }
             ]
@@ -1925,7 +2378,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IHtmlComponent",
                     "example": null
                 },
                 {
@@ -1933,7 +2386,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IHttpComponent",
                     "example": null
                 },
                 {
@@ -1949,7 +2402,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IMetaComponent",
                     "example": null
                 },
                 {
@@ -1973,7 +2426,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IStoreComponent",
                     "example": null
                 },
                 {
@@ -1989,7 +2442,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IWebSocketComponent",
                     "example": null
                 }
             ]
@@ -5315,6 +5768,28 @@
                 }
             ]
         },
+        "ICreateOrEditTaskModalContentViewProps": {
+            "name": "ICreateOrEditTaskModalContentViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Omit<IKanbanModalViewProps",
+                "'modalType'>"
+            ],
+            "properties": [
+                {
+                    "name": "bem",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IBem",
+                    "example": null
+                }
+            ]
+        },
         "IDragEndResult": {
             "name": "IDragEndResult",
             "moduleName": "ui/content/Kanban/Kanban",
@@ -5459,12 +5934,375 @@
                     "example": null
                 },
                 {
+                    "name": "onOpenCreateTaskModal",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "renderTask",
                     "decorators": [],
                     "description": "",
                     "required": true,
                     "type": "{}",
                     "example": null
+                },
+                {
+                    "name": "task",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IKanbanTask",
+                    "example": null
+                }
+            ]
+        },
+        "IKanbanModalViewProps": {
+            "name": "IKanbanModalViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IModalProps"
+            ],
+            "properties": [
+                {
+                    "name": "assigners",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IDropDownFieldItem[]",
+                    "example": null
+                },
+                {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Коллекция кнопок, которая отобразится в нижней секции Modal",
+                    "required": false,
+                    "type": "IButtonProps[]",
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Кастомный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeAfterMs",
+                    "decorators": [],
+                    "description": "Время в миллисекундах, через которое автоматически произойдет закрытие Modal.",
+                    "required": false,
+                    "type": "number",
+                    "example": "1000"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, в течение которого будет происходить анимация закрытия Modal.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
+                },
+                {
+                    "name": "columnId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "columns",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IKanbanColumn[]",
+                    "example": null
+                },
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "Компонент, который отрендерится внутри Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
+                },
+                {
+                    "name": "componentProps",
+                    "decorators": [],
+                    "description": "Свойства для внутреннего компонента",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "group",
+                    "decorators": [],
+                    "description": "Группа Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'modal'"
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "Порядковый номер Modal",
+                    "required": false,
+                    "type": "number",
+                    "example": "0"
+                },
+                {
+                    "name": "isClosing",
+                    "decorators": [],
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "modalType",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "default",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Обработчик срабатывает при закрытии Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onSubmit",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onToggleModalType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "shouldCloseOnEsc",
+                    "decorators": [],
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "shouldCloseOnOverlayClick",
+                    "decorators": [],
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'middle'"
+                },
+                {
+                    "name": "submitButtonLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "tags",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ITaskTag[]",
+                    "example": null
+                },
+                {
+                    "name": "task",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IKanbanTask",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Заявка отправлена на модерацию'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IKanbanProps": {
+            "name": "IKanbanProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IKanbanConfig",
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "assigners",
+                    "decorators": [],
+                    "description": "Массив исполнителей, которых можно назначить для выполнения задачи",
+                    "required": false,
+                    "type": "ITaskAssigner[]",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "columns",
+                    "decorators": [],
+                    "description": "Коллекция с наименованиями и свойствами колонок в таблице",
+                    "required": true,
+                    "type": "IKanbanColumn[]",
+                    "example": "[\n            {\n             id: 1,\n             title: 'column 1',\n             tasks: [{ content: 'item 1', id: 1 }],\n            },\n            {\n             id: 2,\n             title: 'column 2',\n             tasks: [],\n            }\n         ]"
+                },
+                {
+                    "name": "dndContext",
+                    "decorators": [],
+                    "description": "Общий контекст обертка из библиотеки react-beautiful-dnd",
+                    "required": true,
+                    "type": "any",
+                    "example": "DragDropContext"
+                },
+                {
+                    "name": "draggableComponent",
+                    "decorators": [],
+                    "description": "Компонент обертка для регистрации элемента который можно переместить из библиотеки react-beautiful-dnd",
+                    "required": true,
+                    "type": "any",
+                    "example": "Draggable"
+                },
+                {
+                    "name": "droppableComponent",
+                    "decorators": [],
+                    "description": "Компонент обертка для инициализации области куда можно переместить элемент из библиотеки react-beautiful-dnd",
+                    "required": true,
+                    "type": "any",
+                    "example": "Droppable"
+                },
+                {
+                    "name": "kanbanId",
+                    "decorators": [],
+                    "description": "Идентификатор канбан доски",
+                    "required": false,
+                    "type": "string",
+                    "example": "TasksKanban"
+                },
+                {
+                    "name": "lastTaskId",
+                    "decorators": [],
+                    "description": "Идентификатор последней созданной задачи, нужен для определения последовательности id для новых задач",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "onCreateTask",
+                    "decorators": [],
+                    "description": "Обработчик события создания карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onDragEnd",
+                    "decorators": [],
+                    "description": "Обработчик события окончания перетаскивания карточки или колонки\nВ result передается объект с информацией о событии",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{\n    draggableId: 1,\n    type: 'task',\n    source: {\n        index: 0,\n        droppableId: 2\n    },\n    reason: 'DROP',\n    mode: 'FLUID',\n    destination: {\n        droppableId: 2,\n        index: 1\n    },\n    combine: null\n}"
+                },
+                {
+                    "name": "onEditTask",
+                    "decorators": [],
+                    "description": "Обработчик события редактирования карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tags",
+                    "decorators": [],
+                    "description": "Массив тегов для задач",
+                    "required": false,
+                    "type": "ITaskTag[]",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
                 }
             ]
         },
@@ -5482,11 +6320,19 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "ITaskAssigner",
                     "example": null
                 },
                 {
                     "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "fullDescription",
                     "decorators": [],
                     "description": "",
                     "required": false,
@@ -5506,15 +6352,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "status",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "ITaskPriority",
                     "example": null
                 },
                 {
@@ -5535,6 +6373,163 @@
                 }
             ]
         },
+        "IKanbanTaskDetailsModalViewProps": {
+            "name": "IKanbanTaskDetailsModalViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IModalProps"
+            ],
+            "properties": [
+                {
+                    "name": "bem",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IBem",
+                    "example": null
+                },
+                {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Коллекция кнопок, которая отобразится в нижней секции Modal",
+                    "required": false,
+                    "type": "IButtonProps[]",
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Кастомный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeAfterMs",
+                    "decorators": [],
+                    "description": "Время в миллисекундах, через которое автоматически произойдет закрытие Modal.",
+                    "required": false,
+                    "type": "number",
+                    "example": "1000"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, в течение которого будет происходить анимация закрытия Modal.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
+                },
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "Компонент, который отрендерится внутри Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
+                },
+                {
+                    "name": "componentProps",
+                    "decorators": [],
+                    "description": "Свойства для внутреннего компонента",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "group",
+                    "decorators": [],
+                    "description": "Группа Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'modal'"
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "Порядковый номер Modal",
+                    "required": false,
+                    "type": "number",
+                    "example": "0"
+                },
+                {
+                    "name": "isClosing",
+                    "decorators": [],
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Обработчик срабатывает при закрытии Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "shouldCloseOnEsc",
+                    "decorators": [],
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "shouldCloseOnOverlayClick",
+                    "decorators": [],
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'middle'"
+                },
+                {
+                    "name": "task",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IKanbanTask",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Заявка отправлена на модерацию'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
         "IKanbanTaskViewProps": {
             "name": "IKanbanTaskViewProps",
             "moduleName": "ui/content/Kanban/Kanban",
@@ -5544,6 +6539,14 @@
             "defaultProps": null,
             "extends": [],
             "properties": [
+                {
+                    "name": "columnId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
                 {
                     "name": "draggableComponent",
                     "decorators": [],
@@ -5561,11 +6564,89 @@
                     "example": null
                 },
                 {
+                    "name": "onOpenTaskDetailsModal",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "task",
                     "decorators": [],
                     "description": "",
                     "required": true,
                     "type": "IKanbanTask",
+                    "example": null
+                }
+            ]
+        },
+        "ITaskAssigner": {
+            "name": "ITaskAssigner",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "avatar",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{src: string}",
+                    "example": null
+                },
+                {
+                    "name": "firstName",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "lastName",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "ITaskPriority": {
+            "name": "ITaskPriority",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -5615,12 +6696,20 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "assigners",
+                    "decorators": [],
+                    "description": "Массив исполнителей, которых можно назначить для выполнения задачи",
+                    "required": false,
+                    "type": "ITaskAssigner[]",
+                    "example": null
+                },
+                {
                     "name": "columns",
                     "decorators": [],
-                    "description": "Колонки канбан доски",
-                    "required": false,
+                    "description": "Коллекция с наименованиями и свойствами колонок в таблице",
+                    "required": true,
                     "type": "IKanbanColumn[]",
-                    "example": null
+                    "example": "[\n            {\n             id: 1,\n             title: 'column 1',\n             tasks: [{ content: 'item 1', id: 1 }],\n            },\n            {\n             id: 2,\n             title: 'column 2',\n             tasks: [],\n            }\n         ]"
                 },
                 {
                     "name": "kanbanId",
@@ -5631,11 +6720,43 @@
                     "example": "TasksKanban"
                 },
                 {
+                    "name": "lastTaskId",
+                    "decorators": [],
+                    "description": "Идентификатор последней созданной задачи, нужен для определения последовательности id для новых задач",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "onCreateTask",
+                    "decorators": [],
+                    "description": "Обработчик события создания карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "onDragEnd",
                     "decorators": [],
-                    "description": "Обработчик события окончания перетаскивания карточки или колонки",
-                    "required": true,
+                    "description": "Обработчик события окончания перетаскивания карточки или колонки\nВ result передается объект с информацией о событии",
+                    "required": false,
                     "type": "{}",
+                    "example": "{\n    draggableId: 1,\n    type: 'task',\n    source: {\n        index: 0,\n        droppableId: 2\n    },\n    reason: 'DROP',\n    mode: 'FLUID',\n    destination: {\n        droppableId: 2,\n        index: 1\n    },\n    combine: null\n}"
+                },
+                {
+                    "name": "onEditTask",
+                    "decorators": [],
+                    "description": "Обработчик события редактирования карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "tags",
+                    "decorators": [],
+                    "description": "Массив тегов для задач",
+                    "required": false,
+                    "type": "ITaskTag[]",
                     "example": null
                 }
             ]
@@ -11693,6 +12814,196 @@
                     "required": false,
                     "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
+                }
+            ]
+        },
+        "IEmailFieldProps": {
+            "name": "IEmailFieldProps",
+            "moduleName": "ui/form/EmailField/EmailField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IBaseFieldProps",
+                "IFieldWrapperInputProps"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "fieldLayoutClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Input ID для связи поля с label",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "Свойства для элемента input",
+                    "required": false,
+                    "type": "InputHTMLAttributes",
+                    "example": "{onKeyDown: ...}"
+                },
+                {
+                    "name": "isRenderWithoutFieldLayout",
+                    "decorators": [],
+                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при изменении данных",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Подсказка для поля",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "showClear",
+                    "decorators": [],
+                    "description": "Показывать иконку очищения поля",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Значение для поля",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента отображения",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{customHandler: () => {...}}"
                 }
             ]
         },
@@ -29111,6 +30422,14 @@
             "type": "ContentType | \"group\" | string",
             "example": null
         },
+        "IElementInputType": {
+            "name": "IElementInputType",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "\"button\" | \"checkbox\" | \"color\" | \"date\" | \"datetime-local\" | \"email\" | \"file\" | \"hidden\" | \"image\" | \"month\" | \"number\" | \"password\" | \"radio\" | \"range\" | \"reset\" | \"search\" | \"submit\" | \"tel\" | \"text\" | \"time\" | \"url\" | \"week\" | string",
+            "example": null
+        },
         "IMaskFieldProps": {
             "name": "IMaskFieldProps",
             "decorators": [],
@@ -29281,8 +30600,112 @@
             "title": "Client Storage Component",
             "description": "Слой хранения данных в браузере (cookie, local/session storage) или ReactNative",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "domain",
+                    "decorators": [],
+                    "description": "Кастомный домен",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "get",
+                    "decorators": [],
+                    "description": "Получить значение из хранилища.",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "storageName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "remove",
+                    "decorators": [],
+                    "description": "Удалить значение из хранилища.",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "storageName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "set",
+                    "decorators": [],
+                    "description": "Установить значение в хранилище.",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "value",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "storageName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "expires",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/HtmlComponent": {
             "name": "default",
@@ -29291,7 +30714,96 @@
             "description": "Хелпер для работы с БЭМ классами и DOM элементами",
             "tags": {},
             "properties": [],
-            "methods": []
+            "methods": [
+                {
+                    "name": "addClass",
+                    "decorators": [],
+                    "description": "Метод для добавления css-класса к элементу",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "node",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "className",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "bem",
+                    "decorators": [],
+                    "description": "Утилита для создания css-классов по БЭМ",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "blockName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "classNames",
+                    "decorators": [],
+                    "description": "Метод для соединения нескольких classNames",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "names",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "removeClass",
+                    "decorators": [],
+                    "description": "Метод для удаления css-класса у элемента",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "node",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "className",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/HttpComponent": {
             "name": "default",
@@ -29299,23 +30811,410 @@
             "title": "Http Component",
             "description": "Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "accessTokenKey",
+                    "decorators": [],
+                    "description": "Ключ для хранения токена в куках",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "apiUrl",
+                    "decorators": [],
+                    "description": "Url для http запросов",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageExpiresIn",
+                    "decorators": [],
+                    "description": "Срок хранения токена в хранилище в днях",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageName",
+                    "decorators": [],
+                    "description": "Имя хранилища для токена (local, session, или cookie)",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "afterRequest",
+                    "decorators": [],
+                    "description": "Метод, который вызывается после запроса",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "response",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "options",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IHttpRequestOptions",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "delete",
+                    "decorators": [],
+                    "description": "Вызов метода delete",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "url",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{}",
+                            "example": null
+                        },
+                        {
+                            "name": "options",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IHttpRequestOptions",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "get",
+                    "decorators": [],
+                    "description": "Вызов метода get",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "url",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{}",
+                            "example": null
+                        },
+                        {
+                            "name": "options",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IHttpRequestOptions",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getAccessToken",
+                    "decorators": [],
+                    "description": "Получение токена",
+                    "required": false,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getAxiosConfig",
+                    "decorators": [],
+                    "description": "Получение конфига для axios",
+                    "required": false,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getAxiosInstance",
+                    "decorators": [],
+                    "description": "Получение экземпляра axios",
+                    "required": false,
+                    "type": "Promise",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getUrl",
+                    "decorators": [],
+                    "description": "Получение url по методу",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onLogin",
+                    "decorators": [],
+                    "description": "Метод, который можно вызвать при login",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{accessToken: string}",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onLogout",
+                    "decorators": [],
+                    "description": "Метод, который можно вызвать при logout",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "post",
+                    "decorators": [],
+                    "description": "Вызов метода post",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "url",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{}",
+                            "example": null
+                        },
+                        {
+                            "name": "options",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IHttpRequestOptions",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "removeAccessToken",
+                    "decorators": [],
+                    "description": "Удаление токена",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "resetConfig",
+                    "decorators": [],
+                    "description": "Сбросить конфиг",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "send",
+                    "decorators": [],
+                    "description": "Вызов http-метода",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "method",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "url",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "params",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "{}",
+                            "example": null
+                        },
+                        {
+                            "name": "options",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IHttpRequestOptions",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setAccessToken",
+                    "decorators": [],
+                    "description": "Изменение токена",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setCsrfToken",
+                    "decorators": [],
+                    "description": "Изменение csrf токена",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/JwtHttpComponent": {
             "name": "default",
             "moduleName": "components/JwtHttpComponent",
-            "title": "",
-            "description": "",
+            "title": "JwtHttpComponent",
+            "description": "Вариация HttpComponent с функционалом обновления токена авторизации",
             "tags": {},
-            "properties": [],
+            "properties": [
+                {
+                    "name": "accessTokenKey",
+                    "decorators": [],
+                    "description": "Ключ для хранения токена в куках",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "apiUrl",
+                    "decorators": [],
+                    "description": "Url для http запросов",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageExpiresIn",
+                    "decorators": [],
+                    "description": "Срок хранения токена в хранилище в днях",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "clientStorageName",
+                    "decorators": [],
+                    "description": "Имя хранилища для токена (local, session, или cookie)",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "refreshTokenKey",
+                    "decorators": [],
+                    "description": "Ключ токена авторизации для локального хранилища",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "refreshTokenRequest",
+                    "decorators": [],
+                    "description": "Запрос на обновление токена авторизации",
+                    "required": true,
+                    "type": "IRefreshTokenRequest",
+                    "example": null
+                }
+            ],
             "methods": []
         },
         "components/LocaleComponent": {
             "name": "default",
             "moduleName": "components/LocaleComponent",
             "title": "Locale Component",
-            "description": "Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны\n\nПример строки: `{__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}`\n",
+            "description": "Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны",
             "tags": {},
             "properties": [
                 {
@@ -29447,16 +31346,185 @@
             "description": "Компонент для работы с мета-данными моделей и типами приложения (appType)",
             "tags": {},
             "properties": [],
-            "methods": []
+            "methods": [
+                {
+                    "name": "getModel",
+                    "decorators": [],
+                    "description": "Получить модель",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getType",
+                    "decorators": [],
+                    "description": "Получить тип",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "normalizeModel",
+                    "decorators": [],
+                    "description": "Форматирование модели модели",
+                    "required": false,
+                    "type": "{attributes: any[], primaryKey: any}",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "inputModel",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Model",
+                            "example": null
+                        },
+                        {
+                            "name": "defaultModel",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "normalizeName",
+                    "decorators": [],
+                    "description": "Форматирование названия модели",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setModel",
+                    "decorators": [],
+                    "description": "Изменить модель",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        },
+                        {
+                            "name": "item",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Model",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "setType",
+                    "decorators": [],
+                    "description": "Изменить тип",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        },
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Record",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/MetricsComponent": {
             "name": "default",
             "moduleName": "components/MetricsComponent",
-            "title": "",
-            "description": "",
+            "title": "Metrics Component",
+            "description": "Компонент для добавления метрик в приложение (например яндекс метрики)",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "unlisten",
+                    "decorators": [],
+                    "description": "Отменить прослушивание метрик",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "unsubscribe",
+                    "decorators": [],
+                    "description": "Отписаться от метрик",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "setCounters",
+                    "decorators": [],
+                    "description": "Поменять счетчики",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "values",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/ResourceComponent": {
             "name": "default",
@@ -29503,22 +31571,6 @@
                     "description": "URL для загрузки Yandex Maps API.",
                     "required": true,
                     "type": "\"https://api-maps.yandex.ru/2.1/\"",
-                    "example": null
-                },
-                {
-                    "name": "_callbacks",
-                    "decorators": [],
-                    "description": "Свойство для хранения обратных вызовов.",
-                    "required": true,
-                    "type": "any",
-                    "example": null
-                },
-                {
-                    "name": "_components",
-                    "decorators": [],
-                    "description": "Свойство для хранения компонентов.",
-                    "required": true,
-                    "type": "any",
                     "example": null
                 },
                 {
@@ -29660,8 +31712,45 @@
             "title": "Social Component",
             "description": "Провайдер для социальных сетей. Обеспечивает вызов окна соц сети для oauth авторизации",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "providers",
+                    "decorators": [],
+                    "description": "Провайдеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "init",
+                    "decorators": [],
+                    "description": "Инициализация компонента",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "start",
+                    "decorators": [],
+                    "description": "Старт",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "socialName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/StoreComponent": {
             "name": "default",
@@ -29669,8 +31758,160 @@
             "title": "Store Component",
             "description": "Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "reducers",
+                    "decorators": [],
+                    "description": "Редьюсеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "store",
+                    "decorators": [],
+                    "description": "Хранилище",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "addReducers",
+                    "decorators": [],
+                    "description": "Добавление редьюсеров",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "asyncReducers",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "configurate",
+                    "decorators": [],
+                    "description": "Конфигурация",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "dispatch",
+                    "decorators": [],
+                    "description": "Метод для dispatch",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "errorHandler",
+                    "decorators": [],
+                    "description": "Метод, который вызывается при ошибке",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "error",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "action",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getState",
+                    "decorators": [],
+                    "description": "Получение состояние",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "init",
+                    "decorators": [],
+                    "description": "Инициализация",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IStoreComponentConfig",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "initStore",
+                    "decorators": [],
+                    "description": "Инициализация хранилища",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IStoreComponentConfig",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "subscribe",
+                    "decorators": [],
+                    "description": "Подписка",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "handler",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/UiComponent": {
             "name": "default",
@@ -29679,22 +31920,6 @@
             "description": "Компонент для подгрузки и конфигурации UI компонентов приложения",
             "tags": {},
             "properties": [
-                {
-                    "name": "_portalElement",
-                    "decorators": [],
-                    "description": "Элемент портала.",
-                    "required": true,
-                    "type": "HTMLDivElement",
-                    "example": null
-                },
-                {
-                    "name": "_registeredFields",
-                    "decorators": [],
-                    "description": "Зарегистрированные компоненты полей формы.",
-                    "required": true,
-                    "type": "any",
-                    "example": null
-                },
                 {
                     "name": "components",
                     "decorators": [],
@@ -29850,7 +32075,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "any",
+                            "type": "string",
                             "example": null
                         },
                         {
@@ -29858,7 +32083,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "any",
+                            "type": "string",
                             "example": null
                         },
                         {
@@ -29866,7 +32091,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "any",
+                            "type": "string",
                             "example": null
                         }
                     ]
@@ -30061,11 +32286,176 @@
         "components/WebSocketComponent": {
             "name": "default",
             "moduleName": "components/WebSocketComponent",
-            "title": "",
-            "description": "",
+            "title": "WebSocket Component",
+            "description": "Компонент для создания websocket взаимодействия",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "authHandler",
+                    "decorators": [],
+                    "description": "Хендлер для авторизации",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на закрытие соединения",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onMessage",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на отправку сообщения",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onOpen",
+                    "decorators": [],
+                    "description": "Функция, которая вызывается на открытие соединения",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "streams",
+                    "decorators": [],
+                    "description": "Массив streams",
+                    "required": true,
+                    "type": "TStreams",
+                    "example": null
+                },
+                {
+                    "name": "wsUrl",
+                    "decorators": [],
+                    "description": "url для websocket",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "close",
+                    "decorators": [],
+                    "description": "Закрытие websocket соединения",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "open",
+                    "decorators": [],
+                    "description": "Открытие websocket соединения",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "closePrevious",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "boolean",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "subscribe",
+                    "decorators": [],
+                    "description": "Подписка на streams",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "streams",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "subscribeStream",
+                    "decorators": [],
+                    "description": "Подписка на stream",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "stream",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "unsubscribe",
+                    "decorators": [],
+                    "description": "Отписка от streams",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "streams",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "unsubscribeStream",
+                    "decorators": [],
+                    "description": "Отписка от stream",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "stream",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/social/FacebookProvider": {
             "name": "default",
@@ -30405,6 +32795,310 @@
             "description": "",
             "tags": {}
         },
+        "ui/content/Kanban/enums/KanbanModalTypeEnum": {
+            "name": "default",
+            "moduleName": "ui/content/Kanban/enums/KanbanModalTypeEnum",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "CREATE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "DETAILS",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "EDIT",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getCssClass",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getCssClasses",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDropdownItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, label: string}[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getKeys",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getLabels",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getModalIconByType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getModalIcons",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                }
+            ]
+        },
+        "ui/content/Kanban/enums/KanbanPrioritiesEnum": {
+            "name": "default",
+            "moduleName": "ui/content/Kanban/enums/KanbanPrioritiesEnum",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "DEFAULT",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "HIGH",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "MIDDLE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getColorByType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getColorsByType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getCssClass",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getCssClasses",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDefaultSelectedPriorityId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDropdownItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, label: string}[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getKeys",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getLabels",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getPrioritiesArray",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ITaskPriority[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getPriorityById",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
         "ui/content/Menu/Menu": {
             "name": "default",
             "moduleName": "ui/content/Menu/Menu",
@@ -30499,6 +33193,13 @@
         "ui/form/DropDownField/DropDownField": {
             "name": "default",
             "moduleName": "ui/form/DropDownField/DropDownField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/EmailField/EmailField": {
+            "name": "default",
+            "moduleName": "ui/form/EmailField/EmailField",
             "title": "",
             "description": "",
             "tags": {}

@@ -26,11 +26,43 @@ export interface ModelAttribute {
     toStringConverter?: (value: any, type: string, item: any) => string | null,
 }
 
+export interface IMetaComponent {
+    /**
+     * Изменить модель
+     */
+    setModel(name: string, item: Model): void,
+
+    /**
+     * Получить модель
+     */
+    getModel(name: string): Model,
+
+    /**
+     * Изменить тип
+     */
+    setType(name: string, config: Record<string, any>): void,
+
+    /**
+     * Получить тип
+     */
+    getType(name: string): any,
+
+    /**
+     * Форматирование названия модели
+     */
+    normalizeName(name: string): string,
+
+    /**
+     * Форматирование модели модели
+     */
+    normalizeModel(inputModel: Model, defaultModel: Model | any): Model,
+}
+
 /**
  * Meta Component
  * Компонент для работы с мета-данными моделей и типами приложения (appType)
  */
-export default class MetaComponent {
+export default class MetaComponent implements IMetaComponent {
     defaultPrimaryKey: string;
 
     defaultAttributeType: string;
@@ -61,7 +93,7 @@ export default class MetaComponent {
         return this.models[name] || null;
     }
 
-    setType(name, config) {
+    setType(name: string, config: Record<string, any>) {
         this.types[name] = config;
     }
 
@@ -69,7 +101,7 @@ export default class MetaComponent {
         return this.types[name] || null;
     }
 
-    normalizeName(name) {
+    normalizeName(name: string) {
         return name.replace(/\\/g, '.').replace(/^\./, '');
     }
 
@@ -127,7 +159,7 @@ export default class MetaComponent {
         };
     }
 
-    _defaultTypes() {
+    private _defaultTypes() {
         return {
             autoTime: {
                 jsType: 'string',

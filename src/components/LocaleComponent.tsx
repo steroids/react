@@ -6,36 +6,38 @@ import _isObject from 'lodash-es/isObject';
 import 'dayjs/locale/it';
 import 'dayjs/locale/ru';
 
-/**
- * Интерфейс для LocaleComponent
- */
-export interface ILocaleComponent {
+export interface ILocaleComponentConfig {
     /**
      * Разница времени с бекендом (в микросекундах)
      */
-    backendTimeDiff: null;
+    backendTimeDiff?: null;
 
     /**
      * Временная зона бекенда
      */
-    backendTimeZone: any;
+    backendTimeZone?: any;
 
     /**
      * Язык приложения
      * @example ru
      */
-    language: string;
+    language?: string;
 
     /**
      * Исходный язык
      */
-    sourceLanguage: string;
+    sourceLanguage?: string;
 
     /**
      * Переводы сообщений
      */
-    translations: any;
+    translations?: any;
+}
 
+/**
+ * Интерфейс для LocaleComponent
+ */
+export interface ILocaleComponent extends ILocaleComponentConfig {
     /**
      * Получение экземпляра `dayjs` с учетом временной зоны бекенда
      * @param date Дата
@@ -64,8 +66,6 @@ export interface ILocaleComponent {
 /**
  * Locale Component
  * Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны
- *
- * Пример строки: `{__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}`
  */
 export default class LocaleComponent implements ILocaleComponent {
     backendTimeDiff: null;
@@ -149,7 +149,7 @@ export default class LocaleComponent implements ILocaleComponent {
         return message;
     }
 
-    _pasteComponents(message, components) {
+    private _pasteComponents(message, components) {
         if (Object.keys(components).length === 0) {
             return message;
         }

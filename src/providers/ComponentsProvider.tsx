@@ -1,5 +1,10 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
+import {IHttpComponent} from 'src/components/HttpComponent';
+import {IHtmlComponent} from 'src/components/HtmlComponent';
+import {IWebSocketComponent} from 'src/components/WebSocketComponent';
+import {IMetaComponent} from 'src/components/MetaComponent';
+import {IStoreComponent} from 'src/components/StoreComponent';
 import {IClientStorageComponent} from '../components/ClientStorageComponent';
 import {ILocaleComponent} from '../components/LocaleComponent';
 import {IUiApplicationComponent} from '../components/UiComponent';
@@ -13,20 +18,20 @@ declare global {
 
 export interface IComponents {
     clientStorage?: IClientStorageComponent,
-    html?: any,
-    http?: any,
+    html?: IHtmlComponent,
+    http?: IHttpComponent,
     locale?: ILocaleComponent,
-    store?: any,
+    store?: IStoreComponent,
     ui?: IUiApplicationComponent,
     resource?: IResourceComponent,
-    ws?: any,
+    ws?: IWebSocketComponent,
     pushNotification?: any,
-    meta?: any,
+    meta?: IMetaComponent,
     [key: string]: any,
 }
 
 export interface IComponentsProviderProps extends PropsWithChildren<any> {
-    components: IComponents
+    components: IComponents,
 }
 
 export const ComponentsContext = React.createContext({} as IComponents);

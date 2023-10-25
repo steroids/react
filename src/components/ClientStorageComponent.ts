@@ -3,10 +3,22 @@
 import * as cookie from 'js-cookie';
 import dayjs from 'dayjs';
 
+export interface IClientStorageComponentConfig {
+    /**
+     * Кастомный домен
+     */
+    domain?: string,
+
+    /**
+     * Куки для режима ssr
+     */
+    ssrCookie?: any,
+}
+
 /**
  * Интерфейс для ClientStorageComponent
  */
-export interface IClientStorageComponent {
+export interface IClientStorageComponent extends IClientStorageComponentConfig {
     /**
      * Получить значение из хранилища.
      * @param name Имя записи.
@@ -20,7 +32,7 @@ export interface IClientStorageComponent {
      * @param name Имя записи.
      * @param value Значение записи.
      * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
-     * @param expires (Необязательный) Срок действия записи в миллисекундах.
+     * @param expires (Необязательный) Срок действия записи в днях.
      */
     set(name: string, value: string, storageName?: 'local' | 'session' | 'cookie', expires?: number | null): void;
 
@@ -80,11 +92,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         this._ssrCookie = config?.ssrCookie;
     }
 
-    /**
-     * @param {string} name
-     * @param {string} [storageName]
-     * @returns {*}
-     */
     get(name, storageName) {
         storageName = storageName || this.STORAGE_LOCAL;
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {
@@ -98,12 +105,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         return process.env.IS_SSR ? this._ssrCookie.get(name) : cookie.get(name);
     }
 
-    /**
-     * @param {string} name
-     * @param {*} value
-     * @param {string} [storageName]
-     * @param {number|null} [expires]
-     */
     set(name, value, storageName, expires = null) {
         storageName = storageName || this.STORAGE_LOCAL;
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {
@@ -127,11 +128,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         }
     }
 
-    /**
-     *
-     * @param {string} name
-     * @param {string} [storageName]
-     */
     remove(name, storageName) {
         storageName = storageName || this.STORAGE_LOCAL;
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {

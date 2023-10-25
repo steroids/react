@@ -13,11 +13,120 @@ interface IHttpRequestOptions {
     responseType?: string,
 }
 
+export interface IHttpComponentConfig {
+    /**
+     * Url для http запросов
+     */
+    apiUrl?: string,
+
+    /**
+     * Ключ для хранения токена в куках
+     */
+    accessTokenKey?: string,
+
+    /**
+     * Имя хранилища для токена (local, session, или cookie)
+     */
+    clientStorageName?: string,
+
+    /**
+     * Срок хранения токена в хранилище в днях
+     */
+    clientStorageExpiresIn?: number,
+}
+
+export interface IHttpComponent extends IHttpComponentConfig {
+    /**
+     * Получение конфига для axios
+     * @returns Конфиг для axios
+     */
+    getAxiosConfig(): Promise<any>;
+
+    /**
+     * Изменение csrf токена
+     * @param {string} value
+     */
+    setCsrfToken(value: string): void;
+
+    /**
+     * Удаление токена
+     */
+    removeAccessToken(): void;
+
+    /**
+     * Изменение токена
+     * @param {string} value
+     */
+    setAccessToken(value: string): any;
+
+    /**
+     * Получение токена
+     * @returns {string}
+     */
+    getAccessToken(): Promise<any>;
+
+    /**
+     * Сбросить конфиг
+     */
+    resetConfig(): void;
+
+    /**
+     * Метод, который можно вызвать при logout
+     */
+    onLogout(): void;
+
+    /**
+     * Метод, который можно вызвать при login
+     * @param {{accessToken: string}} params
+     */
+    onLogin(params: {accessToken: string}): void;
+
+    /**
+     * Получение url по методу
+     * @param {string} method
+     * @returns {string} url
+     */
+    getUrl(method: string): string;
+
+    /**
+     * Получение экземпляра axios
+     * @returns Экземпляр axios
+     */
+    getAxiosInstance(): Promise<any>;
+
+    /**
+     * Вызов метода get
+     */
+    get(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
+    /**
+     * Вызов метода post
+     */
+    post(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
+    /**
+     * Вызов метода delete
+     */
+    delete(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
+    /**
+     * Вызов http-метода
+     */
+    send(method: string, url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+
+    /**
+     * Метод, который вызывается после запроса
+     */
+    afterRequest(response: any, config: Record<string, any>, options: IHttpRequestOptions): Promise<any>;
+
+    [key: string]: any,
+}
+
 /**
  * Http Component
  * Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.
  */
-export default class HttpComponent {
+export default class HttpComponent implements IHttpComponent {
     accessTokenKey = 'accessToken';
 
     apiUrl: string;
@@ -104,10 +213,7 @@ export default class HttpComponent {
         return config;
     }
 
-    /**
-     * @param {string} value
-     */
-    setCsrfToken(value) {
+    setCsrfToken(value: string) {
         this._csrfToken = value;
         this.resetConfig();
     }
@@ -121,10 +227,7 @@ export default class HttpComponent {
         );
     }
 
-    /**
-     * @param {string} value
-     */
-    setAccessToken(value) {
+    setAccessToken(value: string) {
         this._accessToken = value;
         this.resetConfig();
         this._components.clientStorage.set(
@@ -135,9 +238,6 @@ export default class HttpComponent {
         );
     }
 
-    /**
-     * @returns {string}
-     */
     async getAccessToken() {
         if (this._accessToken === false) {
             this._accessToken = await this._components.clientStorage.get(
@@ -169,7 +269,7 @@ export default class HttpComponent {
         return this._axios;
     }
 
-    getUrl(method) {
+    getUrl(method: string) {
         if (method === null && this._isWindowAvailable) {
             method = window.location.pathname;
         }
@@ -224,7 +324,7 @@ export default class HttpComponent {
         );
     }
 
-    _send(method, config, options: IHttpRequestOptions) {
+    private _send(method, config, options: IHttpRequestOptions) {
         const axiosConfig = {
             ...config,
             url: this.getUrl(method),
@@ -266,7 +366,7 @@ export default class HttpComponent {
         return this._sendAxios(axiosConfig, options);
     }
 
-    _sendAxios(config, options: IHttpRequestOptions) {
+    private _sendAxios(config, options: IHttpRequestOptions) {
         return this.getAxiosInstance()
             .then(instance => instance(config))
             .then(response => this.afterRequest(response, config, options).then(newResponse => newResponse || response))
@@ -328,7 +428,7 @@ export default class HttpComponent {
         return response;
     }
 
-    _onTwoFactor(providerName) {
+    private _onTwoFactor(providerName) {
         return new Promise((resolve) => {
             const store = this._components.store;
             const TwoFactorModal = require('../ui/modal/TwoFactorModal').default;

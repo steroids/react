@@ -28,7 +28,7 @@ export interface IFieldSetProps extends IFormContext {
     view?: CustomView,
 
     /**
-     * Дополнительный CSS-класс для \<fieldset\>...\<\/fieldset\>
+     * Дополнительный CSS-класс для '<fieldset>...</fieldset>'
      */
     className?: CssClassName,
 

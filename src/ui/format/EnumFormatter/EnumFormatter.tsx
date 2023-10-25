@@ -15,7 +15,7 @@ export interface IEnumFormatterProps {
     /**
      * Перечисление элементов.
      * 1) Может быть строкой вида: `app.geo.enums.Cities`
-     * 2) Массивом: [{id: 1, label: "London"}]
+     * 2) Массивом: ['{'id: 1, label: "London"'}']
      */
     items?: DataProviderItems;
 

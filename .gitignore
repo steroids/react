@@ -69,7 +69,7 @@ Thumbs.db
 
 src/docs-autogen-result.json
 src/en.json
-build/docs-autogen-raw.json
+docs/docs-autogen-raw.json
 /dist
 
 /.yarnrc.yml

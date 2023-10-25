@@ -152,7 +152,7 @@ export interface IFormProps extends IUiComponent {
     addressBar?: boolean | IAddressBarConfig,
 
     /**
-     * Если в форме есть элементы \<input\>, то произойдет автоматическая фокусировка на первом из них
+     * Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них
      * @example true
      */
     autoFocus?: boolean;

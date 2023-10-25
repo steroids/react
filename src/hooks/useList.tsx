@@ -193,7 +193,7 @@ export interface IListConfig {
     initialTotal?: number,
 
     /**
-     * Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]
+     * Включает обработку вложенных данных из items
      */
     hasTreeItems?: boolean,
 }

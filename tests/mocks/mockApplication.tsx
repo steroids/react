@@ -22,7 +22,7 @@ export default function MockApplication(props: IMockApplicationProps) {
                 className: HttpComponent,
             },
             store: {
-                reducers: require('../../src/reducers/index').default,
+                reducers: require('../mocks/reducersMock').default,
                 ...props.config?.store,
             },
             metrics: {

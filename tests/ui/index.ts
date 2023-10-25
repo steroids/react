@@ -14,6 +14,18 @@ export default {
     'content.SliderView': {
         lazy: () => require('./content/Slider/SliderMockView').default,
     },
+    'content.KanbanView': {
+        lazy: () => require('./content/Kanban/mockViews/KanbanMockView').default,
+    },
+    'content.KanbanColumnView': {
+        lazy: () => require('./content/Kanban/mockViews/KanbanColumnMockView').default,
+    },
+    'content.KanbanTaskView': {
+        lazy: () => require('./content/Kanban/mockViews/KanbanTaskMockView').default,
+    },
+    'content.KanbanModalView': {
+        lazy: () => require('./content/Kanban/mockViews/KanbanModal/KanbanModalMockView').default,
+    },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },
@@ -34,6 +46,9 @@ export default {
     },
     'content.MenuItemView': {
         lazy: () => require('./content/Menu/MenuItemMockView').default,
+    },
+    'content.BadgeView': {
+        lazy: () => require('./content/Badge/BadgeMockView').default,
     },
     'form.CheckboxFieldView': {
         lazy: () => require('./form/CheckboxField/CheckboxFieldMockView').default,
@@ -106,6 +121,9 @@ export default {
     },
     'form.TimeRangeFieldView': {
         lazy: () => require('./form/TimeRangeField/TimeRangeFieldMockView').default,
+    },
+    'typography.TitleView': {
+        lazy: () => require('./typography/Title/TitleMockView').default,
     },
     'typography.TextView': {
         lazy: () => require('./typography/Text/TextMockView').default,

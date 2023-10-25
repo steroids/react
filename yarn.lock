@@ -1444,15 +1444,15 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@maskito/core@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-0.12.1.tgz#3878661f7ddd9001669a3e5c83fa292e8f9482b1"
-  integrity sha512-/Np9ZaRBN2beutO/21yFKm+flBWt5LU7n9GKzSQ30Ia5uCTrkxjNPyyuJCOMCRe/f5Ldt1F9aIpwokZiAKazCg==
+"@maskito/core@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-1.7.0.tgz#e486ca1db2219f03beee5085c362688226fbaeec"
+  integrity sha512-sjdv1MSJnWWor/Qy1u1+ZZtqejzfVt6zqMUfy5RToEPZSBWlsCg1JSfjRu9WRb3yirpZnj3j80JkTGCicFrvuw==
 
-"@maskito/kit@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@maskito/kit/-/kit-0.12.1.tgz#0301f78c399f1836de4cefb00d3ca2d39b33a66d"
-  integrity sha512-9Va1GaBJzvtwQn3nYKhmnMgoktqzEwCwOtUcr+LsNCx1lWWSWSD0LkeUoNOVoY3b4xy7E6yT4jxiJX1gUJNtMw==
+"@maskito/kit@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@maskito/kit/-/kit-1.7.0.tgz#0a0085836b64d1813ac465971b23f9901337d172"
+  integrity sha512-LX/ngWFnPKWnQfvU9m5fss8NIBO261DlQdXOtlbhoXgyscVoR8RVeUHRVuRKEhJgd1I+dvlP1vUxms2qltFTjw==
 
 "@maskito/react@^0.12.1":
   version "0.12.1"

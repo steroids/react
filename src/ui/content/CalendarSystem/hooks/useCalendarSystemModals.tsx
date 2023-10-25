@@ -43,7 +43,7 @@ const useCalendarSystemModals = (
         const changeableEventGroup = {...currentEventGroups[changeableEventGroupIndex]};
 
         const updatedEvent = {
-            id: eventInitialValues?.id || (_maxBy(changeableEventGroup.events, event => event.id)?.id || DEFAULT_ID) + 1,
+            id: (_maxBy(changeableEventGroup.events, event => event.id)?.id || DEFAULT_ID) + 1,
             date: new Date(date),
             title: title as string,
             description: description as string,

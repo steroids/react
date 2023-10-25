@@ -1,10 +1,28 @@
 import _isFunction from 'lodash-es/isFunction';
 
+export interface ISocialComponent {
+    /**
+     * Провайдеры
+     */
+    providers: any;
+
+    /**
+     * Старт
+     * @param socialName Название social
+     */
+    start(socialName: string): void;
+
+    /**
+     * Инициализация компонента
+     */
+    init(): void;
+}
+
 /**
  * Social Component
  * Провайдер для социальных сетей. Обеспечивает вызов окна соц сети для oauth авторизации
  */
-export default class SocialComponent {
+export default class SocialComponent implements ISocialComponent {
     _components: any;
 
     _initializing: any;

@@ -22,11 +22,63 @@ interface IStoreComponentConfig {
     history: any,
 }
 
+export interface IStoreComponent {
+    /**
+     * Редьюсеры
+     */
+    reducers: any;
+
+    /**
+     * Хранилище
+     */
+    store: any;
+
+    /**
+     * Инициализация
+     */
+    init(): void;
+
+    /**
+     * Инициализация хранилища
+     */
+    initStore(): void;
+
+    /**
+     * Конфигурация
+     */
+    configurate(): void;
+
+    /**
+     * Метод для dispatch
+     */
+    dispatch(action): void;
+
+    /**
+     * Получение состояние
+     */
+    getState(): void;
+
+    /**
+     * Подписка
+     */
+    subscribe(handler): void;
+
+    /**
+     * Добавление редьюсеров
+     */
+    addReducers(asyncReducers): void;
+
+    /**
+     * Метод, который вызывается при ошибке
+     */
+    errorHandler(error, action): void;
+}
+
 /**
  * Store Component
  * Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router
  */
-export default class StoreComponent {
+export default class StoreComponent implements IStoreComponent {
     _asyncReducers: any;
 
     _components: any;

@@ -74,6 +74,10 @@ export interface IWebSocketComponent extends IWebSocketComponentConfig{
 
 const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;
 
+/**
+ * WebSocket Component
+ * Компонент для создания websocket взаимодействия
+ */
 export default class WebSocketComponent implements IWebSocketComponent {
     wsUrl: string;
 

@@ -92,11 +92,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         this._ssrCookie = config?.ssrCookie;
     }
 
-    /**
-     * @param {string} name
-     * @param {string} [storageName]
-     * @returns {*}
-     */
     get(name, storageName) {
         storageName = storageName || this.STORAGE_LOCAL;
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {
@@ -110,12 +105,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         return process.env.IS_SSR ? this._ssrCookie.get(name) : cookie.get(name);
     }
 
-    /**
-     * @param {string} name
-     * @param {*} value
-     * @param {string} [storageName]
-     * @param {number|null} [expires]
-     */
     set(name, value, storageName, expires = null) {
         storageName = storageName || this.STORAGE_LOCAL;
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {
@@ -139,11 +128,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         }
     }
 
-    /**
-     *
-     * @param {string} name
-     * @param {string} [storageName]
-     */
     remove(name, storageName) {
         storageName = storageName || this.STORAGE_LOCAL;
         if (this.localStorageAvailable && storageName === this.STORAGE_LOCAL) {

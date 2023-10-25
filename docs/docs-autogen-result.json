@@ -539,6 +539,33 @@
             "extends": [],
             "properties": []
         },
+        "IMetricsComponent": {
+            "name": "IMetricsComponent",
+            "moduleName": "components/MetricsComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "unlisten",
+                    "decorators": [],
+                    "description": "Отменить прослушивание метрик",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
+                    "name": "unsubscribe",
+                    "decorators": [],
+                    "description": "Отписаться от метрик",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                }
+            ]
+        },
         "IResourceComponent": {
             "name": "IResourceComponent",
             "moduleName": "components/ResourceComponent",
@@ -639,6 +666,52 @@
                     "description": "Языковой код, используемый для загрузки ресурсов.",
                     "required": false,
                     "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "ISocialComponent": {
+            "name": "ISocialComponent",
+            "moduleName": "components/SocialComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "providers",
+                    "decorators": [],
+                    "description": "Провайдеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ]
+        },
+        "IStoreComponent": {
+            "name": "IStoreComponent",
+            "moduleName": "components/StoreComponent",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "reducers",
+                    "decorators": [],
+                    "description": "Редьюсеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "store",
+                    "decorators": [],
+                    "description": "Хранилище",
+                    "required": true,
+                    "type": "any",
                     "example": null
                 }
             ]
@@ -29671,7 +29744,102 @@
                     "example": null
                 }
             ],
-            "methods": []
+            "methods": [
+                {
+                    "name": "get",
+                    "decorators": [],
+                    "description": "Получить значение из хранилища.",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "storageName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "remove",
+                    "decorators": [],
+                    "description": "Удалить значение из хранилища.",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "storageName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "set",
+                    "decorators": [],
+                    "description": "Установить значение в хранилище.",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "value",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "storageName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "expires",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/HtmlComponent": {
             "name": "default",
@@ -30121,8 +30289,8 @@
         "components/JwtHttpComponent": {
             "name": "default",
             "moduleName": "components/JwtHttpComponent",
-            "title": "",
-            "description": "",
+            "title": "JwtHttpComponent",
+            "description": "Вариация HttpComponent с функционалом обновления токена авторизации",
             "tags": {},
             "properties": [
                 {
@@ -30180,7 +30348,7 @@
             "name": "default",
             "moduleName": "components/LocaleComponent",
             "title": "Locale Component",
-            "description": "Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны\n\nПример строки: `{__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}`\n",
+            "description": "Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны",
             "tags": {},
             "properties": [
                 {
@@ -30450,11 +30618,47 @@
         "components/MetricsComponent": {
             "name": "default",
             "moduleName": "components/MetricsComponent",
-            "title": "",
-            "description": "",
+            "title": "Metrics Component",
+            "description": "Компонент для добавления метрик в приложение (например яндекс метрики)",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "unlisten",
+                    "decorators": [],
+                    "description": "Отменить прослушивание метрик",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "unsubscribe",
+                    "decorators": [],
+                    "description": "Отписаться от метрик",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "setCounters",
+                    "decorators": [],
+                    "description": "Поменять счетчики",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "values",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/ResourceComponent": {
             "name": "default",
@@ -30642,8 +30846,45 @@
             "title": "Social Component",
             "description": "Провайдер для социальных сетей. Обеспечивает вызов окна соц сети для oauth авторизации",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "providers",
+                    "decorators": [],
+                    "description": "Провайдеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "init",
+                    "decorators": [],
+                    "description": "Инициализация компонента",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "start",
+                    "decorators": [],
+                    "description": "Старт",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "socialName",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/StoreComponent": {
             "name": "default",
@@ -30651,8 +30892,160 @@
             "title": "Store Component",
             "description": "Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router",
             "tags": {},
-            "properties": [],
-            "methods": []
+            "properties": [
+                {
+                    "name": "reducers",
+                    "decorators": [],
+                    "description": "Редьюсеры",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "store",
+                    "decorators": [],
+                    "description": "Хранилище",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "addReducers",
+                    "decorators": [],
+                    "description": "Добавление редьюсеров",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "asyncReducers",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "configurate",
+                    "decorators": [],
+                    "description": "Конфигурация",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "dispatch",
+                    "decorators": [],
+                    "description": "Метод для dispatch",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "action",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "errorHandler",
+                    "decorators": [],
+                    "description": "Метод, который вызывается при ошибке",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "error",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        },
+                        {
+                            "name": "action",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getState",
+                    "decorators": [],
+                    "description": "Получение состояние",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "init",
+                    "decorators": [],
+                    "description": "Инициализация",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IStoreComponentConfig",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "initStore",
+                    "decorators": [],
+                    "description": "Инициализация хранилища",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IStoreComponentConfig",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "subscribe",
+                    "decorators": [],
+                    "description": "Подписка",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "handler",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
         },
         "components/UiComponent": {
             "name": "default",
@@ -31027,8 +31420,8 @@
         "components/WebSocketComponent": {
             "name": "default",
             "moduleName": "components/WebSocketComponent",
-            "title": "",
-            "description": "",
+            "title": "WebSocket Component",
+            "description": "Компонент для создания websocket взаимодействия",
             "tags": {},
             "properties": [
                 {

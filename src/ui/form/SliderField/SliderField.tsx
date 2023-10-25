@@ -51,7 +51,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
     valuePostfix?: string,
 
     /**
-     * Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.
+     * Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.
      * Если вы хотите задать стиль определенной точки метки, значением должен быть объект,
      * содержащий свойства style и label.
      * @example { min: 20, 40: 40, max: 100 }

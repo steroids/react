@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
 import React, {ChangeEvent} from 'react';

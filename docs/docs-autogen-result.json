@@ -2020,7 +2020,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -6103,35 +6103,59 @@
             "extends": [],
             "properties": [
                 {
-                    "name": "hasBorder",
+                    "name": "combine",
                     "decorators": [],
-                    "description": "Нижний border",
-                    "required": false,
-                    "type": "boolean",
+                    "description": "",
+                    "required": true,
+                    "type": "null",
                     "example": null
                 },
                 {
-                    "name": "icon",
+                    "name": "destination",
                     "decorators": [],
-                    "description": "Кастомная иконка",
-                    "required": false,
-                    "type": "string | ReactElement",
+                    "description": "",
+                    "required": true,
+                    "type": "{droppableId: number, index: number}",
                     "example": null
                 },
                 {
-                    "name": "label",
+                    "name": "draggableId",
                     "decorators": [],
-                    "description": "Заголовок элемента меню",
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "mode",
+                    "decorators": [],
+                    "description": "",
                     "required": true,
                     "type": "string",
                     "example": null
                 },
                 {
-                    "name": "onClick",
+                    "name": "reason",
                     "decorators": [],
-                    "description": "Функция вызываемая при клике",
+                    "description": "",
                     "required": true,
-                    "type": "VoidFunction",
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "source",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{droppableId: number, index: number}",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -13376,7 +13400,7 @@
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для \\<fieldset\\>...\\<\\/fieldset\\>",
+                    "description": "Дополнительный CSS-класс для '<fieldset>...</fieldset>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -13707,7 +13731,7 @@
             "name": "IFileFieldProps",
             "moduleName": "ui/form/FileField/FileField",
             "title": "FileField",
-            "description": "\nКомпонент `FileField` представляет собой поле формы для загрузки файлов.\nОн использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.\nКомпонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.\n",
+            "description": "\nКомпонент `FileField` представляет собой поле формы для загрузки файлов.\nОн использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.\nКомпонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.\nНа backendUrl по дефолту файл отправляется в теле запроса в виде бинарного кода.\nЧтобы отправлять файл в виде form-data (например в таком виде принимает файл FileModule в библиотеке steroidsjs/nest),\nнужно передать в `FileField` пропс uploaderConfig, в котором нужно указать поле useFormData: true.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -14428,7 +14452,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -16366,7 +16390,7 @@
                     "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
                     "required": false,
                     "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
+                    "example": "require('icon.png') | '<component/>'"
                 },
                 {
                     "name": "textBefore",
@@ -16676,7 +16700,7 @@
                     "description": "Изображение или React-нода, которая будет отрендерена справа от поля.",
                     "required": false,
                     "type": "ReactNode",
-                    "example": "require('icon.png') | <component/>"
+                    "example": "require('icon.png') | '<component/>'"
                 },
                 {
                     "name": "textBefore",
@@ -19850,7 +19874,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -20112,7 +20136,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте ({key: value}) key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{ min: 20, 40: 40, max: 100 }"
@@ -22129,7 +22153,7 @@
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: [{id: 1, label: \"London\"}]",
+                    "description": "Перечисление элементов.\n1) Может быть строкой вида: `app.geo.enums.Cities`\n2) Массивом: ['{'id: 1, label: \"London\"'}']",
                     "required": false,
                     "type": "string | {} | string | number | {id: string | number | boolean, label: string | any}[]",
                     "example": null
@@ -22284,7 +22308,7 @@
                 {
                     "name": "currency",
                     "decorators": [],
-                    "description": "Валюта @enum {eur, rub, usd}",
+                    "description": "Валюта @enum '{eur, rub, usd}'",
                     "required": false,
                     "type": "string",
                     "example": "rub"
@@ -23813,7 +23837,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -24663,7 +24687,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -24850,7 +24874,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -25047,7 +25071,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -25560,7 +25584,7 @@
                 {
                     "name": "hasTreeItems",
                     "decorators": [],
-                    "description": "Включает обработку вложенных данных из items вида [{id: 1, name: 'John', items: [...]}]",
+                    "description": "Включает обработку вложенных данных из items",
                     "required": false,
                     "type": "boolean",
                     "example": null
@@ -26455,7 +26479,7 @@
                 {
                     "name": "autoFocus",
                     "decorators": [],
-                    "description": "Если в форме есть элементы \\<input\\>, то произойдет автоматическая фокусировка на первом из них",
+                    "description": "Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -26837,7 +26861,7 @@
                 {
                     "name": "headerClassName",
                     "decorators": [],
-                    "description": "CSS-класс для ячейки с заголовком колонки <th>...</th>",
+                    "description": "CSS-класс для ячейки с заголовком колонки '<th>...</th>'",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -28865,10 +28889,10 @@
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "Вложенные элементы\n[{id: 2, label: 'Nested element', items: [...]}]",
+                    "description": "Вложенные элементы",
                     "required": false,
                     "type": "any[]",
-                    "example": null
+                    "example": "[{id: 2, label: 'Nested element', items: [...]}]"
                 },
                 {
                     "name": "label",

@@ -39,6 +39,9 @@ interface IFileFieldCommonProps extends IFileInput {
  * Компонент `FileField` представляет собой поле формы для загрузки файлов.
  * Он использует хук `useFile` для управления состоянием файлов и выполнения операций с файлами, таких как выбор и удаление.
  * Компонент поддерживает различные варианты отображения файлов (список или стена) с помощью перечисления `FilesLayout`.
+ * На backendUrl по дефолту файл отправляется в теле запроса в виде бинарного кода.
+ * Чтобы отправлять файл в виде form-data (например в таком виде принимает файл FileModule в библиотеке steroidsjs/nest),
+ * нужно передать в `FileField` пропс uploaderConfig, в котором нужно указать поле useFormData: true.
  **/
 
 export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldCommonProps, IUiComponent {

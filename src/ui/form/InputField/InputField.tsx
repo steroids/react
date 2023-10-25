@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable max-len */
 import * as React from 'react';
 import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
@@ -5,6 +7,7 @@ import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -39,7 +42,7 @@ export const MASK_PRESETS = {
     },
 };
 
-type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
+export type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden'
     | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel'
     | 'text' | 'time' | 'url' | 'week' | string;
 
@@ -84,7 +87,7 @@ export interface IInputFieldProps extends IBaseFieldProps {
 
     /**
      * Изображение или React-нода, которая будет отрендерена справа от поля.
-     * @example require('icon.png') | <component/>
+     * @example require('icon.png') | '<component/>'
      */
     textAfter?: number | ReactNode | string;
 
@@ -155,6 +158,8 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         }
     }, [inputRef, maskedInputRef]);
 
+    useInputFieldWarningByType(props.type);
+
     const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 
     const inputProps = useMemo(() => ({
@@ -176,7 +181,8 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props,
         ...props.viewProps,
         inputProps,
-        inputRef,
+        // If type was recognized as unsupported in InputField, then we do not pass ref.
+        inputRef: INPUT_TYPES_SUPPORTED_SELECTION.includes(props.type) ? inputRef : null,
         onClear,
     });
 }

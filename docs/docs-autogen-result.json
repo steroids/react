@@ -2426,7 +2426,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "IStoreComponent",
                     "example": null
                 },
                 {
@@ -5768,6 +5768,28 @@
                 }
             ]
         },
+        "ICreateOrEditTaskModalContentViewProps": {
+            "name": "ICreateOrEditTaskModalContentViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Omit<IKanbanModalViewProps",
+                "'modalType'>"
+            ],
+            "properties": [
+                {
+                    "name": "bem",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IBem",
+                    "example": null
+                }
+            ]
+        },
         "IDragEndResult": {
             "name": "IDragEndResult",
             "moduleName": "ui/content/Kanban/Kanban",
@@ -5912,12 +5934,375 @@
                     "example": null
                 },
                 {
+                    "name": "onOpenCreateTaskModal",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "renderTask",
                     "decorators": [],
                     "description": "",
                     "required": true,
                     "type": "{}",
                     "example": null
+                },
+                {
+                    "name": "task",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IKanbanTask",
+                    "example": null
+                }
+            ]
+        },
+        "IKanbanModalViewProps": {
+            "name": "IKanbanModalViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IModalProps"
+            ],
+            "properties": [
+                {
+                    "name": "assigners",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IDropDownFieldItem[]",
+                    "example": null
+                },
+                {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Коллекция кнопок, которая отобразится в нижней секции Modal",
+                    "required": false,
+                    "type": "IButtonProps[]",
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Кастомный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeAfterMs",
+                    "decorators": [],
+                    "description": "Время в миллисекундах, через которое автоматически произойдет закрытие Modal.",
+                    "required": false,
+                    "type": "number",
+                    "example": "1000"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, в течение которого будет происходить анимация закрытия Modal.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
+                },
+                {
+                    "name": "columnId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "columns",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IKanbanColumn[]",
+                    "example": null
+                },
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "Компонент, который отрендерится внутри Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
+                },
+                {
+                    "name": "componentProps",
+                    "decorators": [],
+                    "description": "Свойства для внутреннего компонента",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "group",
+                    "decorators": [],
+                    "description": "Группа Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'modal'"
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "Порядковый номер Modal",
+                    "required": false,
+                    "type": "number",
+                    "example": "0"
+                },
+                {
+                    "name": "isClosing",
+                    "decorators": [],
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "modalType",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "default",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Обработчик срабатывает при закрытии Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onSubmit",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onToggleModalType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "shouldCloseOnEsc",
+                    "decorators": [],
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "shouldCloseOnOverlayClick",
+                    "decorators": [],
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'middle'"
+                },
+                {
+                    "name": "submitButtonLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "tags",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ITaskTag[]",
+                    "example": null
+                },
+                {
+                    "name": "task",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IKanbanTask",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Заявка отправлена на модерацию'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IKanbanProps": {
+            "name": "IKanbanProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IKanbanConfig",
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "assigners",
+                    "decorators": [],
+                    "description": "Массив исполнителей, которых можно назначить для выполнения задачи",
+                    "required": false,
+                    "type": "ITaskAssigner[]",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "columns",
+                    "decorators": [],
+                    "description": "Коллекция с наименованиями и свойствами колонок в таблице",
+                    "required": true,
+                    "type": "IKanbanColumn[]",
+                    "example": "[\n            {\n             id: 1,\n             title: 'column 1',\n             tasks: [{ content: 'item 1', id: 1 }],\n            },\n            {\n             id: 2,\n             title: 'column 2',\n             tasks: [],\n            }\n         ]"
+                },
+                {
+                    "name": "dndContext",
+                    "decorators": [],
+                    "description": "Общий контекст обертка из библиотеки react-beautiful-dnd",
+                    "required": true,
+                    "type": "any",
+                    "example": "DragDropContext"
+                },
+                {
+                    "name": "draggableComponent",
+                    "decorators": [],
+                    "description": "Компонент обертка для регистрации элемента который можно переместить из библиотеки react-beautiful-dnd",
+                    "required": true,
+                    "type": "any",
+                    "example": "Draggable"
+                },
+                {
+                    "name": "droppableComponent",
+                    "decorators": [],
+                    "description": "Компонент обертка для инициализации области куда можно переместить элемент из библиотеки react-beautiful-dnd",
+                    "required": true,
+                    "type": "any",
+                    "example": "Droppable"
+                },
+                {
+                    "name": "kanbanId",
+                    "decorators": [],
+                    "description": "Идентификатор канбан доски",
+                    "required": false,
+                    "type": "string",
+                    "example": "TasksKanban"
+                },
+                {
+                    "name": "lastTaskId",
+                    "decorators": [],
+                    "description": "Идентификатор последней созданной задачи, нужен для определения последовательности id для новых задач",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "onCreateTask",
+                    "decorators": [],
+                    "description": "Обработчик события создания карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onDragEnd",
+                    "decorators": [],
+                    "description": "Обработчик события окончания перетаскивания карточки или колонки\nВ result передается объект с информацией о событии",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{\n    draggableId: 1,\n    type: 'task',\n    source: {\n        index: 0,\n        droppableId: 2\n    },\n    reason: 'DROP',\n    mode: 'FLUID',\n    destination: {\n        droppableId: 2,\n        index: 1\n    },\n    combine: null\n}"
+                },
+                {
+                    "name": "onEditTask",
+                    "decorators": [],
+                    "description": "Обработчик события редактирования карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tags",
+                    "decorators": [],
+                    "description": "Массив тегов для задач",
+                    "required": false,
+                    "type": "ITaskTag[]",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
                 }
             ]
         },
@@ -5935,11 +6320,19 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "ITaskAssigner",
                     "example": null
                 },
                 {
                     "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "fullDescription",
                     "decorators": [],
                     "description": "",
                     "required": false,
@@ -5959,15 +6352,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "status",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "any",
+                    "type": "ITaskPriority",
                     "example": null
                 },
                 {
@@ -5988,6 +6373,163 @@
                 }
             ]
         },
+        "IKanbanTaskDetailsModalViewProps": {
+            "name": "IKanbanTaskDetailsModalViewProps",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IModalProps"
+            ],
+            "properties": [
+                {
+                    "name": "bem",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IBem",
+                    "example": null
+                },
+                {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Коллекция кнопок, которая отобразится в нижней секции Modal",
+                    "required": false,
+                    "type": "IButtonProps[]",
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Кастомный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeAfterMs",
+                    "decorators": [],
+                    "description": "Время в миллисекундах, через которое автоматически произойдет закрытие Modal.",
+                    "required": false,
+                    "type": "number",
+                    "example": "1000"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, в течение которого будет происходить анимация закрытия Modal.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
+                },
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "Компонент, который отрендерится внутри Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
+                },
+                {
+                    "name": "componentProps",
+                    "decorators": [],
+                    "description": "Свойства для внутреннего компонента",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "group",
+                    "decorators": [],
+                    "description": "Группа Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'modal'"
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "Порядковый номер Modal",
+                    "required": false,
+                    "type": "number",
+                    "example": "0"
+                },
+                {
+                    "name": "isClosing",
+                    "decorators": [],
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Обработчик срабатывает при закрытии Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "shouldCloseOnEsc",
+                    "decorators": [],
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "shouldCloseOnOverlayClick",
+                    "decorators": [],
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'middle'"
+                },
+                {
+                    "name": "task",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IKanbanTask",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Заявка отправлена на модерацию'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
         "IKanbanTaskViewProps": {
             "name": "IKanbanTaskViewProps",
             "moduleName": "ui/content/Kanban/Kanban",
@@ -5997,6 +6539,14 @@
             "defaultProps": null,
             "extends": [],
             "properties": [
+                {
+                    "name": "columnId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
                 {
                     "name": "draggableComponent",
                     "decorators": [],
@@ -6014,11 +6564,89 @@
                     "example": null
                 },
                 {
+                    "name": "onOpenTaskDetailsModal",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "task",
                     "decorators": [],
                     "description": "",
                     "required": true,
                     "type": "IKanbanTask",
+                    "example": null
+                }
+            ]
+        },
+        "ITaskAssigner": {
+            "name": "ITaskAssigner",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "avatar",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{src: string}",
+                    "example": null
+                },
+                {
+                    "name": "firstName",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "lastName",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "ITaskPriority": {
+            "name": "ITaskPriority",
+            "moduleName": "ui/content/Kanban/Kanban",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
                     "example": null
                 }
             ]
@@ -6068,12 +6696,20 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "assigners",
+                    "decorators": [],
+                    "description": "Массив исполнителей, которых можно назначить для выполнения задачи",
+                    "required": false,
+                    "type": "ITaskAssigner[]",
+                    "example": null
+                },
+                {
                     "name": "columns",
                     "decorators": [],
-                    "description": "Колонки канбан доски",
-                    "required": false,
+                    "description": "Коллекция с наименованиями и свойствами колонок в таблице",
+                    "required": true,
                     "type": "IKanbanColumn[]",
-                    "example": null
+                    "example": "[\n            {\n             id: 1,\n             title: 'column 1',\n             tasks: [{ content: 'item 1', id: 1 }],\n            },\n            {\n             id: 2,\n             title: 'column 2',\n             tasks: [],\n            }\n         ]"
                 },
                 {
                     "name": "kanbanId",
@@ -6084,11 +6720,43 @@
                     "example": "TasksKanban"
                 },
                 {
+                    "name": "lastTaskId",
+                    "decorators": [],
+                    "description": "Идентификатор последней созданной задачи, нужен для определения последовательности id для новых задач",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "onCreateTask",
+                    "decorators": [],
+                    "description": "Обработчик события создания карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "onDragEnd",
                     "decorators": [],
-                    "description": "Обработчик события окончания перетаскивания карточки или колонки",
-                    "required": true,
+                    "description": "Обработчик события окончания перетаскивания карточки или колонки\nВ result передается объект с информацией о событии",
+                    "required": false,
                     "type": "{}",
+                    "example": "{\n    draggableId: 1,\n    type: 'task',\n    source: {\n        index: 0,\n        droppableId: 2\n    },\n    reason: 'DROP',\n    mode: 'FLUID',\n    destination: {\n        droppableId: 2,\n        index: 1\n    },\n    combine: null\n}"
+                },
+                {
+                    "name": "onEditTask",
+                    "decorators": [],
+                    "description": "Обработчик события редактирования карточки",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "tags",
+                    "decorators": [],
+                    "description": "Массив тегов для задач",
+                    "required": false,
+                    "type": "ITaskTag[]",
                     "example": null
                 }
             ]
@@ -6103,59 +6771,35 @@
             "extends": [],
             "properties": [
                 {
-                    "name": "combine",
+                    "name": "hasBorder",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "null",
+                    "description": "Нижний border",
+                    "required": false,
+                    "type": "boolean",
                     "example": null
                 },
                 {
-                    "name": "destination",
+                    "name": "icon",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{droppableId: number, index: number}",
+                    "description": "Кастомная иконка",
+                    "required": false,
+                    "type": "string | ReactElement",
                     "example": null
                 },
                 {
-                    "name": "draggableId",
+                    "name": "label",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "number",
-                    "example": null
-                },
-                {
-                    "name": "mode",
-                    "decorators": [],
-                    "description": "",
+                    "description": "Заголовок элемента меню",
                     "required": true,
                     "type": "string",
                     "example": null
                 },
                 {
-                    "name": "reason",
+                    "name": "onClick",
                     "decorators": [],
-                    "description": "",
+                    "description": "Функция вызываемая при клике",
                     "required": true,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "source",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "{droppableId: number, index: number}",
-                    "example": null
-                },
-                {
-                    "name": "type",
-                    "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "string",
+                    "type": "VoidFunction",
                     "example": null
                 }
             ]
@@ -12170,6 +12814,196 @@
                     "required": false,
                     "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
+                }
+            ]
+        },
+        "IEmailFieldProps": {
+            "name": "IEmailFieldProps",
+            "moduleName": "ui/form/EmailField/EmailField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IBaseFieldProps",
+                "IFieldWrapperInputProps"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "fieldLayoutClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Input ID для связи поля с label",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "Свойства для элемента input",
+                    "required": false,
+                    "type": "InputHTMLAttributes",
+                    "example": "{onKeyDown: ...}"
+                },
+                {
+                    "name": "isRenderWithoutFieldLayout",
+                    "decorators": [],
+                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{attributes: [{attribute: 'category', field: 'DropDownField'}]}"
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при изменении данных",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Подсказка для поля",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "showClear",
+                    "decorators": [],
+                    "description": "Показывать иконку очищения поля",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Значение для поля",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента отображения",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{customHandler: () => {...}}"
                 }
             ]
         },
@@ -29588,6 +30422,14 @@
             "type": "ContentType | \"group\" | string",
             "example": null
         },
+        "IElementInputType": {
+            "name": "IElementInputType",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "\"button\" | \"checkbox\" | \"color\" | \"date\" | \"datetime-local\" | \"email\" | \"file\" | \"hidden\" | \"image\" | \"month\" | \"number\" | \"password\" | \"radio\" | \"range\" | \"reset\" | \"search\" | \"submit\" | \"tel\" | \"text\" | \"time\" | \"url\" | \"week\" | string",
+            "example": null
+        },
         "IMaskFieldProps": {
             "name": "IMaskFieldProps",
             "decorators": [],
@@ -31953,6 +32795,310 @@
             "description": "",
             "tags": {}
         },
+        "ui/content/Kanban/enums/KanbanModalTypeEnum": {
+            "name": "default",
+            "moduleName": "ui/content/Kanban/enums/KanbanModalTypeEnum",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "CREATE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "DETAILS",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "EDIT",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getCssClass",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getCssClasses",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDropdownItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, label: string}[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getKeys",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getLabels",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getModalIconByType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getModalIcons",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                }
+            ]
+        },
+        "ui/content/Kanban/enums/KanbanPrioritiesEnum": {
+            "name": "default",
+            "moduleName": "ui/content/Kanban/enums/KanbanPrioritiesEnum",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "properties": [
+                {
+                    "name": "DEFAULT",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "HIGH",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "MIDDLE",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "getColorByType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getColorsByType",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getCssClass",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getCssClasses",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDefaultSelectedPriorityId",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getDropdownItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{id: string, label: string}[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getKeys",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "getLabels",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getPrioritiesArray",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ITaskPriority[]",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "getPriorityById",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
         "ui/content/Menu/Menu": {
             "name": "default",
             "moduleName": "ui/content/Menu/Menu",
@@ -32047,6 +33193,13 @@
         "ui/form/DropDownField/DropDownField": {
             "name": "default",
             "moduleName": "ui/form/DropDownField/DropDownField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/EmailField/EmailField": {
+            "name": "default",
+            "moduleName": "ui/form/EmailField/EmailField",
             "title": "",
             "description": "",
             "tags": {}

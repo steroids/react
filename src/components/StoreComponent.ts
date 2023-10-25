@@ -72,6 +72,8 @@ export interface IStoreComponent {
      * Метод, который вызывается при ошибке
      */
     errorHandler(error, action): void;
+
+    [key: string]: any;
 }
 
 /**

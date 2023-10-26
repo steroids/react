@@ -1,5 +1,5 @@
-import kanban, {getKanban, getLastTaskId, getKanbanTags, getKanbanPriorities} from './kanban';
+import kanban, {getKanban, getLastTaskId, getKanbanTags} from './kanban';
 
-export {getKanban, getLastTaskId, getKanbanTags, getKanbanPriorities};
+export {getKanban, getLastTaskId, getKanbanTags};
 
 export default kanban;

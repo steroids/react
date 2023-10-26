@@ -83,7 +83,7 @@ export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'ca
     onChangeCalendarType: (newType: string) => void,
     onMonthChange: (newDate: Date) => void,
     applyControl: (event: React.MouseEvent<HTMLElement>) => void
-    openCreateModal: VoidFunction,
+    openCreateModal: (eventInitialDay?: IDay) => void;
     openEditModal: (event: IEvent) => void;
     getEventsFromDate: (dateFromDay: Date, isMonth: boolean) => IEvent[],
     onChangeEventGroupsIds: (selectedIds: number[]) => void,

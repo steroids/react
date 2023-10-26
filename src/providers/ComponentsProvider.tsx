@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
-import {IHttpComponent} from 'src/components/HttpComponent';
-import {IHtmlComponent} from 'src/components/HtmlComponent';
-import {IWebSocketComponent} from 'src/components/WebSocketComponent';
-import {IMetaComponent} from 'src/components/MetaComponent';
-import {IStoreComponent} from 'src/components/StoreComponent';
+import {IHttpComponent} from '../components/HttpComponent';
+import {IHtmlComponent} from '../components/HtmlComponent';
+import {IWebSocketComponent} from '../components/WebSocketComponent';
+import {IMetaComponent} from '../components/MetaComponent';
+import {IStoreComponent} from '../components/StoreComponent';
 import {IClientStorageComponent} from '../components/ClientStorageComponent';
 import {ILocaleComponent} from '../components/LocaleComponent';
 import {IUiApplicationComponent} from '../components/UiComponent';

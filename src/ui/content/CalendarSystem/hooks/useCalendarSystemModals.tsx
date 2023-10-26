@@ -5,7 +5,7 @@ import _maxBy from 'lodash-es/maxBy';
 import {openModal} from '../../../../actions/modal';
 import {IModalProps} from '../../../modal/Modal/Modal';
 import useComponents from '../../../../hooks/useComponents';
-import {CalendarSystemModalFields, ICalendarSystemModalViewProps, IEvent, IEventGroup, IEventInitialValues} from '../CalendarSystem';
+import {CalendarSystemModalFields, ICalendarSystemModalViewProps, IDay, IEvent, IEventGroup, IEventInitialValues} from '../CalendarSystem';
 import {getOmittedEvent, sortEventsInGroup} from '../utils/utils';
 
 const DEFAULT_ID = 0;
@@ -61,7 +61,7 @@ const useCalendarSystemModals = (
         setInnerEventGroups(currentEventGroups);
     }, [innerEventGroups, setInnerEventGroups]);
 
-    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: IEvent & {eventGroupId: number}) => ({
+    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number}>) => ({
         ...calendarModalProps,
         component: calendarModalView,
         eventGroups: innerEventGroups,
@@ -74,9 +74,12 @@ const useCalendarSystemModals = (
         .find(group => group.events
             .some(groupEvent => _isEqual(getOmittedEvent(groupEvent), getOmittedEvent(event)))), [innerEventGroups]);
 
-    const openCreateModal = React.useCallback(() => {
-        dispatch(openModal(calendarModalView, getModalProps(true)));
-    }, [getModalProps, calendarModalView, dispatch]);
+    const openCreateModal = React.useCallback((eventInitialDay: IDay = null) => {
+        const modalProps = eventInitialDay
+            ? getModalProps(true, {date: eventInitialDay.date}) : getModalProps(true);
+
+        dispatch(openModal(calendarModalView, modalProps));
+    }, [calendarModalView, dispatch, getModalProps]);
 
     const openEditModal = React.useCallback((event: IEvent) => {
         const eventGroupId = getEventFromGroup(event)?.id || 0;

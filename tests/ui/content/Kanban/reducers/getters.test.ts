@@ -33,13 +33,13 @@ describe('kanban getters', () => {
         it('should return kanban', () => {
             const kanbanId = 'kanbanId';
 
-            const listProperties = {
+            const kanbanProperties = {
                 kanbanId: 'kanbanId',
             };
 
-            const kanbans = {[kanbanId]: listProperties};
+            const kanbans = {[kanbanId]: kanbanProperties};
             const state = getStateWithWrappedKanbans(kanbans);
-            expect(getKanban(state, kanbanId)).toEqual(listProperties);
+            expect(getKanban(state, kanbanId)).toEqual(kanbanProperties);
         });
 
         it('should return null', () => {

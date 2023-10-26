@@ -6,7 +6,7 @@ export interface IFlexGridItem {
     /**
      * Содержимое элемента FlexGrid
      */
-    content: ReactNode,
+    content: any,
 
     /**
      * Порядок элемента в FlexGrid

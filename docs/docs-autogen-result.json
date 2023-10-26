@@ -4179,6 +4179,179 @@
                 }
             ]
         },
+        "ICalendarSystemModalViewProps": {
+            "name": "ICalendarSystemModalViewProps",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IModalProps"
+            ],
+            "properties": [
+                {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Коллекция кнопок, которая отобразится в нижней секции Modal",
+                    "required": false,
+                    "type": "IButtonProps[]",
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Кастомный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeAfterMs",
+                    "decorators": [],
+                    "description": "Время в миллисекундах, через которое автоматически произойдет закрытие Modal.",
+                    "required": false,
+                    "type": "number",
+                    "example": "1000"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, в течение которого будет происходить анимация закрытия Modal.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
+                },
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "Компонент, который отрендерится внутри Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
+                },
+                {
+                    "name": "componentProps",
+                    "decorators": [],
+                    "description": "Свойства для внутреннего компонента",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "eventGroups",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IEventGroup[]",
+                    "example": null
+                },
+                {
+                    "name": "eventInitialValues",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "group",
+                    "decorators": [],
+                    "description": "Группа Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'modal'"
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "Порядковый номер Modal",
+                    "required": false,
+                    "type": "number",
+                    "example": "0"
+                },
+                {
+                    "name": "isClosing",
+                    "decorators": [],
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "isCreate",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Обработчик срабатывает при закрытии Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onEventSubmit",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "shouldCloseOnEsc",
+                    "decorators": [],
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "shouldCloseOnOverlayClick",
+                    "decorators": [],
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'middle'"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Заявка отправлена на модерацию'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
         "ICalendarSystemProps": {
             "name": "ICalendarSystemProps",
             "moduleName": "ui/content/CalendarSystem/CalendarSystem",
@@ -4191,19 +4364,19 @@
             ],
             "properties": [
                 {
+                    "name": "calendarModalProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IModalProps",
+                    "example": null
+                },
+                {
                     "name": "className",
                     "decorators": [],
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "createEventModalProps",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "IModalProps",
                     "example": null
                 },
                 {
@@ -4349,15 +4522,23 @@
                     "example": null
                 },
                 {
-                    "name": "onClickCreate",
+                    "name": "onMonthChange",
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "VoidFunction",
+                    "type": "{}",
                     "example": null
                 },
                 {
-                    "name": "onMonthChange",
+                    "name": "openCreateModal",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "openEditModal",
                     "decorators": [],
                     "description": "",
                     "required": true,
@@ -4459,6 +4640,22 @@
                     "example": null
                 },
                 {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
                     "name": "title",
                     "decorators": [],
                     "description": "",
@@ -4490,7 +4687,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "IEvent[]",
+                    "type": "Omit[]",
                     "example": null
                 },
                 {
@@ -4503,6 +4700,67 @@
                 },
                 {
                     "name": "label",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IEventInitialValues": {
+            "name": "IEventInitialValues",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IEvent"
+            ],
+            "properties": [
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Date",
+                    "example": null
+                },
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "eventGroupId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "title",
                     "decorators": [],
                     "description": "",
                     "required": true,
@@ -4958,6 +5216,220 @@
                     "required": false,
                     "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
+                }
+            ]
+        },
+        "IDashboardItem": {
+            "name": "IDashboardItem",
+            "moduleName": "ui/content/Dashboard/Dashboard",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFlexGridItem"
+            ],
+            "properties": [
+                {
+                    "name": "col",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "content",
+                    "decorators": [],
+                    "description": "Содержимое элемента FlexGrid",
+                    "required": true,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "lg",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент на экранах размером lg, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "md",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент на экранах размером md, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "offset",
+                    "decorators": [],
+                    "description": "Количество колонок для смещения столбца слева",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "order",
+                    "decorators": [],
+                    "description": "Порядок элемента в FlexGrid",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "sm",
+                    "decorators": [],
+                    "description": "Количество колонок, которое занимает элемент на экранах размером sm, максимум 12",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок для элемента",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IDashboardItemViewProps": {
+            "name": "IDashboardItemViewProps",
+            "moduleName": "ui/content/Dashboard/Dashboard",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IDashboardProps": {
+            "name": "IDashboardProps",
+            "moduleName": "ui/content/Dashboard/Dashboard",
+            "title": "Dashboard",
+            "description": "\nКомпонент в котором можно расположить различные элементы, например графики, таблицы на доске\n",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent",
+                "IFlexGridProps"
+            ],
+            "properties": [
+                {
+                    "name": "align",
+                    "decorators": [],
+                    "description": "Значение для css-свойства align-items",
+                    "required": false,
+                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\"",
+                    "example": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "direction",
+                    "decorators": [],
+                    "description": "Значение для css-свойства flex-direction",
+                    "required": false,
+                    "type": "\"column-reverse\" | \"column\" | \"row-reverse\" | \"row\"",
+                    "example": null
+                },
+                {
+                    "name": "gap",
+                    "decorators": [],
+                    "description": "Расстояние между элементами в px.\nЕсли передано число, то установится расстояние между строками и между колонками.\nЕсли передан массив, то первый элемент - расстояние между колонками, второй - между строками.",
+                    "required": false,
+                    "type": "number | number[]",
+                    "example": null
+                },
+                {
+                    "name": "itemClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элементов FlexGrid",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "itemView",
+                    "decorators": [],
+                    "description": "Кастомная вьюшка для элемента",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Элементы дашборда",
+                    "required": true,
+                    "type": "IDashboardItem[]",
+                    "example": null
+                },
+                {
+                    "name": "justify",
+                    "decorators": [],
+                    "description": "Значение для css-свойства justify-content",
+                    "required": false,
+                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"left\" | \"right\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "wrap",
+                    "decorators": [],
+                    "description": "Автоматический перенос на новую строку",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
                 }
             ]
         },
@@ -6602,7 +7074,7 @@
                     "name": "firstName",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": null
                 },
@@ -6618,7 +7090,7 @@
                     "name": "lastName",
                     "decorators": [],
                     "description": "",
-                    "required": true,
+                    "required": false,
                     "type": "string",
                     "example": null
                 }
@@ -25212,7 +25684,7 @@
                     "decorators": [],
                     "description": "Содержимое элемента FlexGrid",
                     "required": true,
-                    "type": "ReactNode",
+                    "type": "any",
                     "example": null
                 },
                 {
@@ -30358,12 +30830,12 @@
             "type": "AvatarGroupProps",
             "example": null
         },
-        "ICalendarSystemModalViewProps": {
-            "name": "ICalendarSystemModalViewProps",
+        "CalendarSystemModalFields": {
+            "name": "CalendarSystemModalFields",
             "decorators": [],
             "description": "",
             "required": true,
-            "type": "IModalProps",
+            "type": "\"title\" | \"eventGroupId\" | \"date\" | \"description\"",
             "example": null
         },
         "ICardViewProps": {
@@ -32763,6 +33235,13 @@
         "ui/content/Chart/Chart": {
             "name": "default",
             "moduleName": "ui/content/Chart/Chart",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/content/Dashboard/Dashboard": {
+            "name": "default",
+            "moduleName": "ui/content/Dashboard/Dashboard",
             "title": "",
             "description": "",
             "tags": {}

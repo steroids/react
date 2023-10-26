@@ -157,5 +157,3 @@ export const getKanban = (state, kanbanId) => _get(state, ['kanban', 'kanbans', 
 export const getLastTaskId = (state, kanbanId) => _get(state, ['kanban', 'kanbans', kanbanId, 'lastTaskId']) || null;
 
 export const getKanbanTags = (state, kanbanId) => _get(state, ['kanban', 'kanbans', kanbanId, 'tags']) || null;
-
-export const getKanbanPriorities = (state, kanbanId) => _get(state, ['kanban', 'kanbans', kanbanId, 'priorities']) || null;

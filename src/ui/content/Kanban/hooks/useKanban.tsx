@@ -84,7 +84,7 @@ export interface IKanbanConfig {
     /**
      * Обработчик события редактирования карточки
      */
-    onEditTask?: (task: IKanbanTask) => void;
+    onEditTask?: (kanbanId: string, columnId: number, task: IKanbanTask) => void;
 
     /**
      * Идентификатор последней созданной задачи, нужен для определения последовательности id для новых задач
@@ -155,7 +155,7 @@ export default function useKanban(config: IKanbanConfig) {
         const editedTask = normalizeEditTaskFormForState(id, data, config.assigners, tags);
 
         if (config.onEditTask) {
-            config.onEditTask(editedTask);
+            config.onEditTask(config.kanbanId, data.columnId, editedTask);
         }
 
         const toDispatch = [

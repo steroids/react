@@ -15,8 +15,8 @@ export interface ITaskTag {
 
 export interface ITaskAssigner {
     id: number;
-    firstName: string;
-    lastName: string;
+    firstName?: string;
+    lastName?: string;
     avatar?: {
         src: string;
     };

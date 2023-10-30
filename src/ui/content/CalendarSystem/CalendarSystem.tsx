@@ -161,6 +161,10 @@ export interface ICalendarSystemModalViewProps extends IModalProps {
 export interface CalendarSystemEventGroupModalViewProps extends IModalProps {
     isCreate: boolean,
     onEventGroupSubmit: (fields: Record<CalendarSystemEventGroupModalFields, string>) => void,
+    eventGroupInitialValues?: {
+        color: string,
+        label: string
+    }
 }
 
 export default function CalendarSystem(props: ICalendarSystemProps) {

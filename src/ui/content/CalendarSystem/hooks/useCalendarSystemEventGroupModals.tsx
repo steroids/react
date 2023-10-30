@@ -1,6 +1,7 @@
 import {useDispatch} from 'react-redux';
 import _maxBy from 'lodash-es/maxBy';
 import React from 'react';
+import {useTheme} from '../../../../hooks';
 import {openModal} from '../../../../actions/modal';
 import useComponents from '../../../../hooks/useComponents';
 import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewProps, IEventGroup} from '../CalendarSystem';
@@ -15,7 +16,11 @@ export const useCalendarSystemEventGroupModals = (
 ) => {
     const dispatch = useDispatch();
     const components = useComponents();
+    const {theme} = useTheme();
+
     const calendarModalView = eventGroupModalProps?.component || components.ui.getView('content.CalendarSystemEventGroupModalView');
+
+    const defaultEventGroupColor = React.useMemo(() => theme === 'light' ? '#651fff' : '#9362ff', [theme]);
 
     const onEventGroupSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
         const newEventGroup: IEventGroup = {
@@ -32,8 +37,11 @@ export const useCalendarSystemEventGroupModals = (
         dispatch(openModal(calendarModalView, {
             isCreate: true,
             onEventGroupSubmit,
+            eventGroupInitialValues: {
+                color: defaultEventGroupColor,
+            },
         } as CalendarSystemEventGroupModalViewProps));
-    }, [calendarModalView, dispatch, onEventGroupSubmit]);
+    }, [calendarModalView, defaultEventGroupColor, dispatch, onEventGroupSubmit]);
 
     return {
         openCreateEventGroupModal,

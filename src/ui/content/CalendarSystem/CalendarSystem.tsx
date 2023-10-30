@@ -46,29 +46,86 @@ export interface IPresentDateInfo {
     currentMonth: number;
     dateToDisplay: string;
 }
+
+/**
+* Событие
+*/
 export interface IEvent {
+    /**
+    * Идентификатор
+    */
     id: number,
+    /**
+    * Дата
+    */
     date: Date,
+    /**
+    * Заголовок
+    */
     title: string,
+
+    /**
+    * Цвет
+    */
     color?: string,
+
+    /**
+    * Внутреннее описания события
+    */
     description?: string,
     [key: string]: any,
 }
 
+/**
+* Группа событий
+*/
 export interface IEventGroup {
+    /**
+    * Идентификатор
+    */
     id: number,
+    /**
+    * Название группы
+    */
     label: string,
+    /**
+    * Цвет
+    * @example '#000000'
+    */
     color?: string,
+    /**
+    * События группы
+    */
     events: Omit<IEvent, 'color'>[],
 }
 
+/**
+ * Комплексный календарь
+ **/
 export interface ICalendarSystemProps extends IUiComponent {
-    onCreateEvent?: () => void;
+    /**
+    * Функция, которая вызовется при смене типа календаря
+    */
     onChangeCalendarType?: (newType: string) => void;
+    /**
+    * Свойства для модального окна
+    */
     calendarModalProps?: IModalProps,
+    /**
+    * Свойства для модалного окна группы событий
+    */
     eventGroupModalProps?: IModalProps,
+    /**
+    * Параметры для групп событий
+    */
     eventBlock: {
+        /**
+        * Заголовок, который используется для обозначения групп событий
+        */
         title: string,
+        /**
+        * Группы событий
+        */
         eventGroups: IEventGroup[],
     },
     [key: string]: any;

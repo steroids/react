@@ -1,6 +1,6 @@
 {
  "name": "@steroidsjs/core",
-"version": "3.0.0-beta.98",
+ "version": "3.0.0-beta.98",
  "description": "",
  "author": "Vladimir Kozhin <hello@kozhindev.com>",
  "repository": {
@@ -36,6 +36,7 @@
   "dot-prop-immutable": "^2.1.0",
   "fileup-core": "^1.2.7",
   "history": "^4.10.1",
+  "immer": "^10.0.3",
   "intl-messageformat": "^10.1.4",
   "js-cookie": "^2.2.1",
   "load-js": "^3.0.3",
@@ -57,7 +58,8 @@
   "react-use": "^17.4.0",
   "redux": "^4.0.4",
   "redux-mock-store": "^1.5.4",
-  "set-cookie-parser": "^2.4.8"
+  "set-cookie-parser": "^2.4.8",
+  "zustand": "^4.4.4"
  },
  "devDependencies": {
   "@babel/cli": "^7.13.14",

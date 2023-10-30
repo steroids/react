@@ -2,9 +2,10 @@ import * as React from 'react';
 import _orderBy from 'lodash-es/orderBy';
 import {useCallback, useMemo, useState} from 'react';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
+import {useNotificationsStore, closeNotification} from '../../../store/notificationsStore';
 import useDispatch from '../../../hooks/useDispatch';
 import {useComponents, useSelector} from '../../../hooks';
-import {setFlashes, closeNotification} from '../../../actions/notifications';
+import {setFlashes} from '../../../actions/notifications';
 import {getNotifications, getPosition} from '../../../reducers/notifications';
 
 /**
@@ -104,30 +105,36 @@ export interface INotificationsItemViewProps extends INotificationItem {
 }
 
 function Notifications(props:INotificationsProps): JSX.Element {
-    const {notifications, position} = useSelector(state => ({
-        notifications: getNotifications(state),
-        position: getPosition(state),
-    }));
+    // Redux
+    // const {notifications, position} = useSelector(state => ({
+    //     notifications: getNotifications(state),
+    //     position: getPosition(state),
+    // }));
+
+    // Zustand
+    // в данном случае селекторы не требуются, так как поля находятся на первом уровне вложенности состояния.
+    // Для остальных уровней вложенности можно использовать селекторы
+    const {items: notifications, position} = useNotificationsStore();
 
     const components = useComponents();
     const [innerNotifications, setInnerNotifications] = useState(props.notifications || []);
     const [closing, setClosing] = useState([]);
 
-    const dispatch = useDispatch();
-    useMount(() => {
-        if (props.initialFlashes) {
-            dispatch(setFlashes(props.initialFlashes));
+    // const dispatch = useDispatch();
+    // useMount(() => {
+    //     if (props.initialFlashes) {
+    //         dispatch(setFlashes(props.initialFlashes));
 
-            // Disable scroll or scroll to top on show notifications
-            if (!process.env.IS_SSR) {
-                if ('scrollRestoration' in window.history) {
-                    window.history.scrollRestoration = 'manual';
-                } else {
-                    setTimeout(() => window.scrollTo(0, 0), 1000);
-                }
-            }
-        }
-    });
+    //         // Disable scroll or scroll to top on show notifications
+    //         if (!process.env.IS_SSR) {
+    //             if ('scrollRestoration' in window.history) {
+    //                 window.history.scrollRestoration = 'manual';
+    //             } else {
+    //                 setTimeout(() => window.scrollTo(0, 0), 1000);
+    //             }
+    //         }
+    //     }
+    // });
 
     const prevNotifications = usePrevious(notifications);
     useUpdateEffect(() => {
@@ -144,10 +151,15 @@ function Notifications(props:INotificationsProps): JSX.Element {
         }
     }, [closing, innerNotifications, notifications, prevNotifications, props.closeTimeoutMs]);
 
-    const onClose = useCallback(
-        notificationId => dispatch(closeNotification(notificationId)),
-        [dispatch],
-    );
+    // Redux
+    // const onClose = useCallback(
+    //     notificationId => dispatch(closeNotification(notificationId)),
+    //     [dispatch],
+    // );
+
+    // Zustand
+    // Избавляемся от функции dispatch
+    const onClose = useCallback(notificationId => closeNotification(notificationId), []);
 
     const closingIds = closing.map(item => item.id);
 

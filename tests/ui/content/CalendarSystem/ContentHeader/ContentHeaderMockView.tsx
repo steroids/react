@@ -7,6 +7,7 @@ import {ButtonGroup} from '../../../../../src/ui/nav';
 import {Icon} from '../../../../../src/ui/content';
 import DateControlEnum from '../../../../../src/ui/content/CalendarSystem/enums/DateControlType';
 import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
+import ButtonGroupMockView from '../../../nav/ButtonGroup/ButtonGroupMockView';
 
 interface IContentHeaderProps {
     dateToDisplay: string;
@@ -35,15 +36,16 @@ function ContentHeader(props: IContentHeaderProps) {
                     >
                         <Icon
                             className={bem.element('controls-item-icon')}
-                            name="mockIcon"
+                            name='mockIcon'
                         />
                     </li>
                 ))}
             </ul>
             <ButtonGroup
+                view={ButtonGroupMockView}
                 className={bem.element('measures')}
                 items={CalendarEnum}
-                onClick={(value) => props.onChangeCalendarType(value as string)}
+                onClick={props.onChangeCalendarType}
                 defaultActiveButton={CalendarEnum.MONTH}
             />
         </div>

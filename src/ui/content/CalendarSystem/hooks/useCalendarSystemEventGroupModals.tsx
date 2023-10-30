@@ -4,16 +4,18 @@ import React from 'react';
 import {openModal} from '../../../../actions/modal';
 import useComponents from '../../../../hooks/useComponents';
 import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewProps, IEventGroup} from '../CalendarSystem';
+import {IModalProps} from '../../../modal/Modal/Modal';
 
 const DEFAULT_ID = 1;
 
 export const useCalendarSystemEventGroupModals = (
     innerEventGroups: IEventGroup[],
     setInnerEventGroups: React.Dispatch<React.SetStateAction<IEventGroup[]>>,
+    eventGroupModalProps: IModalProps,
 ) => {
     const dispatch = useDispatch();
     const components = useComponents();
-    const calendarModalView = components.ui.getView('content.CalendarSystemEventGroupModalView');
+    const calendarModalView = eventGroupModalProps?.component || components.ui.getView('content.CalendarSystemEventGroupModalView');
 
     const onEventGroupSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
         const newEventGroup: IEventGroup = {

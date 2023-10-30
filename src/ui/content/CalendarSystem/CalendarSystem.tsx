@@ -66,6 +66,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     onCreateEvent?: () => void;
     onChangeCalendarType?: (newType: string) => void;
     calendarModalProps?: IModalProps,
+    eventGroupModalProps?: IModalProps,
     eventBlock: {
         title: string,
         eventGroups: IEventGroup[],
@@ -132,7 +133,11 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         setInnerEventGroups,
     );
 
-    const {openCreateEventGroupModal} = useCalendarSystemEventGroupModals(innerEventGroups, setInnerEventGroups);
+    const {openCreateEventGroupModal} = useCalendarSystemEventGroupModals(
+        innerEventGroups,
+        setInnerEventGroups,
+        props.eventGroupModalProps,
+    );
 
     const onChangeCalendarType = React.useCallback((newType: string) => {
         setCalendarType(newType);

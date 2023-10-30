@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import useBem from '../../../../../src/hooks/useBem';
-import {Accordion, AccordionItem} from '../../../../../src/ui/content';
-import {CheckboxListField} from '../../../../../src/ui/form';
+import {Accordion, AccordionItem, Icon} from '../../../../../src/ui/content';
+import {CheckboxListField, Button} from '../../../../../src/ui/form';
 import {IEventGroup} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
 
 interface IAsideCalendarsProps {
@@ -9,6 +9,7 @@ interface IAsideCalendarsProps {
     eventGroupsTitle: string;
     selectedCalendarGroupsIds: number[],
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
+    openCreateEventGroupModal: () => void,
 }
 
 function AsideCalendars(props: IAsideCalendarsProps) {
@@ -23,6 +24,14 @@ function AsideCalendars(props: IAsideCalendarsProps) {
                         selectedIds={props.selectedCalendarGroupsIds}
                         onChange={(selectedIds) => props.onChangeEventGroupsIds(selectedIds)}
                     />
+                    <Button
+                        color='basic'
+                        className={bem.element('add')}
+                        onClick={props.openCreateEventGroupModal}
+                        size='sm'
+                    >
+                        <Icon name="mockIcon" />
+                    </Button>
                 </AccordionItem>
             </Accordion>
         </div>

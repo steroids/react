@@ -64,7 +64,7 @@ export default function CalendarSystemModalView(props: ICalendarSystemModalViewP
                 </div>
                 <div>
                     <Text
-                        content={__('Время и дата')}
+                        content="Время и дата"
                         className={bem.element('label')}
                     />
                     <DateTimeField
@@ -74,7 +74,7 @@ export default function CalendarSystemModalView(props: ICalendarSystemModalViewP
                 </div>
                 <div>
                     <Text
-                        content={__('Описание')}
+                        content="Описание"
                         className={bem.element('label')}
                     />
                     <TextField

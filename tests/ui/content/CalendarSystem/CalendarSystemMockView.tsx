@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import Calendar from '../../../../src/ui/content/Calendar';
 import {ICalendarSystemViewProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
@@ -8,7 +8,7 @@ import AsideCalendars from './AsideCalendars/AsideCalendarsMockView';
 import ContentHeader from './ContentHeader/ContentHeaderMockView';
 import MonthGrid from './MonthGrid/MonthGridMockView';
 import WeekGrid from './WeekGrid/WeekGridMockView';
-import CalendarMockVIew from '../Calendar/CalendarMockView';
+import CalendarMockView from '../Calendar/CalendarMockView';
 
 export default function CalendarSystemView(props: ICalendarSystemViewProps) {
     const bem = useBem('CalendarSystemView');
@@ -26,16 +26,16 @@ export default function CalendarSystemView(props: ICalendarSystemViewProps) {
                     onClick={props.openCreateModal}
                     className={bem.element('aside-header')}
                 />
-                <Calendar
+                {/* <Calendar
                     showFooter={false}
-
                     onMonthChange={props.onMonthChange}
-                />
+                /> */}
                 <AsideCalendars
                     eventGroups={props.eventGroups}
                     eventGroupsTitle={props.eventGroupsTitle}
                     selectedCalendarGroupsIds={props.selectedCalendarGroups}
                     onChangeEventGroupsIds={props.onChangeEventGroupsIds}
+                    openCreateEventGroupModal={props.openCreateEventGroupModal}
                 />
             </aside>
             <div className={bem.element('content')}>

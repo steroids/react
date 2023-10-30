@@ -112,6 +112,10 @@ export interface ICalendarSystemProps extends IUiComponent {
     */
     calendarModalProps?: IModalProps,
     /**
+    * Свойства для модалного окна группы событий
+    */
+    eventGroupModalProps?: IModalProps,
+    /**
     * Параметры для групп событий
     */
     eventBlock: {
@@ -142,7 +146,7 @@ export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'ca
     openCreateModal: (eventInitialDay?: IDay) => void;
     openCreateEventGroupModal: VoidFunction,
     openEditModal: (event: IEvent) => void;
-    getEventsFromDate: (dateFromDay: Date, isMonth: boolean) => IEvent[],
+    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
     weekDays: string[],
 }
@@ -186,7 +190,11 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         setInnerEventGroups,
     );
 
-    const {openCreateEventGroupModal} = useCalendarSystemEventGroupModals(innerEventGroups, setInnerEventGroups);
+    const {openCreateEventGroupModal} = useCalendarSystemEventGroupModals(
+        innerEventGroups,
+        setInnerEventGroups,
+        props.eventGroupModalProps,
+    );
 
     const onChangeCalendarType = React.useCallback((newType: string) => {
         setCalendarType(newType);

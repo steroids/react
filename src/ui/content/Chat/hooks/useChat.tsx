@@ -1,30 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {IChatMessage, IChatUser} from '@steroidsjs/core/ui/content/Chat/Chat';
-import {getBubblesGroupedByDate} from '../utils';
+import {IChatMessage} from '../Chat';
+import {groupMessagesByDate} from '../utils';
 
-export interface IUseChatConfig {
-    chatId: string;
+export interface IChatConfig {
     messages: IChatMessage[];
-    currentUser: IChatUser;
 }
 
-export interface IBubbleMessage extends IChatMessage {
+export interface IGroupedMessage extends IChatMessage {
     isFirstMessage?: boolean;
     isLastMessage?: boolean;
 }
 
-export type IBubbleMessagesByDates = Record<string, IBubbleMessage[][]>
+export type IGroupedMessagesByDates = Record<string, IGroupedMessage[][]>
 
-export default function useChat(props: IUseChatConfig) {
-    const [bubbleMessagesByDates, setBubbleMessagesByDates] = useState([]);
+export default function useChat(config: IChatConfig) {
+    const [groupedMessagesByDates, setGroupedMessagesByDates] = useState({});
 
     useEffect(() => {
-        const preparedMessages = getBubblesGroupedByDate(props.messages);
-
-        setBubbleMessagesByDates(preparedMessages);
-    }, [props.messages]);
+        setGroupedMessagesByDates(
+            groupMessagesByDate(config.messages),
+        );
+    }, [config.messages]);
 
     return {
-        bubbleMessagesByDates,
+        groupedMessagesByDates,
     };
 }

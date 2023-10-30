@@ -1,7 +1,7 @@
-import {getBubblesGroupedByDate} from './convertMessagesIntoBubbles';
+import {groupMessagesByDate} from './groupMessagesByDate';
 import calculateMessageTimeAgo from './calculateMessageTimeAgo';
 
 export {
-    getBubblesGroupedByDate,
+    groupMessagesByDate,
     calculateMessageTimeAgo,
 };

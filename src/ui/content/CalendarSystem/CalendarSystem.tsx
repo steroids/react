@@ -23,10 +23,12 @@ import {useComponents, useWeekCalendar} from '../../../hooks';
 import {addEventIfMatchDate} from './helpers/addEventIfMatchDate';
 import CalendarEnum from './enums/CalendarType';
 import useCalendarSystemModals from './hooks/useCalendarSystemModals';
+import {useCalendarSystemEventGroupModals} from './hooks/useCalendarSystemEventGroupModals';
 
 dayjs.extend(localeData);
 
 export type CalendarSystemModalFields = 'title' | 'eventGroupId' | 'date' | 'description';
+export type CalendarSystemEventGroupModalFields = 'label' | 'color';
 
 export interface IEventInitialValues extends IEvent {
     eventGroupId: string;
@@ -84,6 +86,7 @@ export interface ICalendarSystemViewProps extends Omit<ICalendarSystemProps, 'ca
     onMonthChange: (newDate: Date) => void,
     applyControl: (event: React.MouseEvent<HTMLElement>) => void
     openCreateModal: (eventInitialDay?: IDay) => void;
+    openCreateEventGroupModal: VoidFunction,
     openEditModal: (event: IEvent) => void;
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
@@ -95,6 +98,11 @@ export interface ICalendarSystemModalViewProps extends IModalProps {
     onEventSubmit: (fields: Record<CalendarSystemModalFields, string>, eventInitialValues?: IEventInitialValues) => void,
     isCreate: boolean,
     eventInitialValues?: any,
+}
+
+export interface CalendarSystemEventGroupModalViewProps extends IModalProps {
+    isCreate: boolean,
+    onEventGroupSubmit: (fields: Record<CalendarSystemEventGroupModalFields, string>) => void,
 }
 
 export default function CalendarSystem(props: ICalendarSystemProps) {
@@ -123,6 +131,8 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         innerEventGroups,
         setInnerEventGroups,
     );
+
+    const {openCreateEventGroupModal} = useCalendarSystemEventGroupModals(innerEventGroups, setInnerEventGroups);
 
     const onChangeCalendarType = React.useCallback((newType: string) => {
         setCalendarType(newType);
@@ -225,6 +235,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         openCreateModal,
         getEventsFromDate,
         onChangeEventGroupsIds: (newSelectedEventGroupsIds: number[]) => setSelectedEventGroupsIds(newSelectedEventGroupsIds),
+        openCreateEventGroupModal,
         openEditModal,
         weekDays,
     });

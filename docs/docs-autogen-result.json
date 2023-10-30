@@ -4179,6 +4179,163 @@
                 }
             ]
         },
+        "CalendarSystemEventGroupModalViewProps": {
+            "name": "CalendarSystemEventGroupModalViewProps",
+            "moduleName": "ui/content/CalendarSystem/CalendarSystem",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IModalProps"
+            ],
+            "properties": [
+                {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Коллекция кнопок, которая отобразится в нижней секции Modal",
+                    "required": false,
+                    "type": "IButtonProps[]",
+                    "example": "[{label: __(('Закрыть')), onClick: () => props.onClose()}]"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Кастомный CSS-класс",
+                    "required": false,
+                    "type": "string",
+                    "example": "'CustomCssClassName'"
+                },
+                {
+                    "name": "closeAfterMs",
+                    "decorators": [],
+                    "description": "Время в миллисекундах, через которое автоматически произойдет закрытие Modal.",
+                    "required": false,
+                    "type": "number",
+                    "example": "1000"
+                },
+                {
+                    "name": "closeTimeoutMs",
+                    "decorators": [],
+                    "description": "Время, в течение которого будет происходить анимация закрытия Modal.\nПереопределяет отрезок времени, заданный в ModalPortal",
+                    "required": false,
+                    "type": "number",
+                    "example": "300"
+                },
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "Компонент, который отрендерится внутри Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": "() => <InnerModalComponent />"
+                },
+                {
+                    "name": "componentProps",
+                    "decorators": [],
+                    "description": "Свойства для внутреннего компонента",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "group",
+                    "decorators": [],
+                    "description": "Группа Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'modal'"
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "Порядковый номер Modal",
+                    "required": false,
+                    "type": "number",
+                    "example": "0"
+                },
+                {
+                    "name": "isClosing",
+                    "decorators": [],
+                    "description": "Значение свойства отслеживается для показа/закрытия Modal.\nЕсли для компонента ModalPortal установлено значение задержки (animationDelayMc), то после закрытия\nпользователем Modal, оно исчезнет не сразу, а через указанный в animationDelayMc промежуток времени.\nВ течение этого времени флаг isClosing будет равен true.\nЕсли задержка не установлена, Modal закроется сразу же и флаг isClosing всегда будет равен false.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "isCreate",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "Обработчик срабатывает при закрытии Modal",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "onEventGroupSubmit",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "shouldCloseOnEsc",
+                    "decorators": [],
+                    "description": "Закрытие Modal при нажатии на клавишу 'ESC'",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "shouldCloseOnOverlayClick",
+                    "decorators": [],
+                    "description": "Закрытие Modal при клике на компонент overlay внутри Modal (темный фон, отделяющий контент страницы от Modal)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'middle'"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок Modal",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Заявка отправлена на модерацию'"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение React-компонента для кастомизации view-отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
         "ICalendarSystemModalViewProps": {
             "name": "ICalendarSystemModalViewProps",
             "moduleName": "ui/content/CalendarSystem/CalendarSystem",
@@ -4355,7 +4512,7 @@
         "ICalendarSystemProps": {
             "name": "ICalendarSystemProps",
             "moduleName": "ui/content/CalendarSystem/CalendarSystem",
-            "title": "",
+            "title": "Комплексный календарь",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -4366,7 +4523,7 @@
                 {
                     "name": "calendarModalProps",
                     "decorators": [],
-                    "description": "",
+                    "description": "Свойства для модального окна",
                     "required": false,
                     "type": "IModalProps",
                     "example": null
@@ -4382,23 +4539,23 @@
                 {
                     "name": "eventBlock",
                     "decorators": [],
-                    "description": "",
+                    "description": "Параметры для групп событий",
                     "required": true,
                     "type": "{eventGroups: IEventGroup[], title: string}",
                     "example": null
                 },
                 {
-                    "name": "onChangeCalendarType",
+                    "name": "eventGroupModalProps",
                     "decorators": [],
-                    "description": "",
+                    "description": "Свойства для модалного окна группы событий",
                     "required": false,
-                    "type": "{}",
+                    "type": "IModalProps",
                     "example": null
                 },
                 {
-                    "name": "onCreateEvent",
+                    "name": "onChangeCalendarType",
                     "decorators": [],
-                    "description": "",
+                    "description": "Функция, которая вызовется при смене типа календаря",
                     "required": false,
                     "type": "{}",
                     "example": null
@@ -4530,6 +4687,14 @@
                     "example": null
                 },
                 {
+                    "name": "openCreateEventGroupModal",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "VoidFunction",
+                    "example": null
+                },
+                {
                     "name": "openCreateModal",
                     "decorators": [],
                     "description": "",
@@ -4617,7 +4782,7 @@
         "IEvent": {
             "name": "IEvent",
             "moduleName": "ui/content/CalendarSystem/CalendarSystem",
-            "title": "",
+            "title": "Событие",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -4626,7 +4791,7 @@
                 {
                     "name": "color",
                     "decorators": [],
-                    "description": "",
+                    "description": "Цвет",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -4634,7 +4799,7 @@
                 {
                     "name": "date",
                     "decorators": [],
-                    "description": "",
+                    "description": "Дата",
                     "required": true,
                     "type": "Date",
                     "example": null
@@ -4642,7 +4807,7 @@
                 {
                     "name": "description",
                     "decorators": [],
-                    "description": "",
+                    "description": "Внутреннее описания события",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -4650,7 +4815,7 @@
                 {
                     "name": "id",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор",
                     "required": true,
                     "type": "number",
                     "example": null
@@ -4658,7 +4823,7 @@
                 {
                     "name": "title",
                     "decorators": [],
-                    "description": "",
+                    "description": "Заголовок",
                     "required": true,
                     "type": "string",
                     "example": null
@@ -4668,7 +4833,7 @@
         "IEventGroup": {
             "name": "IEventGroup",
             "moduleName": "ui/content/CalendarSystem/CalendarSystem",
-            "title": "",
+            "title": "Группа событий",
             "description": "",
             "tags": {},
             "defaultProps": null,
@@ -4677,15 +4842,15 @@
                 {
                     "name": "color",
                     "decorators": [],
-                    "description": "",
+                    "description": "Цвет",
                     "required": false,
                     "type": "string",
-                    "example": null
+                    "example": "'#000000'"
                 },
                 {
                     "name": "events",
                     "decorators": [],
-                    "description": "",
+                    "description": "События группы",
                     "required": true,
                     "type": "Omit[]",
                     "example": null
@@ -4693,7 +4858,7 @@
                 {
                     "name": "id",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор",
                     "required": true,
                     "type": "number",
                     "example": null
@@ -4701,7 +4866,7 @@
                 {
                     "name": "label",
                     "decorators": [],
-                    "description": "",
+                    "description": "Название группы",
                     "required": true,
                     "type": "string",
                     "example": null
@@ -4722,7 +4887,7 @@
                 {
                     "name": "color",
                     "decorators": [],
-                    "description": "",
+                    "description": "Цвет",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -4730,7 +4895,7 @@
                 {
                     "name": "date",
                     "decorators": [],
-                    "description": "",
+                    "description": "Дата",
                     "required": true,
                     "type": "Date",
                     "example": null
@@ -4738,7 +4903,7 @@
                 {
                     "name": "description",
                     "decorators": [],
-                    "description": "",
+                    "description": "Внутреннее описания события",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -4754,7 +4919,7 @@
                 {
                     "name": "id",
                     "decorators": [],
-                    "description": "",
+                    "description": "Идентификатор",
                     "required": true,
                     "type": "number",
                     "example": null
@@ -4762,7 +4927,7 @@
                 {
                     "name": "title",
                     "decorators": [],
-                    "description": "",
+                    "description": "Заголовок",
                     "required": true,
                     "type": "string",
                     "example": null
@@ -30828,6 +30993,14 @@
             "description": "",
             "required": true,
             "type": "AvatarGroupProps",
+            "example": null
+        },
+        "CalendarSystemEventGroupModalFields": {
+            "name": "CalendarSystemEventGroupModalFields",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "\"label\" | \"color\"",
             "example": null
         },
         "CalendarSystemModalFields": {

@@ -16,11 +16,9 @@ export type IGroupedMessagesByDates = Record<string, IGroupedMessage[][]>
 export default function useChat(config: IChatConfig) {
     const [groupedMessagesByDates, setGroupedMessagesByDates] = useState({});
 
-    useEffect(() => {
-        setGroupedMessagesByDates(
-            groupMessagesByDate(config.messages),
-        );
-    }, [config.messages]);
+    useEffect(() => setGroupedMessagesByDates(
+        groupMessagesByDate(config.messages),
+    ), [config.messages]);
 
     return {
         groupedMessagesByDates,

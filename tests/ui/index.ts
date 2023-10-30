@@ -26,6 +26,15 @@ export default {
     'content.KanbanModalView': {
         lazy: () => require('./content/Kanban/mockViews/KanbanModal/KanbanModalMockView').default,
     },
+    'content.CalendarSystemView': {
+        lazy: () => require('./content/CalendarSystem/CalendarSystemMockView').default,
+    },
+    'content.CalendarSystemModalView': {
+        lazy: () => require('./content/CalendarSystem/CalendarSystemModalMockView').default,
+    },
+    'content.CalendarSystemEventGroupModalView': {
+        lazy: () => require('./content/CalendarSystem/CalendarSystemEventGroupModalMockView').default,
+    },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },

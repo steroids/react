@@ -12,6 +12,7 @@ import CopyToClipboard from './CopyToClipboard';
 import Chart from './Chart';
 import Slider from './Slider';
 import CalendarSystem from './CalendarSystem';
+import Chat from './Chat';
 
 export {
     Avatar,
@@ -31,4 +32,5 @@ export {
     Chart,
     Slider,
     CalendarSystem,
+    Chat,
 };

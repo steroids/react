@@ -1,5 +1,6 @@
 import {create} from 'zustand';
 import {immer} from 'zustand/middleware/immer';
+import {devtools} from 'zustand/middleware';
 import _uniqueId from 'lodash-es/uniqueId';
 
 export type TNotificationsStore = {
@@ -21,10 +22,10 @@ const showNotificationDefaults: IShowNotificationParameters = {
 // Для подключения дополнительных store в проекте не требуется комбинировать редьюсеры
 export const useNotificationsStore = create<TNotificationsStore>()(
     // использование immer позволяет не клонировать предыдущие вложенные состояния. (кстати, его можно использовать и с redux)
-    immer(() => ({
+    immer(devtools(() => ({
         items: [],
         position: '',
-    })),
+    }))),
 );
 
 export const closeNotification = (id: string) => {

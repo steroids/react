@@ -14,29 +14,33 @@ export interface IChatMessage {
     id: number;
     user: IChatUser;
     text: string;
-    timestamp: Date;
+    timestamp: Date | string;
 }
 
 interface IChatProps extends IChatConfig, IUiComponent {
     chatId: string;
-    currentUser: IChatUser;
 }
 
 export interface IChatViewProps extends Omit<IChatProps, 'messages'>{
     groupedMessagesByDates: IGroupedMessagesByDates;
+    onSendMessage: (data) => void;
 }
 
 export default function Chat(props: IChatProps) {
     const components = useComponents();
 
     const {
+        onSendMessage,
         groupedMessagesByDates,
     } = useChat({
+        chatId: props.chatId,
         messages: props.messages,
+        currentUser: props.currentUser,
     });
 
     return components.ui.renderView(props.view || 'content.ChatView', {
         ...props,
         groupedMessagesByDates,
+        onSendMessage,
     });
 }

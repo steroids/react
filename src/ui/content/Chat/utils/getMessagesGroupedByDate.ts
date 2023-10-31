@@ -5,7 +5,7 @@ import {IGroupedMessagesByDates} from '../hooks/useChat';
 import {MONTH_AND_DAY_TEMPLATE, SECONDS_IN_MINUTE_VALUE} from '../constants/timeTemplatesAndUnits';
 import {IChatMessage} from '../Chat';
 
-const isWithinTimeThreshold = (firstMessage: IChatMessage, secondMessage: IChatMessage) => {
+export const isWithinTimeThreshold = (firstMessage: IChatMessage, secondMessage: IChatMessage) => {
     const firstMessageTime = new Date(firstMessage.timestamp).getTime();
     const secondMessageTime = new Date(secondMessage.timestamp).getTime();
 

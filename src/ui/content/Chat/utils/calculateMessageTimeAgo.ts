@@ -7,7 +7,7 @@ import {
     MINUTES_IN_HOUR_VALUE,
 } from '../constants/timeTemplatesAndUnits';
 
-export default function calculateMessageTimeAgo(timestamp) {
+export const calculateMessageTimeAgo = (timestamp) => {
     const now = dayjs();
     const messageTime = dayjs(timestamp);
     const diffInMinutes = now.diff(messageTime, MINUTE_UNIT);
@@ -24,4 +24,4 @@ export default function calculateMessageTimeAgo(timestamp) {
     }
 
     return timeAgo;
-}
+};

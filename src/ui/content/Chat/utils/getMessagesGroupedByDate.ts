@@ -5,19 +5,19 @@ import {IGroupedMessagesByDates} from '../hooks/useChat';
 import {MONTH_AND_DAY_TEMPLATE, SECONDS_IN_MINUTE_VALUE} from '../constants/timeTemplatesAndUnits';
 import {IChatMessage} from '../Chat';
 
-function isWithinTimeThreshold(firstMessage: IChatMessage, secondMessage: IChatMessage) {
+const isWithinTimeThreshold = (firstMessage: IChatMessage, secondMessage: IChatMessage) => {
     const firstMessageTime = new Date(firstMessage.timestamp).getTime();
     const secondMessageTime = new Date(secondMessage.timestamp).getTime();
 
     return firstMessage.user.id === secondMessage.user.id && Math.abs(firstMessageTime - secondMessageTime) <= SECONDS_IN_MINUTE_VALUE;
-}
+};
 
-function addFirstAndLastKeyForMessageGroup(messageGroup: any) {
+const addFirstAndLastKeyForMessageGroup = (messageGroup: any) => {
     _first(messageGroup).isFirstMessage = true;
     _last(messageGroup).isLastMessage = true;
-}
+};
 
-export function groupMessagesByDate(messages: IChatMessage[]) {
+export const getMessagesGroupedByDate = (messages: IChatMessage[]) => {
     const groupedMessages = {} as IGroupedMessagesByDates;
 
     let prevDateKey = null;
@@ -61,4 +61,4 @@ export function groupMessagesByDate(messages: IChatMessage[]) {
     addFirstAndLastKeyForMessageGroup(_last(groupedMessages[prevDateKey]));
 
     return groupedMessages;
-}
+};

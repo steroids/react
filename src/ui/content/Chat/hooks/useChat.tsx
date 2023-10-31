@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {IChatMessage} from '../Chat';
-import {groupMessagesByDate} from '../utils';
+import {getMessagesGroupedByDate} from '../utils';
 
 export interface IChatConfig {
     messages: IChatMessage[];
@@ -13,14 +13,16 @@ export interface IGroupedMessage extends IChatMessage {
 
 export type IGroupedMessagesByDates = Record<string, IGroupedMessage[][]>
 
-export default function useChat(config: IChatConfig) {
+const useChat = (config: IChatConfig) => {
     const [groupedMessagesByDates, setGroupedMessagesByDates] = useState({});
 
     useEffect(() => setGroupedMessagesByDates(
-        groupMessagesByDate(config.messages),
+        getMessagesGroupedByDate(config.messages),
     ), [config.messages]);
 
     return {
         groupedMessagesByDates,
     };
-}
+};
+
+export default useChat;

@@ -1,7 +1,7 @@
-import {groupMessagesByDate} from './groupMessagesByDate';
-import calculateMessageTimeAgo from './calculateMessageTimeAgo';
+import {getMessagesGroupedByDate} from './getMessagesGroupedByDate';
+import {calculateMessageTimeAgo} from './calculateMessageTimeAgo';
 
 export {
-    groupMessagesByDate,
+    getMessagesGroupedByDate,
     calculateMessageTimeAgo,
 };

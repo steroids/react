@@ -8,6 +8,8 @@ import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewPr
 import {IModalProps} from '../../../modal/Modal/Modal';
 
 const DEFAULT_ID = 1;
+const PRIMARY_LIGHT = '#651fff';
+const PRIMARY_DARK = '#9362ff';
 
 export const useCalendarSystemEventGroupModals = (
     innerEventGroups: IEventGroup[],
@@ -20,7 +22,7 @@ export const useCalendarSystemEventGroupModals = (
 
     const calendarModalView = eventGroupModalProps?.component || components.ui.getView('content.CalendarSystemEventGroupModalView');
 
-    const defaultEventGroupColor = React.useMemo(() => theme === 'light' ? '#651fff' : '#9362ff', [theme]);
+    const defaultEventGroupColor = React.useMemo(() => theme === 'light' ? PRIMARY_LIGHT : PRIMARY_DARK, [theme]);
 
     const onEventGroupSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
         const newEventGroup: IEventGroup = {

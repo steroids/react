@@ -1,10 +1,10 @@
 import {getMessagesGroupedByDate, isWithinTimeThreshold} from './getMessagesGroupedByDate';
-import {setNewMessageIntoGroupedMessages} from './setNewMessageIntoGroupedMessages';
+import {addNewMessageIntoGroupedMessages} from './addNewMessageIntoGroupedMessages';
 import {calculateMessageTimeAgo} from './calculateMessageTimeAgo';
 
 export {
     getMessagesGroupedByDate,
     isWithinTimeThreshold,
-    setNewMessageIntoGroupedMessages,
+    addNewMessageIntoGroupedMessages,
     calculateMessageTimeAgo,
 };

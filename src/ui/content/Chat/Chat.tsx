@@ -1,7 +1,7 @@
 import React from 'react';
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../Avatar/Avatar';
-import useChat, {IChatConfig, IGroupedMessagesByDates} from './hooks/useChat';
+import useChat, {IGroupedMessagesByDates} from './hooks/useChat';
 
 export interface IChatUser {
     id: number;
@@ -17,8 +17,52 @@ export interface IChatMessage {
     timestamp: Date | string;
 }
 
-interface IChatProps extends IChatConfig, IUiComponent {
+export interface IChatProps extends IUiComponent {
+    /**
+     * Идентификатор чата
+     * @example TaskChat
+     */
     chatId: string;
+
+    /**
+     * Коллекция сообщений,
+     * @example [
+     *  {
+     *         id: 1,
+     *         text: 'Всем привет!',
+     *         user: {
+     *             id: 1,
+     *             firstName: 'Olga',
+     *             lastName: 'Petrova',
+     *             avatar: {
+     *                 src: 'images.com/image.png',
+     *                 status: true,
+     *             },
+     *         },
+     *         timestamp: '2023-10-25T12:38:00',
+     *     },
+     * ]
+     */
+    messages: IChatMessage[];
+
+    /**
+     * Данные о текущем пользователе, нужны для отправки сообщений и определения сообщений пользователя
+     * @example {
+     *             id: 1,
+     *             firstName: 'Olga',
+     *             lastName: 'Petrova',
+     *             avatar: {
+     *                 src: 'images.com/image.png',
+     *                 status: true,
+     *             },
+     *         }
+     */
+    currentUser: IChatUser;
+
+    /**
+     * Обработчик события отправки сообщения
+     */
+    onSendMessage?: (chatId: string, message: IChatMessage) => void;
 }
 
 export interface IChatViewProps extends Omit<IChatProps, 'messages'>{
@@ -36,6 +80,7 @@ export default function Chat(props: IChatProps) {
         chatId: props.chatId,
         messages: props.messages,
         currentUser: props.currentUser,
+        onSendMessage: props.onSendMessage,
     });
 
     return components.ui.renderView(props.view || 'content.ChatView', {

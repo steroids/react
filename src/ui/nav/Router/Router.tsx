@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {parse} from 'path-to-regexp';
 import {Route, Switch, Redirect, StaticRouter} from 'react-router';
 import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
@@ -13,7 +14,14 @@ import {IListProps} from '../../list/List/List';
 import {useComponents, useSelector} from '../../../hooks';
 import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
-import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized} from '../../../reducers/router';
+import {
+    buildUrl,
+    getActiveRouteIds,
+    getRoute,
+    getRouteParams,
+    getRouteParent,
+    isRouterInitialized,
+} from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {findRedirectPathRecursive, treeToList, walkRoutesRecursive} from './helpers';
 
@@ -212,18 +220,44 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
     );
 };
 
+const filterParamsForRoute = (route: IRouteItem, routeParams: Record<string, string | number>) => {
+    if (!route.path) {
+        return routeParams;
+    }
+
+    const parsedPath = parse(route.path);
+    const filteredRouteParams = {} as Record<string, any>;
+
+    parsedPath.forEach(p => {
+        if (typeof p === 'object' && p.name) {
+            if (p.name in routeParams) {
+                filteredRouteParams[p.name] = routeParams[p.name];
+            }
+        }
+    });
+    return filteredRouteParams;
+};
+
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
     const routeParams = useSelector(getRouteParams);
 
-    const {isInitialized, pathname, route, activePath, activeRouteIds} = useSelector(state => ({
+    const {isInitialized, pathname, route, activePath, activeRouteIds, parentRoute} = useSelector(state => ({
         isInitialized: isRouterInitialized(state),
         pathname: _get(state, 'router.location.pathname'),
         route: getRoute(state),
         activePath: state.router?.location?.pathname,
         activeRouteIds: getActiveRouteIds(state),
+        parentRoute: getRouteParent(state),
     }));
     const routeId = route?.id || null;
+
+    const parentRouteRefForInitialClosingModal = useRef<IRouteItem | null | undefined>(parentRoute);
+    useUpdateEffect(() => {
+        if (typeof parentRouteRefForInitialClosingModal.current !== 'undefined') {
+            parentRouteRefForInitialClosingModal.current = parentRoute;
+        }
+    }, [parentRoute]);
 
     // Init routes in redux
     const dispatch = useDispatch();
@@ -241,7 +275,7 @@ function Router(props: IRouterProps): JSX.Element {
     });
 
     // Sync route params with redux
-    const prevRouteParams = usePreviousDistinct(routeParams);
+    const prevRouteParams = usePreviousDistinct(routeParams) ?? routeParams;
 
     useEffect(() => {
         if (!_isEqual(prevRouteParams, routeParams)) {
@@ -305,7 +339,15 @@ function Router(props: IRouterProps): JSX.Element {
                 return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
             });
             if (parentRouteId) {
-                dispatch(goToRoute(parentRouteId, prevRouteParams));
+                let params = prevRouteParams;
+                if (parentRouteRefForInitialClosingModal.current) {
+                    params = filterParamsForRoute(
+                        parentRouteRefForInitialClosingModal.current,
+                        prevRouteParams,
+                    );
+                    parentRouteRefForInitialClosingModal.current = undefined;
+                }
+                dispatch(goToRoute(parentRouteId, params));
             }
         }
     });

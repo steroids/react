@@ -4,6 +4,8 @@ export const HOURS_AND_MINUTES_TEMPLATE = 'HH:mm';
 
 export const MINUTE_UNIT = 'minute';
 
+export const ISO_TIMESTAMP_TEMPLATE = 'YYYY-MM-DDTHH:mm:ss.SSS';
+
 export const HOUR_UNIT = 'hour';
 
 export const SECONDS_IN_MINUTE_VALUE = 60000;

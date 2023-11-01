@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {IChatMessage} from '../Chat';
-import {getMessagesGroupedByDate} from '../utils';
+import React, {useCallback, useEffect, useState} from 'react';
+import dayjs from 'dayjs';
+import _uniqueId from 'lodash-es/uniqueId';
+import {useDispatch} from '../../../../hooks';
+import {formReset} from '../../../../actions/form';
+import {IChatMessage, IChatProps} from '../Chat';
+import {getMessagesGroupedByDate, addNewMessageIntoGroupedMessages} from '../utils';
+import {ISO_TIMESTAMP_TEMPLATE} from '../constants/timeTemplatesAndUnits';
 
-export interface IChatConfig {
-    messages: IChatMessage[];
-}
+export type IChatConfig = Pick<IChatProps, 'chatId' | 'messages' | 'currentUser' | 'onSendMessage'>
 
 export interface IGroupedMessage extends IChatMessage {
     isFirstMessage?: boolean;
@@ -20,8 +23,28 @@ const useChat = (config: IChatConfig) => {
         getMessagesGroupedByDate(config.messages),
     ), [config.messages]);
 
+    const dispatch = useDispatch();
+
+    const onSendMessage = useCallback((rawMessage) => {
+        const newMessage: IChatMessage = {
+            ...rawMessage,
+            id: _uniqueId(),
+            user: config.currentUser,
+            timestamp: dayjs().format(ISO_TIMESTAMP_TEMPLATE),
+        };
+
+        if (config.onSendMessage) {
+            config.onSendMessage(config.chatId, newMessage);
+        }
+
+        setGroupedMessagesByDates((prevGroupedMessagesByDates) => addNewMessageIntoGroupedMessages(newMessage, prevGroupedMessagesByDates));
+
+        dispatch(formReset(config.chatId));
+    }, [config, dispatch]);
+
     return {
         groupedMessagesByDates,
+        onSendMessage,
     };
 };
 

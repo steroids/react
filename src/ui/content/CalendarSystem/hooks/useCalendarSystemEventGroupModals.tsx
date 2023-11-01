@@ -1,12 +1,15 @@
 import {useDispatch} from 'react-redux';
 import _maxBy from 'lodash-es/maxBy';
 import React from 'react';
+import {useTheme} from '../../../../hooks';
 import {openModal} from '../../../../actions/modal';
 import useComponents from '../../../../hooks/useComponents';
 import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewProps, IEventGroup} from '../CalendarSystem';
 import {IModalProps} from '../../../modal/Modal/Modal';
 
 const DEFAULT_ID = 1;
+const PRIMARY_LIGHT = '#651fff';
+const PRIMARY_DARK = '#9362ff';
 
 export const useCalendarSystemEventGroupModals = (
     innerEventGroups: IEventGroup[],
@@ -15,7 +18,11 @@ export const useCalendarSystemEventGroupModals = (
 ) => {
     const dispatch = useDispatch();
     const components = useComponents();
+    const {theme} = useTheme();
+
     const calendarModalView = eventGroupModalProps?.component || components.ui.getView('content.CalendarSystemEventGroupModalView');
+
+    const defaultEventGroupColor = React.useMemo(() => theme === 'light' ? PRIMARY_LIGHT : PRIMARY_DARK, [theme]);
 
     const onEventGroupSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
         const newEventGroup: IEventGroup = {
@@ -32,8 +39,11 @@ export const useCalendarSystemEventGroupModals = (
         dispatch(openModal(calendarModalView, {
             isCreate: true,
             onEventGroupSubmit,
+            eventGroupInitialValues: {
+                color: defaultEventGroupColor,
+            },
         } as CalendarSystemEventGroupModalViewProps));
-    }, [calendarModalView, dispatch, onEventGroupSubmit]);
+    }, [calendarModalView, defaultEventGroupColor, dispatch, onEventGroupSubmit]);
 
     return {
         openCreateEventGroupModal,

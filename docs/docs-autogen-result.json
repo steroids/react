@@ -4247,6 +4247,14 @@
                     "example": null
                 },
                 {
+                    "name": "eventGroupInitialValues",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{color: string, label: string}",
+                    "example": null
+                },
+                {
                     "name": "group",
                     "decorators": [],
                     "description": "Группа Modal",
@@ -5187,6 +5195,292 @@
                     "required": false,
                     "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
+                }
+            ]
+        },
+        "IChatMessage": {
+            "name": "IChatMessage",
+            "moduleName": "ui/content/Chat/Chat",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "text",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "timestamp",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string | Date",
+                    "example": null
+                },
+                {
+                    "name": "user",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IChatUser",
+                    "example": null
+                }
+            ]
+        },
+        "IChatProps": {
+            "name": "IChatProps",
+            "moduleName": "ui/content/Chat/Chat",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "chatId",
+                    "decorators": [],
+                    "description": "Идентификатор чата",
+                    "required": true,
+                    "type": "string",
+                    "example": "TaskChat"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "currentUser",
+                    "decorators": [],
+                    "description": "Данные о текущем пользователе, нужны для отправки сообщений и определения сообщений пользователя",
+                    "required": true,
+                    "type": "IChatUser",
+                    "example": "{\n            id: 1,\n            firstName: 'Olga',\n            lastName: 'Petrova',\n            avatar: {\n                src: 'images.com/image.png',\n                status: true,\n            },\n        }"
+                },
+                {
+                    "name": "messages",
+                    "decorators": [],
+                    "description": "Коллекция сообщений,",
+                    "required": true,
+                    "type": "IChatMessage[]",
+                    "example": "[\n {\n        id: 1,\n        text: 'Всем привет!',\n        user: {\n            id: 1,\n            firstName: 'Olga',\n            lastName: 'Petrova',\n            avatar: {\n                src: 'images.com/image.png',\n                status: true,\n            },\n        },\n        timestamp: '2023-10-25T12:38:00',\n    },\n]"
+                },
+                {
+                    "name": "onSendMessage",
+                    "decorators": [],
+                    "description": "Обработчик события отправки сообщения",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IChatUser": {
+            "name": "IChatUser",
+            "moduleName": "ui/content/Chat/Chat",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "avatar",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IAvatarProps",
+                    "example": null
+                },
+                {
+                    "name": "firstName",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "lastName",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ]
+        },
+        "IChatViewProps": {
+            "name": "IChatViewProps",
+            "moduleName": "ui/content/Chat/Chat",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Omit<IChatProps",
+                "'messages'>"
+            ],
+            "properties": [
+                {
+                    "name": "chatId",
+                    "decorators": [],
+                    "description": "Идентификатор чата",
+                    "required": true,
+                    "type": "string",
+                    "example": "TaskChat"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "currentUser",
+                    "decorators": [],
+                    "description": "Данные о текущем пользователе, нужны для отправки сообщений и определения сообщений пользователя",
+                    "required": true,
+                    "type": "IChatUser",
+                    "example": "{\n            id: 1,\n            firstName: 'Olga',\n            lastName: 'Petrova',\n            avatar: {\n                src: 'images.com/image.png',\n                status: true,\n            },\n        }"
+                },
+                {
+                    "name": "groupedMessagesByDates",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "Record",
+                    "example": null
+                },
+                {
+                    "name": "onSendMessage",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                }
+            ]
+        },
+        "IGroupedMessage": {
+            "name": "IGroupedMessage",
+            "moduleName": "ui/content/Chat/hooks/useChat",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IChatMessage"
+            ],
+            "properties": [
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "isFirstMessage",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isLastMessage",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "text",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "timestamp",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string | Date",
+                    "example": null
+                },
+                {
+                    "name": "user",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IChatUser",
+                    "example": null
                 }
             ]
         },
@@ -31025,6 +31319,22 @@
             "description": "",
             "required": true,
             "type": "IChartProps",
+            "example": null
+        },
+        "IChatConfig": {
+            "name": "IChatConfig",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "Pick",
+            "example": null
+        },
+        "IGroupedMessagesByDates": {
+            "name": "IGroupedMessagesByDates",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "Record",
             "example": null
         },
         "IKanbanViewProps": {

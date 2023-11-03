@@ -45,13 +45,13 @@ export interface IChartProps extends IUiComponent {
     * Чекбоксы
     * Могут служить в качестве настаиваемых контроллов для создания функционала
     */
-    checkboxes: ICheckboxListFieldProps,
+    checkboxes?: ICheckboxListFieldProps,
 
     /**
     * Кнопки
     * Могут служить в качестве настаиваемых контроллов для создания функционала
     */
-    buttonGroup: IButtonGroupProps,
+    buttonGroup?: IButtonGroupProps,
 
     /**
     * Заголовок графика

@@ -50,7 +50,7 @@ export const normalizeItems = (sourceItems: ICrudItem[] | { [key: string]: ICrud
                 }
 
                 if (props.restUrl) {
-                    await props.components.http.delete(`${props.restUrl}/${props.recordId}`)
+                    await props.components.http.delete({url: `${props.restUrl}/${props.recordId}`})
                         .then(() => props.goToAction(CRUD_ACTION_INDEX))
                         .catch((error) => {
                             if (props.errorHandler) {

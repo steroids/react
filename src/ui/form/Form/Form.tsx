@@ -6,6 +6,7 @@ import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {IApiMethod} from 'src/components/HttpComponent';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import AutoSaveHelper from './AutoSaveHelper';
@@ -40,16 +41,10 @@ export interface IFormProps extends IUiComponent {
     model?: string | ((...args: any[]) => any) | any;
 
     /**
-     * Url на который будет отправлена форма
-     * @example api/v1/handle-form
+     * Объект данных для запроса, который вернет коллекцию элементов
+     * @example {url: api/v1/articles, method: 'get'}
      */
-    action?: string;
-
-    /**
-     * Тип HTTP запроса (GET | POST | PUT | DELETE)
-     * @example POST
-     */
-    actionMethod?: string;
+    apiMethod?: IApiMethod,
 
     /**
      * Текст ошибки при неудачной отправке данных. По-умолчанию: "Ошибка сервера"
@@ -409,7 +404,7 @@ function Form(props: IFormProps): JSX.Element {
             onTwoFactor: props.onTwoFactor
                 ? async (providerName) => {
                     const info = props.autoStartTwoFactor
-                        ? await components.http.post(`/api/v1/auth/2fa/${providerName}/send`)
+                        ? await components.http.post({url: `/api/v1/auth/2fa/${providerName}/send`})
                         : null;
                     props.onTwoFactor(providerName, info);
                 }
@@ -420,9 +415,11 @@ function Form(props: IFormProps): JSX.Element {
         let response;
         try {
             response = await components.http.send(
-                props.actionMethod,
-                props.action || window.location.pathname,
-                cleanedValues,
+                {
+                    method: props.apiMethod.method,
+                    url: props.apiMethod.url || window.location.pathname,
+                    params: cleanedValues,
+                },
                 options,
             );
         } catch (requestError) {

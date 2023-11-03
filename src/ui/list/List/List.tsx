@@ -74,8 +74,7 @@ export default function List(props: IListProps): JSX.Element {
     } = useList({
         listId: props.listId,
         primaryKey: props.primaryKey,
-        action: props.action,
-        actionMethod: props.actionMethod,
+        apiMethod: props.apiMethod,
         pagination: props.pagination,
         paginationSize: props.paginationSize,
         sort: props.sort,
@@ -88,7 +87,6 @@ export default function List(props: IListProps): JSX.Element {
         condition: props.condition,
         addressBar: props.addressBar,
         scope: props.scope,
-        query: props.query,
         model: props.model,
         searchModel: props.searchModel,
         items: props.items,

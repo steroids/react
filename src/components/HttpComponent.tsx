@@ -13,6 +13,21 @@ interface IHttpRequestOptions {
     responseType?: string,
 }
 
+enum MethodEnum {
+    GET = 'get',
+    POST = 'post',
+    DELETE = 'delete',
+    PUT = 'put',
+    PATCH = 'patch',
+    OPTIONS = 'options',
+}
+
+export interface IApiMethod {
+    url: string,
+    method?: MethodEnum,
+    params?: Record<string, any>,
+}
+
 export interface IHttpComponentConfig {
     /**
      * Url для http запросов
@@ -97,22 +112,22 @@ export interface IHttpComponent extends IHttpComponentConfig {
     /**
      * Вызов метода get
      */
-    get(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    get(apiMethod: IApiMethod, options?: IHttpRequestOptions): any;
 
     /**
      * Вызов метода post
      */
-    post(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    post(apiMethod: IApiMethod, options?: IHttpRequestOptions): any;
 
     /**
      * Вызов метода delete
      */
-    delete(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    delete(apiMethod: IApiMethod, options?: IHttpRequestOptions): any;
 
     /**
      * Вызов http-метода
      */
-    send(method: string, url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    send(apiMethod: IApiMethod, options?: IHttpRequestOptions): any;
 
     /**
      * Метод, который вызывается после запроса
@@ -279,46 +294,46 @@ export default class HttpComponent implements IHttpComponent {
         return method;
     }
 
-    get(url, params = {}, options: IHttpRequestOptions = {}) {
+    get(apiMethod: IApiMethod, options: IHttpRequestOptions = {}) {
         return this._send(
-            url,
+            apiMethod.url,
             {
-                method: 'get',
-                params,
+                method: apiMethod.method || MethodEnum.GET,
+                params: apiMethod.params,
             },
             options,
         ).then((response: any) => response.data);
     }
 
-    post(url, params = {}, options: IHttpRequestOptions = {}) {
+    post(apiMethod: IApiMethod, options: IHttpRequestOptions = {}) {
         return this._send(
-            url,
+            apiMethod.url,
             {
-                method: 'post',
-                data: params,
+                method: apiMethod.method || MethodEnum.POST,
+                params: apiMethod.params,
             },
             options,
         ).then((response: any) => response.data);
     }
 
-    delete(url, params = {}, options: IHttpRequestOptions = {}) {
+    delete(apiMethod: IApiMethod, options: IHttpRequestOptions = {}) {
         return this._send(
-            url,
+            apiMethod.url,
             {
-                method: 'delete',
-                data: params,
+                method: apiMethod.method || MethodEnum.DELETE,
+                params: apiMethod.params,
             },
             options,
         ).then((response: any) => response.data);
     }
 
-    send(method, url, params = {}, options: IHttpRequestOptions = {}) {
-        method = method.toLowerCase();
+    send(apiMethod: IApiMethod, options: IHttpRequestOptions = {}) {
+        const method = apiMethod.method?.toLowerCase() || MethodEnum.GET;
         return this._send(
-            url,
+            apiMethod.url,
             {
                 method,
-                [method === 'get' ? 'params' : 'data']: params,
+                [method === MethodEnum.GET ? 'params' : 'data']: apiMethod.params,
             },
             options,
         );

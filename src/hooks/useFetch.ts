@@ -2,6 +2,7 @@ import {useCallback, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
 import _trim from 'lodash-es/trim';
 import axios, {AxiosError} from 'axios';
+import {IApiMethod} from 'src/components/HttpComponent';
 import {useComponents, useSsr} from './index';
 import {IComponents} from '../providers/ComponentsProvider';
 
@@ -13,9 +14,7 @@ declare global {
 
 export interface IFetchConfig {
     id?: string | number,
-    url?: string,
-    method?: 'get' | 'post' | string,
-    params?: Record<string, unknown>,
+    apiMethod: IApiMethod,
     onFetch?: (config: IFetchConfig, components: IComponents, addCancelToken: (token: any) => any) => any,
 }
 
@@ -36,9 +35,11 @@ export const normalizeConfig = config => (
     config
         ? {
             id: null,
-            url: '',
-            method: 'get',
-            params: {},
+            apiMethod: {
+                url: '',
+                method: 'get',
+                params: {},
+            },
             options: null,
             onFetch: null,
             ...config,
@@ -51,7 +52,7 @@ export const getConfigId = config => {
         return null;
     }
 
-    const result = _trim(config.id || config.url, '/');
+    const result = _trim(config.id || config.apiMethod.url, '/');
     if (!result) {
         // eslint-disable-next-line no-console
         console.warn('Please set id for fetch config, it`s necessary for SSR to work properly');
@@ -65,7 +66,7 @@ export const defaultFetchHandler = (config, components, addCancelToken) => {
     });
 
     return components.http
-        .send(config.method, config.url, config.params, {...config.options, cancelToken})
+        .send(config.apiMethod, {...config.options, cancelToken})
         .then(result => result.data);
 };
 
@@ -115,9 +116,13 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
             setConfig({
                 ...config,
                 ...newConfig,
-                params: {
-                    ...config?.params,
-                    ...newConfig?.params,
+                apiMethod: {
+                    ...config.apiMethod,
+                    ...newConfig.apiMethod,
+                    params: {
+                        ...config?.params,
+                        ...newConfig?.params,
+                    },
                 },
             });
         }

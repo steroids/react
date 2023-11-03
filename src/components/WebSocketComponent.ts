@@ -243,7 +243,7 @@ export default class WebSocketComponent implements IWebSocketComponent {
         }
     }
 
-    private async _connect() {
+    protected async _connect() {
         if (!this._authToken) {
             const token = await this.authHandler(this._components);
             if (token) {
@@ -260,7 +260,7 @@ export default class WebSocketComponent implements IWebSocketComponent {
         }
     }
 
-    private _reConnect() {
+    protected _reConnect() {
         let delay = 1000;
         if (this._tryCount > 10) {
             delay = 2000;
@@ -276,7 +276,7 @@ export default class WebSocketComponent implements IWebSocketComponent {
         setTimeout(this._connect, delay);
     }
 
-    private _onOpen(event) {
+    protected _onOpen(event) {
         this._tryCount = 0;
 
         if (this.onOpen) {
@@ -284,13 +284,13 @@ export default class WebSocketComponent implements IWebSocketComponent {
         }
     }
 
-    private _onMessage(message) {
+    protected _onMessage(message) {
         if (this.onMessage) {
             this.onMessage(JSON.parse(message.data), this._components);
         }
     }
 
-    private _onClose(event) {
+    protected _onClose(event) {
         if (this.onClose) {
             this.onClose(event, this._components);
         }

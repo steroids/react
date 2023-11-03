@@ -324,7 +324,7 @@ export default class HttpComponent implements IHttpComponent {
         );
     }
 
-    private _send(method, config, options: IHttpRequestOptions) {
+    protected _send(method, config, options: IHttpRequestOptions) {
         const axiosConfig = {
             ...config,
             url: this.getUrl(method),
@@ -366,7 +366,7 @@ export default class HttpComponent implements IHttpComponent {
         return this._sendAxios(axiosConfig, options);
     }
 
-    private _sendAxios(config, options: IHttpRequestOptions) {
+    protected _sendAxios(config, options: IHttpRequestOptions) {
         return this.getAxiosInstance()
             .then(instance => instance(config))
             .then(response => this.afterRequest(response, config, options).then(newResponse => newResponse || response))
@@ -428,7 +428,7 @@ export default class HttpComponent implements IHttpComponent {
         return response;
     }
 
-    private _onTwoFactor(providerName) {
+    protected _onTwoFactor(providerName) {
         return new Promise((resolve) => {
             const store = this._components.store;
             const TwoFactorModal = require('../ui/modal/TwoFactorModal').default;

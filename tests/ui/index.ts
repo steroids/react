@@ -35,6 +35,9 @@ export default {
     'content.CalendarSystemEventGroupModalView': {
         lazy: () => require('./content/CalendarSystem/CalendarSystemEventGroupModalMockView').default,
     },
+    'content.ChatView': {
+        lazy: () => require('./content/Chat/mockViews/ChatMockView').default,
+    },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },

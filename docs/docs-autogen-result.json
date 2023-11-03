@@ -5279,7 +5279,7 @@
                 {
                     "name": "messages",
                     "decorators": [],
-                    "description": "Коллекция сообщений,",
+                    "description": "Коллекция сообщений",
                     "required": true,
                     "type": "IChatMessage[]",
                     "example": "[\n {\n        id: 1,\n        text: 'Всем привет!',\n        user: {\n            id: 1,\n            firstName: 'Olga',\n            lastName: 'Petrova',\n            avatar: {\n                src: 'images.com/image.png',\n                status: true,\n            },\n        },\n        timestamp: '2023-10-25T12:38:00',\n    },\n]"

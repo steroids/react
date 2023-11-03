@@ -30,7 +30,7 @@ export interface IChatProps extends IUiComponent {
     chatId: string;
 
     /**
-     * Коллекция сообщений,
+     * Коллекция сообщений
      * @example [
      *  {
      *         id: 1,

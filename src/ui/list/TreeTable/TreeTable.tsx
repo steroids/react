@@ -32,6 +32,11 @@ export interface ITreeTableItem {
     uniqueId?: string,
 }
 
+/**
+ * TreeTable
+ *
+ * Компонент для представления данных коллекции в виде иерархической структуры.
+ */
 export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
     /**
      * Элементы коллекции
@@ -53,11 +58,6 @@ export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[]) => {
 
     return newColumns;
 };
-
-/**
- * TreeTable
- * Компонент для представления данных коллекции в виде иерархической структуры.
- */
 
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
     const columns = useMemo(

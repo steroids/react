@@ -10,10 +10,6 @@ import {formArrayAdd, formArrayRemove} from '../../../actions/form';
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
-/**
- * FieldList
- * Создает список из сгруппированных полей формы
- */
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Будет ли отображён item ?
@@ -46,6 +42,11 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     [key: string]: any,
 }
 
+/**
+ * FieldList
+ *
+ * Создает список из сгруппированных полей формы.
+ */
 export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Начальные значения в полях

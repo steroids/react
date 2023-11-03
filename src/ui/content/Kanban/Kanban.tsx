@@ -84,11 +84,11 @@ export interface IKanbanTaskDetailsModalViewProps extends IModalProps {
 /**
  * Kanban
  *
- * Компонент `Kanban` позволяет создать Канбан-доску для управления задачами.
+ * Компонент `Kanban` позволяет создать доску для управления задачами.
  * Количество столбцов задается с помощью пропа `columns`.
  * Задачи на доске можно создавать, редактировать и перемещать с визуальным отображением.
  *
- * Примечание: Для работы этого компонента необходимо установить в проекте зависимости `react-beautiful-dnd`
+ * Для работы этого компонента необходимо установить в проекте зависимости `react-beautiful-dnd`
  * и передать в пропсы `droppableComponent`, `draggableComponent` и `dndContext`
  * компоненты `Droppable`, `Draggable` и `DragDropContext` соответственно.
  */

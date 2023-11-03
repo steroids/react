@@ -5,7 +5,7 @@ import {IButtonProps, IButtonViewProps} from '../../form/Button/Button';
 /**
  * Link
  *
- * Ссылка
+ * С помощью компонента `Link` вы можете легко настраивать цветовую схему элементов ссылок.
  */
 export interface ILinkProps extends IButtonProps {
     [key: string]: any,

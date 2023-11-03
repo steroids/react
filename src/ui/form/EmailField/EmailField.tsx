@@ -5,12 +5,14 @@ import {IBaseFieldProps} from '../InputField/InputField';
 import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
 import useInputTypeEmail from './hooks/useInputTypeEmail';
 
-export interface IEmailFieldProps extends IBaseFieldProps, IFieldWrapperInputProps { }
-
 /**
  * EmailField
- * Поле для ввода почты
- */
+ *
+ * Поле ввода почты. Этот компонент представляет собой поле ввода почты.
+ *
+ **/
+export interface IEmailFieldProps extends IBaseFieldProps, IFieldWrapperInputProps { }
+
 function EmailField(props: IEmailFieldProps) {
     const components = useComponents();
 

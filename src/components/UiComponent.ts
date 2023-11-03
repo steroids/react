@@ -152,9 +152,9 @@ export interface IUiApplicationComponent {
 export default class UiComponent implements IUiApplicationComponent {
     components: IComponents;
 
-    private _components: any;
+    protected _components: any;
 
-    private _models: any;
+    protected _models: any;
 
     icons: {[name: string]: string | number | ReactNode} | any;
 
@@ -162,9 +162,9 @@ export default class UiComponent implements IUiApplicationComponent {
 
     formatters: any;
 
-    private _registeredFields: any;
+    protected _registeredFields: any;
 
-    private _portalElement: HTMLDivElement;
+    protected _portalElement: HTMLDivElement;
 
     constructor(components) {
         this.components = components;
@@ -264,7 +264,7 @@ export default class UiComponent implements IUiApplicationComponent {
         return this._registeredFields[formId] || null;
     }
 
-    private _add(group, items, defaultNamespace = null) {
+    protected _add(group, items, defaultNamespace = null) {
         // require.context()
         if (_isFunction(items) && _isFunction(items.keys)) {
             items.keys().forEach(fileName => {
@@ -289,7 +289,7 @@ export default class UiComponent implements IUiApplicationComponent {
         }
     }
 
-    private _getComponent(group, path) {
+    protected _getComponent(group, path) {
         if (!this._components[group] || !this._components[group][path]) {
             throw new Error(`Not found '${group}' by path '${path}'.`);
         }
@@ -302,7 +302,7 @@ export default class UiComponent implements IUiApplicationComponent {
         return this._components[group][path];
     }
 
-    private _getPropsConfig(group, path) {
+    protected _getPropsConfig(group, path) {
         return (this[group] && this[group][path]) || null;
     }
 

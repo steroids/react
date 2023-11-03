@@ -107,9 +107,9 @@ export interface IResourceComponent extends IResourceComponentConfig {
  * Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...
  */
 export default class ResourceComponent implements IResourceComponent {
-    private _callbacks: any;
+    protected _callbacks: any;
 
-    private _components: any;
+    protected _components: any;
 
     googleApiKey: string;
 

@@ -159,7 +159,7 @@ export default class MetaComponent implements IMetaComponent {
         };
     }
 
-    private _defaultTypes() {
+    protected _defaultTypes() {
         return {
             autoTime: {
                 jsType: 'string',

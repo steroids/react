@@ -149,7 +149,7 @@ export default class LocaleComponent implements ILocaleComponent {
         return message;
     }
 
-    private _pasteComponents(message, components) {
+    protected _pasteComponents(message, components) {
         if (Object.keys(components).length === 0) {
             return message;
         }

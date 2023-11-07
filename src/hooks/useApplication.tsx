@@ -145,6 +145,10 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         if (config.onInit) {
             config.onInit(components);
         }
+
+        if (components?.locale.language) {
+            dayjs.locale(components.locale.language);
+        }
     }
 
     // Application wrapper

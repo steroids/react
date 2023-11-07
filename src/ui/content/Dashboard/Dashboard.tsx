@@ -43,7 +43,10 @@ function Dashboard(props: IDashboardProps): JSX.Element {
     const flexGridItems = React.useMemo(() => props.items.map(item => ({
         ...item,
         content: (
-            <DashboardItemView title={item.title} iconName={item.iconName}>
+            <DashboardItemView
+                title={item.title}
+                iconName={item.iconName}
+            >
                 {item.content}
             </DashboardItemView>
         ),

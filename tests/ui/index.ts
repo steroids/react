@@ -11,6 +11,9 @@ export default {
     'content.DropDownView': {
         lazy: () => require('./content/DropDown/DropDownMockView').default,
     },
+    'content.DashboardItemView': {
+        lazy: () => require('./content/Dashboard/DashboardItemMockView').default,
+    },
     'content.SliderView': {
         lazy: () => require('./content/Slider/SliderMockView').default,
     },
@@ -73,6 +76,9 @@ export default {
     },
     'list.PaginationButtonView': {
         lazy: () => require('./list/Pagination/PaginationButtonMockView').default,
+    },
+    'list.FlexGridView': {
+        lazy: () => require('./list/FlexGrid/FlexGridMockView').default,
     },
     'list.PaginationMoreView': {
         lazy: () => require('./list/Pagination/PaginationMoreMockView').default,

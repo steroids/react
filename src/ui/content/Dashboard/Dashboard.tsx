@@ -7,6 +7,11 @@ export interface IDashboardItem extends IFlexGridItem {
     * Заголовок для элемента
     */
     title?: string,
+
+    /**
+     * Иконка, которая отобразится слева от заголовка
+     */
+    iconName?: string,
 }
 
 /**
@@ -26,9 +31,8 @@ export interface IDashboardProps extends IUiComponent, IFlexGridProps {
     itemView?: CustomView,
 }
 
-export interface IDashboardItemViewProps {
+export interface IDashboardItemViewProps extends Pick<IDashboardItem, 'title' | 'iconName'> {
     children: React.ReactNode,
-    title?: string,
 }
 
 function Dashboard(props: IDashboardProps): JSX.Element {
@@ -39,7 +43,7 @@ function Dashboard(props: IDashboardProps): JSX.Element {
     const flexGridItems = React.useMemo(() => props.items.map(item => ({
         ...item,
         content: (
-            <DashboardItemView title={item.title}>
+            <DashboardItemView title={item.title} iconName={item.iconName}>
                 {item.content}
             </DashboardItemView>
         ),

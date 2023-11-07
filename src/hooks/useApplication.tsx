@@ -146,7 +146,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
             config.onInit(components);
         }
 
-        if (components?.locale.language) {
+        if (components?.locale?.language) {
             dayjs.locale(components.locale.language);
         }
     }

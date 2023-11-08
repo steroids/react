@@ -55,6 +55,8 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(props.input);
 
+    const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
+
     const {onInputChange} = useInputTypeNumber(
         currentInputRef,
         {
@@ -66,18 +68,20 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     );
 
     const onStep = useCallback((isIncrement: boolean) => {
-        const step = props.step || DEFAULT_STEP;
-
         onChange(null, String(Number(currentInputRef?.current?.value) + (isIncrement ? step : -step)));
-    }, [currentInputRef, onChange, props.step]);
+    }, [currentInputRef, onChange, step]);
 
     const onStepUp = useCallback(() => {
-        onStep(true);
-    }, [onStep]);
+        if (!(Number(currentInputRef.current.value) + step > props.max)) {
+            onStep(true);
+        }
+    }, [currentInputRef, onStep, props.max, step]);
 
     const onStepDown = useCallback(() => {
-        onStep(false);
-    }, [onStep]);
+        if (!(Number(currentInputRef.current.value) - step < props.min)) {
+            onStep(false);
+        }
+    }, [currentInputRef, onStep, props.min, step]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {

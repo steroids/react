@@ -4520,8 +4520,8 @@
         "ICalendarSystemProps": {
             "name": "ICalendarSystemProps",
             "moduleName": "ui/content/CalendarSystem/CalendarSystem",
-            "title": "Комплексный календарь",
-            "description": "",
+            "title": "CalendarSystem",
+            "description": "\nКомплексный компонент календарь служит для планирования событий и их отображения в календаре.\n\nКомпонент умеет отображать события с помощью недельной сетки с шагом в 1 час,\nа также переключать отображение на сетку по месяцам с шагом 1 день.\nПрисутствует возможность добавлять в календарь события и создавать новые группы событий.\n\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -5125,7 +5125,7 @@
             "name": "IChartProps",
             "moduleName": "ui/content/Chart/Chart",
             "title": "Chart",
-            "description": "Этот компонент позволяет создавать в проекте графики разных типов. Под капотом для графиков используется библиотека nivo.\nДля работы этого компонента необходимо установить в проекте зависимости @nivo/core и пакет конкретного графика nivo, например @nivo/line.\nКомпонент графика nivo нужно передать в пропс chartComponent",
+            "description": "Этот компонент позволяет создавать в проекте графики разных типов, используя библиотеки nivo, react-vis и другие.\n Под капотом для графиков могут использоваться различные библиотеки в зависимости от предпочтений и потребностей проекта.\n Для работы с nivo графиками, необходимо установить в проекте зависимости @nivo/core и соответствующий пакет графика, например @nivo/line.\n Компонент графика, независимо от выбранной библиотеки, нужно передать в пропс chartComponent.",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -5133,12 +5133,36 @@
             ],
             "properties": [
                 {
+                    "name": "buttonGroup",
+                    "decorators": [],
+                    "description": "Кнопки\nМогут служить в качестве настаиваемых контроллов для создания функционала",
+                    "required": true,
+                    "type": "IButtonGroupProps",
+                    "example": null
+                },
+                {
                     "name": "chartComponent",
                     "decorators": [],
                     "description": "Компонент графика из библиотеки nivo",
                     "required": true,
                     "type": "any",
                     "example": "ResponsiveLine"
+                },
+                {
+                    "name": "chartHeight",
+                    "decorators": [],
+                    "description": "Фиксированная высота обертки в пикселях",
+                    "required": false,
+                    "type": "number",
+                    "example": "500"
+                },
+                {
+                    "name": "checkboxes",
+                    "decorators": [],
+                    "description": "Чекбоксы\nМогут служить в качестве настаиваемых контроллов для создания функционала",
+                    "required": true,
+                    "type": "ICheckboxListFieldProps",
+                    "example": null
                 },
                 {
                     "name": "className",
@@ -5160,17 +5184,9 @@
                     "name": "data",
                     "decorators": [],
                     "description": "Данные для графика",
-                    "required": true,
+                    "required": false,
                     "type": "Record[]",
                     "example": "[{id: 1, value: 15}, {id: 2, value: 30}]"
-                },
-                {
-                    "name": "height",
-                    "decorators": [],
-                    "description": "Фиксированная высота графика в пикселях",
-                    "required": false,
-                    "type": "number",
-                    "example": "500"
                 },
                 {
                     "name": "style",
@@ -5179,6 +5195,14 @@
                     "required": false,
                     "type": "CSSProperties",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Заголовок графика",
+                    "required": false,
+                    "type": "string",
+                    "example": null
                 },
                 {
                     "name": "useDefaultLineChartConfig",
@@ -5195,6 +5219,14 @@
                     "required": false,
                     "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
+                },
+                {
+                    "name": "wrapperHeight",
+                    "decorators": [],
+                    "description": "Фиксированная высота обертки в пикселях",
+                    "required": false,
+                    "type": "number",
+                    "example": "500"
                 }
             ]
         },
@@ -5244,8 +5276,8 @@
         "IChatProps": {
             "name": "IChatProps",
             "moduleName": "ui/content/Chat/Chat",
-            "title": "",
-            "description": "",
+            "title": "Chat",
+            "description": "\nКомплексный компонент `Chat` предназначен для коммуникации пользователей с помощью текстовых сообщений.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -5279,7 +5311,7 @@
                 {
                     "name": "messages",
                     "decorators": [],
-                    "description": "Коллекция сообщений,",
+                    "description": "Коллекция сообщений",
                     "required": true,
                     "type": "IChatMessage[]",
                     "example": "[\n {\n        id: 1,\n        text: 'Всем привет!',\n        user: {\n            id: 1,\n            firstName: 'Olga',\n            lastName: 'Petrova',\n            avatar: {\n                src: 'images.com/image.png',\n                status: true,\n            },\n        },\n        timestamp: '2023-10-25T12:38:00',\n    },\n]"
@@ -7114,8 +7146,8 @@
         "IKanbanProps": {
             "name": "IKanbanProps",
             "moduleName": "ui/content/Kanban/Kanban",
-            "title": "",
-            "description": "",
+            "title": "Kanban",
+            "description": "\nКомпонент `Kanban` позволяет создать доску для управления задачами.\nКоличество столбцов задается с помощью пропа `columns`.\nЗадачи на доске можно создавать, редактировать и перемещать с визуальным отображением.\n\nДля работы этого компонента необходимо установить в проекте зависимости `react-beautiful-dnd`\nи передать в пропсы `droppableComponent`, `draggableComponent` и `dndContext`\nкомпоненты `Droppable`, `Draggable` и `DragDropContext` соответственно.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -13751,8 +13783,8 @@
         "IEmailFieldProps": {
             "name": "IEmailFieldProps",
             "moduleName": "ui/form/EmailField/EmailField",
-            "title": "",
-            "description": "",
+            "title": "EmailField",
+            "description": "\nПоле ввода почты. Этот компонент представляет собой поле ввода почты.\n\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -14502,8 +14534,8 @@
         "IFieldListItem": {
             "name": "IFieldListItem",
             "moduleName": "ui/form/FieldList/FieldList",
-            "title": "FieldList",
-            "description": "Создает список из сгруппированных полей формы",
+            "title": "",
+            "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -14793,8 +14825,8 @@
         "IFieldListProps": {
             "name": "IFieldListProps",
             "moduleName": "ui/form/FieldList/FieldList",
-            "title": "",
-            "description": "",
+            "title": "FieldList",
+            "description": "\nСоздает список из сгруппированных полей формы.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -25120,8 +25152,8 @@
         "ISkeletonProps": {
             "name": "ISkeletonProps",
             "moduleName": "ui/layout/Skeleton/Skeleton",
-            "title": "Компонент Skeleton представляет собой заглушку для отображения временных данных",
-            "description": "во время загрузки или ожидания загрузки реальных данных.",
+            "title": "Skeleton",
+            "description": "\nКомпонент `Skeleton` представляет собой заглушку для отображения временных данных\nво время загрузки или ожидания загрузки реальных данных.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -26010,7 +26042,7 @@
             "name": "IControlsColumnProps",
             "moduleName": "ui/list/ControlsColumn/ControlsColumn",
             "title": "ControlsColumn",
-            "description": "\nКомпонент ControlsColumn предоставляет колонку с контролами.\n",
+            "description": "\nКомпонент `ControlsColumn` предоставляет колонку с контролами.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],
@@ -28807,8 +28839,8 @@
         "ITreeTableProps": {
             "name": "ITreeTableProps",
             "moduleName": "ui/list/TreeTable/TreeTable",
-            "title": "",
-            "description": "",
+            "title": "TreeTable",
+            "description": "\nКомпонент для представления данных коллекции в виде иерархической структуры.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -29652,7 +29684,7 @@
             "name": "ILinkProps",
             "moduleName": "ui/nav/Link/Link",
             "title": "Link",
-            "description": "\nСсылка\n",
+            "description": "\nС помощью компонента `Link` вы можете легко настраивать цветовую схему элементов ссылок.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -30174,7 +30206,7 @@
             "name": "INavProps",
             "moduleName": "ui/nav/Nav/Nav",
             "title": "Nav",
-            "description": "Компонент навигации",
+            "description": "\nКомпонент навигации позволяет переключаться между группами связанного контента.\n\n",
             "tags": {},
             "defaultProps": null,
             "extends": [],

@@ -81,7 +81,9 @@ export interface INavItem extends IButtonProps {
 
 /**
  * Nav
- * Компонент навигации
+ *
+ * Компонент навигации позволяет переключаться между группами связанного контента.
+ *
  */
 export interface INavProps {
     /**

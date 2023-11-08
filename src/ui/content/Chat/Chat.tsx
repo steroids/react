@@ -17,6 +17,11 @@ export interface IChatMessage {
     timestamp: Date | string;
 }
 
+/**
+ * Chat
+ *
+ * Комплексный компонент `Chat` предназначен для коммуникации пользователей с помощью текстовых сообщений.
+ */
 export interface IChatProps extends IUiComponent {
     /**
      * Идентификатор чата
@@ -25,7 +30,7 @@ export interface IChatProps extends IUiComponent {
     chatId: string;
 
     /**
-     * Коллекция сообщений,
+     * Коллекция сообщений
      * @example [
      *  {
      *         id: 1,

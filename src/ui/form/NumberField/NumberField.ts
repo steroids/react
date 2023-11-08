@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React, {ChangeEvent, useMemo, useCallback, useRef} from 'react';
-import _isNumber from 'lodash-es/isNumber';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';

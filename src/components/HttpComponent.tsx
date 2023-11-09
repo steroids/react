@@ -127,13 +127,13 @@ export interface IHttpComponent extends IHttpComponentConfig {
  * Обертка над Axios для запросов на бекенд. Поддерживает токен авторизации, CSRF и обработку ошибок.
  */
 export default class HttpComponent implements IHttpComponent {
-    accessTokenKey = 'accessToken';
+    accessTokenKey? = 'accessToken';
 
-    apiUrl: string;
+    apiUrl?: string;
 
-    clientStorageName: string;
+    clientStorageName?: string;
 
-    clientStorageExpiresIn: number;
+    clientStorageExpiresIn?: number;
 
     _accessToken: any;
 

@@ -4,6 +4,9 @@ import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _isEmpty from 'lodash-es/isEmpty';
+import _isArray from 'lodash-es/isArray';
+import _isNil from 'lodash-es/isNil';
 import {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
@@ -375,7 +378,11 @@ function Form(props: IFormProps): JSX.Element {
 
             Object.keys(components.ui.getRequiredFields(props.formId) || {})
                 .forEach((field) => {
-                    if (!cleanedValues || cleanedValues[field] === null) {
+                    if (
+                        !cleanedValues
+                        || _isNil(cleanedValues[field])
+                        || (_isArray(cleanedValues[field]) && _isEmpty(cleanedValues[field]))
+                    ) {
                         errors[field] = __('Field is required');
                     }
                 });

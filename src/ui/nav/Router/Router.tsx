@@ -331,6 +331,9 @@ function Router(props: IRouterProps): JSX.Element {
 
         const result = renderComponent(routeItem, activePath, {...routeProps, children});
         if (!result) {
+            if (children) {
+                return children;
+            }
             // eslint-disable-next-line no-console
             console.error('Not found component for route:', routeItem);
         }

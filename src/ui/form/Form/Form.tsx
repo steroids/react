@@ -369,6 +369,20 @@ function Form(props: IFormProps): JSX.Element {
         // Clean
         cleanedValues = cleanEmptyObject(cleanedValues);
 
+        // Check if required fields are filled and add an error to the empty required fields
+        if (props.formId) {
+            const errors = {};
+
+            Object.keys(components.ui.getRequiredFields(props.formId) || {})
+                .forEach((field) => {
+                    if (!cleanedValues || cleanedValues[field] === null) {
+                        errors[field] = __('Field is 111');
+                    }
+                });
+
+            setErrors(errors);
+        }
+
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {
             dispatch(formSetSubmitting(props.formId, false));

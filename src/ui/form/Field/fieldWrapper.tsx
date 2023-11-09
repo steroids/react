@@ -166,7 +166,7 @@ const createDynamicField = (componentId: string, Component, options: IFieldWrapp
 
             // Register field
             if (formId) {
-                components.ui.registerField(formId, name, componentId);
+                components.ui.registerField(formId, name, componentId, props.required);
             }
 
             let errors;

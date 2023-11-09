@@ -122,8 +122,9 @@ export interface IUiApplicationComponent {
      * @param {string} formId - Идентификатор формы.
      * @param {string} attribute - Атрибут.
      * @param {any} type - Тип.
+     * @param {boolean} required (Необязательный)
      */
-    registerField(formId: string, attribute: string, type: any): void;
+    registerField(formId: string, attribute: string, type: any, required?: boolean): void;
 
     /**
      * Возвращает зарегистрированные поля формы для указанного идентификатора формы.
@@ -131,6 +132,13 @@ export interface IUiApplicationComponent {
      * @returns {any} Зарегистрированные поля формы.
      */
     getRegisteredFields(formId: string): any;
+
+    /**
+     * Возвращает обязательные поля формы для указанного идентификатора формы.
+     * @param {string} formId - Идентификатор формы.
+     * @returns {any} Обязательные поля формы.
+     */
+    getRequiredFields(formId: string): any;
 
     /**
      * Задает элемент портала.
@@ -164,6 +172,8 @@ export default class UiComponent implements IUiApplicationComponent {
 
     protected _registeredFields: any;
 
+    protected _requiredFields: any;
+
     protected _portalElement: HTMLDivElement;
 
     constructor(components) {
@@ -174,6 +184,7 @@ export default class UiComponent implements IUiApplicationComponent {
         this._components = {};
         this._models = {};
         this._registeredFields = {};
+        this._requiredFields = {};
         this._portalElement = null;
     }
 
@@ -253,15 +264,30 @@ export default class UiComponent implements IUiApplicationComponent {
         return name || null;
     }*/
 
-    registerField(formId, attribute, type) {
+    registerField(formId, attribute, type, required = false) {
+        console.log('registerField', {formId, attribute, type});
+
         if (!this._registeredFields[formId]) {
             this._registeredFields[formId] = {};
         }
+
+        if (!this._requiredFields[formId]) {
+            this._requiredFields[formId] = {};
+        }
+
         this._registeredFields[formId][attribute] = type;
+
+        if (required) {
+            this._requiredFields[formId][attribute] = required;
+        }
     }
 
     getRegisteredFields(formId) {
         return this._registeredFields[formId] || null;
+    }
+
+    getRequiredFields(formId) {
+        return this._requiredFields[formId] || null;
     }
 
     protected _add(group, items, defaultNamespace = null) {

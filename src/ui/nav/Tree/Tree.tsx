@@ -66,6 +66,19 @@ export interface ITreeProps {
     selectedItemId?: string | number;
 
     /**
+    *  Использовать двунаправленное связывание.
+    * Если включено, то selectedItemId будет обновляться каждое изменение состояния
+    * @example {}
+    */
+    useTwoWayBinding?: boolean;
+
+    /**
+    * При нажатии или выборе элемента повторно через selectedItemId он не будет отмечен как невыбранный.
+    * @example {}
+    */
+    useToggleSelectedItemId?: boolean;
+
+    /**
      * CSS-класс для элемента отображения
      */
     className?: CssClassName;
@@ -124,11 +137,20 @@ function Tree(props: ITreeProps) {
     //State
     const [selectedUniqId, setSelectedUniqId] = useState<string>(null);
     const [openedItems, setOpenedItems] = useState<{[key: string]: boolean}>({});
+    const [selectedInnerItemId, setSelectedInnerItemId] = React.useState<string | number>(null);
+
+    React.useEffect(() => {
+        if (!props.useTwoWayBinding) {
+            return;
+        }
+
+        setSelectedInnerItemId(props.selectedItemId);
+    }, [props.selectedItemId, props.useTwoWayBinding]);
 
     //Redux connection
     const {routes, selectedItemId, activeRouteIds, routerParams} = useSelector(state => ({
         routes: _isString(props.items) ? getNavItems(state, props.items) : null,
-        selectedItemId: _isString(props.items) ? getRouteId(state) : props.selectedItemId,
+        selectedItemId: _isString(props.items) ? getRouteId(state) : selectedInnerItemId,
         activeRouteIds: getActiveRouteIds(state),
         routerParams: getRouterParams(state),
     }));
@@ -232,13 +254,31 @@ function Tree(props: ITreeProps) {
         setSelectedUniqId(selectedItem ? selectedItem.uniqId : null);
     }, [items]);
 
+    // Update open items
+    React.useEffect(() => {
+        if (!props.useTwoWayBinding) {
+            return;
+        }
+
+        const opened = autoOpen(items);
+        setOpenedItems(opened);
+
+        const selectedItem = findChildById(items as ITreeItem[], selectedItemId);
+        setSelectedUniqId(selectedItem ? selectedItem.uniqId : null);
+    }, [items, selectedInnerItemId]);
+
     const onItemClick = useCallback((e, uniqId, item) => {
         e.preventDefault();
         if (props.onItemClick) {
             props.onItemClick.call(null, e, item);
         }
 
-        setSelectedUniqId(selectedUniqId === uniqId ? null : uniqId);
+        // console.log(e);
+        console.log(uniqId);
+        // console.log(item);
+        console.log(selectedUniqId);
+
+        setSelectedUniqId(selectedUniqId === uniqId && !props.useToggleSelectedItemId ? null : uniqId);
 
         if (item.items?.length > 0) {
             const newItems = {...openedItems, [uniqId]: !openedItems[uniqId]};
@@ -247,7 +287,7 @@ function Tree(props: ITreeProps) {
             // const key = STORAGE_KEY_PREFIX + this.props.id;
             // this.props.clientStorage.set(key, JSON.stringify(this.state.opened));
         }
-    }, [openedItems, props.onItemClick, selectedUniqId]);
+    }, [openedItems, props.onItemClick, props.useToggleSelectedItemId, selectedUniqId]);
 
     const resultItems = useMemo(() => {
         const getItems = (sourceItems: ITreeItem, parentId = '', level = 0) => {

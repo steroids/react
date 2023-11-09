@@ -376,7 +376,7 @@ function Form(props: IFormProps): JSX.Element {
             Object.keys(components.ui.getRequiredFields(props.formId) || {})
                 .forEach((field) => {
                     if (!cleanedValues || cleanedValues[field] === null) {
-                        errors[field] = __('Field is 111');
+                        errors[field] = __('Field is required');
                     }
                 });
 

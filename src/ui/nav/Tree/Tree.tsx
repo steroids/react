@@ -273,11 +273,6 @@ function Tree(props: ITreeProps) {
             props.onItemClick.call(null, e, item);
         }
 
-        // console.log(e);
-        console.log(uniqId);
-        // console.log(item);
-        console.log(selectedUniqId);
-
         setSelectedUniqId(selectedUniqId === uniqId && !props.useToggleSelectedItemId ? null : uniqId);
 
         if (item.items?.length > 0) {

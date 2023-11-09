@@ -122,7 +122,7 @@ export interface IUiApplicationComponent {
      * @param {string} formId - Идентификатор формы.
      * @param {string} attribute - Атрибут.
      * @param {any} type - Тип.
-     * @param {boolean} required (Необязательный)
+     * @param {boolean} required  - Обязательное ли поле.
      */
     registerField(formId: string, attribute: string, type: any, required?: boolean): void;
 

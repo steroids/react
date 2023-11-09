@@ -111,11 +111,11 @@ export default class ResourceComponent implements IResourceComponent {
 
     protected _components: any;
 
-    googleApiKey: string;
+    googleApiKey?: string;
 
     googleCaptchaSiteKey: string;
 
-    language: string;
+    language?: string;
 
     readonly RESOURCE_GOOGLE_MAP_API = '//maps.googleapis.com/maps/api/js';
 

@@ -6,7 +6,6 @@ import {getSourceCalendarControl} from './useCalendarControls';
 import {getWeekDaysFromDate, isDateIsToday} from '../utils/utils';
 
 const WEEK_DAY_FORMAT = 'dd, D MMM';
-
 const ONE_DAY = 1;
 
 const getFormattedWeekFromDate = (fromDate: Date = null) => {
@@ -74,6 +73,9 @@ const useWeekCalendar = (currentMonthDate: Date) => {
         setCurrentWeek(formattedPrevWeek);
         changeMonthAfterWeekChanged(formattedPrevWeek);
     }, [currentWeek, changeMonthAfterWeekChanged]);
+
+
+
 
     return {
         currentWeek,

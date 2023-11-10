@@ -2,9 +2,11 @@
 import dayjs from 'dayjs';
 import _omit from 'lodash-es/omit';
 import {IDay, IEvent, IEventGroup} from '../CalendarSystem';
+import {convertDate} from '../../../../utils/calendar';
 
 const SIX_DAYS_DIFF = 6;
 const MAX_DAYS_DIFF_IN_WEEK = 7;
+const WEEK_DAY_FORMAT = 'dd, D MMM';
 
 export const getWeekDaysFromDate = (date: Date) => {
     const weekDays: IDay[] = [];
@@ -31,3 +33,19 @@ export const isDateIsToday = (date: Date): boolean => dayjs(date).isToday();
 export const getOmittedEvent = (event: IEvent | Omit<IEvent, 'color'>) => _omit(event, ['color', 'eventGroupId']);
 
 export const sortEventsInGroup = (group: IEventGroup) => group.events.sort((eventA, eventB) => eventA.date.getTime() - eventB.date.getTime());
+
+export const getSourceCalendarControl = (control: string) => document.querySelector(`[data-sourcecontrol="${control}"]`) as HTMLElement;
+
+export const getFormattedWeekFromDate = (fromDate: Date = null) => {
+    const currentWeek = getWeekDaysFromDate(fromDate || new Date());
+
+    return currentWeek.map(dayOfWeek => {
+        const copyOfDayWeek = {...dayOfWeek};
+
+        copyOfDayWeek.formattedDisplay = convertDate(dayOfWeek.date, null, WEEK_DAY_FORMAT);
+        // eslint-disable-next-line no-unused-expressions
+        isDateIsToday(copyOfDayWeek.date) ? copyOfDayWeek.isToday = true : copyOfDayWeek.isToday = false;
+
+        return copyOfDayWeek;
+    });
+};

@@ -5,10 +5,7 @@
 /* eslint-disable no-plusplus */
 import React from 'react';
 import dayjs from 'dayjs';
-import _concat from 'lodash-es/concat';
-import _slice from 'lodash-es/slice';
 import localeData from 'dayjs/plugin/localeData';
-import _upperFirst from 'lodash-es/upperFirst';
 import _take from 'lodash-es/take';
 import _omit from 'lodash-es/omit';
 import _maxBy from 'lodash-es/maxBy';
@@ -19,12 +16,13 @@ import _indexOf from 'lodash-es/indexOf';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import useCalendarControls from './hooks/useCalendarControls';
 import useDisplayDate from './hooks/useDisplayDate';
-import useMonthCalendar from './hooks/useMonthCalendar';
-import {useComponents, useWeekCalendar} from '../../../hooks';
+import useMonthGrid from './hooks/useMonthGrid';
+import {useComponents} from '../../../hooks';
 import {addEventIfMatchDate} from './helpers/addEventIfMatchDate';
 import CalendarEnum from './enums/CalendarType';
 import useCalendarSystemModals from './hooks/useCalendarSystemModals';
 import {useCalendarSystemEventGroupModals} from './hooks/useCalendarSystemEventGroupModals';
+import useWeekGrid from './hooks/useWeekGrid';
 
 dayjs.extend(localeData);
 
@@ -141,27 +139,27 @@ export interface ICalendarSystemProps extends IUiComponent {
 
 export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style'> {
     openCreateModal: (eventInitialDay?: IDay) => void;
-    onMonthChange: (newDate: Date) => void,
+    onInnerCalendarChangedMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
     eventGroupsTitle: string,
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     onChangeCalendarType: (newType: string) => void,
-    applyControl: (event: React.MouseEvent<HTMLElement>) => void
+    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void
     calendarType: CalendarEnum,
 
     monthGridProps: {
-        monthCalendarDays: IDay[],
+        monthGridWeekDays: string[],
+        monthGridCalendarDays: IDay[],
         getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
-        weekDays: string[],
         openEditModal: (event: IEvent) => void;
         openCreateModal: (eventInitialDay?: IDay) => void;
     }
     weekGridProps: {
-        allHours: string[],
+        weekGrid24HoursArray: string[],
+        weekGridCurrentWeekDays: IDay[],
         getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
-        currentWeekDays: IDay[],
         openEditModal: (event: IEvent) => void;
         openCreateModal: (eventInitialDay?: IDay) => void;
     }
@@ -185,21 +183,32 @@ export interface CalendarSystemEventGroupModalViewProps extends IModalProps {
 
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
+
     const [innerEventGroups, setInnerEventGroups] = React.useState<IEventGroup[]>(props.eventBlock.eventGroups || []);
-    const [selectedEventGroupsIds, setSelectedEventGroupsIds] = React.useState<number[]>([]);
-    const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
     const [calendarType, setCalendarType] = React.useState<CalendarEnum>(CalendarEnum.MONTH);
-    const {calendarArray: monthCalendarDays, setCurrentMonthDate, currentMonthDate} = useMonthCalendar();
+    const [selectedEventGroupsIds, setSelectedEventGroupsIds] = React.useState<number[]>([]);
+    const [currentMonthFirstDayDate, setCurrentMonthFirstDayDate] = React.useState<Date | null>(null);
+
+    const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
 
     const {
-        currentWeek: currentWeekDays,
-        weekControls,
-        forceUpdateWeekOnMonthChange,
-    } = useWeekCalendar(
-        currentMonthDate,
+        monthGridWeekDays,
+        monthGridCalendarDays,
+    } = useMonthGrid(
+        currentMonthFirstDayDate,
+        setCurrentMonthFirstDayDate,
     );
 
-    const applyControl = useCalendarControls(calendarType, weekControls);
+    const {
+        weekGrid24HoursArray,
+        weekGridCurrentWeekDays,
+        weekGridControls,
+        updateWeekOnMonthChange,
+    } = useWeekGrid(
+        currentMonthFirstDayDate,
+    );
+
+    const handleControlClick = useCalendarControls(calendarType, weekGridControls);
 
     const {
         openCreateModal,
@@ -224,15 +233,14 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         }
     }, [props]);
 
-    const onMonthChange = React.useCallback((newDate: Date) => {
+    const onInnerCalendarChangedMonth = React.useCallback((newDate: Date) => {
         setNewDateToDisplay(newDate);
-        setCurrentMonthDate(newDate);
-        forceUpdateWeekOnMonthChange(newDate);
-    }, [forceUpdateWeekOnMonthChange, setCurrentMonthDate, setNewDateToDisplay]);
+        setCurrentMonthFirstDayDate(newDate);
+        updateWeekOnMonthChange(newDate);
+    }, [updateWeekOnMonthChange, setCurrentMonthFirstDayDate, setNewDateToDisplay]);
 
     const getEventsFromDate = React.useCallback((date: Date, currentCalendarType: CalendarEnum) => {
         const eventsOnDate: IEvent[] = [];
-
         const dayjsDate = dayjs(date);
 
         const iterateEventGroups = (callback: (event: IEvent, eventGroup: IEventGroup) => void) => {
@@ -282,54 +290,38 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             }
         }
 
-        // eslint-disable-next-line consistent-return
         return eventsOnDate;
     }, [innerEventGroups, selectedEventGroupsIds]);
-
-    const weekDays = React.useMemo(() => {
-        const unformattedDaysOfWeek = dayjs.weekdaysMin();
-
-        return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]).map(weekDay => __(`${_upperFirst(weekDay)}`));
-    }, []);
-
-    const allHours = React.useMemo(() => {
-        const hoursArray = [];
-        for (let i = 0; i < 24; i++) {
-            const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
-            hoursArray.push(formattedHour);
-        }
-        return hoursArray;
-    }, []);
 
     const viewProps: ICalendarSystemViewProps = React.useMemo(() => ({
         className: props.className,
         style: props.style,
         openCreateModal,
-        onMonthChange,
+        onInnerCalendarChangedMonth,
         eventGroups: innerEventGroups,
         eventGroupsTitle: props.eventBlock.title,
         onChangeEventGroupsIds: (newSelectedEventGroupsIds: number[]) => setSelectedEventGroupsIds(newSelectedEventGroupsIds),
         openCreateEventGroupModal,
         dateToDisplay,
         onChangeCalendarType,
-        applyControl,
+        handleControlClick,
         calendarType,
 
         monthGridProps: {
-            weekDays,
-            monthCalendarDays,
+            monthGridWeekDays,
+            monthGridCalendarDays,
             getEventsFromDate,
             openCreateModal,
             openEditModal,
         },
         weekGridProps: {
-            allHours,
-            currentWeekDays,
+            weekGrid24HoursArray,
+            weekGridCurrentWeekDays,
             getEventsFromDate,
             openCreateModal,
             openEditModal,
         },
-    }), [props.className, props.style, props.eventBlock.title, openCreateModal, onMonthChange, innerEventGroups, openCreateEventGroupModal, dateToDisplay, onChangeCalendarType, applyControl, calendarType, getEventsFromDate, monthCalendarDays, openEditModal, weekDays, allHours, currentWeekDays]);
+    }), [props.className, props.style, props.eventBlock.title, openCreateModal, onInnerCalendarChangedMonth, innerEventGroups, openCreateEventGroupModal, dateToDisplay, onChangeCalendarType, handleControlClick, calendarType, monthGridWeekDays, monthGridCalendarDays, getEventsFromDate, openEditModal, weekGrid24HoursArray, weekGridCurrentWeekDays]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

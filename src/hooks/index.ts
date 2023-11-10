@@ -18,8 +18,8 @@ import useSelector from './useSelector';
 import useSsr from './useSsr';
 import useUniqueId from './useUniqueId';
 import useTheme from './useTheme';
-import useMonthCalendar from '../ui/content/CalendarSystem/hooks/useMonthCalendar';
-import useWeekCalendar from '../ui/content/CalendarSystem/hooks/useWeekCalendar';
+import useMonthGrid from '../ui/content/CalendarSystem/hooks/useMonthGrid';
+import useWeekGrid from '../ui/content/CalendarSystem/hooks/useWeekGrid';
 import useDisplayDate from '../ui/content/CalendarSystem/hooks/useDisplayDate';
 import useCalendarControls from '../ui/content/CalendarSystem/hooks/useCalendarControls';
 import useSaveCursorPosition from './useSaveCursorPosition';
@@ -45,8 +45,8 @@ export {
     useSsr,
     useUniqueId,
     useTheme,
-    useMonthCalendar,
-    useWeekCalendar,
+    useMonthGrid,
+    useWeekGrid,
     useDisplayDate,
     useCalendarControls,
     useSaveCursorPosition,

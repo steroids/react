@@ -164,9 +164,12 @@ const createDynamicField = (componentId: string, Component, options: IFieldWrapp
             // Get full name (attribute with prefix)
             const name = [props.prefix, props[attributeKey]].filter(Boolean).join('.');
 
-            // Register field
             if (formId) {
-                components.ui.registerField(formId, name, componentId, props.required);
+                // Register field
+                components.ui.registerField(formId, name, componentId);
+
+                // Add field if it's required
+                components.ui.addRequiredField(formId, name, props.required);
             }
 
             let errors;

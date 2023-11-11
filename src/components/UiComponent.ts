@@ -122,9 +122,16 @@ export interface IUiApplicationComponent {
      * @param {string} formId - Идентификатор формы.
      * @param {string} attribute - Атрибут.
      * @param {any} type - Тип.
+     */
+    registerField(formId: string, attribute: string, type: any): void;
+
+    /**
+     * Добавляет обязательные поля формы.
+     * @param {string} formId - Идентификатор формы.
+     * @param {string} attribute - Атрибут.
      * @param {boolean} required  - Обязательное ли поле.
      */
-    registerField(formId: string, attribute: string, type: any, required?: boolean): void;
+    addRequiredField(formId: string, attribute: string, required: boolean): void;
 
     /**
      * Возвращает зарегистрированные поля формы для указанного идентификатора формы.
@@ -264,26 +271,25 @@ export default class UiComponent implements IUiApplicationComponent {
         return name || null;
     }*/
 
-    registerField(formId, attribute, type, required = false) {
-        console.log('registerField', {formId, attribute, type});
-
+    registerField(formId, attribute, type) {
         if (!this._registeredFields[formId]) {
             this._registeredFields[formId] = {};
         }
-
-        if (!this._requiredFields[formId]) {
-            this._requiredFields[formId] = {};
-        }
-
         this._registeredFields[formId][attribute] = type;
-
-        if (required) {
-            this._requiredFields[formId][attribute] = required;
-        }
     }
 
     getRegisteredFields(formId) {
         return this._registeredFields[formId] || null;
+    }
+
+    addRequiredField(formId, attribute, required = false) {
+        if (!this._requiredFields[formId]) {
+            this._requiredFields[formId] = {};
+        }
+
+        if (required) {
+            this._requiredFields[formId][attribute] = required;
+        }
     }
 
     getRequiredFields(formId) {

@@ -79,17 +79,17 @@ const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;
  * Компонент для создания websocket взаимодействия
  */
 export default class WebSocketComponent implements IWebSocketComponent {
-    wsUrl: string;
+    wsUrl?: string;
 
-    streams: TStreams;
+    streams?: TStreams;
 
-    authHandler: (components: IComponents) => Promise<string>;
+    authHandler?: (components: IComponents) => Promise<string>;
 
-    onOpen: (event: any, components: IComponents) => any;
+    onOpen?: (event: any, components: IComponents) => any;
 
-    onClose: (event: any, components: IComponents) => any;
+    onClose?: (event: any, components: IComponents) => any;
 
-    onMessage: (data: Record<string, unknown>, components: IComponents) => any;
+    onMessage?: (data: Record<string, unknown>, components: IComponents) => any;
 
     _components: IComponents;
 

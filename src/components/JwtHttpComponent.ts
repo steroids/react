@@ -24,9 +24,9 @@ export interface IJwtHttpComponentConfig {
  * Вариация HttpComponent с функционалом обновления токена авторизации
  */
 export default class JwtHttpComponent extends BaseHttpComponent implements IJwtHttpComponentConfig {
-    refreshTokenRequest: IRefreshTokenRequest;
+    refreshTokenRequest?: IRefreshTokenRequest;
 
-    refreshTokenKey = 'refreshToken';
+    refreshTokenKey? = 'refreshToken';
 
     _refreshToken: any;
 

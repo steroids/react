@@ -162,7 +162,7 @@ const getInfo = (filesMap, moduleItem, item) => {
     }
 
     // Get methods
-    if (item.kindString === 'Class') {
+    if (['Class', 'Interface'].includes(item.kindString)) {
         info.methods = (item.children || [])
             .map(method => {
                 // Check is property

@@ -2,6 +2,10 @@ import _isPlainObject from 'lodash-es/isPlainObject';
 import _isArray from 'lodash-es/isArray';
 import _isEqual from 'lodash-es/isEqual';
 import _get from 'lodash-es/get';
+import _differenceWith from 'lodash-es/differenceWith';
+import _toPairs from 'lodash-es/toPairs';
+import _omit from 'lodash-es/omit';
+import _isEmpty from 'lodash-es/isEmpty';
 import {useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {useEffectOnce, useLifecycles, useUpdate} from 'react-use';
 import useDispatch from '../hooks/useDispatch';
@@ -67,6 +71,19 @@ export const cleanEmptyObject = object => {
     });
 
     return object;
+};
+
+export const clearErrors = (values, prevValues, errors, setErrors) => {
+    if (!_isEmpty(errors) && !_isEqual(prevValues || {}, values)) {
+        // compare arrays of key-value pairs in previous and new field objects to identify the changed field
+        const changedField = _differenceWith(_toPairs(values), _toPairs(prevValues), _isEqual);
+
+        if (changedField) {
+            const cleanedErrors = _omit(errors, changedField[0]);
+
+            setErrors(_isEmpty(cleanedErrors) ? null : cleanedErrors);
+        }
+    }
 };
 
 // Form state providers

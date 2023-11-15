@@ -81,7 +81,7 @@ const imagesMimeTypes = [
     'image/heic-sequence',
 ];
 
-function generateBackendUrl(props) {
+export function generateBackendUrl(props) {
     return buildURL(props.backendUrl, {
         mimeTypes: props.imagesOnly ? imagesMimeTypes : props.mimeTypes,
         imagesProcessor: props.imagesProcessor,

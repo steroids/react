@@ -78,7 +78,7 @@ export const clearErrors = (values, prevValues, errors, setErrors) => {
         // compare arrays of key-value pairs in previous and new field objects to identify the changed field
         const changedField = _differenceWith(_toPairs(values), _toPairs(prevValues), _isEqual);
 
-        if (changedField) {
+        if (!_isEmpty(changedField)) {
             const cleanedErrors = _omit(errors, changedField[0]);
 
             setErrors(_isEmpty(cleanedErrors) ? null : cleanedErrors);

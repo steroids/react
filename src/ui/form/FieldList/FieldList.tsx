@@ -1,8 +1,11 @@
 import * as React from 'react';
 import _isBoolean from 'lodash-es/isBoolean';
 import _range from 'lodash-es/range';
+import _concat from 'lodash-es/concat';
+import _last from 'lodash-es/last';
+import _isEmpty from 'lodash-es/isEmpty';
 import {useEvent, useMount} from 'react-use';
-import {useCallback, useContext, useMemo, useRef} from 'react';
+import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {ModelAttribute} from 'src/components/MetaComponent';
 import {useComponents} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
@@ -156,13 +159,32 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
 
     const dispatch = context.provider.useDispatch();
 
+    // Mapper for preserving the correct sequence of rows on the UI
+    const [storeToRowIndexMap, setStoreToRowIndexMap] = useState([]);
+
+    const addRowIndexes = useCallback((rowsCount) => {
+        setStoreToRowIndexMap((prevMap) => {
+            const lastIndex = !_isEmpty(prevMap) ? _last(prevMap) + 1 : 0;
+            return _concat(prevMap, _range(lastIndex, lastIndex + rowsCount));
+        });
+    }, []);
+
+    const removeRowIndex = useCallback((rowIndex) => {
+        setStoreToRowIndexMap((prevMap) => [
+            ...prevMap.slice(0, rowIndex),
+            ...prevMap.slice(rowIndex + 1),
+        ]);
+    }, []);
+
     // Add and Remove handlers
     const onAdd = useCallback((rowsCount = 1) => {
+        addRowIndexes(rowsCount);
         dispatch(formArrayAdd(context.formId, props.input.name, rowsCount, props.initialValues));
-    }, [context.formId, dispatch, props.initialValues, props.input.name]);
+    }, [context.formId, dispatch, props.initialValues, props.input.name, addRowIndexes]);
     const onRemove = useCallback((rowIndex) => {
+        removeRowIndex(rowIndex);
         dispatch(formArrayRemove(context.formId, props.input.name, rowIndex));
-    }, [context.formId, dispatch, props.input.name]);
+    }, [context.formId, dispatch, props.input.name, removeRowIndex]);
 
     // Add initial rows
     useMount(() => {
@@ -230,17 +252,16 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
                 onAdd={onAdd}
                 hasAlternatingColors={props.hasAlternatingColors}
             >
-                {_range(props.input.value || 0)
-                    .map(index => (
-                        <FieldListItemView
-                            {...props.itemViewProps}
-                            {...commonProps}
-                            key={index}
-                            onRemove={onRemove}
-                            prefix={props.input.name + '.' + index}
-                            rowIndex={index}
-                        />
-                    ))}
+                {!_isEmpty(storeToRowIndexMap) && _range(props.input.value || 0).map((index) => (
+                    <FieldListItemView
+                        {...props.itemViewProps}
+                        {...commonProps}
+                        key={storeToRowIndexMap[index]}
+                        onRemove={onRemove}
+                        prefix={props.input.name + '.' + index}
+                        rowIndex={index}
+                    />
+                ))}
             </FieldListView>
         </FormContext.Provider>
     );

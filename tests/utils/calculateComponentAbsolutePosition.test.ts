@@ -9,7 +9,7 @@ let originalWindowScrollY: number;
 let originalDocumentBodyClientWidth: number;
 let originalWindowInnerHeight: number;
 
-beforeAll(() => {
+beforeEach(() => {
     originalWindowScrollY = global.window.scrollY;
     originalDocumentBodyClientWidth = global.document.body.clientWidth;
     originalWindowInnerHeight = global.window.innerHeight;
@@ -104,118 +104,94 @@ const ARROW_SIZE = {
 describe('calculateComponentAbsolutePosition utils', () => {
     describe('without autoPositioning', () => {
         it('should keep initial TOP position and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+            const testCases = [
                 Position.TOP,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {top} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.TOP);
-        });
-
-        it('should keep initial TOP_LEFT position and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.TOP_LEFT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {top} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.TOP_LEFT);
-        });
-
-        it('should keep initial TOP_RIGHT position and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.TOP_RIGHT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {top} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.TOP_RIGHT);
+            const expectedStyle = {
+                top: top - DEFAULT_COMPONENT_SIZE.height,
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_TOP_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.top).toBe(expectedStyle.top);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
         it('should keep initial BOTTOM position and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+            const bottomPositions = [
                 Position.BOTTOM,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {top, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top + height);
-            expect(position).toEqual(Position.BOTTOM);
-        });
-
-        it('should keep initial BOTTOM_LEFT position and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.BOTTOM_LEFT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {top, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top + height);
-            expect(position).toEqual(Position.BOTTOM_LEFT);
-        });
-
-        it('should keep initial BOTTOM_RIGHT position and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.BOTTOM_RIGHT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {top, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top + height);
-            expect(position).toEqual(Position.BOTTOM_RIGHT);
+            const expectedStyle = {
+                top: top + height,
+            };
+
+            bottomPositions.forEach((bottomPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    bottomPosition,
+                    PARENT_AT_THE_TOP_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.top).toBe(expectedStyle.top);
+                expect(position).toEqual(bottomPosition);
+            });
         });
 
         it('should keep initial LEFT position and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+            const leftPositions = [
                 Position.LEFT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+                Position.LEFT_TOP,
+            ];
 
             const {left} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
-            expect(style.left).toBe(left - DEFAULT_COMPONENT_SIZE.width);
-            expect(position).toEqual(Position.LEFT);
+            const expectedStyle = {
+                left: left - DEFAULT_COMPONENT_SIZE.width,
+            };
+
+            leftPositions.forEach((leftPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    leftPosition,
+                    PARENT_AT_THE_TOP_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.left).toBe(expectedStyle.left);
+                expect(position).toEqual(leftPosition);
+            });
         });
 
         it('should keep initial LEFT_BOTTOM position and calculate style for left value correctly', () => {
+            const {left} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
+            const expectedStyle = {
+                left: left - DEFAULT_COMPONENT_SIZE.width,
+            };
+
             const {style, position} = calculateComponentAbsolutePosition(
                 GAP,
                 Position.LEFT_BOTTOM,
@@ -225,58 +201,35 @@ describe('calculateComponentAbsolutePosition utils', () => {
                 false,
             );
 
-            const {left} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(left - DEFAULT_COMPONENT_SIZE.width);
+            expect(style.left).toBe(expectedStyle.left);
             expect(position).toEqual(Position.LEFT_BOTTOM);
         });
 
-        it('should keep initial LEFT_TOP position and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.LEFT_TOP,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {left} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(left - DEFAULT_COMPONENT_SIZE.width);
-            expect(position).toEqual(Position.LEFT_TOP);
-        });
-
         it('should keep initial RIGHT position and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+            const rightPositions = [
                 Position.RIGHT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {right} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(right);
-            expect(position).toEqual(Position.RIGHT);
-        });
-
-        it('should keep initial RIGHT_TOP position and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.RIGHT_TOP,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {right} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
-            expect(style.left).toBe(right);
-            expect(position).toEqual(Position.RIGHT_TOP);
+            const expectedStyle = {
+                left: right,
+            };
+
+            rightPositions.forEach((rightPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    rightPosition,
+                    PARENT_AT_THE_TOP_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.left).toBe(expectedStyle.left);
+                expect(position).toEqual(rightPosition);
+            });
         });
 
         it('should keep initial RIGHT_BOTTOM position and calculate style for left value correctly', () => {
@@ -298,131 +251,130 @@ describe('calculateComponentAbsolutePosition utils', () => {
 
     describe('with autoPositioning', () => {
         it('should change position from TOP to BOTTOM and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.TOP,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
+            const changingPositions = [
+                [Position.TOP, Position.BOTTOM],
+                [Position.TOP_LEFT, Position.BOTTOM_LEFT],
+                [Position.TOP_RIGHT, Position.BOTTOM_RIGHT],
+            ];
 
             const {top, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top + height);
-            expect(position).toEqual(Position.BOTTOM);
-        });
+            const expectedStyle = {
+                top: top + height,
+            };
 
-        it('should change position from TOP_LEFT to BOTTOM_LEFT and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.TOP_LEFT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
+            changingPositions.forEach(([initialPosition, resultPosition]) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    initialPosition,
+                    PARENT_AT_THE_TOP_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    true,
+                );
 
-            const {top, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top + height);
-            expect(position).toEqual(Position.BOTTOM_LEFT);
-        });
-
-        it('should change position from TOP_RIGHT to BOTTOM_RIGHT and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.TOP_RIGHT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
-
-            const {top, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top + height);
-            expect(position).toEqual(Position.BOTTOM_RIGHT);
+                expect(style.top).toEqual(expectedStyle.top);
+                expect(position).toEqual(resultPosition);
+            });
         });
 
         it('should change position from BOTTOM to TOP and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.BOTTOM,
-                PARENT_AT_THE_BOTTOM_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
+            const changingPositions = [
+                [Position.BOTTOM, Position.TOP],
+                [Position.BOTTOM_LEFT, Position.TOP_LEFT],
+                [Position.BOTTOM_RIGHT, Position.TOP_RIGHT],
+            ];
 
             const {top} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.TOP);
+            const expectedStyle = {
+                top: top - DEFAULT_COMPONENT_SIZE.height,
+            };
+
+            changingPositions.forEach(([initialPosition, resultPosition]) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    initialPosition,
+                    PARENT_AT_THE_BOTTOM_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    true,
+                );
+
+                expect(style.top).toBe(expectedStyle.top);
+                expect(position).toEqual(resultPosition);
+            });
         });
 
-        it('should change position from BOTTOM_LEFT to TOP_LEFT and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.BOTTOM_LEFT,
-                PARENT_AT_THE_BOTTOM_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
+        it('should change position from left/right to BOTTOM when component is beyond left/right', () => {
+            const testCases = [
+                Position.LEFT,
+                Position.LEFT_TOP,
+                Position.LEFT_BOTTOM,
+                Position.RIGHT,
+                Position.RIGHT_TOP,
+                Position.RIGHT_BOTTOM,
+            ];
 
-            const {top} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
+            const {top, left, width, height} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.TOP_LEFT);
+            const expectedStyle = {
+                left: (left + (width / 2)) - (DEFAULT_COMPONENT_SIZE.width / 2),
+                top: top + height,
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_TOP_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    true,
+                );
+
+                expect(style.left).toBe(expectedStyle.left);
+                expect(style.top).toBe(expectedStyle.top);
+                expect(position).toEqual(Position.BOTTOM);
+            });
+        });
+    });
+
+    describe('with autoPositioning and left/right position', () => {
+        beforeEach(() => {
+            Object.defineProperty(global.document.body, 'clientWidth', {
+                value: 1024,
+                writable: true,
+            });
         });
 
-        it('should change position from BOTTOM_RIGHT to TOP_RIGHT and calculate style for top value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.BOTTOM_RIGHT,
-                PARENT_AT_THE_BOTTOM_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
-
-            const {top} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.TOP_RIGHT);
+        afterAll(() => {
+            Object.defineProperty(global.document.body, 'clientWidth', {
+                value: originalDocumentBodyClientWidth,
+            });
         });
 
         it('should change position from LEFT to RIGHT and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.LEFT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
+            const changingPositions = [
+                [Position.LEFT, Position.RIGHT],
+                [Position.LEFT_TOP, Position.RIGHT_TOP],
+            ];
 
             const {right} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
 
-            expect(style.left).toBe(right);
-            expect(position).toEqual(Position.RIGHT);
-        });
+            changingPositions.forEach(([initialPosition, resultPosition]) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    initialPosition,
+                    PARENT_AT_THE_TOP_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    true,
+                );
 
-        it('should change position from LEFT_TOP to RIGHT_TOP and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.LEFT_TOP,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
-
-            const {right} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(right);
-            expect(position).toEqual(Position.RIGHT_TOP);
+                expect(style.left).toBe(right);
+                expect(position).toEqual(resultPosition);
+            });
         });
 
         it('should change position from LEFT_BOTTOM to RIGHT_BOTTOM and calculate style for left value correctly', () => {
@@ -442,387 +394,339 @@ describe('calculateComponentAbsolutePosition utils', () => {
         });
 
         it('should change position from RIGHT to LEFT and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.RIGHT,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
+            const parentAtTheTopRightRef = {
+                getBoundingClientRect: () => ({
+                    top: 61,
+                    left: 614,
+                    right: 1014,
+                    width: 179,
+                    height: 42,
+                }),
+            };
 
-            const {left} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
+            const changingPositions = [
+                [Position.RIGHT, Position.LEFT],
+                [Position.RIGHT_TOP, Position.LEFT_TOP],
+            ];
 
-            expect(style.left).toBe(left - DEFAULT_COMPONENT_SIZE.width);
-            expect(position).toEqual(Position.LEFT);
+            const {left} = parentAtTheTopRightRef.getBoundingClientRect();
+
+            const expectedStyle = {
+                left: left - DEFAULT_COMPONENT_SIZE.width,
+            };
+
+            changingPositions.forEach(([initialPosition, resultPosition]) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    initialPosition,
+                    parentAtTheTopRightRef,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    true,
+                );
+
+                expect(style.left).toEqual(expectedStyle.left);
+                expect(position).toEqual(resultPosition);
+            });
         });
 
         it('should change position from RIGHT_BOTTOM to LEFT_BOTTOM and calculate style for left value correctly', () => {
+            const parentAtTheBottomRef = {
+                getBoundingClientRect: () => ({
+                    top: 497,
+                    left: 614,
+                    right: 1014,
+                    width: 179,
+                    height: 42,
+                }),
+            };
+
             const {style, position} = calculateComponentAbsolutePosition(
                 GAP,
                 Position.RIGHT_BOTTOM,
-                PARENT_AT_THE_BOTTOM_REF,
+                parentAtTheBottomRef,
                 DEFAULT_COMPONENT_SIZE,
                 null,
                 true,
             );
 
-            const {left} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
+            const {left} = parentAtTheBottomRef.getBoundingClientRect();
 
             expect(style.left).toBe(left - DEFAULT_COMPONENT_SIZE.width);
             expect(position).toEqual(Position.LEFT_BOTTOM);
-        });
-
-        it('should change position from RIGHT_TOP to LEFT_TOP and calculate style for left value correctly', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
-                Position.RIGHT_TOP,
-                PARENT_AT_THE_TOP_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                true,
-            );
-
-            const {left} = PARENT_AT_THE_TOP_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(left - DEFAULT_COMPONENT_SIZE.width);
-            expect(position).toEqual(Position.LEFT_TOP);
         });
     });
 
     describe('calculate styles for left or top, depends on the position', () => {
-        it('should calculate style for left if pass TOP position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for left if pass TOP/BOTTOM position', () => {
+            const testCases = [
                 Position.TOP,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {left, width} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(left + (width / 2) - (DEFAULT_COMPONENT_SIZE.width / 2));
-            expect(position).toEqual(Position.TOP);
-        });
-
-        it('should calculate style for left if pass BOTTOM position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.BOTTOM,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {left, width} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(style.left).toBe(left + (width / 2) - (DEFAULT_COMPONENT_SIZE.width / 2));
-            expect(position).toEqual(Position.BOTTOM);
+            const expectedStyle = {
+                left: left + (width / 2) - (DEFAULT_COMPONENT_SIZE.width / 2),
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.left).toEqual(expectedStyle.left);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for left if pass BOTTOM_LEFT position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for left if pass BOTTOM_LEFT/TOP_LEFT position', () => {
+            const testCases = [
                 Position.BOTTOM_LEFT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {left} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(left);
-            expect(position).toEqual(Position.BOTTOM_LEFT);
-        });
-
-        it('should calculate style for left if pass TOP_LEFT position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.TOP_LEFT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {left} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(style.left).toBe(left);
-            expect(position).toEqual(Position.TOP_LEFT);
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.left).toEqual(left);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for left if pass TOP_RIGHT position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for left if pass TOP_RIGHT/BOTTOM_RIGHT position', () => {
+            const testCases = [
                 Position.TOP_RIGHT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {right} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(style.left).toBe(right - DEFAULT_COMPONENT_SIZE.width);
-            expect(position).toEqual(Position.TOP_RIGHT);
-        });
-
-        it('should calculate style for left if pass BOTTOM_RIGHT position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.BOTTOM_RIGHT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {right} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(style.left).toBe(right - DEFAULT_COMPONENT_SIZE.width);
-            expect(position).toEqual(Position.BOTTOM_RIGHT);
+            const expectedStyle = {
+                left: right - DEFAULT_COMPONENT_SIZE.width,
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.left).toEqual(expectedStyle.left);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for top if pass LEFT position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for top if pass LEFT/RIGHT position', () => {
+            const testCases = [
                 Position.LEFT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {top, height} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top + (height / 2) - (DEFAULT_COMPONENT_SIZE.height / 2));
-            expect(position).toEqual(Position.LEFT);
-        });
-
-        it('should calculate style for top if pass RIGHT position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.RIGHT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {top, height} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top + (height / 2) - (DEFAULT_COMPONENT_SIZE.height / 2));
-            expect(position).toEqual(Position.RIGHT);
+            const expectedStyle = {
+                top: top + (height / 2) - (DEFAULT_COMPONENT_SIZE.height / 2),
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.top).toEqual(expectedStyle.top);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for top if pass LEFT_TOP position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for top if pass LEFT_TOP/RIGHT_TOP position', () => {
+            const testCases = [
                 Position.LEFT_TOP,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {top} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top);
-            expect(position).toEqual(Position.LEFT_TOP);
-        });
-
-        it('should calculate style for top if pass RIGHT_TOP position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.RIGHT_TOP,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {top} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top);
-            expect(position).toEqual(Position.RIGHT_TOP);
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.top).toEqual(top);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for top if pass LEFT_BOTTOM position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for top if pass LEFT_BOTTOM/RIGHT_BOTTOM position', () => {
+            const testCases = [
                 Position.LEFT_BOTTOM,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
-
-            const {top, height} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(style.top).toBe(top + height - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.LEFT_BOTTOM);
-        });
-
-        it('should calculate style for top if pass RIGHT_BOTTOM position', () => {
-            const {style, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.RIGHT_BOTTOM,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                null,
-                false,
-            );
+            ];
 
             const {top, height} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(style.top).toBe(top + height - DEFAULT_COMPONENT_SIZE.height);
-            expect(position).toEqual(Position.RIGHT_BOTTOM);
+            const expectedStyle = {
+                top: top + height - DEFAULT_COMPONENT_SIZE.height,
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {style, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    null,
+                    false,
+                );
+
+                expect(style.top).toEqual(expectedStyle.top);
+                expect(position).toEqual(testingPosition);
+            });
         });
     });
 
     describe('calculate styles for arrow', () => {
-        it('should calculate style for arrow position if pass TOP_LEFT position and component width more than parent width', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for arrow position if pass TOP_LEFT/BOTTOM_LEFT position and component width more than parent width', () => {
+            const testCases = [
                 Position.TOP_LEFT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
-
-            const {width} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(width).toBeLessThan(DEFAULT_COMPONENT_SIZE.width);
-            expect(arrowPosition.right).toBeUndefined();
-            expect(arrowPosition.left).toBe(width / 2);
-            expect(position).toEqual(Position.TOP_LEFT);
-        });
-
-        it('should calculate style for arrow position if pass BOTTOM_LEFT position and component width more than parent width', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.BOTTOM_LEFT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
+            ];
 
             const {width} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(width).toBeLessThan(DEFAULT_COMPONENT_SIZE.width);
-            expect(arrowPosition.right).toBeUndefined();
-            expect(arrowPosition.left).toBe(width / 2);
-            expect(position).toEqual(Position.BOTTOM_LEFT);
+            const expectedArrowPosition = {
+                left: width / 2,
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {arrowPosition, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    ARROW_SIZE,
+                    true,
+                );
+
+                expect(width).toBeLessThan(DEFAULT_COMPONENT_SIZE.width);
+                expect(arrowPosition.right).toBeUndefined();
+                expect(arrowPosition.left).toEqual(expectedArrowPosition.left);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for arrow position if pass TOP_RIGHT position and component width more than parent width', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for arrow position if pass TOP_RIGHT/BOTTOM_RIGHT position and component width more than parent width', () => {
+            const testCases = [
                 Position.TOP_RIGHT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
-
-            const {width} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(width).toBeLessThan(DEFAULT_COMPONENT_SIZE.width);
-            expect(arrowPosition.left).toBeNull();
-            expect(arrowPosition.right).toBe((width / 2) - (ARROW_SIZE.width / 2));
-            expect(position).toEqual(Position.TOP_RIGHT);
-        });
-
-        it('should calculate style for arrow position if pass BOTTOM_RIGHT position and component width more than parent width', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.BOTTOM_RIGHT,
-                PARENT_AT_THE_CENTER_REF,
-                DEFAULT_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
+            ];
 
             const {width} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(width).toBeLessThan(DEFAULT_COMPONENT_SIZE.width);
-            expect(arrowPosition.left).toBeNull();
-            expect(arrowPosition.right).toBe((width / 2) - (ARROW_SIZE.width / 2));
-            expect(position).toEqual(Position.BOTTOM_RIGHT);
+            const expectedArrowPosition = {
+                left: null,
+                right: (width / 2) - (ARROW_SIZE.width / 2),
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {arrowPosition, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    DEFAULT_COMPONENT_SIZE,
+                    ARROW_SIZE,
+                    true,
+                );
+
+                expect(width).toBeLessThan(DEFAULT_COMPONENT_SIZE.width);
+                expect(arrowPosition.left).toEqual(expectedArrowPosition.left);
+                expect(arrowPosition.right).toEqual(expectedArrowPosition.right);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for arrow position if pass LEFT_TOP position and component height more than parent height', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for arrow position if pass LEFT_TOP/RIGHT_TOP position and component height more than parent height', () => {
+            const testCases = [
                 Position.LEFT_TOP,
-                PARENT_AT_THE_CENTER_REF,
-                LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
-
-            const {height} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
-
-            expect(height).toBeLessThan(LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE.height);
-            expect(arrowPosition.top).toBe(height / 2);
-            expect(position).toEqual(Position.LEFT_TOP);
-        });
-
-        it('should calculate style for arrow position if pass RIGHT_TOP position and component height more than parent height', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.RIGHT_TOP,
-                PARENT_AT_THE_CENTER_REF,
-                LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
+            ];
 
             const {height} = PARENT_AT_THE_CENTER_REF.getBoundingClientRect();
 
-            expect(height).toBeLessThan(LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE.height);
-            expect(arrowPosition.top).toBe(height / 2);
-            expect(position).toEqual(Position.RIGHT_TOP);
+            const expectedArrowPosition = {
+                top: height / 2,
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {arrowPosition, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_CENTER_REF,
+                    LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE,
+                    ARROW_SIZE,
+                    true,
+                );
+
+                expect(height).toBeLessThan(LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE.height);
+                expect(arrowPosition.top).toEqual(expectedArrowPosition.top);
+                expect(position).toEqual(testingPosition);
+            });
         });
 
-        it('should calculate style for arrow position if pass RIGHT_BOTTOM position and component height more than parent height', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
+        it('should calculate style for arrow position if pass RIGHT_BOTTOM/LEFT_BOTTOM position and component height more than parent height', () => {
+            const testCases = [
                 Position.RIGHT_BOTTOM,
-                PARENT_AT_THE_BOTTOM_REF,
-                LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
-
-            const {height} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
-
-            expect(height).toBeLessThan(LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE.height);
-            expect(arrowPosition.bottom).toBe((height / 2) - (ARROW_SIZE.height / 2));
-            expect(position).toEqual(Position.RIGHT_BOTTOM);
-        });
-
-        it('should calculate style for arrow position if pass LEFT_BOTTOM position and component height more than parent height', () => {
-            const {arrowPosition, position} = calculateComponentAbsolutePosition(
-                GAP,
                 Position.LEFT_BOTTOM,
-                PARENT_AT_THE_BOTTOM_REF,
-                LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE,
-                ARROW_SIZE,
-                true,
-            );
+            ];
 
             const {height} = PARENT_AT_THE_BOTTOM_REF.getBoundingClientRect();
 
-            expect(height).toBeLessThan(LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE.height);
-            expect(arrowPosition.bottom).toBe((height / 2) - (ARROW_SIZE.height / 2));
-            expect(position).toEqual(Position.LEFT_BOTTOM);
+            const expectedArrowPosition = {
+                bottom: (height / 2) - (ARROW_SIZE.height / 2),
+            };
+
+            testCases.forEach((testingPosition) => {
+                const {arrowPosition, position} = calculateComponentAbsolutePosition(
+                    GAP,
+                    testingPosition,
+                    PARENT_AT_THE_BOTTOM_REF,
+                    LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE,
+                    ARROW_SIZE,
+                    true,
+                );
+
+                expect(height).toBeLessThan(LARGE_HEIGHT_SMALL_WIDTH_COMPONENT_SIZE.height);
+                expect(arrowPosition.bottom).toEqual(expectedArrowPosition.bottom);
+                expect(position).toEqual(testingPosition);
+            });
         });
     });
 

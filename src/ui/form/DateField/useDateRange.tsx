@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {usePrevious} from 'react-use';
+import {useFirstMountState, usePrevious} from 'react-use';
 import dayjs from 'dayjs';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
 import {IDateInputStateInput} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
@@ -14,11 +14,14 @@ interface IUseDateRangeProps extends Pick<IDateInputStateInput, 'displayFormat' 
     inputTo: any,
     inputFrom: any,
     useSmartFocus: boolean,
+    hasInitialFocus: boolean,
 }
 
 export default function useDateRange(props:IUseDateRangeProps) {
     // Tracking focus for input being edited
     const [focus, setFocus] = useState<'from' | 'to'>('from');
+
+    const isFirstMount = useFirstMountState();
 
     // Local refs to handle auto-focus
     const valueFromRef = useRef('');
@@ -68,6 +71,10 @@ export default function useDateRange(props:IUseDateRangeProps) {
     const prevValueFrom = usePrevious(props.inputFrom.value);
     const prevValueTo = usePrevious(props.inputTo.value);
     useEffect(() => {
+        if (!props.hasInitialFocus && isFirstMount) {
+            return;
+        }
+
         if (props.useSmartFocus) {
             if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
                 valueFromRef.current = props.inputFrom.value;
@@ -77,9 +84,12 @@ export default function useDateRange(props:IUseDateRangeProps) {
                 valueToRef.current = props.inputTo.value;
                 inputFromRef.current.focus();
             }
+        } else if (props.hasInitialFocus && isFirstMount) {
+            inputFromRef.current.focus();
         }
+
     // eslint-disable-next-line max-len
-    }, [focus, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value]);
+    }, [focus, isFirstMount, onClose, prevValueFrom, prevValueTo, props, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value]);
 
     // Swap start and end dates if start date is later than end date
     useEffect(() => {

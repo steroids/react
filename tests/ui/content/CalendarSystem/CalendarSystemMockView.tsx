@@ -1,6 +1,5 @@
 import * as React from 'react';
 import useBem from '../../../../src/hooks/useBem';
-import Calendar from '../../../../src/ui/content/Calendar';
 import {ICalendarSystemViewProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import CalendarEnum from '../../../../src/ui/content/CalendarSystem/enums/CalendarType';
 import AsideHeader from './AsideHeader/AsideHeaderMockView';
@@ -8,10 +7,14 @@ import AsideCalendars from './AsideCalendars/AsideCalendarsMockView';
 import ContentHeader from './ContentHeader/ContentHeaderMockView';
 import MonthGrid from './MonthGrid/MonthGridMockView';
 import WeekGrid from './WeekGrid/WeekGridMockView';
-import CalendarMockView from '../Calendar/CalendarMockView';
 
 export default function CalendarSystemView(props: ICalendarSystemViewProps) {
     const bem = useBem('CalendarSystemView');
+
+    const calendarTypeGrids = React.useMemo(() => ({
+        [CalendarEnum.MONTH]: <MonthGrid {...props.monthGridProps} />,
+        [CalendarEnum.WEEK]: <WeekGrid {...props.weekGridProps} />,
+    }), [props.monthGridProps, props.weekGridProps]);
 
     return (
         <div
@@ -28,12 +31,11 @@ export default function CalendarSystemView(props: ICalendarSystemViewProps) {
                 />
                 {/* <Calendar
                     showFooter={false}
-                    onMonthChange={props.onMonthChange}
+                    onMonthChange={props.onInnerCalendarChangeMonth}
                 /> */}
                 <AsideCalendars
                     eventGroups={props.eventGroups}
                     eventGroupsTitle={props.eventGroupsTitle}
-                    selectedCalendarGroupsIds={props.selectedCalendarGroups}
                     onChangeEventGroupsIds={props.onChangeEventGroupsIds}
                     openCreateEventGroupModal={props.openCreateEventGroupModal}
                 />
@@ -41,28 +43,10 @@ export default function CalendarSystemView(props: ICalendarSystemViewProps) {
             <div className={bem.element('content')}>
                 <ContentHeader
                     dateToDisplay={props.dateToDisplay}
-                    onChangeCalendarType={props.onChangeCalendarType}
-                    applyControl={props.applyControl}
+                    onChangeCalendarType={props.handleCalendarTypeChange}
+                    handleControlClick={props.handleControlClick}
                 />
-                {props.calendarType === CalendarEnum.MONTH
-                    ? (
-                        <MonthGrid
-                            monthCalendarDays={props.monthCalendarDays}
-                            getEventsFromDate={props.getEventsFromDate}
-                            weekDays={props.weekDays}
-                            openEditModal={props.openEditModal}
-                            openCreateModal={props.openCreateModal}
-                        />
-                    )
-                    : (
-                        <WeekGrid
-                            allHours={props.allHours}
-                            getEventsFromDate={props.getEventsFromDate}
-                            currentWeekDays={props.currentWeekDays}
-                            openEditModal={props.openEditModal}
-                            openCreateModal={props.openCreateModal}
-                        />
-                    )}
+                {calendarTypeGrids[props.calendarType as string]}
             </div>
         </div>
     );

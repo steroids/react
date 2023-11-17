@@ -5,9 +5,9 @@ import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/Cal
 import MonthDay from './views/MonthDay/MonthDayMockView';
 
 interface IMonthGridProps {
-    monthCalendarDays: IDay[];
+    monthGridWeekDays: string[],
+    monthGridCalendarDays: IDay[];
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
-    weekDays: string[],
     openEditModal: (event: IEvent) => void,
     openCreateModal: (eventInitialDay?: IDay) => void;
 }
@@ -18,7 +18,7 @@ function MonthGrid(props: IMonthGridProps) {
     return (
         <div className={bem.block()}>
             <div className={bem.element('week-days')}>
-                {props.weekDays.map((day, dayIndex) => (
+                {props.monthGridWeekDays.map((day, dayIndex) => (
                     <span
                         key={dayIndex}
                         className={bem.element('week-days-day')}
@@ -28,7 +28,7 @@ function MonthGrid(props: IMonthGridProps) {
                 ))}
             </div>
             <div className={bem.element('grid')}>
-                {props.monthCalendarDays.map((day, dayIndex) => (
+                {props.monthGridCalendarDays.map((day, dayIndex) => (
                     <MonthDay
                         key={dayIndex}
                         openEditModal={props.openEditModal}

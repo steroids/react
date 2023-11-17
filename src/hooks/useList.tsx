@@ -1,11 +1,9 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import {getTreeItemUniqId} from '../utils/list';
-import {ITreeTableItem} from '../ui/list/TreeTable/TreeTable';
 import useSelector from '../hooks/useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
@@ -16,11 +14,15 @@ import {formChange, formDestroy} from '../actions/form';
 import {formSelector} from '../reducers/form';
 import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
 import useInitial from '../hooks/useInitial';
-import {IPaginationProps, normalizePaginationProps} from '../ui/list/Pagination/Pagination';
-import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
-import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
+import {IPaginationProps} from '../ui/list/Pagination/Pagination';
+import {IPaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
+import {IEmptyProps} from '../ui/list/Empty/Empty';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Model} from '../components/MetaComponent';
+import usePagination from './usePagination';
+import useEmpty from './useEmpty';
+import useSearchForm from './useSearchForm';
+import useTreeItems from './useTreeItems';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -281,56 +283,6 @@ export const createInitialValues = ({
     ...configQuery, // Query from props
 });
 
-const TOP_TREE_LEVEL_VALUE = 0;
-
-export const prepareItemsToTree = (
-    sourceItems: ITreeTableItem[],
-    openedTreeItems: Record<string, boolean>,
-    currentPage: number | null,
-    itemsOnPage: number | null,
-    onTreeItemClick: (uniqueId: string, item: Record<string, any>) => void,
-    parentId = '',
-    currentLevel = TOP_TREE_LEVEL_VALUE,
-) => {
-    let treeItems = [];
-
-    if (currentPage && itemsOnPage && currentLevel === TOP_TREE_LEVEL_VALUE) {
-        const startIndex = (currentPage - 1) * itemsOnPage;
-        sourceItems = sourceItems.slice(startIndex, startIndex + itemsOnPage);
-    }
-
-    (sourceItems || []).forEach((item, index) => {
-        const uniqueId = getTreeItemUniqId(item, index, parentId);
-        const isOpened = !!openedTreeItems[uniqueId];
-        const hasItems = !!(item.items && item.items.length > 0);
-
-        treeItems.push({
-            ...item,
-            uniqueId,
-            level: currentLevel,
-            isOpened,
-            hasItems,
-            onTreeItemClick,
-        });
-
-        if (isOpened) {
-            treeItems = treeItems.concat(
-                prepareItemsToTree(
-                    item.items,
-                    openedTreeItems,
-                    currentPage,
-                    itemsOnPage,
-                    onTreeItemClick,
-                    uniqueId,
-                    currentLevel + 1,
-                ),
-            ).filter(Boolean);
-        }
-    });
-
-    return treeItems;
-};
-
 /**
  * useList
  * Добавляет массу возможностей для взаимодействия с коллекциями. Коллекции можно получать как с бекенда,
@@ -341,69 +293,16 @@ export default function useList(config: IListConfig): IListOutput {
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
 
-    const [openedTreeItems, setOpenedTreeItems] = useState<Record<string, boolean>>({});
-
-    const onTreeItemClick = useCallback((uniqueId: string, item: Record<string, any>) => {
-        if (item.items?.length > 0) {
-            setOpenedTreeItems((prevItems) => (
-                {...prevItems, [uniqueId]: !prevItems[uniqueId]}
-            ));
-        }
-    }, []);
-
-    const getTreeItems = useCallback(
-        (sourceItems: ITreeTableItem[]) => prepareItemsToTree(
-            sourceItems,
-            openedTreeItems,
-            list?.page,
-            list?.pageSize,
-            onTreeItemClick,
-        ),
-        [onTreeItemClick, openedTreeItems, list],
-    );
+    const {openedTreeItems, getTreeItems} = useTreeItems(list);
 
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);
 
-    // Empty
-    const Empty = require('../ui/list/Empty').default;
-    const emptyProps = normalizeEmptyProps(config.empty);
-    const renderEmpty = () => {
-        if (!emptyProps.enable || list?.isLoading || list?.items?.length > 0) {
-            return null;
-        }
-        return (
-            <Empty
-                list={list}
-                {...emptyProps}
-            />
-        );
-    };
+    //Empty
+    const {renderEmpty} = useEmpty(config, list);
 
-    // Pagination size
-    const PaginationSize = require('../ui/list/PaginationSize').default;
-    const paginationSizeProps = normalizePaginationSizeProps(config.paginationSize);
-    const renderPaginationSize = () => paginationSizeProps.enable
-        ? (
-            <PaginationSize
-                list={list}
-                {...paginationSizeProps}
-            />
-        )
-        : null;
-
-    // Pagination
-    const Pagination = require('../ui/list/Pagination').default;
-    const paginationProps = normalizePaginationProps(config.pagination);
-    const renderPagination = () => paginationProps.enable
-        ? (
-            <Pagination
-                list={list}
-                {...paginationProps}
-                sizeAttribute={paginationSizeProps.attribute}
-            />
-        )
-        : null;
+    //Pagination
+    const {renderPagination, renderPaginationSize, paginationProps, paginationSizeProps} = usePagination(config, list);
 
     // Layout switcher
     const LayoutNames = require('../ui/list/LayoutNames').default;
@@ -436,22 +335,7 @@ export default function useList(config: IListConfig): IListOutput {
     });
 
     // Outside search form
-    const searchFormFields = config.searchForm?.fields;
-    const SearchForm = require('../ui/list/SearchForm').default;
-    const initialValuesSearchForm = useMemo(() => (searchFormFields || []).reduce((acc, field) => {
-        const attribute = typeof field === 'string' ? field : field.attribute;
-        acc[attribute] = initialQuery?.[attribute];
-        return acc;
-    }, {}), [searchFormFields, initialQuery]);
-
-    const searchFormProps = {
-        listId: config.listId,
-        ...config.searchForm,
-        model: searchModel,
-        initialValues: initialValuesSearchForm,
-    };
-
-    const renderSearchForm = () => <SearchForm {...searchFormProps} />;
+    const {renderSearchForm} = useSearchForm(config, list, initialQuery, searchModel);
 
     // Form id
     const formId = _get(config, 'searchForm.formId') || config.listId;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction, useState} from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
@@ -19,7 +19,7 @@ export interface IButtonGroupProps extends IUiComponent {
      * Функция, которая будет вызываться при клике по кнопке
      * @example setActiveTab
      */
-    onClick: (value: number | string | boolean) => void,
+    onClick: ((value: number | string | boolean) => void) | Dispatch<SetStateAction<string | number | boolean>>,
 
     /**
      * При указании в связке с onClick предоставляет возможность реализовать two-way binding

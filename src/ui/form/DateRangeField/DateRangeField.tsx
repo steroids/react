@@ -82,6 +82,12 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      */
     calendarProps?: ICalendarProps,
 
+    /**
+     * Устанавливать ли фокус и показывать календарь сразу после рендера страницы
+     * @example true
+     */
+    hasInitialFocus?: boolean,
+
     [key: string]: any;
 }
 
@@ -175,6 +181,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
         useSmartFocus: true,
+        hasInitialFocus: props.hasInitialFocus,
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
     });
@@ -216,6 +223,7 @@ DateRangeField.defaultProps = {
     displayFormat: 'DD.MM.YYYY',
     valueFormat: 'YYYY-MM-DD',
     showRemove: true,
+    hasInitialFocus: false,
     icon: true,
     noBorder: false,
     size: 'md',

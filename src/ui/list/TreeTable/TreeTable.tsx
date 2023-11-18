@@ -21,7 +21,13 @@ export interface ITreeTableItem {
 
     /**
      * Вложенные элементы
-     * @example items: [{id: 3, name: 'Ivan'}]
+     * @example
+     * items: [
+     *  {
+     *   id: 3,
+     *   name: 'Ivan'
+     *  }
+     * ]
      */
     items?: any[],
 
@@ -40,7 +46,18 @@ export interface ITreeTableItem {
 export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
     /**
      * Элементы коллекции
-     * @example [{id: 1, name: 'Jane'}, {id: 2, name: 'John', items: [...]}]
+     * @example
+     * [
+     *  {
+     *   id: 1,
+     *   name: 'Jane'
+     *  },
+     *  {
+     *   id: 2,
+     *   name: 'John',
+     *   items: [...]
+     *  }
+     * ]
      */
     items?: ITreeTableItem[]
 }

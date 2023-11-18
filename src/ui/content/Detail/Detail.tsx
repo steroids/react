@@ -69,7 +69,16 @@ export interface IDetailProps extends IUiComponent {
 
     /**
      * Перестраивать таблицу при ресайзе
-     * @example {enable: true, media: [{breakpoint: 600, column: 2}]}
+     * @example
+     * {
+     *  enable: true,
+     *  media: [
+     *   {
+     *    breakpoint: 600,
+     *    column: 2
+     *   }
+     *  ]
+     * }
      */
     responsive?: boolean | IDetailResponsive,
 
@@ -87,7 +96,11 @@ export interface IDetailProps extends IUiComponent {
 
     /**
      * Контролы, которые нужно расположить рядом с таблицей
-     * @example [{label: __(('Edit')), onClick: () => props.onClick()}]
+     * @example
+     * [{
+     *  label: __(('Edit')),
+     *  onClick: () => props.onClick()
+     * }]
      */
     controls?: IControlItem[],
 

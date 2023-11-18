@@ -36,7 +36,12 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
 
     /**
      * Свойства для компонента DayPickerInput
-     * @example {dayPickerProps: {showWeekNumbers: true}}
+     * @example
+     * {
+     *  dayPickerProps: {
+     *   showWeekNumbers: true
+     *  }
+     * }
      */
     pickerProps?: any;
 

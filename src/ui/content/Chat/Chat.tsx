@@ -31,36 +31,38 @@ export interface IChatProps extends IUiComponent {
 
     /**
      * Коллекция сообщений
-     * @example [
+     * @example
+     * [
      *  {
-     *         id: 1,
-     *         text: 'Всем привет!',
-     *         user: {
-     *             id: 1,
-     *             firstName: 'Olga',
-     *             lastName: 'Petrova',
-     *             avatar: {
-     *                 src: 'images.com/image.png',
-     *                 status: true,
-     *             },
-     *         },
-     *         timestamp: '2023-10-25T12:38:00',
+     *   id: 1,
+     *   text: 'Всем привет!',
+     *   user: {
+     *     id: 1,
+     *     firstName: 'Olga',
+     *     lastName: 'Petrova',
+     *     avatar: {
+     *       src: 'images.com/image.png',
+     *       status: true,
      *     },
+     *   },
+     *   timestamp: '2023-10-25T12:38:00',
+     *  },
      * ]
      */
     messages: IChatMessage[];
 
     /**
      * Данные о текущем пользователе, нужны для отправки сообщений и определения сообщений пользователя
-     * @example {
-     *             id: 1,
-     *             firstName: 'Olga',
-     *             lastName: 'Petrova',
-     *             avatar: {
-     *                 src: 'images.com/image.png',
-     *                 status: true,
-     *             },
-     *         }
+     * @example
+     * {
+     *  id: 1,
+     *  firstName: 'Olga',
+     *  lastName: 'Petrova',
+     *  avatar: {
+     *    src: 'images.com/image.png',
+     *    status: true,
+     *  },
+     * }
      */
     currentUser: IChatUser;
 

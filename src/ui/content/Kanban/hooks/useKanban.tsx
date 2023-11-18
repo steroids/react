@@ -30,18 +30,24 @@ export interface IKanbanConfig {
 
     /**
      * Коллекция с наименованиями и свойствами колонок в таблице
-     * @example [
-     *             {
-     *              id: 1,
-     *              title: 'column 1',
-     *              tasks: [{ content: 'item 1', id: 1 }],
-     *             },
-     *             {
-     *              id: 2,
-     *              title: 'column 2',
-     *              tasks: [],
-     *             }
-     *          ]
+     * @example
+     * [
+     *  {
+     *   id: 1,
+     *   title: 'column 1',
+     *   tasks: [
+     *    {
+     *      content: 'item 1',
+     *      id: 1
+     *    }
+     *    ],
+     *  },
+     *  {
+     *   id: 2,
+     *   title: 'column 2',
+     *   tasks: [],
+     *  }
+     * ]
      */
     columns: IKanbanColumn[];
 
@@ -58,20 +64,21 @@ export interface IKanbanConfig {
     /**
      * Обработчик события окончания перетаскивания карточки или колонки
      * В result передается объект с информацией о событии
-     * @example {
-     *     draggableId: 1,
-     *     type: 'task',
-     *     source: {
-     *         index: 0,
-     *         droppableId: 2
-     *     },
-     *     reason: 'DROP',
-     *     mode: 'FLUID',
-     *     destination: {
-     *         droppableId: 2,
-     *         index: 1
-     *     },
-     *     combine: null
+     * @example
+     * {
+     *  draggableId: 1,
+     *  type: 'task',
+     *  source: {
+     *   index: 0,
+     *   droppableId: 2
+     *  },
+     *  reason: 'DROP',
+     *  mode: 'FLUID',
+     *  destination: {
+     *    droppableId: 2,
+     *    index: 1
+     *  },
+     *  combine: null
      * }
      */
     onDragEnd?: (result: IDragEndResult) => void;

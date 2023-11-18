@@ -16,7 +16,15 @@ import {IButtonProps} from '../Button/Button';
 export interface ICropConfig {
     /**
      * Изначальные параметры обрезки изображения
-     * @example {unit: 'px', aspect: 1, x: 0, y: 0, width: 200, height: 200}
+     * @example
+     * {
+     *  unit: 'px',
+     *  aspect: 1,
+     *  x: 0,
+     *  y: 0,
+     *  width: 200,
+     *  height: 200
+     * }
      */
     initialValues?: Crop,
 

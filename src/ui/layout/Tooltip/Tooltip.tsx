@@ -93,7 +93,10 @@ export interface ITooltipProps {
 
     /**
      * Стили для позиционирования стрелки
-     * @example {left: 10}
+     * @example
+     * {
+     *  left: 10
+     * }
      */
     arrowPosition?: ITooltipArrowPosition,
 

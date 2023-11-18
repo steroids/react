@@ -18,7 +18,14 @@ export interface ITreeItem extends IButtonProps {
 
     /**
      * Вложенные элементы
-     * @example [{id: 2, label: 'Nested element', items: [...]}]
+     * @example
+     * [
+     *  {
+     *   id: 2,
+     *   label: 'Nested element',
+     *   items: [...]
+     *  }
+     * ]
      */
     items?: any[],
 
@@ -43,7 +50,14 @@ export interface ITreeProps {
     /**
      * Коллекция с узлами. Также можно передать идентификатор роута, тогда компонент найдет все
      * вложенные роуты и отобразит их в виде дерева.
-     * @example [{id: 1, label: 'Root', items: [...]}] | 'root'
+     * @example
+     * [
+     *  {
+     *   id: 1,
+     *   label: 'Root',
+     *   items: [...]
+     *  }
+     * ] | 'root'
      */
     items?: ITreeItem[] | string;
 

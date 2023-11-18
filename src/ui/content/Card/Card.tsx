@@ -44,6 +44,11 @@ export interface ICardHeader {
  */
 export interface ICardProps extends IUiComponent {
     /**
+     * Коллекция кнопок
+     */
+    buttons?: IButtonProps[],
+
+    /**
      * Дочерние элементы
      */
     children?: React.ReactNode,
@@ -61,32 +66,6 @@ export interface ICardProps extends IUiComponent {
     description?: string,
 
     /**
-     * Контент хедера
-     * @example
-     * avatar: {
-     * src: 'Kate.png',
-     * status: true,
-     * },
-     * head: 'Header',
-     * subhead: 'Subhead',
-     * menu: {
-     *  dropDownProps: {
-            position: 'bottom',
-            closeMode: 'click-any',
-        },
-        items: [
-            {label: 'Вырезать', icon: 'cut', onClick: voidFunction},
-            {label: 'Копировать', icon: 'copy', hasBorder: true, onClick: voidFunction},
-            {label: 'Показать историю изменений', hasBorder: true, onClick: voidFunction},
-            {label: 'Редактировать', icon: 'edit', onClick: voidFunction},
-            {label: 'Удалить', icon: 'trash', onClick: voidFunction},
-        ],
-        icon: 'menu_dots',
-     * },
-     */
-    header?: ICardHeader,
-
-    /**
      * Контент футера
      */
     footer?: {
@@ -95,14 +74,41 @@ export interface ICardProps extends IUiComponent {
     },
 
     /**
-    * Коллекция ссылок
-    */
-    links?: ILinkProps[],
+     * Контент хедера
+     * @example
+     * avatar: {
+     *  src: 'Kate.png',
+     *  status: true,
+     * },
+     * head: 'Header',
+     * subhead: 'Subhead',
+     * menu: {
+     *  dropDownProps: {
+     *   position: 'bottom',
+     *   closeMode: 'click-any',
+     *  },
+     *  items: [
+     *   {
+     *    label: 'Вырезать',
+     *    icon: 'cut',
+     *    onClick: voidFunction
+     *   },
+     *   {
+     *    label: 'Копировать',
+     *    icon: 'copy',
+     *    hasBorder: true
+     *    onClick: voidFunction
+     *   },
+     *  ],
+     *  icon: 'menu_dots',
+     * },
+     */
+    header?: ICardHeader,
 
     /**
-     * Коллекция кнопок
+     * Коллекция ссылок
      */
-    buttons?: IButtonProps[],
+    links?: ILinkProps[],
 
     /**
      * Заголовок карточки

@@ -11,7 +11,12 @@ import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider
 export interface IButtonGroupProps extends IUiComponent {
     /**
      * Элементы для группы кнопок
-     * @example ['button1', 'button2', 'button3']
+     * @example
+     * [
+     *  'button1',
+     *  'button2',
+     *  'button3'
+     * ]
      */
     items: DataProviderItems,
 
@@ -34,7 +39,11 @@ export interface IButtonGroupProps extends IUiComponent {
 
     /**
      * Общие свойства для всех кнопок группы
-     * @example {outline: true, color: 'secondary'}
+     * @example
+     * {
+     *  outline: true,
+     *  color: 'secondary'
+     * }
      */
     buttonProps?: IButtonProps,
 }

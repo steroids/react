@@ -24,7 +24,15 @@ export interface IFieldProps extends IFieldWrapperInputProps {
 
     /**
      * Модель с полями формы
-     * @example {attributes: [{attribute: 'category', field: 'DropDownField'}]}
+     * @example
+     * {
+     *  attributes: [
+     *   {
+     *    attribute: 'category',
+     *    field: 'DropDownField'
+     *   }
+     *  ]
+     * }
      */
     model?: Model;
 

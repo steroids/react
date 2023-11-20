@@ -20,12 +20,15 @@ describe('addTreeColumnFieldsToFirstColumn function', () => {
             },
         ];
 
+        const levelPadding = 32;
+
         const expectedColumns = [
             {
                 label: 'Name',
                 attribute: 'name',
                 valueView: 'TreeColumnView',
                 headerClassName: 'TreeColumnHeader',
+                levelPadding,
             },
             {
                 label: 'Surname',
@@ -33,7 +36,7 @@ describe('addTreeColumnFieldsToFirstColumn function', () => {
             },
         ];
 
-        const result = addTreeColumnFieldsToFirstColumn(columns);
+        const result = addTreeColumnFieldsToFirstColumn(columns, levelPadding);
 
         expect(result).toEqual(expectedColumns);
     });

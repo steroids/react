@@ -15,10 +15,13 @@ export default function TreeTableMock(props: ITreeTableProps): JSX.Element {
             headerClassName: 'TreeColumnHeader',
         };
 
-        _merge(newColumns[0], additionalFields);
+        _merge(newColumns[0], {
+            ...additionalFields,
+            levelPadding: props.levelPadding,
+        });
 
         return newColumns;
-    }, [props.columns]);
+    }, [props.columns, props.levelPadding]);
 
     return (
         <Grid
@@ -30,3 +33,7 @@ export default function TreeTableMock(props: ITreeTableProps): JSX.Element {
         />
     );
 }
+
+TreeTableMock.defaultProps = {
+    levelPadding: 32,
+};

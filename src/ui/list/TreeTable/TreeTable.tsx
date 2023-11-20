@@ -6,10 +6,12 @@ import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 import Grid from '../Grid';
 
 export interface ITreeColumnViewProps extends IColumnViewProps {
-    item: {
-        onTreeItemClick?: (uniqueId: string, item: {[key: string]: any}) => void;
-
-        [key: string]: any
+    item: ITreeTableItem & {
+        uniqueId: string,
+        level: number,
+        isOpened: boolean,
+        hasItems: boolean,
+        onClick: () => void,
     },
 }
 
@@ -29,13 +31,7 @@ export interface ITreeTableItem {
      *  }
      * ]
      */
-    items?: any[],
-
-    /**
-     * Уникальный идентификатор,
-     * используется для сохранения состояния открыта или закрыта ячейка
-     */
-    uniqueId?: string,
+    items?: ITreeTableItem[],
 }
 
 /**
@@ -59,7 +55,13 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
      *  }
      * ]
      */
-    items?: ITreeTableItem[]
+    items?: ITreeTableItem[],
+
+    /**
+     * Расстояние вложенных элементов от родителя для каждого уровня
+     * @example 32
+     */
+    levelPadding?: number | string,
 }
 
 const TREE_COLUMN_VIEW_FIELDS = {
@@ -67,19 +69,22 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
-export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[]) => {
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number) => {
     const newColumns = [...columns];
 
     // Add tree view to the first column
-    _merge(newColumns[0], TREE_COLUMN_VIEW_FIELDS);
+    _merge(newColumns[0], {
+        ...TREE_COLUMN_VIEW_FIELDS,
+        levelPadding,
+    });
 
     return newColumns;
 };
 
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
     const columns = useMemo(
-        () => addTreeColumnFieldsToFirstColumn(props.columns),
-        [props.columns],
+        () => addTreeColumnFieldsToFirstColumn(props.columns, props.levelPadding),
+        [props.columns, props.levelPadding],
     );
 
     return (
@@ -92,3 +97,7 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
         />
     );
 }
+
+TreeTable.defaultProps = {
+    levelPadding: 32,
+};

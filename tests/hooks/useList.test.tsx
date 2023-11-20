@@ -42,10 +42,26 @@ describe('normalizeSortProps function', () => {
 describe('getDefaultSearchModel function', () => {
     it('should return a default search model object', () => {
         const parameters = {
-            paginationProps: {enable: true, attribute: 'page', defaultValue: 1},
-            paginationSizeProps: {enable: true, attribute: 'pageSize', defaultValue: 10},
-            sort: {enable: true, attribute: 'sort', defaultValue: 'asc'},
-            layoutNamesProps: {enable: true, attribute: 'layout', defaultValue: 'list'},
+            paginationProps: {
+                enable: true,
+                attribute: 'page',
+                defaultValue: 1,
+            },
+            paginationSizeProps: {
+                enable: true,
+                attribute: 'pageSize',
+                defaultValue: 10,
+            },
+            sort: {
+                enable: true,
+                attribute: 'sort',
+                defaultValue: 'asc',
+            },
+            layoutNamesProps: {
+                enable: true,
+                attribute: 'layout',
+                defaultValue: 'list',
+            },
         };
 
         const expectedAttributes = [
@@ -81,9 +97,17 @@ describe('getDefaultSearchModel function', () => {
     it('should return a default search model object without disabled attributes', () => {
         const parameters = {
             paginationProps: {enable: false},
-            paginationSizeProps: {enable: true, attribute: 'pageSize', defaultValue: 10},
+            paginationSizeProps: {
+                enable: true,
+                attribute: 'pageSize',
+                defaultValue: 10,
+            },
             sort: {enable: false},
-            layoutNamesProps: {enable: true, attribute: 'layout', defaultValue: 'list'},
+            layoutNamesProps: {
+                enable: true,
+                attribute: 'layout',
+                defaultValue: 'list',
+            },
         };
 
         const expectedEnabledAttributes = [
@@ -143,7 +167,7 @@ describe('prepareItemsToTree function', () => {
 
     const currentPageStub = null;
     const itemsOnPageStub = null;
-    const onTreeItemClick = jest.fn();
+    const onClick = expect.any(Function);
 
     it('should prepare tree items correctly', () => {
         const openedTreeItems = {};
@@ -155,7 +179,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: false,
                 hasItems: true,
-                onTreeItemClick,
+                onClick,
                 items: [{
                     id: 2,
                     name: 'Item 1.1',
@@ -168,7 +192,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: false,
                 hasItems: true,
-                onTreeItemClick,
+                onClick,
                 items: [{
                     id: 5,
                     name: 'Item 2.1',
@@ -176,7 +200,7 @@ describe('prepareItemsToTree function', () => {
             },
         ];
 
-        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onClick);
 
         expect(treeItems).toHaveLength(expectedResult.length);
         expect(treeItems[0]).toEqual(expectedResult[0]);
@@ -193,7 +217,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: true,
                 hasItems: true,
-                onTreeItemClick,
+                onClick,
                 items: [{
                     id: 2,
                     name: 'Item 1.1',
@@ -206,7 +230,7 @@ describe('prepareItemsToTree function', () => {
                 level: 1,
                 isOpened: false,
                 hasItems: false,
-                onTreeItemClick,
+                onClick,
             },
             {
                 id: 4,
@@ -215,7 +239,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: false,
                 hasItems: true,
-                onTreeItemClick,
+                onClick,
                 items: [{
                     id: 5,
                     name: 'Item 2.1',
@@ -223,7 +247,7 @@ describe('prepareItemsToTree function', () => {
             },
         ];
 
-        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPageStub, itemsOnPageStub, onClick);
 
         expect(treeItems).toHaveLength(expectedResult.length);
 
@@ -244,7 +268,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: true,
                 hasItems: true,
-                onTreeItemClick,
+                onClick,
                 items: [{
                     id: 5,
                     name: 'Item 2.1',
@@ -257,11 +281,11 @@ describe('prepareItemsToTree function', () => {
                 level: 1,
                 isOpened: false,
                 hasItems: false,
-                onTreeItemClick,
+                onClick,
             },
         ];
 
-        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPage, itemsOnPage, onTreeItemClick);
+        const treeItems = prepareItemsToTree(sourceItems, openedTreeItems, currentPage, itemsOnPage, onClick);
 
         expect(treeItems).toHaveLength(expectedResult.length);
 
@@ -293,7 +317,7 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: true,
                 hasItems: true,
-                onTreeItemClick,
+                onClick,
                 items: [{
                     id: 1,
                     name: 'Item 1.1',
@@ -306,7 +330,7 @@ describe('prepareItemsToTree function', () => {
                 level: 1,
                 isOpened: false,
                 hasItems: false,
-                onTreeItemClick,
+                onClick,
             },
             {
                 id: 1,
@@ -315,13 +339,13 @@ describe('prepareItemsToTree function', () => {
                 level: 0,
                 isOpened: true,
                 hasItems: false,
-                onTreeItemClick,
+                onClick,
             },
         ];
 
         const openedTreeItems = {0.1: true};
 
-        const treeItems = prepareItemsToTree(items, openedTreeItems, currentPageStub, itemsOnPageStub, onTreeItemClick);
+        const treeItems = prepareItemsToTree(items, openedTreeItems, currentPageStub, itemsOnPageStub, onClick);
 
         expect(treeItems).toHaveLength(expectedResult.length);
 
@@ -482,13 +506,21 @@ describe('useList hook', () => {
     });
 
     it('should dispatch list set items with initial items', () => {
-        const initialItems = [{id: 1, name: 'html'}];
+        const initialItems = [
+            {
+                id: 1,
+                name: 'html',
+            },
+        ];
         const expectedActions = [
             expect.any(Object),
             listSetItems(listId, initialItems),
         ];
 
-        renderHook(() => useList({listId, initialItems}));
+        renderHook(() => useList({
+            listId,
+            initialItems,
+        }));
 
         expect(dispatch).toHaveBeenCalledWith(expectedActions);
     });
@@ -605,7 +637,10 @@ describe('useList hook', () => {
     });
 
     it('should return a null if model is not exist', () => {
-        const {result} = renderHook(() => useList({listId, model: 'model'}));
+        const {result} = renderHook(() => useList({
+            listId,
+            model: 'model',
+        }));
 
         expect(result.current.model).toBeDefined();
         expect(result.current.model).toBeNull();

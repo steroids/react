@@ -44,7 +44,7 @@ function Field(props: IFieldProps): JSX.Element {
     const context = useContext(FormContext);
     const fieldModel = useMemo(() => {
         const model = props.model || context.model;
-        const modelAttributes = (components.meta.getModel(model)?.attributes || []) as ModelAttribute[];
+        const modelAttributes = (components.meta.getModel(model)?.attributes || model?.attributes || []) as ModelAttribute[];
         const result = modelAttributes
             .find(field => field.attribute === props.attribute);
 

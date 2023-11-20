@@ -144,7 +144,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
     // Fetch cropped image
     useEffect(() => {
         if (croppedImage) {
-            components.http.post(props.crop.backendUrl, croppedImage).then((res: any) => {
+            components.http.post({url: props.crop.backendUrl}, croppedImage).then((res: any) => {
                 setCroppedImage(null);
                 onAdd(new File({
                     path: res.title || res.label || res.uid || res.id,

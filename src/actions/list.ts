@@ -6,21 +6,17 @@ import _trimStart from 'lodash-es/trimStart';
 import _isFunction from 'lodash-es/isFunction';
 import _isEqual from 'lodash-es/isEqual';
 import _isNil from 'lodash-es/isNil';
+import {IApiMethod} from 'src/components/HttpComponent';
 import {formSelector} from '../reducers/form';
 import {formChange, formSetErrors} from '../actions/form';
 import {filterItems} from '../utils/data';
 
 export interface IList {
     /**
-    * Url, который вернет коллекцию элементов.
-    * @example api/v1/articles
-    */
-    action?: string,
-
-    /**
-    * Тип HTTP запроса (GET | POST | PUT | DELETE)
-    */
-    actionMethod?: string,
+     * Объект данных для запроса, который вернет коллекцию элементов
+     * @example {url: api/v1/articles, method: 'get'}
+     */
+    apiMethod?: IApiMethod,
 
     /**
     * Функция обратного вызова, вызываемая при получении списка.
@@ -162,13 +158,17 @@ const createList = (listId: string, props: any) => ({
 });
 
 export const httpFetchHandler = (list: IList, query, {http}) => {
-    let url = list.action;
+    let url = list.apiMethod.url;
     if (list.scope) {
         url
             += (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
     }
     return http
-        .send(list.actionMethod, url || window.location.pathname, query)
+        .send({
+            method: list.apiMethod,
+            url: url || window.location.pathname,
+            params: query,
+        })
         .then(response => response.data)
         .catch(error => {
             if (typeof list.onError === 'function') {
@@ -299,7 +299,7 @@ export const listFetch = (listId: string, query: any = {}) => (dispatch, getStat
 
     const list = _get(state, ['list', 'lists', listId]) as IList;
 
-    if (!list || (list.isRemote && !list.action && list.action !== '')) {
+    if (!list || (list.isRemote && !list.apiMethod.url && list.apiMethod.url !== '')) {
         return [];
     }
 

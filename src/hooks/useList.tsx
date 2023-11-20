@@ -4,6 +4,7 @@ import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {IApiMethod} from 'src/components/HttpComponent';
 import {getTreeItemUniqId} from '../utils/list';
 import {ITreeTableItem} from '../ui/list/TreeTable/TreeTable';
 import useSelector from '../hooks/useSelector';
@@ -59,16 +60,10 @@ export interface IListConfig {
     primaryKey?: string,
 
     /**
-     * Url, который вернет коллекцию элементов
-     * @example api/v1/articles
+     * Объект данных для запроса, который вернет коллекцию элементов
+     * @example {url: api/v1/articles, method: 'get'}
      */
-    action?: string,
-
-    /**
-     * Тип HTTP запроса (GET | POST | PUT | DELETE)
-     * @example GET
-     */
-    actionMethod?: HttpMethod,
+    apiMethod?: IApiMethod,
 
     /**
      * Подключение пагинации
@@ -160,12 +155,6 @@ export interface IListConfig {
     scope?: string[],
 
     /**
-     * Дополнительные параметры, значения которых нужно передавать в запросе для получения данных
-     * @example {tagName: 'MarketReviews'}
-     */
-    query?: Record<string, unknown>,
-
-    /**
      * Модель
      */
     model?: string,
@@ -216,7 +205,6 @@ export interface IListOutput {
 }
 
 export const defaultConfig = {
-    actionMethod: 'get',
     primaryKey: 'id',
     autoDestroy: true,
     sort: {
@@ -343,6 +331,8 @@ export default function useList(config: IListConfig): IListOutput {
 
     const [openedTreeItems, setOpenedTreeItems] = useState<Record<string, boolean>>({});
 
+    const queryParams = config.apiMethod.params;
+
     const onTreeItemClick = useCallback((uniqueId: string, item: Record<string, any>) => {
         if (item.items?.length > 0) {
             setOpenedTreeItems((prevItems) => (
@@ -464,8 +454,8 @@ export default function useList(config: IListConfig): IListOutput {
         sort,
         layoutNamesProps,
         initialQuery,
-        configQuery: config.query,
-    }), [config.query, initialQuery, layoutNamesProps, paginationProps, paginationSizeProps, sort]);
+        configQuery: queryParams,
+    }), [initialQuery, layoutNamesProps, paginationProps, paginationSizeProps, queryParams, sort]);
     const initialValues = useInitial(() => _initialValues);
 
     const renderList = useCallback((children: any) => {
@@ -490,8 +480,7 @@ export default function useList(config: IListConfig): IListOutput {
             const toDispatch: any = [
                 listInit(config.listId, {
                     listId: config.listId,
-                    action: config.action || config.action === '' ? config.action : null,
-                    actionMethod: config.actionMethod || defaultConfig.actionMethod,
+                    apiMethod: config.apiMethod,
                     onFetch: config.onFetch,
                     onError: config.onError,
                     condition: config.condition,
@@ -551,15 +540,15 @@ export default function useList(config: IListConfig): IListOutput {
         paginationProps.attribute, paginationProps.defaultValue, prevFormValues, updateQuery]);
 
     // Check change query
-    const prevQuery = usePrevious(config.query);
+    const prevQuery = usePrevious(queryParams);
     useUpdateEffect(() => {
-        _union(Object.keys(prevQuery), Object.keys(config.query))
+        _union(Object.keys(prevQuery), Object.keys(queryParams))
             .forEach(key => {
-                if (!_isEqual(prevQuery[key], config.query[key])) {
-                    dispatch(formChange(formId, key, config.query[key]));
+                if (!_isEqual(prevQuery[key], queryParams[key])) {
+                    dispatch(formChange(formId, key, queryParams[key]));
                 }
             });
-    }, [formId, prevQuery, config.query, dispatch]);
+    }, [formId, prevQuery, queryParams, dispatch]);
 
     // Check change items
     useUpdateEffect(() => {

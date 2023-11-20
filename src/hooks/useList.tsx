@@ -310,7 +310,7 @@ export const prepareItemsToTree = (
             level: currentLevel,
             isOpened,
             hasItems,
-            onTreeItemClick,
+            onClick: () => onTreeItemClick(uniqueId, item),
         });
 
         if (isOpened) {
@@ -346,7 +346,10 @@ export default function useList(config: IListConfig): IListOutput {
     const onTreeItemClick = useCallback((uniqueId: string, item: Record<string, any>) => {
         if (item.items?.length > 0) {
             setOpenedTreeItems((prevItems) => (
-                {...prevItems, [uniqueId]: !prevItems[uniqueId]}
+                {
+                    ...prevItems,
+                    [uniqueId]: !prevItems[uniqueId],
+                }
             ));
         }
     }, []);

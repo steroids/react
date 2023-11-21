@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -61,6 +61,12 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
      *  }
      */
     pickerProps?: any;
+
+    /**
+     * Устанавливать ли фокус и показывать панель времени сразу после рендера страницы
+     * @example true
+     */
+    hasInitialFocus?: boolean,
 
     [key: string]: any;
 }
@@ -161,7 +167,8 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         inputPropsTo,
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
-        useSmartFocus: true,
+        useSmartFocus: false,
+        hasInitialFocus: props.hasInitialFocus,
     });
 
     const timePanelFromViewProps = useMemo(() => ({
@@ -205,6 +212,7 @@ TimeRangeField.defaultProps = {
     displayFormat: 'HH:mm',
     required: false,
     showRemove: true,
+    hasInitialFocus: false,
     type: 'text',
     valueFormat: 'HH:mm',
     useUTC: true,

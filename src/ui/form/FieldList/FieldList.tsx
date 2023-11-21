@@ -50,7 +50,11 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
 export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Начальные значения в полях
-     * @example {name: 'Ivan', amount: 5}
+     * @example
+     * {
+     *  name: 'Ivan',
+     *  amount: 5
+     * }
      */
     initialValues?: { [key: string]: any }
 

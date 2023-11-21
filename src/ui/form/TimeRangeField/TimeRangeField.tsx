@@ -54,7 +54,11 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
 
     /**
      * Свойства для компонента DayPickerInput
-     * @example {dayPickerProps: {showWeekNumbers: true}}
+     * @example
+     * {
+     *  dayPickerProps: {
+     *   showWeekNumbers: true
+     *  }
      */
     pickerProps?: any;
 

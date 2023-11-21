@@ -35,7 +35,15 @@ export interface IFormProps extends IUiComponent {
 
     /**
      * Модель с полями формы
-     * @example {attributes: [{attribute: 'category', field: 'DropDownField'}]}
+     * @example
+     * {
+     *  attributes: [
+     *   {
+     *    attribute: 'category',
+     *    field: 'DropDownField'
+     *   }
+     *  ]
+     * }
      */
     model?: string | ((...args: any[]) => any) | any;
 
@@ -66,7 +74,11 @@ export interface IFormProps extends IUiComponent {
     /**
      * Набор с правилами для проверки соответствия значений полей формы определенному формату.
      * Проверка запускается в момент отправки формы (в обработчике onSubmit).
-     * @example [['name', 'required'], ['age', 'integer']]
+     * @example
+     * [
+     *  ['name', 'required'],
+     *  ['age', 'integer']
+     * ]
      */
     validators?: any[];
 
@@ -129,7 +141,13 @@ export interface IFormProps extends IUiComponent {
 
     /**
      * Поля, которые необходимо поместить в форму
-     * @example [{attribute: 'category', component: 'DropDownField'}]
+     * @example
+     * [
+     *  {
+     *   attribute: 'category',
+     *   component: 'DropDownField'
+     *  }
+     * ]
      */
     fields?: (string | IFieldProps)[],
 

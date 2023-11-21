@@ -54,14 +54,22 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
      * Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.
      * Если вы хотите задать стиль определенной точки метки, значением должен быть объект,
      * содержащий свойства style и label.
-     * @example { min: 20, 40: 40, max: 100 }
+     * @example
+     * {
+     *  min: 20,
+     *  40: 40,
+     *  max: 100
+     * }
      */
     marks?: Record<string, {style: {color}, label} | React.ReactNode | string>,
 
     /**
      * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
      * @see https://github.com/schrodinger/rc-slider
-     * @example {() => console.log('Slider handler is released')}
+     * @example
+     * {
+     *  () => console.log('Slider handler is released')
+     * }
      */
     onAfterChange?: (value: any) => void,
 

@@ -72,31 +72,57 @@ export interface IListConfig {
 
     /**
      * Подключение пагинации
-     * @example {loadMore: true}
+     * @example
+     * {
+     *  loadMore: true
+     * }
      */
     pagination?: boolean | IPaginationProps,
 
     /**
      * Переключение количества элементов в списке
-     * @example {sizes: [3, 6, 9], defaultValue: 3}
+     * @example
+     * {
+     *  sizes: [3, 6, 9],
+     *  defaultValue: 3
+     * }
      */
     paginationSize?: boolean | IPaginationSizeProps,
 
     /**
      * Подключение сортировки
-     * @example {enable: true, defaultSort: 'startDate'}
+     * @example
+     * {
+     *  enable: true,
+     *  defaultSort: 'startDate'
+     * }
      */
     sort?: boolean | ISortConfig,
 
     /**
      * Варианты расположения элементов коллекции
-     * @example {items: [{id: 'list', label: 'List'}, {id: 'grid', label: 'Grid'}]}
+     * @example
+     * {
+     *  items: [
+     *   {
+     *    id: 'list',
+     *    label: 'List'
+     *   },
+     *   {
+     *    id: 'grid',
+     *    label: 'Grid'
+     *   }
+     *  ]
+     * }
      */
     layout?: boolean | ILayoutNamesProps,
 
     /**
      * Заглушка в случае отсутствия элементов
-     * @example {text: 'Записи не найдены'}
+     * @example
+     * {
+     *  text: 'Записи не найдены'
+     * }
      */
     empty?: boolean | string | IEmptyProps,
 
@@ -108,7 +134,15 @@ export interface IListConfig {
 
     /**
      * Форма для поиска элементов
-     * @example {fields: ['title'], model: {attributes: ['title:string:Название']}}
+     * @example
+     * {
+     *  fields: ['title'],
+     *  model: {
+     *   attributes: [
+     *    'title:string:Название'
+     *   ]
+     *  }
+     * }
      */
     searchForm?: Omit<IFormProps, 'formId'> & {
         formId?: string,
@@ -161,7 +195,10 @@ export interface IListConfig {
 
     /**
      * Дополнительные параметры, значения которых нужно передавать в запросе для получения данных
-     * @example {tagName: 'MarketReviews'}
+     * @example
+     * {
+     *  tagName: 'MarketReviews'
+     * }
      */
     query?: Record<string, unknown>,
 
@@ -172,7 +209,15 @@ export interface IListConfig {
 
     /**
      * Модель для синхронизации значений формы с адресной строкой
-     * @example {attributes: [{attribute: 'isMilesAvailable', type: boolean}]}
+     * @example
+     * {
+     *  attributes: [
+     *   {
+     *    attribute: 'isMilesAvailable',
+     *    type: boolean
+     *   }
+     *  ]
+     * }
      */
     searchModel?: string,
 

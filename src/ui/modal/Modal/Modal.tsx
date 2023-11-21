@@ -27,7 +27,13 @@ export interface IModalProps {
 
     /**
      * Коллекция кнопок, которая отобразится в нижней секции Modal
-     * @example [{label: __(('Закрыть')), onClick: () => props.onClose()}]
+     * @example
+     * [
+     *  {
+     *   label: __(('Закрыть')),
+     *   onClick: () => props.onClose()
+     *  }
+     * ]
      */
     buttons?: IButtonProps[],
 

@@ -4,10 +4,11 @@ import _range from 'lodash-es/range';
 import _concat from 'lodash-es/concat';
 import _last from 'lodash-es/last';
 import _isEmpty from 'lodash-es/isEmpty';
+import _get from 'lodash-es/get';
 import {useEvent, useMount} from 'react-use';
 import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {ModelAttribute} from 'src/components/MetaComponent';
-import {useComponents} from '../../../hooks';
+import {useComponents, useSelector} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
 import {formArrayAdd, formArrayRemove} from '../../../actions/form';
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
@@ -153,6 +154,8 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     // Resolve model
     const modelAttributes = components.meta.getModel(props.model)?.attributes as ModelAttribute[];
 
+    const isWithReduxForm = useSelector(state => _get(state, ['form', context.formId]) || null);
+
     const dispatch = context.provider.useDispatch();
 
     // Mapper for preserving the correct sequence of rows on the UI
@@ -252,7 +255,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
                     <FieldListItemView
                         {...props.itemViewProps}
                         {...commonProps}
-                        key={storeToRowIndexMap[index]}
+                        key={isWithReduxForm ? storeToRowIndexMap[index] : index}
                         onRemove={onRemove}
                         prefix={props.input.name + '.' + index}
                         rowIndex={index}

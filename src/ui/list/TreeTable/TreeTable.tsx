@@ -1,37 +1,14 @@
 import * as React from 'react';
 import {useMemo} from 'react';
 import _merge from 'lodash-es/merge';
-
+import {getList} from '@steroidsjs/core/reducers/list';
+import useTree, {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
 import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 import Grid from '../Grid';
+import useSelector from '../../../hooks/useSelector';
 
 export interface ITreeColumnViewProps extends IColumnViewProps {
-    item: ITreeTableItem & {
-        uniqueId: string,
-        level: number,
-        isOpened: boolean,
-        hasItems: boolean,
-        onClick: () => void,
-    },
-}
-
-export interface ITreeTableItem {
-    /**
-     * Идентификатор узла
-     */
-    id?: string | number,
-
-    /**
-     * Вложенные элементы
-     * @example
-     * items: [
-     *  {
-     *   id: 3,
-     *   name: 'Ivan'
-     *  }
-     * ]
-     */
-    items?: ITreeTableItem[],
+    item: IPreparedTreeItem,
 }
 
 /**
@@ -39,7 +16,7 @@ export interface ITreeTableItem {
  *
  * Компонент для представления данных коллекции в виде иерархической структуры.
  */
-export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
+export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeConfig, 'alwaysOpened'>{
     /**
      * Элементы коллекции
      * @example
@@ -55,7 +32,7 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
      *  }
      * ]
      */
-    items?: ITreeTableItem[],
+    items?: ITreeItem[],
 
     /**
      * Расстояние вложенных элементов от родителя для каждого уровня
@@ -87,17 +64,27 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
         [props.columns, props.levelPadding],
     );
 
+    const list = useSelector(state => getList(state, props.listId));
+
+    const {treeItems} = useTree({
+        items: props.items,
+        autoOpenLevels: 0,
+        alwaysOpened: props.alwaysOpened,
+        currentPage: list?.page,
+        itemsOnPage: list?.pageSize,
+    });
+
     return (
         <Grid
             {...props}
             columns={columns}
-            items={props.items}
+            items={treeItems}
             itemsIndexing={false}
-            hasTreeItems
         />
     );
 }
 
 TreeTable.defaultProps = {
     levelPadding: 32,
+    alwaysOpened: false,
 };

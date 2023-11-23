@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import Grid from '../../../../src/ui/list/Grid';
 import GridMockView from '../Grid/GridMockView';
 import TreeColumnView from './TreeColumnMockView';
 import {addTreeColumnFieldsToFirstColumn, ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';
@@ -81,7 +80,6 @@ describe('TreeTable tests', () => {
     const props = {
         items,
         view: GridMockView,
-        hasTreeItems: true,
         listId: 'TreeTable',
         hasAlternatingColors: true,
         size: 'md',
@@ -108,7 +106,7 @@ describe('TreeTable tests', () => {
     it('should be in the document', () => {
         const expectedTreeColumnsCount = items.length;
 
-        const {container} = render(JSXWrapper(Grid, {
+        const {container} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));
@@ -121,7 +119,7 @@ describe('TreeTable tests', () => {
     });
 
     it('should have correct classes', () => {
-        const {container} = render(JSXWrapper(Grid, {
+        const {container} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));
@@ -136,7 +134,7 @@ describe('TreeTable tests', () => {
     });
 
     it('should show nested items by click', async () => {
-        const {container, queryByText} = render(JSXWrapper(Grid, {
+        const {container, queryByText} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));
@@ -151,7 +149,7 @@ describe('TreeTable tests', () => {
     });
 
     it('should hide nested items by click', async () => {
-        const {container, queryByText} = render(JSXWrapper(Grid, {
+        const {container, queryByText} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));

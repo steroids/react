@@ -4,6 +4,9 @@ import _merge from 'lodash-es/merge';
 import Grid from '../../../../src/ui/list/Grid';
 import {ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';
 import TreeColumnView from './TreeColumnMockView';
+import useTree from '../../../../src/hooks/useTree';
+import useSelector from '../../../../src/hooks/useSelector';
+import {getList} from '../../../../src/reducers/list';
 
 export default function TreeTableMock(props: ITreeTableProps): JSX.Element {
     // Add tree view to the first column
@@ -23,13 +26,22 @@ export default function TreeTableMock(props: ITreeTableProps): JSX.Element {
         return newColumns;
     }, [props.columns, props.levelPadding]);
 
+    const list = useSelector(state => getList(state, props.listId));
+
+    const {treeItems} = useTree({
+        items: props.items,
+        autoOpenLevels: 0,
+        alwaysOpened: props.alwaysOpened,
+        currentPage: list?.page,
+        itemsOnPage: list?.pageSize,
+    });
+
     return (
         <Grid
             {...props}
             columns={columns}
-            items={props.items}
+            items={treeItems}
             itemsIndexing={false}
-            hasTreeItems
         />
     );
 }

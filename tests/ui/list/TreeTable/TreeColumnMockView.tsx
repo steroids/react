@@ -30,9 +30,10 @@ export default function TreeColumnView(props: ITreeColumnViewProps) {
         <div
             className={bem.block(bem.block({
                 size: props.size,
+                'has-items': props.item.hasItems,
             }))}
             onClick={props.item.onClick}
-            onKeyDown={(e) => e.key === 'Enter' && props.item.onClick()}
+            onKeyDown={(e) => e.key === 'Enter' && props.item.onClick(e)}
             role='button'
             tabIndex={0}
         >

@@ -171,8 +171,6 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         }
     }, [props]);
 
-    //const onClear = React.useCallback((e) => onChangeHandle(e), [onChangeHandle]);
-
     const onClear = React.useCallback(() => onChangeHandle(null, ''), [onChangeHandle]);
 
     const inputProps = useMemo(() => ({

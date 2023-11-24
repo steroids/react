@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable max-len */
 import * as React from 'react';
-import {InputHTMLAttributes, ReactNode, useCallback, useMemo} from 'react';
+import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
@@ -163,25 +163,17 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     useInputFieldWarningByType(props.type);
 
-    const onChangeHandle = useCallback((e, value) => {
-        const currentValue = value ?? e.target?.value;
-
-        if (props.onChange) {
-            props.onChange(e, currentValue);
-        }
-    }, [props]);
-
-    const onClear = React.useCallback(() => onChangeHandle(null, ''), [onChangeHandle]);
+    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
 
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
         value: props.input.value ?? '',
-        onInput: onChangeHandle,
+        onInput: onChange,
         placeholder: props.placeholder,
         disabled: props.disabled,
         ...props.inputProps,
-    }), [onChangeHandle, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
+    }), [onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
 
     // No render for hidden input
     if (props.type === 'hidden') {

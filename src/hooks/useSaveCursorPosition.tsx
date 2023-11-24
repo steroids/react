@@ -21,11 +21,9 @@ export default function useSaveCursorPosition(
     }, [cursor, inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
-        if (event) {
-            setCursor(event?.target?.selectionStart);
-        }
+        setCursor(event?.target?.selectionStart);
 
-        inputParams.onChange.call(null, value || event?.target?.value);
+        inputParams.onChange(value || event.target?.value);
     }, [inputParams]);
 
     return {

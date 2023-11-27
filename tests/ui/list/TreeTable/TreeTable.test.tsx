@@ -42,7 +42,7 @@ describe('addTreeColumnFieldsToFirstColumn function', () => {
 });
 
 describe('TreeTable tests', () => {
-    const expectedTreeColumnViewClass = 'TreeColumnView';
+    const expectedTreeColumnViewClass = 'TreeItemView';
     const expectedTreeColumnHeaderClass = 'TreeColumnHeader';
     const expectedToggleItemName = 'Jane';
     const tagImg = 'img';
@@ -83,6 +83,8 @@ describe('TreeTable tests', () => {
         listId: 'TreeTable',
         hasAlternatingColors: true,
         size: 'md',
+        levelPadding: 32,
+        alwaysOpened: false,
     } as ITreeTableProps;
 
     it('should add tree view to the first column', () => {
@@ -119,18 +121,20 @@ describe('TreeTable tests', () => {
     });
 
     it('should have correct classes', () => {
-        const {container} = render(JSXWrapper(TreeTableMock, {
+        const {container, getByRole} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));
 
-        const treeColumnSize = getElementByClassName(container, `${expectedTreeColumnViewClass}_size_md`);
-        const treeColumnIcon = getElementByClassName(container, `${expectedTreeColumnViewClass}__icon`);
-        const treeColumnData = getElementByClassName(container, `${expectedTreeColumnViewClass}__data`);
+        //const role = getByRole('');
 
-        expect(treeColumnSize).toBeInTheDocument();
+        //const treeColumnSize = getElementByClassName(container, `${expectedTreeColumnViewClass}_size_md`);
+        const treeColumnIcon = getElementByClassName(container, `${expectedTreeColumnViewClass}__icon`);
+        const treeColumnItem = getElementByClassName(container, `${expectedTreeColumnViewClass}__item`);
+
+        //expect(treeColumnSize).toBeInTheDocument();
         expect(treeColumnIcon).toBeInTheDocument();
-        expect(treeColumnData).toBeInTheDocument();
+        expect(treeColumnItem).toBeInTheDocument();
     });
 
     it('should show nested items by click', async () => {

@@ -2,6 +2,15 @@ import * as React from 'react';
 import {IPreparedTreeItem, ITreeConfig} from '../../../hooks/useTree';
 import {useComponents, useTree} from '../../../hooks';
 
+export interface ITreeViewProps extends ITreeProps {
+    items: IPreparedTreeItem[],
+}
+
+export interface ITreeItemViewProps extends ITreeProps {
+    item: IPreparedTreeItem;
+    children?: JSX.Element;
+}
+
 /**
  * Tree
  * Компонент, который представляет в виде дерева список с иерархической структурой данных
@@ -36,15 +45,16 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      */
     autoSave?: boolean;
 
+    /**
+     * Расстояние вложенных элементов от родителя для каждого уровня
+     * @example 32
+     */
+    levelPadding?: number;
+
     [key: string]: any;
 }
 
-export interface ITreeViewProps extends ITreeProps {
-    items: IPreparedTreeItem[],
-    levelPadding?: number
-}
-
-function Tree(props: ITreeProps) {
+export default function Tree(props: ITreeProps) {
     const components = useComponents();
 
     const {treeItems} = useTree({
@@ -69,6 +79,5 @@ Tree.defaultProps = {
     autoOpenLevels: 1,
     autoSave: false,
     level: 0,
+    levelPadding: 32,
 };
-
-export default Tree;

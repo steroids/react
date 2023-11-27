@@ -2,12 +2,13 @@ import * as React from 'react';
 import {useMemo} from 'react';
 import _merge from 'lodash-es/merge';
 import {getList} from '@steroidsjs/core/reducers/list';
-import useTree, {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
+import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
+import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
 import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 import Grid from '../Grid';
 import useSelector from '../../../hooks/useSelector';
 
-export interface ITreeColumnViewProps extends IColumnViewProps {
+export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding'> {
     item: IPreparedTreeItem,
 }
 
@@ -16,7 +17,7 @@ export interface ITreeColumnViewProps extends IColumnViewProps {
  *
  * Компонент для представления данных коллекции в виде иерархической структуры.
  */
-export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeConfig, 'alwaysOpened'>{
+export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeProps, 'alwaysOpened' | 'levelPadding'>{
     /**
      * Элементы коллекции
      * @example
@@ -33,12 +34,6 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeCo
      * ]
      */
     items?: ITreeItem[],
-
-    /**
-     * Расстояние вложенных элементов от родителя для каждого уровня
-     * @example 32
-     */
-    levelPadding?: number | string,
 }
 
 const TREE_COLUMN_VIEW_FIELDS = {

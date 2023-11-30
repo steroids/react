@@ -18,7 +18,6 @@ import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/Pag
 import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Model} from '../components/MetaComponent';
-import useTree, {ITreeConfig} from './useTree';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 

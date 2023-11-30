@@ -1,8 +1,6 @@
 import * as React from 'react';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isString from 'lodash-es/isString';
-import _isPlainObject from 'lodash-es/isPlainObject';
-import _get from 'lodash-es/get';
 import {useCallback, useMemo} from 'react';
 import {ILinkProps} from '../../nav/Link/Link';
 import {useComponents} from '../../../hooks';
@@ -277,7 +275,6 @@ export default function Grid(props: IGridProps): JSX.Element {
         initialItems: props.initialItems,
         initialTotal: props.initialTotal,
         autoFetchOnFormChanges: props.autoFetchOnFormChanges,
-        hasTreeItems: props.hasTreeItems,
     });
 
     const renderLabel = useCallback((column) => {

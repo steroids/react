@@ -18,6 +18,7 @@ import useSelector from './useSelector';
 import useSsr from './useSsr';
 import useUniqueId from './useUniqueId';
 import useTheme from './useTheme';
+import useTree from './useTree';
 import useMonthCalendar from '../ui/content/CalendarSystem/hooks/useMonthCalendar';
 import useWeekCalendar from '../ui/content/CalendarSystem/hooks/useWeekCalendar';
 import useDisplayDate from '../ui/content/CalendarSystem/hooks/useDisplayDate';
@@ -45,6 +46,7 @@ export {
     useSsr,
     useUniqueId,
     useTheme,
+    useTree,
     useMonthCalendar,
     useWeekCalendar,
     useDisplayDate,

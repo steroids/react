@@ -15,7 +15,7 @@ export interface ITreeItem extends IButtonProps {
     /**
      * Идентификатор узла
      */
-    id?: string | number,
+    id: string | number | boolean,
 
     /**
      * Вложенные элементы

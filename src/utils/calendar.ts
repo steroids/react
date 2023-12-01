@@ -77,7 +77,7 @@ const WEEKDAYS_LONG = {
 };
 const WEEKDAYS_SHORT = {
     en: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-    ru: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+    ru: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
 };
 const MONTHS = {
     en: [

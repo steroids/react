@@ -38,14 +38,11 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
         checked: boolean,
         onChange: (value: string | React.ChangeEvent) => void,
         disabled: boolean,
-        required: boolean,
     }
 }
 
 function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
-
-    console.log('CheckboxField', props);
 
     const onChangeHandler = React.useCallback(() => {
         props.input.onChange(!props.input?.value);
@@ -62,7 +59,7 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         required: props.required,
         ...props.inputProps,
-    }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps]);
+    }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps, props.required]);
 
     return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props, inputProps});
 }
@@ -75,4 +72,4 @@ CheckboxField.defaultProps = {
     inputProps: {},
 };
 
-export default fieldWrapper<ICheckboxFieldProps>('CheckboxField', CheckboxField, {label: true});
+export default fieldWrapper<ICheckboxFieldProps>('CheckboxField', CheckboxField, {label: false});

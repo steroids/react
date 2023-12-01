@@ -19,9 +19,9 @@ type CheckboxTreeItems = string
     | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any})[];
 
 /**
- * CheckboxListField
+ * CheckboxTreeField
  *
- * Список с чекбоксами. Используется в формах для выбора нескольких значений.
+ * Список с вложенными чекбоксами. Используется в формах для создания иерархической структуры и выбора нескольких значений.
  */
 export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,

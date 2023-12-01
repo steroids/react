@@ -94,7 +94,7 @@ export const getNestedItemsIds = (item, groupAttribute) => {
         }, result);
     }
 
-    return result;
+    return result.sort();
 };
 
 function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {

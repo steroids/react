@@ -38,6 +38,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
         checked: boolean,
         onChange: (value: string | React.ChangeEvent) => void,
         disabled: boolean,
+        required?: boolean,
     }
 }
 

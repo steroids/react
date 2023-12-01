@@ -28,7 +28,7 @@ export interface ITaskPriority {
 }
 
 export interface IKanbanTask {
-    id: string;
+    id: number;
     title: string;
     description?: string;
     fullDescription?: string;
@@ -54,7 +54,7 @@ export interface IDragEndResult {
 }
 
 export interface IKanbanColumn {
-    id: string;
+    id: number;
     title: string;
     tasks: IKanbanTask[];
 }
@@ -128,8 +128,8 @@ export interface IKanbanColumnViewProps {
     droppableComponent: any;
     draggableComponent: any;
     task?: IKanbanTask;
-    renderTask: (task: IKanbanTask, columnId: string, index: number) => JSX.Element;
-    onOpenCreateTaskModal: (columnId: string) => void;
+    renderTask: (task: IKanbanTask, columnId: number, index: number) => JSX.Element;
+    onOpenCreateTaskModal: (columnId: number) => void;
 }
 
 export type IKanbanViewProps = IKanbanProps;

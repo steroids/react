@@ -16,7 +16,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
-     * Будет ли отображён item ?
+     * Будет ли отображён item?
      * @example true
      */
     visible?: boolean,
@@ -39,7 +39,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     headerClassName?: CssClassName,
 
     /**
-     * Заголовок для колонки таблицы.
+     * Заголовок для колонки таблицы
      */
     title?: string,
 
@@ -50,6 +50,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
  * FieldList
  *
  * Создает список из сгруппированных полей формы.
+ * Для загрузки файлов с помощью `FileField` внутри строк `FieldList`, нужно использовать форму с флагом `useRedux`.
  */
 export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
@@ -163,7 +164,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     const dispatch = context.provider.useDispatch();
 
     // Mapper for preserving the correct sequence of rows on the UI
-    const [storeToRowIndexMap, setStoreToRowIndexMap] = useState([]);
+    const [storeToRowIndexMap, setStoreToRowIndexMap] = useState(_range(props.input.value) || []);
 
     const addRowIndexes = useCallback((rowsCount) => {
         setStoreToRowIndexMap((prevMap) => {

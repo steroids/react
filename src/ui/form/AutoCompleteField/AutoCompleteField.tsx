@@ -167,7 +167,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         ...props.inputProps,
         type: 'text',
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
+        value: props.input.value ?? '',
         placeholder: props.placeholder,
         disabled: props.disabled,
         onChange,

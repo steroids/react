@@ -3846,14 +3846,6 @@
                     "example": "{\n text: 'Записи не найдены'\n}"
                 },
                 {
-                    "name": "hasTreeItems",
-                    "decorators": [],
-                    "description": "Включает обработку вложенных данных из items",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                },
-                {
                     "name": "initialItems",
                     "decorators": [],
                     "description": "Начальные элементы. Используется для подгрузки нескольких списков в один запрос, при этом не отменяя пагинацию\nи последующие запросы на бекенд для 2-й и следующих страниц",
@@ -4239,6 +4231,723 @@
                     "required": false,
                     "type": "boolean",
                     "example": "false"
+                }
+            ],
+            "methods": []
+        },
+        "IPreparedTreeItem": {
+            "name": "IPreparedTreeItem",
+            "moduleName": "hooks/useTree",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "ITreeItem"
+            ],
+            "properties": [
+                {
+                    "name": "badge",
+                    "decorators": [],
+                    "description": "Цифра (к примеру, новые сообщения)",
+                    "required": false,
+                    "type": "number | IButtonBadge",
+                    "example": null
+                },
+                {
+                    "name": "block",
+                    "decorators": [],
+                    "description": "Включает стиль `block`, делая размер кнопки на 100% ширины блока",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "Цвет состояния",
+                    "required": false,
+                    "type": "string",
+                    "example": "success"
+                },
+                {
+                    "name": "confirm",
+                    "decorators": [],
+                    "description": "При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное\nокно с текстом подтверждения - `window.confirm('Ваш текст')`.",
+                    "required": false,
+                    "type": "string",
+                    "example": "Удалить запись #512?"
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит кнопку в состояние \"не активна\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки\nпри отправке формы.",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "hasItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, отображается при наведении (через тег title)",
+                    "required": false,
+                    "type": "any",
+                    "example": "Save"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Идентификатор узла",
+                    "required": true,
+                    "type": "string | number | boolean",
+                    "example": null
+                },
+                {
+                    "name": "index",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "isFailed",
+                    "decorators": [],
+                    "description": "Отобразить кнопку в состоянии неуспешного нажатия (например, при неуспешном ajax запросе)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "isLoading",
+                    "decorators": [],
+                    "description": "Отображать индикатор загрузки?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "isOpened",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "isSelected",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "ITreeItem[]",
+                    "example": "[\n {\n  id: 2,\n  label: 'Nested element',\n  items: [...]\n }\n]"
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Текст кнопки или ссылки",
+                    "required": false,
+                    "type": "any",
+                    "example": "Save"
+                },
+                {
+                    "name": "level",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "link",
+                    "decorators": [],
+                    "description": "Отображать как ссылку?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "outline",
+                    "decorators": [],
+                    "description": "Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "resetFailedMs",
+                    "decorators": [],
+                    "description": "Через сколько миллисекунд должно исчезнуть состояние \"failed\"",
+                    "required": false,
+                    "type": "number",
+                    "example": "5000"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tag",
+                    "decorators": [],
+                    "description": "Выбор html-тэга, который будет вставлен в DOM",
+                    "required": false,
+                    "type": "\"a\" | \"button\"",
+                    "example": "button"
+                },
+                {
+                    "name": "target",
+                    "decorators": [],
+                    "description": "HTML аттрибут `target`, доступен только для ссылок",
+                    "required": false,
+                    "type": "string",
+                    "example": "_blank"
+                },
+                {
+                    "name": "textColor",
+                    "decorators": [],
+                    "description": "Цвет текста кнопки или ссылки",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "toRoute",
+                    "decorators": [],
+                    "description": "ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров\nиспользуйте свойство `toRouteParams`",
+                    "required": false,
+                    "type": "string",
+                    "example": "profile"
+                },
+                {
+                    "name": "toRouteParams",
+                    "decorators": [],
+                    "description": "Параметры роута, на который необходимо перейти, см. свойство `toRoute`.",
+                    "required": false,
+                    "type": "Record",
+                    "example": "{userId: 52}"
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "HTML Тип",
+                    "required": false,
+                    "type": "\"button\" | \"submit\"",
+                    "example": "submit"
+                },
+                {
+                    "name": "uniqueId",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "url",
+                    "decorators": [],
+                    "description": "Ссылка на внешнюю страницу, используется совместно с свойством `link`",
+                    "required": false,
+                    "type": "string",
+                    "example": "https://kozhindev.com"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "visible",
+                    "decorators": [],
+                    "description": "Скрыть или показать узел",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка\nавтоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ITreeConfig": {
+            "name": "ITreeConfig",
+            "moduleName": "hooks/useTree",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "alwaysOpened",
+                    "decorators": [],
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "autoOpenLevels",
+                    "decorators": [],
+                    "description": "Максимальный уровень вложенности, до которого все узлы будут отображаться в развёрнутом виде",
+                    "required": false,
+                    "type": "number",
+                    "example": "1"
+                },
+                {
+                    "name": "currentPage",
+                    "decorators": [],
+                    "description": " Текущая страница, используется для корректного отображения пагинации",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Коллекция с узлами. Также можно передать идентификатор роута, тогда компонент найдет все\nвложенные роуты и отобразит их в виде дерева.",
+                    "required": false,
+                    "type": "string | ITreeItem[]",
+                    "example": "[\n {\n  id: 1,\n  label: 'Root',\n  items: [...]\n }\n] | 'root'"
+                },
+                {
+                    "name": "itemsKey",
+                    "decorators": [],
+                    "description": "Ключ для доступа к вложенным элементам узла",
+                    "required": false,
+                    "type": "string",
+                    "example": "'items'"
+                },
+                {
+                    "name": "itemsOnPage",
+                    "decorators": [],
+                    "description": " Количество элементов на странице, используется для корректного отображения пагинации",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "level",
+                    "decorators": [],
+                    "description": "Ограничивает максимальный уровень вложенности дерева",
+                    "required": false,
+                    "type": "number",
+                    "example": "2"
+                },
+                {
+                    "name": "routerParams",
+                    "decorators": [],
+                    "description": " Параметры роутинга",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "selectedItemId",
+                    "decorators": [],
+                    "description": "Идентификатор узла, которой нужно отобразить в раскрытом виде",
+                    "required": false,
+                    "type": "string | number",
+                    "example": "2"
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onExpand",
+                    "decorators": [],
+                    "description": "Обработчик на клик по узлу",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "args",
+                            "decorators": [],
+                            "description": "\n",
+                            "required": true,
+                            "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ITreeItem": {
+            "name": "ITreeItem",
+            "moduleName": "hooks/useTree",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IButtonProps"
+            ],
+            "properties": [
+                {
+                    "name": "badge",
+                    "decorators": [],
+                    "description": "Цифра (к примеру, новые сообщения)",
+                    "required": false,
+                    "type": "number | IButtonBadge",
+                    "example": null
+                },
+                {
+                    "name": "block",
+                    "decorators": [],
+                    "description": "Включает стиль `block`, делая размер кнопки на 100% ширины блока",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "color",
+                    "decorators": [],
+                    "description": "Цвет состояния",
+                    "required": false,
+                    "type": "string",
+                    "example": "success"
+                },
+                {
+                    "name": "confirm",
+                    "decorators": [],
+                    "description": "При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное\nокно с текстом подтверждения - `window.confirm('Ваш текст')`.",
+                    "required": false,
+                    "type": "string",
+                    "example": "Удалить запись #512?"
+                },
+                {
+                    "name": "dark",
+                    "decorators": [],
+                    "description": "Темная тема",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит кнопку в состояние \"не активна\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки\nпри отправке формы.",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, отображается при наведении (через тег title)",
+                    "required": false,
+                    "type": "any",
+                    "example": "Save"
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Иконка",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Идентификатор узла",
+                    "required": true,
+                    "type": "string | number | boolean",
+                    "example": null
+                },
+                {
+                    "name": "isFailed",
+                    "decorators": [],
+                    "description": "Отобразить кнопку в состоянии неуспешного нажатия (например, при неуспешном ajax запросе)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "isLoading",
+                    "decorators": [],
+                    "description": "Отображать индикатор загрузки?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Вложенные элементы",
+                    "required": false,
+                    "type": "ITreeItem[]",
+                    "example": "[\n {\n  id: 2,\n  label: 'Nested element',\n  items: [...]\n }\n]"
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Текст кнопки или ссылки",
+                    "required": false,
+                    "type": "any",
+                    "example": "Save"
+                },
+                {
+                    "name": "link",
+                    "decorators": [],
+                    "description": "Отображать как ссылку?",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "outline",
+                    "decorators": [],
+                    "description": "Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "resetFailedMs",
+                    "decorators": [],
+                    "description": "Через сколько миллисекунд должно исчезнуть состояние \"failed\"",
+                    "required": false,
+                    "type": "number",
+                    "example": "5000"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "tag",
+                    "decorators": [],
+                    "description": "Выбор html-тэга, который будет вставлен в DOM",
+                    "required": false,
+                    "type": "\"a\" | \"button\"",
+                    "example": "button"
+                },
+                {
+                    "name": "target",
+                    "decorators": [],
+                    "description": "HTML аттрибут `target`, доступен только для ссылок",
+                    "required": false,
+                    "type": "string",
+                    "example": "_blank"
+                },
+                {
+                    "name": "textColor",
+                    "decorators": [],
+                    "description": "Цвет текста кнопки или ссылки",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "toRoute",
+                    "decorators": [],
+                    "description": "ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров\nиспользуйте свойство `toRouteParams`",
+                    "required": false,
+                    "type": "string",
+                    "example": "profile"
+                },
+                {
+                    "name": "toRouteParams",
+                    "decorators": [],
+                    "description": "Параметры роута, на который необходимо перейти, см. свойство `toRoute`.",
+                    "required": false,
+                    "type": "Record",
+                    "example": "{userId: 52}"
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "HTML Тип",
+                    "required": false,
+                    "type": "\"button\" | \"submit\"",
+                    "example": "submit"
+                },
+                {
+                    "name": "url",
+                    "decorators": [],
+                    "description": "Ссылка на внешнюю страницу, используется совместно с свойством `link`",
+                    "required": false,
+                    "type": "string",
+                    "example": "https://kozhindev.com"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "visible",
+                    "decorators": [],
+                    "description": "Скрыть или показать узел",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка\nавтоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "=> fetch(...)\n",
+                            "required": true,
+                            "type": "Event | MouseEvent",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ITreeOutput": {
+            "name": "ITreeOutput",
+            "moduleName": "hooks/useTree",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "treeItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IPreparedTreeItem[]",
+                    "example": null
                 }
             ],
             "methods": []
@@ -9395,7 +10104,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "string",
+                    "type": "number",
                     "example": null
                 },
                 {
@@ -9481,7 +10190,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "string",
+                            "type": "number",
                             "example": null
                         }
                     ]
@@ -9507,7 +10216,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "string",
+                            "type": "number",
                             "example": null
                         },
                         {
@@ -10031,7 +10740,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "string",
+                    "type": "number",
                     "example": null
                 },
                 {
@@ -13838,7 +14547,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{checked: boolean, disabled: boolean, name: string, type: string, onChange: null}",
+                    "type": "{checked: boolean, disabled: boolean, name: string, required: boolean, type: string, onChange: null}",
                     "example": null
                 },
                 {
@@ -14100,6 +14809,15 @@
                     "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
                     "required": false,
                     "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "itemView",
+                    "decorators": [],
+                    "description": "Кастомная вьюшка для элемента",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
                     "example": null,
                     "defaultValue": null
                 },
@@ -14385,6 +15103,467 @@
                             "description": "",
                             "required": true,
                             "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "renderCheckbox",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Element",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "checkboxProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ICheckboxFieldViewProps",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ICheckboxTreeFieldProps": {
+            "name": "ICheckboxTreeFieldProps",
+            "moduleName": "ui/form/CheckboxTreeField/CheckboxTreeField",
+            "title": "CheckboxTreeField",
+            "description": "\nСписок с вложенными чекбоксами. Используется в формах для создания иерархической структуры и выбора нескольких значений.\n",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFieldWrapperInputProps",
+                "Omit<IDataProviderConfig",
+                "'items'>",
+                "Omit<IDataSelectConfig",
+                "'items'>",
+                "IUiComponent",
+                "Pick<ITreeProps",
+                "'levelPadding' | 'alwaysOpened'>"
+            ],
+            "properties": [
+                {
+                    "name": "alwaysOpened",
+                    "decorators": [],
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "autoComplete",
+                    "decorators": [],
+                    "description": "Настройки поиска",
+                    "required": false,
+                    "type": "boolean | IAutoCompleteConfig",
+                    "example": "{\n enable: true,\n minLength: 2,\n delay: 100\n}",
+                    "defaultValue": null
+                },
+                {
+                    "name": "autoFetch",
+                    "decorators": [],
+                    "description": "Загрузка данных после любого изменения запроса.\nЕсли включен autoFetch, то настройки autoComplete не применятся.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "dataProvider",
+                    "decorators": [],
+                    "description": "Конфигурация для подгрузки данных извне.\nЕсли dataProvider не передан, то поиск данных по запросу происходит локально.",
+                    "required": false,
+                    "type": "IDataProvider",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']",
+                    "defaultValue": null
+                },
+                {
+                    "name": "fieldLayoutClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "groupAttribute",
+                    "decorators": [],
+                    "description": "Атрибут, в котором должны лежать дочерние элементы списка (для группировки)\nЕсли аттрибут не задан - группировка не производится",
+                    "required": false,
+                    "type": "string",
+                    "example": "items",
+                    "defaultValue": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Input ID для связи поля с label",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "initialSelectedIds",
+                    "decorators": [],
+                    "description": "Идентификаторы выбранных значений, которые необходимо подгрузить при `autoFetch` режиме.\nНа бекенд будут переданы идентификаторы в параметре `ids`, которые необходимо вернуть.\nИспользуется только при `autoFetch = true`",
+                    "required": false,
+                    "type": "number[]",
+                    "example": "[1, 22]",
+                    "defaultValue": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "Свойства для элемента input",
+                    "required": false,
+                    "type": "any",
+                    "example": "{ onKeyDown: ... }",
+                    "defaultValue": null
+                },
+                {
+                    "name": "inputValue",
+                    "decorators": [],
+                    "description": "Значение поля в форме",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "isRenderWithoutFieldLayout",
+                    "decorators": [],
+                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "Коллекция элементов",
+                    "required": true,
+                    "type": "CheckboxTreeItems",
+                    "example": "[\n {\n     id: 1,\n     label: 'Krasnoyarsk',\n     color: 'red'\n },\n {\n     id: 2,\n     label: 'Moscow',\n     color: 'purple'\n }\n]",
+                    "defaultValue": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "levelPadding",
+                    "decorators": [],
+                    "description": "Расстояние вложенных элементов от родителя для каждого уровня",
+                    "required": false,
+                    "type": "number",
+                    "example": "32",
+                    "defaultValue": null
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{\n attributes: [\n  {\n   attribute: 'category',\n   field: 'DropDownField'\n  }\n ]\n}",
+                    "defaultValue": null
+                },
+                {
+                    "name": "multiple",
+                    "decorators": [],
+                    "description": "Возможность множественного выбора",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Подсказка для поля",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text...",
+                    "defaultValue": null
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "primaryKey",
+                    "decorators": [],
+                    "description": "Первичный ключ для доступа к вложенным элементам",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "query",
+                    "decorators": [],
+                    "description": "Текст запроса",
+                    "required": false,
+                    "type": "string",
+                    "example": "'some text'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
+                    "name": "selectFirst",
+                    "decorators": [],
+                    "description": "Сделать активным первый элемент в списке",
+                    "required": false,
+                    "type": "any",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
+                    "name": "selectedIds",
+                    "decorators": [],
+                    "description": "Список с идентификаторами выбранных элементов",
+                    "required": false,
+                    "type": "any",
+                    "example": "[1, 4]",
+                    "defaultValue": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "sourceItems",
+                    "decorators": [],
+                    "description": " Список со всеми элементами",
+                    "required": false,
+                    "type": "IDataSelectItem[]",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}",
+                    "defaultValue": null
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Значение для поля",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView",
+                    "defaultValue": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при изменении данных",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "args",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "ICheckboxTreeFieldViewProps": {
+            "name": "ICheckboxTreeFieldViewProps",
+            "moduleName": "ui/form/CheckboxTreeField/CheckboxTreeField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IFieldWrapperOutputProps"
+            ],
+            "properties": [
+                {
+                    "name": "componentId",
+                    "decorators": [],
+                    "description": "Id компонента",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Коллекция ошибок",
+                    "required": false,
+                    "type": "string[]",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "Id формы",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "input",
+                    "decorators": [],
+                    "description": "Параметры для input элемента",
+                    "required": false,
+                    "type": "IInputParams",
+                    "example": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "{color: string, disabled: boolean, id: string | number | boolean, isHovered: boolean, label: string, required: boolean} & IPreparedTreeItem[]",
+                    "example": null
+                },
+                {
+                    "name": "levelPadding",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "selectedIds",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any[]",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onItemSelect",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "checkbox",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IPreparedTreeItem",
                             "example": null
                         }
                     ]
@@ -15204,6 +16383,15 @@
                     "required": false,
                     "type": "string",
                     "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "hasInitialFocus",
+                    "decorators": [],
+                    "description": "Устанавливать ли фокус и показывать календарь сразу после рендера страницы",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
                     "defaultValue": null
                 },
                 {
@@ -16034,6 +17222,15 @@
                     "required": false,
                     "type": "string",
                     "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "hasInitialFocus",
+                    "decorators": [],
+                    "description": "Устанавливать ли фокус и показывать календарь сразу после рендера страницы",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
                     "defaultValue": null
                 },
                 {
@@ -18487,7 +19684,7 @@
                 {
                     "name": "title",
                     "decorators": [],
-                    "description": "Заголовок для колонки таблицы.",
+                    "description": "Заголовок для колонки таблицы",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -18511,7 +19708,7 @@
                 {
                     "name": "visible",
                     "decorators": [],
-                    "description": "Будет ли отображён item ?",
+                    "description": "Будет ли отображён item?",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -18647,7 +19844,7 @@
             "name": "IFieldListProps",
             "moduleName": "ui/form/FieldList/FieldList",
             "title": "FieldList",
-            "description": "\nСоздает список из сгруппированных полей формы.\n",
+            "description": "\nСоздает список из сгруппированных полей формы.\nДля загрузки файлов с помощью `FileField` внутри строк `FieldList`, нужно использовать форму с флагом `useRedux`.\n",
             "tags": {},
             "defaultProps": null,
             "extends": [
@@ -28384,6 +29581,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "hasInitialFocus",
+                    "decorators": [],
+                    "description": "Устанавливать ли фокус и показывать панель времени сразу после рендера страницы",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
                     "name": "hint",
                     "decorators": [],
                     "description": "Подсказка, которая отобразится рядом с полем",
@@ -32157,15 +33363,6 @@
                     "defaultValue": "true"
                 },
                 {
-                    "name": "hasTreeItems",
-                    "decorators": [],
-                    "description": "Включает обработку вложенных данных из items",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null,
-                    "defaultValue": null
-                },
-                {
                     "name": "initialItems",
                     "decorators": [],
                     "description": "Начальные элементы. Используется для подгрузки нескольких списков в один запрос, при этом не отменяя пагинацию\nи последующие запросы на бекенд для 2-й и следующих страниц",
@@ -32806,15 +34003,6 @@
                     "required": false,
                     "type": "string | boolean | IEmptyProps",
                     "example": "{\n text: 'Записи не найдены'\n}",
-                    "defaultValue": null
-                },
-                {
-                    "name": "hasTreeItems",
-                    "decorators": [],
-                    "description": "Включает обработку вложенных данных из items",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null,
                     "defaultValue": null
                 },
                 {
@@ -34365,7 +35553,9 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IColumnViewProps"
+                "IColumnViewProps",
+                "Pick<ITreeTableProps",
+                "'levelPadding'>"
             ],
             "properties": [
                 {
@@ -34445,7 +35635,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "{onTreeItemClick: null}",
+                    "type": "IPreparedTreeItem",
                     "example": null
                 },
                 {
@@ -34455,6 +35645,14 @@
                     "required": false,
                     "type": "ReactNode",
                     "example": "'Name'"
+                },
+                {
+                    "name": "levelPadding",
+                    "decorators": [],
+                    "description": "Расстояние вложенных элементов от родителя для каждого уровня",
+                    "required": false,
+                    "type": "number",
+                    "example": "32"
                 },
                 {
                     "name": "link",
@@ -34547,62 +35745,49 @@
             ],
             "methods": []
         },
-        "ITreeTableItem": {
-            "name": "ITreeTableItem",
-            "moduleName": "ui/list/TreeTable/TreeTable",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [],
-            "properties": [
-                {
-                    "name": "id",
-                    "decorators": [],
-                    "description": "Идентификатор узла",
-                    "required": false,
-                    "type": "string | number",
-                    "example": null
-                },
-                {
-                    "name": "items",
-                    "decorators": [],
-                    "description": "Вложенные элементы",
-                    "required": false,
-                    "type": "any[]",
-                    "example": "items: [\n {\n  id: 3,\n  name: 'Ivan'\n }\n]"
-                },
-                {
-                    "name": "uniqueId",
-                    "decorators": [],
-                    "description": "Уникальный идентификатор,\nиспользуется для сохранения состояния открыта или закрыта ячейка",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                }
-            ],
-            "methods": []
-        },
         "ITreeTableProps": {
             "name": "ITreeTableProps",
             "moduleName": "ui/list/TreeTable/TreeTable",
             "title": "TreeTable",
             "description": "\nКомпонент для представления данных коллекции в виде иерархической структуры.\n",
             "tags": {},
-            "defaultProps": null,
+            "defaultProps": {
+                "alwaysOpened": "false",
+                "levelPadding": "32"
+            },
             "extends": [
                 "Omit<IGridProps",
-                "'items'>"
+                "'items'>",
+                "Pick<ITreeProps",
+                "'alwaysOpened' | 'levelPadding'>"
             ],
             "properties": [
+                {
+                    "name": "alwaysOpened",
+                    "decorators": [],
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": "false"
+                },
                 {
                     "name": "items",
                     "decorators": [],
                     "description": "Элементы коллекции",
                     "required": false,
-                    "type": "ITreeTableItem[]",
+                    "type": "ITreeItem[]",
                     "example": "[\n {\n  id: 1,\n  name: 'Jane'\n },\n {\n  id: 2,\n  name: 'John',\n  items: [...]\n }\n]",
                     "defaultValue": null
+                },
+                {
+                    "name": "levelPadding",
+                    "decorators": [],
+                    "description": "Расстояние вложенных элементов от родителя для каждого уровня",
+                    "required": false,
+                    "type": "number",
+                    "example": "32",
+                    "defaultValue": "32"
                 }
             ],
             "methods": []
@@ -35029,6 +36214,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "Функция, которая будет вызываться при клике по кнопке",
+                    "required": true,
+                    "type": "Dispatch | {}",
+                    "example": "setActiveTab",
+                    "defaultValue": null
+                },
+                {
                     "name": "style",
                     "decorators": [],
                     "description": "Объект CSS стилей",
@@ -35047,26 +36241,7 @@
                     "defaultValue": null
                 }
             ],
-            "methods": [
-                {
-                    "name": "onClick",
-                    "decorators": [],
-                    "description": "Функция, которая будет вызываться при клике по кнопке",
-                    "required": false,
-                    "type": "void",
-                    "example": "setActiveTab",
-                    "parameters": [
-                        {
-                            "name": "value",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "string | number | boolean",
-                            "example": null
-                        }
-                    ]
-                }
-            ]
+            "methods": []
         },
         "IButtonGroupViewProps": {
             "name": "IButtonGroupViewProps",
@@ -35121,6 +36296,14 @@
                     "example": null
                 },
                 {
+                    "name": "onClick",
+                    "decorators": [],
+                    "description": "Функция, которая будет вызываться при клике по кнопке",
+                    "required": true,
+                    "type": "Dispatch | {}",
+                    "example": "setActiveTab"
+                },
+                {
                     "name": "size",
                     "decorators": [],
                     "description": "",
@@ -35145,26 +36328,7 @@
                     "example": "MyCustomView"
                 }
             ],
-            "methods": [
-                {
-                    "name": "onClick",
-                    "decorators": [],
-                    "description": "Функция, которая будет вызываться при клике по кнопке",
-                    "required": false,
-                    "type": "void",
-                    "example": "setActiveTab",
-                    "parameters": [
-                        {
-                            "name": "value",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "string | number | boolean",
-                            "example": null
-                        }
-                    ]
-                }
-            ]
+            "methods": []
         },
         "IControlItem": {
             "name": "IControlItem",
@@ -36536,29 +37700,37 @@
             ],
             "methods": []
         },
-        "ITreeItem": {
-            "name": "ITreeItem",
+        "ITreeItemViewProps": {
+            "name": "ITreeItemViewProps",
             "moduleName": "ui/nav/Tree/Tree",
             "title": "",
             "description": "",
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IButtonProps"
+                "ITreeProps"
             ],
             "properties": [
                 {
-                    "name": "badge",
+                    "name": "alwaysOpened",
                     "decorators": [],
-                    "description": "Цифра (к примеру, новые сообщения)",
+                    "description": " Используется для управления раскрытием всех элементов в дереве",
                     "required": false,
-                    "type": "number | IButtonBadge",
+                    "type": "boolean",
                     "example": null
                 },
                 {
-                    "name": "block",
+                    "name": "autoOpenLevels",
                     "decorators": [],
-                    "description": "Включает стиль `block`, делая размер кнопки на 100% ширины блока",
+                    "description": "Максимальный уровень вложенности, до которого все узлы будут отображаться в развёрнутом виде",
+                    "required": false,
+                    "type": "number",
+                    "example": "1"
+                },
+                {
+                    "name": "autoSave",
+                    "decorators": [],
+                    "description": "Отображать раскрытыми узлы из LocalStorage",
                     "required": false,
                     "type": "boolean",
                     "example": "true"
@@ -36566,243 +37738,133 @@
                 {
                     "name": "children",
                     "decorators": [],
-                    "description": "Вложенные элементы",
+                    "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "Element",
                     "example": null
                 },
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "description": "CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
                     "example": null
                 },
                 {
-                    "name": "color",
+                    "name": "hasIconExpandOnly",
                     "decorators": [],
-                    "description": "Цвет состояния",
-                    "required": false,
-                    "type": "string",
-                    "example": "success"
-                },
-                {
-                    "name": "confirm",
-                    "decorators": [],
-                    "description": "При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное\nокно с текстом подтверждения - `window.confirm('Ваш текст')`.",
-                    "required": false,
-                    "type": "string",
-                    "example": "Удалить запись #512?"
-                },
-                {
-                    "name": "dark",
-                    "decorators": [],
-                    "description": "Темная тема",
+                    "description": "Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку",
                     "required": false,
                     "type": "boolean",
-                    "example": null
-                },
-                {
-                    "name": "disabled",
-                    "decorators": [],
-                    "description": "Переводит кнопку в состояние \"не активна\"",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "formId",
-                    "decorators": [],
-                    "description": "ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки\nпри отправке формы.",
-                    "required": false,
-                    "type": "string | boolean",
-                    "example": null
-                },
-                {
-                    "name": "hint",
-                    "decorators": [],
-                    "description": "Подсказка, отображается при наведении (через тег title)",
-                    "required": false,
-                    "type": "any",
-                    "example": "Save"
-                },
-                {
-                    "name": "icon",
-                    "decorators": [],
-                    "description": "Иконка",
-                    "required": false,
-                    "type": "string",
-                    "example": null
+                    "example": "false"
                 },
                 {
                     "name": "id",
                     "decorators": [],
-                    "description": "Идентификатор узла",
+                    "description": "Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами",
                     "required": false,
-                    "type": "string | number",
+                    "type": "string",
+                    "example": "'exampleTree'"
+                },
+                {
+                    "name": "item",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IPreparedTreeItem",
                     "example": null
-                },
-                {
-                    "name": "isFailed",
-                    "decorators": [],
-                    "description": "Отобразить кнопку в состоянии неуспешного нажатия (например, при неуспешном ajax запросе)",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "isLoading",
-                    "decorators": [],
-                    "description": "Отображать индикатор загрузки?",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
                 },
                 {
                     "name": "items",
                     "decorators": [],
-                    "description": "Вложенные элементы",
+                    "description": "Коллекция с узлами. Также можно передать идентификатор роута, тогда компонент найдет все\nвложенные роуты и отобразит их в виде дерева.",
                     "required": false,
-                    "type": "any[]",
-                    "example": "[\n {\n  id: 2,\n  label: 'Nested element',\n  items: [...]\n }\n]"
+                    "type": "string | ITreeItem[]",
+                    "example": "[\n {\n  id: 1,\n  label: 'Root',\n  items: [...]\n }\n] | 'root'"
                 },
                 {
-                    "name": "label",
+                    "name": "itemsKey",
                     "decorators": [],
-                    "description": "Текст кнопки или ссылки",
+                    "description": "Ключ для доступа к вложенным элементам узла",
                     "required": false,
-                    "type": "any",
-                    "example": "Save"
+                    "type": "string",
+                    "example": "'items'"
                 },
                 {
-                    "name": "link",
+                    "name": "level",
                     "decorators": [],
-                    "description": "Отображать как ссылку?",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "outline",
-                    "decorators": [],
-                    "description": "Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "resetFailedMs",
-                    "decorators": [],
-                    "description": "Через сколько миллисекунд должно исчезнуть состояние \"failed\"",
+                    "description": "Ограничивает максимальный уровень вложенности дерева",
                     "required": false,
                     "type": "number",
-                    "example": "5000"
+                    "example": "2"
                 },
                 {
-                    "name": "size",
+                    "name": "levelPadding",
                     "decorators": [],
-                    "description": "Размер",
+                    "description": "Расстояние вложенных элементов от родителя для каждого уровня",
                     "required": false,
-                    "type": "string",
-                    "example": null
+                    "type": "number",
+                    "example": "32"
                 },
                 {
-                    "name": "style",
+                    "name": "routerParams",
                     "decorators": [],
-                    "description": "Объект CSS стилей",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": "{width: '45%'}"
-                },
-                {
-                    "name": "tag",
-                    "decorators": [],
-                    "description": "Выбор html-тэга, который будет вставлен в DOM",
-                    "required": false,
-                    "type": "\"a\" | \"button\"",
-                    "example": "button"
-                },
-                {
-                    "name": "target",
-                    "decorators": [],
-                    "description": "HTML аттрибут `target`, доступен только для ссылок",
-                    "required": false,
-                    "type": "string",
-                    "example": "_blank"
-                },
-                {
-                    "name": "textColor",
-                    "decorators": [],
-                    "description": "Цвет текста кнопки или ссылки",
+                    "description": " Параметры роутинга",
                     "required": false,
                     "type": "any",
                     "example": null
                 },
                 {
-                    "name": "toRoute",
+                    "name": "selectedItemId",
                     "decorators": [],
-                    "description": "ID роута, на который необходимо перейти, указанный в дереве `steroids` роутинга. Для передачи параметров\nиспользуйте свойство `toRouteParams`",
+                    "description": "Идентификатор узла, которой нужно отобразить в раскрытом виде",
                     "required": false,
-                    "type": "string",
-                    "example": "profile"
-                },
-                {
-                    "name": "toRouteParams",
-                    "decorators": [],
-                    "description": "Параметры роута, на который необходимо перейти, см. свойство `toRoute`.",
-                    "required": false,
-                    "type": "Record",
-                    "example": "{userId: 52}"
-                },
-                {
-                    "name": "type",
-                    "decorators": [],
-                    "description": "HTML Тип",
-                    "required": false,
-                    "type": "\"button\" | \"submit\"",
-                    "example": "submit"
-                },
-                {
-                    "name": "url",
-                    "decorators": [],
-                    "description": "Ссылка на внешнюю страницу, используется совместно с свойством `link`",
-                    "required": false,
-                    "type": "string",
-                    "example": "https://kozhindev.com"
+                    "type": "string | number",
+                    "example": "2"
                 },
                 {
                     "name": "view",
                     "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "description": "Переопределение view React компонента для кастомизации отображения элемента",
                     "required": false,
                     "type": "React.ReactNode | {}",
                     "example": "MyCustomView"
-                },
-                {
-                    "name": "visible",
-                    "decorators": [],
-                    "description": "Скрыть или показать узел",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
                 }
             ],
             "methods": [
                 {
-                    "name": "onClick",
+                    "name": "onExpand",
                     "decorators": [],
-                    "description": "Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка\nавтоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.",
+                    "description": "Обработчик на клик по узлу",
                     "required": false,
                     "type": "any",
                     "example": null,
                     "parameters": [
                         {
-                            "name": "e",
+                            "name": "args",
                             "decorators": [],
-                            "description": "=> fetch(...)\n",
+                            "description": "\n",
                             "required": true,
-                            "type": "Event | MouseEvent",
+                            "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onItemClick",
+                    "decorators": [],
+                    "description": "Обработчик на клик по узлу",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "args",
+                            "decorators": [],
+                            "description": "\n",
+                            "required": true,
+                            "type": "any[]",
                             "example": null
                         }
                     ]
@@ -36818,10 +37880,15 @@
             "defaultProps": {
                 "autoOpenLevels": "1",
                 "autoSave": "false",
+                "hasIconExpandOnly": "false",
                 "itemsKey": "'items'",
-                "level": "0"
+                "level": "0",
+                "levelPadding": "32"
             },
-            "extends": [],
+            "extends": [
+                "Omit<ITreeConfig",
+                "'currentPage' | 'itemsOnPage'>"
+            ],
             "properties": [
                 {
                     "name": "alwaysOpened",
@@ -36860,6 +37927,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "hasIconExpandOnly",
+                    "decorators": [],
+                    "description": "Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "false",
+                    "defaultValue": "false"
+                },
+                {
                     "name": "id",
                     "decorators": [],
                     "description": "Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами",
@@ -36896,6 +37972,24 @@
                     "defaultValue": "0"
                 },
                 {
+                    "name": "levelPadding",
+                    "decorators": [],
+                    "description": "Расстояние вложенных элементов от родителя для каждого уровня",
+                    "required": false,
+                    "type": "number",
+                    "example": "32",
+                    "defaultValue": "32"
+                },
+                {
+                    "name": "routerParams",
+                    "decorators": [],
+                    "description": " Параметры роутинга",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "selectedItemId",
                     "decorators": [],
                     "description": "Идентификатор узла, которой нужно отобразить в раскрытом виде",
@@ -36915,6 +38009,24 @@
                 }
             ],
             "methods": [
+                {
+                    "name": "onExpand",
+                    "decorators": [],
+                    "description": "Обработчик на клик по узлу",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "args",
+                            "decorators": [],
+                            "description": "\n",
+                            "required": true,
+                            "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                },
                 {
                     "name": "onItemClick",
                     "decorators": [],
@@ -36979,6 +38091,14 @@
                     "example": null
                 },
                 {
+                    "name": "hasIconExpandOnly",
+                    "decorators": [],
+                    "description": "Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "false"
+                },
+                {
                     "name": "id",
                     "decorators": [],
                     "description": "Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами",
@@ -36991,7 +38111,7 @@
                     "decorators": [],
                     "description": "Коллекция с узлами. Также можно передать идентификатор роута, тогда компонент найдет все\nвложенные роуты и отобразит их в виде дерева.",
                     "required": true,
-                    "type": "ITreeItem & {className: string, hasItems: boolean, index: number, isOpened: boolean, isSelected: boolean, level: number, uniqId: string, onClick: null}[]",
+                    "type": "IPreparedTreeItem[]",
                     "example": null
                 },
                 {
@@ -37013,9 +38133,17 @@
                 {
                     "name": "levelPadding",
                     "decorators": [],
-                    "description": "",
+                    "description": "Расстояние вложенных элементов от родителя для каждого уровня",
                     "required": false,
                     "type": "number",
+                    "example": "32"
+                },
+                {
+                    "name": "routerParams",
+                    "decorators": [],
+                    "description": " Параметры роутинга",
+                    "required": false,
+                    "type": "any",
                     "example": null
                 },
                 {
@@ -37036,6 +38164,24 @@
                 }
             ],
             "methods": [
+                {
+                    "name": "onExpand",
+                    "decorators": [],
+                    "description": "Обработчик на клик по узлу",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "args",
+                            "decorators": [],
+                            "description": "\n",
+                            "required": true,
+                            "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                },
                 {
                     "name": "onItemClick",
                     "decorators": [],
@@ -40457,6 +41603,13 @@
         "ui/form/CheckboxListField/CheckboxListField": {
             "name": "default",
             "moduleName": "ui/form/CheckboxListField/CheckboxListField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/CheckboxTreeField/CheckboxTreeField": {
+            "name": "default",
+            "moduleName": "ui/form/CheckboxTreeField/CheckboxTreeField",
             "title": "",
             "description": "",
             "tags": {}

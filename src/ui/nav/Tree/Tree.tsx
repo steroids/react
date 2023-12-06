@@ -3,7 +3,7 @@ import {IPreparedTreeItem, ITreeConfig} from '../../../hooks/useTree';
 import {useComponents, useTree} from '../../../hooks';
 
 export interface ITreeViewProps extends ITreeProps {
-    items: IPreparedTreeItem[],
+    items: IPreparedTreeItem[];
 }
 
 export interface ITreeItemViewProps extends ITreeProps {
@@ -51,6 +51,12 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      */
     levelPadding?: number;
 
+    /**
+     * Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку
+     * @example false
+     */
+    hasIconExpandOnly?: boolean;
+
     [key: string]: any;
 }
 
@@ -80,4 +86,5 @@ Tree.defaultProps = {
     autoSave: false,
     level: 0,
     levelPadding: 32,
+    hasIconExpandOnly: false,
 };

@@ -62,7 +62,10 @@ export interface INavItem extends IButtonProps {
 
     /**
      * Свойства для компонента с контентом
-     * @example {content: 'Some text'}
+     * @example
+     * {
+     *  content: 'Some text'
+     * }
      */
     contentProps?: any,
 
@@ -95,7 +98,17 @@ export interface INavProps {
     /**
      * Коллекция с элементами навигации. Также можно передать идентификатор роута, тогда компонент найдет все
      * вложенные роуты и отобразит их в навигации.
-     * @example [{id: 1, label: 'One'}, {id: 2, label: 'Two'}] | 'root'
+     * @example
+     * [
+     *  {
+     *   id: 1,
+     *   label: 'One'
+     *  },
+     *  {
+     *   id: 2,
+     *   label: 'Two'
+     *  }
+     * ] | 'root'
      */
     items?: string | INavItem[];
 

@@ -1,35 +1,15 @@
 import * as React from 'react';
 import {useMemo} from 'react';
 import _merge from 'lodash-es/merge';
-
+import {getList} from '@steroidsjs/core/reducers/list';
+import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
+import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
 import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 import Grid from '../Grid';
+import useSelector from '../../../hooks/useSelector';
 
-export interface ITreeColumnViewProps extends IColumnViewProps {
-    item: {
-        onTreeItemClick?: (uniqueId: string, item: {[key: string]: any}) => void;
-
-        [key: string]: any
-    },
-}
-
-export interface ITreeTableItem {
-    /**
-     * Идентификатор узла
-     */
-    id?: string | number,
-
-    /**
-     * Вложенные элементы
-     * @example items: [{id: 3, name: 'Ivan'}]
-     */
-    items?: any[],
-
-    /**
-     * Уникальный идентификатор,
-     * используется для сохранения состояния открыта или закрыта ячейка
-     */
-    uniqueId?: string,
+export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding'> {
+    item: IPreparedTreeItem,
 }
 
 /**
@@ -37,12 +17,23 @@ export interface ITreeTableItem {
  *
  * Компонент для представления данных коллекции в виде иерархической структуры.
  */
-export interface ITreeTableProps extends Omit<IGridProps, 'items'> {
+export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeProps, 'alwaysOpened' | 'levelPadding'>{
     /**
      * Элементы коллекции
-     * @example [{id: 1, name: 'Jane'}, {id: 2, name: 'John', items: [...]}]
+     * @example
+     * [
+     *  {
+     *   id: 1,
+     *   name: 'Jane'
+     *  },
+     *  {
+     *   id: 2,
+     *   name: 'John',
+     *   items: [...]
+     *  }
+     * ]
      */
-    items?: ITreeTableItem[]
+    items?: ITreeItem[],
 }
 
 const TREE_COLUMN_VIEW_FIELDS = {
@@ -50,28 +41,45 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
-export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[]) => {
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number) => {
     const newColumns = [...columns];
 
     // Add tree view to the first column
-    _merge(newColumns[0], TREE_COLUMN_VIEW_FIELDS);
+    _merge(newColumns[0], {
+        ...TREE_COLUMN_VIEW_FIELDS,
+        levelPadding,
+    });
 
     return newColumns;
 };
 
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
     const columns = useMemo(
-        () => addTreeColumnFieldsToFirstColumn(props.columns),
-        [props.columns],
+        () => addTreeColumnFieldsToFirstColumn(props.columns, props.levelPadding),
+        [props.columns, props.levelPadding],
     );
+
+    const list = useSelector(state => getList(state, props.listId));
+
+    const {treeItems} = useTree({
+        items: props.items,
+        autoOpenLevels: 0,
+        alwaysOpened: props.alwaysOpened,
+        currentPage: list?.page,
+        itemsOnPage: list?.pageSize,
+    });
 
     return (
         <Grid
             {...props}
             columns={columns}
-            items={props.items}
+            items={treeItems}
             itemsIndexing={false}
-            hasTreeItems
         />
     );
 }
+
+TreeTable.defaultProps = {
+    levelPadding: 32,
+    alwaysOpened: false,
+};

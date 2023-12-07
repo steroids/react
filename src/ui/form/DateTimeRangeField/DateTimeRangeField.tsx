@@ -36,7 +36,12 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
 
     /**
      * Свойства для компонента DayPickerInput
-     * @example {dayPickerProps: {showWeekNumbers: true}}
+     * @example
+     * {
+     *  dayPickerProps: {
+     *   showWeekNumbers: true
+     *  }
+     * }
      */
     pickerProps?: any;
 
@@ -59,6 +64,12 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      * Свойства для компонента Calendar
      */
     calendarProps?: ICalendarProps,
+
+    /**
+     * Устанавливать ли фокус и показывать календарь сразу после рендера страницы
+     * @example true
+     */
+    hasInitialFocus?: boolean,
 
     [key: string]: any;
 }
@@ -194,6 +205,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
         useSmartFocus: false,
+        hasInitialFocus: props.hasInitialFocus,
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
     });
@@ -254,6 +266,7 @@ DateTimeRangeField.defaultProps = {
     displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     showRemove: true,
+    hasInitialFocus: false,
     useUTC: false,
     dateInUTC: false,
     icon: true,

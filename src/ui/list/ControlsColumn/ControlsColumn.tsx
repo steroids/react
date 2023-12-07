@@ -22,14 +22,28 @@ export interface IControlsColumnProps {
 
     /**
      * Коллекция с контролами
-     * @example [{id: 'delete'}, {id: 'view', position: 'left'}]
+     * @example
+     * [
+     *  {
+     *   id: 'delete'
+     *  },
+     *  {
+     *   id: 'view',
+     *   position: 'left'
+     *  }
+     * ]
      */
     controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
 
     /**
      * Элемент, для которого будет отображаться список с контролами, в нём можно задать видимость контрола
      * с помощью свойства 'can' + _upperFirst(control.id)
-     * @example {name: 'Ivan', work: 'development', canView: false}
+     * @example
+     * {
+     *  name: 'Ivan',
+     *  work: 'development',
+     *  canView: false
+     * }
      */
     item?: any;
 

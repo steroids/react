@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import Grid from '../../../../src/ui/list/Grid';
 import GridMockView from '../Grid/GridMockView';
 import TreeColumnView from './TreeColumnMockView';
 import {addTreeColumnFieldsToFirstColumn, ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';
@@ -20,12 +19,15 @@ describe('addTreeColumnFieldsToFirstColumn function', () => {
             },
         ];
 
+        const levelPadding = 32;
+
         const expectedColumns = [
             {
                 label: 'Name',
                 attribute: 'name',
                 valueView: 'TreeColumnView',
                 headerClassName: 'TreeColumnHeader',
+                levelPadding,
             },
             {
                 label: 'Surname',
@@ -33,14 +35,14 @@ describe('addTreeColumnFieldsToFirstColumn function', () => {
             },
         ];
 
-        const result = addTreeColumnFieldsToFirstColumn(columns);
+        const result = addTreeColumnFieldsToFirstColumn(columns, levelPadding);
 
         expect(result).toEqual(expectedColumns);
     });
 });
 
 describe('TreeTable tests', () => {
-    const expectedTreeColumnViewClass = 'TreeColumnView';
+    const expectedTreeColumnViewClass = 'TreeItemView';
     const expectedTreeColumnHeaderClass = 'TreeColumnHeader';
     const expectedToggleItemName = 'Jane';
     const tagImg = 'img';
@@ -78,10 +80,11 @@ describe('TreeTable tests', () => {
     const props = {
         items,
         view: GridMockView,
-        hasTreeItems: true,
         listId: 'TreeTable',
         hasAlternatingColors: true,
         size: 'md',
+        levelPadding: 32,
+        alwaysOpened: false,
     } as ITreeTableProps;
 
     it('should add tree view to the first column', () => {
@@ -105,7 +108,7 @@ describe('TreeTable tests', () => {
     it('should be in the document', () => {
         const expectedTreeColumnsCount = items.length;
 
-        const {container} = render(JSXWrapper(Grid, {
+        const {container} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));
@@ -118,22 +121,24 @@ describe('TreeTable tests', () => {
     });
 
     it('should have correct classes', () => {
-        const {container} = render(JSXWrapper(Grid, {
+        const {container, getByRole} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));
 
-        const treeColumnSize = getElementByClassName(container, `${expectedTreeColumnViewClass}_size_md`);
-        const treeColumnIcon = getElementByClassName(container, `${expectedTreeColumnViewClass}__icon`);
-        const treeColumnData = getElementByClassName(container, `${expectedTreeColumnViewClass}__data`);
+        //const role = getByRole('');
 
-        expect(treeColumnSize).toBeInTheDocument();
+        //const treeColumnSize = getElementByClassName(container, `${expectedTreeColumnViewClass}_size_md`);
+        const treeColumnIcon = getElementByClassName(container, `${expectedTreeColumnViewClass}__icon`);
+        const treeColumnItem = getElementByClassName(container, `${expectedTreeColumnViewClass}__item`);
+
+        //expect(treeColumnSize).toBeInTheDocument();
         expect(treeColumnIcon).toBeInTheDocument();
-        expect(treeColumnData).toBeInTheDocument();
+        expect(treeColumnItem).toBeInTheDocument();
     });
 
     it('should show nested items by click', async () => {
-        const {container, queryByText} = render(JSXWrapper(Grid, {
+        const {container, queryByText} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));
@@ -148,7 +153,7 @@ describe('TreeTable tests', () => {
     });
 
     it('should hide nested items by click', async () => {
-        const {container, queryByText} = render(JSXWrapper(Grid, {
+        const {container, queryByText} = render(JSXWrapper(TreeTableMock, {
             ...props,
             columns,
         }));

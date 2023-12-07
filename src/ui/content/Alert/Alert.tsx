@@ -20,7 +20,7 @@ import {useComponents} from '../../../hooks';
 export interface IAlertProps extends IUiComponent {
     /**
     * Дочерние элементы
-    * @example {<span>children</span>}
+    * @example { <span>children</span> }
     */
     children?: React.ReactNode,
 
@@ -53,7 +53,10 @@ export interface IAlertProps extends IUiComponent {
 
     /**
      * Callback функция вызываемая при нажатии на кнопку закрытия
-     * @example {() => console.log('this is callback')}
+     * @example
+     * {
+     *  () => console.log('this is callback')
+     * }
      */
     onClose?: () => void,
 

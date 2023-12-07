@@ -16,7 +16,17 @@ export interface IBreadcrumbsProps {
 
     /**
      * Коллекция элементов навигационной цепочки
-     * @example [{id: 'root', title: 'Home'}, {id: 'catalog', title: 'Catalog'}]
+     * @example
+     * [
+     *  {
+     *   id: 'root',
+     *   title: 'Home'
+     *  },
+     *  {
+     *   id: 'catalog',
+     *   title: 'Catalog'
+     *  }
+     * ]
      */
     items?: IRouteItem[],
 

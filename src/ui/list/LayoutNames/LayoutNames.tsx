@@ -44,7 +44,17 @@ export interface ILayoutNamesProps {
 
     /**
      * Коллекция с шаблонами
-     * @example [{id: 'list', label: 'List'}, {id: 'grid', label: 'Grid'}]
+     * @example
+     * [
+     *  {
+     *   id: 'list',
+     *   label: 'List'
+     *  },
+     *  {
+     *   id: 'grid',
+     *   label: 'Grid'
+     *  }
+     * ]
      */
     items?: INavItem[],
 

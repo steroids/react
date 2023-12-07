@@ -49,7 +49,7 @@ export type IElementInputType = 'button' | 'checkbox' | 'color' | 'date' | 'date
 export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Свойства для элемента input
-     * @example {onKeyDown: ...}
+     * @example { onKeyDown: ... }
      */
     inputProps?: InputHTMLAttributes<HTMLInputElement>;
 
@@ -61,7 +61,10 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
 
     /**
      * Свойства для компонента отображения
-     * @example {customHandler: () => {...}}
+     * @example
+     * {
+     *  customHandler: () => {...}
+     * }
      */
     viewProps?: {
         [key: string]: any,

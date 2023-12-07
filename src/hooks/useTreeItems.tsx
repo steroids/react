@@ -1,11 +1,10 @@
 import React from 'react';
-import {getTreeItemUniqId} from '../utils/list';
-import {ITreeTableItem} from '../ui/list/TreeTable/TreeTable';
+import {ITreeItem, getTreeItemUniqueId} from './useTree';
 
 const TOP_TREE_LEVEL_VALUE = 0;
 
 export const prepareItemsToTree = (
-    sourceItems: ITreeTableItem[],
+    sourceItems: ITreeItem[],
     openedTreeItems: Record<string, boolean>,
     currentPage: number | null,
     itemsOnPage: number | null,
@@ -21,7 +20,7 @@ export const prepareItemsToTree = (
     }
 
     (sourceItems || []).forEach((item, index) => {
-        const uniqueId = getTreeItemUniqId(item, index, parentId);
+        const uniqueId = getTreeItemUniqueId(item, index, parentId);
         const isOpened = !!openedTreeItems[uniqueId];
         const hasItems = !!(item.items && item.items.length > 0);
 
@@ -64,7 +63,7 @@ export default function useTreeItems(list: any) {
     }, []);
 
     const getTreeItems = React.useCallback(
-        (sourceItems: ITreeTableItem[]) => prepareItemsToTree(
+        (sourceItems: ITreeItem[]) => prepareItemsToTree(
             sourceItems,
             openedTreeItems,
             list?.page,

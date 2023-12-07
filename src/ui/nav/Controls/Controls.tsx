@@ -33,7 +33,13 @@ export interface IControlItem extends IButtonProps {
 export interface IControlsProps {
     /**
      * Коллекция контролов
-     * @example [{id: 'delete', onClick: () => alert("It's deleted")}]
+     * @example
+     * [
+     *  {
+     *   id: 'delete',
+     *   onClick: () => alert("It's deleted")
+     *  }
+     * ]
      */
     items?: IControlItem[],
 

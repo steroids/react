@@ -19,13 +19,21 @@ export interface IChartProps extends IUiComponent {
 
     /**
      * Данные для графика
-     * @example [{id: 1, value: 15}, {id: 2, value: 30}]
+     * @example
+     * [
+     *  {id: 1, value: 15},
+     *  {id: 2, value: 30}
+     * ]
      */
     data?: Record<string, any>[],
 
     /**
      * Конфигурация, настройки отображения графика
-     * @example {lineWidth: 3, pointSize: 10}
+     * @example
+     * {
+     *  lineWidth: 3,
+     *  pointSize: 10
+     * }
      */
     config?: Record<string, any>,
 

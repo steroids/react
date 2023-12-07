@@ -135,6 +135,11 @@ export interface ICalendarSystemProps extends IUiComponent {
         */
         eventGroups: IEventGroup[],
     },
+    /**
+    * Дополнительные свойства, которые передаются во view компонента
+    */
+    additionalViewProps?: Record<string, any>,
+
     [key: string]: any;
 }
 
@@ -168,7 +173,7 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
 
 export interface ICalendarSystemModalViewProps extends IModalProps {
     eventGroups: IEventGroup[],
-    onEventSubmit: (fields: Record<CalendarSystemModalFields, string>, eventInitialValues?: IEventInitialValues) => void,
+    onModalFormSubmit: (fields: Record<CalendarSystemModalFields, string>, eventInitialValues?: IEventInitialValues) => void,
     isCreate: boolean,
     eventInitialValues?: any,
 }

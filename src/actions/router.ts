@@ -1,4 +1,5 @@
 import {push, replace} from 'connected-react-router';
+import {parse} from 'path-to-regexp';
 
 type TParams = Record<string, any> | null;
 
@@ -16,6 +17,21 @@ export const initParams = params => ({
     params,
 });
 
+const filterParamsForPath = (path: string, params: Record<string, string | number>) => {
+    if (!path) {
+        return params;
+    }
+
+    const parsedPath = parse(path);
+
+    return parsedPath.reduce((filteredParams, param) => {
+        if (typeof param === 'object' && params[param.name]) {
+            filteredParams[param.name] = params[param.name];
+        }
+        return filteredParams;
+    }, {});
+};
+
 export const goToRoute = (routeId, params: TParams = null, isReplace = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
@@ -25,8 +41,9 @@ export const goToRoute = (routeId, params: TParams = null, isReplace = false) =>
     const getRouteProp = require('../reducers/router').getRouteProp;
     const buildUrl = require('../reducers/router').buildUrl;
     const path = getRouteProp(getState(), routeId, 'path');
+    const filteredParams = filterParamsForPath(path, params);
     const method = isReplace ? replace : push;
-    return dispatch(method(buildUrl(path, params)));
+    return dispatch(method(buildUrl(path, filteredParams)));
 };
 
 export const goToParent = (level = 1) => (dispatch, getState) => {

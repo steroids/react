@@ -3,7 +3,6 @@ import * as React from 'react';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import useList, * as listHelpers from '../../src/hooks/useList';
-import {prepareItemsToTree} from '../../src/hooks/useTreeItems';
 import * as normalizeEmpty from '../../src/ui/list/Empty/Empty';
 import * as paginationSize from '../../src/ui/list/PaginationSize/PaginationSize';
 import * as pagination from '../../src/ui/list/Pagination/Pagination';

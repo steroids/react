@@ -19,7 +19,7 @@ const useCalendarSystemModals = (
     const components = useComponents();
     const calendarModalView = calendarModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
 
-    const onEventSubmit = React.useCallback((
+    const onModalFormSubmit = React.useCallback((
         fields: Record<CalendarSystemModalFields, string | number>,
         eventInitialValues?: IEventInitialValues,
     ) => {
@@ -65,10 +65,10 @@ const useCalendarSystemModals = (
         ...calendarModalProps,
         component: calendarModalView,
         eventGroups: innerEventGroups,
-        onEventSubmit,
+        onModalFormSubmit,
         isCreate,
         eventInitialValues,
-    }) as ICalendarSystemModalViewProps, [calendarModalProps, calendarModalView, innerEventGroups, onEventSubmit]);
+    }) as ICalendarSystemModalViewProps, [calendarModalProps, calendarModalView, innerEventGroups, onModalFormSubmit]);
 
     const getEventFromGroup = React.useCallback((event: IEvent) => innerEventGroups
         .find(group => group.events

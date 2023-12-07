@@ -24,7 +24,7 @@ export const useCalendarSystemEventGroupModals = (
 
     const defaultEventGroupColor = React.useMemo(() => theme === 'light' ? PRIMARY_LIGHT : PRIMARY_DARK, [theme]);
 
-    const onEventGroupSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
+    const onSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
         const newEventGroup: IEventGroup = {
             id: (_maxBy(innerEventGroups, eventsGroup => eventsGroup.id)?.id || DEFAULT_ID) + 1,
             label: fields.label,
@@ -38,12 +38,12 @@ export const useCalendarSystemEventGroupModals = (
     const openCreateEventGroupModal = React.useCallback(() => {
         dispatch(openModal(calendarModalView, {
             isCreate: true,
-            onEventGroupSubmit,
+            onEventGroupSubmit: onSubmit,
             eventGroupInitialValues: {
                 color: defaultEventGroupColor,
             },
         } as CalendarSystemEventGroupModalViewProps));
-    }, [calendarModalView, defaultEventGroupColor, dispatch, onEventGroupSubmit]);
+    }, [calendarModalView, defaultEventGroupColor, dispatch, onSubmit]);
 
     return {
         openCreateEventGroupModal,

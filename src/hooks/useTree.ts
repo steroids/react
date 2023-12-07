@@ -132,7 +132,7 @@ const defaultProps = {
     autoOpenLevels: 0,
 };
 
-export const getTreeItemUniqueId = (item, index, parentId) => _join([parentId || FIRST_LEVEL_PARENT_ID, String(item.id || index)], DOT_SEPARATOR);
+const getTreeItemUniqueId = (item, index, parentId) => _join([parentId || FIRST_LEVEL_PARENT_ID, String(item.id || index)], DOT_SEPARATOR);
 
 const routeToItem = (route: IRouteItem, routerParams) => {
     const routeItems = (

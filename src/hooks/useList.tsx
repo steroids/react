@@ -3,7 +3,7 @@ import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import useSelector from '../hooks/useSelector';
+import useSelector from './useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
 import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';

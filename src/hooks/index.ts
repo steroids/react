@@ -27,7 +27,6 @@ import useSaveCursorPosition from './useSaveCursorPosition';
 import useEmpty from './useEmpty';
 import usePagination from './usePagination';
 import useSearchForm from './useSearchForm';
-import useTreeItems from './useTreeItems';
 
 export {
     useAbsolutePositioning,
@@ -59,5 +58,4 @@ export {
     useEmpty,
     usePagination,
     useSearchForm,
-    useTreeItems,
 };

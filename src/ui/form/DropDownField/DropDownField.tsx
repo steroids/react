@@ -111,7 +111,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
 
     /**
      * Свойство, которое устанавливает один type и src контента для всех пунктов
-     * @example {type: 'icon', src: 'user'}
+     * @example
+     * {
+     *  type: 'icon',
+     *  src: 'user'
+     * }
      */
     itemsContent?: {
         type: ContentType | string,
@@ -120,7 +124,15 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
 
     /**
      * Элементы вложенные внутрь DropDownField
-     * @example [{id: 1, label: 'Ivan Ivanov', type: 'icon', typeSrc: 'user'}]
+     * @example
+     * [
+     *  {
+     *   id: 1,
+     *   label: 'Ivan Ivanov',
+     *   type: 'icon',
+     *   typeSrc: 'user'
+     *  }
+     * ]
      */
     items?: IDropDownFieldItem[] | DataProviderItems,
 
@@ -132,7 +144,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
 
     /**
     * Добавляет кнопку при нажатии на которую выбираются все элементы, работает только при multiple: true
-    * @example {label: 'All', id: 'all'}
+    * @example
+     * {
+     *  label: 'All',
+     *  id: 'all'
+     * }
     */
     itemToSelectAll?: boolean | {
         label: string,

@@ -38,6 +38,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
         checked: boolean,
         onChange: (value: string | React.ChangeEvent) => void,
         disabled: boolean,
+        required?: boolean,
     }
 }
 
@@ -57,8 +58,9 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         checked: !!props.input?.value,
         onChange: onChangeHandler,
         disabled: props.disabled,
+        required: props.required,
         ...props.inputProps,
-    }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps]);
+    }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps, props.required]);
 
     return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props, inputProps});
 }

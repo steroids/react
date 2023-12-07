@@ -12,8 +12,6 @@ export default function DateRangeFieldView(props: IDateRangeFieldViewProps) {
 
     const hasValue = props.inputPropsFrom?.value || props.inputPropsTo?.value;
 
-    console.log(props.inputPropsFrom);
-
     const renderCalendar = useCallback(() => (
         <Calendar
             {...props.calendarProps}

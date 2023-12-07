@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
@@ -51,7 +51,7 @@ describe('DropDown tests', () => {
         fireEvent.click(dropDownDispatcher);
         const dropDown = getElementByClassName(container, expectedDropDownClass);
 
-        expect(dropDown).toHaveClass(`${expectedDropDownClass}_position-bottom`);
+        expect(dropDown).toHaveClass(`${expectedDropDownClass}_position_bottom`);
     });
 
     it('should have external class and right content', () => {

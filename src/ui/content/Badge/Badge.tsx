@@ -56,7 +56,11 @@ export interface IBadgeProps extends IUiComponent {
 
     /**
      * Нужно ли отображать счетчик
-     * @example {isEnable: true, content: 'Hello from counter!'}
+     * @example
+     * {
+     *  isEnable: true,
+     *  content: 'Hello from counter!',
+     * }
      */
     counter: boolean | ICounter;
 

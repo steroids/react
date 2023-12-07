@@ -4,7 +4,7 @@ import {useComponents} from '../../../hooks';
 export interface IAccordionIcon {
     /**
     * Пользовательская иконка открытия
-    * @example 'user
+    * @example 'user'
     */
     open: React.ReactElement | string,
     /**
@@ -74,7 +74,10 @@ export interface IAccordionProps extends IUiComponent {
 
     /**
      * Вызываемая функция при каждом изменении состояния
-     * @example {() => {console.log('success')}}
+     * @example
+     * {
+     *  () => { console.log('success') }
+     * }
      */
     onChange?: () => void,
 

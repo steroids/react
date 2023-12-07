@@ -71,7 +71,17 @@ export interface IDataProvider {
 export interface IDataProviderConfig {
     /**
      * Коллекция элементов
-     * @example [{id: 1, label: 'Krasnoyarsk'}, {id: 2, label: 'Moscow'}]
+     * @example
+     * [
+     *  {
+     *   id: 1,
+     *   label: 'Krasnoyarsk'
+     *  },
+     *  {
+     *   id: 2,
+     *   label: 'Moscow'
+     *  }
+     * ]
      */
     items?: DataProviderItems,
 
@@ -89,7 +99,12 @@ export interface IDataProviderConfig {
 
     /**
      * Настройки поиска
-     * @example {enable: true, minLength: 2, delay: 100}
+     * @example
+     * {
+     *  enable: true,
+     *  minLength: 2,
+     *  delay: 100
+     * }
      */
     autoComplete?: boolean | IAutoCompleteConfig,
 

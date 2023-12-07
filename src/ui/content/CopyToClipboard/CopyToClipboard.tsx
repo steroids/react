@@ -40,9 +40,9 @@ export interface ICopyToClipboardProps extends IUiComponent {
     *   message: 'Some value has been copied to buffer',
     *   level: 'info',
     *   params: {
-    *   position: 'top-left',
-    *   timeOut: 100,
-    *  }
+    *     position: 'top-left',
+    *     timeOut: 100,
+    *   }
     * }
     */
     notification?: string | {

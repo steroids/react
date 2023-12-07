@@ -11,7 +11,7 @@ import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import AutoSaveHelper from './AutoSaveHelper';
 import {IFieldProps} from '../Field/Field';
 import {useComponents, useDispatch} from '../../../hooks';
-import {cleanEmptyObject, providers} from '../../../utils/form';
+import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
 import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
 
@@ -35,7 +35,15 @@ export interface IFormProps extends IUiComponent {
 
     /**
      * Модель с полями формы
-     * @example {attributes: [{attribute: 'category', field: 'DropDownField'}]}
+     * @example
+     * {
+     *  attributes: [
+     *   {
+     *    attribute: 'category',
+     *    field: 'DropDownField'
+     *   }
+     *  ]
+     * }
      */
     model?: string | ((...args: any[]) => any) | any;
 
@@ -66,7 +74,11 @@ export interface IFormProps extends IUiComponent {
     /**
      * Набор с правилами для проверки соответствия значений полей формы определенному формату.
      * Проверка запускается в момент отправки формы (в обработчике onSubmit).
-     * @example [['name', 'required'], ['age', 'integer']]
+     * @example
+     * [
+     *  ['name', 'required'],
+     *  ['age', 'integer']
+     * ]
      */
     validators?: any[];
 
@@ -129,7 +141,13 @@ export interface IFormProps extends IUiComponent {
 
     /**
      * Поля, которые необходимо поместить в форму
-     * @example [{attribute: 'category', component: 'DropDownField'}]
+     * @example
+     * [
+     *  {
+     *   attribute: 'category',
+     *   component: 'DropDownField'
+     *  }
+     * ]
      */
     fields?: (string | IFieldProps)[],
 
@@ -298,6 +316,7 @@ function Form(props: IFormProps): JSX.Element {
         submitCounter,
         isInvalid,
         isSubmitting,
+        errors,
         setErrors,
         reducer,
         dispatch,
@@ -322,6 +341,11 @@ function Form(props: IFormProps): JSX.Element {
             dispatch(formDestroy(props.formId));
         }
     });
+
+    // Clear Errors
+    const prevValues = usePrevious(values);
+    useUpdateEffect(() => clearErrors(values, prevValues, errors, setErrors),
+        [errors, prevValues, setErrors, values]);
 
     // OnChange handler
     useUpdateEffect(() => {

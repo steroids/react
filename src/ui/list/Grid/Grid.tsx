@@ -1,8 +1,6 @@
 import * as React from 'react';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isString from 'lodash-es/isString';
-import _isPlainObject from 'lodash-es/isPlainObject';
-import _get from 'lodash-es/get';
 import {useCallback, useMemo} from 'react';
 import {ILinkProps} from '../../nav/Link/Link';
 import {useComponents} from '../../../hooks';
@@ -31,7 +29,11 @@ export interface IGridColumn {
 
     /**
      * Свойства для компонента форматирования
-     * @example {component: DateFormatter, format: 'DD MMMM'}
+     * @example
+     * {
+     *  component: DateFormatter,
+     *  format: 'DD MMMM'
+     * }
      */
     formatter?: Record<string, any>,
 
@@ -99,7 +101,12 @@ export interface IGridColumn {
 
     /**
      * Параметры для ссылки в колонке
-    * @example {attribute: 'name', linkProps: {target: 'blank'}, url: 'https://kozhindev.com'}
+    * @example
+     * {
+     *  attribute: 'name',
+     *  linkProps: {target: 'blank'},
+     *  url: 'https://kozhindev.com'
+     * }
     */
     link?: {
         attribute: string,
@@ -109,7 +116,11 @@ export interface IGridColumn {
 
     /**
     * Параметры для иконки в колонке
-    * @example {attribute: 'icon', isLeft: true}
+    * @example
+     * {
+     *  attribute: 'icon',
+     *  isLeft: true
+     * }
     */
     icon?: {
         attribute: string,
@@ -118,7 +129,11 @@ export interface IGridColumn {
 
     /**
     *  Параметры для картинки в колонке
-    * @example {attribute: 'icon', isLeft: true}
+    * @example
+     * {
+     *  attribute: 'icon',
+     *  isLeft: true
+     * }
     */
     picture?: {
         attribute: string,
@@ -152,14 +167,33 @@ export interface IGridProps extends IListConfig {
 
     /**
      * Коллекция с наименованиями и свойствами колонок в таблице
-     * @example [{label: 'Name', attribute: 'name'}, {label: 'Work', attribute: 'work'}]
+     * @example
+     * [
+     *  {
+     *   label: 'Name',
+     *   attribute: 'name'
+     *  },
+     *  {
+     *   label: 'Work',
+     *   attribute: 'work'
+     *  }
+     * ]
      */
     columns: (string | IGridColumn)[];
 
     /**
      * Коллекция с элементами управления. Данная коллекция отобразится в колонке рядом с каждой записью в таблице.
      * Например, кнопки для удаления и детального просмотра записи.
-     * @example [{id: 'delete'}, {id: 'view', position: 'left'}]
+     * @example
+     * [
+     *  {
+     *   id: 'delete'
+     *  },
+     *  {
+     *   id: 'view',
+     *   position: 'left'
+     *  }
+     * ]
      */
     controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
 
@@ -241,7 +275,6 @@ export default function Grid(props: IGridProps): JSX.Element {
         initialItems: props.initialItems,
         initialTotal: props.initialTotal,
         autoFetchOnFormChanges: props.autoFetchOnFormChanges,
-        hasTreeItems: props.hasTreeItems,
     });
 
     const renderLabel = useCallback((column) => {

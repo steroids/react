@@ -24,7 +24,7 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>, Omit<IDataSelectConfig, 'items'>, IUiComponent {
     /**
      * Свойства для элемента input
-     * @example {onKeyDown: ...}
+     * @example { onKeyDown: ... }
      */
     inputProps?: any,
 
@@ -35,9 +35,26 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
 
     /**
      * Коллекция элементов
-     * @example [{id: 1, label: 'Krasnoyarsk', color: 'red'}, {id: 2, label: 'Moscow', color: 'purple'}]
+     * @example
+     * [
+     *  {
+     *      id: 1,
+     *      label: 'Krasnoyarsk',
+     *      color: 'red'
+     *  },
+     *  {
+     *      id: 2,
+     *      label: 'Moscow',
+     *      color: 'purple'
+     *  }
+     * ]
      */
     items: CheckboxFieldListItems,
+
+    /**
+     * Кастомная вьюшка для элемента
+     */
+    itemView?: CustomView,
 
     [key: string]: any,
 }
@@ -122,7 +139,7 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         }
     }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
-    const CheckboxFieldView = components.ui.getView('form.CheckboxFieldView');
+    const CheckboxFieldView = props.itemView || components.ui.getView('form.CheckboxFieldView');
 
     const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => (
         <CheckboxFieldView

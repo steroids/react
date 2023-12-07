@@ -68,19 +68,19 @@ export interface ILocaleComponent extends ILocaleComponentConfig {
  * Компонент для локализации приложения. Поддерживает конфигурацию языка и временной зоны
  */
 export default class LocaleComponent implements ILocaleComponent {
-    backendTimeDiff: null;
+    backendTimeDiff?: null;
 
-    backendTimeZone: any;
+    backendTimeZone?: any;
 
     /**
      * Язык приложения
      * @example ru
      */
-    language: string;
+    language?: string;
 
-    sourceLanguage: string;
+    sourceLanguage?: string;
 
-    translations: any;
+    translations?: any;
 
     constructor(components, config) {
         this.language = config.language || 'en';

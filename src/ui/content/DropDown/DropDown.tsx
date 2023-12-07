@@ -49,7 +49,7 @@ export interface IDropDownViewProps extends IDropDownProps, IAbsolutePositioning
     /**
      * Рассчет абсолютной позиции
      */
-    calculatePosition: (componentSize: ClientRect) => void,
+    calculatePosition?: (dropDownDimensions: Record<string, any>, arrowDimensions: Record<string, any>) => void,
 
     /**
      * Ссылка на view
@@ -66,6 +66,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
         onShow,
         onHide,
         position,
+        arrowPosition,
         style,
     } = useAbsolutePositioning(props);
     const childRef = useRef(null);
@@ -94,8 +95,8 @@ function DropDown(props: IDropDownProps): JSX.Element {
     useEvent('mousedown', onAnyClick);
     useEvent('touchstart', onAnyClick);
 
-    const calculatePosition = useCallback((componentSize) => {
-        calculateAbsolutePosition(position, childRef.current, componentSize);
+    const calculatePosition = useCallback((componentSize, arrowSize) => {
+        calculateAbsolutePosition(position, childRef.current, componentSize, arrowSize);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -131,6 +132,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
                         content={props.content}
                         position={position}
                         style={style}
+                        arrowPosition={arrowPosition}
                         calculatePosition={calculatePosition}
                         isComponentVisible={isComponentVisible}
                         onClose={onHide}

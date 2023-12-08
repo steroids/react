@@ -6,7 +6,7 @@ import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/Calenda
 import WeekHour from './views/WeekHour/WeekMockHour';
 
 interface IWeekGridProps {
-    weekGrid24HoursArray: string[],
+    weekGridTwentyFourHoursArray: string[],
     weekGridCurrentWeekDays: IDay[]
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
     openEditModal: (event: IEvent) => void,
@@ -36,7 +36,7 @@ function WeekGrid(props: IWeekGridProps) {
         <div className={bem.block()}>
             <div className={bem.element('content')}>
                 <div className={bem.element('hours-time')}>
-                    {props.weekGrid24HoursArray.map((hour, hourIndex) => (
+                    {props.weekGridTwentyFourHoursArray.map((hour, hourIndex) => (
                         <div
                             key={hourIndex}
                             className={bem.element('hours-time-item')}
@@ -62,7 +62,7 @@ function WeekGrid(props: IWeekGridProps) {
                         ))}
                     </div>
                     <div className={bem.element('table-grid')}>
-                        {props.weekGrid24HoursArray.map((hour, hourIndex) => (
+                        {props.weekGridTwentyFourHoursArray.map((hour, hourIndex) => (
                             <div
                                 key={hourIndex}
                                 className={bem.element('table-grid-row')}

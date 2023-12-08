@@ -4,7 +4,7 @@ import _isString from 'lodash-es/isString';
 import {useCallback, useMemo} from 'react';
 import {ILinkProps} from '../../nav/Link/Link';
 import {useComponents} from '../../../hooks';
-import useList, {IListConfig, ListControlPosition} from '../../../hooks/useList';
+import useList, {IListConfig, ListControlPosition} from '../../../hooks/useList/useList';
 import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';

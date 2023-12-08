@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useComponents} from '../../../hooks';
-import useList, {IListConfig, IListOutput} from '../../../hooks/useList';
+import useList, { } from '../../../hooks/useList';
+import {IListConfig, IListOutput} from '../../../hooks/useList/useList';
 
 /**
  * List

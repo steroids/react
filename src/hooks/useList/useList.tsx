@@ -3,24 +3,24 @@ import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import useSelector from './useSelector';
-import {getList} from '../reducers/list';
-import useModel from '../hooks/useModel';
-import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
-import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../actions/list';
-import useDispatch from '../hooks/useDispatch';
-import {formChange, formDestroy} from '../actions/form';
-import {formSelector} from '../reducers/form';
-import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
-import useInitial from '../hooks/useInitial';
-import {IPaginationProps} from '../ui/list/Pagination/Pagination';
-import {IPaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
-import {IEmptyProps} from '../ui/list/Empty/Empty';
-import {IFormProps} from '../ui/form/Form/Form';
-import {Model} from '../components/MetaComponent';
-import usePagination from './usePagination';
-import useEmpty from './useEmpty';
-import useSearchForm from './useSearchForm';
+import useSelector from '../useSelector';
+import {getList} from '../../reducers/list';
+import useModel from '../useModel';
+import useAddressBar, {IAddressBarConfig} from '../useAddressBar';
+import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../../actions/list';
+import useDispatch from '../useDispatch';
+import {formChange, formDestroy} from '../../actions/form';
+import {formSelector} from '../../reducers/form';
+import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../../ui/list/LayoutNames/LayoutNames';
+import useInitial from '../useInitial';
+import {IPaginationProps} from '../../ui/list/Pagination/Pagination';
+import {IPaginationSizeProps} from '../../ui/list/PaginationSize/PaginationSize';
+import {IEmptyProps} from '../../ui/list/Empty/Empty';
+import {IFormProps} from '../../ui/form/Form/Form';
+import {Model} from '../../components/MetaComponent';
+import usePagination from './hooks/usePagination';
+import useEmpty from './hooks/useEmpty';
+import useSearchForm from './hooks/useSearchForm';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -341,7 +341,7 @@ export default function useList(config: IListConfig): IListOutput {
     const {renderPagination, renderPaginationSize, paginationProps, paginationSizeProps} = usePagination(config, list);
 
     // Layout switcher
-    const LayoutNames = require('../ui/list/LayoutNames').default;
+    const LayoutNames = require('../../ui/list/LayoutNames').default;
     const layoutNamesProps = normalizeLayoutNamesProps(config.layout);
     const renderLayoutNames = () => (
         <LayoutNames
@@ -389,7 +389,7 @@ export default function useList(config: IListConfig): IListOutput {
     const initialValues = useInitial(() => _initialValues);
 
     const renderList = useCallback((children: any) => {
-        const Form = require('../ui/form/Form').default;
+        const Form = require('../../ui/form/Form').default;
         return (
             <Form
                 formId={formId}
@@ -463,7 +463,7 @@ export default function useList(config: IListConfig): IListOutput {
             }
         }
     }, [config.autoFetchOnFormChanges, config.listId, dispatch, formId, formValues,
-        paginationProps.attribute, paginationProps.defaultValue, prevFormValues, updateQuery]);
+    paginationProps.attribute, paginationProps.defaultValue, prevFormValues, updateQuery]);
 
     // Check change query
     const prevQuery = usePrevious(config.query);

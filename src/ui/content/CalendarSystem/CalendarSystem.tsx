@@ -143,7 +143,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     [key: string]: any;
 }
 
-export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style'> {
+export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps'> {
     openCreateModal: (eventInitialDay?: IDay) => void;
     onInnerCalendarChangeMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
@@ -163,7 +163,7 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
         openCreateModal: (eventInitialDay?: IDay) => void;
     }
     weekGridProps: {
-        weekGrid24HoursArray: string[],
+        weekGridTwentyFourHoursArray: string[],
         weekGridCurrentWeekDays: IDay[],
         getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
         openEditModal: (event: IEvent) => void;
@@ -207,7 +207,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
     );
 
     const {
-        weekGrid24HoursArray,
+        weekGridTwentyFourHoursArray,
         weekGridCurrentWeekDays,
         weekGridControls,
         updateWeekOnMonthChange,
@@ -253,6 +253,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         handleCalendarTypeChange,
         handleControlClick,
         calendarType,
+        additionalViewProps: props.additionalViewProps,
 
         monthGridProps: {
             monthGridWeekDays,
@@ -262,7 +263,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             openEditModal,
         },
         weekGridProps: {
-            weekGrid24HoursArray,
+            weekGridTwentyFourHoursArray,
             weekGridCurrentWeekDays,
             getEventsFromDate,
             openCreateModal,
@@ -284,8 +285,9 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         monthGridCalendarDays,
         getEventsFromDate,
         openEditModal,
-        weekGrid24HoursArray,
+        weekGridTwentyFourHoursArray,
         weekGridCurrentWeekDays,
+        props.additionalViewProps,
     ]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);

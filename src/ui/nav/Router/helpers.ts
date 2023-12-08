@@ -39,7 +39,7 @@ export const walkRoutesRecursive = (
         ...item,
         id: item.id,
         exact: item.exact,
-        path: item.path && joinChildAndParentPaths(item.path, parentItem.path),
+        path: item.path && isChildPathJoinedWithParentPath ? item.path : joinChildAndParentPaths(item.path, parentItem.path),
         label: item.label,
         title: item.title,
         isVisible: typeof item.isVisible !== 'undefined'
@@ -76,7 +76,7 @@ export const treeToList = (
     item: IRouteItem | Record<string, any>,
     isRoot = true,
     parentItem: any = {},
-    isChildPathJoinedWithParentPath = false,
+    isChildPathJoinedWithParentPath = true,
 ) => {
     if (_isArray(item)) {
         return item;

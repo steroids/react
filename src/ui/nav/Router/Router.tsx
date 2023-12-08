@@ -13,13 +13,7 @@ import {IListProps} from '../../list/List/List';
 import {useComponents, useSelector} from '../../../hooks';
 import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
-import {
-    buildUrl,
-    getActiveRouteIds,
-    getRoute,
-    getRouteParams,
-    isRouterInitialized,
-} from '../../../reducers/router';
+import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized} from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {findRedirectPathRecursive, treeToList, walkRoutesRecursive} from './helpers';
 
@@ -180,6 +174,10 @@ export interface IRouterProps {
      */
     children?: React.ReactNode;
 
+    /**
+     * Флаг, который позволяет использовать вложенные роуты без указания абсолютного пути
+     * @example true
+     */
     isChildPathJoinedWithParentPath?: boolean;
 }
 
@@ -406,6 +404,7 @@ function Router(props: IRouterProps): JSX.Element {
 
 Router.defaultProps = {
     autoScrollTop: true,
+    isChildPathJoinedWithParentPath: true,
 };
 
 export default Router;

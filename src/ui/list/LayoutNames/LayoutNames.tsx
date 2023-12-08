@@ -3,7 +3,7 @@ import _get from 'lodash-es/get';
 import {useCallback} from 'react';
 import {useComponents} from '../../../hooks';
 import {INavItem} from '../../nav/Nav/Nav';
-import {ListControlPosition} from '../../../hooks/useList';
+import {ListControlPosition} from '../../../hooks/useList/useList';
 import {IList, listSetLayout} from '../../../actions/list';
 import useDispatch from '../../../hooks/useDispatch';
 

@@ -46,7 +46,17 @@ export interface IFlexGridItem {
 export interface IFlexGridProps extends IUiComponent {
     /**
      * Элементы FlexGrid
-     * @example [{content: 'Block1', col: 4}, {content: 'Block2', col: 6}]
+     * @example
+     * [
+     *  {
+     *   content: 'Block1',
+     *   col: 4
+     *  },
+     *  {
+     *   content: 'Block2',
+     *   col: 6
+     *  }
+     * ]
      */
     items?: IFlexGridItem[];
 

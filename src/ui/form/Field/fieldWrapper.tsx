@@ -27,7 +27,15 @@ export interface IFieldWrapperInputProps {
 
     /**
      * Модель с полями формы
-     * @example {attributes: [{attribute: 'category', field: 'DropDownField'}]}
+     * @example
+     * {
+     *  attributes: [
+     *   {
+     *    attribute: 'category',
+     *    field: 'DropDownField'
+     *   }
+     *  ]
+     * }
      */
     model?: string | ((...args: any[]) => any) | any;
 

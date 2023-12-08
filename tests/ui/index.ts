@@ -137,6 +137,9 @@ export default {
     'nav.NavListView': {
         lazy: () => require('./nav/Nav/NavListMockView').default,
     },
+    'nav.TreeItemView': {
+        lazy: () => require('./list/TreeTable/TreeItemMockView').default,
+    },
     'form.TimeRangeFieldView': {
         lazy: () => require('./form/TimeRangeField/TimeRangeFieldMockView').default,
     },

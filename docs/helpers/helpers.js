@@ -1,6 +1,11 @@
 const _ = require('lodash');
 const fs = require('fs');
 
+const PROPS_INTERFACE_PATTERN = /^I\w+Props$/;
+const PROPS_VIEW_INTERFACE_PATTERN = /^I\w+ViewProps$/;
+
+const isUiComponent = (component) => PROPS_INTERFACE_PATTERN.test(component) && !PROPS_VIEW_INTERFACE_PATTERN.test(component);
+
 const typeToString = (type) => {
     if (!type) {
         return null;
@@ -46,7 +51,10 @@ const typeToObject = type => {
 
     switch (type.kindString) {
         case 'Property':
-            return typeToObject(type.type.declaration);
+            if (type.type.declaration) {
+                return typeToObject(type.type.declaration);
+            }
+            return typeToString(type.type);
 
         case 'Function':
             return type.name + '()';
@@ -63,7 +71,9 @@ const typeToObject = type => {
             // eslint-disable-next-line no-case-declarations
             const obj = {};
             (type.children || []).forEach(item => {
-                obj[item.name] = typeToObject(item);
+                obj[item.name] = item.defaultValue === '...'
+                    ? typeToObject(item)
+                    : item.defaultValue.trim();
             });
             return obj;
         default:
@@ -113,24 +123,14 @@ const getInfo = (filesMap, moduleItem, item) => {
     // Find default props for React Components
     if (item.kindString === 'Interface') {
         info.defaultProps = null;
-        (item.children || []).forEach(property => {
-            if (property.name === 'defaultProps' && property.flags && property.flags.isExported === true) {
-                info.defaultProps = typeToObject(property);
-            }
-        });
-        (moduleItem.children || []).forEach(childrenItem => {
-            if (
-                childrenItem.kindString === 'Object literal'
-                && childrenItem.name === 'defaultProps'
-                && childrenItem.flags
-                && childrenItem.flags.isConst === true
-            ) {
-                info.defaultProps = {
-                    ...info.defaultProps,
-                    ...typeToObject(childrenItem),
-                };
-            }
-        });
+
+        if (isUiComponent(item.name)) {
+            (moduleItem.children[0].children || []).forEach(property => {
+                if (property.name === 'defaultProps') {
+                    info.defaultProps = typeToObject(property.type.declaration);
+                }
+            });
+        }
 
         info.extends = null;
         if (filesMap[item.sources[0].fileName]) {
@@ -140,8 +140,8 @@ const getInfo = (filesMap, moduleItem, item) => {
         }
     }
 
-    // Get properties
     if (['Class', 'Interface'].includes(item.kindString)) {
+        // Get properties
         info.properties = (item.children || [])
             .map(property => {
                 // Check is property
@@ -151,7 +151,12 @@ const getInfo = (filesMap, moduleItem, item) => {
 
                 const propertyInfo = getProperty(property);
 
-                // Skip props without jsoc for components
+                if (isUiComponent(info.name)) {
+                    const defaultValue = _.get(info, ['defaultProps', property.name]) || null;
+                    _.set(propertyInfo, 'defaultValue', defaultValue);
+                }
+
+                // Skip props without jsdoc for components
                 if (!propertyInfo.description && moduleName.match(/^components\//)) {
                     return false;
                 }
@@ -159,10 +164,8 @@ const getInfo = (filesMap, moduleItem, item) => {
                 return propertyInfo;
             })
             .filter(Boolean);
-    }
 
-    // Get methods
-    if (item.kindString === 'Class') {
+        // Get methods
         info.methods = (item.children || [])
             .map(method => {
                 // Check is property
@@ -170,68 +173,13 @@ const getInfo = (filesMap, moduleItem, item) => {
                     return false;
                 }
 
-                /*
-                    "signatures": [
-                        {
-                            "id": 7631,
-                            "name": "moment",
-                            "kind": 4096,
-                            "kindString": "Call signature",
-                            "flags": {
-                                "isExported": true
-                            },
-                            "comment": {
-                                "shortText": "Получение экземпляра `moment` с учетом временной зоны бекенда"
-                            },
-                            "parameters": [
-                                {
-                                    "id": 7632,
-                                    "name": "date",
-                                    "kind": 32768,
-                                    "kindString": "Parameter",
-                                    "flags": {
-                                        "isExported": true
-                                    },
-                                    "comment": {},
-                                    "type": {
-                                        "type": "intrinsic",
-                                        "name": "any"
-                                    },
-                                    "defaultValue": "undefined"
-                                },
-                                {
-                                    "id": 7633,
-                                    "name": "format",
-                                    "kind": 32768,
-                                    "kindString": "Parameter",
-                                    "flags": {
-                                        "isExported": true
-                                    },
-                                    "comment": {
-                                        "text": "\n"
-                                    },
-                                    "type": {
-                                        "type": "intrinsic",
-                                        "name": "any"
-                                    },
-                                    "defaultValue": "undefined"
-                                }
-                            ],
-                            "type": {
-                                "type": "intrinsic",
-                                "name": "any"
-                            }
-                        }
-                    ],
-                 */
-
                 if (!method.signatures || method.signatures.length === 0) {
                     return false;
                 }
 
                 const methodInfo = getProperty(method.signatures[0], true);
 
-                // Skip props without jsoc for components
+                // Skip props without jsdoc for components
                 if (!methodInfo.description && moduleName.match(/^components\//)) {
                     return false;
                 }

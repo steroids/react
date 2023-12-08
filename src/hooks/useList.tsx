@@ -1,12 +1,9 @@
-import {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
-import * as React from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import {getTreeItemUniqId} from '../utils/list';
-import {ITreeTableItem} from '../ui/list/TreeTable/TreeTable';
-import useSelector from '../hooks/useSelector';
+import useSelector from './useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
 import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
@@ -72,31 +69,57 @@ export interface IListConfig {
 
     /**
      * Подключение пагинации
-     * @example {loadMore: true}
+     * @example
+     * {
+     *  loadMore: true
+     * }
      */
     pagination?: boolean | IPaginationProps,
 
     /**
      * Переключение количества элементов в списке
-     * @example {sizes: [3, 6, 9], defaultValue: 3}
+     * @example
+     * {
+     *  sizes: [3, 6, 9],
+     *  defaultValue: 3
+     * }
      */
     paginationSize?: boolean | IPaginationSizeProps,
 
     /**
      * Подключение сортировки
-     * @example {enable: true, defaultSort: 'startDate'}
+     * @example
+     * {
+     *  enable: true,
+     *  defaultSort: 'startDate'
+     * }
      */
     sort?: boolean | ISortConfig,
 
     /**
      * Варианты расположения элементов коллекции
-     * @example {items: [{id: 'list', label: 'List'}, {id: 'grid', label: 'Grid'}]}
+     * @example
+     * {
+     *  items: [
+     *   {
+     *    id: 'list',
+     *    label: 'List'
+     *   },
+     *   {
+     *    id: 'grid',
+     *    label: 'Grid'
+     *   }
+     *  ]
+     * }
      */
     layout?: boolean | ILayoutNamesProps,
 
     /**
      * Заглушка в случае отсутствия элементов
-     * @example {text: 'Записи не найдены'}
+     * @example
+     * {
+     *  text: 'Записи не найдены'
+     * }
      */
     empty?: boolean | string | IEmptyProps,
 
@@ -108,7 +131,15 @@ export interface IListConfig {
 
     /**
      * Форма для поиска элементов
-     * @example {fields: ['title'], model: {attributes: ['title:string:Название']}}
+     * @example
+     * {
+     *  fields: ['title'],
+     *  model: {
+     *   attributes: [
+     *    'title:string:Название'
+     *   ]
+     *  }
+     * }
      */
     searchForm?: Omit<IFormProps, 'formId'> & {
         formId?: string,
@@ -161,7 +192,10 @@ export interface IListConfig {
 
     /**
      * Дополнительные параметры, значения которых нужно передавать в запросе для получения данных
-     * @example {tagName: 'MarketReviews'}
+     * @example
+     * {
+     *  tagName: 'MarketReviews'
+     * }
      */
     query?: Record<string, unknown>,
 
@@ -172,7 +206,15 @@ export interface IListConfig {
 
     /**
      * Модель для синхронизации значений формы с адресной строкой
-     * @example {attributes: [{attribute: 'isMilesAvailable', type: boolean}]}
+     * @example
+     * {
+     *  attributes: [
+     *   {
+     *    attribute: 'isMilesAvailable',
+     *    type: boolean
+     *   }
+     *  ]
+     * }
      */
     searchModel?: string,
 
@@ -191,11 +233,6 @@ export interface IListConfig {
      * Количество элементов всего в списке (для отрисовки пагинации), заданное вручную
      */
     initialTotal?: number,
-
-    /**
-     * Включает обработку вложенных данных из items
-     */
-    hasTreeItems?: boolean,
 }
 
 export interface IListOutput {
@@ -281,56 +318,6 @@ export const createInitialValues = ({
     ...configQuery, // Query from props
 });
 
-const TOP_TREE_LEVEL_VALUE = 0;
-
-export const prepareItemsToTree = (
-    sourceItems: ITreeTableItem[],
-    openedTreeItems: Record<string, boolean>,
-    currentPage: number | null,
-    itemsOnPage: number | null,
-    onTreeItemClick: (uniqueId: string, item: Record<string, any>) => void,
-    parentId = '',
-    currentLevel = TOP_TREE_LEVEL_VALUE,
-) => {
-    let treeItems = [];
-
-    if (currentPage && itemsOnPage && currentLevel === TOP_TREE_LEVEL_VALUE) {
-        const startIndex = (currentPage - 1) * itemsOnPage;
-        sourceItems = sourceItems.slice(startIndex, startIndex + itemsOnPage);
-    }
-
-    (sourceItems || []).forEach((item, index) => {
-        const uniqueId = getTreeItemUniqId(item, index, parentId);
-        const isOpened = !!openedTreeItems[uniqueId];
-        const hasItems = !!(item.items && item.items.length > 0);
-
-        treeItems.push({
-            ...item,
-            uniqueId,
-            level: currentLevel,
-            isOpened,
-            hasItems,
-            onTreeItemClick,
-        });
-
-        if (isOpened) {
-            treeItems = treeItems.concat(
-                prepareItemsToTree(
-                    item.items,
-                    openedTreeItems,
-                    currentPage,
-                    itemsOnPage,
-                    onTreeItemClick,
-                    uniqueId,
-                    currentLevel + 1,
-                ),
-            ).filter(Boolean);
-        }
-    });
-
-    return treeItems;
-};
-
 /**
  * useList
  * Добавляет массу возможностей для взаимодействия с коллекциями. Коллекции можно получать как с бекенда,
@@ -340,27 +327,6 @@ export const prepareItemsToTree = (
 export default function useList(config: IListConfig): IListOutput {
     // Get list from redux state
     const list = useSelector(state => getList(state, config.listId));
-
-    const [openedTreeItems, setOpenedTreeItems] = useState<Record<string, boolean>>({});
-
-    const onTreeItemClick = useCallback((uniqueId: string, item: Record<string, any>) => {
-        if (item.items?.length > 0) {
-            setOpenedTreeItems((prevItems) => (
-                {...prevItems, [uniqueId]: !prevItems[uniqueId]}
-            ));
-        }
-    }, []);
-
-    const getTreeItems = useCallback(
-        (sourceItems: ITreeTableItem[]) => prepareItemsToTree(
-            sourceItems,
-            openedTreeItems,
-            list?.page,
-            list?.pageSize,
-            onTreeItemClick,
-        ),
-        [onTreeItemClick, openedTreeItems, list],
-    );
 
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);
@@ -485,8 +451,6 @@ export default function useList(config: IListConfig): IListOutput {
     // Init list in redux store
     useMount(() => {
         if (!list) {
-            const items = config.hasTreeItems ? getTreeItems(config.items) : config.items;
-
             const toDispatch: any = [
                 listInit(config.listId, {
                     listId: config.listId,
@@ -497,7 +461,7 @@ export default function useList(config: IListConfig): IListOutput {
                     condition: config.condition,
                     scope: config.scope,
                     items: null,
-                    sourceItems: items || null,
+                    sourceItems: config.items || null,
                     total: config.initialTotal,
                     isRemote: !config.items,
                     primaryKey: config.primaryKey || defaultConfig.primaryKey,
@@ -510,11 +474,8 @@ export default function useList(config: IListConfig): IListOutput {
                 }),
             ];
 
-            if (config.initialItems) {
-                const initialItems = config.hasTreeItems ? getTreeItems(config.initialItems) : config.initialItems;
-                toDispatch.push(listSetItems(config.listId, initialItems));
-            } else if (config.items) {
-                toDispatch.push(listSetItems(config.listId, items));
+            if (config.initialItems || config.items) {
+                toDispatch.push(listSetItems(config.listId, config.initialItems || config.items));
             }
 
             if (!config.initialItems) {
@@ -567,14 +528,6 @@ export default function useList(config: IListConfig): IListOutput {
             listSetItems(config.listId, config.items),
         ]);
     }, [dispatch, config.items, config.listId]);
-
-    useUpdateEffect(() => {
-        if (config.hasTreeItems) {
-            dispatch([
-                listSetItems(config.listId, getTreeItems(config.items)),
-            ]);
-        }
-    }, [dispatch, config.items, config.listId, openedTreeItems, list?.pageSize, list?.page]);
 
     // Destroy
     useUnmount(() => {

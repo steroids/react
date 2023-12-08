@@ -240,6 +240,8 @@ function Router(props: IRouterProps): JSX.Element {
                     walkRoutesRecursive(
                         {id: 'root', ...props.routes},
                         props.defaultRoles ? {roles: props.defaultRoles} : undefined,
+                        {},
+                        props.isChildPathJoinedWithParentPath,
                     ),
                 ),
             );

@@ -28,6 +28,8 @@ const joinChildAndParentPaths = (path = '', parentPath = '') => {
     return `${parentPath}${path.startsWith('/') ? '' : '/'}${path}`;
 };
 
+const ensureLeadingSlashInPath = (path = '', parentPath = null) => (!path.startsWith('/') && parentPath ? parentPath + '/' : '') + path;
+
 export const walkRoutesRecursive = (
     item: IRouteItem | Record<string, any>,
     defaultItem: any = {},
@@ -39,7 +41,11 @@ export const walkRoutesRecursive = (
         ...item,
         id: item.id,
         exact: item.exact,
-        path: item.path && isChildPathJoinedWithParentPath ? item.path : joinChildAndParentPaths(item.path, parentItem.path),
+        path: item.path && (
+            isChildPathJoinedWithParentPath
+                ? ensureLeadingSlashInPath(item.path, parentItem.path)
+                : joinChildAndParentPaths(item.path, parentItem.path)
+        ),
         label: item.label,
         title: item.title,
         isVisible: typeof item.isVisible !== 'undefined'

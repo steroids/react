@@ -32,6 +32,7 @@ export const walkRoutesRecursive = (
     item: IRouteItem | Record<string, any>,
     defaultItem: any = {},
     parentItem: any = {},
+    isChildPathJoinedWithParentPath = true,
 ) => {
     const normalizedItem = {
         ...defaultItem,
@@ -60,10 +61,10 @@ export const walkRoutesRecursive = (
     };
     let items = null;
     if (_isArray(item.items)) {
-        items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem));
+        items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, isChildPathJoinedWithParentPath));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
-            .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem));
+            .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem, isChildPathJoinedWithParentPath));
     }
     return {
         ...normalizedItem,
@@ -77,17 +78,20 @@ export const treeToList = (
     parentItem: any = {},
     isChildPathJoinedWithParentPath = false,
 ) => {
-    if (isChildPathJoinedWithParentPath && parentItem?.path) {
-        item.path = joinChildAndParentPaths(item.path, parentItem.path);
-    }
-
     if (_isArray(item)) {
         return item;
     }
+
+    if (!isChildPathJoinedWithParentPath && parentItem?.path) {
+        item.path = joinChildAndParentPaths(item.path, parentItem.path);
+    }
+
     if (isRoot && !item.id) {
         item.id = 'root';
     }
+
     let items = item.path ? [item] : [];
+
     if (_isArray(item.items)) {
         item.items.forEach(subItem => {
             items = items.concat(treeToList(subItem, false, item, isChildPathJoinedWithParentPath));

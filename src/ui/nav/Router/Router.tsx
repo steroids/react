@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {parse} from 'path-to-regexp';
 import {Route, Switch, Redirect, StaticRouter} from 'react-router';
 import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
@@ -19,7 +18,6 @@ import {
     getActiveRouteIds,
     getRoute,
     getRouteParams,
-    getRouteParent,
     isRouterInitialized,
 } from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
@@ -180,7 +178,9 @@ export interface IRouterProps {
      * Контент, который отобразится под каждой страницей приложения
      * @example SomeComponent
      */
-    children?: React.ReactNode,
+    children?: React.ReactNode;
+
+    isChildPathJoinedWithParentPath?: boolean;
 }
 
 const renderComponent = (route: IRouteItem, activePath, routeProps) => {
@@ -220,44 +220,18 @@ const renderComponent = (route: IRouteItem, activePath, routeProps) => {
     );
 };
 
-const filterParamsForRoute = (route: IRouteItem, routeParams: Record<string, string | number>) => {
-    if (!route.path) {
-        return routeParams;
-    }
-
-    const parsedPath = parse(route.path);
-    const filteredRouteParams = {} as Record<string, any>;
-
-    parsedPath.forEach(p => {
-        if (typeof p === 'object' && p.name) {
-            if (p.name in routeParams) {
-                filteredRouteParams[p.name] = routeParams[p.name];
-            }
-        }
-    });
-    return filteredRouteParams;
-};
-
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
     const routeParams = useSelector(getRouteParams);
 
-    const {isInitialized, pathname, route, activePath, activeRouteIds, parentRoute} = useSelector(state => ({
+    const {isInitialized, pathname, route, activePath, activeRouteIds} = useSelector(state => ({
         isInitialized: isRouterInitialized(state),
         pathname: _get(state, 'router.location.pathname'),
         route: getRoute(state),
         activePath: state.router?.location?.pathname,
         activeRouteIds: getActiveRouteIds(state),
-        parentRoute: getRouteParent(state),
     }));
     const routeId = route?.id || null;
-
-    const parentRouteRefForInitialClosingModal = useRef<IRouteItem | null | undefined>(parentRoute);
-    useUpdateEffect(() => {
-        if (typeof parentRouteRefForInitialClosingModal.current !== 'undefined') {
-            parentRouteRefForInitialClosingModal.current = parentRoute;
-        }
-    }, [parentRoute]);
 
     // Init routes in redux
     const dispatch = useDispatch();
@@ -284,7 +258,7 @@ function Router(props: IRouterProps): JSX.Element {
     }, [dispatch, prevRouteParams, routeParams]);
 
     // Routes state
-    const [routes, setRoutes] = useState(treeToList(props.routes));
+    const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.isChildPathJoinedWithParentPath));
     useUpdateEffect(() => {
         setRoutes(props.routes);
     }, [props.routes]);
@@ -339,15 +313,7 @@ function Router(props: IRouterProps): JSX.Element {
                 return activeRoute && activeRoute.role !== ROUTER_ROLE_MODAL;
             });
             if (parentRouteId) {
-                let params = prevRouteParams;
-                if (parentRouteRefForInitialClosingModal.current) {
-                    params = filterParamsForRoute(
-                        parentRouteRefForInitialClosingModal.current,
-                        prevRouteParams,
-                    );
-                    parentRouteRefForInitialClosingModal.current = undefined;
-                }
-                dispatch(goToRoute(parentRouteId, params));
+                dispatch(goToRoute(parentRouteId, prevRouteParams));
             }
         }
     });

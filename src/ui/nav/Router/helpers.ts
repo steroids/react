@@ -1,5 +1,4 @@
 import _get from 'lodash-es/get';
-import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {IRouteItem} from './Router';
@@ -21,6 +20,14 @@ export const findRedirectPathRecursive = (route: IRouteItem) => {
         : null;
 };
 
+const joinChildAndParentPaths = (path = '', parentPath = '') => {
+    if (!parentPath || parentPath === '/') {
+        return path;
+    }
+
+    return `${parentPath}${path.startsWith('/') ? '' : '/'}${path}`;
+};
+
 export const walkRoutesRecursive = (
     item: IRouteItem | Record<string, any>,
     defaultItem: any = {},
@@ -31,7 +38,7 @@ export const walkRoutesRecursive = (
         ...item,
         id: item.id,
         exact: item.exact,
-        path: item.path && (item.path.indexOf('/') !== 0 && parentItem.path ? parentItem.path + '/' : '') + item.path,
+        path: item.path && joinChildAndParentPaths(item.path, parentItem.path),
         label: item.label,
         title: item.title,
         isVisible: typeof item.isVisible !== 'undefined'
@@ -51,7 +58,6 @@ export const walkRoutesRecursive = (
         component: null,
         componentProps: null,
     };
-
     let items = null;
     if (_isArray(item.items)) {
         items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem));
@@ -68,7 +74,13 @@ export const walkRoutesRecursive = (
 export const treeToList = (
     item: IRouteItem | Record<string, any>,
     isRoot = true,
+    parentItem: any = {},
+    isChildPathJoinedWithParentPath = false,
 ) => {
+    if (isChildPathJoinedWithParentPath && parentItem?.path) {
+        item.path = joinChildAndParentPaths(item.path, parentItem.path);
+    }
+
     if (_isArray(item)) {
         return item;
     }
@@ -78,11 +90,11 @@ export const treeToList = (
     let items = item.path ? [item] : [];
     if (_isArray(item.items)) {
         item.items.forEach(subItem => {
-            items = items.concat(treeToList(subItem, false));
+            items = items.concat(treeToList(subItem, false, item, isChildPathJoinedWithParentPath));
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).forEach(id => {
-            items = items.concat(treeToList({...item.items[id], id}, false));
+            items = items.concat(treeToList({...item.items[id], id}, false, item, isChildPathJoinedWithParentPath));
         });
     }
 

@@ -43,8 +43,7 @@ export const getFormattedWeekFromDate = (fromDate: Date = null) => {
         const copyOfDayWeek = {...dayOfWeek};
 
         copyOfDayWeek.formattedDisplay = convertDate(dayOfWeek.date, null, WEEK_DAY_FORMAT);
-        // eslint-disable-next-line no-unused-expressions
-        isDateIsToday(copyOfDayWeek.date) ? copyOfDayWeek.isToday = true : copyOfDayWeek.isToday = false;
+        copyOfDayWeek.isToday = isDateIsToday(copyOfDayWeek.date);
 
         return copyOfDayWeek;
     });

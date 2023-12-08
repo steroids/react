@@ -7,6 +7,15 @@ import {getFormattedWeekFromDate, getSourceCalendarControl} from '../utils/utils
 
 const ONE_DAY = 1;
 
+const getTwentyFourHoursArray = () => {
+    const hoursArray = [];
+    for (let i = 0; i < 24; i++) {
+        const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
+        hoursArray.push(formattedHour);
+    }
+    return hoursArray;
+};
+
 const useWeekGrid = (currentMonthFirstDayDate: Date) => {
     const [currentWeek, setCurrentWeek] = React.useState(getFormattedWeekFromDate());
 
@@ -59,17 +68,8 @@ const useWeekGrid = (currentMonthFirstDayDate: Date) => {
         changeMonthAfterWeekChanged(formattedPrevWeek);
     }, [currentWeek, changeMonthAfterWeekChanged]);
 
-    const twentyFourHoursArray = React.useMemo(() => {
-        const hoursArray = [];
-        for (let i = 0; i < 24; i++) {
-            const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
-            hoursArray.push(formattedHour);
-        }
-        return hoursArray;
-    }, []);
-
     return {
-        weekGrid24HoursArray: twentyFourHoursArray,
+        weekGridTwentyFourHoursArray: getTwentyFourHoursArray(),
         weekGridCurrentWeekDays: currentWeek,
         weekGridControls: {
             [DateControlEnum.NEXT_DOUBLE]: DateControlEnum.NEXT_ONE,

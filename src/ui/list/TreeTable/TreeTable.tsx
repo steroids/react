@@ -8,8 +8,8 @@ import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 import Grid from '../Grid';
 import useSelector from '../../../hooks/useSelector';
 
-export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding'> {
-    item: IPreparedTreeItem,
+export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon'> {
+    item: IPreparedTreeItem;
 }
 
 /**
@@ -17,7 +17,7 @@ export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableP
  *
  * Компонент для представления данных коллекции в виде иерархической структуры.
  */
-export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeProps, 'alwaysOpened' | 'levelPadding'>{
+export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeProps, 'alwaysOpened' | 'levelPadding' | 'customIcon'>{
     /**
      * Элементы коллекции
      * @example
@@ -33,7 +33,7 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreePr
      *  }
      * ]
      */
-    items?: ITreeItem[],
+    items?: ITreeItem[];
 }
 
 const TREE_COLUMN_VIEW_FIELDS = {
@@ -41,13 +41,14 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
-export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number) => {
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon) => {
     const newColumns = [...columns];
 
     // Add tree view to the first column
     _merge(newColumns[0], {
         ...TREE_COLUMN_VIEW_FIELDS,
         levelPadding,
+        customIcon,
     });
 
     return newColumns;
@@ -55,8 +56,8 @@ export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPa
 
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
     const columns = useMemo(
-        () => addTreeColumnFieldsToFirstColumn(props.columns, props.levelPadding),
-        [props.columns, props.levelPadding],
+        () => addTreeColumnFieldsToFirstColumn(props.columns, props.levelPadding, props.customIcon),
+        [props.columns, props.customIcon, props.levelPadding],
     );
 
     const list = useSelector(state => getList(state, props.listId));

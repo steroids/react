@@ -52,6 +52,17 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
     levelPadding?: number;
 
     /**
+     * Показать иконку c лева от элемента
+     * @example true
+     */
+    showIcon?: boolean;
+
+    /**
+     * Кастомная иконка, заменяющая иконку раскрытия по умолчанию
+     */
+    customIcon?: string | React.ReactElement;
+
+    /**
      * Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку
      * @example false
      */
@@ -87,4 +98,5 @@ Tree.defaultProps = {
     level: 0,
     levelPadding: 32,
     hasIconExpandOnly: false,
+    showIcon: true,
 };

@@ -34,6 +34,8 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreePr
      * ]
      */
     items?: ITreeItem[];
+
+    customIcon?: string | React.ReactElement;
 }
 
 const TREE_COLUMN_VIEW_FIELDS = {
@@ -41,7 +43,7 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
-export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon) => {
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon?: string | React.ReactElement) => {
     const newColumns = [...columns];
 
     // Add tree view to the first column

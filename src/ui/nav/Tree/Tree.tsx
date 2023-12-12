@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IPreparedTreeItem, ITreeConfig} from '../../../hooks/useTree';
+import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
 import {useComponents, useTree} from '../../../hooks';
 
 export interface ITreeViewProps extends ITreeProps {
@@ -15,7 +15,7 @@ export interface ITreeItemViewProps extends ITreeProps {
  * Tree
  * Компонент, который представляет в виде дерева список с иерархической структурой данных
  */
-export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'>{
+export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'> {
     /**
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами
      * @example 'exampleTree'
@@ -23,15 +23,8 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
     id?: string;
 
     /**
-    *  Использовать двунаправленное связывание.
-    * Если включено, то selectedItemId будет обновляться каждое изменение состояния
-    * @example {}
-    */
-    useTwoWayBinding?: boolean;
-
-    /**
-    * При нажатии или выборе элемента повторно через selectedItemId он не будет отмечен как невыбранный.
-    * @example {}
+    * При повторном нажатии на активный элемент из дерева, он продолжит отображаться как активный.
+    * @example true
     */
     useToggleSelectedItemId?: boolean;
 
@@ -50,7 +43,7 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      * Обработчик на клик по узлу
      * @param args
      */
-    onItemClick?: (...args: any[]) => any;
+    onItemClick?: (event: React.MouseEvent, item: ITreeItem) => any;
 
     /**
      * Отображать раскрытыми узлы из LocalStorage
@@ -85,6 +78,7 @@ export default function Tree(props: ITreeProps) {
         onExpand: props.onItemClick,
         level: props.level,
         alwaysOpened: props.alwaysOpened,
+        useToggleSelectedItemId: props.useToggleSelectedItemId,
     });
 
     return components.ui.renderView(props.view || 'nav.TreeView', {

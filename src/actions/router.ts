@@ -20,6 +20,10 @@ export const initParams = params => ({
 // Include in the result only those parameters that are present as route parameters in the path
 // For example, given the path '/users/:id' and the parameters { id: 1, page: 3, totalPages: 10 }, the function will return { id: 1 }.
 const filterParamsForPath = (path: string, params: Record<string, string | number>) => {
+    if (!path) {
+        return params;
+    }
+
     const parsedPath = parse(path);
 
     return parsedPath.reduce((filteredParams, param) => {

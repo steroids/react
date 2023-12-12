@@ -175,10 +175,10 @@ export interface IRouterProps {
     children?: React.ReactNode;
 
     /**
-     * Флаг, который позволяет использовать вложенные роуты без указания абсолютного пути
+     * Флаг, который позволяет использовать вложенные роуты c указанием абсолютного пути
      * @example true
      */
-    isChildPathJoinedWithParentPath?: boolean;
+    isChildRouteHasAbsolutePath?: boolean;
 }
 
 const renderComponent = (route: IRouteItem, activePath, routeProps) => {
@@ -241,7 +241,7 @@ function Router(props: IRouterProps): JSX.Element {
                         {id: 'root', ...props.routes},
                         props.defaultRoles ? {roles: props.defaultRoles} : undefined,
                         {},
-                        props.isChildPathJoinedWithParentPath,
+                        props.isChildRouteHasAbsolutePath,
                     ),
                 ),
             );
@@ -258,7 +258,7 @@ function Router(props: IRouterProps): JSX.Element {
     }, [dispatch, prevRouteParams, routeParams]);
 
     // Routes state
-    const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.isChildPathJoinedWithParentPath));
+    const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.isChildRouteHasAbsolutePath));
     useUpdateEffect(() => {
         setRoutes(props.routes);
     }, [props.routes]);
@@ -406,7 +406,7 @@ function Router(props: IRouterProps): JSX.Element {
 
 Router.defaultProps = {
     autoScrollTop: true,
-    isChildPathJoinedWithParentPath: true,
+    isChildRouteHasAbsolutePath: false,
 };
 
 export default Router;

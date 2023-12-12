@@ -3,6 +3,8 @@ import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {IRouteItem} from './Router';
 
+const LEAD_SLASH = '/';
+
 export const findRedirectPathRecursive = (route: IRouteItem) => {
     if (!route) {
         return null;
@@ -21,20 +23,22 @@ export const findRedirectPathRecursive = (route: IRouteItem) => {
 };
 
 const joinChildAndParentPaths = (path = '', parentPath = '') => {
-    if (!parentPath || parentPath === '/') {
+    if (!parentPath || parentPath === LEAD_SLASH) {
         return path;
     }
 
-    return `${parentPath}${path.startsWith('/') ? '' : '/'}${path}`;
+    return `${parentPath}${path.startsWith(LEAD_SLASH) ? '' : LEAD_SLASH}${path}`;
 };
 
-const ensureLeadingSlashInPath = (path = '', parentPath = null) => (!path.startsWith('/') && parentPath ? parentPath + '/' : '') + path;
+const ensureLeadingSlashInPath = (path = '', parentPath = null) => (
+    !path.startsWith(LEAD_SLASH) && parentPath ? parentPath + LEAD_SLASH : ''
+) + path;
 
 export const walkRoutesRecursive = (
     item: IRouteItem | Record<string, any>,
     defaultItem: any = {},
     parentItem: any = {},
-    isChildPathJoinedWithParentPath = true,
+    isChildRouteHasAbsolutePath = false,
 ) => {
     const normalizedItem = {
         ...defaultItem,
@@ -42,7 +46,7 @@ export const walkRoutesRecursive = (
         id: item.id,
         exact: item.exact,
         path: item.path && (
-            isChildPathJoinedWithParentPath
+            isChildRouteHasAbsolutePath
                 ? ensureLeadingSlashInPath(item.path, parentItem.path)
                 : joinChildAndParentPaths(item.path, parentItem.path)
         ),
@@ -67,10 +71,10 @@ export const walkRoutesRecursive = (
     };
     let items = null;
     if (_isArray(item.items)) {
-        items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, isChildPathJoinedWithParentPath));
+        items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, isChildRouteHasAbsolutePath));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
-            .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem, isChildPathJoinedWithParentPath));
+            .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem, isChildRouteHasAbsolutePath));
     }
     return {
         ...normalizedItem,
@@ -82,13 +86,14 @@ export const treeToList = (
     item: IRouteItem | Record<string, any>,
     isRoot = true,
     parentItem: any = {},
-    isChildPathJoinedWithParentPath = true,
+    isChildRouteHasAbsolutePath = false,
 ) => {
     if (_isArray(item)) {
         return item;
     }
 
-    if (!isChildPathJoinedWithParentPath && parentItem?.path) {
+    // If the children path is not absolute, and it is not a root path, join it with the parent
+    if (!isChildRouteHasAbsolutePath && parentItem?.path) {
         item.path = joinChildAndParentPaths(item.path, parentItem.path);
     }
 
@@ -100,11 +105,11 @@ export const treeToList = (
 
     if (_isArray(item.items)) {
         item.items.forEach(subItem => {
-            items = items.concat(treeToList(subItem, false, item, isChildPathJoinedWithParentPath));
+            items = items.concat(treeToList(subItem, false, item, isChildRouteHasAbsolutePath));
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).forEach(id => {
-            items = items.concat(treeToList({...item.items[id], id}, false, item, isChildPathJoinedWithParentPath));
+            items = items.concat(treeToList({...item.items[id], id}, false, item, isChildRouteHasAbsolutePath));
         });
     }
 

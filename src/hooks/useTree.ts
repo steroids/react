@@ -120,6 +120,12 @@ export interface ITreeConfig {
      * @example: true
      */
     routerParams?: any;
+
+    /**
+     * При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.
+     * @example true
+    */
+    useToggleSelectedItemId?: boolean;
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
@@ -232,10 +238,10 @@ const getAutoExpandedItems = (
 
 const isSelectedItem = (selectedUniqueId, uniqueId, activeRouteIds, item, routerParams) => (
     selectedUniqueId === uniqueId
-        || (
-            (activeRouteIds || []).includes(item.toRoute)
-            && _isEqual(item.toRouteParams || {}, _omit(routerParams, _keys(item.toRouteParams)))
-        )
+    || (
+        (activeRouteIds || []).includes(item.toRoute)
+        && _isEqual(item.toRouteParams || {}, _omit(routerParams, _keys(item.toRouteParams)))
+    )
 );
 
 export default function useTree(config: ITreeConfig): ITreeOutput {
@@ -290,7 +296,8 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
             config.onExpand.call(null, e, item);
         }
 
-        setSelectedUniqueId(selectedUniqueId === uniqueId ? null : uniqueId);
+        const sameUniqueIdAccordingToSettings = config.useToggleSelectedItemId ? uniqueId : null;
+        setSelectedUniqueId(selectedUniqueId === uniqueId ? sameUniqueIdAccordingToSettings : uniqueId);
 
         if (!_isEmpty(item[primaryKey])) {
             setExpandedItems({
@@ -298,7 +305,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
                 [uniqueId]: !expandedItems[uniqueId],
             });
         }
-    }, [config.onExpand, expandedItems, primaryKey, selectedUniqueId]);
+    }, [config.onExpand, config.useToggleSelectedItemId, expandedItems, primaryKey, selectedUniqueId]);
 
     const resultTreeItems = useMemo(() => {
         const getItems = (

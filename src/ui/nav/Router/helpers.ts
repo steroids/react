@@ -3,7 +3,7 @@ import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import {IRouteItem} from './Router';
 
-const LEAD_SLASH = '/';
+const SLASH = '/';
 
 export const findRedirectPathRecursive = (route: IRouteItem) => {
     if (!route) {
@@ -23,15 +23,15 @@ export const findRedirectPathRecursive = (route: IRouteItem) => {
 };
 
 const joinChildAndParentPaths = (path = '', parentPath = '') => {
-    if (!parentPath || parentPath === LEAD_SLASH) {
+    if (!parentPath || parentPath === SLASH) {
         return path;
     }
 
-    return `${parentPath}${path.startsWith(LEAD_SLASH) ? '' : LEAD_SLASH}${path}`;
+    return `${parentPath}${path.startsWith(SLASH) ? '' : SLASH}${path}`;
 };
 
 const ensureLeadingSlashInPath = (path = '', parentPath = null) => (
-    !path.startsWith(LEAD_SLASH) && parentPath ? parentPath + LEAD_SLASH : ''
+    !path.startsWith(SLASH) && parentPath ? parentPath + SLASH : ''
 ) + path;
 
 export const walkRoutesRecursive = (

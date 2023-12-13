@@ -371,7 +371,7 @@ export default function useList(config: IListConfig): IListOutput {
     });
 
     // Outside search form
-    const {renderSearchForm} = useSearchForm(config, list, initialQuery, searchModel);
+    const {renderSearchForm} = useSearchForm(config, initialQuery, searchModel);
 
     // Form id
     const formId = _get(config, 'searchForm.formId') || config.listId;
@@ -463,7 +463,7 @@ export default function useList(config: IListConfig): IListOutput {
             }
         }
     }, [config.autoFetchOnFormChanges, config.listId, dispatch, formId, formValues,
-    paginationProps.attribute, paginationProps.defaultValue, prevFormValues, updateQuery]);
+        paginationProps.attribute, paginationProps.defaultValue, prevFormValues, updateQuery]);
 
     // Check change query
     const prevQuery = usePrevious(config.query);

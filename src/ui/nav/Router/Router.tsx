@@ -172,7 +172,13 @@ export interface IRouterProps {
      * Контент, который отобразится под каждой страницей приложения
      * @example SomeComponent
      */
-    children?: React.ReactNode,
+    children?: React.ReactNode;
+
+    /**
+     * Флаг, который позволяет использовать вложенные роуты c указанием абсолютного пути
+     * @example true
+     */
+    isChildRouteHasAbsolutePath?: boolean;
 }
 
 const renderComponent = (route: IRouteItem, activePath, routeProps) => {
@@ -234,6 +240,8 @@ function Router(props: IRouterProps): JSX.Element {
                     walkRoutesRecursive(
                         {id: 'root', ...props.routes},
                         props.defaultRoles ? {roles: props.defaultRoles} : undefined,
+                        {},
+                        props.isChildRouteHasAbsolutePath,
                     ),
                 ),
             );
@@ -250,7 +258,7 @@ function Router(props: IRouterProps): JSX.Element {
     }, [dispatch, prevRouteParams, routeParams]);
 
     // Routes state
-    const [routes, setRoutes] = useState(treeToList(props.routes));
+    const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.isChildRouteHasAbsolutePath));
     useUpdateEffect(() => {
         setRoutes(props.routes);
     }, [props.routes]);
@@ -398,6 +406,7 @@ function Router(props: IRouterProps): JSX.Element {
 
 Router.defaultProps = {
     autoScrollTop: true,
+    isChildRouteHasAbsolutePath: false,
 };
 
 export default Router;

@@ -23,12 +23,6 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
     id?: string;
 
     /**
-    * При повторном нажатии на активный элемент из дерева, он продолжит отображаться как активный.
-    * @example true
-    */
-    useToggleSelectedItemId?: boolean;
-
-    /**
      * CSS-класс для элемента отображения
      */
     className?: CssClassName;
@@ -78,7 +72,7 @@ export default function Tree(props: ITreeProps) {
         onExpand: props.onItemClick,
         level: props.level,
         alwaysOpened: props.alwaysOpened,
-        useToggleSelectedItemId: props.useToggleSelectedItemId,
+        useSameSelectedItemId: props.useSameSelectedItemId,
     });
 
     return components.ui.renderView(props.view || 'nav.TreeView', {
@@ -94,4 +88,5 @@ Tree.defaultProps = {
     level: 0,
     levelPadding: 32,
     hasIconExpandOnly: false,
+    useSameSelectedItemId: true,
 };

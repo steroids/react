@@ -125,7 +125,7 @@ export interface ITreeConfig {
      * При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.
      * @example true
     */
-    useToggleSelectedItemId?: boolean;
+    useSameSelectedItemId?: boolean;
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
@@ -296,7 +296,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
             config.onExpand.call(null, e, item);
         }
 
-        const sameUniqueIdAccordingToSettings = config.useToggleSelectedItemId ? uniqueId : null;
+        const sameUniqueIdAccordingToSettings = config.useSameSelectedItemId ? uniqueId : null;
         setSelectedUniqueId(selectedUniqueId === uniqueId ? sameUniqueIdAccordingToSettings : uniqueId);
 
         if (!_isEmpty(item[primaryKey])) {
@@ -305,7 +305,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
                 [uniqueId]: !expandedItems[uniqueId],
             });
         }
-    }, [config.onExpand, config.useToggleSelectedItemId, expandedItems, primaryKey, selectedUniqueId]);
+    }, [config.onExpand, config.useSameSelectedItemId, expandedItems, primaryKey, selectedUniqueId]);
 
     const resultTreeItems = useMemo(() => {
         const getItems = (

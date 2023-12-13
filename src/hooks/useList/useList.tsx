@@ -329,7 +329,7 @@ export const createInitialValues = ({
  */
 export default function useList(config: IListConfig): IListOutput {
     // Get list from redux state
-    const list = useSelector(state => getList(state, config.listId));
+    const list: IList = useSelector(state => getList(state, config.listId));
 
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);

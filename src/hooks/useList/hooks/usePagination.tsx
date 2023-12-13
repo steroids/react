@@ -1,11 +1,18 @@
 import React from 'react';
-import {normalizePaginationSizeProps} from '../../../ui/list/PaginationSize/PaginationSize';
-import {normalizePaginationProps} from '../../../ui/list/Pagination/Pagination';
+import PaginationSize, {normalizePaginationSizeProps} from '../../../ui/list/PaginationSize/PaginationSize';
+import Pagination, {normalizePaginationProps} from '../../../ui/list/Pagination/Pagination';
 import {IListConfig} from '../useList';
+import {IList} from '../../../actions/list';
 
-export default function usePagination(config: IListConfig, list: any) {
+/**
+ * Генерирует объект пагинации списка основываясь на переданной конфигурации.
+ *
+ * @param {IListConfig} config - конфигурация для списка.
+ * @param {IList} list - список.
+ * @return {Object} объект, который содержит функции для отображения пагинации, свойства пагинации и свойства размера пагинации.
+ */
+export default function usePagination(config: IListConfig, list: IList) {
     // Pagination size
-    const PaginationSize = require('../../../ui/list/PaginationSize').default;
     const paginationSizeProps = normalizePaginationSizeProps(config.paginationSize);
     const renderPaginationSize = () => paginationSizeProps.enable
         ? (
@@ -17,7 +24,6 @@ export default function usePagination(config: IListConfig, list: any) {
         : null;
 
     // Pagination
-    const Pagination = require('../../../ui/list/Pagination').default;
     const paginationProps = normalizePaginationProps(config.pagination);
     const renderPagination = () => paginationProps.enable
         ? (

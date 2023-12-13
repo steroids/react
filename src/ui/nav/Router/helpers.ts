@@ -22,23 +22,33 @@ export const findRedirectPathRecursive = (route: IRouteItem) => {
         : null;
 };
 
-const joinChildAndParentPaths = (path = '', parentPath = '') => {
+const addSlashIfNotPresent = (path = '') => path.startsWith(SLASH) ? path : (SLASH + path);
+
+const joinChildAndParentPaths = (path = '', parentPath = null) => {
     if (!parentPath || parentPath === SLASH) {
-        return path;
+        return addSlashIfNotPresent(path);
     }
 
-    return `${parentPath}${path.startsWith(SLASH) ? '' : SLASH}${path}`;
+    return addSlashIfNotPresent(parentPath) + addSlashIfNotPresent(path);
 };
 
-const ensureLeadingSlashInPath = (path = '', parentPath = null) => (
-    !path.startsWith(SLASH) && parentPath ? parentPath + SLASH : ''
-) + path;
+const appendChildIfNoSlash = (path = '', parentPath = null) => {
+    if (parentPath === SLASH) {
+        return addSlashIfNotPresent(path);
+    }
+
+    if (!path.startsWith(SLASH)) {
+        return addSlashIfNotPresent(parentPath) + addSlashIfNotPresent(path);
+    }
+
+    return path;
+};
 
 export const walkRoutesRecursive = (
     item: IRouteItem | Record<string, any>,
     defaultItem: any = {},
     parentItem: any = {},
-    isChildRouteHasAbsolutePath = false,
+    alwaysAppendParentRoutePath = true,
 ) => {
     const normalizedItem = {
         ...defaultItem,
@@ -46,9 +56,9 @@ export const walkRoutesRecursive = (
         id: item.id,
         exact: item.exact,
         path: item.path && (
-            isChildRouteHasAbsolutePath
-                ? ensureLeadingSlashInPath(item.path, parentItem.path)
-                : joinChildAndParentPaths(item.path, parentItem.path)
+            alwaysAppendParentRoutePath
+                ? joinChildAndParentPaths(item.path, parentItem.path)
+                : appendChildIfNoSlash(item.path, parentItem.path)
         ),
         label: item.label,
         title: item.title,
@@ -71,10 +81,10 @@ export const walkRoutesRecursive = (
     };
     let items = null;
     if (_isArray(item.items)) {
-        items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, isChildRouteHasAbsolutePath));
+        items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
-            .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem, isChildRouteHasAbsolutePath));
+            .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
     }
     return {
         ...normalizedItem,
@@ -86,15 +96,16 @@ export const treeToList = (
     item: IRouteItem | Record<string, any>,
     isRoot = true,
     parentItem: any = {},
-    isChildRouteHasAbsolutePath = false,
+    alwaysAppendParentRoutePath = true,
 ) => {
     if (_isArray(item)) {
         return item;
     }
 
-    // If the children path is not absolute, and it is not a root path, join it with the parent
-    if (!isChildRouteHasAbsolutePath && parentItem?.path) {
-        item.path = joinChildAndParentPaths(item.path, parentItem.path);
+    if (item.path) {
+        item.path = alwaysAppendParentRoutePath
+            ? joinChildAndParentPaths(item.path, parentItem?.path)
+            : appendChildIfNoSlash(item.path, parentItem?.path);
     }
 
     if (isRoot && !item.id) {
@@ -105,11 +116,11 @@ export const treeToList = (
 
     if (_isArray(item.items)) {
         item.items.forEach(subItem => {
-            items = items.concat(treeToList(subItem, false, item, isChildRouteHasAbsolutePath));
+            items = items.concat(treeToList(subItem, false, item, alwaysAppendParentRoutePath));
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).forEach(id => {
-            items = items.concat(treeToList({...item.items[id], id}, false, item, isChildRouteHasAbsolutePath));
+            items = items.concat(treeToList({...item.items[id], id}, false, item, alwaysAppendParentRoutePath));
         });
     }
 

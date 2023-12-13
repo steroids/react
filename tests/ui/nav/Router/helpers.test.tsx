@@ -175,7 +175,7 @@ describe('Function treeToList', () => {
                 {id: '3', path: '/path3'},
             ];
 
-            const list = treeToList(tree, true, {}, true);
+            const list = treeToList(tree, true, {}, false);
             expect(list).toEqual(expectedList);
         });
 
@@ -215,7 +215,7 @@ describe('Function treeToList', () => {
                 {id: '5', path: '/path5'},
             ];
 
-            const list = treeToList(tree, true, {}, true);
+            const list = treeToList(tree, true, {}, false);
             expect(list).toEqual(expectedList);
         });
     });

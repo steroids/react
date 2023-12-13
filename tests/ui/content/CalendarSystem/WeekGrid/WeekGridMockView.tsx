@@ -6,8 +6,8 @@ import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/Calenda
 import WeekHour from './views/WeekHour/WeekMockHour';
 
 interface IWeekGridProps {
-    currentWeekDays: IDay[]
-    allHours: string[],
+    weekGridTwentyFourHoursArray: string[],
+    weekGridCurrentWeekDays: IDay[]
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
     openEditModal: (event: IEvent) => void,
     openCreateModal: (eventInitialDay?: IDay) => void;
@@ -16,10 +16,10 @@ interface IWeekGridProps {
 function WeekGrid(props: IWeekGridProps) {
     const bem = useBem('WeekGrid');
 
-    const {currentWeekDays, getEventsFromDate} = props;
+    const {weekGridCurrentWeekDays, getEventsFromDate} = props;
 
     const renderWeekHours = React.useCallback(
-        (hour) => currentWeekDays.map((dayOfWeek, dayOfWeekIndex) => (
+        (hour) => weekGridCurrentWeekDays.map((dayOfWeek, dayOfWeekIndex) => (
             <WeekHour
                 hour={hour}
                 getEventsFromDate={getEventsFromDate}
@@ -29,14 +29,14 @@ function WeekGrid(props: IWeekGridProps) {
                 openCreateModal={props.openCreateModal}
             />
         )),
-        [currentWeekDays, getEventsFromDate, props.openCreateModal, props.openEditModal],
+        [weekGridCurrentWeekDays, getEventsFromDate, props.openCreateModal, props.openEditModal],
     );
 
     return (
         <div className={bem.block()}>
             <div className={bem.element('content')}>
                 <div className={bem.element('hours-time')}>
-                    {props.allHours.map((hour, hourIndex) => (
+                    {props.weekGridTwentyFourHoursArray.map((hour, hourIndex) => (
                         <div
                             key={hourIndex}
                             className={bem.element('hours-time-item')}
@@ -48,7 +48,7 @@ function WeekGrid(props: IWeekGridProps) {
 
                 <div className={bem.element('table')}>
                     <div className={bem.element('table-heading')}>
-                        {currentWeekDays.map((weekDay, weekDayIndex) => (
+                        {weekGridCurrentWeekDays.map((weekDay, weekDayIndex) => (
                             <Text
                                 key={weekDayIndex}
                                 className={bem.element('day', {
@@ -62,7 +62,7 @@ function WeekGrid(props: IWeekGridProps) {
                         ))}
                     </div>
                     <div className={bem.element('table-grid')}>
-                        {props.allHours.map((hour, hourIndex) => (
+                        {props.weekGridTwentyFourHoursArray.map((hour, hourIndex) => (
                             <div
                                 key={hourIndex}
                                 className={bem.element('table-grid-row')}

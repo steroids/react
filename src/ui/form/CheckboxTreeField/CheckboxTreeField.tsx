@@ -26,12 +26,12 @@ type CheckboxTreeItems = string
 export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'>, IUiComponent,
-    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened'> {
+    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'hasIcon' | 'customIcon'> {
     /**
      * Свойства для элемента input
      * @example { onKeyDown: ... }
      */
-    inputProps?: any,
+    inputProps?: any;
 
     /**
      * Коллекция элементов
@@ -49,17 +49,19 @@ export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
      *  }
      * ]
      */
-    items: CheckboxTreeItems,
+    items: CheckboxTreeItems;
 
     /**
      * Первичный ключ для доступа к вложенным элементам
      */
-    primaryKey?: string,
+    primaryKey?: string;
 
-    [key: string]: any,
+    [key: string]: any;
 }
 
-export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps {
+export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
+    Pick<ITreeProps, 'levelPadding' | 'customIcon'>
+{
     items: {
         id: number | string | boolean,
         label?: string,
@@ -67,12 +69,11 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps {
         color?: string,
         disabled?: boolean,
         required?: boolean,
-    } & IPreparedTreeItem[],
-    selectedIds: (PrimaryKey | any)[],
-    onItemSelect: (checkbox: IPreparedTreeItem) => void,
-    renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
-    size?: Size,
-    levelPadding: number,
+    } & IPreparedTreeItem[];
+    selectedIds: (PrimaryKey | any)[];
+    onItemSelect: (checkbox: IPreparedTreeItem) => void;
+    renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element;
+    size?: Size;
 }
 
 export const getNestedItemsIds = (item, groupAttribute) => {
@@ -174,7 +175,6 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         items: treeItems,
         onItemSelect,
         selectedIds,
-        levelPadding: props.levelPadding,
         renderCheckbox,
     });
 }

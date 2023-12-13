@@ -12,7 +12,7 @@ import ButtonGroupMockView from '../../../nav/ButtonGroup/ButtonGroupMockView';
 interface IContentHeaderProps {
     dateToDisplay: string;
     onChangeCalendarType: (newType: string) => void;
-    applyControl: (event: React.MouseEvent<HTMLElement>) => void;
+    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 function ContentHeader(props: IContentHeaderProps) {
@@ -26,7 +26,7 @@ function ContentHeader(props: IContentHeaderProps) {
             />
             <ul
                 className={bem.element('controls')}
-                onClick={props.applyControl}
+                onClick={props.handleControlClick}
             >
                 {Object.entries(DateControlEnum.getIcons()).map(([controlLabel, controlIcon], controlIndex) => (
                     <li

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IPreparedTreeItem, ITreeConfig} from '../../../hooks/useTree';
+import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
 import {useComponents, useTree} from '../../../hooks';
 
 export interface ITreeViewProps extends ITreeProps {
@@ -15,7 +15,7 @@ export interface ITreeItemViewProps extends ITreeProps {
  * Tree
  * Компонент, который представляет в виде дерева список с иерархической структурой данных
  */
-export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'>{
+export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'> {
     /**
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами
      * @example 'exampleTree'
@@ -37,7 +37,7 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      * Обработчик на клик по узлу
      * @param args
      */
-    onItemClick?: (...args: any[]) => any;
+    onItemClick?: (event: React.MouseEvent, item: ITreeItem) => any;
 
     /**
      * Отображать раскрытыми узлы из LocalStorage
@@ -83,6 +83,7 @@ export default function Tree(props: ITreeProps) {
         onExpand: props.onItemClick,
         level: props.level,
         alwaysOpened: props.alwaysOpened,
+        useSameSelectedItemId: props.useSameSelectedItemId,
     });
 
     return components.ui.renderView(props.view || 'nav.TreeView', {
@@ -98,5 +99,6 @@ Tree.defaultProps = {
     level: 0,
     levelPadding: 32,
     hasIconExpandOnly: false,
+    useSameSelectedItemId: true,
     showIcon: true,
 };

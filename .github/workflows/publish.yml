@@ -14,6 +14,7 @@ jobs:
       - run: yarn
       - run: yarn upgrade @steroidsjs/core
       - run: yarn tsc
+      - run: yarn docs
       - run: cp ./{package.json,LICENSE,README.md} dist/
       - run: cp src/index.d.ts dist/
       - run: cp docs/docs-autogen-result.json dist/

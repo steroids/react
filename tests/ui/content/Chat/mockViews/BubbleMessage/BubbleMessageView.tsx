@@ -1,9 +1,11 @@
 import * as React from 'react';
+import _isEmpty from 'lodash-es/isEmpty';
 import {Avatar} from '../../../../../../src/ui/content/Avatar';
 import {Text, Title} from '../../../../../../src/ui/typography';
 import Icon from '../../../../../../src/ui/content/Icon';
-import {IChatUser} from '../../../../../../src/ui/content/Chat/Chat';
+import {IChatUser, IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
 import {useBem} from '../../../../../../src/hooks';
+import ChatFileItemView from '../ChatFileItem';
 
 interface IBubbleMessageProps {
     user: IChatUser;
@@ -12,14 +14,17 @@ interface IBubbleMessageProps {
     isCurrentUser: boolean;
     isFirstMessage?: boolean;
     isLastMessage?: boolean;
+    files?: IMessageFile[];
 }
 
 function BubbleMessageView(props: IBubbleMessageProps) {
     const bem = useBem('BubbleMessageView');
 
+    const isMessageByAnotherUser = !props.isCurrentUser;
+
     return (
         <div className={bem.block({
-            'another-user': !props.isCurrentUser,
+            'another-user': isMessageByAnotherUser,
             'last-message': !!props.isLastMessage,
         })}
         >
@@ -37,6 +42,18 @@ function BubbleMessageView(props: IBubbleMessageProps) {
                     type="body"
                     content={props.text}
                 />
+                {!_isEmpty(props.files) && (
+                    <div className={bem.element('files')}>
+                        {props.files.map((file) => (
+                            <ChatFileItemView
+                                key={file.uid}
+                                isFileByAnotherUser={isMessageByAnotherUser}
+                                isFileFromMessage
+                                {...file}
+                            />
+                        ))}
+                    </div>
+                )}
                 <div className={bem.element('indicators')}>
                     <Text
                         className={bem.element('time')}

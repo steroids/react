@@ -2,7 +2,6 @@ import * as React from 'react';
 import {useBem} from '../../../../../src/hooks';
 import {IChatViewProps} from '../../../../../src/ui/content/Chat/Chat';
 
-import ChatInputView from './ChatInput';
 import BubblesDateGroup from './BubblesDateGroup';
 
 export default function ChatView(props: IChatViewProps) {
@@ -31,10 +30,7 @@ export default function ChatView(props: IChatViewProps) {
     return (
         <div className={bem.block()}>
             {renderChatScreen()}
-            <ChatInputView
-                chatId={props.chatId}
-                onSendMessage={props.onSendMessage}
-            />
+            {props.renderChatInput()}
         </div>
     );
 }

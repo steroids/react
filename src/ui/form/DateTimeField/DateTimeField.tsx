@@ -1,4 +1,7 @@
 import {useMemo} from 'react';
+import {MaskitoOptions} from '@maskito/core';
+import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
+import {useMaskito} from '@maskito/react';
 import useDateTime from '../DateField/useDateTime';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateInputState, {
@@ -29,16 +32,26 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
      */
     timePanelViewProps?: any,
 
+    /**
+     * Опции маски для поля ввода
+     */
+    maskOptions?: MaskitoOptions,
+
     [key: string]: any;
 }
 
 export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
     Pick<IDateTimeFieldProps, 'size' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'timePanelViewProps'>
 {
+    /**
+     * Ref для input элемента, который накладывает маску
+     */
+    maskInputRef?: React.RefCallback<HTMLElement>,
+
     [key: string]: any;
 }
 
-const DATE_TIME_SEPARATOR = ' ';
+const DATE_TIME_SEPARATOR = ', ';
 
 /**
  * DateTimeField
@@ -46,6 +59,8 @@ const DATE_TIME_SEPARATOR = ' ';
  */
 function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
+
+    const maskInputRef = useMaskito({options: props.maskOptions});
 
     const {
         onClear,
@@ -114,6 +129,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         isInvalid: props.isInvalid,
         disabled: props.disabled,
         style: props.style,
+        maskInputRef,
     });
 }
 
@@ -127,6 +143,7 @@ DateTimeField.defaultProps = {
     dateInUTC: false,
     size: 'md',
     icon: true,
+    maskOptions: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy', timeMode: 'HH:MM', dateSeparator: '.'}),
 };
 
 export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);

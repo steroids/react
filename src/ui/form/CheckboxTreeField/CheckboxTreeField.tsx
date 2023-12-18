@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 import _isArray from 'lodash-es/isArray';
 import {IPreparedTreeItem} from '../../../hooks/useTree';
@@ -26,7 +25,7 @@ type CheckboxTreeItems = string
 export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'>, IUiComponent,
-    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'hasIcon' | 'customIcon'> {
+    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'showIcon' | 'customIcon'> {
     /**
      * Свойства для элемента input
      * @example { onKeyDown: ... }

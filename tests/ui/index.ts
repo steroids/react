@@ -8,6 +8,9 @@ export default {
     'form.ButtonView': {
         lazy: () => require('./form/Button/ButtonMockView').default,
     },
+    'form.FileFieldView': {
+        lazy: () => require('./form/FileField/FileFieldMockView').default,
+    },
     'content.DropDownView': {
         lazy: () => require('./content/DropDown/DropDownMockView').default,
     },
@@ -40,6 +43,9 @@ export default {
     },
     'content.ChatView': {
         lazy: () => require('./content/Chat/mockViews/ChatMockView').default,
+    },
+    'content.ChatInputView': {
+        lazy: () => require('./content/Chat/mockViews/ChatInput/ChatInputMockView').default,
     },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,

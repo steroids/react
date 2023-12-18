@@ -87,13 +87,14 @@ describe('Chat tests', () => {
     it('should send a new message', () => {
         const expectedMessageText = 'Message';
         const expectedMessageTime = '0 мин. назад';
+        const expectedSendMessageButtonIndex = 1;
 
         const {container, queryByText, getByRole, getByDisplayValue} = render(JSXWrapper(Chat, props));
 
         const chatInputElement = getElementByClassName(container, expectedChatInputClass) as HTMLElement;
 
         const chatInput = getByRole('textbox');
-        const sendMessageButton = getElementByTag(chatInputElement, 'button');
+        const sendMessageButton = getElementByTag(chatInputElement, 'button', expectedSendMessageButtonIndex);
 
         fireEvent.change(chatInput, {target: {value: expectedMessageText}});
 

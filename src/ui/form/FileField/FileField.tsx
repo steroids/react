@@ -154,6 +154,12 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
         }
     }, [isFilesLoaded, props]);
 
+    useEffect(() => {
+        if (props.onChange) {
+            props.onChange(files);
+        }
+    }, [files, props]);
+
     return (
         <FileFieldView
             {...props}

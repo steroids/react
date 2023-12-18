@@ -1,4 +1,7 @@
-import {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
+import {MaskitoOptions} from '@maskito/core';
+import {maskitoDateOptionsGenerator} from '@maskito/kit';
+import {useMaskito} from '@maskito/react';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import {useComponents} from '../../../hooks';
@@ -93,6 +96,21 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      */
     hasInitialFocus?: boolean,
 
+    /**
+    * Опции маски для полей
+    */
+    maskOptions?: {
+        /**
+        * Опции маски для поля from
+        */
+        from: MaskitoOptions,
+
+        /**
+        * Опции маски для поля to
+        */
+        to: MaskitoOptions,
+    }
+
     [key: string]: any;
 }
 
@@ -106,6 +124,16 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     inputPropsTo?: any,
     errorsFrom?: string[],
     errorsTo?: string[],
+
+    /**
+     * Ref для input элемента, который накладывает маску на поле from
+     */
+    maskInputFromRef?: React.RefCallback<HTMLElement>,
+
+    /**
+     * Ref для input элемента, который накладывает маску на поле to
+     */
+    maskInputFromTo?: React.RefCallback<HTMLElement>,
 }
 
 interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldWrapperOutputProps, 'input' | 'errors'> {
@@ -125,6 +153,9 @@ interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldW
 
 function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
+
+    const maskInputFromRef = useMaskito({options: props.maskOptions?.from});
+    const maskInputToRef = useMaskito({options: props.maskOptions?.to});
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
@@ -191,6 +222,18 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
     });
 
+    React.useEffect(() => {
+        if (extendedInputPropsFrom.ref && extendedInputPropsTo.ref) {
+            maskInputFromRef(extendedInputPropsFrom.ref.current);
+            maskInputToRef(extendedInputPropsTo.ref.current);
+        }
+    }, [
+        extendedInputPropsFrom.ref,
+        extendedInputPropsTo.ref,
+        maskInputFromRef,
+        maskInputToRef,
+    ]);
+
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
         value: [props.inputFrom.value, props.inputTo.value],
@@ -232,6 +275,10 @@ DateRangeField.defaultProps = {
     icon: true,
     noBorder: false,
     size: 'md',
+    maskOptions: {
+        from: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy', separator: '.'}),
+        to: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy', separator: '.'}),
+    },
 };
 
 export default fieldWrapper<IDateRangeFieldProps>('DateRangeField', DateRangeField,

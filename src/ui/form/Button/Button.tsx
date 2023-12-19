@@ -215,11 +215,15 @@ function Button(props: IButtonProps): JSX.Element {
         : (routePath ? buildUrl(routePath, props.toRouteParams) : null);
 
     // Flags: isLoading, isFailed
-    const [{isLoading, isFailed}, setStateFlags] = useState({isLoading: false,
-isFailed: false});
+    const [{isLoading, isFailed}, setStateFlags] = useState({
+        isLoading: false,
+        isFailed: false,
+    });
     React.useEffect(() => {
-        setStateFlags({isLoading: props.isLoading,
-isFailed: props.isFailed});
+        setStateFlags({
+            isLoading: props.isLoading,
+            isFailed: props.isFailed,
+        });
     }, [props.isLoading, props.isFailed]);
 
     // Form submitting

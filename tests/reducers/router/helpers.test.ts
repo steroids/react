@@ -139,8 +139,10 @@ describe('router reducers', () => {
                 } as IRouteItem,
             };
 
-            const routeWithChildren = {...routeWithoutChildren,
-items};
+            const routeWithChildren = {
+                ...routeWithoutChildren,
+                items,
+            };
 
             const expectedRoutesTree = getExpectedRoutesTree(routeWithChildren, [
                 {
@@ -160,8 +162,10 @@ items};
         });
 
         it('with items as array', () => {
-            const childRoute = {id: 'childRoute',
-exact: true} as IRouteItem;
+            const childRoute = {
+                id: 'childRoute',
+                exact: true,
+            } as IRouteItem;
             const routeWithChildren = {
                 ...routeWithoutChildren,
                 items: [childRoute],
@@ -186,10 +190,14 @@ exact: true} as IRouteItem;
 
     describe('findRecursive', () => {
         const defaultPathItems = [
-            {id: 'someRoute1',
-label: 'someRoute1'},
-            {id: 'someRoute2',
-label: 'someRoute2'},
+            {
+                id: 'someRoute1',
+                label: 'someRoute1',
+            },
+            {
+                id: 'someRoute2',
+                label: 'someRoute2',
+            },
         ];
 
         it('with predicate as parentRoute id', () => {

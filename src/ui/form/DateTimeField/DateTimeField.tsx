@@ -41,8 +41,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
 }
 
 export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
-    Pick<IDateTimeFieldProps, 'size' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'timePanelViewProps'>
-{
+    Pick<IDateTimeFieldProps, 'size' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'timePanelViewProps'> {
     /**
      * Ref для input элемента, который накладывает маску
      */
@@ -143,9 +142,11 @@ DateTimeField.defaultProps = {
     dateInUTC: false,
     size: 'md',
     icon: true,
-    maskOptions: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy',
-timeMode: 'HH:MM',
-dateSeparator: '.'}),
+    maskOptions: maskitoDateTimeOptionsGenerator({
+        dateMode: 'dd/mm/yyyy',
+        timeMode: 'HH:MM',
+        dateSeparator: '.',
+    }),
 };
 
 export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);

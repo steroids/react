@@ -64,10 +64,14 @@ describe('form utils', () => {
         afterAll(() => jest.restoreAllMocks());
 
         it('should not clear errors if no fields have changed', () => {
-            values = {firstName: 'John',
-secondName: 'Doe'};
-            prevValues = {firstName: 'John',
-secondName: 'Doe'};
+            values = {
+                firstName: 'John',
+                secondName: 'Doe',
+            };
+            prevValues = {
+                firstName: 'John',
+                secondName: 'Doe',
+            };
 
             clearErrors(values, prevValues, errors, setErrors);
 
@@ -76,10 +80,14 @@ secondName: 'Doe'};
 
         it('should clear errors for changed fields', () => {
             const expectedErrors = _omit(errors, 'firstName');
-            values = {firstName: 'Jane',
-secondName: 'Doe'};
-            prevValues = {firstName: 'John',
-secondName: 'Doe'};
+            values = {
+                firstName: 'Jane',
+                secondName: 'Doe',
+            };
+            prevValues = {
+                firstName: 'John',
+                secondName: 'Doe',
+            };
 
             clearErrors(values, prevValues, errors, setErrors);
 

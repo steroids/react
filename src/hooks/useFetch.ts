@@ -65,8 +65,10 @@ export const defaultFetchHandler = (config, components, addCancelToken) => {
     });
 
     return components.http
-        .send(config.method, config.url, config.params, {...config.options,
-cancelToken})
+        .send(config.method, config.url, config.params, {
+            ...config.options,
+            cancelToken,
+        })
         .then(result => result.data);
 };
 
@@ -152,8 +154,10 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
         fetch();
     }, [fetch]);
 
-    return {data,
-isLoading,
-fetch,
-axiosError};
+    return {
+        data,
+        isLoading,
+        fetch,
+        axiosError,
+    };
 }

@@ -33,8 +33,10 @@ describe('fields actions', () => {
 
     it('fieldsDataProviderSetItems', () => {
         const dataProviderId = '0';
-        const items = {item1: 'item1',
-item2: false};
+        const items = {
+            item1: 'item1',
+            item2: false,
+        };
 
         const expectedActions = [
             {

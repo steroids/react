@@ -102,7 +102,7 @@ export interface IUiApplicationComponent {
      * Добавляет иконки.
      * @param {{ [name: string]: string | ReactNode }} icons - Иконки.
      */
-    addIcons(icons: {[name: string]: string | ReactNode,}): void,
+    addIcons(icons: {[name: string]: string | ReactNode, }): void,
 
     /**
      * Возвращает иконку по указанному имени.
@@ -156,7 +156,7 @@ export default class UiComponent implements IUiApplicationComponent {
 
     protected _models: any;
 
-    icons: {[name: string]: string | number | ReactNode,} | any;
+    icons: {[name: string]: string | number | ReactNode, } | any;
 
     fields: any;
 
@@ -187,8 +187,10 @@ export default class UiComponent implements IUiApplicationComponent {
         }
         if (!forceNode && _isFunction(Component)) {
             if (Component.defaultProps) {
-                return Component({...Component.defaultProps,
-...props});
+                return Component({
+                    ...Component.defaultProps,
+                    ...props,
+                });
             }
             return Component(props);
         }
@@ -238,8 +240,10 @@ export default class UiComponent implements IUiApplicationComponent {
     }
 
     addModels(models) {
-        this._models = {...this._models,
-...models};
+        this._models = {
+            ...this._models,
+            ...models,
+        };
     }
 
     /*getModel(name) {

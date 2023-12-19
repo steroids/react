@@ -62,8 +62,10 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         ...props.inputProps,
     }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps, props.required]);
 
-    return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props,
-inputProps});
+    return components.ui.renderView(props.view || 'form.CheckboxFieldView', {
+        ...props,
+        inputProps,
+    });
 }
 
 CheckboxField.defaultProps = {

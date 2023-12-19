@@ -4,17 +4,13 @@ import {IAlertViewProps} from '../../../../src/ui/content/Alert/Alert';
 import {useBem} from '../../../../src/hooks';
 import IconView from '../Icon/IconMockView';
 
-interface IAlertProps extends IAlertViewProps {
-    testId: string,
-}
-
-export default function Alert(props: IAlertProps) {
+export default function Alert(props: IAlertViewProps) {
     const bem = useBem('AlertView');
 
     return (
         props.isExist && (
             <div
-                data-testid={props.testId}
+                data-testid='alert-test'
                 className={bem(
                     bem.block({
                         [props.type]: !!props.type,

@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import {ILinkProps} from '../../nav/Link/Link';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
@@ -121,9 +122,21 @@ export type ICardViewProps = ICardProps
 
 function Card(props: ICardProps) {
     const components = useComponents();
-    return components.ui.renderView(props.view || 'content.CardView', {
-        ...props,
-    });
+
+    const viewProps = useMemo(() => ({
+        title: props.title,
+        buttons: props.buttons,
+        links: props.links,
+        description: props.description,
+        children: props.children,
+        header: props.header,
+        cover: props.cover,
+        footer: props.footer,
+        className: props.className,
+        style: props.style,
+    }), [props.className, props.style]);
+
+    return components.ui.renderView(props.view || 'content.CardView', viewProps);
 }
 
 export default Card;

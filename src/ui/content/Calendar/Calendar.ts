@@ -153,9 +153,7 @@ function Calendar(props: ICalendarProps) {
         }
     }, [props]);
 
-    return components.ui.renderView(props.view || 'content.CalendarView', {
-        ...props.viewProps,
-        ...props.pickerProps,
+    const viewProps = useMemo(() => ({
         month,
         toYear,
         fromYear,
@@ -164,10 +162,17 @@ function Calendar(props: ICalendarProps) {
         selectedDates,
         toggleCaptionPanel,
         isCaptionPanelVisible,
+        style: props.style,
         className: props.className,
+        viewProps: props.viewProps,
         showFooter: props.showFooter,
+        pickerProps: props.pickerProps,
         numberOfMonths: props.numberOfMonths,
-    });
+    }), [fromYear, isCaptionPanelVisible, month, onDaySelect, onMonthSelect, props.className,
+        props.numberOfMonths, props.pickerProps, props.showFooter, props.style, props.viewProps,
+        selectedDates, toYear, toggleCaptionPanel]);
+
+    return components.ui.renderView(props.view || 'content.CalendarView', viewProps);
 }
 
 Calendar.defaultProps = {

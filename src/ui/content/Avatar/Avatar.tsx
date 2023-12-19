@@ -98,12 +98,25 @@ function Avatar(props: IAvatarProps) {
         return resultTitle;
     }, [props.title]);
 
-    return components.ui.renderView(props.view || 'content.AvatarView', {
-        ...props,
+    const viewProps = useMemo(() => ({
+        alt: props.alt,
+        size: props.size,
+        shape: props.shape,
+        src: props.src,
+        srcSet: props.srcSet,
+        status: props.status,
+        title: props.title,
+        children: props.children,
+        hasBorder: props.hasBorder,
+        className: props.className,
+        style: props.style,
         isError,
         onError,
         formattedTitle,
-    });
+    }), [props.alt, props.size, props.shape, props.src, props.srcSet, props.status, props.title,
+        props.children, props.hasBorder, props.className, props.style, isError, onError, formattedTitle]);
+
+    return components.ui.renderView(props.view || 'content.AvatarView', viewProps);
 }
 
 Avatar.defaultProps = {

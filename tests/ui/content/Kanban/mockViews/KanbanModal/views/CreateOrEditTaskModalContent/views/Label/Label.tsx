@@ -2,8 +2,8 @@ import * as React from 'react';
 import {Text} from '../../../../../../../../../../src/ui/typography';
 
 interface ILabelProps {
-    content: string;
-    className: string;
+    content: string,
+    className: string,
 }
 
 export default function Label(props: ILabelProps) {

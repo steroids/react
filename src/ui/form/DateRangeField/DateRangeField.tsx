@@ -26,13 +26,13 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      * Аттрибут (название) поля в форме
      * @example 'fromTime'
      */
-    attributeFrom?: string;
+    attributeFrom?: string,
 
     /**
      * Аттрибут (название) поля в форме
      * @example 'toTime'
      */
-    attributeTo?: string;
+    attributeTo?: string,
 
     /**
      * Свойства для компонента DayPickerInput
@@ -43,31 +43,31 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      *  }
      * }
      */
-    pickerProps?: any;
+    pickerProps?: any,
 
     /**
      * Формат даты показываемый пользователю
      * @example DD.MM.YYYY
      */
-    displayFormat?: string;
+    displayFormat?: string,
 
     /**
      * Формат даты отправляемый на сервер
      * @example YYYY-MM-DD
      */
-    valueFormat?: string;
+    valueFormat?: string,
 
     /**
      * Placeholder подсказка
      * @example Your text...
      */
-    placeholder?: any;
+    placeholder?: any,
 
     /**
      * Иконка
      * @example calendar-day
      */
-    icon?: boolean | string;
+    icon?: boolean | string,
 
     /**
      * Отображение кнопки для сброса значения поля
@@ -109,9 +109,9 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
         * Опции маски для поля to
         */
         to: MaskitoOptions,
-    }
+    },
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
@@ -276,8 +276,10 @@ DateRangeField.defaultProps = {
     noBorder: false,
     size: 'md',
     maskOptions: {
-        from: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy', separator: '.'}),
-        to: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy', separator: '.'}),
+        from: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy',
+separator: '.'}),
+        to: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy',
+separator: '.'}),
     },
 };
 

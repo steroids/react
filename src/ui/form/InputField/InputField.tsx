@@ -51,13 +51,13 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
      * Свойства для элемента input
      * @example { onKeyDown: ... }
      */
-    inputProps?: InputHTMLAttributes<HTMLInputElement>;
+    inputProps?: InputHTMLAttributes<HTMLInputElement>,
 
     /**
      * Показывать иконку очищения поля
      * @example true
     */
-    showClear?: boolean;
+    showClear?: boolean,
 
     /**
      * Свойства для компонента отображения
@@ -68,7 +68,7 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
      */
     viewProps?: {
         [key: string]: any,
-    };
+    },
 }
 
 /**
@@ -80,31 +80,31 @@ export interface IInputFieldProps extends IBaseFieldProps {
      * HTML Тип
      * @example email
      */
-    type?: IElementInputType;
+    type?: IElementInputType,
 
     /**
      * Изображение или React-нода, которая будет отрендерена слева от поля.
      * @example require('icon.png') | <component/>
      */
-    textBefore?: number | ReactNode | string;
+    textBefore?: number | ReactNode | string,
 
     /**
      * Изображение или React-нода, которая будет отрендерена справа от поля.
      * @example require('icon.png') | '<component/>'
      */
-    textAfter?: number | ReactNode | string;
+    textAfter?: number | ReactNode | string,
 
     /**
      * Текст или React-нода, которая будет отрендерена слева от поля.
      * @example 'http://'
      */
-    addonBefore?: ReactNode | string;
+    addonBefore?: ReactNode | string,
 
     /**
      * Текст или React-нода, которая будет отрендерена справа от поля.
      * @example '.com'
      */
-    addonAfter?: ReactNode | string;
+    addonAfter?: ReactNode | string,
 
     /**
      * Конфигурация маски
@@ -125,7 +125,7 @@ export interface IInputFieldProps extends IBaseFieldProps {
     /**
      * Пользовательская иконка svg или название иконки
      */
-    leadIcon?: React.ReactElement | string;
+    leadIcon?: React.ReactElement | string,
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
@@ -140,7 +140,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     onClear?: () => void,
     onFocus?: (e: Event | React.FocusEvent) => void,
     onBlur?: (e: Event | React.FocusEvent) => void,
-    onMouseDown?: (e: Event | React.MouseEvent) => void;
+    onMouseDown?: (e: Event | React.MouseEvent) => void,
     defaultValue?: string,
 }
 

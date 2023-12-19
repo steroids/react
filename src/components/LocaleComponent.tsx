@@ -10,28 +10,28 @@ export interface ILocaleComponentConfig {
     /**
      * Разница времени с бекендом (в микросекундах)
      */
-    backendTimeDiff?: null;
+    backendTimeDiff?: null,
 
     /**
      * Временная зона бекенда
      */
-    backendTimeZone?: any;
+    backendTimeZone?: any,
 
     /**
      * Язык приложения
      * @example ru
      */
-    language?: string;
+    language?: string,
 
     /**
      * Исходный язык
      */
-    sourceLanguage?: string;
+    sourceLanguage?: string,
 
     /**
      * Переводы сообщений
      */
-    translations?: any;
+    translations?: any,
 }
 
 /**
@@ -44,7 +44,7 @@ export interface ILocaleComponent extends ILocaleComponentConfig {
      * @param format Формат даты
      * @returns Экземпляр `dayjs`
      */
-    dayjs(date?: string, format?: string): dayjs.Dayjs;
+    dayjs(date?: string, format?: string): dayjs.Dayjs,
 
     /**
      * Алиас для метода `translate`
@@ -52,7 +52,7 @@ export interface ILocaleComponent extends ILocaleComponentConfig {
      * @param params Параметры перевода
      * @returns Переведенное сообщение
      */
-    t(message: string, params?: Record<string, any>): string;
+    t(message: string, params?: Record<string, any>): string,
 
     /**
      * Перевод сообщения
@@ -60,7 +60,7 @@ export interface ILocaleComponent extends ILocaleComponentConfig {
      * @param params Параметры перевода
      * @returns Переведенное сообщение
      */
-    translate(message: string, params?: Record<string, any>): string;
+    translate(message: string, params?: Record<string, any>): string,
 }
 
 /**

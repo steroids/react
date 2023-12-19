@@ -13,22 +13,22 @@ export interface ISliderProps extends IUiComponent, Omit<SplideProps, 'items'> {
     /**
      * Опции слайдера.
      */
-    sliderOptions: Options;
+    sliderOptions: Options,
 
     /**
      * Элементы слайдера.
      */
-    items: Record<string, any>[];
+    items: Record<string, any>[],
 
     /**
      * Представление элемента слайдера.
      */
-    itemView: CustomView | any;
+    itemView: CustomView | any,
 
     /**
      * Дополнительные свойства.
      */
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export type ISliderViewProps = ISliderProps

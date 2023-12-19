@@ -11,19 +11,19 @@ export interface IBooleanFormatterProps {
     /**
     * Значение для BooleanFormatter
     */
-    value?: string | number | boolean;
+    value?: string | number | boolean,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IBooleanFormatterPropsView {
-    value?: string | number | boolean;
+    value?: string | number | boolean,
     children?: React.ReactNode,
 }
 

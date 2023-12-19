@@ -31,20 +31,20 @@ export type CalendarSystemModalFields = 'title' | 'eventGroupId' | 'date' | 'des
 export type CalendarSystemEventGroupModalFields = 'label' | 'color';
 
 export interface IEventInitialValues extends IEvent {
-    eventGroupId: string;
+    eventGroupId: string,
 }
 export interface IDay {
-    dayNumber: number;
-    date: Date;
-    outOfRange?: boolean;
-    isToday?: boolean;
+    dayNumber: number,
+    date: Date,
+    outOfRange?: boolean,
+    isToday?: boolean,
     formattedDisplay?: string,
 }
 
 export interface IPresentDateInfo {
-    currentYear: number;
-    currentMonth: number;
-    dateToDisplay: string;
+    currentYear: number,
+    currentMonth: number,
+    dateToDisplay: string,
 }
 
 /**
@@ -113,7 +113,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     /**
     * Функция, которая вызовется при смене типа календаря
     */
-    onChangeCalendarType?: (newType: string) => void;
+    onChangeCalendarType?: (newType: string) => void,
     /**
     * Свойства для модального окна
     */
@@ -140,11 +140,11 @@ export interface ICalendarSystemProps extends IUiComponent {
     */
     additionalViewProps?: Record<string, any>,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps'> {
-    openCreateModal: (eventInitialDay?: IDay) => void;
+    openCreateModal: (eventInitialDay?: IDay) => void,
     onInnerCalendarChangeMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
     eventGroupsTitle: string,
@@ -152,23 +152,23 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
-    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void
+    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void,
     calendarType: CalendarEnum,
 
     monthGridProps: {
         monthGridWeekDays: string[],
         monthGridCalendarDays: IDay[],
-        getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
-        openEditModal: (event: IEvent) => void;
-        openCreateModal: (eventInitialDay?: IDay) => void;
-    }
+        getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
+        openEditModal: (event: IEvent) => void,
+        openCreateModal: (eventInitialDay?: IDay) => void,
+    },
     weekGridProps: {
         weekGridTwentyFourHoursArray: string[],
         weekGridCurrentWeekDays: IDay[],
-        getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
-        openEditModal: (event: IEvent) => void;
-        openCreateModal: (eventInitialDay?: IDay) => void;
-    }
+        getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
+        openEditModal: (event: IEvent) => void,
+        openCreateModal: (eventInitialDay?: IDay) => void,
+    },
 }
 
 export interface ICalendarSystemModalViewProps extends IModalProps {
@@ -183,8 +183,8 @@ export interface CalendarSystemEventGroupModalViewProps extends IModalProps {
     onEventGroupSubmit: (fields: Record<CalendarSystemEventGroupModalFields, string>) => void,
     eventGroupInitialValues?: {
         color: string,
-        label: string
-    }
+        label: string,
+    },
 }
 
 export default function CalendarSystem(props: ICalendarSystemProps) {

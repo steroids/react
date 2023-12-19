@@ -96,7 +96,7 @@ export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'o
 }
 
 export interface ICrudClickProps {
-    crudId?: string;
+    crudId?: string,
     mode?: 'page' | 'modal',
     restUrl?: string,
     restApi?: IApiRest,
@@ -123,7 +123,7 @@ export interface ICrudProps {
     /**
     * Id для Crud
     */
-    crudId?: string;
+    crudId?: string,
 
     /**
     * Режим работы Crud
@@ -191,7 +191,7 @@ export interface ICrudProps {
     /**
     * Коллекция элементов
     */
-    items?: ICrudItem[] | { [key: string]: ICrudItem };
+    items?: ICrudItem[] | { [key: string]: ICrudItem, },
 
     /**
     * Параметры Grid
@@ -362,7 +362,8 @@ function Crud(props: ICrudProps): JSX.Element {
                         }
                     }
 
-                    crudItem.onClick(e, {...clickProps, ...localClickProps});
+                    crudItem.onClick(e, {...clickProps,
+...localClickProps});
                 };
             } else {
                 button.toRoute = routeId;

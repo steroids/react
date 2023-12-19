@@ -12,13 +12,13 @@ export interface IRadioFieldProps extends IFieldWrapperInputProps, IUiComponent 
      * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
-    inputProps?: any;
+    inputProps?: any,
 
     /**
      * Флаг определяющий включен ли элемент
      * @example {'true'}
      */
-    checked?: boolean;
+    checked?: boolean,
 
     [key: string]: any,
 }
@@ -30,7 +30,7 @@ export interface IRadioFieldViewProps extends IRadioFieldProps, IFieldWrapperOut
         checked: boolean,
         onChange: (value: string | React.ChangeEvent) => void,
         disabled: boolean,
-    }
+    },
 }
 
 function RadioField(props: IRadioFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -52,7 +52,8 @@ function RadioField(props: IRadioFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props.inputProps,
     }), [onChangeHandler, props.disabled, props.input.name, props.input.value, props.inputProps]);
 
-    return components.ui.renderView(props.view || 'form.RadioFieldView', {...props, inputProps});
+    return components.ui.renderView(props.view || 'form.RadioFieldView', {...props,
+inputProps});
 }
 
 RadioField.defaultProps = {

@@ -42,53 +42,53 @@ export interface IButtonProps extends IUiComponent {
      * Текст кнопки или ссылки
      * @example Save
      */
-    label?: string | any;
+    label?: string | any,
 
     /**
      * Подсказка, отображается при наведении (через тег title)
      * @example Save
      */
-    hint?: string | any;
+    hint?: string | any,
 
     /**
      * HTML Тип
      * @example submit
      */
-    type?: 'button' | 'submit';
+    type?: 'button' | 'submit',
 
     /**
      * Цвет состояния
      * @example success
      */
-    color?: ColorName;
+    color?: ColorName,
 
     /**
      * Отображать как ссылку?
      * @example true
      */
-    link?: boolean;
+    link?: boolean,
 
     /**
      * Иконка
      */
-    icon?: string;
+    icon?: string,
 
     /**
      * Цифра (к примеру, новые сообщения)
      */
-    badge?: number | IButtonBadge;
+    badge?: number | IButtonBadge,
 
     /**
      * Отображать индикатор загрузки?
      * @example true
      */
-    isLoading?: boolean;
+    isLoading?: boolean,
 
     /**
      * Отобразить кнопку в состоянии неуспешного нажатия (например, при неуспешном ajax запросе)
      * @example true
      */
-    isFailed?: boolean;
+    isFailed?: boolean,
 
     /**
      * Через сколько миллисекунд должно исчезнуть состояние "failed"
@@ -100,45 +100,45 @@ export interface IButtonProps extends IUiComponent {
      * Включает стиль `outline`, когда у кнопки остается только `border`, а цвет кнопки становится прозрачным
      * @example true
      */
-    outline?: boolean;
+    outline?: boolean,
 
     /**
      * HTML аттрибут `target`, доступен только для ссылок
      * @example _blank
      */
-    target?: string;
+    target?: string,
 
     /**
      * Ссылка на внешнюю страницу, используется совместно с свойством `link`
      * @example https://kozhindev.com
      */
-    url?: string;
+    url?: string,
 
     /**
      * При указании данного свойства, после нажатия на кнопку и до выполнения действия будет отображено нативное
      * окно с текстом подтверждения - `window.confirm('Ваш текст')`.
      * @example Удалить запись #512?
      */
-    confirm?: string;
+    confirm?: string,
 
     /**
      * Обработчик события нажатия. Для асинхронных событий вовзращяйте в обработчике `Promise`, тогда кнопка
      * автоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
      * @param e => fetch(...)
      */
-    onClick?: (e: Event | React.MouseEvent) => Promise<any> | any;
+    onClick?: (e: Event | React.MouseEvent) => Promise<any> | any,
 
     /**
      * Переводит кнопку в состояние "не активна"
      * @example true
      */
-    disabled?: boolean;
+    disabled?: boolean,
 
     /**
      * Включает стиль `block`, делая размер кнопки на 100% ширины блока
      * @example true
      */
-    block?: boolean;
+    block?: boolean,
 
     /**
      * Вложенные элементы
@@ -150,13 +150,13 @@ export interface IButtonProps extends IUiComponent {
      * используйте свойство `toRouteParams`
      * @example profile
      */
-    toRoute?: string;
+    toRoute?: string,
 
     /**
      * Параметры роута, на который необходимо перейти, см. свойство `toRoute`.
      * @example {userId: 52}
      */
-    toRouteParams?: Record<string, unknown>;
+    toRouteParams?: Record<string, unknown>,
 
     /**
      * ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки
@@ -185,7 +185,7 @@ export interface IButtonProps extends IUiComponent {
      */
     textColor?: any,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IButtonViewProps extends IButtonProps {
@@ -215,9 +215,11 @@ function Button(props: IButtonProps): JSX.Element {
         : (routePath ? buildUrl(routePath, props.toRouteParams) : null);
 
     // Flags: isLoading, isFailed
-    const [{isLoading, isFailed}, setStateFlags] = useState({isLoading: false, isFailed: false});
+    const [{isLoading, isFailed}, setStateFlags] = useState({isLoading: false,
+isFailed: false});
     React.useEffect(() => {
-        setStateFlags({isLoading: props.isLoading, isFailed: props.isFailed});
+        setStateFlags({isLoading: props.isLoading,
+isFailed: props.isFailed});
     }, [props.isLoading, props.isFailed]);
 
     // Form submitting

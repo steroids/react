@@ -6,8 +6,8 @@ import {DropDownField} from '../../../../../../../../../../src/ui/form';
 import TaskTags from '../../../../../TaskTags';
 
 interface ITagsSelectorProps {
-    tags?: ITaskTag[];
-    formId?: string;
+    tags?: ITaskTag[],
+    formId?: string,
 }
 
 export default function TagsSelector(props: ITagsSelectorProps) {

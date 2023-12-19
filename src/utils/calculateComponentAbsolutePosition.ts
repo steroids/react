@@ -18,11 +18,17 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         return null;
     }
 
-    const style: IComponentStylePosition = {left: null, right: null, top: null};
+    const style: IComponentStylePosition = {left: null,
+right: null,
+top: null};
     let arrowPosition: IComponentArrowPosition = null;
 
     const {top, right, left, width, height} = parentRef.getBoundingClientRect();
-    const parentDimensions = {top, right, left, width, height};
+    const parentDimensions = {top,
+right,
+left,
+width,
+height};
 
     parentDimensions.top += window.scrollY;
 
@@ -218,5 +224,7 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         }
     }
 
-    return {style, position, arrowPosition};
+    return {style,
+position,
+arrowPosition};
 }

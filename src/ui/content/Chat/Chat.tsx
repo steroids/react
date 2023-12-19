@@ -5,28 +5,28 @@ import {IAvatarProps} from '../Avatar/Avatar';
 import useChat, {IGroupedMessagesByDates} from './hooks/useChat';
 
 export interface IChatUser {
-    id: number;
-    firstName?: string;
-    lastName?: string;
-    avatar?: IAvatarProps;
+    id: number,
+    firstName?: string,
+    lastName?: string,
+    avatar?: IAvatarProps,
 }
 
 export interface IMessageFile {
     uid?: string,
-    title?: string;
-    size?: number;
-    url?: string;
-    downloadUrl?: string;
-    fullHeight?: number;
-    fullWidth?: number;
+    title?: string,
+    size?: number,
+    url?: string,
+    downloadUrl?: string,
+    fullHeight?: number,
+    fullWidth?: number,
 }
 
 export interface IChatMessage {
-    id: number;
-    user: IChatUser;
-    text: string;
-    timestamp: Date | string;
-    files?: IMessageFile[];
+    id: number,
+    user: IChatUser,
+    text: string,
+    timestamp: Date | string,
+    files?: IMessageFile[],
 }
 
 /**
@@ -39,7 +39,7 @@ export interface IChatProps extends IUiComponent {
      * Идентификатор чата
      * @example TaskChat
      */
-    chatId: string;
+    chatId: string,
 
     /**
      * Коллекция сообщений
@@ -70,7 +70,7 @@ export interface IChatProps extends IUiComponent {
      *  },
      * ]
      */
-    messages: IChatMessage[];
+    messages: IChatMessage[],
 
     /**
      * Данные о текущем пользователе, нужны для отправки сообщений и определения сообщений пользователя
@@ -85,39 +85,39 @@ export interface IChatProps extends IUiComponent {
      *  },
      * }
      */
-    currentUser: IChatUser;
+    currentUser: IChatUser,
 
     /**
      * Обработчик события отправки сообщения
      */
-    onSendMessage?: (chatId: string, message: IChatMessage) => void;
+    onSendMessage?: (chatId: string, message: IChatMessage) => void,
 
     /**
      * Переопределение view React компонента для кастомизации отображения элемента инпута
      * @example MyCustomView
      */
-    customChatInputView?: React.ReactNode;
+    customChatInputView?: React.ReactNode,
 
     /**
      * Кастомный placeholder для инпута
      */
-    customInputPlaceholder?: string;
+    customInputPlaceholder?: string,
 
     /**
      * Пропсы для инпута загрузки файлов
      */
-    fileFieldProps?: IFileFieldProps;
+    fileFieldProps?: IFileFieldProps,
 }
 
 export interface IChatViewProps extends Pick<IChatProps, 'currentUser'>{
-    groupedMessagesByDates: IGroupedMessagesByDates;
-    renderChatInput: () => JSX.Element;
+    groupedMessagesByDates: IGroupedMessagesByDates,
+    renderChatInput: () => JSX.Element,
 }
 
 export interface IChatInputViewProps extends Pick<IChatProps, 'chatId' | 'fileFieldProps'> {
-    onSendMessage: (data) => void;
-    onUploadFiles: (files) => void;
-    inputPlaceholder: string;
+    onSendMessage: (data) => void,
+    onUploadFiles: (files) => void,
+    inputPlaceholder: string,
 }
 
 export default function Chat(props: IChatProps) {

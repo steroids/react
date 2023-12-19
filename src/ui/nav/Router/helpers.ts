@@ -84,7 +84,8 @@ export const walkRoutesRecursive = (
         items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
-            .map(id => walkRoutesRecursive({...item.items[id], id}, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
+            .map(id => walkRoutesRecursive({...item.items[id],
+id}, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
     }
     return {
         ...normalizedItem,
@@ -120,7 +121,8 @@ export const treeToList = (
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).forEach(id => {
-            items = items.concat(treeToList({...item.items[id], id}, false, item, alwaysAppendParentRoutePath));
+            items = items.concat(treeToList({...item.items[id],
+id}, false, item, alwaysAppendParentRoutePath));
         });
     }
 

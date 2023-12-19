@@ -7,7 +7,7 @@ import {IComponents} from '../providers/ComponentsProvider';
 
 declare global {
     interface Window {
-        APP_PRELOADED_DATA: any
+        APP_PRELOADED_DATA: any,
     }
 }
 
@@ -23,9 +23,9 @@ export interface IFetchResult<T> {
     data?: {
         providerData?: {
             type: string,
-            value: string
+            value: string,
         },
-        [key: string]: unknown
+        [key: string]: unknown,
     } | T,
     isLoading: boolean,
     fetch: (newParams?: Record<string, unknown>) => void,
@@ -65,7 +65,8 @@ export const defaultFetchHandler = (config, components, addCancelToken) => {
     });
 
     return components.http
-        .send(config.method, config.url, config.params, {...config.options, cancelToken})
+        .send(config.method, config.url, config.params, {...config.options,
+cancelToken})
         .then(result => result.data);
 };
 
@@ -151,5 +152,8 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
         fetch();
     }, [fetch]);
 
-    return {data, isLoading, fetch, axiosError};
+    return {data,
+isLoading,
+fetch,
+axiosError};
 }

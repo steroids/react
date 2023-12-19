@@ -30,7 +30,8 @@ const useMonthGrid = (currentMonthFirstDayDate: Date, setCurrentMonthFirstDayDat
         // Пройдемся по всем дням месяца и добавим их в массив
         for (let dayNumber = 1; dayNumber <= lastDayOfCurrentMonth; dayNumber++) {
             const date = new Date(Date.UTC(currentYear, month, dayNumber));
-            daysInCurrentMonth.push({date, dayNumber});
+            daysInCurrentMonth.push({date,
+dayNumber});
         }
 
         return {

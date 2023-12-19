@@ -64,7 +64,7 @@ export interface ICalendarProps extends IUiComponent {
     * Callback вызываемый при нажатии на смену года или месяца в шапке Calendar
     * @param newDate - дата первого дня нового месяца
     */
-    onMonthChange?: (newDate: Date) => void;
+    onMonthChange?: (newDate: Date) => void,
 }
 
 export interface ICalendarViewProps extends ICalendarProps {

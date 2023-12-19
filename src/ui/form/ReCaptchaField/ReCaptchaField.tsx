@@ -18,67 +18,67 @@ export interface IReCaptchaFieldProps extends IFieldWrapperInputProps, IUiCompon
     /**
      * Обработчик события изменения ReCaptcha.
      */
-    onChange?: VoidFunction;
+    onChange?: VoidFunction,
 
     /**
      * Функция, вызываемая после загрузки асинхронного скрипта.
      */
-    asyncScriptOnLoad?: () => void;
+    asyncScriptOnLoad?: () => void,
 
     /**
      * Положение значка ReCaptcha. Может быть 'bottomright' (внизу справа), 'bottomleft' (внизу слева) или 'inline' (встроенный).
      */
-    badge?: 'bottomright' | 'bottomleft' | 'inline';
+    badge?: 'bottomright' | 'bottomleft' | 'inline',
 
     /**
      * Тип ReCaptcha. Может быть 'image' (изображение) или 'audio' (аудио).
      */
-    type?: 'image' | 'audio';
+    type?: 'image' | 'audio',
 
     /**
      * Значение tabindex для ReCaptcha.
      */
-    tabindex?: number;
+    tabindex?: number,
 
     /**
      * Защищенный токен для ReCaptcha.
      */
-    stoken?: string;
+    stoken?: string,
 
     /**
      * Обработчик события истечения срока действия ReCaptcha.
      */
-    onExpired?: VoidFunction;
+    onExpired?: VoidFunction,
 
     /**
      * Обработчик события ошибки ReCaptcha.
      */
-    onErrored?: VoidFunction;
+    onErrored?: VoidFunction,
 
     /**
      * Флаг, указывающий на изоляцию ReCaptcha.
      */
-    isolated?: boolean;
+    isolated?: boolean,
 
     /**
      * Языковой код для ReCaptcha.
      */
-    hl?: string;
+    hl?: string,
 
     /**
      * Ссылка на ref-объект React для ReCaptcha.
      */
-    ref?: React.RefObject<any>;
+    ref?: React.RefObject<any>,
 
     /**
      * Ключ сайта ReCaptcha. По умолчанию process.env.APP_RECAPTCHA_SITE_KEY
      */
-    sitekey?: string;
+    sitekey?: string,
 
     /**
      * Дополнительные свойства, которые могут быть указаны.
      */
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWrapperOutputProps {
@@ -96,7 +96,7 @@ export interface IReCaptchaFieldViewProps extends IReCaptchaFieldProps, IFieldWr
         isolated: boolean,
         hl: string,
         ref: React.RefObject<any>,
-    }
+    },
 }
 
 function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps): JSX.Element {

@@ -58,7 +58,7 @@ export interface IFlexGridProps extends IUiComponent {
      *  }
      * ]
      */
-    items?: IFlexGridItem[];
+    items?: IFlexGridItem[],
 
     /**
      * Вложенные элементы
@@ -68,7 +68,7 @@ export interface IFlexGridProps extends IUiComponent {
     /**
      * Дополнительный CSS-класс для элементов FlexGrid
      */
-    itemClassName?: CssClassName;
+    itemClassName?: CssClassName,
 
     /**
      * Расстояние между элементами в px.
@@ -98,7 +98,7 @@ export interface IFlexGridProps extends IUiComponent {
      */
     align?: 'center' | 'end' | 'start' | 'stretch' | 'flex-start' | 'flex-end',
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IFlexGridViewProps extends IFlexGridProps {

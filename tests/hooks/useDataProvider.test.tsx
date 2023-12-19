@@ -15,9 +15,12 @@ jest.useFakeTimers();
 describe('hook useDataProvider', () => {
     it('smart search query', async () => {
         const items = [
-            {id: 1, label: 'Ivanov'},
-            {id: 2, label: 'Petrov'},
-            {id: 3, label: 'John'},
+            {id: 1,
+label: 'Ivanov'},
+            {id: 2,
+label: 'Petrov'},
+            {id: 3,
+label: 'John'},
         ];
         const wrapper = mountWithApp(MockComponent, {
             items,
@@ -25,13 +28,15 @@ describe('hook useDataProvider', () => {
         });
 
         expect(wrapper.find('MockComponent').prop('query')).toEqual(undefined);
-        wrapper.setProps({items, query: 'Ivan'} as any);
+        wrapper.setProps({items,
+query: 'Ivan'} as any);
 
         expect(wrapper.find('MockComponent').prop('query')).toEqual('Ivan');
         wrapper.update();
 
         expect(wrapper.find('MockResultComponent').prop('items')).toEqual([
-            {...items[0], labelHighlighted: [['Ivan', true], ['ov', false]]},
+            {...items[0],
+labelHighlighted: [['Ivan', true], ['ov', false]]},
         ]);
         expect(wrapper.find('MockResultComponent').prop('sourceItems')).toEqual(items);
     });
@@ -75,8 +80,10 @@ describe('hook useDataProvider', () => {
             items: ['a', 'b'],
         });
         expect(wrapper.find('MockResultComponent').prop('items')).toEqual([
-            {id: 'a', label: 'a'},
-            {id: 'b', label: 'b'},
+            {id: 'a',
+label: 'a'},
+            {id: 'b',
+label: 'b'},
         ]);
     });
 
@@ -101,8 +108,10 @@ describe('hook useDataProvider', () => {
 
             expect(wrapper.find('MockResultComponent').prop('isLoading')).toEqual(false);
             expect(wrapper.find('MockResultComponent').prop('items')).toEqual([
-                {id: 'q1', label: 'q1'},
-                {id: 'q2', label: 'q2'},
+                {id: 'q1',
+label: 'q1'},
+                {id: 'q2',
+label: 'q2'},
             ]);
         });
     });

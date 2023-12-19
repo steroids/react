@@ -4,11 +4,11 @@ import {isInitialized} from '../reducers/auth';
 
 declare global {
     interface Window {
-        ym: any;
-        dataLayer: any;
-        VK: any;
-        fbq: any;
-        _fbq: any;
+        ym: any,
+        dataLayer: any,
+        VK: any,
+        fbq: any,
+        _fbq: any,
     }
 }
 
@@ -20,25 +20,25 @@ type ConfigType = {
         vkRetargeting?: any,
         facebookAnalytics?: any,
     },
-    enable?: boolean
+    enable?: boolean,
 }
 
 export interface IMetricsComponent {
     /**
      * Отписаться от метрик
      */
-    unsubscribe: VoidFunction;
+    unsubscribe: VoidFunction,
 
     /**
      * Отменить прослушивание метрик
      */
-    unlisten: VoidFunction;
+    unlisten: VoidFunction,
 
     /**
      * Поменять счетчики
      * @param values Значения
      */
-    setCounters(values: any): void;
+    setCounters(values: any): void,
 }
 
 /**
@@ -136,7 +136,8 @@ export default class MetricsComponent implements IMetricsComponent {
         (function (w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
-                'gtm.start': new Date().getTime(), event: 'gtm.js',
+                'gtm.start': new Date().getTime(),
+event: 'gtm.js',
             });
             const f = d.getElementsByTagName(s)[0];
             const j = d.createElement(s) as HTMLScriptElement;

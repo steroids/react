@@ -37,12 +37,12 @@ export interface IHeaderProps extends IUiComponent {
          * Дополнительные классы стилей для логотипа.
          */
         className?: CssClassName,
-    };
+    },
 
     /**
     * Свойства для навигации
     */
-    nav?: INavProps;
+    nav?: INavProps,
 
     /**
      * Размер
@@ -92,7 +92,7 @@ export interface IHeaderProps extends IUiComponent {
          * Свойства для меню пользователя.
          */
         menu?: IMenuProps,
-    }
+    },
 
     /**
      * Свойства для бургер-меню.
@@ -107,9 +107,9 @@ export interface IHeaderProps extends IUiComponent {
          * Свойства для ссылок бургер-меню.
          */
         links?: ILinkProps,
-    }
+    },
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IHeaderViewProps extends IHeaderProps {

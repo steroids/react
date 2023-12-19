@@ -14,27 +14,27 @@ export interface IDateTimeFormatterProps {
      * Формат даты
      * @example LLL
      */
-    format?: string;
+    format?: string,
 
     /**
      * Показывать ли дату учитываю временную зону
      * @example true
      */
-    timeZone?: string | boolean;
+    timeZone?: string | boolean,
 
     /**
      * Дата
      * @example 2023-09-11
      */
-    value?: any;
+    value?: any,
 
     /**
      * Переопределение view React компонента для кастомизации отображения колонки
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 function DateTimeFormatter(props: IDateFormatterProps): JSX.Element {

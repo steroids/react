@@ -37,7 +37,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
      */
     maskOptions?: MaskitoOptions,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
@@ -48,7 +48,7 @@ export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
      */
     maskInputRef?: React.RefCallback<HTMLElement>,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 const DATE_TIME_SEPARATOR = ', ';
@@ -143,7 +143,9 @@ DateTimeField.defaultProps = {
     dateInUTC: false,
     size: 'md',
     icon: true,
-    maskOptions: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy', timeMode: 'HH:MM', dateSeparator: '.'}),
+    maskOptions: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy',
+timeMode: 'HH:MM',
+dateSeparator: '.'}),
 };
 
 export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);

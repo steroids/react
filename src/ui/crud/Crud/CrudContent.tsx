@@ -45,8 +45,10 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
     ), [props.action, props.items, props.itemsToControls]);
 
     const formInitialValues = useMemo(() => props.action === CRUD_ACTION_UPDATE
-        ? {...props.record,
-[props.primaryKey]: props.record?.[props.primaryKey] || props.recordId}
+        ? {
+            ...props.record,
+            [props.primaryKey]: props.record?.[props.primaryKey] || props.recordId,
+        }
         : undefined,
     [props.action, props.primaryKey, props.record, props.recordId]);
 

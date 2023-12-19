@@ -148,8 +148,10 @@ describe('router reducers', () => {
             };
 
             const activeIds = [routeId];
-            const state = getStateWithRouterData({routesMap,
-activeIds});
+            const state = getStateWithRouterData({
+                routesMap,
+                activeIds,
+            });
             expect(getRoute(state)).toEqual(route);
         });
 
@@ -289,8 +291,10 @@ activeIds});
     describe('getRouteChildren', () => {
         it('with items', () => {
             const routeParentId = 'routeParent';
-            const routeChildren = [{id: 'routeChild',
-exact: true}];
+            const routeChildren = [{
+                id: 'routeChild',
+                exact: true,
+            }];
 
             const routesMap = {
                 [routeParentId]: {

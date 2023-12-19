@@ -108,8 +108,10 @@ DateField.defaultProps = {
     required: false,
     showRemove: true,
     valueFormat: 'YYYY-MM-DD',
-    maskOptions: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy',
-separator: '.'}),
+    maskOptions: maskitoDateOptionsGenerator({
+        mode: 'dd/mm/yyyy',
+        separator: '.',
+    }),
     size: 'md',
 };
 

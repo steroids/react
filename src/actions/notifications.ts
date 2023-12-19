@@ -27,11 +27,13 @@ export const showNotification = (
     const {position, timeOut} = params as IShowNotificationParameters;
     const id = _uniqueId();
 
-    dispatch({type: NOTIFICATIONS_SHOW,
-id,
-message,
-level: level || 'success',
-position});
+    dispatch({
+        type: NOTIFICATIONS_SHOW,
+        id,
+        message,
+        level: level || 'success',
+        position,
+    });
 
     if (timeOut > 0) {
         setTimeout(() => dispatch(closeNotification(id)), timeOut);

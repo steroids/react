@@ -120,7 +120,7 @@ export interface IRouteItem {
     /**
      * Вложенные роуты
      */
-    items?: IRouteItem[] | {[key: string]: IRouteItem,},
+    items?: IRouteItem[] | {[key: string]: IRouteItem, },
 
     /**
      * Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента
@@ -153,7 +153,7 @@ export interface IRouterProps {
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes?: IRouteItem[] | {[key: string]: IRouteItem,},
+    routes?: IRouteItem[] | {[key: string]: IRouteItem, },
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент
@@ -238,8 +238,10 @@ function Router(props: IRouterProps): JSX.Element {
             dispatch(
                 initRoutes(
                     walkRoutesRecursive(
-                        {id: 'root',
-...props.routes},
+                        {
+                            id: 'root',
+                            ...props.routes,
+                        },
                         props.defaultRoles ? {roles: props.defaultRoles} : undefined,
                         {},
                         props.alwaysAppendParentRoutePath,
@@ -328,8 +330,10 @@ function Router(props: IRouterProps): JSX.Element {
             }
 
             const activeRoute = routes.find(r => r.id === activeRouteId);
-            children = renderComponent(activeRoute, activePath, {...routeProps,
-children}) || children;
+            children = renderComponent(activeRoute, activePath, {
+                ...routeProps,
+                children,
+            }) || children;
 
             // Stop, if route is exact
             if (activeRoute.exact) {
@@ -339,8 +343,10 @@ children}) || children;
             return false;
         });
 
-        const result = renderComponent(routeItem, activePath, {...routeProps,
-children});
+        const result = renderComponent(routeItem, activePath, {
+            ...routeProps,
+            children,
+        });
         if (!result) {
             if (children) {
                 return children;

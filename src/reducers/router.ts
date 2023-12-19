@@ -24,7 +24,7 @@ export interface IRouterInitialState {
         query: Record<string, unknown> | null,
     } | null,
     routesTree: IRouteItem | null,
-    routesMap: {[key: string]: IRouteItem,} | null,
+    routesMap: {[key: string]: IRouteItem, } | null,
     activeIds: string[] | null,
     match: {
         path: string,
@@ -52,7 +52,7 @@ const initialState: IRouterInitialState = {
     counters: {},
 };
 
-type TUrlParams = { [key: string]: unknown, } | null;
+type TUrlParams = {[key: string]: unknown, } | null;
 
 /**
  * Generate url for route by path and params
@@ -115,8 +115,10 @@ export const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], ro
         items = item.items.map(subItem => normalizeRoutes(state, subItem, activeIds, routesMap));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
-            .map(id => normalizeRoutes(state, {...item.items[id],
-id}, activeIds, routesMap));
+            .map(id => normalizeRoutes(state, {
+                ...item.items[id],
+                id,
+            }, activeIds, routesMap));
     }
     const normalizedItem = {
         ...item,

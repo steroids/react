@@ -20,8 +20,7 @@ import fieldWrapper, {
  *  Он позволяет пользователю выбрать начальную и конечную даты с помощью календаря и предоставляет удобный интерфейс для работы с диапазоном дат.
  */
 export interface IDateRangeFieldProps extends IDateInputStateInput,
-    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent
-{
+    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent {
     /**
      * Аттрибут (название) поля в форме
      * @example 'fromTime'
@@ -118,8 +117,7 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
-        | 'noBorder' | 'style'>
-{
+        | 'noBorder' | 'style'> {
     inputPropsFrom?: any,
     inputPropsTo?: any,
     errorsFrom?: string[],
@@ -276,10 +274,14 @@ DateRangeField.defaultProps = {
     noBorder: false,
     size: 'md',
     maskOptions: {
-        from: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy',
-separator: '.'}),
-        to: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy',
-separator: '.'}),
+        from: maskitoDateOptionsGenerator({
+            mode: 'dd/mm/yyyy',
+            separator: '.',
+        }),
+        to: maskitoDateOptionsGenerator({
+            mode: 'dd/mm/yyyy',
+            separator: '.',
+        }),
     },
 };
 

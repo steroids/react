@@ -198,6 +198,8 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         );
     }, [components, config, useGlobal]);
 
-    return {renderApplication,
-components};
+    return {
+        renderApplication,
+        components,
+    };
 }

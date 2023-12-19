@@ -126,13 +126,15 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
                 ...props.modalProps,
                 crop: {
                     ...props.crop,
-                    onSubmit: (crop, imageId) => setCroppedImage({...crop,
-id: imageId}),
+                    onSubmit: (crop, imageId) => setCroppedImage({
+                        ...crop,
+                        id: imageId,
+                    }),
                 },
                 image: _first(data) || data,
             }));
             // eslint-disable-next-line no-empty
-        } catch (e) {}
+        } catch (e) { }
         return data;
     }, [ImageFieldModalVIew, modalId, dispatch, props.crop, props.modalProps]);
 

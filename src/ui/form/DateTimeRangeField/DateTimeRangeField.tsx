@@ -29,13 +29,13 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
     * Аттрибут (название) поля в форме
     * @example 'fromTime'
     */
-    attributeFrom?: string;
+    attributeFrom?: string,
 
     /**
      * Аттрибут (название) поля в форме
      * @example 'toTime'
      */
-    attributeTo?: string;
+    attributeTo?: string,
 
     /**
      * Свойства для компонента DayPickerInput
@@ -46,7 +46,7 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      *  }
      * }
      */
-    pickerProps?: any;
+    pickerProps?: any,
 
     /**
      * Свойства для поля 'from'
@@ -87,9 +87,9 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
         * Опции маски для поля to
         */
         to: MaskitoOptions,
-    }
+    },
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
@@ -304,8 +304,12 @@ DateTimeRangeField.defaultProps = {
     icon: true,
     size: 'md',
     maskOptions: {
-        from: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy', timeMode: 'HH:MM', dateSeparator: '.'}),
-        to: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy', timeMode: 'HH:MM', dateSeparator: '.'}),
+        from: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy',
+timeMode: 'HH:MM',
+dateSeparator: '.'}),
+        to: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy',
+timeMode: 'HH:MM',
+dateSeparator: '.'}),
     },
 };
 

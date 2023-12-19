@@ -61,7 +61,7 @@ const useCalendarSystemModals = (
         setInnerEventGroups(currentEventGroups);
     }, [innerEventGroups, setInnerEventGroups]);
 
-    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number}>) => ({
+    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number,}>) => ({
         ...calendarModalProps,
         component: calendarModalView,
         eventGroups: innerEventGroups,
@@ -83,7 +83,8 @@ const useCalendarSystemModals = (
 
     const openEditModal = React.useCallback((event: IEvent) => {
         const eventGroupId = getEventFromGroup(event)?.id || 0;
-        dispatch(openModal(calendarModalView, getModalProps(false, {...event, eventGroupId})));
+        dispatch(openModal(calendarModalView, getModalProps(false, {...event,
+eventGroupId})));
     }, [getModalProps, calendarModalView, dispatch, getEventFromGroup]);
 
     return {

@@ -14,8 +14,8 @@ import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 import {ITreeProps} from '../../nav/Tree/Tree';
 
 type CheckboxTreeItems = string
-    | ({new(): Enum})
-    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any})[];
+    | ({new(): Enum,})
+    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any,})[];
 
 /**
  * CheckboxTreeField
@@ -30,7 +30,7 @@ export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
      * Свойства для элемента input
      * @example { onKeyDown: ... }
      */
-    inputProps?: any;
+    inputProps?: any,
 
     /**
      * Коллекция элементов
@@ -48,14 +48,14 @@ export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
      *  }
      * ]
      */
-    items: CheckboxTreeItems;
+    items: CheckboxTreeItems,
 
     /**
      * Первичный ключ для доступа к вложенным элементам
      */
-    primaryKey?: string;
+    primaryKey?: string,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
@@ -68,11 +68,11 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
         color?: string,
         disabled?: boolean,
         required?: boolean,
-    } & IPreparedTreeItem[];
-    selectedIds: (PrimaryKey | any)[];
-    onItemSelect: (checkbox: IPreparedTreeItem) => void;
-    renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element;
-    size?: Size;
+    } & IPreparedTreeItem[],
+    selectedIds: (PrimaryKey | any)[],
+    onItemSelect: (checkbox: IPreparedTreeItem) => void,
+    renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
+    size?: Size,
 }
 
 export const getNestedItemsIds = (item, groupAttribute) => {

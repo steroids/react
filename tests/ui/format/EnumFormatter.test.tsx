@@ -8,7 +8,8 @@ describe('EnumFormatter tests', () => {
     const itemId = 1;
     const props = {
         view: DefaultFormatterMockView,
-        items: [{id: itemId, label: 'London'}],
+        items: [{id: itemId,
+label: 'London'}],
         value: itemId,
     } as IEnumFormatterProps;
 

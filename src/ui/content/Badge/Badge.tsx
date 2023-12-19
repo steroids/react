@@ -12,7 +12,7 @@ export interface ICounter {
     * Содержимое счетчика
     * @example 'Counter'
     */
-    content: string | number
+    content: string | number,
 }
 
 /**
@@ -31,17 +31,17 @@ export interface IBadgeProps extends IUiComponent {
      * Тип badge
      * @example 'primary'
      */
-    type: ColorName;
+    type: ColorName,
 
     /**
      * Стиль скругления
      */
-    roundingStyle: 'rounder' | 'squarer';
+    roundingStyle: 'rounder' | 'squarer',
 
     /**
      * Нужно ли отображать кнопку, чтобы закрыть badge
      */
-    showClose?: boolean;
+    showClose?: boolean,
 
     /**
      * Callback функция вызываемая при нажатии на кнопку закрытия
@@ -62,13 +62,13 @@ export interface IBadgeProps extends IUiComponent {
      *  content: 'Hello from counter!',
      * }
      */
-    counter: boolean | ICounter;
+    counter: boolean | ICounter,
 
     /**
      * Размер для badge
      * @example 'md'
      */
-    size: Size;
+    size: Size,
 }
 
 export interface IBadgeViewProps extends IBadgeProps {

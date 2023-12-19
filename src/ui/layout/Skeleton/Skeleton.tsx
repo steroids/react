@@ -7,7 +7,7 @@ export interface ISkeletonViewProps {
     animation?: 'pulse' | 'wave',
     type?: 'text' | 'rect' | 'circle',
     height?: string | number,
-    width?: string | number
+    width?: string | number,
 }
 
 /**
@@ -46,7 +46,7 @@ export interface ISkeletonProps {
     /**
     * Ширина элемента
     */
-    width?: string | number
+    width?: string | number,
 }
 
 function Skeleton(props: ISkeletonProps): JSX.Element {

@@ -4,18 +4,18 @@ export interface ISocialComponent {
     /**
      * Провайдеры
      */
-    providers: any;
+    providers: any,
 
     /**
      * Старт
      * @param socialName Название social
      */
-    start(socialName: string): void;
+    start(socialName: string): void,
 
     /**
      * Инициализация компонента
      */
-    init(): void;
+    init(): void,
 }
 
 /**

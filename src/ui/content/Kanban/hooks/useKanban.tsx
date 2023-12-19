@@ -26,7 +26,7 @@ export interface IKanbanConfig {
      * Идентификатор канбан доски
      * @example TasksKanban
      */
-    kanbanId?: string;
+    kanbanId?: string,
 
     /**
      * Коллекция с наименованиями и свойствами колонок в таблице
@@ -49,17 +49,17 @@ export interface IKanbanConfig {
      *  }
      * ]
      */
-    columns: IKanbanColumn[];
+    columns: IKanbanColumn[],
 
     /**
      * Массив тегов для задач
      */
-    tags?: ITaskTag[];
+    tags?: ITaskTag[],
 
     /**
      * Массив исполнителей, которых можно назначить для выполнения задачи
      */
-    assigners?: ITaskAssigner[];
+    assigners?: ITaskAssigner[],
 
     /**
      * Обработчик события окончания перетаскивания карточки или колонки
@@ -81,22 +81,22 @@ export interface IKanbanConfig {
      *  combine: null
      * }
      */
-    onDragEnd?: (result: IDragEndResult) => void;
+    onDragEnd?: (result: IDragEndResult) => void,
 
     /**
      * Обработчик события создания карточки
      */
-    onCreateTask?: (kanbanId: string, columnId: number, task: IKanbanTask) => void;
+    onCreateTask?: (kanbanId: string, columnId: number, task: IKanbanTask) => void,
 
     /**
      * Обработчик события редактирования карточки
      */
-    onEditTask?: (kanbanId: string, columnId: number, task: IKanbanTask) => void;
+    onEditTask?: (kanbanId: string, columnId: number, task: IKanbanTask) => void,
 
     /**
      * Идентификатор последней созданной задачи, нужен для определения последовательности id для новых задач
      */
-    lastTaskId?: number;
+    lastTaskId?: number,
 }
 
 const COLUMNS_DROPPABLE_ID = 'all-columns';

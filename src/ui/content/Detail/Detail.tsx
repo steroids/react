@@ -25,7 +25,7 @@ export interface IDetailMedia {
      * Количество колонок, которое будет применяться, начиная от указанной ширины и меньше
      * @example 2
      */
-    column: number
+    column: number,
 }
 
 export interface IDetailResponsive {
@@ -37,7 +37,7 @@ export interface IDetailResponsive {
     /**
      * Брейкпоинты
      */
-    media: IDetailMedia[]
+    media: IDetailMedia[],
 }
 
 /**
@@ -65,7 +65,7 @@ export interface IDetailProps extends IUiComponent {
      * Вариант расположения ячеек "ключ-значение"
      * @example 'horizontal'
      */
-    layout?: DetailLayoutEnum
+    layout?: DetailLayoutEnum,
 
     /**
      * Перестраивать таблицу при ресайзе
@@ -86,13 +86,13 @@ export interface IDetailProps extends IUiComponent {
      * Максимальное количество колонок
      * @example 3
      */
-    column?: number
+    column?: number,
 
     /**
      * Заголовок таблицы
      * @example 'User info'
      */
-    title?: string | React.ReactNode
+    title?: string | React.ReactNode,
 
     /**
      * Контролы, которые нужно расположить рядом с таблицей
@@ -109,17 +109,17 @@ export interface IDetailProps extends IUiComponent {
      */
     children?: React.ReactNode | React.ReactNode[],
 
-    [key: string]: any
+    [key: string]: any,
 }
 
 export interface IDetailItemOutputProps extends IDetailItemProps {
     colspan: number,
-    value: IDetailItemProps['children']
+    value: IDetailItemProps['children'],
 }
 
 export interface IDetailViewProps extends IDetailProps {
     rows: IDetailItemOutputProps[][],
-    resizedNodeRef?: (node: HTMLDivElement) => void
+    resizedNodeRef?: (node: HTMLDivElement) => void,
 }
 
 export const constants = Object.freeze({

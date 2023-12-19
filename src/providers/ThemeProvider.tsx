@@ -2,14 +2,14 @@ import * as React from 'react';
 import {useComponents} from '../hooks';
 
 export interface ITheme {
-    theme: string;
-    toggleTheme: VoidFunction;
-    setTheme: React.Dispatch<any>;
+    theme: string,
+    toggleTheme: VoidFunction,
+    setTheme: React.Dispatch<any>,
 }
 
 export interface IThemeProviderProps extends React.PropsWithChildren<any> {
-    themes?: string[];
-    themeStorageKey?: string;
+    themes?: string[],
+    themeStorageKey?: string,
 }
 
 export const LIGHT_THEME = 'light';

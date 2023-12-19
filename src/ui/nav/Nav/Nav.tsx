@@ -72,7 +72,7 @@ export interface INavItem extends IButtonProps {
     /**
     * Вложенные элементы
     */
-    items?: INavItem[]
+    items?: INavItem[],
 
     /**
     * Props для пункта
@@ -93,7 +93,7 @@ export interface INavProps {
      * Шаблон отображения элементов навигации
      * @example 'link'
      */
-    layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list' | string;
+    layout?: 'button' | 'icon' | 'link' | 'tabs' | 'navbar' | 'list' | string,
 
     /**
      * Коллекция с элементами навигации. Также можно передать идентификатор роута, тогда компонент найдет все
@@ -110,37 +110,37 @@ export interface INavProps {
      *  }
      * ] | 'root'
      */
-    items?: string | INavItem[];
+    items?: string | INavItem[],
 
     /**
      * Идентификатор активного элемента. По умолчанию будет активен первый элемент.
      * @example 1
      */
-    activeTab?: number | string;
+    activeTab?: number | string,
 
     /**
      * CSS-класс для элемента отображения
      */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
      * Переопределение view React компонента для кастомизации отображения элемента
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Обработчик, который вызывается при смене активного элемента навигации
      * @param args
      */
-    onChange?: (...args: any[]) => any;
+    onChange?: (...args: any[]) => any,
 
     /**
      * Размер
      */
     size?: Size,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface INavViewProps extends INavProps {

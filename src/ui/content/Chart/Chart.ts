@@ -15,7 +15,7 @@ export interface IChartProps extends IUiComponent {
      * Компонент графика из библиотеки nivo
      * @example ResponsiveLine
      */
-    chartComponent: any;
+    chartComponent: any,
 
     /**
      * Данные для графика
@@ -70,7 +70,7 @@ export interface IChartProps extends IUiComponent {
      * Использовать ли дефолтную конфигурацию для графика типа line
      * @example ResponsiveLine
      */
-    useDefaultLineChartConfig?: boolean;
+    useDefaultLineChartConfig?: boolean,
 
     [key: string]: any,
 }

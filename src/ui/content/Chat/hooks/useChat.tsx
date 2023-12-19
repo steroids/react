@@ -12,8 +12,8 @@ import {ISO_TIMESTAMP_TEMPLATE} from '../constants/timeTemplatesAndUnits';
 export type IChatConfig = Pick<IChatProps, 'chatId' | 'messages' | 'currentUser' | 'onSendMessage'>
 
 export interface IGroupedMessage extends IChatMessage {
-    isFirstMessage?: boolean;
-    isLastMessage?: boolean;
+    isFirstMessage?: boolean,
+    isLastMessage?: boolean,
 }
 
 export type IGroupedMessagesByDates = Record<string, IGroupedMessage[][]>

@@ -76,7 +76,7 @@ const useWeekGrid = (currentMonthFirstDayDate: Date) => {
             [DateControlEnum.NEXT_ONE]: setNextWeek,
             [DateControlEnum.PREV_ONE]: setPrevWeek,
             [DateControlEnum.PREV_DOUBLE]: DateControlEnum.PREV_ONE,
-        } as {[key: string]: () => void | DateControlEnum},
+        } as {[key: string]: () => void | DateControlEnum,},
         updateWeekOnMonthChange,
     };
 };

@@ -5,8 +5,8 @@ import {CheckboxListField, Button} from '../../../../../src/ui/form';
 import {IEventGroup} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
 
 interface IAsideCalendarsProps {
-    eventGroups: IEventGroup[]
-    eventGroupsTitle: string;
+    eventGroups: IEventGroup[],
+    eventGroupsTitle: string,
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
     openCreateEventGroupModal: () => void,
 }

@@ -38,7 +38,7 @@ export interface ICropConfig {
      * Пропсы для модуля react-image-crop
      * @example {maxWidth: 400, maxHeight: 400}
      */
-    reactImageCropProps?: ReactCropProps
+    reactImageCropProps?: ReactCropProps,
 }
 
 /**
@@ -52,12 +52,12 @@ export interface IImageFieldProps extends IFieldWrapperInputProps,
      * Переопределение внешнего вида модального окна
      * @example MyCustomModalView
      */
-    modalView?: CustomView;
+    modalView?: CustomView,
 
     /**
      * Пропсы для модального окна
      */
-    modalProps?: IModalProps;
+    modalProps?: IModalProps,
 
     /**
      * Параметры обрезки
@@ -73,13 +73,13 @@ export interface IImageFieldProps extends IFieldWrapperInputProps,
     /**
      * Пропсы для кнопки
      */
-    buttonProps?: IButtonProps;
+    buttonProps?: IButtonProps,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface ICropOutputProps extends ICropConfig {
-    onSubmit: (crop: Crop, imageId: any) => void
+    onSubmit: (crop: Crop, imageId: any) => void,
 }
 
 export interface IImageFieldModalViewProps extends IModalProps {
@@ -106,7 +106,7 @@ export interface IImageFieldViewProps extends IImageFieldProps {
             percent: number,
         },
     },
-    onClick: () => void
+    onClick: () => void,
 }
 
 function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -126,7 +126,8 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
                 ...props.modalProps,
                 crop: {
                     ...props.crop,
-                    onSubmit: (crop, imageId) => setCroppedImage({...crop, id: imageId}),
+                    onSubmit: (crop, imageId) => setCroppedImage({...crop,
+id: imageId}),
                 },
                 image: _first(data) || data,
             }));

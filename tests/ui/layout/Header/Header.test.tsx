@@ -27,7 +27,8 @@ describe('Header test', () => {
 
     const props: IHeaderProps = {
         view: HeaderMockView,
-        logo: {icon: 'kozhinDev', title: 'KozhinDev'},
+        logo: {icon: 'kozhinDev',
+title: 'KozhinDev'},
         nav: {
             items: navItems,
         },
@@ -113,9 +114,15 @@ describe('Header test', () => {
             },
             menu: {
                 items: [
-                    {label: 'Профиль', icon: 'user', onClick: () => { }},
-                    {label: 'Настройки', icon: 'setting_line', onClick: () => { }},
-                    {label: 'Выйти', icon: 'menu_left', onClick: () => { }},
+                    {label: 'Профиль',
+icon: 'user',
+onClick: () => { }},
+                    {label: 'Настройки',
+icon: 'setting_line',
+onClick: () => { }},
+                    {label: 'Выйти',
+icon: 'menu_left',
+onClick: () => { }},
                 ],
                 dropDownProps: {
                     position: 'bottom',

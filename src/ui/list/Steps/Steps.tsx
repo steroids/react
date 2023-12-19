@@ -5,16 +5,16 @@ import {useComponents} from '../../../hooks';
  * Компонент Steps предоставляет шаги для выполнения определенного процесса.
  **/
 interface IStepsProps {
-    stepItems: IStepItem[];
-    currentStep: number;
-    isChangeable?: boolean;
-    className?: CssClassName;
-    onChange?: (index: number) => void;
+    stepItems: IStepItem[],
+    currentStep: number,
+    isChangeable?: boolean,
+    className?: CssClassName,
+    onChange?: (index: number) => void,
 }
 
 export interface IStepsViewProps {
-    className?: CssClassName;
-    children?: React.ReactNode;
+    className?: CssClassName,
+    children?: React.ReactNode,
 }
 
 export interface IStepItemViewProps {
@@ -23,15 +23,15 @@ export interface IStepItemViewProps {
     index: number,
     status: string,
     disabled: boolean,
-    onChange: () => void
+    onChange: () => void,
 }
 
 export interface IStepItem{
-    title?: string;
-    subtitle?: string;
-    description?: string;
-    icon?: string | React.ReactNode;
-    isError?: boolean;
+    title?: string,
+    subtitle?: string,
+    description?: string,
+    icon?: string | React.ReactNode,
+    isError?: boolean,
 }
 
 function Steps(props: IStepsProps): JSX.Element {

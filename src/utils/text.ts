@@ -17,7 +17,7 @@ interface ISmartSearchSourceItem {
 }
 
 interface ISmartSearchOutputItem extends ISmartSearchSourceItem {
-    labelHighlighted?: [string, boolean][];
+    labelHighlighted?: [string, boolean][],
 }
 
 export type TSmartSearchOutput = ISmartSearchOutputItem[];

@@ -21,7 +21,7 @@ export interface IRadioListFieldProps extends IFieldWrapperInputProps, IDataProv
      * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
-    inputProps?: any;
+    inputProps?: any,
 
     /**
      * Ориентация списка
@@ -49,7 +49,7 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
     disabled?: boolean,
     size?: Size,
     onItemSelect: (id: PrimaryKey | any) => void,
-    renderRadio: (radioProps: IRadioFieldViewProps) => JSX.Element;
+    renderRadio: (radioProps: IRadioFieldViewProps) => JSX.Element,
 }
 
 function RadioListField(props: IRadioListFieldProps): JSX.Element {

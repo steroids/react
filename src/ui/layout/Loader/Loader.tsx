@@ -10,13 +10,13 @@ export interface ILoaderProps {
     /**
     * Размер элемента
     */
-    size?: Size;
+    size?: Size,
 
     /**
      * Название цвета
      */
-    color?: ColorName;
-    [key: string]: any;
+    color?: ColorName,
+    [key: string]: any,
 }
 
 export type ILoaderViewProps = ILoaderProps;

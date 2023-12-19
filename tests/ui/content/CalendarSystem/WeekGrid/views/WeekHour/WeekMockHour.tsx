@@ -21,10 +21,10 @@ const FOURTH_ELEMENT_INDEX = 3;
 
 interface IWeekHourProps {
     dayOfWeek: IDay,
-    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
+    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
     hour: string,
-    openEditModal: (event: IEvent) => void;
-    openCreateModal: (eventInitialDay?: IDay) => void;
+    openEditModal: (event: IEvent) => void,
+    openCreateModal: (eventInitialDay?: IDay) => void,
 }
 
 export default function WeekHour(props: IWeekHourProps) {

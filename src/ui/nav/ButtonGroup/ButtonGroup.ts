@@ -35,7 +35,7 @@ export interface IButtonGroupProps extends IUiComponent {
     /**
     * Кнопка по умолчанию.
     */
-    defaultActiveButton?: number | string;
+    defaultActiveButton?: number | string,
 
     /**
      * Общие свойства для всех кнопок группы

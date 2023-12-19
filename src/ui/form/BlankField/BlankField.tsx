@@ -18,12 +18,12 @@ export interface IBlankFieldProps extends IFieldWrapperInputProps, IUiComponent 
     * Текст для отображения
     * @example 'Hello World!'
     */
-    text?: string | React.ReactNode;
+    text?: string | React.ReactNode,
 
     /**
      * Дочерние элементы
      */
-    children?: React.ReactNode;
+    children?: React.ReactNode,
 }
 
 function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps): JSX.Element {

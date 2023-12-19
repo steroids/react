@@ -20,7 +20,7 @@ export interface IFieldProps extends IFieldWrapperInputProps {
      * Аттрибут (название) поля в форме
      * @example isVisible
      */
-    attribute?: any;
+    attribute?: any,
 
     /**
      * Модель с полями формы
@@ -34,13 +34,13 @@ export interface IFieldProps extends IFieldWrapperInputProps {
      *  ]
      * }
      */
-    model?: Model;
+    model?: Model,
 
     /**
      * Компонент поля
      * @example DropDownField
      */
-    component?: any;
+    component?: any,
 
     [key: string]: any,
 }

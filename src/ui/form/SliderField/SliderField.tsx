@@ -12,19 +12,19 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
     /**
      * Свойства для компонента слайдера
      */
-    sliderProps?: any;
+    sliderProps?: any,
 
     /**
      * Минимальное значение в слайдере
      * @example 0
      */
-    min?: number;
+    min?: number,
 
     /**
      * Максимальное значение в слайдере
      * @example 100
      */
-    max?: number;
+    max?: number,
 
     /**
      * Делает слайдер с двумя значениями
@@ -36,7 +36,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
      * Длина шага слайдера
      * @example 10
      */
-    step?: null | number;
+    step?: null | number,
 
     /**
      * Значение по-умолчанию при первом рендере. Для isRange=false используется number, для isRange=true - number[]
@@ -61,7 +61,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
      *  max: 100
      * }
      */
-    marks?: Record<string, {style: {color}, label} | React.ReactNode | string>,
+    marks?: Record<string, {style: {color,}, label,} | React.ReactNode | string>,
 
     /**
      * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
@@ -73,7 +73,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
      */
     onAfterChange?: (value: any) => void,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperOutputProps {

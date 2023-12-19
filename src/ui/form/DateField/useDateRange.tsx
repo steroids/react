@@ -24,7 +24,7 @@ export default function useDateRange(props:IUseDateRangeProps) {
 
     const isFirstMount = useFirstMountState();
 
-    // Local refs to handle auto-focus
+    // Refs to handle auto-focus
     const valueFromRef = useRef('');
     const valueToRef = useRef('');
 

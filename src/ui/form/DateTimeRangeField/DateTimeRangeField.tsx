@@ -1,4 +1,7 @@
-import {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
+import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
+import {MaskitoOptions} from '@maskito/core';
+import {useMaskito} from '@maskito/react';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import useDateTime from '../../form/DateField/useDateTime';
@@ -71,6 +74,21 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      */
     hasInitialFocus?: boolean,
 
+    /**
+    * Опции маски для полей
+    */
+    maskOptions?: {
+        /**
+        * Опции маски для поля from
+        */
+        from: MaskitoOptions,
+
+        /**
+        * Опции маски для поля to
+        */
+        to: MaskitoOptions,
+    }
+
     [key: string]: any;
 }
 
@@ -103,13 +121,15 @@ interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
     errorsFrom?: string[],
     errorsTo?: string[],
     disabled?: boolean,
-
 }
 
-const DATE_TIME_SEPARATOR = ' ';
+const DATE_TIME_SEPARATOR = ', ';
 
 function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
+
+    const maskInputFromRef = useMaskito({options: props.maskOptions?.from});
+    const maskInputToRef = useMaskito({options: props.maskOptions?.to});
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
@@ -210,6 +230,18 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         valueFormat: props.valueFormat,
     });
 
+    React.useEffect(() => {
+        if (extendedInputPropsFrom.ref && extendedInputPropsTo.ref) {
+            maskInputFromRef(extendedInputPropsFrom.ref.current);
+            maskInputToRef(extendedInputPropsTo.ref.current);
+        }
+    }, [
+        extendedInputPropsFrom.ref,
+        extendedInputPropsTo.ref,
+        maskInputFromRef,
+        maskInputToRef,
+    ]);
+
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
         value: [dateValueFrom, dateValueTo],
@@ -271,6 +303,10 @@ DateTimeRangeField.defaultProps = {
     dateInUTC: false,
     icon: true,
     size: 'md',
+    maskOptions: {
+        from: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy', timeMode: 'HH:MM', dateSeparator: '.'}),
+        to: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy', timeMode: 'HH:MM', dateSeparator: '.'}),
+    },
 };
 
 export default fieldWrapper<IDateTimeRangeFieldProps>('DateTimeRangeField', DateTimeRangeField,

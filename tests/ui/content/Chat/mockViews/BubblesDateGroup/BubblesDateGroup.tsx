@@ -7,9 +7,9 @@ import {IChatUser} from '../../../../../../src/ui/content/Chat/Chat';
 import BubbleMessageView from '../BubbleMessage';
 
 interface IBubblesDateGroupProps {
-    date: string;
-    groupedMessages: IGroupedMessage[][];
-    currentUser: IChatUser;
+    date: string,
+    groupedMessages: IGroupedMessage[][],
+    currentUser: IChatUser,
 }
 
 function BubblesDateGroup(props: IBubblesDateGroupProps) {

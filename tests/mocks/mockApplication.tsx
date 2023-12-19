@@ -4,7 +4,7 @@ import LocaleComponent from '../../src/components/LocaleComponent';
 import HttpComponent from '../../src/components/HttpComponent';
 
 export interface IMockApplicationConfig extends IApplicationHookConfig {
-    store?: any;
+    store?: any,
 }
 
 interface IMockApplicationProps {

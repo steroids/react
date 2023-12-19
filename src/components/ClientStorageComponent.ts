@@ -25,7 +25,7 @@ export interface IClientStorageComponent extends IClientStorageComponentConfig {
      * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
      * @returns Значение записи.
      */
-    get(name: string, storageName?: 'local' | 'session' | 'cookie'): string | null;
+    get(name: string, storageName?: 'local' | 'session' | 'cookie'): string | null,
 
     /**
      * Установить значение в хранилище.
@@ -34,14 +34,14 @@ export interface IClientStorageComponent extends IClientStorageComponentConfig {
      * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
      * @param expires (Необязательный) Срок действия записи в днях.
      */
-    set(name: string, value: string, storageName?: 'local' | 'session' | 'cookie', expires?: number | null): void;
+    set(name: string, value: string, storageName?: 'local' | 'session' | 'cookie', expires?: number | null): void,
 
     /**
      * Удалить значение из хранилища.
      * @param name Имя записи.
      * @param storageName (Необязательный) Имя хранилища (local, session, или cookie).
      */
-    remove(name: string, storageName?: 'local' | 'session' | 'cookie'): void;
+    remove(name: string, storageName?: 'local' | 'session' | 'cookie'): void,
 }
 
 /**

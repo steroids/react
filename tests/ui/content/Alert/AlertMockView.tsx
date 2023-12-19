@@ -5,7 +5,7 @@ import {useBem} from '../../../../src/hooks';
 import IconView from '../Icon/IconMockView';
 
 interface IAlertProps extends IAlertViewProps {
-    testId: string;
+    testId: string,
 }
 
 export default function Alert(props: IAlertProps) {

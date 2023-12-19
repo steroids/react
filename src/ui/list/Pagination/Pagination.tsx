@@ -23,7 +23,7 @@ export interface IPaginationProps {
     /**
      * Значение по-умолчанию
      */
-    defaultValue?: number;
+    defaultValue?: number,
 
     /**
      * Аттрибут (название) в форме для поля пагинации
@@ -42,7 +42,7 @@ export interface IPaginationProps {
      * включая выбранную. Остальные будут спрятаны в элемент "..."
      * @example 5
      */
-    aroundCount?: number;
+    aroundCount?: number,
 
     /**
      * Вместо списка с номерами страниц будет кнопка "Загрузить еще"
@@ -53,7 +53,7 @@ export interface IPaginationProps {
     /**
      * Дополнительный CSS-класс для элемента отображения
      */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
     * Параметры кнопки

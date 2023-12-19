@@ -68,7 +68,7 @@ export interface IAbsolutePositioningInputProps {
      * Включает "умное" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом
      * и краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.
      */
-    autoPositioning?: boolean
+    autoPositioning?: boolean,
 
     /**
      * Дочерние элементы

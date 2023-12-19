@@ -10,7 +10,7 @@ const CUSTOM_CONTROL_PATH = 'dataset.control';
 
 const useCalendarControls = (
     calendarType: CalendarEnum,
-    weekGridControls: {[key: string]: () => void | DateControlEnum},
+    weekGridControls: {[key: string]: () => void | DateControlEnum,},
 ) => {
     const extractCustomControlType = (event: React.MouseEvent<HTMLElement>) => {
         const target = event.target as HTMLDivElement;

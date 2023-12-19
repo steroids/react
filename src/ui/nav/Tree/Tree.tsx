@@ -3,12 +3,12 @@ import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree'
 import {useComponents, useTree} from '../../../hooks';
 
 export interface ITreeViewProps extends ITreeProps {
-    items: IPreparedTreeItem[];
+    items: IPreparedTreeItem[],
 }
 
 export interface ITreeItemViewProps extends ITreeProps {
-    item: IPreparedTreeItem;
-    children?: JSX.Element;
+    item: IPreparedTreeItem,
+    children?: JSX.Element,
 }
 
 /**
@@ -20,55 +20,55 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами
      * @example 'exampleTree'
      */
-    id?: string;
+    id?: string,
 
     /**
      * CSS-класс для элемента отображения
      */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
      * Переопределение view React компонента для кастомизации отображения элемента
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Обработчик на клик по узлу
      * @param args
      */
-    onItemClick?: (event: React.MouseEvent, item: ITreeItem) => any;
+    onItemClick?: (event: React.MouseEvent, item: ITreeItem) => any,
 
     /**
      * Отображать раскрытыми узлы из LocalStorage
      * @example true
      */
-    autoSave?: boolean;
+    autoSave?: boolean,
 
     /**
      * Расстояние вложенных элементов от родителя для каждого уровня
      * @example 32
      */
-    levelPadding?: number;
+    levelPadding?: number,
 
     /**
      * Показать иконку c лева от элемента
      * @example true
      */
-    showIcon?: boolean;
+    showIcon?: boolean,
 
     /**
      * Кастомная иконка, заменяющая иконку раскрытия по умолчанию
      */
-    customIcon?: string | React.ReactElement;
+    customIcon?: string | React.ReactElement,
 
     /**
      * Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку
      * @example false
      */
-    hasIconExpandOnly?: boolean;
+    hasIconExpandOnly?: boolean,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export default function Tree(props: ITreeProps) {

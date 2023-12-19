@@ -40,84 +40,84 @@ export interface IHttpComponent extends IHttpComponentConfig {
      * Получение конфига для axios
      * @returns Конфиг для axios
      */
-    getAxiosConfig(): Promise<any>;
+    getAxiosConfig(): Promise<any>,
 
     /**
      * Изменение csrf токена
      * @param {string} value
      */
-    setCsrfToken(value: string): void;
+    setCsrfToken(value: string): void,
 
     /**
      * Удаление токена
      */
-    removeAccessToken(): void;
+    removeAccessToken(): void,
 
     /**
      * Изменение токена
      * @param {string} value
      */
-    setAccessToken(value: string): any;
+    setAccessToken(value: string): any,
 
     /**
      * Получение токена
      * @returns {string}
      */
-    getAccessToken(): Promise<any>;
+    getAccessToken(): Promise<any>,
 
     /**
      * Сбросить конфиг
      */
-    resetConfig(): void;
+    resetConfig(): void,
 
     /**
      * Метод, который можно вызвать при logout
      */
-    onLogout(): void;
+    onLogout(): void,
 
     /**
      * Метод, который можно вызвать при login
      * @param {{accessToken: string}} params
      */
-    onLogin(params: {accessToken: string}): void;
+    onLogin(params: {accessToken: string,}): void,
 
     /**
      * Получение url по методу
      * @param {string} method
      * @returns {string} url
      */
-    getUrl(method: string): string;
+    getUrl(method: string): string,
 
     /**
      * Получение экземпляра axios
      * @returns Экземпляр axios
      */
-    getAxiosInstance(): Promise<any>;
+    getAxiosInstance(): Promise<any>,
 
     /**
      * Вызов метода get
      */
-    get(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    get(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Вызов метода post
      */
-    post(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    post(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Вызов метода delete
      */
-    delete(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    delete(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Вызов http-метода
      */
-    send(method: string, url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any;
+    send(method: string, url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Метод, который вызывается после запроса
      */
-    afterRequest(response: any, config: Record<string, any>, options: IHttpRequestOptions): Promise<any>;
+    afterRequest(response: any, config: Record<string, any>, options: IHttpRequestOptions): Promise<any>,
 
     [key: string]: any,
 }

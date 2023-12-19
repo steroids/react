@@ -7,8 +7,8 @@ import {FileSize} from '../../../../../../src/ui/format';
 import {IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
 
 interface IChatFileItemViewProps extends IFileFieldItemViewProps, IMessageFile {
-    isFileFromMessage?: boolean;
-    isFileByAnotherUser?: boolean;
+    isFileFromMessage?: boolean,
+    isFileByAnotherUser?: boolean,
 }
 
 export default function ChatFileItemView(props: IChatFileItemViewProps) {

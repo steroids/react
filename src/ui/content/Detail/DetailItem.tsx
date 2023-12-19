@@ -37,7 +37,7 @@ export interface IDetailItemProps {
     /**
      * Дополнительный CSS-класс для ячейки со значением
      */
-    contentClassName?: string
+    contentClassName?: string,
 }
 
 export default function DetailItem(props: IDetailItemProps): JSX.Element {

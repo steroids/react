@@ -8,13 +8,13 @@ import {useBem} from '../../../../../../src/hooks';
 import ChatFileItemView from '../ChatFileItem';
 
 interface IBubbleMessageProps {
-    user: IChatUser;
-    text: string;
-    timeAgo: string;
-    isCurrentUser: boolean;
-    isFirstMessage?: boolean;
-    isLastMessage?: boolean;
-    files?: IMessageFile[];
+    user: IChatUser,
+    text: string,
+    timeAgo: string,
+    isCurrentUser: boolean,
+    isFirstMessage?: boolean,
+    isLastMessage?: boolean,
+    files?: IMessageFile[],
 }
 
 function BubbleMessageView(props: IBubbleMessageProps) {

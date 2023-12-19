@@ -11,13 +11,13 @@ export interface IDateInputStateInput extends IFieldWrapperInputProps {
      * Формат даты показываемый пользователю
      * @example DD.MM.YYYY
      */
-    displayFormat?: string;
+    displayFormat?: string,
 
     /**
      * Иконка, отображаемая в правой части поля
      * @example calendar-day
      */
-    icon?: string | boolean;
+    icon?: string | boolean,
 
     /**
      * Свойства поля props.input
@@ -36,7 +36,7 @@ export interface IDateInputStateInput extends IFieldWrapperInputProps {
     /**
      * Дополнительная функция, срабатывающая при изменении props.input
      */
-    onChange?: (...args: any[]) => any;
+    onChange?: (...args: any[]) => any,
 
     /**
      * Показывать при наведении на поле иконку для сброса значения поля в начальное состояние
@@ -47,21 +47,21 @@ export interface IDateInputStateInput extends IFieldWrapperInputProps {
      * Формат даты отправляемый на сервер
      * @example YYYY-MM-DD
      */
-    valueFormat?: string;
+    valueFormat?: string,
 
     /**
      * Приводить значение даты к часовому поясу UTC
      * (пример: с бэкенда приходит дата в какой-либо временной зоне (не UTC), но нужно отбразить ее
      * в часовом поясе UTC. В этом случае dateInUTC = false, а useUTC = true)
      */
-    useUTC?: boolean;
+    useUTC?: boolean,
 
     /**
      * Задано ли значение даты в часовом поясе UTC
      * (пример: с бэкенда приходит дата в UTC, но нужно отбразить ее в локальном времени.
      * В этом случае dateInUTC = true, а useUTC = false)
      */
-    dateInUTC?: boolean;
+    dateInUTC?: boolean,
 }
 
 export interface IDateInputStateOutput {

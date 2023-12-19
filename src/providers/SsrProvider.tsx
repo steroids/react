@@ -3,7 +3,7 @@ import {PropsWithChildren} from 'react';
 import {StaticRouterContext} from 'react-router';
 
 export interface IPreloadedData {
-    [configId: string]: any
+    [configId: string]: any,
 }
 
 export interface ISsr {

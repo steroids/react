@@ -4,8 +4,8 @@ import useBem from '../../../../src/hooks/useBem';
 import renderIcon from '../../../mocks/renderIconMock';
 
 interface IFooterIconsProps {
-    footerIcons?: IIconProps[];
-    isShink?: boolean;
+    footerIcons?: IIconProps[],
+    isShink?: boolean,
 }
 
 function FooterIcons(props: IFooterIconsProps) {

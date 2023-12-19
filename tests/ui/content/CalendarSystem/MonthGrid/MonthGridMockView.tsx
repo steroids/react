@@ -6,10 +6,10 @@ import MonthDay from './views/MonthDay/MonthDayMockView';
 
 interface IMonthGridProps {
     monthGridWeekDays: string[],
-    monthGridCalendarDays: IDay[];
-    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
+    monthGridCalendarDays: IDay[],
+    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
     openEditModal: (event: IEvent) => void,
-    openCreateModal: (eventInitialDay?: IDay) => void;
+    openCreateModal: (eventInitialDay?: IDay) => void,
 }
 
 function MonthGrid(props: IMonthGridProps) {

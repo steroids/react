@@ -11,30 +11,30 @@ export interface IListProps extends IListConfig {
      * Переопределение view React компонента для кастомизации отображения элемента коллекции
      * @example MyCustomView
      */
-    itemView?: CustomView;
+    itemView?: CustomView,
 
     /**
      * Свойства для элемента коллекции
      */
-    itemProps?: Record<string, unknown>;
+    itemProps?: Record<string, unknown>,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Дополнительный CSS-класс для элемента отображения
      */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
      * Дополнительный CSS-класс для элемента с контентом
      */
-    contentClassName?: string;
+    contentClassName?: string,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IListViewProps extends Omit<IListProps, 'onFetch'>, Omit<IListOutput, 'list'> {
@@ -51,9 +51,9 @@ export interface IListItemViewProps {
         [key: string]: any,
     },
     index: number,
-    className?: CssClassName;
-    contentClassName?: string;
-    layoutSelected?: PrimaryKey;
+    className?: CssClassName,
+    contentClassName?: string,
+    layoutSelected?: PrimaryKey,
 }
 
 export default function List(props: IListProps): JSX.Element {

@@ -39,7 +39,7 @@ interface INotificationItem {
      * @example Сохранено!
      */
     message?: string,
-    isClosing?: boolean
+    isClosing?: boolean,
 }
 
 /**
@@ -53,54 +53,54 @@ export interface INotificationsProps {
     */
     initialFlashes?: {
         [key: string]: string | any,
-    };
+    },
 
     /**
     * Коллекция уведомлений
     */
-    notifications?: INotificationItem[];
+    notifications?: INotificationItem[],
 
     /**
     * Задержка перед закрытием
     */
-    closeTimeoutMs?: number;
+    closeTimeoutMs?: number,
 
     /**
     * Дополнительный CSS-класс для элемента отображения
     */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Переопределение view React компонента для кастомизации отображения элемента
      * @example MyCustomView
      */
-    itemView?: any;
+    itemView?: any,
 
     /**
     * Позиционирование элемента уведомления
     */
-    position?: string;
+    position?: string,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface INotificationsViewProps {
-    notifications?: INotificationItem[];
-    className?: CssClassName;
-    position: string;
+    notifications?: INotificationItem[],
+    className?: CssClassName,
+    position: string,
     children?: React.ReactNode,
 }
 
 export interface INotificationsItemViewProps extends INotificationItem {
-    isClosing: boolean;
-    onClose: () => void;
-    position: string;
+    isClosing: boolean,
+    onClose: () => void,
+    position: string,
 }
 
 function Notifications(props:INotificationsProps): JSX.Element {

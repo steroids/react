@@ -10,9 +10,9 @@ import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/Cal
 import ButtonGroupMockView from '../../../nav/ButtonGroup/ButtonGroupMockView';
 
 interface IContentHeaderProps {
-    dateToDisplay: string;
-    onChangeCalendarType: (newType: string) => void;
-    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void;
+    dateToDisplay: string,
+    onChangeCalendarType: (newType: string) => void,
+    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void,
 }
 
 function ContentHeader(props: IContentHeaderProps) {

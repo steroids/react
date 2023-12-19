@@ -34,13 +34,13 @@ export interface ITimeFieldProps extends IDateInputStateInput, IUiComponent {
      */
     timePanelViewProps?: any,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface ITimeFieldViewProps extends IDateInputStateOutput,
     Pick<ITimeFieldProps, 'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps' | 'style'>
 {
-    [key: string]: any;
+    [key: string]: any,
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {

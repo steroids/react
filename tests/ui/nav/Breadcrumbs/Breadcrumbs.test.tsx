@@ -13,9 +13,12 @@ describe('Breadcrumbs tests', () => {
     const title3 = 'Ui';
 
     const items = [
-        {id: 'root', title: title1},
-        {id: 'react', title: title2},
-        {id: 'ui', title: title3},
+        {id: 'root',
+title: title1},
+        {id: 'react',
+title: title2},
+        {id: 'ui',
+title: title3},
     ];
 
     const expectedBreadcrumbsClass = 'BreadcrumbsView';

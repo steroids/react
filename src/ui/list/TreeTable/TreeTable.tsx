@@ -9,7 +9,7 @@ import Grid from '../Grid';
 import useSelector from '../../../hooks/useSelector';
 
 export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon'> {
-    item: IPreparedTreeItem;
+    item: IPreparedTreeItem,
 }
 
 /**
@@ -33,9 +33,9 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreePr
      *  }
      * ]
      */
-    items?: ITreeItem[];
+    items?: ITreeItem[],
 
-    customIcon?: string | React.ReactElement;
+    customIcon?: string | React.ReactElement,
 }
 
 const TREE_COLUMN_VIEW_FIELDS = {

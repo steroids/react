@@ -1,6 +1,7 @@
 import _upperFirst from 'lodash-es/upperFirst';
 import {ICheckboxListFieldProps} from 'src/ui/form/CheckboxListField/CheckboxListField';
 import {IButtonGroupProps} from 'src/ui/nav/ButtonGroup/ButtonGroup';
+import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 
 /**
@@ -80,7 +81,20 @@ export type IChartViewProps = IChartProps;
 export default function Chart(props: IChartProps): JSX.Element {
     const components = useComponents();
 
-    return components.ui.renderView(props.view || 'content.ChartView', {
-        ...props,
-    });
+    const viewProps = useMemo(() => ({
+        chartComponent: props.chartComponent,
+        data: props.data,
+        config: props.config,
+        wrapperHeight: props.wrapperHeight,
+        chartHeight: props.chartHeight,
+        checkboxes: props.checkboxes,
+        buttonGroup: props.buttonGroup,
+        title: props.title,
+        useDefaultLineChartConfig: props.useDefaultLineChartConfig,
+        className: props.className,
+        style: props.style,
+    }), [props.chartComponent, props.data, props.config, props.wrapperHeight, props.chartHeight,
+        props.checkboxes, props.buttonGroup, props.title, props.useDefaultLineChartConfig, props.className, props.style]);
+
+    return components.ui.renderView(props.view || 'content.ChartView', viewProps);
 }

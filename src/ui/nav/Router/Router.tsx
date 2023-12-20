@@ -13,7 +13,13 @@ import {IListProps} from '../../list/List/List';
 import {useComponents, useSelector} from '../../../hooks';
 import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import useDispatch from '../../../hooks/useDispatch';
-import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized} from '../../../reducers/router';
+import {
+    buildUrl,
+    getActiveRouteIds,
+    getRoute,
+    getRouteParams,
+    isRouterInitialized,
+} from '../../../reducers/router';
 import {SsrProviderContext} from '../../../providers/SsrProvider';
 import {findRedirectPathRecursive, treeToList, walkRoutesRecursive} from './helpers';
 

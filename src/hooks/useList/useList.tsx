@@ -3,21 +3,24 @@ import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import useSelector from './useSelector';
-import {getList} from '../reducers/list';
-import useModel from '../hooks/useModel';
-import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
-import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../actions/list';
-import useDispatch from '../hooks/useDispatch';
-import {formChange, formDestroy} from '../actions/form';
-import {formSelector} from '../reducers/form';
-import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
-import useInitial from '../hooks/useInitial';
-import {IPaginationProps, normalizePaginationProps} from '../ui/list/Pagination/Pagination';
-import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
-import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
-import {IFormProps} from '../ui/form/Form/Form';
-import {Model} from '../components/MetaComponent';
+import useSelector from '../useSelector';
+import {getList} from '../../reducers/list';
+import useModel from '../useModel';
+import useAddressBar, {IAddressBarConfig} from '../useAddressBar';
+import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../../actions/list';
+import useDispatch from '../useDispatch';
+import {formChange, formDestroy} from '../../actions/form';
+import {formSelector} from '../../reducers/form';
+import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../../ui/list/LayoutNames/LayoutNames';
+import useInitial from '../useInitial';
+import {IPaginationProps} from '../../ui/list/Pagination/Pagination';
+import {IPaginationSizeProps} from '../../ui/list/PaginationSize/PaginationSize';
+import {IEmptyProps} from '../../ui/list/Empty/Empty';
+import {IFormProps} from '../../ui/form/Form/Form';
+import {Model} from '../../components/MetaComponent';
+import usePagination from './hooks/usePagination';
+import useEmpty from './hooks/useEmpty';
+import useSearchForm from './hooks/useSearchForm';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -326,53 +329,19 @@ export const createInitialValues = ({
  */
 export default function useList(config: IListConfig): IListOutput {
     // Get list from redux state
-    const list = useSelector(state => getList(state, config.listId));
+    const list: IList = useSelector(state => getList(state, config.listId));
 
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);
 
-    // Empty
-    const Empty = require('../ui/list/Empty').default;
-    const emptyProps = normalizeEmptyProps(config.empty);
-    const renderEmpty = () => {
-        if (!emptyProps.enable || list?.isLoading || list?.items?.length > 0) {
-            return null;
-        }
-        return (
-            <Empty
-                list={list}
-                {...emptyProps}
-            />
-        );
-    };
+    //Empty
+    const {renderEmpty} = useEmpty(config, list);
 
-    // Pagination size
-    const PaginationSize = require('../ui/list/PaginationSize').default;
-    const paginationSizeProps = normalizePaginationSizeProps(config.paginationSize);
-    const renderPaginationSize = () => paginationSizeProps.enable
-        ? (
-            <PaginationSize
-                list={list}
-                {...paginationSizeProps}
-            />
-        )
-        : null;
-
-    // Pagination
-    const Pagination = require('../ui/list/Pagination').default;
-    const paginationProps = normalizePaginationProps(config.pagination);
-    const renderPagination = () => paginationProps.enable
-        ? (
-            <Pagination
-                list={list}
-                {...paginationProps}
-                sizeAttribute={paginationSizeProps.attribute}
-            />
-        )
-        : null;
+    //Pagination
+    const {renderPagination, renderPaginationSize, paginationProps, paginationSizeProps} = usePagination(config, list);
 
     // Layout switcher
-    const LayoutNames = require('../ui/list/LayoutNames').default;
+    const LayoutNames = require('../../ui/list/LayoutNames').default;
     const layoutNamesProps = normalizeLayoutNamesProps(config.layout);
     const renderLayoutNames = () => (
         <LayoutNames
@@ -402,22 +371,7 @@ export default function useList(config: IListConfig): IListOutput {
     });
 
     // Outside search form
-    const searchFormFields = config.searchForm?.fields;
-    const SearchForm = require('../ui/list/SearchForm').default;
-    const initialValuesSearchForm = useMemo(() => (searchFormFields || []).reduce((acc, field) => {
-        const attribute = typeof field === 'string' ? field : field.attribute;
-        acc[attribute] = initialQuery?.[attribute];
-        return acc;
-    }, {}), [searchFormFields, initialQuery]);
-
-    const searchFormProps = {
-        listId: config.listId,
-        ...config.searchForm,
-        model: searchModel,
-        initialValues: initialValuesSearchForm,
-    };
-
-    const renderSearchForm = () => <SearchForm {...searchFormProps} />;
+    const {renderSearchForm} = useSearchForm(config, initialQuery, searchModel);
 
     // Form id
     const formId = _get(config, 'searchForm.formId') || config.listId;
@@ -435,7 +389,7 @@ export default function useList(config: IListConfig): IListOutput {
     const initialValues = useInitial(() => _initialValues);
 
     const renderList = useCallback((children: any) => {
-        const Form = require('../ui/form/Form').default;
+        const Form = require('../../ui/form/Form').default;
         return (
             <Form
                 formId={formId}

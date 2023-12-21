@@ -55,7 +55,7 @@ export interface INavItem extends IButtonProps {
     visible?: boolean,
 
     /**
-     * Контент, который отобразиться, если элемент навигации будет активен
+     * Контент, который отобразится, если элемент навигации будет активен
      * @example ContentComponent
      */
     content?: any,

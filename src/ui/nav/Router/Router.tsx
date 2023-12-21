@@ -120,7 +120,7 @@ export interface IRouteItem {
     /**
      * Вложенные роуты
      */
-    items?: IRouteItem[] | {[key: string]: IRouteItem};
+    items?: IRouteItem[] | {[key: string]: IRouteItem, },
 
     /**
      * Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента
@@ -142,37 +142,43 @@ export interface IRouterProps {
      * Общий шаблон, который оборачивает страницы приложения
      * @example Layout
      */
-    wrapperView?: any;
+    wrapperView?: any,
 
     /**
      * Свойства шаблона
      */
-    wrapperProps?: any;
+    wrapperProps?: any,
 
     /**
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes?: IRouteItem[] | {[key: string]: IRouteItem};
+    routes?: IRouteItem[] | {[key: string]: IRouteItem, },
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент
      * на соответствующей странице, то подставится стандартный список с ролями
      * @example [null, 'user', 'admin']
      */
-    defaultRoles?: string[];
+    defaultRoles?: string[],
 
     /**
      * Прокрутить страницу к началу при смене url
      * @example true
      */
-    autoScrollTop?: boolean;
+    autoScrollTop?: boolean,
 
     /**
      * Контент, который отобразится под каждой страницей приложения
      * @example SomeComponent
      */
     children?: React.ReactNode,
+
+    /**
+     * Флаг, который позволяет использовать вложенные роуты c указанием вложенного пути
+     * @example true
+     */
+    alwaysAppendParentRoutePath?: boolean,
 }
 
 const renderComponent = (route: IRouteItem, activePath, routeProps) => {
@@ -232,8 +238,13 @@ function Router(props: IRouterProps): JSX.Element {
             dispatch(
                 initRoutes(
                     walkRoutesRecursive(
-                        {id: 'root', ...props.routes},
+                        {
+                            id: 'root',
+                            ...props.routes,
+                        },
                         props.defaultRoles ? {roles: props.defaultRoles} : undefined,
+                        {},
+                        props.alwaysAppendParentRoutePath,
                     ),
                 ),
             );
@@ -250,7 +261,7 @@ function Router(props: IRouterProps): JSX.Element {
     }, [dispatch, prevRouteParams, routeParams]);
 
     // Routes state
-    const [routes, setRoutes] = useState(treeToList(props.routes));
+    const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     useUpdateEffect(() => {
         setRoutes(props.routes);
     }, [props.routes]);
@@ -319,7 +330,10 @@ function Router(props: IRouterProps): JSX.Element {
             }
 
             const activeRoute = routes.find(r => r.id === activeRouteId);
-            children = renderComponent(activeRoute, activePath, {...routeProps, children}) || children;
+            children = renderComponent(activeRoute, activePath, {
+                ...routeProps,
+                children,
+            }) || children;
 
             // Stop, if route is exact
             if (activeRoute.exact) {
@@ -329,7 +343,10 @@ function Router(props: IRouterProps): JSX.Element {
             return false;
         });
 
-        const result = renderComponent(routeItem, activePath, {...routeProps, children});
+        const result = renderComponent(routeItem, activePath, {
+            ...routeProps,
+            children,
+        });
         if (!result) {
             if (children) {
                 return children;
@@ -398,6 +415,7 @@ function Router(props: IRouterProps): JSX.Element {
 
 Router.defaultProps = {
     autoScrollTop: true,
+    alwaysAppendParentRoutePath: true,
 };
 
 export default Router;

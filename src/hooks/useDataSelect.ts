@@ -26,7 +26,7 @@ export interface IDataSelectConfig {
      * Возможность множественного выбора
      * @example true
      */
-    multiple?: boolean;
+    multiple?: boolean,
 
     /**
      * Список с видимыми элементами
@@ -38,7 +38,7 @@ export interface IDataSelectConfig {
      * Сделать активным первый элемент в списке
      * @example true
      */
-    selectFirst?: any;
+    selectFirst?: any,
 
     /**
      * Список с идентификаторами выбранных элементов
@@ -62,7 +62,7 @@ export interface IDataSelectConfig {
     /**
      * Значение поля в форме
      */
-    inputValue?: any
+    inputValue?: any,
 
     /**
      *  Список со всеми элементами

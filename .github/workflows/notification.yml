@@ -1,0 +1,17 @@
+name: Notification
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  Notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Notification
+        uses: steroids/notification-action@main
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          git_token: ${{ secrets.GITHUB_TOKEN }}

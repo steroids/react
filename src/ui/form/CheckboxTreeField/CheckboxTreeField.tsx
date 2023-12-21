@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 import _isArray from 'lodash-es/isArray';
 import {IPreparedTreeItem} from '../../../hooks/useTree';
@@ -15,8 +14,8 @@ import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 import {ITreeProps} from '../../nav/Tree/Tree';
 
 type CheckboxTreeItems = string
-    | ({new(): Enum})
-    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any})[];
+    | ({new(): Enum,})
+    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any,})[];
 
 /**
  * CheckboxTreeField
@@ -26,7 +25,7 @@ type CheckboxTreeItems = string
 export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'>, IUiComponent,
-    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened'> {
+    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'showIcon' | 'customIcon'> {
     /**
      * Свойства для элемента input
      * @example { onKeyDown: ... }
@@ -59,7 +58,9 @@ export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     [key: string]: any,
 }
 
-export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps {
+export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
+    Pick<ITreeProps, 'levelPadding' | 'customIcon'>
+{
     items: {
         id: number | string | boolean,
         label?: string,
@@ -72,7 +73,6 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps {
     onItemSelect: (checkbox: IPreparedTreeItem) => void,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
     size?: Size,
-    levelPadding: number,
 }
 
 export const getNestedItemsIds = (item, groupAttribute) => {
@@ -174,7 +174,6 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         items: treeItems,
         onItemSelect,
         selectedIds,
-        levelPadding: props.levelPadding,
         renderCheckbox,
     });
 }

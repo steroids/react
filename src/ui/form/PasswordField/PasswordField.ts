@@ -21,12 +21,12 @@ export interface IPasswordFieldProps extends IBaseFieldProps {
      * Если true, то отображается шкала сложности пароля
      * @example true
      */
-    showSecurityBar?: boolean;
+    showSecurityBar?: boolean,
 
     /**
      * Если true, то отображается иконка скрытия/показа пароля
      */
-    showSecurityIcon?: boolean;
+    showSecurityIcon?: boolean,
 }
 
 export interface IPasswordFieldViewProps extends IPasswordFieldProps, IFieldWrapperOutputProps {

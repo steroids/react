@@ -149,6 +149,7 @@ export const shouldUpdate = (objA, objB, deepPaths: any = null) => {
                 ? shouldUpdate(objA[key], objB[key], deepPath)
                 : shouldUpdateSingle(objA[key], objB[key]);
             if (hasChanges) {
+                // eslint-disable-next-line no-console
                 console.log(0, 'shouldUpdate changed key:', key, objA[key], objB[key]);
                 return true;
             }

@@ -95,16 +95,16 @@ declare interface IUiComponent {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Дополнительный CSS-класс для элемента отображения
      */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
      * Объект CSS стилей
      * @example {width: '45%'}
      */
-    style?: CustomStyle;
+    style?: CustomStyle,
 }

@@ -12,7 +12,7 @@ export interface ITextFieldProps extends IBaseFieldProps {
      * Отправлять форму при нажатии на кнопку `enter`
      * @example true
      */
-    submitOnEnter?: boolean;
+    submitOnEnter?: boolean,
 }
 
 export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {

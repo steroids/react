@@ -47,7 +47,7 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
     item: IDropDownFieldItem,
     size: Size,
     type: ItemSwitchType,
-    selectedIds: (PrimaryKey | any)[]
+    selectedIds: (PrimaryKey | any)[],
     groupAttribute: 'string',
     primaryKey: PrimaryKey,
     hoveredId: string,
@@ -77,24 +77,24 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Placeholder подсказка
      * @example Your text...
      */
-    searchPlaceholder?: string;
+    searchPlaceholder?: string,
 
     /**
      * Цвет состояния
      * @example success
      */
-    color?: ColorName;
+    color?: ColorName,
 
     /**
     * Включает стиль `outline`, когда у DropDownField остается только `border`, а задний фон становится прозрачным
     * @example true
     */
-    outline?: boolean;
+    outline?: boolean,
 
     /**
      * Параметры для элемента input
      */
-    inputProps?: any;
+    inputProps?: any,
 
     /**
      * Показать иконку сброса для выбранных значений
@@ -119,8 +119,8 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     itemsContent?: {
         type: ContentType | string,
-        src?: string | React.ReactElement;
-    };
+        src?: string | React.ReactElement,
+    },
 
     /**
      * Элементы вложенные внутрь DropDownField
@@ -155,7 +155,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
         id: string,
     },
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IDropDownFieldViewProps extends IDropDownFieldProps {
@@ -177,7 +177,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isLoading?: boolean,
     onReset: () => void,
     onOpen: () => void,
-    renderItem: (item: IDropDownFieldItem) => JSX.Element;
+    renderItem: (item: IDropDownFieldItem) => JSX.Element,
     onItemRemove: (id: PrimaryKey | any) => void,
     isAutoComplete?: boolean,
     isSearchAutoFocus?: boolean,
@@ -190,7 +190,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
 }
 
 const normalizeItemToSelectAll = (
-    itemToSelectAll: boolean | {label: string, id: string},
+    itemToSelectAll: boolean | {label: string, id: string,},
 ) => {
     if (!itemToSelectAll) {
         return null;

@@ -13,15 +13,15 @@ import {FormContext} from '../../form/Form/Form';
  * Он позволяет кастомизировать отображение значения, используя переданный view React компонент.
  **/
 export interface IFormatProps {
-    attribute?: string;
-    model?: string | ((...args: any[]) => any) | any;
-    item?: any;
-    component?: string | ((...args: any[]) => any);
-    getFormatter?: any;
-    ui?: any;
-    emptyText?: any;
+    attribute?: string,
+    model?: string | ((...args: any[]) => any) | any,
+    item?: any,
+    component?: string | ((...args: any[]) => any),
+    getFormatter?: any,
+    ui?: any,
+    emptyText?: any,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export function getFormatterPropsFromModel(model, attribute) {

@@ -21,9 +21,9 @@ export const pageControlsMap: Record<string, string[]> = {
     [CRUD_ACTION_VIEW]: [CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE, CRUD_ACTION_DELETE],
 };
 
-export const normalizeItems = (sourceItems: ICrudItem[] | { [key: string]: ICrudItem }, fromProps): ICrudItem[] => {
+export const normalizeItems = (sourceItems: ICrudItem[] | {[key: string]: ICrudItem, }, fromProps): ICrudItem[] => {
     // Defaults
-    const defaultItems: ({ [key: string]: ICrudItem }) = {
+    const defaultItems: ({[key: string]: ICrudItem, }) = {
         index: {
             pkRequired: false,
         },
@@ -88,7 +88,10 @@ export const normalizeItems = (sourceItems: ICrudItem[] | { [key: string]: ICrud
             ...items[id],
         };
         if (typeof fromProps[id] === 'object') {
-            items[id] = {...items[id], ...fromProps[id]};
+            items[id] = {
+                ...items[id],
+                ...fromProps[id],
+            };
         }
         if (typeof fromProps[id] === 'function') {
             items[id].component = fromProps[id];

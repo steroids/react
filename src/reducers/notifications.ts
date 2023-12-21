@@ -4,8 +4,8 @@ import {
 } from '../actions/notifications';
 
 export type TNotificationsState = {
-   items: any[];
-   position: string;
+   items: any[],
+   position: string,
 };
 
 const initialState: TNotificationsState = {

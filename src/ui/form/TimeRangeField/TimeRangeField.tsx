@@ -18,13 +18,13 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
      * Аттрибут (название) поля в форме
      * @example 'fromTime'
      */
-    attributeFrom?: string;
+    attributeFrom?: string,
 
     /**
      * Аттрибут (название) поля в форме
      * @example 'toTime'
      */
-    attributeTo?: string;
+    attributeTo?: string,
 
     /**
     * Свойства для view компонента
@@ -50,7 +50,7 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
     * Placeholder подсказка
     * @example Your text...
     */
-    placeholder?: any;
+    placeholder?: any,
 
     /**
      * Свойства для компонента DayPickerInput
@@ -60,7 +60,7 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
      *   showWeekNumbers: true
      *  }
      */
-    pickerProps?: any;
+    pickerProps?: any,
 
     /**
      * Устанавливать ли фокус и показывать панель времени сразу после рендера страницы
@@ -68,7 +68,7 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
      */
     hasInitialFocus?: boolean,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface ITimeRangeFieldViewProps extends IDateInputStateOutput,
@@ -83,7 +83,7 @@ export interface ITimeRangeFieldViewProps extends IDateInputStateOutput,
     timePanelFromViewProps: ITimePanelViewProps,
     timePanelToViewProps: ITimePanelViewProps,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 interface ITimeRangeFieldPrivateProps extends ITimeRangeFieldProps, Omit<IFieldWrapperOutputProps, 'input' | 'errors'> {

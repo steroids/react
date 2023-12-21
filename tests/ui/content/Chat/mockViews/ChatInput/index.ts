@@ -1,3 +1,3 @@
-import ChatInputView from './ChatInputView';
+import ChatInputView from './ChatInputMockView';
 
 export default ChatInputView;

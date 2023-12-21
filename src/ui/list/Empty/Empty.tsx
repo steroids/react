@@ -16,7 +16,7 @@ export interface IEmptyProps extends IUiComponent{
      * Текст заглушки
      * @example 'Записи не найдены'
      */
-    text?: string | React.ReactNode;
+    text?: string | React.ReactNode,
 
     [key: string]: any,
 }

@@ -72,7 +72,7 @@ export interface IControlsViewProps extends IControlsProps {
         confirm?: string,
         color?: ColorName,
         outline?: boolean,
-        position?: 'right' | 'left'
+        position?: 'right' | 'left',
     })[],
 }
 

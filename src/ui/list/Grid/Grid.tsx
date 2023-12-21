@@ -16,7 +16,7 @@ export interface IColumnViewProps extends IGridColumn {
     listId: string,
     model: string,
 
-    [key: string]: any
+    [key: string]: any,
 }
 
 export interface IGridColumn {
@@ -149,9 +149,9 @@ export interface IGridColumn {
         type: 'horizontal' | 'vertical' | 'circle',
         items: {
             color: 'success' | 'warning' | 'danger' | 'secondary' | string,
-            percentageAttribute: string
-        }[]
-    }
+            percentageAttribute: string,
+        }[],
+    },
 }
 
 /**
@@ -163,7 +163,7 @@ export interface IGridProps extends IListConfig {
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Коллекция с наименованиями и свойствами колонок в таблице
@@ -179,7 +179,7 @@ export interface IGridProps extends IListConfig {
      *  }
      * ]
      */
-    columns: (string | IGridColumn)[];
+    columns: (string | IGridColumn)[],
 
     /**
      * Коллекция с элементами управления. Данная коллекция отобразится в колонке рядом с каждой записью в таблице.
@@ -195,13 +195,13 @@ export interface IGridProps extends IListConfig {
      *  }
      * ]
      */
-    controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
+    controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]),
 
     /**
      * Нужно ли отображать колонку с порядковым номером элемента? Если да, то для каждого элемента в коллекции items
      * должно быть задано свойство index
      */
-    itemsIndexing?: any;
+    itemsIndexing?: any,
 
     /**
      * Размер Grid
@@ -213,7 +213,7 @@ export interface IGridProps extends IListConfig {
      */
     hasAlternatingColors?: boolean,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IGridViewProps extends Omit<IGridProps, 'onFetch'> {

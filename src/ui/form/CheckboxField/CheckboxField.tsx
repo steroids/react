@@ -15,18 +15,18 @@ export interface ICheckboxFieldProps extends IFieldWrapperInputProps, IUiCompone
      * Свойства для элемента input
      * @example {onKeyDown: ...}
      */
-    inputProps?: any;
+    inputProps?: any,
 
     /**
      * Флаг определяющий включен ли элемент
      * @example true
      */
-    checked?: boolean;
+    checked?: boolean,
 
     /**
     * Пользовательский цвет для чекбокса
     */
-    color?: string;
+    color?: string,
 
     [key: string]: any,
 }
@@ -39,7 +39,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
         onChange: (value: string | React.ChangeEvent) => void,
         disabled: boolean,
         required?: boolean,
-    }
+    },
 }
 
 function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -62,7 +62,10 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         ...props.inputProps,
     }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps, props.required]);
 
-    return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props, inputProps});
+    return components.ui.renderView(props.view || 'form.CheckboxFieldView', {
+        ...props,
+        inputProps,
+    });
 }
 
 CheckboxField.defaultProps = {

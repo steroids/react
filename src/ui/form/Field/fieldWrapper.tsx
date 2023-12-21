@@ -11,19 +11,19 @@ export interface IFieldWrapperInputProps {
     /**
      * Префикс, который добавится к аттрибуту (названию) поля в форме
      */
-    prefix?: string | boolean;
+    prefix?: string | boolean,
 
     /**
      * Название поля либо отмена отображение поля (false)
      * @example 'Visible'
      */
-    label?: string | boolean | any;
+    label?: string | boolean | any,
 
     /**
      * Аттрибут (название) поля в форме
      * @example 'isVisible'
      */
-    attribute?: string;
+    attribute?: string,
 
     /**
      * Модель с полями формы
@@ -37,37 +37,37 @@ export interface IFieldWrapperInputProps {
      *  ]
      * }
      */
-    model?: string | ((...args: any[]) => any) | any;
+    model?: string | ((...args: any[]) => any) | any,
 
     /**
      * Подсказка, которая отобразится рядом с полем
      * @example 'Only english letters'
      */
-    hint?: string;
+    hint?: string,
 
     /**
      * Обязательное ли поле? Если true, то к названию будет добавлен
      * модификатор 'required' - красная звездочка (по умолчанию)
      * @example true
      */
-    required?: boolean;
+    required?: boolean,
 
     /**
      * Переводит элемент в состояние "не активен"
      * @example true
      */
-    disabled?: boolean;
+    disabled?: boolean,
 
     /**
      * Подсказка для поля
      * @example Your text...
      */
-    placeholder?: string;
+    placeholder?: string,
 
     /**
      * Input ID для связи поля с label
      */
-    id?: string;
+    id?: string,
 
     /**
     * Значение для поля
@@ -77,15 +77,15 @@ export interface IFieldWrapperInputProps {
     /**
     * Callback-функция, которая вызывается при изменении данных
     */
-    onChange?: (...args: any[]) => any;
+    onChange?: (...args: any[]) => any,
 
     /**
      * Ошибки в поле
      * @example ['Error text']
      */
-    errors?: string[];
+    errors?: string[],
 
-    date?: any;
+    date?: any,
 
     /**
      * Размер поля
@@ -95,7 +95,7 @@ export interface IFieldWrapperInputProps {
     /**
      * Дополнительный CSS-класс для обертки FieldLayout
      */
-    fieldLayoutClassName?: CssClassName;
+    fieldLayoutClassName?: CssClassName,
 
     /**
      * Возможность отрендерить поле без обертки в компонент FieldLayout
@@ -140,10 +140,10 @@ interface IFieldWrapperOptions {
 }
 
 export interface FieldWrapperComponent<T> {
-    (props: IFieldWrapperInputProps & T): JSX.Element;
-    WrappedComponent: any;
-    displayName: any;
-    defaultProps: any;
+    (props: IFieldWrapperInputProps & T): JSX.Element,
+    WrappedComponent: any,
+    displayName: any,
+    defaultProps: any,
 }
 
 const getKey = (baseName, attribute) => baseName + _upperFirst(attribute || '');

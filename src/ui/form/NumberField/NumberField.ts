@@ -17,19 +17,19 @@ export interface INumberFieldProps extends IBaseFieldProps {
      * Минимальное значение
      * @example 1
      */
-    min?: number;
+    min?: number,
 
     /**
      * Максимальное значение
      * @example 100
      */
-    max?: number;
+    max?: number,
 
     /**
      * Шаг увеличения/уменьшения значения
      * @example 5
      */
-    step?: number;
+    step?: number,
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {

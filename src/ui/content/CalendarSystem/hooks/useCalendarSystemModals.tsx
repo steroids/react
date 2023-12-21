@@ -19,7 +19,7 @@ const useCalendarSystemModals = (
     const components = useComponents();
     const calendarModalView = calendarModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
 
-    const onEventSubmit = React.useCallback((
+    const onModalFormSubmit = React.useCallback((
         fields: Record<CalendarSystemModalFields, string | number>,
         eventInitialValues?: IEventInitialValues,
     ) => {
@@ -61,14 +61,14 @@ const useCalendarSystemModals = (
         setInnerEventGroups(currentEventGroups);
     }, [innerEventGroups, setInnerEventGroups]);
 
-    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number}>) => ({
+    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number, }>) => ({
         ...calendarModalProps,
         component: calendarModalView,
         eventGroups: innerEventGroups,
-        onEventSubmit,
+        onModalFormSubmit,
         isCreate,
         eventInitialValues,
-    }) as ICalendarSystemModalViewProps, [calendarModalProps, calendarModalView, innerEventGroups, onEventSubmit]);
+    }) as ICalendarSystemModalViewProps, [calendarModalProps, calendarModalView, innerEventGroups, onModalFormSubmit]);
 
     const getEventFromGroup = React.useCallback((event: IEvent) => innerEventGroups
         .find(group => group.events
@@ -83,7 +83,10 @@ const useCalendarSystemModals = (
 
     const openEditModal = React.useCallback((event: IEvent) => {
         const eventGroupId = getEventFromGroup(event)?.id || 0;
-        dispatch(openModal(calendarModalView, getModalProps(false, {...event, eventGroupId})));
+        dispatch(openModal(calendarModalView, getModalProps(false, {
+            ...event,
+            eventGroupId,
+        })));
     }, [getModalProps, calendarModalView, dispatch, getEventFromGroup]);
 
     return {

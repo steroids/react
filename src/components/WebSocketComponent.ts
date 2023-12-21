@@ -12,64 +12,64 @@ export interface IWebSocketComponentConfig {
     /**
      * url для websocket
      */
-    wsUrl?: string;
+    wsUrl?: string,
 
     /**
      * Массив streams
      */
-    streams?: TStreams;
+    streams?: TStreams,
 
     /**
      * Хендлер для авторизации
      */
-    authHandler?: (components: IComponents) => Promise<string>;
+    authHandler?: (components: IComponents) => Promise<string>,
 
     /**
      * Функция, которая вызывается на открытие соединения
      */
-    onOpen?: (event: any, components: IComponents) => any;
+    onOpen?: (event: any, components: IComponents) => any,
 
     /**
      * Функция, которая вызывается на закрытие соединения
      */
-    onClose?: (event: any, components: IComponents) => any;
+    onClose?: (event: any, components: IComponents) => any,
 
     /**
      * Функция, которая вызывается на отправку сообщения
      */
-    onMessage?: (data: Record<string, unknown>, components: IComponents) => any;
+    onMessage?: (data: Record<string, unknown>, components: IComponents) => any,
 }
 
 export interface IWebSocketComponent extends IWebSocketComponentConfig{
     /**
      * Открытие websocket соединения
      */
-    open(closePrevious?: boolean): void;
+    open(closePrevious?: boolean): void,
 
     /**
      * Закрытие websocket соединения
      */
-    close(): void;
+    close(): void,
 
     /**
      * Подписка на stream
      */
-    subscribeStream(stream: TStream, id: string | number): void;
+    subscribeStream(stream: TStream, id: string | number): void,
 
     /**
      * Подписка на streams
      */
-    subscribe(streams: TStreams): void;
+    subscribe(streams: TStreams): void,
 
     /**
      * Отписка от stream
      */
-    unsubscribeStream(stream: TStream, id: string | number): void;
+    unsubscribeStream(stream: TStream, id: string | number): void,
 
     /**
      * Отписка от streams
      */
-    unsubscribe(streams: TStreams): void;
+    unsubscribe(streams: TStreams): void,
 }
 
 const getStreamName = stream => Array.isArray(stream) ? stream[0] : stream;

@@ -12,7 +12,7 @@ interface IInnerHTML {
     /**
      * Содержимое тега
      */
-    innerHtml?: string
+    innerHtml?: string,
 }
 
 interface IScript extends ScriptHTMLAttributes<any>, IInnerHTML {}
@@ -66,7 +66,7 @@ interface IMetaProps extends PropsWithChildren<any>{
     /**
      * Конфигурация тега \<base\>
      */
-    base?: BaseHTMLAttributes<any>
+    base?: BaseHTMLAttributes<any>,
 }
 
 function Meta(props: IMetaProps) {

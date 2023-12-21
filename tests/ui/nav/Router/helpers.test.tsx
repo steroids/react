@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import React from 'react';
+import * as React from 'react';
 import {walkRoutesRecursive, findRedirectPathRecursive, treeToList} from '../../../../src/ui/nav/Router/helpers';
 
 describe('Function walkRoutesRecursive', () => {
@@ -32,9 +32,15 @@ describe('Function walkRoutesRecursive', () => {
     };
 
     it('if the isVisible and isNavVisible fields are not set for the child element, then they are set as for the parent props', () => {
-        const route = {isVisible: undefined, isNavVisible: undefined};
+        const route = {
+            isVisible: undefined,
+            isNavVisible: undefined,
+        };
         const defaultItem = {};
-        const parentItem = {isVisible: true, isNavVisible: false};
+        const parentItem = {
+            isVisible: true,
+            isNavVisible: false,
+        };
         const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
 
         expect(normalizedRoute.isVisible).toBe(true);
@@ -99,8 +105,18 @@ describe('Function walkRoutesRecursive', () => {
 
     it('should normalize object recursively with defaultItem/parentItem', () => {
         const route = {};
-        const defaultItem = {roles: ['admin'], layout: 'test-second', test: 'second-test', isVisible: false, isNavVisible: false};
-        const parentItem = {roles: ['user'], layout: 'test-first', test: 'first-test'};
+        const defaultItem = {
+            roles: ['admin'],
+            layout: 'test-second',
+            test: 'second-test',
+            isVisible: false,
+            isNavVisible: false,
+        };
+        const parentItem = {
+            roles: ['user'],
+            layout: 'test-first',
+            test: 'first-test',
+        };
         const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
 
         expect(normalizedRoute.roles).toBe(parentItem.roles);
@@ -159,85 +175,265 @@ describe('Function findRedirectPathRecursive', () => {
 });
 
 describe('Function treeToList', () => {
-    it('should return an empty array for an empty tree', () => {
-        const tree = [];
-        const list = treeToList(tree);
-        const expectedList = [];
-        expect(list).toEqual(expectedList);
-    });
-
-    it('should convert a single item to an empty array if he dont have path', () => {
-        const tree = {id: '1'};
-        const list = treeToList(tree);
-        const expectedList = [];
-        expect(list).toEqual(expectedList);
-    });
-
-    it('should convert a single item to an array if he have path', () => {
-        const tree = {id: '1', path: '/path'};
-        const list = treeToList(tree);
-        const expectedList = [tree];
-        expect(list).toEqual(expectedList);
-    });
-
-    it('should get a leaf from a tree with one level of nesting', () => {
-        const tree = {
-            id: '1',
-            path: '/path',
-            items: [
-                {id: '2', path: '/path2'},
-                {id: '3', path: '/path3'},
-            ],
-        };
-        const list = treeToList(tree);
-        expect(list).toEqual([
-            {id: '1', path: '/path', items: [{id: '2', path: '/path2'}, {id: '3', path: '/path3'}]},
-            {id: '2', path: '/path2'},
-            {id: '3', path: '/path3'},
-        ]);
-    });
-
-    it('should add root item with id "root" when isRoot is true and item.id is falsy', () => {
-        const tree = {path: '/path'};
-        const list = treeToList(tree);
-        expect(list[0].id).toBe('root');
-    });
-
-    it('should get a leaf from a tree with several levels of nesting', () => {
-        const tree = {
-            id: '1',
-            path: '/path',
-            items: [
-                {
-                    id: '2',
-                    path: '/path2',
-                    items: [{id: '3', path: '/path3'}, {id: '4', path: '/path4'}],
-                },
-                {id: '5', path: '/path5'},
-            ],
-        };
-        const list = treeToList(tree);
-        expect(list).toEqual([
-            {
+    describe('with absolute paths ', () => {
+        it('should get a leaf from a tree with one level of nesting', () => {
+            const tree = {
                 id: '1',
                 path: '/path',
                 items: [
                     {
                         id: '2',
                         path: '/path2',
-                        items: [{id: '3', path: '/path3'}, {id: '4', path: '/path4'}],
                     },
-                    {id: '5', path: '/path5'},
+                    {
+                        id: '3',
+                        path: '/path3',
+                    },
                 ],
-            },
-            {
-                id: '2',
-                path: '/path2',
-                items: [{id: '3', path: '/path3'}, {id: '4', path: '/path4'}],
-            },
-            {id: '3', path: '/path3'},
-            {id: '4', path: '/path4'},
-            {id: '5', path: '/path5'},
-        ]);
+            };
+            const expectedList = [
+                {
+                    id: '1',
+                    path: '/path',
+                    items: [{
+                        id: '2',
+                        path: '/path2',
+                    }, {
+                        id: '3',
+                        path: '/path3',
+                    }],
+                },
+                {
+                    id: '2',
+                    path: '/path2',
+                },
+                {
+                    id: '3',
+                    path: '/path3',
+                },
+            ];
+
+            const list = treeToList(tree, true, {}, false);
+            expect(list).toEqual(expectedList);
+        });
+
+        it('should get a leaf from a tree with several levels of nesting', () => {
+            const tree = {
+                id: '1',
+                path: '/path',
+                items: [
+                    {
+                        id: '2',
+                        path: '/path2',
+                        items: [{
+                            id: '3',
+                            path: '/path3',
+                        }, {
+                            id: '4',
+                            path: '/path4',
+                        }],
+                    },
+                    {
+                        id: '5',
+                        path: '/path5',
+                    },
+                ],
+            };
+            const expectedList = [
+                {
+                    id: '1',
+                    path: '/path',
+                    items: [
+                        {
+                            id: '2',
+                            path: '/path2',
+                            items: [{
+                                id: '3',
+                                path: '/path3',
+                            }, {
+                                id: '4',
+                                path: '/path4',
+                            }],
+                        },
+                        {
+                            id: '5',
+                            path: '/path5',
+                        },
+                    ],
+                },
+                {
+                    id: '2',
+                    path: '/path2',
+                    items: [{
+                        id: '3',
+                        path: '/path3',
+                    }, {
+                        id: '4',
+                        path: '/path4',
+                    }],
+                },
+                {
+                    id: '3',
+                    path: '/path3',
+                },
+                {
+                    id: '4',
+                    path: '/path4',
+                },
+                {
+                    id: '5',
+                    path: '/path5',
+                },
+            ];
+
+            const list = treeToList(tree, true, {}, false);
+            expect(list).toEqual(expectedList);
+        });
+    });
+
+    describe('with nested paths ', () => {
+        it('should return an empty array for an empty tree', () => {
+            const tree = [];
+            const list = treeToList(tree);
+            const expectedList = [];
+            expect(list).toEqual(expectedList);
+        });
+
+        it('should convert a single item to an empty array if he dont have path', () => {
+            const tree = {id: '1'};
+            const list = treeToList(tree);
+            const expectedList = [];
+            expect(list).toEqual(expectedList);
+        });
+
+        it('should convert a single item to an array if he have path', () => {
+            const tree = {
+                id: '1',
+                path: '/path',
+            };
+            const list = treeToList(tree);
+            const expectedList = [tree];
+            expect(list).toEqual(expectedList);
+        });
+
+        it('should get a leaf from a tree with one level of nesting', () => {
+            const tree = {
+                id: '1',
+                path: '/path',
+                items: [
+                    {
+                        id: '2',
+                        path: '/path2',
+                    },
+                    {
+                        id: '3',
+                        path: '/path3',
+                    },
+                ],
+            };
+            const expectedList = [
+                {
+                    id: '1',
+                    path: '/path',
+                    items: [{
+                        id: '2',
+                        path: '/path/path2',
+                    }, {
+                        id: '3',
+                        path: '/path/path3',
+                    }],
+                },
+                {
+                    id: '2',
+                    path: '/path/path2',
+                },
+                {
+                    id: '3',
+                    path: '/path/path3',
+                },
+            ];
+
+            const list = treeToList(tree);
+            expect(list).toEqual(expectedList);
+        });
+
+        it('should add root item with id "root" when isRoot is true and item.id is falsy', () => {
+            const tree = {path: '/path'};
+            const list = treeToList(tree);
+            expect(list[0].id).toBe('root');
+        });
+
+        it('should get a leaf from a tree with several levels of nesting', () => {
+            const tree = {
+                id: '1',
+                path: '/path',
+                items: [
+                    {
+                        id: '2',
+                        path: 'path2',
+                        items: [{
+                            id: '3',
+                            path: 'path3',
+                        }, {
+                            id: '4',
+                            path: 'path4',
+                        }],
+                    },
+                    {
+                        id: '5',
+                        path: 'path5',
+                    },
+                ],
+            };
+            const expectedList = [
+                {
+                    id: '1',
+                    path: '/path',
+                    items: [
+                        {
+                            id: '2',
+                            path: '/path/path2',
+                            items: [{
+                                id: '3',
+                                path: '/path/path2/path3',
+                            }, {
+                                id: '4',
+                                path: '/path/path2/path4',
+                            }],
+                        },
+                        {
+                            id: '5',
+                            path: '/path/path5',
+                        },
+                    ],
+                },
+                {
+                    id: '2',
+                    path: '/path/path2',
+                    items: [{
+                        id: '3',
+                        path: '/path/path2/path3',
+                    }, {
+                        id: '4',
+                        path: '/path/path2/path4',
+                    }],
+                },
+                {
+                    id: '3',
+                    path: '/path/path2/path3',
+                },
+                {
+                    id: '4',
+                    path: '/path/path2/path4',
+                },
+                {
+                    id: '5',
+                    path: '/path/path5',
+                },
+            ];
+
+            const list = treeToList(tree);
+            expect(list).toEqual(expectedList);
+        });
     });
 });

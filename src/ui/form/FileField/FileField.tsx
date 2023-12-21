@@ -30,7 +30,7 @@ interface IFileFieldCommonProps extends IFileInput {
      * Вариант отображения файлов
      * @example 'list'
      */
-    filesLayout?: FilesLayout | string;
+    filesLayout?: FilesLayout | string,
 }
 
 /**
@@ -49,27 +49,27 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldComm
      * View компонент для кнопки
      * @example true
      */
-    buttonView?: any;
+    buttonView?: any,
 
     /**
      * Пропсы для кнопки
      * @example true
      */
-    buttonProps?: IButtonProps;
+    buttonProps?: IButtonProps,
 
     /**
      * View компонент для элемента списка файлов
      * @example true
      */
-    itemView?: any;
+    itemView?: any,
 
     /**
      * Пропсы для элемента файла
      * @example true
      */
-    itemProps?: Record<string, any>;
+    itemProps?: Record<string, any>,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IFileFieldItemViewProps extends IFileFieldCommonProps{
@@ -153,6 +153,12 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
             props.onLoad();
         }
     }, [isFilesLoaded, props]);
+
+    useEffect(() => {
+        if (props.onChange) {
+            props.onChange(files);
+        }
+    }, [files, props]);
 
     return (
         <FileFieldView

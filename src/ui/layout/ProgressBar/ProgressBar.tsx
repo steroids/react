@@ -3,10 +3,10 @@ import Icon from '../../content/Icon/Icon';
 import {useComponents} from '../../../hooks';
 
 export interface IProgressBarViewProps {
-    percent: number;
-    status?: 'normal' | 'success' | 'exception';
-    size?: 'small' | 'medium' | 'large';
-    label?: string | React.ReactNode
+    percent: number,
+    status?: 'normal' | 'success' | 'exception',
+    size?: 'small' | 'medium' | 'large',
+    label?: string | React.ReactNode,
 }
 
 /**
@@ -17,34 +17,34 @@ export interface IProgressBarProps {
     /**
      * Прогресс в процентах
      */
-    percent: number;
+    percent: number,
     /**
      * Статус компонента
      */
-    status?: 'normal' | 'success' | 'exception';
+    status?: 'normal' | 'success' | 'exception',
     /**
      * Размер компонента
      */
-    size?: 'small' | 'medium' | 'large';
+    size?: 'small' | 'medium' | 'large',
     /**
      * Тип компонента - круг или линия
      */
-    type?: 'line' | 'circle';
+    type?: 'line' | 'circle',
     /**
      * Флаг, определяющий показывать ли лейбл
      */
-    showLabel?: boolean;
+    showLabel?: boolean,
     /**
      * Функция, позволяющая изменить генерацию лейбла
      * @param percent Прогресс в процентах
      */
-    label?: (percent: number) => string;
+    label?: (percent: number) => string,
     /**
      * Функция, позволяющая задавать собственные иконки в зависимости от прогресса и статуса
      * @param status Статус компонента
      * @param percent Прогресс в процентах
      */
-    icon?: (status: string, percent: number) => React.ReactNode;
+    icon?: (status: string, percent: number) => React.ReactNode,
 }
 
 function ProgressBar(props: IProgressBarProps): JSX.Element {
@@ -68,10 +68,16 @@ function ProgressBar(props: IProgressBarProps): JSX.Element {
 
     if (props.type === 'line') {
         return components.ui.renderView('layout.LineProgressBarView',
-            {percent: props.percent, status: props.status, size: props.size, label: getLabel()});
+            {percent: props.percent,
+status: props.status,
+size: props.size,
+label: getLabel()});
     }
     return components.ui.renderView('layout.CircleProgressBarView',
-        {percent: props.percent, status: props.status, size: props.size, label: getLabel()});
+        {percent: props.percent,
+status: props.status,
+size: props.size,
+label: getLabel()});
 }
 
 ProgressBar.defaultProps = {

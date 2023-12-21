@@ -34,8 +34,8 @@ export interface IAutoCompleteConfig {
 }
 
 export type DataProviderItems = string
-    | ({new(): Enum})
-    | (string | number | {id: string | number | boolean, label: string | any, [key: string]: any})[];
+    | ({new(): Enum,})
+    | (string | number | {id: string | number | boolean, label: string | any, [key: string]: any,})[];
 
 export interface IDataProvider {
     /**
@@ -129,12 +129,12 @@ export interface IDataProviderResult {
         id: number | string | boolean,
         label?: string,
         [key: string]: unknown,
-    }[];
+    }[],
     sourceItems?: {
         id: number | string | boolean,
         label?: string,
         [key: string]: unknown,
-    }[];
+    }[],
     isLoading?: boolean,
     isAutoComplete?: boolean,
 }

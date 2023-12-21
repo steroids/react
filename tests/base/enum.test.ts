@@ -60,9 +60,18 @@ describe('Enum', () => {
 
     it('getDropdownItems', () => {
         const expectedDropdownItems = [
-            {label: 'label1', id: TestEnum.FIELD_1},
-            {label: 'label2', id: TestEnum.FIELD_2},
-            {label: 'label3', id: TestEnum.FIELD_3},
+            {
+                label: 'label1',
+                id: TestEnum.FIELD_1,
+            },
+            {
+                label: 'label2',
+                id: TestEnum.FIELD_2,
+            },
+            {
+                label: 'label3',
+                id: TestEnum.FIELD_3,
+            },
         ];
 
         expect(TestEnum.getDropdownItems()).toEqual(expectedDropdownItems);

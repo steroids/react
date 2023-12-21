@@ -460,7 +460,11 @@ describe('useFetch Hook', () => {
         mockedUseSsr.mockReturnValueOnce(ssrContextValue);
         mockedGetConfigId.mockReturnValue(preloadedDataId);
 
-        const {result} = renderHook(() => useFetch({...mockedRawConfig, id: preloadedDataId, url: null}));
+        const {result} = renderHook(() => useFetch({
+            ...mockedRawConfig,
+            id: preloadedDataId,
+            url: null,
+        }));
 
         expect(result.current.data).toEqual(expectedPreloadedData);
 

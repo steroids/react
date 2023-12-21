@@ -18,7 +18,7 @@ export interface IControlsColumnProps {
     /**
      * Первичный ключ
      */
-    primaryKey?: string;
+    primaryKey?: string,
 
     /**
      * Коллекция с контролами
@@ -33,7 +33,7 @@ export interface IControlsColumnProps {
      *  }
      * ]
      */
-    controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]);
+    controls?: IControlItem[] | ((item: any, primaryKey: string) => IControlItem[]),
 
     /**
      * Элемент, для которого будет отображаться список с контролами, в нём можно задать видимость контрола
@@ -45,15 +45,15 @@ export interface IControlsColumnProps {
      *  canView: false
      * }
      */
-    item?: any;
+    item?: any,
 
     /**
      * Переопределение view React компонента для кастомизации отображения колонки
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IControlsColumnViewProps {

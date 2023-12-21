@@ -72,7 +72,7 @@ export interface IAlertProps extends IUiComponent {
      */
     animationDuration?: number,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IAlertViewProps extends IAlertProps {

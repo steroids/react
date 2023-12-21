@@ -4,28 +4,28 @@ export interface IHtmlComponent {
     /**
      * Утилита для создания css-классов по БЭМ
      */
-    bem(blockName: string): any;
+    bem(blockName: string): any,
 
     /**
      * Метод для соединения нескольких classNames
      */
-    classNames(...names: string[]): string;
+    classNames(...names: string[]): string,
 
     /**
      * Метод для добавления css-класса к элементу
      * @param node Элемент, к которому нужно добавить класс
      * @param className Название класса
      */
-    addClass(node: React.ReactNode, className: string): void;
+    addClass(node: React.ReactNode, className: string): void,
 
     /**
      * Метод для удаления css-класса у элемента
      * @param node Элемент, у которого нужно удалить класс
      * @param className Название класса
      */
-    removeClass(node: React.ReactNode, className: string): void;
+    removeClass(node: React.ReactNode, className: string): void,
 
-    closest(element: any, className: string): any;
+    closest(element: any, className: string): any,
 }
 
 /**

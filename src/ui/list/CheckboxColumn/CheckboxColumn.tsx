@@ -23,13 +23,13 @@ export interface ICheckboxColumnProps {
     /**
      * Свойства для CheckboxField
      */
-    fieldProps?: any;
+    fieldProps?: any,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     [key: string]: any,
 }

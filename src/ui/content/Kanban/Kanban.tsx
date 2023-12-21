@@ -8,77 +8,77 @@ import {useComponents} from '../../../hooks';
 import {useKanban} from './hooks';
 
 export interface ITaskTag {
-    id: number;
-    message: string;
-    type: string;
+    id: number,
+    message: string,
+    type: string,
 }
 
 export interface ITaskAssigner {
-    id: number;
-    firstName?: string;
-    lastName?: string;
+    id: number,
+    firstName?: string,
+    lastName?: string,
     avatar?: {
-        src: string;
-    };
+        src: string,
+    },
 }
 
 export interface ITaskPriority {
-    id: number;
-    type: string;
+    id: number,
+    type: string,
 }
 
 export interface IKanbanTask {
-    id: number;
-    title: string;
-    description?: string;
-    fullDescription?: string;
-    priority?: ITaskPriority;
-    assigner?: ITaskAssigner;
-    tags?: ITaskTag[];
+    id: number,
+    title: string,
+    description?: string,
+    fullDescription?: string,
+    priority?: ITaskPriority,
+    assigner?: ITaskAssigner,
+    tags?: ITaskTag[],
 }
 
 export interface IDragEndResult {
-    draggableId: number;
-    type: string;
+    draggableId: number,
+    type: string,
     source: {
-        index: number;
-        droppableId: number;
-    };
-    reason: string;
-    mode: string;
+        index: number,
+        droppableId: number,
+    },
+    reason: string,
+    mode: string,
     destination: {
-        droppableId: number;
-        index: number;
-    };
-    combine: null;
+        droppableId: number,
+        index: number,
+    },
+    combine: null,
 }
 
 export interface IKanbanColumn {
-    id: number;
-    title: string;
-    tasks: IKanbanTask[];
+    id: number,
+    title: string,
+    tasks: IKanbanTask[],
 }
 
 export interface IKanbanModalViewProps extends IModalProps {
-    modalType: KanbanModalTypeEnum;
-    formId: string;
-    columns: IKanbanColumn[];
-    columnId: string;
-    assigners: IDropDownFieldItem[];
-    submitButtonLabel: string;
-    onSubmit: (id: string | null, data: any, columnId: string) => void;
-    onToggleModalType?: () => void;
-    task?: IKanbanTask;
-    tags?: ITaskTag[];
+    modalType: KanbanModalTypeEnum,
+    formId: string,
+    columns: IKanbanColumn[],
+    columnId: string,
+    assigners: IDropDownFieldItem[],
+    submitButtonLabel: string,
+    onSubmit: (id: string | null, data: any, columnId: string) => void,
+    onToggleModalType?: () => void,
+    task?: IKanbanTask,
+    tags?: ITaskTag[],
 }
 
 export interface ICreateOrEditTaskModalContentViewProps extends Omit<IKanbanModalViewProps, 'modalType'> {
-    bem: IBem;
+    bem: IBem,
 }
 
 export interface IKanbanTaskDetailsModalViewProps extends IModalProps {
-    bem: IBem;
-    task: IKanbanTask;
+    bem: IBem,
+    task: IKanbanTask,
 }
 
 /**
@@ -97,39 +97,39 @@ export interface IKanbanProps extends IKanbanConfig, IUiComponent {
      * Компонент обертка для инициализации области куда можно переместить элемент из библиотеки react-beautiful-dnd
      * @example Droppable
      */
-    droppableComponent: any;
+    droppableComponent: any,
 
     /**
      * Компонент обертка для регистрации элемента который можно переместить из библиотеки react-beautiful-dnd
      * @example Draggable
      */
-    draggableComponent: any;
+    draggableComponent: any,
 
     /**
      * Общий контекст обертка из библиотеки react-beautiful-dnd
      * @example DragDropContext
      */
-    dndContext: any;
+    dndContext: any,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IKanbanTaskViewProps {
-    task: IKanbanTask;
-    columnId: string;
-    index: number;
-    draggableComponent: any;
-    onOpenTaskDetailsModal: (task: IKanbanTask, columnId: string) => void;
+    task: IKanbanTask,
+    columnId: string,
+    index: number,
+    draggableComponent: any,
+    onOpenTaskDetailsModal: (task: IKanbanTask, columnId: string) => void,
 }
 
 export interface IKanbanColumnViewProps {
-    column: IKanbanColumn;
-    columnIndex: number;
-    droppableComponent: any;
-    draggableComponent: any;
-    task?: IKanbanTask;
-    renderTask: (task: IKanbanTask, columnId: number, index: number) => JSX.Element;
-    onOpenCreateTaskModal: (columnId: number) => void;
+    column: IKanbanColumn,
+    columnIndex: number,
+    droppableComponent: any,
+    draggableComponent: any,
+    task?: IKanbanTask,
+    renderTask: (task: IKanbanTask, columnId: number, index: number) => JSX.Element,
+    onOpenCreateTaskModal: (columnId: number) => void,
 }
 
 export type IKanbanViewProps = IKanbanProps;

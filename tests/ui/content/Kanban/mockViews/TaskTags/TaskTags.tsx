@@ -4,8 +4,8 @@ import {useBem} from '../../../../../../src/hooks';
 import {ITaskTag} from '../../../../../../src/ui/content/Kanban/Kanban';
 
 interface ITaskTagsProps {
-    tags: ITaskTag[];
-    showClose?: boolean;
+    tags: ITaskTag[],
+    showClose?: boolean,
     onClose?: (id: number) => void,
 }
 

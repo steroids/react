@@ -15,30 +15,30 @@ export interface IUiApplicationComponent {
     /**
     * Компоненты приложения.
     */
-    components: IComponents;
+    components: IComponents,
 
     /**
     * Иконки для использования в приложении.
     */
     icons: {
-        [name: string]: string | number | ReactNode
-    };
+        [name: string]: string | number | ReactNode,
+    },
 
     /**
     * Компоненты полей формы для использования в приложении.
     */
-    fields: any;
+    fields: any,
 
     /**
     * Компоненты форматтеры для использования в приложении.
     */
-    formatters: any;
+    formatters: any,
 
     /**
      * Добавляет компоненты представлений.
      * @param {any} components - Компоненты представлений.
      */
-    addViews(components: any): void;
+    addViews(components: any): void,
 
     /**
      * Рендерит компонент представления.
@@ -47,27 +47,27 @@ export interface IUiApplicationComponent {
      * @param {boolean} [forceNode=false] - Флаг, указывающий на принудительное отображение компонента как узла.
      * @returns {React.ReactElement<any>|null} Возвращает элемент React или null.
      */
-    renderView(Component: any, props: any, forceNode?: boolean): React.ReactElement<any> | null;
+    renderView(Component: any, props: any, forceNode?: boolean): React.ReactElement<any> | null,
 
     /**
      * Возвращает компонент представления по указанному пути.
      * @param {string} path - Путь к компоненту представления.
      * @returns {any} Компонент представления или undefined, если не найден.
      */
-    getView(path: any): any;
+    getView(path: any): any,
 
     /**
      * Добавляет компоненты полей формы.
      * @param {any} components - Компоненты полей формы.
      */
-    addFields(components: any): void;
+    addFields(components: any): void,
 
     /**
      * Возвращает компонент поля формы по указанному пути.
      * @param {string} path - Путь к компоненту поля формы.
      * @returns {React.ComponentType<any>|undefined} Компонент поля формы или undefined, если не найден.
      */
-    getField(path: string): React.ComponentType<any> | undefined;
+    getField(path: string): React.ComponentType<any> | undefined,
 
     /**
      * Возвращает свойства конфигурации компонента поля формы по указанному пути.
@@ -76,46 +76,46 @@ export interface IUiApplicationComponent {
      * @param {any} attribute - Атрибут.
      * @returns {any} Свойства конфигурации компонента поля формы.
      */
-    getFieldProps(path: string, model?: any, attribute?: any): any;
+    getFieldProps(path: string, model?: any, attribute?: any): any,
 
     /**
      * Добавляет компоненты форматтеров.
      * @param {any} components - Компоненты форматтеров.
      */
-    addFormatters(components: any): void;
+    addFormatters(components: any): void,
 
     /**
      * Возвращает компонент форматтера по указанному пути.
      * @param {string} path - Путь к компоненту форматтера.
      * @returns {React.ComponentType<any>|undefined} Компонент форматтера или undefined, если не найден.
      */
-    getFormatter(path: string): React.ComponentType<any> | undefined;
+    getFormatter(path: string): React.ComponentType<any> | undefined,
 
     /**
      * Возвращает свойства конфигурации компонента форматтера по указанному пути.
      * @param {string} path - Путь к компоненту форматтера.
      * @returns {any} Свойства конфигурации компонента форматтера.
      */
-    getFormatterProps(path: string): any;
+    getFormatterProps(path: string): any,
 
     /**
      * Добавляет иконки.
      * @param {{ [name: string]: string | ReactNode }} icons - Иконки.
      */
-    addIcons(icons: {[name: string]: string | ReactNode}): void;
+    addIcons(icons: {[name: string]: string | ReactNode, }): void,
 
     /**
      * Возвращает иконку по указанному имени.
      * @param {string} name - Имя иконки.
      * @returns {string | number | ReactNode | null} Иконка или null, если не найдена.
      */
-    getIcon(name: string): string | number | ReactNode | null;
+    getIcon(name: string): string | number | ReactNode | null,
 
     /**
      * Добавляет модели.
      * @param {any} models - Модели.
      */
-    addModels(models: any): void;
+    addModels(models: any): void,
 
     /**
      * Регистрирует поле формы.
@@ -123,26 +123,26 @@ export interface IUiApplicationComponent {
      * @param {string} attribute - Атрибут.
      * @param {any} type - Тип.
      */
-    registerField(formId: string, attribute: string, type: any): void;
+    registerField(formId: string, attribute: string, type: any): void,
 
     /**
      * Возвращает зарегистрированные поля формы для указанного идентификатора формы.
      * @param {string} formId - Идентификатор формы.
      * @returns {any} Зарегистрированные поля формы.
      */
-    getRegisteredFields(formId: string): any;
+    getRegisteredFields(formId: string): any,
 
     /**
      * Задает элемент портала.
      * @param {HTMLElement} element - Элемент портала.
      */
-    setPortalElement(element: HTMLElement): void;
+    setPortalElement(element: HTMLElement): void,
 
     /**
      * Возвращает элемент портала.
      * @returns {HTMLElement | null} Элемент портала или null, если не задан.
      */
-    getPortalElement(): HTMLElement | null;
+    getPortalElement(): HTMLElement | null,
 }
 
 /**
@@ -156,7 +156,7 @@ export default class UiComponent implements IUiApplicationComponent {
 
     protected _models: any;
 
-    icons: {[name: string]: string | number | ReactNode} | any;
+    icons: {[name: string]: string | number | ReactNode, } | any;
 
     fields: any;
 
@@ -187,7 +187,10 @@ export default class UiComponent implements IUiApplicationComponent {
         }
         if (!forceNode && _isFunction(Component)) {
             if (Component.defaultProps) {
-                return Component({...Component.defaultProps, ...props});
+                return Component({
+                    ...Component.defaultProps,
+                    ...props,
+                });
             }
             return Component(props);
         }
@@ -237,7 +240,10 @@ export default class UiComponent implements IUiApplicationComponent {
     }
 
     addModels(models) {
-        this._models = {...this._models, ...models};
+        this._models = {
+            ...this._models,
+            ...models,
+        };
     }
 
     /*getModel(name) {

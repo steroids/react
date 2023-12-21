@@ -64,7 +64,7 @@ export interface IAccordionProps extends IUiComponent {
     /**
      * Тема аккордеона
      */
-    theme?: 'light' | 'dark' | 'intermediate';
+    theme?: 'light' | 'dark' | 'intermediate',
 
     /**
      * Номер активного AccordionItem, который может меняться динамический или быть статичным
@@ -96,7 +96,7 @@ export interface IAccordionProps extends IUiComponent {
 
 export interface IAccordionViewProps extends IAccordionProps {
     toggleAccordion?: (number) => void,
-    toggleCollapse?: (number) => void;
+    toggleCollapse?: (number) => void,
     childIndex?: number,
     isShowMore?: boolean,
 }

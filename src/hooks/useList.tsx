@@ -409,7 +409,7 @@ export default function useList(config: IListConfig): IListOutput {
         const attribute = typeof field === 'string' ? field : field.attribute;
 
         if (config.searchForm?.initialValues) {
-            acc[attribute] = config.searchForm?.initialValues?.[attribute];
+            acc[attribute] = config.searchForm.initialValues[attribute];
         } else {
             acc[attribute] = initialQuery?.[attribute];
         }

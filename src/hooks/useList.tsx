@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
@@ -406,9 +407,15 @@ export default function useList(config: IListConfig): IListOutput {
     const SearchForm = require('../ui/list/SearchForm').default;
     const initialValuesSearchForm = useMemo(() => (searchFormFields || []).reduce((acc, field) => {
         const attribute = typeof field === 'string' ? field : field.attribute;
-        acc[attribute] = initialQuery?.[attribute];
+
+        if (config.searchForm?.initialValues) {
+            acc[attribute] = config.searchForm.initialValues[attribute];
+        } else {
+            acc[attribute] = initialQuery?.[attribute];
+        }
+
         return acc;
-    }, {}), [searchFormFields, initialQuery]);
+    }, {}), [searchFormFields, config.searchForm, initialQuery]);
 
     const searchFormProps = {
         listId: config.listId,

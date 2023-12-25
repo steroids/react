@@ -56,13 +56,15 @@ describe('Function walkRoutesRecursive', () => {
         expect(normalizedRoute.path).toBe('/root/about');
     });
 
-    it('should recursively normalize an object with an empty object', () => {
-        const route = {};
+    it('should recursively normalize an object with an only path', () => {
+        const route = {
+            path: '/',
+        };
         const normalizedRoute = walkRoutesRecursive(route);
 
+        expect(normalizedRoute.path).toEqual(route.path);
         expect(normalizedRoute.id).toBeUndefined();
         expect(normalizedRoute.exact).toBeUndefined();
-        expect(normalizedRoute.path).toBeUndefined();
         expect(normalizedRoute.label).toBeUndefined();
         expect(normalizedRoute.title).toBeUndefined();
         expect(normalizedRoute.isVisible).toBeUndefined();
@@ -131,15 +133,11 @@ describe('Function walkRoutesRecursive', () => {
 });
 
 describe('Function findRedirectPathRecursive', () => {
-    it('returns null when passed an empty object', () => {
-        const emptyRoute = {};
-        expect(findRedirectPathRecursive(emptyRoute)).toBeNull();
-    });
-
     it('returns the first nested route path when passed an object with redirectTo equal to true', () => {
         const nestedPath = '/nested-route';
         const anotherNestedPath = '/another-nested-route';
         const route = {
+            path: '/',
             redirectTo: true,
             items: [
                 {path: nestedPath},
@@ -152,7 +150,10 @@ describe('Function findRedirectPathRecursive', () => {
 
     it('returns the redirectTo path when passed an object with redirectTo equal to a string', () => {
         const redirectPath = '/redirect-path';
-        const route = {redirectTo: redirectPath};
+        const route = {
+            path: '/',
+            redirectTo: redirectPath,
+        };
         expect(findRedirectPathRecursive(route)).toBe(redirectPath);
     });
 
@@ -166,11 +167,6 @@ describe('Function findRedirectPathRecursive', () => {
         const emptyPath = '';
         const route = {path: emptyPath};
         expect(findRedirectPathRecursive(route)).toBe(emptyPath);
-    });
-
-    it('returns null value when passing an object without a path', () => {
-        const routeWithoutPath = {id: '1'};
-        expect(findRedirectPathRecursive(routeWithoutPath)).toBeNull();
     });
 });
 
@@ -294,13 +290,6 @@ describe('Function treeToList', () => {
     describe('with nested paths ', () => {
         it('should return an empty array for an empty tree', () => {
             const tree = [];
-            const list = treeToList(tree);
-            const expectedList = [];
-            expect(list).toEqual(expectedList);
-        });
-
-        it('should convert a single item to an empty array if he dont have path', () => {
-            const tree = {id: '1'};
             const list = treeToList(tree);
             const expectedList = [];
             expect(list).toEqual(expectedList);

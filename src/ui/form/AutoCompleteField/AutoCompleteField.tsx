@@ -179,8 +179,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         props.input.onChange.call(null, selectedIds[0] || null);
     }, [props.input.onChange, selectedIds]);
 
-    return components.ui.renderView(props.view || 'form.AutoCompleteFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         inputProps,
         items,
         isLoading,
@@ -192,8 +191,19 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         forwardedRef,
         onItemHover,
         onItemSelect,
+        primaryKey: props.primaryKey,
+        size: props.size,
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        required: props.required,
         categories: getCategories(props.items),
-    });
+        className: props.className,
+        style: props.style,
+    }), [inputProps, items, isLoading, hoveredId, selectedIds, onOpen, isOpened, onClose,
+        onItemHover, onItemSelect, props.primaryKey, props.size, props.placeholder, props.disabled,
+        props.required, props.items, props.className, props.style]);
+
+    return components.ui.renderView(props.view || 'form.AutoCompleteFieldView', viewProps);
 }
 
 AutoCompleteField.defaultProps = {

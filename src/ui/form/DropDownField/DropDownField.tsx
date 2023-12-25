@@ -155,6 +155,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
         id: string,
     },
 
+    /**
+     * Кастомная вьюшка для элемента
+     */
+    itemView?: CustomView,
+
     [key: string]: any,
 }
 
@@ -344,7 +349,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         item: IDropDownFieldItem,
         type: ItemSwitchType,
         src: string | React.ReactElement,
-    ) => components.ui.renderView('form.DropDownFieldItemView', {
+    ) => components.ui.renderView(props.itemView || 'form.DropDownFieldItemView', {
         item: {
             ...item,
             contentSrc: src,

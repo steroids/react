@@ -64,9 +64,11 @@ describe('useFile Hook', () => {
         showRemove: true,
         multiple: false,
         backendUrl: 'https://site/api/v1/file/upload-photo',
-        input: {name: 'fileId',
-value: null,
-onChange: jest.fn()},
+        input: {
+            name: 'fileId',
+            value: null,
+            onChange: jest.fn(),
+        },
     };
 
     beforeEach(() => {
@@ -97,13 +99,19 @@ onChange: jest.fn()},
 
     it('should normalize and upload initial files', () => {
         const initialFiles = [
-            {uid: '1',
-title: 'File 1'},
-            {uid: '2',
-title: 'File 2'},
+            {
+                uid: '1',
+                title: 'File 1',
+            },
+            {
+                uid: '2',
+                title: 'File 2',
+            },
         ];
-        const {result} = renderHook(() => useFile({...mockedProps,
-initialFiles}));
+        const {result} = renderHook(() => useFile({
+            ...mockedProps,
+            initialFiles,
+        }));
 
         const {files} = result.current;
 
@@ -117,13 +125,17 @@ initialFiles}));
     it('should handle if initial files does not have correct format', () => {
         const initialFiles = [
             {title: 'File 1'},
-            {uid: '2',
-title: 'File 2'},
+            {
+                uid: '2',
+                title: 'File 2',
+            },
         ];
         const expectedQueueFilesLength = initialFiles.length - 1;
 
-        const {result} = renderHook(() => useFile({...mockedProps,
-initialFiles}));
+        const {result} = renderHook(() => useFile({
+            ...mockedProps,
+            initialFiles,
+        }));
 
         const {uploader, files} = result.current;
         const queueFiles = uploader.queue.getFiles();
@@ -195,9 +207,11 @@ initialFiles}));
             initialProps: {
                 props: {
                     ...mockedProps,
-                    input: {name: 'fileId',
-value: [1, 2],
-onChange: jest.fn()},
+                    input: {
+                        name: 'fileId',
+                        value: [1, 2],
+                        onChange: jest.fn(),
+                    },
                 },
             },
         });
@@ -228,9 +242,11 @@ onChange: jest.fn()},
         rerender({
             props: {
                 ...mockedProps,
-                input: {name: 'fileId',
-value: [1],
-onChange: jest.fn()},
+                input: {
+                    name: 'fileId',
+                    value: [1],
+                    onChange: jest.fn(),
+                },
 
             },
         });

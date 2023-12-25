@@ -206,8 +206,10 @@ describe('useApplication Hook', () => {
     });
 
     it('should add components provider', () => {
-        const {result} = renderHook(() => useApplication({...config,
-useGlobal: false}));
+        const {result} = renderHook(() => useApplication({
+            ...config,
+            useGlobal: false,
+        }));
         render(result.current.renderApplication());
 
         expect(componentsProviderSpy).toHaveBeenCalled();

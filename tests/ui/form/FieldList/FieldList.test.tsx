@@ -57,9 +57,11 @@ describe('FieldList tests', () => {
     it('should have button add/remove', () => {
         const showRemove = true;
         const showAdd = true;
-        const {container} = render(FormWrapper(FieldList, {...props,
-showRemove,
-showAdd}));
+        const {container} = render(FormWrapper(FieldList, {
+            ...props,
+            showRemove,
+            showAdd,
+        }));
         const buttonRemove = getElementByClassName(container, `${expectedFieldListItemClass}__remove`);
         const buttonAdd = getElementByClassName(container, `${expectedFieldListClass}__button-add`);
         expect(buttonAdd).toBeInTheDocument();
@@ -90,8 +92,10 @@ showAdd}));
 
     it('should have class hasAlternatingColors', () => {
         const hasAlternatingColors = true;
-        const {container} = render(FormWrapper(FieldList, {...props,
-hasAlternatingColors}));
+        const {container} = render(FormWrapper(FieldList, {
+            ...props,
+            hasAlternatingColors,
+        }));
         const fieldList = getElementByClassName(container, expectedFieldListClass);
         expect(fieldList).toHaveClass(`${expectedFieldListClass}_hasAlternatingColors`);
     });

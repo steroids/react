@@ -29,12 +29,18 @@ const MockComponent = (props: IDataSelectConfig) => (
 jest.useFakeTimers();
 
 const items = [
-    {id: 52,
-name: 'Ivanov'},
-    {id: 28,
-name: 'Petrov'},
-    {id: 33,
-name: 'John'},
+    {
+        id: 52,
+        name: 'Ivanov',
+    },
+    {
+        id: 28,
+        name: 'Petrov',
+    },
+    {
+        id: 33,
+        name: 'John',
+    },
 ];
 
 describe.skip('hook useDataSelect', () => {

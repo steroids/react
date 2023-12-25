@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Options, SplideProps} from '@splidejs/react-splide';
 import {useComponents} from '../../../hooks';
 
@@ -36,7 +36,19 @@ export type ISliderViewProps = ISliderProps
 export default function Slider(props: ISliderProps) {
     const components = useComponents();
 
-    return components.ui.renderView(props.view || 'content.SliderView', {
-        ...props,
-    });
+    const viewProps = useMemo(() => ({
+        sliderOptions: props.sliderOptions,
+        extensions: props.extensions,
+        hasTrack: props.hasTrack,
+        itemView: props.itemView,
+        items: props.items,
+        tag: props.tag,
+        title: props.title,
+        transition: props.transition,
+        className: props.className,
+        style: props.style,
+    }), [props.sliderOptions, props.extensions, props.hasTrack, props.itemView, props.items,
+        props.tag, props.title, props.transition, props.className, props.style]);
+
+    return components.ui.renderView(props.view || 'content.SliderView', viewProps);
 }

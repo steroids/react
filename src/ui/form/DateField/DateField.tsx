@@ -82,13 +82,13 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         ...props.calendarProps,
     }), [props.calendarProps, props.input.onChange, props.input.value, props.valueFormat]);
 
-    return components.ui.renderView(props.view || 'form.DateFieldView', {
+    const viewProps = useMemo(() => ({
+        calendarProps,
         ...props.viewProps,
         onClear,
         onClose,
         isOpened,
         inputProps,
-        calendarProps,
         size: props.size,
         icon: props.icon,
         errors: props.errors,
@@ -98,7 +98,10 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         showRemove: props.showRemove,
         style: props.style,
         maskInputRef,
-    });
+    }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className,
+        props.disabled, props.errors, props.icon, props.label, props.showRemove, props.size, props.style, props.viewProps]);
+
+    return components.ui.renderView(props.view || 'form.DateFieldView', viewProps);
 }
 
 DateField.defaultProps = {
@@ -109,7 +112,7 @@ DateField.defaultProps = {
     showRemove: true,
     valueFormat: 'YYYY-MM-DD',
     maskOptions: maskitoDateOptionsGenerator({mode: 'dd/mm/yyyy',
-separator: '.'}),
+        separator: '.'}),
     size: 'md',
 };
 

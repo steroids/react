@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useMount} from 'react-use';
 import {useMemo} from 'react';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
@@ -62,8 +61,18 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         ...props.inputProps,
     }), [onChangeHandler, props.disabled, props.input?.name, props.input?.value, props.inputProps, props.required]);
 
-    return components.ui.renderView(props.view || 'form.CheckboxFieldView', {...props,
-inputProps});
+    const viewProps = useMemo(() => ({
+        inputProps,
+        color: props.color,
+        size: props.size,
+        errors: props.errors,
+        className: props.className,
+        style: props.style,
+        id: props.id,
+        label: props.label,
+    }), [inputProps, props.className, props.color, props.errors, props.id, props.label, props.size, props.style]);
+
+    return components.ui.renderView(props.view || 'form.CheckboxFieldView', viewProps);
 }
 
 CheckboxField.defaultProps = {

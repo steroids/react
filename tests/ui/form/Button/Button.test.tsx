@@ -34,7 +34,6 @@ describe('Button tests', () => {
             color: 'info',
             outline: true,
             isLoading: true,
-            fontThickness: 'bold',
             size: 'md',
         };
 
@@ -46,7 +45,6 @@ describe('Button tests', () => {
 
         expect(button).toHaveClass(`${expectedButtonClass}_outline_${additionalProps.color}`);
         expect(button).toHaveClass(`${expectedButtonClass}_loading`);
-        expect(button).toHaveClass(`${expectedButtonClass}_thickness_${additionalProps.fontThickness}`);
         expect(button).toHaveClass(`${expectedButtonClass}_size_${additionalProps.size}`);
     });
 

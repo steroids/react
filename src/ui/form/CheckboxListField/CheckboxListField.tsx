@@ -147,14 +147,18 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         />
     );
 
-    return components.ui.renderView(props.view || 'form.CheckboxListFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
         inputProps,
         onItemSelect,
         selectedIds,
         renderCheckbox,
-    });
+        orientation: props.orientation,
+        size: props.size,
+        disabled: props.disabled,
+    }), [inputProps, items, onItemSelect, props.disabled, props.orientation, props.size, renderCheckbox, selectedIds]);
+
+    return components.ui.renderView(props.view || 'form.CheckboxListFieldView', viewProps);
 }
 
 CheckboxListField.defaultProps = {

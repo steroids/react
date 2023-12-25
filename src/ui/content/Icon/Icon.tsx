@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
+import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 
 /**
@@ -67,9 +68,6 @@ export default function Icon(props: IIconProps): JSX.Element {
     const components = useComponents();
 
     const name = props.name;
-    if (!_isString(name)) {
-        return null;
-    }
 
     let icon;
 
@@ -99,8 +97,18 @@ export default function Icon(props: IIconProps): JSX.Element {
         }
     }
 
-    return components.ui.renderView(props.view || 'content.IconView', {
-        ...props,
+    const viewProps = useMemo(() => ({
+        onClick: props.onClick,
+        tabIndex: props.tabIndex,
+        title: props.title,
+        className: props.className,
+        style: props.style,
         icon,
-    });
+    }), [props.onClick, props.tabIndex, props.title, props.className, props.style, icon]);
+
+    if (!_isString(name)) {
+        return null;
+    }
+
+    return components.ui.renderView(props.view || 'content.IconView', viewProps);
 }

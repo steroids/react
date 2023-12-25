@@ -34,8 +34,8 @@ describe('DropDown tests', () => {
         const dropDownDispatcher = getByText(buttonText);
 
         return {dropDownDispatcher,
-getByText,
-container};
+            getByText,
+            container};
     };
 
     const expectedDropDownClass = 'DropDownView';

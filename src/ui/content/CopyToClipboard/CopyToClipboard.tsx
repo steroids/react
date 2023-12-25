@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useComponents, useDispatch} from '../../../hooks';
 
 import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';

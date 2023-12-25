@@ -54,17 +54,7 @@ function Dashboard(props: IDashboardProps): JSX.Element {
 
     const viewProps = useMemo(() => ({
         ...props,
-        children: props.children,
-        itemClassName: props.itemClassName,
-        gap: props.gap,
-        direction: props.direction,
-        wrap: props.wrap,
-        justify: props.justify,
-        align: props.align,
-        view: props.view,
         items: flexGridItems,
-        className: props.className,
-        style: props.style,
     }), [flexGridItems, props]);
 
     return (

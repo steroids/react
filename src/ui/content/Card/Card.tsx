@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {ILinkProps} from '../../nav/Link/Link';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
@@ -134,7 +134,8 @@ function Card(props: ICardProps) {
         footer: props.footer,
         className: props.className,
         style: props.style,
-    }), [props.className, props.style]);
+    }), [props.buttons, props.children, props.className, props.cover, props.description,
+        props.footer, props.header, props.links, props.style, props.title]);
 
     return components.ui.renderView(props.view || 'content.CardView', viewProps);
 }

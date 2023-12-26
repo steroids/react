@@ -55,11 +55,9 @@ export const walkRoutesRecursive = (
         ...item,
         id: item.id,
         exact: item.exact,
-        path: item.path && (
-            alwaysAppendParentRoutePath
-                ? joinChildAndParentPaths(item.path, parentItem.path)
-                : appendChildIfNoSlash(item.path, parentItem.path)
-        ),
+        path: alwaysAppendParentRoutePath
+            ? joinChildAndParentPaths(item.path, parentItem.path)
+            : appendChildIfNoSlash(item.path, parentItem.path),
         label: item.label,
         title: item.title,
         isVisible: typeof item.isVisible !== 'undefined'
@@ -84,8 +82,10 @@ export const walkRoutesRecursive = (
         items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
-            .map(id => walkRoutesRecursive({...item.items[id],
-id}, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
+            .map(id => walkRoutesRecursive({
+                ...item.items[id],
+                id,
+            }, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
     }
     return {
         ...normalizedItem,
@@ -103,11 +103,9 @@ export const treeToList = (
         return item;
     }
 
-    if (item.path) {
-        item.path = alwaysAppendParentRoutePath
-            ? joinChildAndParentPaths(item.path, parentItem?.path)
-            : appendChildIfNoSlash(item.path, parentItem?.path);
-    }
+    item.path = alwaysAppendParentRoutePath
+        ? joinChildAndParentPaths(item.path, parentItem?.path)
+        : appendChildIfNoSlash(item.path, parentItem?.path);
 
     if (isRoot && !item.id) {
         item.id = 'root';
@@ -121,8 +119,10 @@ export const treeToList = (
         });
     } else if (_isObject(item.items)) {
         Object.keys(item.items).forEach(id => {
-            items = items.concat(treeToList({...item.items[id],
-id}, false, item, alwaysAppendParentRoutePath));
+            items = items.concat(treeToList({
+                ...item.items[id],
+                id,
+            }, false, item, alwaysAppendParentRoutePath));
         });
     }
 

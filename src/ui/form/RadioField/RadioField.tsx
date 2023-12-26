@@ -52,8 +52,10 @@ function RadioField(props: IRadioFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props.inputProps,
     }), [onChangeHandler, props.disabled, props.input.name, props.input.value, props.inputProps]);
 
-    return components.ui.renderView(props.view || 'form.RadioFieldView', {...props,
-inputProps});
+    return components.ui.renderView(props.view || 'form.RadioFieldView', {
+        ...props,
+        inputProps,
+    });
 }
 
 RadioField.defaultProps = {

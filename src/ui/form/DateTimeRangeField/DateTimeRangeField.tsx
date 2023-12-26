@@ -23,8 +23,7 @@ import {useComponents} from '../../../hooks';
  * Он объединяет функциональность компонента `DateRangeField` для выбора диапазона дат и компонента `DateTimeField` для выбора времени.
  */
 export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'inputProps' | 'input'>,
-    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent
-{
+    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent {
     /**
     * Аттрибут (название) поля в форме
     * @example 'fromTime'
@@ -96,8 +95,7 @@ export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
-        | 'noBorder' | 'style'>
-{
+        | 'noBorder' | 'style'> {
     timePanelViewProps?: any,
     calendarProps?: ICalendarProps,
     inputPropsFrom?: any,
@@ -304,12 +302,16 @@ DateTimeRangeField.defaultProps = {
     icon: true,
     size: 'md',
     maskOptions: {
-        from: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy',
-timeMode: 'HH:MM',
-dateSeparator: '.'}),
-        to: maskitoDateTimeOptionsGenerator({dateMode: 'dd/mm/yyyy',
-timeMode: 'HH:MM',
-dateSeparator: '.'}),
+        from: maskitoDateTimeOptionsGenerator({
+            dateMode: 'dd/mm/yyyy',
+            timeMode: 'HH:MM',
+            dateSeparator: '.',
+        }),
+        to: maskitoDateTimeOptionsGenerator({
+            dateMode: 'dd/mm/yyyy',
+            timeMode: 'HH:MM',
+            dateSeparator: '.',
+        }),
     },
 };
 

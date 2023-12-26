@@ -1,8 +1,5 @@
 import configureMockStore from 'redux-mock-store';
-import _get from 'lodash-es/get';
-
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
-
 import {
     ROUTER_INIT_ROUTES,
     ROUTER_SET_PARAMS,
@@ -56,84 +53,6 @@ describe('actions router', () => {
         expect(store.getActions()).toEqual(expectedActions);
     });
 
-    describe('goToRoute', () => {
-        const routeId = 'route1';
-        const type = '@@router/CALL_HISTORY_METHOD';
-
-        const pushPayload = {
-            method: 'push',
-            args: [null],
-        };
-
-        const replacePayload = {
-            method: 'replace',
-            args: [null],
-        };
-
-        it('without arguments', () => {
-            const expectedActions = [
-                {
-                    type,
-                    payload: pushPayload,
-                },
-            ];
-
-            store.dispatch(goToRoute(routeId));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-
-        it('with replace', () => {
-            const expectedActions = [
-                {
-                    type,
-                    payload: replacePayload,
-                },
-            ];
-
-            const params = null;
-            const isReplace = true;
-
-            store.dispatch(goToRoute(routeId, params, isReplace));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-
-        it('with params and replace', () => {
-            const expectedActions = [
-                {
-                    type,
-                    payload: replacePayload,
-                },
-            ];
-
-            const params = {
-                exact: false,
-                query: 'contacts',
-            };
-            const isReplace = true;
-
-            store.dispatch(goToRoute(routeId, params, isReplace));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-
-        it('with params', () => {
-            const expectedActions = [
-                {
-                    type,
-                    payload: pushPayload,
-                },
-            ];
-
-            const params = {
-                exact: false,
-                query: 'contacts',
-            };
-            const isReplace = false;
-
-            store.dispatch(goToRoute(routeId, params, isReplace));
-            expect(store.getActions()).toEqual(expectedActions);
-        });
-    });
-
     it('goToParent without parentRouteId', () => {
         const level = 2;
         const expectedActions = [];
@@ -141,5 +60,100 @@ describe('actions router', () => {
         store.dispatch(goToParent(level));
 
         expect(store.getActions()).toEqual(expectedActions);
+    });
+});
+
+describe('goToRoute', () => {
+    let mockedStore;
+
+    const routeId = 'route1';
+    const path = '/some-route';
+    const type = '@@router/CALL_HISTORY_METHOD';
+
+    const pushPayload = {
+        method: 'push',
+        args: [path],
+    };
+
+    const replacePayload = {
+        method: 'replace',
+        args: [path],
+    };
+
+    beforeEach(() => {
+        store.clearActions();
+
+        mockedStore = mockStore({
+            router: {
+                routesMap: {
+                    [routeId]: {
+                        path,
+                    },
+                },
+            },
+        });
+    });
+
+    it('without arguments', () => {
+        const expectedActions = [
+            {
+                type,
+                payload: pushPayload,
+            },
+        ];
+
+        mockedStore.dispatch(goToRoute(routeId));
+        expect(mockedStore.getActions()).toEqual(expectedActions);
+    });
+
+    it('with params', () => {
+        const expectedActions = [
+            {
+                type,
+                payload: pushPayload,
+            },
+        ];
+
+        const params = {
+            exact: false,
+            query: 'contacts',
+        };
+        const isReplace = false;
+
+        mockedStore.dispatch(goToRoute(routeId, params, isReplace));
+        expect(mockedStore.getActions()).toEqual(expectedActions);
+    });
+
+    it('with replace', () => {
+        const expectedActions = [
+            {
+                type,
+                payload: replacePayload,
+            },
+        ];
+
+        const params = null;
+        const isReplace = true;
+
+        mockedStore.dispatch(goToRoute(routeId, params, isReplace));
+        expect(mockedStore.getActions()).toEqual(expectedActions);
+    });
+
+    it('with params and replace', () => {
+        const expectedActions = [
+            {
+                type,
+                payload: replacePayload,
+            },
+        ];
+
+        const params = {
+            exact: false,
+            query: 'contacts',
+        };
+        const isReplace = true;
+
+        mockedStore.dispatch(goToRoute(routeId, params, isReplace));
+        expect(mockedStore.getActions()).toEqual(expectedActions);
     });
 });

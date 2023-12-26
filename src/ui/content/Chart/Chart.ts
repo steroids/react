@@ -1,4 +1,3 @@
-import _upperFirst from 'lodash-es/upperFirst';
 import {ICheckboxListFieldProps} from 'src/ui/form/CheckboxListField/CheckboxListField';
 import {IButtonGroupProps} from 'src/ui/nav/ButtonGroup/ButtonGroup';
 import {useMemo} from 'react';

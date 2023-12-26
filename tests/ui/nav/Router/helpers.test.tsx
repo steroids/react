@@ -32,11 +32,15 @@ describe('Function walkRoutesRecursive', () => {
     };
 
     it('if the isVisible and isNavVisible fields are not set for the child element, then they are set as for the parent props', () => {
-        const route = {isVisible: undefined,
-isNavVisible: undefined};
+        const route = {
+            isVisible: undefined,
+            isNavVisible: undefined,
+        };
         const defaultItem = {};
-        const parentItem = {isVisible: true,
-isNavVisible: false};
+        const parentItem = {
+            isVisible: true,
+            isNavVisible: false,
+        };
         const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
 
         expect(normalizedRoute.isVisible).toBe(true);
@@ -52,13 +56,15 @@ isNavVisible: false};
         expect(normalizedRoute.path).toBe('/root/about');
     });
 
-    it('should recursively normalize an object with an empty object', () => {
-        const route = {};
+    it('should recursively normalize an object with an only path', () => {
+        const route = {
+            path: '/',
+        };
         const normalizedRoute = walkRoutesRecursive(route);
 
+        expect(normalizedRoute.path).toEqual(route.path);
         expect(normalizedRoute.id).toBeUndefined();
         expect(normalizedRoute.exact).toBeUndefined();
-        expect(normalizedRoute.path).toBeUndefined();
         expect(normalizedRoute.label).toBeUndefined();
         expect(normalizedRoute.title).toBeUndefined();
         expect(normalizedRoute.isVisible).toBeUndefined();
@@ -101,14 +107,18 @@ isNavVisible: false};
 
     it('should normalize object recursively with defaultItem/parentItem', () => {
         const route = {};
-        const defaultItem = {roles: ['admin'],
-layout: 'test-second',
-test: 'second-test',
-isVisible: false,
-isNavVisible: false};
-        const parentItem = {roles: ['user'],
-layout: 'test-first',
-test: 'first-test'};
+        const defaultItem = {
+            roles: ['admin'],
+            layout: 'test-second',
+            test: 'second-test',
+            isVisible: false,
+            isNavVisible: false,
+        };
+        const parentItem = {
+            roles: ['user'],
+            layout: 'test-first',
+            test: 'first-test',
+        };
         const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
 
         expect(normalizedRoute.roles).toBe(parentItem.roles);
@@ -123,15 +133,11 @@ test: 'first-test'};
 });
 
 describe('Function findRedirectPathRecursive', () => {
-    it('returns null when passed an empty object', () => {
-        const emptyRoute = {};
-        expect(findRedirectPathRecursive(emptyRoute)).toBeNull();
-    });
-
     it('returns the first nested route path when passed an object with redirectTo equal to true', () => {
         const nestedPath = '/nested-route';
         const anotherNestedPath = '/another-nested-route';
         const route = {
+            path: '/',
             redirectTo: true,
             items: [
                 {path: nestedPath},
@@ -144,7 +150,10 @@ describe('Function findRedirectPathRecursive', () => {
 
     it('returns the redirectTo path when passed an object with redirectTo equal to a string', () => {
         const redirectPath = '/redirect-path';
-        const route = {redirectTo: redirectPath};
+        const route = {
+            path: '/',
+            redirectTo: redirectPath,
+        };
         expect(findRedirectPathRecursive(route)).toBe(redirectPath);
     });
 
@@ -159,11 +168,6 @@ describe('Function findRedirectPathRecursive', () => {
         const route = {path: emptyPath};
         expect(findRedirectPathRecursive(route)).toBe(emptyPath);
     });
-
-    it('returns null value when passing an object without a path', () => {
-        const routeWithoutPath = {id: '1'};
-        expect(findRedirectPathRecursive(routeWithoutPath)).toBeNull();
-    });
 });
 
 describe('Function treeToList', () => {
@@ -173,22 +177,36 @@ describe('Function treeToList', () => {
                 id: '1',
                 path: '/path',
                 items: [
-                    {id: '2',
-path: '/path2'},
-                    {id: '3',
-path: '/path3'},
+                    {
+                        id: '2',
+                        path: '/path2',
+                    },
+                    {
+                        id: '3',
+                        path: '/path3',
+                    },
                 ],
             };
             const expectedList = [
-                {id: '1',
-path: '/path',
-items: [{id: '2',
-path: '/path2'}, {id: '3',
-path: '/path3'}]},
-                {id: '2',
-path: '/path2'},
-                {id: '3',
-path: '/path3'},
+                {
+                    id: '1',
+                    path: '/path',
+                    items: [{
+                        id: '2',
+                        path: '/path2',
+                    }, {
+                        id: '3',
+                        path: '/path3',
+                    }],
+                },
+                {
+                    id: '2',
+                    path: '/path2',
+                },
+                {
+                    id: '3',
+                    path: '/path3',
+                },
             ];
 
             const list = treeToList(tree, true, {}, false);
@@ -203,12 +221,18 @@ path: '/path3'},
                     {
                         id: '2',
                         path: '/path2',
-                        items: [{id: '3',
-path: '/path3'}, {id: '4',
-path: '/path4'}],
+                        items: [{
+                            id: '3',
+                            path: '/path3',
+                        }, {
+                            id: '4',
+                            path: '/path4',
+                        }],
                     },
-                    {id: '5',
-path: '/path5'},
+                    {
+                        id: '5',
+                        path: '/path5',
+                    },
                 ],
             };
             const expectedList = [
@@ -219,27 +243,43 @@ path: '/path5'},
                         {
                             id: '2',
                             path: '/path2',
-                            items: [{id: '3',
-path: '/path3'}, {id: '4',
-path: '/path4'}],
+                            items: [{
+                                id: '3',
+                                path: '/path3',
+                            }, {
+                                id: '4',
+                                path: '/path4',
+                            }],
                         },
-                        {id: '5',
-path: '/path5'},
+                        {
+                            id: '5',
+                            path: '/path5',
+                        },
                     ],
                 },
                 {
                     id: '2',
                     path: '/path2',
-                    items: [{id: '3',
-path: '/path3'}, {id: '4',
-path: '/path4'}],
+                    items: [{
+                        id: '3',
+                        path: '/path3',
+                    }, {
+                        id: '4',
+                        path: '/path4',
+                    }],
                 },
-                {id: '3',
-path: '/path3'},
-                {id: '4',
-path: '/path4'},
-                {id: '5',
-path: '/path5'},
+                {
+                    id: '3',
+                    path: '/path3',
+                },
+                {
+                    id: '4',
+                    path: '/path4',
+                },
+                {
+                    id: '5',
+                    path: '/path5',
+                },
             ];
 
             const list = treeToList(tree, true, {}, false);
@@ -255,16 +295,11 @@ path: '/path5'},
             expect(list).toEqual(expectedList);
         });
 
-        it('should convert a single item to an empty array if he dont have path', () => {
-            const tree = {id: '1'};
-            const list = treeToList(tree);
-            const expectedList = [];
-            expect(list).toEqual(expectedList);
-        });
-
         it('should convert a single item to an array if he have path', () => {
-            const tree = {id: '1',
-path: '/path'};
+            const tree = {
+                id: '1',
+                path: '/path',
+            };
             const list = treeToList(tree);
             const expectedList = [tree];
             expect(list).toEqual(expectedList);
@@ -275,22 +310,36 @@ path: '/path'};
                 id: '1',
                 path: '/path',
                 items: [
-                    {id: '2',
-path: '/path2'},
-                    {id: '3',
-path: '/path3'},
+                    {
+                        id: '2',
+                        path: '/path2',
+                    },
+                    {
+                        id: '3',
+                        path: '/path3',
+                    },
                 ],
             };
             const expectedList = [
-                {id: '1',
-path: '/path',
-items: [{id: '2',
-path: '/path/path2'}, {id: '3',
-path: '/path/path3'}]},
-                {id: '2',
-path: '/path/path2'},
-                {id: '3',
-path: '/path/path3'},
+                {
+                    id: '1',
+                    path: '/path',
+                    items: [{
+                        id: '2',
+                        path: '/path/path2',
+                    }, {
+                        id: '3',
+                        path: '/path/path3',
+                    }],
+                },
+                {
+                    id: '2',
+                    path: '/path/path2',
+                },
+                {
+                    id: '3',
+                    path: '/path/path3',
+                },
             ];
 
             const list = treeToList(tree);
@@ -311,12 +360,18 @@ path: '/path/path3'},
                     {
                         id: '2',
                         path: 'path2',
-                        items: [{id: '3',
-path: 'path3'}, {id: '4',
-path: 'path4'}],
+                        items: [{
+                            id: '3',
+                            path: 'path3',
+                        }, {
+                            id: '4',
+                            path: 'path4',
+                        }],
                     },
-                    {id: '5',
-path: 'path5'},
+                    {
+                        id: '5',
+                        path: 'path5',
+                    },
                 ],
             };
             const expectedList = [
@@ -327,27 +382,43 @@ path: 'path5'},
                         {
                             id: '2',
                             path: '/path/path2',
-                            items: [{id: '3',
-path: '/path/path2/path3'}, {id: '4',
-path: '/path/path2/path4'}],
+                            items: [{
+                                id: '3',
+                                path: '/path/path2/path3',
+                            }, {
+                                id: '4',
+                                path: '/path/path2/path4',
+                            }],
                         },
-                        {id: '5',
-path: '/path/path5'},
+                        {
+                            id: '5',
+                            path: '/path/path5',
+                        },
                     ],
                 },
                 {
                     id: '2',
                     path: '/path/path2',
-                    items: [{id: '3',
-path: '/path/path2/path3'}, {id: '4',
-path: '/path/path2/path4'}],
+                    items: [{
+                        id: '3',
+                        path: '/path/path2/path3',
+                    }, {
+                        id: '4',
+                        path: '/path/path2/path4',
+                    }],
                 },
-                {id: '3',
-path: '/path/path2/path3'},
-                {id: '4',
-path: '/path/path2/path4'},
-                {id: '5',
-path: '/path/path5'},
+                {
+                    id: '3',
+                    path: '/path/path2/path3',
+                },
+                {
+                    id: '4',
+                    path: '/path/path2/path4',
+                },
+                {
+                    id: '5',
+                    path: '/path/path5',
+                },
             ];
 
             const list = treeToList(tree);

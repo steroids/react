@@ -128,6 +128,9 @@ export default {
     'nav.NavButtonView': {
         lazy: () => require('./nav/Nav/NavButtonMockView').default,
     },
+    'nav.ButtonGroupView': {
+        lazy: () => require('./nav/ButtonGroup/ButtonGroupMockView').default,
+    },
     'nav.NavIconView': {
         lazy: () => require('./nav/Nav/NavIconMockView').default,
     },

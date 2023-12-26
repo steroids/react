@@ -125,6 +125,7 @@ describe('router reducers', () => {
             const routeId = 'dashboard';
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
                 exact: true,
             };
 
@@ -139,7 +140,7 @@ describe('router reducers', () => {
         it('without routeId', () => {
             const routeId = 'dashboard';
             const route: IRouteItem = {
-                id: routeId,
+                path: '/',
                 exact: true,
             };
 
@@ -148,8 +149,10 @@ describe('router reducers', () => {
             };
 
             const activeIds = [routeId];
-            const state = getStateWithRouterData({routesMap,
-activeIds});
+            const state = getStateWithRouterData({
+                routesMap,
+                activeIds,
+            });
             expect(getRoute(state)).toEqual(route);
         });
 
@@ -173,6 +176,7 @@ activeIds});
 
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
                 [propName]: propValue,
             };
 
@@ -187,6 +191,7 @@ activeIds});
 
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
             };
 
             const routesMap = getRoutesMapMock(routeId, route);
@@ -268,6 +273,7 @@ activeIds});
         const childRoute: IRouteItem = {
             id: routeId,
             label: 'childRoute',
+            path: '/child',
             isVisible: true,
             isNavVisible: true,
             items: [],
@@ -276,6 +282,7 @@ activeIds});
         const parentRoute: IRouteItem = {
             id: 'parentRoute',
             label: 'parentRoute',
+            path: '/',
             isVisible: true,
             isNavVisible: true,
             items: [childRoute],
@@ -289,8 +296,10 @@ activeIds});
     describe('getRouteChildren', () => {
         it('with items', () => {
             const routeParentId = 'routeParent';
-            const routeChildren = [{id: 'routeChild',
-exact: true}];
+            const routeChildren = [{
+                id: 'routeChild',
+                exact: true,
+            }];
 
             const routesMap = {
                 [routeParentId]: {

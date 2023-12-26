@@ -139,8 +139,10 @@ describe('router reducers', () => {
                 } as IRouteItem,
             };
 
-            const routeWithChildren = {...routeWithoutChildren,
-items};
+            const routeWithChildren = {
+                ...routeWithoutChildren,
+                items,
+            };
 
             const expectedRoutesTree = getExpectedRoutesTree(routeWithChildren, [
                 {
@@ -160,8 +162,10 @@ items};
         });
 
         it('with items as array', () => {
-            const childRoute = {id: 'childRoute',
-exact: true} as IRouteItem;
+            const childRoute = {
+                id: 'childRoute',
+                exact: true,
+            } as IRouteItem;
             const routeWithChildren = {
                 ...routeWithoutChildren,
                 items: [childRoute],
@@ -186,10 +190,16 @@ exact: true} as IRouteItem;
 
     describe('findRecursive', () => {
         const defaultPathItems = [
-            {id: 'someRoute1',
-label: 'someRoute1'},
-            {id: 'someRoute2',
-label: 'someRoute2'},
+            {
+                id: 'someRoute1',
+                path: '/some-route1',
+                label: 'someRoute1',
+            },
+            {
+                id: 'someRoute2',
+                path: '/some-route2',
+                label: 'someRoute2',
+            },
         ];
 
         it('with predicate as parentRoute id', () => {
@@ -199,6 +209,7 @@ label: 'someRoute2'},
 
             const parentRoute = {
                 id: parentRouteId,
+                path: '/',
                 label: 'parentRoute',
             };
 
@@ -212,6 +223,7 @@ label: 'someRoute2'},
 
             const parentRoute: IRouteItem = {
                 id: parentRouteId,
+                path: '/',
                 label: 'parentRoute',
             };
 
@@ -223,13 +235,13 @@ label: 'someRoute2'},
 
             const parentRoute: IRouteItem = {
                 id: 'parentRoute',
+                path: '/',
                 label: 'parentRoute',
             };
 
             const emptyRoute = null;
             expect(findRecursive(parentRoute, emptyPredicate)).toEqual(emptyRoute);
         });
-
         it('with childrenRoutes array and pathItems', () => {
             const routeId = 'parentRoute';
             const deepChildRouteId = 'deepRoute';
@@ -238,18 +250,21 @@ label: 'someRoute2'},
 
             const deepChildRoute = {
                 id: deepChildRouteId,
+                path: '/child/child2',
                 label: 'deepChildRoute',
             };
 
             const childRoute = {
                 id: 'childRoute',
                 label: 'childRoute',
+                path: '/child',
                 items: [deepChildRoute],
             };
 
             const parentRoute = {
                 id: routeId,
                 label: 'parentRoute',
+                path: '/',
                 items: [childRoute],
             };
 

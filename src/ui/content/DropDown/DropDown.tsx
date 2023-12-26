@@ -118,14 +118,14 @@ function DropDown(props: IDropDownProps): JSX.Element {
         className: props.className,
         forwardedRef,
         content: props.content,
-        position: props.position,
+        position,
         style,
         arrowPosition,
         calculatePosition,
         isComponentVisible,
         onClose: onHide,
         hasArrow: props.hasArrow,
-    }), [arrowPosition, calculatePosition, isComponentVisible, onHide, props.className, props.content, props.hasArrow, props.position, style]);
+    }), [arrowPosition, calculatePosition, isComponentVisible, onHide, props.className, props.content, props.hasArrow, position, style]);
 
     return (
         <>

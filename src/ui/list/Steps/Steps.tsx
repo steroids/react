@@ -7,36 +7,36 @@ import {useComponents} from '../../../hooks';
  **/
 
 export interface IStepsProps extends IUiComponent {
-    stepItems: number | IStepItem[];
-    currentStep: number;
-    isChangeable?: boolean;
-    onChange?: (index: number) => void;
-    showDivider?: boolean;
-    stepTitleOrientation?: 'horizontal' | 'vertical';
-    stepItemView?: React.ReactNode;
+    stepItems: number | IStepItem[],
+    currentStep: number,
+    isChangeable?: boolean,
+    onChange?: (index: number) => void,
+    showDivider?: boolean,
+    stepTitleOrientation?: Orientation,
+    stepItemView?: React.ReactNode,
 }
 
 export interface IStepsViewProps {
-    className?: CssClassName;
-    children?: React.ReactNode;
+    className?: CssClassName,
+    children?: React.ReactNode,
 }
 
 export interface IStepItemViewProps extends Pick<IStepsProps, 'showDivider' | 'stepTitleOrientation' | 'onChange'>, IUiComponent {
-    stepItem: IStepItem;
-    index: number;
-    status: string;
-    disabled: boolean;
-    showDivider?: boolean;
+    stepItem: IStepItem,
+    index: number,
+    status: string,
+    disabled: boolean,
+    showDivider?: boolean,
 }
 
 export interface IStepItem {
     id: number,
-    title?: string;
-    subtitle?: string;
-    description?: string;
-    status?: string;
-    icon?: string | React.ReactNode;
-    isError?: boolean;
+    title?: string,
+    subtitle?: string,
+    description?: string,
+    status?: string,
+    icon?: string | React.ReactNode,
+    isError?: boolean,
 }
 
 export const ERROR_STATUS = 'error';

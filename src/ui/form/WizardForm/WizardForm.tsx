@@ -1,96 +1,112 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
 import _isEmpty from 'lodash-es/isEmpty';
 import _indexOf from 'lodash-es/indexOf';
-import {
-    IStepsProps,
-    ACTIVE_STATUS,
-    ERROR_STATUS,
-    FINISH_STATUS,
-} from '../../list/Steps/Steps';
+import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
+import {IStepsProps, IStepItem, ACTIVE_STATUS, ERROR_STATUS, FINISH_STATUS} from '../../list/Steps/Steps';
 import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../Button/Button';
-import Form, {IFormProps} from '../Form/Form';
-import {generateFieldStepMap, getModifiedSteps, normalizeStepItems} from './utils';
+import Form, {IFormProps, IFormViewProps} from '../Form/Form';
+import {generateFieldStepMap, getModifiedSteps, normalizeSteps} from './utils';
+
+export type WizardStepItem = {
+    fields?: IFieldProps[],
+    component?: React.ReactNode,
+    stepLabel?: string,
+} & Partial<IStepItem>
 
 export interface IWizardFormProps extends IUiComponent {
     /**
      * Идентификатор формы
      * @example WizardForm
      */
-    wizardFormId: string;
+    formId: string,
 
     /**
-     * Пропсы для Form
+     * Коллекция полей и аттрибутов для каждого шага формы.Можно передавать как компонент, так и объект с полями.
+     * Главное, чтобы внутри шага использовался один из способов.
+     * @example
+     * [
+     *  {
+     *   title: 'Step 1',
+     *   fields: [
+     *     {
+     *       attribute: 'category',
+     *       component: 'DropDownField'
+     *     },
+     *   ],
+     *  },
+     *  {
+     *   title: 'Step 2',
+     *   component: (
+     *      <InputField
+     *        attribute='address'
+     *      />
+     *   )
+     *  }
+     * ]
      */
-    formProps: {
-        fields: IFormProps['fields'][]
-    } & Omit<IFormProps, 'fields' | 'useRedux'>;
+    steps: WizardStepItem[],
 
     /**
-     * Пропсы для Steps
+     * Свойства для Form
      */
-    stepsProps?: Pick<IStepsProps, 'stepItems'>;
-
-    /**
-     * Надпись на кнопке отправки формы
-     * @example Submit
-     */
-    submitLabel?: string;
-
-    /**
-     * Надпись на кнопке перехода на следующий шаг формы
-     * @example Next
-     */
-    nextStepLabel?: string;
-
-    /**
-     * Поля для шагов формы. Для разделения на шаги, нужно обернуть каждый шаг в `WizardFormItemView`
-     */
-    children: React.ReactNode;
+    formProps: Omit<IFormProps, 'formId' | 'fields' | 'useRedux' | 'viewProps' | 'view'>,
 
     /**
      * Обработчик, который вызывается после перехода на следующий шаг формы
      * @param {number} value
      * @return {void}
      */
-    onNextStep?: (nextStep: number) => any;
+    onNextStep?: (nextStep: number) => void,
 
     /**
      * Обработчик, который вызывается после возврата на предыдущий шаг формы
      * @param {number} value
      * @return {void}
      */
-    onPrevStep?: (prevStep: number) => any;
+    onPrevStep?: (prevStep: number) => void,
 
     /**
      * Свойства для кнопки возврата
      */
-    prevStepButtonProps?: IButtonProps;
+    prevStepButtonProps?: IButtonProps,
+
+    /**
+     * Свойства для кнопки продолжить/отправить
+     */
+    nextStepButtonProps?: {
+        submitLabel: string,
+        nextStepLabel: string,
+    } & Omit<IButtonProps, 'label'>,
 
     /**
      * Переопределение view компонента формы для кастомизации отображения
      * @example MyCustomView
      */
-    formView?: CustomView;
+    formView?: CustomView,
 
     /**
      * Свойства для представления формы
      * @example {className: 'foo'}
      */
-    formViewProps?: any;
+    formViewProps?: IFormViewProps,
 
     /**
-     * Заголовки для шагов формы
+     * Свойства для Steps
      */
-    stepsTitles?: string[];
+    stepsProps?: Pick<IStepsProps, 'stepItems'>,
+
+    /**
+     * Ориентация списка шагов формы
+     */
+    stepTitleOrientation?: Orientation,
 
     /**
      * Показывать ли шаги
      * @example true
      */
-    showSteps?: boolean;
+    showSteps?: boolean,
 
     /**
      * Кастомная вьюшка для элемента
@@ -100,21 +116,17 @@ export interface IWizardFormProps extends IUiComponent {
 
 export interface IWizardFormViewProps extends Pick<IWizardFormProps,
     'prevStepButtonProps'
+    | 'nextStepButtonProps'
     | 'stepsProps'
     | 'showSteps'
-    | 'submitLabel'
-    | 'nextStepLabel'
 > {
-    currentStep: number;
-    stepTitle: string;
-    renderStep: (header: React.ReactNode, buttons: React.ReactNode, viewProps?: IUiComponent) => JSX.Element;
-    isLastStep?: boolean;
-    onPrevStep?: () => void;
-    totalSteps?: number;
-}
-
-export interface IWizardFormItemViewProps {
-    children: React.ReactNode,
+    currentStep: number,
+    stepTitle: string,
+    stepItems: IStepItem[],
+    renderStep: (header: React.ReactNode, buttons: React.ReactNode, viewProps?: IUiComponent) => JSX.Element,
+    isLastStep?: boolean,
+    onPrevStep?: () => void,
+    totalSteps?: number,
 }
 
 const INITIAL_STEP = 0;
@@ -123,26 +135,14 @@ export default function WizardForm(props: IWizardFormProps) {
     const components = useComponents();
 
     const [currentStep, setCurrentStep] = useState(INITIAL_STEP);
-
     const [errorSteps, setErrorSteps] = useState([]);
+    const [steps, setSteps] = useState(normalizeSteps(props.steps));
 
-    const totalSteps = useMemo(() => React.Children.count(props.children) || props.formProps?.fields?.length || 0,
-        [props.children, props.formProps?.fields?.length]);
-
-    const [steps, setSteps] = useState(normalizeStepItems(props.stepsProps?.stepItems || totalSteps));
-
+    const totalSteps = useMemo(() => props.steps.length || 0, [props.steps.length]);
     const isLastStep = useMemo(() => currentStep === totalSteps - 1, [currentStep, totalSteps]);
+    const activeStep = useMemo(() => props.steps[currentStep], [currentStep, props.steps]);
 
-    const activeStepFields = useMemo(
-        () => React.Children.toArray(props.children)[currentStep],
-        [currentStep, props.children],
-    );
-
-    const fieldStepMap = useMemo(() => generateFieldStepMap(
-        props.children
-            ? React.Children.toArray(props.children)
-            : (props.formProps?.fields || []),
-    ), [props.children, props.formProps?.fields]);
+    const fieldStepMap = useMemo(() => generateFieldStepMap(props.steps || []), [props.steps]);
 
     useEffect(() => {
         if (!_isEmpty(errorSteps)) {
@@ -195,7 +195,7 @@ export default function WizardForm(props: IWizardFormProps) {
     }, [isLastStep, onNextStep, props.formProps]);
 
     const onAfterSubmit = useCallback((cleanedValues, data, response) => {
-        if (props.formProps.onAfterSubmit && props.formProps.onAfterSubmit(cleanedValues, data, response) === false) {
+        if (props.formProps.onAfterSubmit && !!props.formProps.onAfterSubmit(cleanedValues, data, response)) {
             return false;
         }
 
@@ -229,41 +229,51 @@ export default function WizardForm(props: IWizardFormProps) {
         return true;
     }, [fieldStepMap, props.formProps]);
 
-    const renderStep = useCallback((header: any, buttons: any, viewProps: IUiComponent) => (
+    const commonFormProps = useMemo(() => ({
+        formId: props.formId,
+        onSubmit: (!isLastStep || props.formProps.onSubmit) && onSubmit,
+        onAfterSubmit,
+        fields: activeStep?.fields ?? null,
+        view: props.formView,
+        viewProps: props.formViewProps,
+        useRedux: true,
+    }), [activeStep?.fields, isLastStep, onAfterSubmit, onSubmit, props.formProps.onSubmit, props.formView, props.formViewProps, props.formId]);
+
+    const renderStep = useCallback((header: React.ReactNode, buttons: React.ReactNode, viewProps: IUiComponent) => (
         <Form
             {...props.formProps}
             {...viewProps}
-            formId={props.wizardFormId}
-            onSubmit={(!isLastStep || props.formProps.onSubmit) && onSubmit}
-            onAfterSubmit={onAfterSubmit}
-            fields={_get(props, ['formProps', 'fields', currentStep], null)}
-            view={props.formView}
-            viewProps={props.formViewProps}
+            {...commonFormProps}
             buttons={buttons}
-            useRedux
         >
             {header}
-            {activeStepFields}
+            {activeStep?.component && props.steps[currentStep].component}
         </Form>
     ),
-    [activeStepFields, currentStep, isLastStep, onAfterSubmit, onSubmit, props]);
+    [activeStep?.component, commonFormProps, currentStep, props.formProps, props.steps]);
 
-    return components.ui.renderView(props.view || 'form.WizardFormView', {
+    const viewProps = useMemo(() => ({
         renderStep,
         currentStep,
         isLastStep,
         totalSteps,
         onPrevStep,
-        submitLabel: props.submitLabel,
-        nextStepLabel: props.nextStepLabel,
         prevStepButtonProps: props.prevStepButtonProps,
+        nextStepButtonProps: {
+            ...props.nextStepButtonProps,
+            label: isLastStep ? props.nextStepButtonProps.submitLabel : props.nextStepButtonProps.nextStepLabel,
+        },
         showSteps: props.showSteps,
         stepsProps: {
             ...props.stepsProps,
-            stepItems: steps,
+            stepTitleOrientation: props.stepTitleOrientation,
         },
-        stepTitle: _get(props, ['stepsTitles', currentStep], null),
-    });
+        stepItems: steps,
+        stepTitle: activeStep.title,
+    }), [props.nextStepButtonProps, props.prevStepButtonProps, props.showSteps, props.stepTitleOrientation, props.stepsProps,
+        activeStep.title, currentStep, isLastStep, onPrevStep, renderStep, steps, totalSteps]);
+
+    return components.ui.renderView(props.view || 'form.WizardFormView', viewProps);
 }
 
 WizardForm.defaultProps = {
@@ -273,7 +283,9 @@ WizardForm.defaultProps = {
         outline: true,
         label: __('Назад'),
     },
-    submitLabel: __('Отправить'),
-    nextStepLabel: __('Далее'),
+    nextStepButtonProps: {
+        submitLabel: __('Отправить'),
+        nextStepLabel: __('Далее'),
+    },
     showSteps: true,
 };

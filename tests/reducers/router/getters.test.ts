@@ -125,6 +125,7 @@ describe('router reducers', () => {
             const routeId = 'dashboard';
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
                 exact: true,
             };
 
@@ -139,7 +140,7 @@ describe('router reducers', () => {
         it('without routeId', () => {
             const routeId = 'dashboard';
             const route: IRouteItem = {
-                id: routeId,
+                path: '/',
                 exact: true,
             };
 
@@ -175,6 +176,7 @@ describe('router reducers', () => {
 
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
                 [propName]: propValue,
             };
 
@@ -189,6 +191,7 @@ describe('router reducers', () => {
 
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
             };
 
             const routesMap = getRoutesMapMock(routeId, route);
@@ -270,6 +273,7 @@ describe('router reducers', () => {
         const childRoute: IRouteItem = {
             id: routeId,
             label: 'childRoute',
+            path: '/child',
             isVisible: true,
             isNavVisible: true,
             items: [],
@@ -278,6 +282,7 @@ describe('router reducers', () => {
         const parentRoute: IRouteItem = {
             id: 'parentRoute',
             label: 'parentRoute',
+            path: '/',
             isVisible: true,
             isNavVisible: true,
             items: [childRoute],

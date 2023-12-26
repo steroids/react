@@ -4,7 +4,7 @@ import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
 import {closeModal, openModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';
@@ -51,13 +51,20 @@ export interface IRouteItem {
      * Путь до роута
      * @example '/catalog'
      */
-    path?: string,
+    path: string,
 
     /**
      * Если true, то путь должен точно соответствовать location.pathname
      * @example '/catalog'
      */
     exact?: boolean,
+
+    /**
+     * Если true, то location.pathname будет совпадать с теми путями, которые содержат слеш в конце.
+     * Например, если указать путь '/catalog/', тогда совпадение будет с '/catalog/' и '/catalog/chapter', но не '/catalog'.
+     * @example '/catalog'
+     */
+    strict?: boolean,
 
     /**
      * В свойстве можно передать как путь, на который осуществится редирект, так и булево значение.
@@ -120,7 +127,7 @@ export interface IRouteItem {
     /**
      * Вложенные роуты
      */
-    items?: IRouteItem[] | {[key: string]: IRouteItem, },
+    items?: IRouteItem[] | {[key: string]: IRouteItem,},
 
     /**
      * Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента
@@ -134,7 +141,11 @@ export interface IRouteItem {
      */
     preloadData?: (match: Record<string, any>) => (IFetchConfig | IListProps)[],
 
-    [key: string]: any,
+    /**
+     * Пользовательская иконка svg или название иконки
+     * @example 'circle'
+     */
+    icon?: React.ReactElement | string,
 }
 
 export interface IRouterProps {
@@ -153,7 +164,7 @@ export interface IRouterProps {
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes?: IRouteItem[] | {[key: string]: IRouteItem, },
+    routes: IRouteItem[] | {[key: string]: IRouteItem,},
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент

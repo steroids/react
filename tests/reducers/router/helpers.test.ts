@@ -192,10 +192,12 @@ describe('router reducers', () => {
         const defaultPathItems = [
             {
                 id: 'someRoute1',
+                path: '/some-route1',
                 label: 'someRoute1',
             },
             {
                 id: 'someRoute2',
+                path: '/some-route2',
                 label: 'someRoute2',
             },
         ];
@@ -207,6 +209,7 @@ describe('router reducers', () => {
 
             const parentRoute = {
                 id: parentRouteId,
+                path: '/',
                 label: 'parentRoute',
             };
 
@@ -220,6 +223,7 @@ describe('router reducers', () => {
 
             const parentRoute: IRouteItem = {
                 id: parentRouteId,
+                path: '/',
                 label: 'parentRoute',
             };
 
@@ -231,13 +235,13 @@ describe('router reducers', () => {
 
             const parentRoute: IRouteItem = {
                 id: 'parentRoute',
+                path: '/',
                 label: 'parentRoute',
             };
 
             const emptyRoute = null;
             expect(findRecursive(parentRoute, emptyPredicate)).toEqual(emptyRoute);
         });
-
         it('with childrenRoutes array and pathItems', () => {
             const routeId = 'parentRoute';
             const deepChildRouteId = 'deepRoute';
@@ -246,18 +250,21 @@ describe('router reducers', () => {
 
             const deepChildRoute = {
                 id: deepChildRouteId,
+                path: '/child/child2',
                 label: 'deepChildRoute',
             };
 
             const childRoute = {
                 id: 'childRoute',
                 label: 'childRoute',
+                path: '/child',
                 items: [deepChildRoute],
             };
 
             const parentRoute = {
                 id: routeId,
                 label: 'parentRoute',
+                path: '/',
                 items: [childRoute],
             };
 

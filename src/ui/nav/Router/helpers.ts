@@ -55,11 +55,9 @@ export const walkRoutesRecursive = (
         ...item,
         id: item.id,
         exact: item.exact,
-        path: item.path && (
-            alwaysAppendParentRoutePath
-                ? joinChildAndParentPaths(item.path, parentItem.path)
-                : appendChildIfNoSlash(item.path, parentItem.path)
-        ),
+        path: alwaysAppendParentRoutePath
+            ? joinChildAndParentPaths(item.path, parentItem.path)
+            : appendChildIfNoSlash(item.path, parentItem.path),
         label: item.label,
         title: item.title,
         isVisible: typeof item.isVisible !== 'undefined'
@@ -105,11 +103,9 @@ export const treeToList = (
         return item;
     }
 
-    if (item.path) {
-        item.path = alwaysAppendParentRoutePath
-            ? joinChildAndParentPaths(item.path, parentItem?.path)
-            : appendChildIfNoSlash(item.path, parentItem?.path);
-    }
+    item.path = alwaysAppendParentRoutePath
+        ? joinChildAndParentPaths(item.path, parentItem?.path)
+        : appendChildIfNoSlash(item.path, parentItem?.path);
 
     if (isRoot && !item.id) {
         item.id = 'root';

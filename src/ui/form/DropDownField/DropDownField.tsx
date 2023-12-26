@@ -387,8 +387,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         return renderItemView(item, 'default', null);
     };
 
-    return components.ui.renderView(props.view || 'form.DropDownFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         isAutoComplete,
         items,
         hoveredId,
@@ -406,8 +405,25 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         renderItem,
         onItemRemove,
         hasGroup,
+        multiple: props.multiple,
+        isSearchAutoFocus: props.isSearchAutoFocus,
         itemToSelectAll: normalizedItemToSelectAll,
-    });
+        className: props.className,
+        style: props.style,
+        size: props.size,
+        color: props.color,
+        outline: props.outline,
+        placeholder: props.placeholder,
+        showReset: props.showReset,
+        showEllipses: props.showEllipses,
+        errors: props.errors,
+        disabled: props.disabled,
+    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen,
+        selectedItems, onReset, onClose, renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus,
+        props.className, props.style, props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses,
+        props.errors, props.disabled, normalizedItemToSelectAll]);
+
+    return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }
 
 DropDownField.defaultProps = {

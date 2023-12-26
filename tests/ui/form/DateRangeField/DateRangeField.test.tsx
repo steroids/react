@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import DateRangeField, {IDateRangeFieldProps} from '../../../../src/ui/form/DateRangeField/DateRangeField';
 import DateRangedMockView from './DateRangeFieldMockView';
-import DateField from '../../../../src/ui/form/DateField/DateField';
 
 describe('DateRangeField tests', () => {
     const expectedDateRangeFieldClassName = 'DateRangeFieldView';

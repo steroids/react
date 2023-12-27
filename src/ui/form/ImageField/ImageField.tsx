@@ -218,11 +218,16 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         return result;
     }, [files, onRemove, props.disabled, props.imagesProcessor, props.size]);
 
+    const viewProps = useMemo(() => ({
+        item,
+        onClick: onBrowse,
+        buttonProps: props.buttonProps,
+        label: props.label,
+    }), [item, onBrowse, props.buttonProps, props.label]);
+
     return (
         <ImageFieldView
-            {...props}
-            item={item}
-            onClick={onBrowse}
+            {...viewProps}
         />
     );
 }

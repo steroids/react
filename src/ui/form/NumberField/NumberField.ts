@@ -106,13 +106,19 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         ...props.inputProps,
     }), [props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, props.inputProps, onInputChange, onKeyDown]);
 
-    return components.ui.renderView(props.view || 'form.NumberFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         inputProps,
         onStepUp,
         onStepDown,
         inputRef: currentInputRef,
-    });
+        size: props.size,
+        errors: props.errors,
+        className: props.className,
+        disabled: props.disabled,
+        id: props.id,
+    }), [currentInputRef, inputProps, onStepDown, onStepUp, props.className, props.disabled, props.errors, props.id, props.size]);
+
+    return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);
 }
 
 NumberField.defaultProps = {

@@ -94,13 +94,19 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         ...props.inputProps,
     }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, type]);
 
-    return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         inputProps,
         securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
         onClear,
         onShowButtonClick,
-    });
+        size: props.size,
+        input: props.input,
+        className: props.className,
+        showSecurityIcon: props.showSecurityIcon,
+        showSecurityBar: props.showSecurityBar,
+    }), [inputProps, onClear, onShowButtonClick, props.className, props.input, props.showSecurityBar, props.showSecurityIcon, props.size]);
+
+    return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', viewProps);
 }
 
 PasswordField.defaultProps = {

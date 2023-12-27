@@ -520,6 +520,17 @@ function Form(props: IFormProps): JSX.Element {
         dispatch,
     }), [dispatch, props.formId, props.model, props.prefix, props.size, provider, reducer]);
 
+    const viewProps = useMemo(() => ({
+        isSubmitting,
+        onSubmit,
+        submitLabel: props.submitLabel,
+        fields: props.fields,
+        children: props.children,
+        className: props.className,
+        style: props.style,
+        autoFocus: props.autoFocus,
+    }), [isSubmitting, onSubmit, props.autoFocus, props.children, props.className, props.fields, props.style, props.submitLabel]);
+
     // Wait initialization (only for redux)
     if (values === undefined) {
         return null;
@@ -529,17 +540,7 @@ function Form(props: IFormProps): JSX.Element {
     return (
         <FormContext.Provider value={formContextValue}>
             {props.view !== false
-                ? components.ui.renderView(props.view || 'form.FormView', {
-                    ...props.viewProps,
-                    isSubmitting,
-                    onSubmit,
-                    submitLabel: props.submitLabel,
-                    fields: props.fields,
-                    children: props.children,
-                    className: props.className,
-                    style: props.style,
-                    autoFocus: props.autoFocus,
-                })
+                ? components.ui.renderView(props.view || 'form.FormView', viewProps)
                 : props.children}
         </FormContext.Provider>
     );

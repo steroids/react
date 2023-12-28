@@ -245,23 +245,31 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         items,
     };
 
+    const viewProps = useMemo(() => ({
+        forwardedRef: nodeRef,
+        ...commonProps,
+        onAdd,
+        hasAlternatingColors: props.hasAlternatingColors,
+        style: props.style,
+        children: props.children,
+    }), [commonProps, onAdd, props.children, props.hasAlternatingColors, props.style]);
+
+    const itemViewProps = useMemo(() => ({
+        ...commonProps,
+        onRemove,
+    }), [commonProps, onRemove]);
+
     const FieldListView = props.view || components.ui.getView('form.FieldListView');
     const FieldListItemView = props.itemView || components.ui.getView('form.FieldListItemView');
     return (
         <FormContext.Provider value={contextValue}>
             <FieldListView
-                {...props.viewProps}
-                {...commonProps}
-                forwardedRef={nodeRef}
-                onAdd={onAdd}
-                hasAlternatingColors={props.hasAlternatingColors}
+                {...viewProps}
             >
                 {!_isEmpty(storeToRowIndexMap) && _range(props.input.value || 0).map((index) => (
                     <FieldListItemView
-                        {...props.itemViewProps}
-                        {...commonProps}
+                        {...itemViewProps}
                         key={isWithReduxForm ? storeToRowIndexMap[index] : index}
-                        onRemove={onRemove}
                         prefix={props.input.name + '.' + index}
                         rowIndex={index}
                     />

@@ -175,19 +175,36 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props.inputProps,
     }), [onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
 
+    const viewProps = useMemo(() => ({
+        inputRef: INPUT_TYPES_SUPPORTED_SELECTION.includes(props.type) ? inputRef : null,
+        onClear,
+        inputProps,
+        size: props.size,
+        errors: props.errors,
+        leadIcon: props.leadIcon,
+        showClear: props.showClear,
+        input: props.input,
+        addonAfter: props.addonAfter,
+        addonBefore: props.addonBefore,
+        textAfter: props.textAfter,
+        textBefore: props.textBefore,
+        className: props.className,
+        style: props.style,
+        onBlur: props.onBlur,
+        onFocus: props.onFocus,
+        onMouseDown: props.onMouseDown,
+        placeholder: props.placeholder,
+        required: props.required,
+        id: props.id,
+        ...props,
+    }), [inputProps, inputRef, onClear, props]);
+
     // No render for hidden input
     if (props.type === 'hidden') {
         return null;
     }
 
-    return components.ui.renderView(props.view || 'form.InputFieldView', {
-        ...props,
-        ...props.viewProps,
-        inputProps,
-        // If type was recognized as unsupported in InputField, then we do not pass ref.
-        inputRef: INPUT_TYPES_SUPPORTED_SELECTION.includes(props.type) ? inputRef : null,
-        onClear,
-    });
+    return components.ui.renderView(props.view || 'form.InputFieldView', viewProps);
 }
 
 InputField.defaultProps = {

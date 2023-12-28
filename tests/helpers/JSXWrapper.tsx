@@ -1,10 +1,12 @@
 import React from 'react';
 import Portal from '../../src/ui/layout/Portal';
+import ModalPortal from '../../src/ui/modal/ModalPortal';
 
 export function JSXWrapper<PropsType>(
     Component: any,
     props: PropsType,
     renderPortal = false,
+    renderModalPortal = false,
 ) {
     return (
         <>
@@ -14,6 +16,7 @@ export function JSXWrapper<PropsType>(
                 />
             </div>
             {renderPortal && <Portal />}
+            {renderModalPortal && <ModalPortal />}
         </>
     );
 }

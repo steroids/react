@@ -125,6 +125,9 @@ export default {
     'form.CheckboxListFieldView': {
         lazy: () => require('./form/CheckboxListField/CheckboxListFieldMockView').default,
     },
+    'modal.ModalView': {
+        lazy: () => require('./modal/Modal/ModalMockView').default,
+    },
     'nav.NavButtonView': {
         lazy: () => require('./nav/Nav/NavButtonMockView').default,
     },

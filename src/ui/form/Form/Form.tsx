@@ -193,7 +193,7 @@ export interface IFormProps extends IUiComponent {
      */
     buttons?: React.ReactNode,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IFormViewProps {

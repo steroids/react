@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, {ChangeEvent, useMemo, useCallback, useRef} from 'react';
+import React, {ChangeEvent, useMemo, useCallback} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -110,13 +110,14 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         inputProps,
         onStepUp,
         onStepDown,
+        input: props.input,
         inputRef: currentInputRef,
         size: props.size,
         errors: props.errors,
         className: props.className,
         disabled: props.disabled,
         id: props.id,
-    }), [currentInputRef, inputProps, onStepDown, onStepUp, props.className, props.disabled, props.errors, props.id, props.size]);
+    }), [currentInputRef, inputProps, onStepDown, onStepUp, props]);
 
     return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);
 }

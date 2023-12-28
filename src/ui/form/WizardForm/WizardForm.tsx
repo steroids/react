@@ -6,14 +6,24 @@ import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
 import {IStepsProps, IStepItem, ACTIVE_STATUS, ERROR_STATUS, FINISH_STATUS} from '../../list/Steps/Steps';
 import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../Button/Button';
-import Form, {IFormProps, IFormViewProps} from '../Form/Form';
+import Form, {IFormProps} from '../Form/Form';
 import {generateFieldStepMap, getModifiedSteps, normalizeSteps} from './utils';
 
-export type WizardStepItem = {
+export interface IWizardStepItem extends Partial<IStepItem> {
     fields?: IFieldProps[],
     component?: React.ReactNode,
     stepLabel?: string,
-} & Partial<IStepItem>
+}
+
+/**
+ * WizardForm
+ *
+ * Компонент для создания пошаговой формы. Предоставляет управление и синхронизацию состояния формы,
+ * а также список шагов формы для удобной навигации.
+ * Поля для шагов можно передавать как в виде компонентов, так и в виде объекта с названием поля.
+ * Позволяет выполнять отправку данных формы на сервер с возможностью валидации и перехода к неверно заполненным полям.
+ *
+ */
 
 export interface IWizardFormProps extends IUiComponent {
     /**
@@ -23,7 +33,7 @@ export interface IWizardFormProps extends IUiComponent {
     formId: string,
 
     /**
-     * Коллекция полей и аттрибутов для каждого шага формы.Можно передавать как компонент, так и объект с полями.
+     * Коллекция полей и аттрибутов для каждого шага формы. Можно передавать как компонент, так и объект с полями.
      * Главное, чтобы внутри шага использовался один из способов.
      * @example
      * [
@@ -46,12 +56,14 @@ export interface IWizardFormProps extends IUiComponent {
      *  }
      * ]
      */
-    steps: WizardStepItem[],
+    steps: IWizardStepItem[],
 
     /**
      * Свойства для Form
      */
-    formProps: Omit<IFormProps, 'formId' | 'fields' | 'useRedux' | 'viewProps' | 'view'>,
+    formProps: Omit<IFormProps, 'formId' | 'fields' | 'useRedux'> & {
+        submitButtonLabel: string,
+    },
 
     /**
      * Обработчик, который вызывается после перехода на следующий шаг формы
@@ -75,22 +87,7 @@ export interface IWizardFormProps extends IUiComponent {
     /**
      * Свойства для кнопки продолжить/отправить
      */
-    nextStepButtonProps?: {
-        submitLabel: string,
-        nextStepLabel: string,
-    } & Omit<IButtonProps, 'label'>,
-
-    /**
-     * Переопределение view компонента формы для кастомизации отображения
-     * @example MyCustomView
-     */
-    formView?: CustomView,
-
-    /**
-     * Свойства для представления формы
-     * @example {className: 'foo'}
-     */
-    formViewProps?: IFormViewProps,
+    nextStepButtonProps?: IButtonProps,
 
     /**
      * Свойства для Steps
@@ -99,6 +96,7 @@ export interface IWizardFormProps extends IUiComponent {
 
     /**
      * Ориентация списка шагов формы
+     * @example 'horizontal'
      */
     stepTitleOrientation?: Orientation,
 
@@ -107,11 +105,6 @@ export interface IWizardFormProps extends IUiComponent {
      * @example true
      */
     showSteps?: boolean,
-
-    /**
-     * Кастомная вьюшка для элемента
-     */
-    itemView?: CustomView,
 }
 
 export interface IWizardFormViewProps extends Pick<IWizardFormProps,
@@ -234,10 +227,8 @@ export default function WizardForm(props: IWizardFormProps) {
         onSubmit: (!isLastStep || props.formProps.onSubmit) && onSubmit,
         onAfterSubmit,
         fields: activeStep?.fields ?? null,
-        view: props.formView,
-        viewProps: props.formViewProps,
         useRedux: true,
-    }), [activeStep?.fields, isLastStep, onAfterSubmit, onSubmit, props.formProps.onSubmit, props.formView, props.formViewProps, props.formId]);
+    }), [activeStep?.fields, isLastStep, onAfterSubmit, onSubmit, props.formProps.onSubmit, props.formId]);
 
     const renderStep = useCallback((header: React.ReactNode, buttons: React.ReactNode, viewProps: IUiComponent) => (
         <Form
@@ -261,7 +252,7 @@ export default function WizardForm(props: IWizardFormProps) {
         prevStepButtonProps: props.prevStepButtonProps,
         nextStepButtonProps: {
             ...props.nextStepButtonProps,
-            label: isLastStep ? props.nextStepButtonProps.submitLabel : props.nextStepButtonProps.nextStepLabel,
+            label: isLastStep ? props.formProps.submitButtonLabel : props.nextStepButtonProps.label,
         },
         showSteps: props.showSteps,
         stepsProps: {
@@ -270,13 +261,16 @@ export default function WizardForm(props: IWizardFormProps) {
         },
         stepItems: steps,
         stepTitle: activeStep.title,
-    }), [props.nextStepButtonProps, props.prevStepButtonProps, props.showSteps, props.stepTitleOrientation, props.stepsProps,
-        activeStep.title, currentStep, isLastStep, onPrevStep, renderStep, steps, totalSteps]);
+    }), [renderStep, currentStep, isLastStep, totalSteps, onPrevStep, props.prevStepButtonProps, props.nextStepButtonProps,
+        props.formProps.submitButtonLabel, props.showSteps, props.stepsProps, props.stepTitleOrientation, steps, activeStep.title]);
 
     return components.ui.renderView(props.view || 'form.WizardFormView', viewProps);
 }
 
 WizardForm.defaultProps = {
+    formProps: {
+        label: __('Отправить'),
+    },
     prevStepButtonProps: {
         color: 'primary',
         icon: 'left_12x12',
@@ -284,8 +278,7 @@ WizardForm.defaultProps = {
         label: __('Назад'),
     },
     nextStepButtonProps: {
-        submitLabel: __('Отправить'),
-        nextStepLabel: __('Далее'),
+        label: __('Далее'),
     },
     showSteps: true,
 };

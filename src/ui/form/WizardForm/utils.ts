@@ -1,19 +1,13 @@
 import React from 'react';
 import _has from 'lodash-es/has';
 import _get from 'lodash-es/get';
-import _reduce from 'lodash-es/reduce';
 import _assign from 'lodash-es/assign';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
 import _indexOf from 'lodash-es/indexOf';
-import {WizardStepItem} from '@steroidsjs/core/ui/form/WizardForm/WizardForm';
+import {IWizardStepItem} from '@steroidsjs/core/ui/form/WizardForm/WizardForm';
 import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
 import {ACTIVE_STATUS, ERROR_STATUS, FINISH_STATUS, WAIT_STATUS} from '../../list/Steps/Steps';
-
-const getNestedProperty = (
-    obj: IFieldProps[] | IFieldProps | React.ReactElement[] | React.ReactElement,
-    propsArray: string[],
-) => _reduce(propsArray, (result, prop) => result && result[prop], obj);
 
 const getComponentAttributes = (component: React.ReactElement[] | React.ReactElement, index: number) => {
     const componentAttributesStepMap: Record<string, number> = {};
@@ -23,12 +17,12 @@ const getComponentAttributes = (component: React.ReactElement[] | React.ReactEle
             _assign(componentAttributesStepMap, getComponentAttributes(field, index));
         });
     } else {
-        const attribute = getNestedProperty(component, ['props', 'attribute']) || getNestedProperty(component, ['attribute']);
+        const attribute = _get(component, ['props', 'attribute']) || _get(component, ['attribute']) || null;
 
         if (attribute) {
             componentAttributesStepMap[attribute] = index;
         } else {
-            const children = getNestedProperty(component, ['props', 'children']);
+            const children = _get(component, ['props', 'children']) || null;
 
             if (_isArray(children)) {
                 children.forEach((field) => _assign(componentAttributesStepMap, getComponentAttributes(field, index)));
@@ -47,7 +41,7 @@ const getFieldsAttributes = (fields: IFieldProps[] | IFieldProps, index: number)
     if (_isArray(fields)) {
         fields.forEach((field) => _assign(fieldAttributesStepMap, getFieldsAttributes(field, index)));
     } else {
-        const attribute = getNestedProperty(fields, ['attribute']);
+        const attribute = _get(fields, ['attribute']) || null;
 
         if (attribute) {
             fieldAttributesStepMap[attribute] = index;
@@ -59,7 +53,7 @@ const getFieldsAttributes = (fields: IFieldProps[] | IFieldProps, index: number)
         }
 
         if (_has(fields, ['items'])) {
-            const children = getNestedProperty(fields, ['items']);
+            const children = _get(fields, ['items']) || null;
 
             if (children) {
                 _assign(fieldAttributesStepMap, getFieldsAttributes(children, index));
@@ -88,7 +82,7 @@ export const generateFieldStepMap = (arr = []) => arr.reduce((fieldStepMap, step
     return fieldStepMap;
 }, {});
 
-export const normalizeSteps = (steps: WizardStepItem[]) => steps.map((step, index) => ({
+export const normalizeSteps = (steps: IWizardStepItem[]) => steps.map((step, index) => ({
     id: index,
     title: step.stepLabel || null,
     description: step.description || null,

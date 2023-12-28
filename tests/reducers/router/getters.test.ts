@@ -125,6 +125,7 @@ describe('router reducers', () => {
             const routeId = 'dashboard';
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
                 exact: true,
             };
 
@@ -139,7 +140,7 @@ describe('router reducers', () => {
         it('without routeId', () => {
             const routeId = 'dashboard';
             const route: IRouteItem = {
-                id: routeId,
+                path: '/',
                 exact: true,
             };
 
@@ -148,7 +149,10 @@ describe('router reducers', () => {
             };
 
             const activeIds = [routeId];
-            const state = getStateWithRouterData({routesMap, activeIds});
+            const state = getStateWithRouterData({
+                routesMap,
+                activeIds,
+            });
             expect(getRoute(state)).toEqual(route);
         });
 
@@ -172,6 +176,7 @@ describe('router reducers', () => {
 
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
                 [propName]: propValue,
             };
 
@@ -186,6 +191,7 @@ describe('router reducers', () => {
 
             const route: IRouteItem = {
                 id: routeId,
+                path: '/',
             };
 
             const routesMap = getRoutesMapMock(routeId, route);
@@ -267,6 +273,7 @@ describe('router reducers', () => {
         const childRoute: IRouteItem = {
             id: routeId,
             label: 'childRoute',
+            path: '/child',
             isVisible: true,
             isNavVisible: true,
             items: [],
@@ -275,6 +282,7 @@ describe('router reducers', () => {
         const parentRoute: IRouteItem = {
             id: 'parentRoute',
             label: 'parentRoute',
+            path: '/',
             isVisible: true,
             isNavVisible: true,
             items: [childRoute],
@@ -288,7 +296,10 @@ describe('router reducers', () => {
     describe('getRouteChildren', () => {
         it('with items', () => {
             const routeParentId = 'routeParent';
-            const routeChildren = [{id: 'routeChild', exact: true}];
+            const routeChildren = [{
+                id: 'routeChild',
+                exact: true,
+            }];
 
             const routesMap = {
                 [routeParentId]: {

@@ -13,15 +13,15 @@ export interface IFileSizeProps extends IUiComponent {
      * то будет показан `0`, иначе пустая строка
      * @example true
      */
-    showZero?: boolean;
+    showZero?: boolean,
 
     /**
      * Размер файла
      * @example 6920
      */
-    value?: any;
+    value?: any,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export const asHumanFileSize = (bytes, showZero) => {

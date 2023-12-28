@@ -28,7 +28,7 @@ export interface IPaginationSizeProps extends IUiComponent {
      * Список с количествами элементов на странице
      * @example [2, 3, 4]
      */
-    sizes?: number[];
+    sizes?: number[],
 
     /**
      * Расположение элемента в списке
@@ -39,7 +39,7 @@ export interface IPaginationSizeProps extends IUiComponent {
     /**
      * Значение по-умолчанию
      */
-    defaultValue?: number;
+    defaultValue?: number,
 
     /**
      * Обработчик, который вызывается после смены страницы

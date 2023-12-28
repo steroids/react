@@ -16,7 +16,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
-     * Будет ли отображён item ?
+     * Будет ли отображён item?
      * @example true
      */
     visible?: boolean,
@@ -39,7 +39,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     headerClassName?: CssClassName,
 
     /**
-     * Заголовок для колонки таблицы.
+     * Заголовок для колонки таблицы
      */
     title?: string,
 
@@ -50,6 +50,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
  * FieldList
  *
  * Создает список из сгруппированных полей формы.
+ * Для загрузки файлов с помощью `FileField` внутри строк `FieldList`, нужно использовать форму с флагом `useRedux`.
  */
 export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
@@ -60,72 +61,72 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
      *  amount: 5
      * }
      */
-    initialValues?: { [key: string]: any }
+    initialValues?: { [key: string]: any, },
 
     /**
      * Список с полями формы
      */
-    items?: IFieldListItem[];
+    items?: IFieldListItem[],
 
     /**
      * Изначальное количество групп с полями
      * @example 2
      */
-    initialRowsCount?: number;
+    initialRowsCount?: number,
 
     /**
      * Отображение кнопки для добавления ещё одной группы с полями
      * @example true
      */
-    showAdd?: boolean;
+    showAdd?: boolean,
 
     /**
      * Возможность удаления группы с полями (добавляет крестик справа от группы)
      * @example true
      */
-    showRemove?: boolean;
+    showRemove?: boolean,
 
     /**
      * Дополнительный CSS-класс для таблицы
      */
-    tableClassName?: CssClassName;
+    tableClassName?: CssClassName,
 
     /**
      * Пропсы для компонента отображения списка с группами полей - FieldListView
      */
-    viewProps?: any;
+    viewProps?: any,
 
     /**
      * Переопределение view React компонента для кастомизации отображения группы полей
      * @example MyCustomView
      */
-    itemView?: any;
+    itemView?: any,
 
     /**
      * Пропсы для компонента отображения группы полей - FieldListItemView
      */
-    itemViewProps?: any;
+    itemViewProps?: any,
 
     /**
      * При фокусировке на одном из элементов формы и нажатию на клавиши стрелок вверх/вниз + Shift
      * происходит добавление группы полей сверху или снизу соответственно
      * @example true
      */
-    enableKeyboardNavigation?: boolean;
+    enableKeyboardNavigation?: boolean,
 
     /**
      * Добавляет эффект зебры к таблице
      */
     hasAlternatingColors?: boolean,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IFieldListViewProps {
     items?: (IFieldListItem & {
         disabled?: boolean,
         size?: boolean,
-    })[];
+    })[],
     onAdd?: () => void,
     showRemove?: boolean,
     showAdd?: boolean,
@@ -143,7 +144,7 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
     items?: (IFieldListItem & {
         disabled?: boolean,
         size?: boolean,
-    })[];
+    })[],
     onRemove?: (rowIndex: number) => void,
     prefix: string,
     required?: boolean,
@@ -163,7 +164,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     const dispatch = context.provider.useDispatch();
 
     // Mapper for preserving the correct sequence of rows on the UI
-    const [storeToRowIndexMap, setStoreToRowIndexMap] = useState([]);
+    const [storeToRowIndexMap, setStoreToRowIndexMap] = useState(_range(props.input.value) || []);
 
     const addRowIndexes = useCallback((rowsCount) => {
         setStoreToRowIndexMap((prevMap) => {

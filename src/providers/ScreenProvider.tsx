@@ -9,14 +9,14 @@ export interface IScreen {
     isPhone: () => boolean,
     isTablet: () => boolean,
     isDesktop: () => boolean,
-    getDeviceType: () => string
+    getDeviceType: () => string,
 }
 
 export const ScreenContext = React.createContext({} as IScreen);
 
 export interface IScreenProviderProps extends PropsWithChildren<any> {
     media?: Record<string, any>,
-    skipTimeout?: boolean
+    skipTimeout?: boolean,
 }
 
 export const SCREEN_PHONE = 'phone';

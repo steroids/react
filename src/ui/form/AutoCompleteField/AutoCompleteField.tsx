@@ -14,7 +14,7 @@ export interface IAutoCompleteItem {
     additional?: {
         icon: string,
         text: string,
-    }
+    },
     category?: string,
     [key: string]: unknown,
 }
@@ -51,13 +51,13 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
     inputProps: {
         type: string,
         name: string,
-        placeholder?: string;
+        placeholder?: string,
         value: string | number,
         disabled: boolean,
         onChange: (value: string) => void,
         onFocus: (e: Event | React.FocusEvent) => void,
         onBlur: (e: Event | React.FocusEvent) => void,
-        className?: CssClassName
+        className?: CssClassName,
     },
     isOpened: boolean,
     isLoading?: boolean,
@@ -167,7 +167,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         ...props.inputProps,
         type: 'text',
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
+        value: props.input.value ?? '',
         placeholder: props.placeholder,
         disabled: props.disabled,
         onChange,

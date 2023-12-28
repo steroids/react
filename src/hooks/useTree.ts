@@ -15,7 +15,7 @@ export interface ITreeItem extends IButtonProps {
     /**
      * Идентификатор узла
      */
-    id?: string | number,
+    id: string | number | boolean,
 
     /**
      * Вложенные элементы
@@ -34,7 +34,7 @@ export interface ITreeItem extends IButtonProps {
      * Скрыть или показать узел
      * @example true
      */
-    visible?: boolean
+    visible?: boolean,
 }
 
 export interface IPreparedTreeItem extends ITreeItem {
@@ -65,61 +65,67 @@ export interface ITreeConfig {
      *  }
      * ] | 'root'
      */
-    items?: ITreeItem[] | string;
+    items?: ITreeItem[] | string,
 
     /**
      * Ограничивает максимальный уровень вложенности дерева
      * @example 2
      */
-    level?: number;
+    level?: number,
 
     /**
      * Ключ для доступа к вложенным элементам узла
      * @example 'items'
      */
-    itemsKey?: string;
+    itemsKey?: string,
 
     /**
      * Идентификатор узла, которой нужно отобразить в раскрытом виде
      * @example 2
      */
-    selectedItemId?: string | number;
+    selectedItemId?: string | number,
 
     /**
      * Максимальный уровень вложенности, до которого все узлы будут отображаться в развёрнутом виде
      * @example 1
      */
-    autoOpenLevels?: number;
+    autoOpenLevels?: number,
 
     /**
      * Обработчик на клик по узлу
      * @param args
      */
-    onExpand?: (...args: any[]) => any;
+    onExpand?: (...args: any[]) => any,
 
     /**
      *  Используется для управления раскрытием всех элементов в дереве
      * @example: true
      */
-    alwaysOpened?: boolean;
+    alwaysOpened?: boolean,
 
     /**
      *  Текущая страница, используется для корректного отображения пагинации
      * @example: 1
      */
-    currentPage?: number;
+    currentPage?: number,
 
     /**
      *  Количество элементов на странице, используется для корректного отображения пагинации
      * @example: 4
      */
-    itemsOnPage?: number;
+    itemsOnPage?: number,
 
     /**
      *  Параметры роутинга
      * @example: true
      */
-    routerParams?: any;
+    routerParams?: any,
+
+    /**
+     * При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.
+     * @example true
+    */
+    useSameSelectedItemId?: boolean,
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
@@ -232,10 +238,10 @@ const getAutoExpandedItems = (
 
 const isSelectedItem = (selectedUniqueId, uniqueId, activeRouteIds, item, routerParams) => (
     selectedUniqueId === uniqueId
-        || (
-            (activeRouteIds || []).includes(item.toRoute)
-            && _isEqual(item.toRouteParams || {}, _omit(routerParams, _keys(item.toRouteParams)))
-        )
+    || (
+        (activeRouteIds || []).includes(item.toRoute)
+        && _isEqual(item.toRouteParams || {}, _omit(routerParams, _keys(item.toRouteParams)))
+    )
 );
 
 export default function useTree(config: ITreeConfig): ITreeOutput {
@@ -244,7 +250,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     const [selectedUniqueId, setSelectedUniqueId] = useState<string>(null);
 
-    const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean}>({});
+    const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean,}>({});
 
     //Redux connection
     const {
@@ -290,7 +296,8 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
             config.onExpand.call(null, e, item);
         }
 
-        setSelectedUniqueId(selectedUniqueId === uniqueId ? null : uniqueId);
+        const sameUniqueIdAccordingToSettings = config.useSameSelectedItemId ? uniqueId : null;
+        setSelectedUniqueId(selectedUniqueId === uniqueId ? sameUniqueIdAccordingToSettings : uniqueId);
 
         if (!_isEmpty(item[primaryKey])) {
             setExpandedItems({
@@ -298,7 +305,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
                 [uniqueId]: !expandedItems[uniqueId],
             });
         }
-    }, [config.onExpand, expandedItems, primaryKey, selectedUniqueId]);
+    }, [config.onExpand, config.useSameSelectedItemId, expandedItems, primaryKey, selectedUniqueId]);
 
     const resultTreeItems = useMemo(() => {
         const getItems = (

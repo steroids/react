@@ -19,39 +19,39 @@ export interface IFileInput {
     /**
     * Множественный выбор файлов
     */
-    multiple?: boolean;
+    multiple?: boolean,
 
     /**
     * Позволяет указать uploader
     */
-    uploader?: any;
+    uploader?: any,
 
     /**
      * Экшен для отправки на бэкенд
      * @example '/api/v1/user/avatar/crop'
      */
-    backendUrl?: any;
+    backendUrl?: any,
 
     /**
     * Список mime-типов
     */
-    mimeTypes?: any;
+    mimeTypes?: any,
 
     /**
     * Использовать только изображения
     */
-    imagesOnly?: any;
-    imagesProcessor?: any;
+    imagesOnly?: any,
+    imagesProcessor?: any,
 
     /**
     * Точные размеры изображений
     */
-    imagesExactSize?: any;
+    imagesExactSize?: any,
 
     /**
     * Начальные файлы
     */
-    initialFiles?: any;
+    initialFiles?: any,
 
     /**
     * Параметры для uploader
@@ -59,15 +59,15 @@ export interface IFileInput {
     uploaderConfig?: {
         useFormData?: boolean,
         fileFieldName?: string,
-    } | any
+    } | any,
 }
 
 export interface IFileOutput {
-    uploader?: any;
-    files?: any[];
-    onBrowse?: any;
-    onRemove?: any;
-    onAdd?: any;
+    uploader?: any,
+    files?: any[],
+    onBrowse?: any,
+    onRemove?: any,
+    onAdd?: any,
 }
 
 const imagesMimeTypes = [

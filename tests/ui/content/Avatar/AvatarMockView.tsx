@@ -4,8 +4,8 @@ import {useBem} from '../../../../src/hooks';
 
 interface IAvatarProps extends IAvatarViewProps {
     formattedTitle: any,
-    testId: string
-    bodyTestId: string;
+    testId: string,
+    bodyTestId: string,
 }
 
 export default function Avatar(props: IAvatarProps) {

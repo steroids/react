@@ -3,6 +3,7 @@ import BlankField from './BlankField';
 import Button from './Button';
 import CheckboxField from './CheckboxField';
 import CheckboxListField from './CheckboxListField';
+import CheckboxTreeField from './CheckboxTreeField';
 import DateField from './DateField';
 import DateRangeField from './DateRangeField';
 import DateTimeField from './DateTimeField';
@@ -36,6 +37,7 @@ export {
     Button,
     CheckboxField,
     CheckboxListField,
+    CheckboxTreeField,
     DateField,
     DateRangeField,
     DateTimeField,
@@ -70,6 +72,7 @@ export default {
     Button,
     CheckboxField,
     CheckboxListField,
+    CheckboxTreeField,
     DateField,
     DateRangeField,
     DateTimeField,

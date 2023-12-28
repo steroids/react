@@ -7,9 +7,18 @@ describe('Nav tests', () => {
     const expectedButtonViewClass = 'ButtonView';
 
     const items = [
-        {id: 1, label: 'One'},
-        {id: 2, label: 'Two'},
-        {id: 3, label: 'Three'},
+        {
+            id: 1,
+            label: 'One',
+        },
+        {
+            id: 2,
+            label: 'Two',
+        },
+        {
+            id: 3,
+            label: 'Three',
+        },
     ];
 
     it('should be in the document', () => {
@@ -27,7 +36,10 @@ describe('Nav tests', () => {
     it('should have external className', () => {
         const externalClass = 'class-test';
         const expectedParentNodeClass = 'NavButtonView';
-        const {container} = render(JSXWrapper<INavProps>(Nav, {items, className: externalClass}));
+        const {container} = render(JSXWrapper<INavProps>(Nav, {
+            items,
+            className: externalClass,
+        }));
         const parentNode = getElementByClassName(container, expectedParentNodeClass);
         expect(parentNode).toHaveClass(externalClass);
     });
@@ -123,9 +135,19 @@ describe('Nav tests', () => {
 
     describe('should have disabled items with different layouts', () => {
         const itemsWithDisabledOne = [
-            {id: 1, label: 'One', disabled: true},
-            {id: 2, label: 'Two'},
-            {id: 3, label: 'Three'},
+            {
+                id: 1,
+                label: 'One',
+                disabled: true,
+            },
+            {
+                id: 2,
+                label: 'Two',
+            },
+            {
+                id: 3,
+                label: 'Three',
+            },
         ];
 
         it('button', () => {
@@ -137,7 +159,10 @@ describe('Nav tests', () => {
         });
 
         it('icon', () => {
-            const {container} = render(JSXWrapper<INavProps>(Nav, {items: itemsWithDisabledOne, layout: 'icon'}));
+            const {container} = render(JSXWrapper<INavProps>(Nav, {
+                items: itemsWithDisabledOne,
+                layout: 'icon',
+            }));
 
             const firstNavElement = getElementByClassName(container, expectedButtonViewClass);
 
@@ -145,7 +170,10 @@ describe('Nav tests', () => {
         });
 
         it('link', () => {
-            const {container} = render(JSXWrapper<INavProps>(Nav, {items: itemsWithDisabledOne, layout: 'link'}));
+            const {container} = render(JSXWrapper<INavProps>(Nav, {
+                items: itemsWithDisabledOne,
+                layout: 'link',
+            }));
 
             const firstNavElement = getElementByClassName(container, expectedButtonViewClass);
 
@@ -153,7 +181,10 @@ describe('Nav tests', () => {
         });
 
         it('tabs', () => {
-            const {container} = render(JSXWrapper<INavProps>(Nav, {items: itemsWithDisabledOne, layout: 'tabs'}));
+            const {container} = render(JSXWrapper<INavProps>(Nav, {
+                items: itemsWithDisabledOne,
+                layout: 'tabs',
+            }));
 
             const firstNavElement = getElementByClassName(container, expectedButtonViewClass);
 
@@ -161,7 +192,10 @@ describe('Nav tests', () => {
         });
 
         it('navbar', () => {
-            const {container} = render(JSXWrapper<INavProps>(Nav, {items: itemsWithDisabledOne, layout: 'navbar'}));
+            const {container} = render(JSXWrapper<INavProps>(Nav, {
+                items: itemsWithDisabledOne,
+                layout: 'navbar',
+            }));
 
             const firstNavElement = getElementByClassName(container, expectedButtonViewClass);
 
@@ -169,7 +203,10 @@ describe('Nav tests', () => {
         });
 
         it('list', () => {
-            const {container} = render(JSXWrapper<INavProps>(Nav, {items: itemsWithDisabledOne, layout: 'list'}));
+            const {container} = render(JSXWrapper<INavProps>(Nav, {
+                items: itemsWithDisabledOne,
+                layout: 'list',
+            }));
 
             const firstNavElement = getElementByClassName(container, expectedButtonViewClass);
 

@@ -48,7 +48,7 @@ export interface IAvatarProps extends IUiComponent {
     /**
     * Набор адаптивных изображений
     */
-    srcSet?: string;
+    srcSet?: string,
 
     /**
      * Статус онлайна
@@ -66,7 +66,7 @@ export interface IAvatarProps extends IUiComponent {
      * Наличие обводки вокруг аватара
      * @example true
      */
-    hasBorder?: boolean;
+    hasBorder?: boolean,
 }
 
 export interface IAvatarViewProps extends IAvatarProps {

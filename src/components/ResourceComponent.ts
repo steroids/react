@@ -6,8 +6,8 @@ declare global {
     interface Window {
         grecaptcha: {
             ready: (...args: any[]) => void,
-            execute: (...args: any[]) => Promise<string>
-        };
+            execute: (...args: any[]) => Promise<string>,
+        },
     }
 }
 
@@ -15,74 +15,74 @@ export interface IResourceComponentConfig {
     /**
      * API-ключ Google для использования Google Maps и других сервисов.
      */
-    googleApiKey?: string;
+    googleApiKey?: string,
 
     /**
      * Языковой код, используемый для загрузки ресурсов.
      */
-    language?: string;
+    language?: string,
 }
 
 export interface IResourceComponent extends IResourceComponentConfig {
     /**
      * Ключ сайта Google reCAPTCHA.
      */
-    googleCaptchaSiteKey: string;
+    googleCaptchaSiteKey: string,
 
     /**
      * URL для загрузки Google Maps API.
      */
-    readonly RESOURCE_GOOGLE_MAP_API: string;
+    readonly RESOURCE_GOOGLE_MAP_API: string,
 
     /**
      * URL для загрузки Yandex Maps API.
      */
-    readonly RESOURCE_YANDEX_MAP_API: string;
+    readonly RESOURCE_YANDEX_MAP_API: string,
 
     /**
      * URL для загрузки Twitter виджетов.
      */
-    readonly RESOURCE_TWITTER_WIDGET: string;
+    readonly RESOURCE_TWITTER_WIDGET: string,
 
     /**
      * URL для загрузки Geetest.
      */
-    readonly RESOURCE_GEETEST_API: string;
+    readonly RESOURCE_GEETEST_API: string,
 
     /**
      * URL для загрузки Google reCAPTCHA.
      */
-    readonly RESOURCE_GOOGLE_CAPTCHA: string;
+    readonly RESOURCE_GOOGLE_CAPTCHA: string,
 
     /**
      * Метод для загрузки Google reCAPTCHA.
      * @returns Промис, который разрешается с объектом window.grecaptcha.
      */
-    loadGoogleCaptcha(): Promise<any>;
+    loadGoogleCaptcha(): Promise<any>,
 
     /**
      * Метод для загрузки Google Maps API.
      * @returns Промис, который разрешается с объектом window.google.maps.
      */
-    loadGoogleMapApi(): Promise<any>;
+    loadGoogleMapApi(): Promise<any>,
 
     /**
      * Метод для загрузки Yandex Maps API.
      * @returns Промис, который разрешается с объектом window.ymaps.
      */
-    loadYandexMap(): Promise<any>;
+    loadYandexMap(): Promise<any>,
 
     /**
      * Метод для загрузки Twitter виджетов.
      * @returns Промис, который разрешается с объектом window.twttr.
      */
-    loadTwitterWidget(): Promise<any>;
+    loadTwitterWidget(): Promise<any>,
 
     /**
      * Метод для загрузки Geetest.
      * @returns Промис, который разрешается с объектом window.initGeetest.
      */
-    loadGeetest(): Promise<any>;
+    loadGeetest(): Promise<any>,
 
     /**
      * Метод для загрузки скрипта по указанному URL.
@@ -91,7 +91,7 @@ export interface IResourceComponent extends IResourceComponentConfig {
      * @param firstResolver Функция, которая возвращает объект, разрешающий промис.
      * @returns Промис, который разрешается с результатом первого разрешенного промиса.
      */
-    loadScript(url: string, params: any, firstResolver: () => any): Promise<any>;
+    loadScript(url: string, params: any, firstResolver: () => any): Promise<any>,
 
     /**
      * Метод для ожидания выполнения определенного условия.
@@ -99,7 +99,7 @@ export interface IResourceComponent extends IResourceComponentConfig {
      * @param timeout (Необязательный) Таймаут ожидания в миллисекундах (по умолчанию 5000 мс).
      * @returns Промис, который разрешается с результатом выполнения условия.
      */
-    wait(condition: () => boolean, timeout?: number): Promise<any>;
+    wait(condition: () => boolean, timeout?: number): Promise<any>,
 }
 
 /**

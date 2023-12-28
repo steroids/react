@@ -13,26 +13,26 @@ export interface IFieldLayoutProps extends IUiComponent {
      * Название поля либо отмена отображение поля (false)
      * @example 'Visible'
      */
-    label?: string | boolean | any;
+    label?: string | boolean | any,
 
     /**
      * Подсказка, которая отображается, когда в поле нет ошибок
      * @example 'Save'
      */
-    hint?: string | boolean;
+    hint?: string | boolean,
 
     /**
      * Обязательное ли поле? Если true,
      * то к названию будет добавлен модификатор 'required' - красная звездочка (по умолчанию)
      * @example true
      */
-    required?: boolean;
+    required?: boolean,
 
     /**
      * Ошибки в поле
      * @example 'Field is required'
      */
-    errors?: string[];
+    errors?: string[],
 
     /**
      * Отображать ли состояние successful на поле
@@ -40,7 +40,7 @@ export interface IFieldLayoutProps extends IUiComponent {
      */
     successful?: boolean,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export interface IFieldLayoutViewProps {
@@ -51,7 +51,7 @@ export interface IFieldLayoutViewProps {
     successful: boolean,
     id: string,
     size: Size,
-    children?: React.ReactNode
+    children?: React.ReactNode,
     className?: string,
 }
 

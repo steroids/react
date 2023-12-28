@@ -1,7 +1,9 @@
 import _isEqual from 'lodash-es/isEqual';
 import _isArray from 'lodash-es/isArray';
 import _isNil from 'lodash-es/isNil';
-
+import _difference from 'lodash-es/difference';
+import _intersection from 'lodash-es/intersection';
+import _pullAll from 'lodash-es/pullAll';
 import {useCallback, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
@@ -24,7 +26,7 @@ export interface IDataSelectConfig {
      * Возможность множественного выбора
      * @example true
      */
-    multiple?: boolean;
+    multiple?: boolean,
 
     /**
      * Список с видимыми элементами
@@ -36,7 +38,7 @@ export interface IDataSelectConfig {
      * Сделать активным первый элемент в списке
      * @example true
      */
-    selectFirst?: any;
+    selectFirst?: any,
 
     /**
      * Список с идентификаторами выбранных элементов
@@ -60,7 +62,7 @@ export interface IDataSelectConfig {
     /**
      * Значение поля в форме
      */
-    inputValue?: any
+    inputValue?: any,
 
     /**
      *  Список со всеми элементами
@@ -154,12 +156,30 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 ids = [ids[0]];
             }
 
-            if (selectedItems.length === ids.length) {
-                setSelectedIds([]);
+            // If all elements of selectedIds are equal to ids, remove all elements
+            if (_isEqual(selectedIds, ids)) {
+                setSelectedIdsInternal([]);
                 return;
             }
 
-            setSelectedIdsInternal(ids.sort());
+            // Check if all elements from ids are contained in selectedIds
+            const intersection = _intersection(selectedIds, ids);
+
+            // If all elements are contained, remove them from sourceArray
+            if (_isEqual(intersection, ids)) {
+                const prevSelectedIds = [...selectedIds];
+
+                _pullAll(prevSelectedIds, ids);
+
+                setSelectedIdsInternal((prevSelectedIds || []).sort());
+                return;
+            }
+
+            // If not all elements are contained, add new ids
+            if (!_isEqual(intersection, ids)) {
+                const difference = _difference(ids, selectedIds);
+                setSelectedIdsInternal([...selectedIds, ...difference].sort());
+            }
         } else {
             const id = ids;
             if (!isIdExists(id)) {
@@ -181,7 +201,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setIsOpened(false);
             }
         }
-    }, [config.multiple, selectedIds, selectedItems.length]);
+    }, [config.multiple, selectedIds]);
 
     const setSelectedAll = useCallback(() => {
         const itemsIds = flattenedItems.map(item => item.id);

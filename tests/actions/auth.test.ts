@@ -92,6 +92,16 @@ describe('auth actions', () => {
         });
 
         it('with redirectPageId', () => {
+            const rootPath = 'root-path';
+            const mockedStore = mockStore({
+                router: {
+                    routesMap: {
+                        root: {
+                            path: rootPath,
+                        },
+                    },
+                },
+            });
             const expectedActions = [
                 {
                     type: AUTH_INIT_USER,
@@ -100,15 +110,15 @@ describe('auth actions', () => {
                 {
                     type: '@@router/CALL_HISTORY_METHOD',
                     payload: {
-                        args: [null],
+                        args: [rootPath],
                         method: 'push',
                     },
                 },
             ];
 
-            store.dispatch(logout());
+            mockedStore.dispatch(logout());
             expect(componentsMock.http.onLogout).toHaveBeenCalled();
-            expect(store.getActions()).toEqual(expectedActions);
+            expect(mockedStore.getActions()).toEqual(expectedActions);
         });
     });
 

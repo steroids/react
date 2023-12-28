@@ -55,7 +55,10 @@ describe('auth actions', () => {
 
     it('listSetItems', () => {
         const listId = 'list2';
-        const items = [{id: 2, name: 'html'}];
+        const items = [{
+            id: 2,
+            name: 'html',
+        }];
 
         const expectedActions = [
             {
@@ -90,7 +93,10 @@ describe('auth actions', () => {
     describe('add', () => {
         it('with prepend argument', () => {
             const listId = 'list4';
-            const item = {id: 1, name: 'body'};
+            const item = {
+                id: 1,
+                name: 'body',
+            };
             const prepend = true;
 
             const expectedActions = [
@@ -108,7 +114,10 @@ describe('auth actions', () => {
 
         it('without prepend argument', () => {
             const listId = 'list5';
-            const item = {id: 324, name: 'p'};
+            const item = {
+                id: 324,
+                name: 'p',
+            };
 
             const expectedActions = [
                 {
@@ -126,8 +135,14 @@ describe('auth actions', () => {
 
     it('update', () => {
         const listId = 'list6';
-        const item = {id: 873287, name: 'address'};
-        const condition = {id: 1, name: 'list6'};
+        const item = {
+            id: 873287,
+            name: 'address',
+        };
+        const condition = {
+            id: 1,
+            name: 'list6',
+        };
 
         const expectedActions = [
             {
@@ -144,7 +159,10 @@ describe('auth actions', () => {
 
     it('deleteItem', () => {
         const listId = 'list7';
-        const condition = {id: 1, name: 'list12'};
+        const condition = {
+            id: 1,
+            name: 'list12',
+        };
 
         const expectedActions = [
             {

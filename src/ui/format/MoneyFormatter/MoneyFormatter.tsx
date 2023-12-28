@@ -13,26 +13,26 @@ export interface IMoneyFormatterProps {
      * Валюта @enum '{eur, rub, usd}'
      * @example rub
      */
-    currency?: string;
+    currency?: string,
 
     /**
      * Округление числа
      * @example 2
      */
-    scale?: number;
+    scale?: number,
 
     /**
      * Разрядность (при передаче int в значении)
      * @example 2
      */
-    precision?: number;
+    precision?: number,
 
     /**
     * Значение для MoneyFormatter
     */
-    value?: any;
+    value?: any,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 export const moneyFormat = (amount, currency, scale) => {

@@ -6,9 +6,9 @@ import {
 } from '../actions/fields';
 
 export interface IFieldsState {
-    props: Record<string, any>;
-    dataProvider: Record<string, any>;
-    meta: Record<string, any> | null;
+    props: Record<string, any>,
+    dataProvider: Record<string, any>,
+    meta: Record<string, any> | null,
 }
 
 const initialState: IFieldsState = {

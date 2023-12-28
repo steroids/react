@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useFirstMountState, usePrevious} from 'react-use';
+import _isNil from 'lodash-es/isNil';
 import dayjs from 'dayjs';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
 import {IDateInputStateInput} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
@@ -23,7 +24,7 @@ export default function useDateRange(props:IUseDateRangeProps) {
 
     const isFirstMount = useFirstMountState();
 
-    // Local refs to handle auto-focus
+    // Refs to handle auto-focus
     const valueFromRef = useRef('');
     const valueToRef = useRef('');
 
@@ -72,6 +73,10 @@ export default function useDateRange(props:IUseDateRangeProps) {
     const prevValueTo = usePrevious(props.inputTo.value);
     useEffect(() => {
         if (!props.hasInitialFocus && isFirstMount) {
+            return;
+        }
+
+        if (_isNil(props.inputFrom.value) && _isNil(props.inputTo.value)) {
             return;
         }
 

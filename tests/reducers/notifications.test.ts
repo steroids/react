@@ -34,7 +34,10 @@ describe('notifications reducers', () => {
 
         initialState.items = items;
 
-        const expectedState = {...initialState, items: []};
+        const expectedState = {
+            ...initialState,
+            items: [],
+        };
 
         expect(notifications(initialState, action)).toEqual(expectedState);
     });

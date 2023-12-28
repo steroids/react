@@ -19,10 +19,10 @@ export const getFormattedExpandRestLabel = (rest: any[]) => `Показать е
 const SIXTH_ELEMENT_INDEX = 6;
 
 interface IMonthDayProps {
-    day: IDay;
-    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[];
+    day: IDay,
+    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
     openEditModal: (event: IEvent) => void,
-    openCreateModal: (eventInitialDay?: IDay) => void;
+    openCreateModal: (eventInitialDay?: IDay) => void,
 }
 
 export default function MonthDay(props: IMonthDayProps) {

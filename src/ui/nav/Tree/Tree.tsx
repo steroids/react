@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {IPreparedTreeItem, ITreeConfig} from '../../../hooks/useTree';
+import React from 'react';
+import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
 import {useComponents, useTree} from '../../../hooks';
 
 export interface ITreeViewProps extends ITreeProps {
@@ -7,51 +7,68 @@ export interface ITreeViewProps extends ITreeProps {
 }
 
 export interface ITreeItemViewProps extends ITreeProps {
-    item: IPreparedTreeItem;
-    children?: JSX.Element;
+    item: IPreparedTreeItem,
+    children?: JSX.Element,
 }
 
 /**
  * Tree
  * Компонент, который представляет в виде дерева список с иерархической структурой данных
  */
-export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'>{
+export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'> {
     /**
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами
      * @example 'exampleTree'
      */
-    id?: string;
+    id?: string,
 
     /**
      * CSS-класс для элемента отображения
      */
-    className?: CssClassName;
+    className?: CssClassName,
 
     /**
      * Переопределение view React компонента для кастомизации отображения элемента
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
     /**
      * Обработчик на клик по узлу
      * @param args
      */
-    onItemClick?: (...args: any[]) => any;
+    onItemClick?: (event: React.MouseEvent, item: ITreeItem) => any,
 
     /**
      * Отображать раскрытыми узлы из LocalStorage
      * @example true
      */
-    autoSave?: boolean;
+    autoSave?: boolean,
 
     /**
      * Расстояние вложенных элементов от родителя для каждого уровня
      * @example 32
      */
-    levelPadding?: number;
+    levelPadding?: number,
 
-    [key: string]: any;
+    /**
+     * Показать иконку c лева от элемента
+     * @example true
+     */
+    showIcon?: boolean,
+
+    /**
+     * Кастомная иконка, заменяющая иконку раскрытия по умолчанию
+     */
+    customIcon?: string | React.ReactElement,
+
+    /**
+     * Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку
+     * @example false
+     */
+    hasIconExpandOnly?: boolean,
+
+    [key: string]: any,
 }
 
 export default function Tree(props: ITreeProps) {
@@ -66,6 +83,7 @@ export default function Tree(props: ITreeProps) {
         onExpand: props.onItemClick,
         level: props.level,
         alwaysOpened: props.alwaysOpened,
+        useSameSelectedItemId: props.useSameSelectedItemId,
     });
 
     return components.ui.renderView(props.view || 'nav.TreeView', {
@@ -80,4 +98,7 @@ Tree.defaultProps = {
     autoSave: false,
     level: 0,
     levelPadding: 32,
+    hasIconExpandOnly: false,
+    useSameSelectedItemId: true,
+    showIcon: true,
 };

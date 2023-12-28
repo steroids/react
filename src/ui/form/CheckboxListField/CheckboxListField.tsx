@@ -12,8 +12,8 @@ import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
 type CheckboxFieldListItems = string
-    | ({new(): Enum})
-    | (string | number | {id: string | number | boolean, label: string | any, color?: string, [key: string]: any})[];
+    | ({new(): Enum,})
+    | (string | number | {id: string | number | boolean, label: string | any, color?: string, [key: string]: any,})[];
 
 /**
  * CheckboxListField
@@ -50,6 +50,11 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
      * ]
      */
     items: CheckboxFieldListItems,
+
+    /**
+     * Кастомная вьюшка для элемента
+     */
+    itemView?: CustomView,
 
     [key: string]: any,
 }
@@ -134,7 +139,7 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         }
     }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
-    const CheckboxFieldView = components.ui.getView('form.CheckboxFieldView');
+    const CheckboxFieldView = props.itemView || components.ui.getView('form.CheckboxFieldView');
 
     const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => (
         <CheckboxFieldView

@@ -26,12 +26,12 @@ export interface IFormProps extends IUiComponent {
      * Идентификатор формы
      * @example BookingForm
      */
-    formId?: string;
+    formId?: string,
 
     /**
     * Префикс
     */
-    prefix?: string;
+    prefix?: string,
 
     /**
      * Модель с полями формы
@@ -45,31 +45,31 @@ export interface IFormProps extends IUiComponent {
      *  ]
      * }
      */
-    model?: string | ((...args: any[]) => any) | any;
+    model?: string | ((...args: any[]) => any) | any,
 
     /**
      * Url на который будет отправлена форма
      * @example api/v1/handle-form
      */
-    action?: string;
+    action?: string,
 
     /**
      * Тип HTTP запроса (GET | POST | PUT | DELETE)
      * @example POST
      */
-    actionMethod?: string;
+    actionMethod?: string,
 
     /**
      * Текст ошибки при неудачной отправке данных. По-умолчанию: "Ошибка сервера"
      * @example Упс, что-то пошло не так
      */
-    submitErrorMessage?: string;
+    submitErrorMessage?: string,
 
     /**
      * Обработчик события отправки формы
      * @param args
      */
-    onSubmit?: (...args: any[]) => any;
+    onSubmit?: (...args: any[]) => any,
 
     /**
      * Набор с правилами для проверки соответствия значений полей формы определенному формату.
@@ -80,37 +80,37 @@ export interface IFormProps extends IUiComponent {
      *  ['age', 'integer']
      * ]
      */
-    validators?: any[];
+    validators?: any[],
 
     /**
      * Обработчик события перед отправкой формы
      * @param args
      */
-    onBeforeSubmit?: (...args: any[]) => any;
+    onBeforeSubmit?: (...args: any[]) => any,
 
     /**
      * Обработчик события после отправки формы
      * @param args
      */
-    onAfterSubmit?: (...args: any[]) => any;
+    onAfterSubmit?: (...args: any[]) => any,
 
     /**
      * Обработчик события при каком-либо изменении в форме
      * @param args
      */
-    onChange?: (...args: any[]) => any;
+    onChange?: (...args: any[]) => any,
 
     /**
      * Обработчик события ошибки выполнения запроса
      * @param args
      */
-    onError?: (...args: any[]) => any;
+    onError?: (...args: any[]) => any,
 
     /**
      * Обработчик успешного выполнения формы (без ошибок)
      * @param args
      */
-    onComplete?: (...args: any[]) => any;
+    onComplete?: (...args: any[]) => any,
 
     /**
      * Автоматически стартовать 2fa аутентификацию (отправлять код)
@@ -131,13 +131,13 @@ export interface IFormProps extends IUiComponent {
     /**
      * Начальные значения формы
      */
-    initialValues?: any | any[];
+    initialValues?: any | any[],
 
     /**
      * Свойства для представления
      * @example {className: 'foo'}
      */
-    viewProps?: any;
+    viewProps?: any,
 
     /**
      * Поля, которые необходимо поместить в форму
@@ -161,7 +161,7 @@ export interface IFormProps extends IUiComponent {
      * Надпись на кнопке отправки формы
      * @example Submit
      */
-    submitLabel?: string;
+    submitLabel?: string,
 
     /**
      * Синхронизация значений формы с адресной строкой
@@ -173,14 +173,14 @@ export interface IFormProps extends IUiComponent {
      * Если в форме есть элементы '<input>', то произойдет автоматическая фокусировка на первом из них
      * @example true
      */
-    autoFocus?: boolean;
+    autoFocus?: boolean,
 
     /**
      * Название действия, которое передаётся в API Google reCAPTCHA v3, для более детального анализа
      * поведения пользователя (https://developers.google.com/recaptcha/docs/v3)
      * @example 'addComment'
      */
-    captchaActionName?: string;
+    captchaActionName?: string,
 
     /**
      * Очищать ли данные формы с redux хранилища при размонтировании компонента. По-умолчанию - false
@@ -197,7 +197,7 @@ export interface IFormProps extends IUiComponent {
 }
 
 export interface IFormViewProps {
-    submitLabel?: string;
+    submitLabel?: string,
     fields?: (string | IFieldProps)[],
     onSubmit: any,
     className?: CssClassName,
@@ -220,22 +220,22 @@ export interface IFormContext {
     * Id формы
     * @example {}
     */
-    formId?: string;
+    formId?: string,
 
     /**
     * Модель с полями формы
     */
-    model?: any;
+    model?: any,
 
     /**
     * Префикс для полей формы
     */
-    prefix?: string | boolean;
+    prefix?: string | boolean,
 
     /**
     * Размер компонента
     */
-    size?: Size;
+    size?: Size,
 
     /**
     * Провайдер
@@ -245,7 +245,7 @@ export interface IFormContext {
     /**
     * Редьюсер
     */
-    reducer?: { dispatch: React.Dispatch<any>, select: any },
+    reducer?: { dispatch: React.Dispatch<any>, select: any, },
 
     /**
     * Диспатч
@@ -257,8 +257,8 @@ export const FormContext = React.createContext<IFormContext>({});
 
 interface ICaptchaParams {
     googleCaptcha: Record<string, any>,
-    siteKey: string
-    actionName: string
+    siteKey: string,
+    actionName: string,
 }
 
 const getCaptchaToken = (params: ICaptchaParams): Promise<string> => {

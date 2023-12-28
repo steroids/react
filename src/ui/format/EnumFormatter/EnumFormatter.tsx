@@ -17,7 +17,7 @@ export interface IEnumFormatterProps {
      * 1) Может быть строкой вида: `app.geo.enums.Cities`
      * 2) Массивом: ['{'id: 1, label: "London"'}']
      */
-    items?: DataProviderItems;
+    items?: DataProviderItems,
 
     /**
      * Уникальный идентификатор элемента из `items`
@@ -29,9 +29,9 @@ export interface IEnumFormatterProps {
      * Переопределение view React компонента для кастомизации отображения колонки
      * @example MyCustomView
      */
-    view?: CustomView;
+    view?: CustomView,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 /**

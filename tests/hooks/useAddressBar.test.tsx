@@ -14,14 +14,46 @@ const WITHOUT_HASH = false;
 describe('defaultFromStringConverter function', () => {
     it('should convert from string correctly', () => {
         const testCases = [
-            {value: '123', type: 'number', expectedValue: 123},
-            {value: 'true', type: 'boolean', expectedValue: true},
-            {value: '1_2_3', type: 'number[]', expectedValue: [1, 2, 3]},
-            {value: '1,2,3', type: 'number[]', expectedValue: [0]},
-            {value: 'a_b_c', type: 'string[]', expectedValue: ['a', 'b', 'c']},
-            {value: undefined, type: 'string', expectedValue: null},
-            {value: 123, type: 'unknown', expectedValue: '123'},
-            {value: '', type: 'unknown', expectedValue: null},
+            {
+                value: '123',
+                type: 'number',
+                expectedValue: 123,
+            },
+            {
+                value: 'true',
+                type: 'boolean',
+                expectedValue: true,
+            },
+            {
+                value: '1_2_3',
+                type: 'number[]',
+                expectedValue: [1, 2, 3],
+            },
+            {
+                value: '1,2,3',
+                type: 'number[]',
+                expectedValue: [0],
+            },
+            {
+                value: 'a_b_c',
+                type: 'string[]',
+                expectedValue: ['a', 'b', 'c'],
+            },
+            {
+                value: undefined,
+                type: 'string',
+                expectedValue: null,
+            },
+            {
+                value: 123,
+                type: 'unknown',
+                expectedValue: '123',
+            },
+            {
+                value: '',
+                type: 'unknown',
+                expectedValue: null,
+            },
         ];
 
         testCases.forEach(({value, type, expectedValue}) => {
@@ -35,16 +67,56 @@ describe('defaultFromStringConverter function', () => {
 describe('defaultToStringConverter', () => {
     it('should convert to string correctly', () => {
         const testCases = [
-            {value: 'hello', type: 'string', expectedValue: 'hello'},
-            {value: '', type: 'string', expectedValue: null},
-            {value: null, type: 'string', expectedValue: null},
-            {value: 42, type: 'number', expectedValue: '42'},
-            {value: null, type: 'number', expectedValue: null},
-            {value: true, type: 'boolean', expectedValue: '1'},
-            {value: false, type: 'boolean', expectedValue: null},
-            {value: ['one', 'two', 'three'], type: 'string[]', expectedValue: 'one_two_three'},
-            {value: [], type: 'string[]', expectedValue: ''},
-            {value: null, type: 'string[]', expectedValue: null},
+            {
+                value: 'hello',
+                type: 'string',
+                expectedValue: 'hello',
+            },
+            {
+                value: '',
+                type: 'string',
+                expectedValue: null,
+            },
+            {
+                value: null,
+                type: 'string',
+                expectedValue: null,
+            },
+            {
+                value: 42,
+                type: 'number',
+                expectedValue: '42',
+            },
+            {
+                value: null,
+                type: 'number',
+                expectedValue: null,
+            },
+            {
+                value: true,
+                type: 'boolean',
+                expectedValue: '1',
+            },
+            {
+                value: false,
+                type: 'boolean',
+                expectedValue: null,
+            },
+            {
+                value: ['one', 'two', 'three'],
+                type: 'string[]',
+                expectedValue: 'one_two_three',
+            },
+            {
+                value: [],
+                type: 'string[]',
+                expectedValue: '',
+            },
+            {
+                value: null,
+                type: 'string[]',
+                expectedValue: null,
+            },
         ];
 
         testCases.forEach(({value, type, expectedValue}) => {
@@ -66,7 +138,11 @@ describe('queryRestore', () => {
         attributes: [
             'id',
             'name',
-            {attribute: 'isActive', fromStringConverter: defaultFromStringConverter, jsType: 'boolean'},
+            {
+                attribute: 'isActive',
+                fromStringConverter: defaultFromStringConverter,
+                jsType: 'boolean',
+            },
         ],
     };
 
@@ -132,7 +208,11 @@ describe('queryReplace', () => {
         attributes: [
             'id',
             'name',
-            {attribute: 'isActive', toStringConverter: defaultToStringConverter, jsType: 'boolean'},
+            {
+                attribute: 'isActive',
+                toStringConverter: defaultToStringConverter,
+                jsType: 'boolean',
+            },
         ],
     };
 
@@ -303,7 +383,10 @@ describe('useAddressBar Hook', () => {
             sort: null,
         });
 
-        const expectedNormalizedValues = {page: 1, pageSize: 50};
+        const expectedNormalizedValues = {
+            page: 1,
+            pageSize: 50,
+        };
 
         expect(dispatch).toHaveBeenCalledWith([]);
 
@@ -321,7 +404,10 @@ describe('useAddressBar Hook', () => {
 
         const expectedAction = {
             type: '@@router/CALL_HISTORY_METHOD',
-            payload: {method: 'replace', args: ['/documents?page=2&pageSize=50']},
+            payload: {
+                method: 'replace',
+                args: ['/documents?page=2&pageSize=50'],
+            },
         };
 
         const {result, rerender} = renderHook(() => useAddressBar(configWithEnabledProp), {
@@ -337,7 +423,10 @@ describe('useAddressBar Hook', () => {
             sort: null,
         });
 
-        const expectedNormalizedValues = {page: 2, pageSize: 50};
+        const expectedNormalizedValues = {
+            page: 2,
+            pageSize: 50,
+        };
 
         expect(dispatch).toHaveBeenCalledWith(expectedAction);
 

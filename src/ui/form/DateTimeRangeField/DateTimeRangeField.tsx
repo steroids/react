@@ -1,4 +1,7 @@
-import {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
+import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
+import {MaskitoOptions} from '@maskito/core';
+import {useMaskito} from '@maskito/react';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import useDateTime from '../../form/DateField/useDateTime';
@@ -20,19 +23,18 @@ import {useComponents} from '../../../hooks';
  * Он объединяет функциональность компонента `DateRangeField` для выбора диапазона дат и компонента `DateTimeField` для выбора времени.
  */
 export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'inputProps' | 'input'>,
-    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent
-{
+    Omit<IFieldWrapperInputProps, 'attribute'>, IUiComponent {
     /**
     * Аттрибут (название) поля в форме
     * @example 'fromTime'
     */
-    attributeFrom?: string;
+    attributeFrom?: string,
 
     /**
      * Аттрибут (название) поля в форме
      * @example 'toTime'
      */
-    attributeTo?: string;
+    attributeTo?: string,
 
     /**
      * Свойства для компонента DayPickerInput
@@ -43,7 +45,7 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      *  }
      * }
      */
-    pickerProps?: any;
+    pickerProps?: any,
 
     /**
      * Свойства для поля 'from'
@@ -71,15 +73,29 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      */
     hasInitialFocus?: boolean,
 
-    [key: string]: any;
+    /**
+    * Опции маски для полей
+    */
+    maskOptions?: {
+        /**
+        * Опции маски для поля from
+        */
+        from: MaskitoOptions,
+
+        /**
+        * Опции маски для поля to
+        */
+        to: MaskitoOptions,
+    },
+
+    [key: string]: any,
 }
 
 export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
-        | 'noBorder' | 'style'>
-{
+        | 'noBorder' | 'style'> {
     timePanelViewProps?: any,
     calendarProps?: ICalendarProps,
     inputPropsFrom?: any,
@@ -103,13 +119,15 @@ interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
     errorsFrom?: string[],
     errorsTo?: string[],
     disabled?: boolean,
-
 }
 
-const DATE_TIME_SEPARATOR = ' ';
+const DATE_TIME_SEPARATOR = ', ';
 
 function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
+
+    const maskInputFromRef = useMaskito({options: props.maskOptions?.from});
+    const maskInputToRef = useMaskito({options: props.maskOptions?.to});
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
@@ -210,6 +228,18 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         valueFormat: props.valueFormat,
     });
 
+    React.useEffect(() => {
+        if (extendedInputPropsFrom.ref && extendedInputPropsTo.ref) {
+            maskInputFromRef(extendedInputPropsFrom.ref.current);
+            maskInputToRef(extendedInputPropsTo.ref.current);
+        }
+    }, [
+        extendedInputPropsFrom.ref,
+        extendedInputPropsTo.ref,
+        maskInputFromRef,
+        maskInputToRef,
+    ]);
+
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
         value: [dateValueFrom, dateValueTo],
@@ -271,6 +301,18 @@ DateTimeRangeField.defaultProps = {
     dateInUTC: false,
     icon: true,
     size: 'md',
+    maskOptions: {
+        from: maskitoDateTimeOptionsGenerator({
+            dateMode: 'dd/mm/yyyy',
+            timeMode: 'HH:MM',
+            dateSeparator: '.',
+        }),
+        to: maskitoDateTimeOptionsGenerator({
+            dateMode: 'dd/mm/yyyy',
+            timeMode: 'HH:MM',
+            dateSeparator: '.',
+        }),
+    },
 };
 
 export default fieldWrapper<IDateTimeRangeFieldProps>('DateTimeRangeField', DateTimeRangeField,

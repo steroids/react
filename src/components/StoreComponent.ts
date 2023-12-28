@@ -12,8 +12,8 @@ import _isPlainObject from 'lodash-es/isPlainObject';
 
 declare global {
     interface Window {
-        APP_REDUX_PRELOAD_STATES?: any;
-        __REDUX_DEVTOOLS_EXTENSION__?: any;
+        APP_REDUX_PRELOAD_STATES?: any,
+        __REDUX_DEVTOOLS_EXTENSION__?: any,
     }
 }
 
@@ -26,54 +26,54 @@ export interface IStoreComponent {
     /**
      * Редьюсеры
      */
-    reducers: any;
+    reducers: any,
 
     /**
      * Хранилище
      */
-    store: any;
+    store: any,
 
     /**
      * Инициализация
      */
-    init(): void;
+    init(): void,
 
     /**
      * Инициализация хранилища
      */
-    initStore(): void;
+    initStore(): void,
 
     /**
      * Конфигурация
      */
-    configurate(): void;
+    configurate(): void,
 
     /**
      * Метод для dispatch
      */
-    dispatch(action): void;
+    dispatch(action): void,
 
     /**
      * Получение состояние
      */
-    getState(): void;
+    getState(): void,
 
     /**
      * Подписка
      */
-    subscribe(handler): void;
+    subscribe(handler): void,
 
     /**
      * Добавление редьюсеров
      */
-    addReducers(asyncReducers): void;
+    addReducers(asyncReducers): void,
 
     /**
      * Метод, который вызывается при ошибке
      */
-    errorHandler(error, action): void;
+    errorHandler(error, action): void,
 
-    [key: string]: any;
+    [key: string]: any,
 }
 
 /**

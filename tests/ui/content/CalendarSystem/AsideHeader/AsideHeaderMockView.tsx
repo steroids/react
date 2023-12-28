@@ -4,8 +4,8 @@ import Title from '../../../../../src/ui/typography/Title/Title';
 import {Button} from '../../../../../src/ui/form';
 
 interface IAsideHeaderProps {
-    onClick?: () => void;
-    className?: string;
+    onClick?: () => void,
+    className?: string,
 }
 
 function AsideHeader(props: IAsideHeaderProps) {

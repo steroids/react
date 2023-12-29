@@ -8,18 +8,18 @@ describe('Badge tests', () => {
     const props = {
         message: 'badgeTest',
         view: BadgeMockView,
-        testId: 'badge-test',
         showClose: true,
         className: 'testClass',
         style: {width: '30px'},
     };
 
+    const testId = 'badge-test';
     const expectedBadgeClass = 'BadgeView';
     const wrapper = JSXWrapper(Badge, props);
 
     it('should be in the document', () => {
         const {getByTestId} = render(wrapper);
-        const badge = getByTestId(props.testId);
+        const badge = getByTestId(testId);
 
         expect(badge).toBeInTheDocument();
         expect(badge).toHaveClass(expectedBadgeClass);
@@ -28,7 +28,7 @@ describe('Badge tests', () => {
 
     it('should have right size, rounding, type and external className', () => {
         const {getByTestId} = render(wrapper);
-        const badge = getByTestId(props.testId);
+        const badge = getByTestId(testId);
 
         expect(badge).toHaveClass(`${expectedBadgeClass}_primary`);
         expect(badge).toHaveClass(`${expectedBadgeClass}_md`);
@@ -45,7 +45,7 @@ describe('Badge tests', () => {
 
     it('should have right style', () => {
         const {getByTestId} = render(wrapper);
-        const badge = getByTestId(props.testId);
+        const badge = getByTestId(testId);
 
         expect(badge).toHaveStyle(props.style);
     });
@@ -53,7 +53,6 @@ describe('Badge tests', () => {
     describe('badge with counter', () => {
         const defaultCounterProps = {
             view: BadgeMockView,
-            testId: 'badge-test',
             counter: {
                 isEnable: true,
                 content: 5,
@@ -65,7 +64,7 @@ describe('Badge tests', () => {
 
         it('should have counter', () => {
             const {getByTestId, container} = render(counterWrapper);
-            const badge = getByTestId(defaultCounterProps.testId);
+            const badge = getByTestId(testId);
             const counter = getElementByClassName(container, `${expectedBadgeClass}__counter`);
 
             expect(badge).toHaveClass(`${expectedBadgeClass}_has-counter`);

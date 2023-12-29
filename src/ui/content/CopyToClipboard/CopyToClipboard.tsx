@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useComponents, useDispatch} from '../../../hooks';
 
 import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';
@@ -119,10 +119,17 @@ function CopyToClipboard(props: ICopyToClipboardProps) {
         }
     }, [dispatch, isCopied, notification, props]);
 
-    return components.ui.renderView(props.view || 'content.CopyToClipboardView', {
-        ...props,
+    const viewProps = useMemo(() => ({
+        disabled: props.disabled,
+        showCopyIcon: props.showCopyIcon,
+        icon: props.icon,
+        children: props.children,
+        className: props.className,
+        style: props.style,
         onClick,
-    });
+    }), [onClick, props.children, props.className, props.disabled, props.icon, props.showCopyIcon, props.style]);
+
+    return components.ui.renderView(props.view || 'content.CopyToClipboardView', viewProps);
 }
 
 CopyToClipboard.defaultProps = {

@@ -3,9 +3,8 @@ import {IAccordionItemProps, IAccordionItemViewProps} from './Accordion';
 
 function AccordionItem(props: IAccordionItemProps) {
     const components = useComponents();
-    return components.ui.renderView(props.view || 'content.AccordionItemView', {
-        ...props,
-    });
+
+    return components.ui.renderView(props.view || 'content.AccordionItemView', props);
 }
 
 AccordionItem.defaultProps = {

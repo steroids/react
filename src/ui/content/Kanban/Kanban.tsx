@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
 import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
 import {KanbanModalTypeEnum} from '@steroidsjs/core/ui/content/Kanban/enums';
@@ -180,15 +180,19 @@ export default function Kanban(props: IKanbanProps) {
         />
     ), [Column, onOpenCreateTaskModal, props.draggableComponent, props.droppableComponent, renderTask]);
 
+    const viewProps = useMemo(() => ({
+        columns,
+        renderColumn,
+        droppableComponent: props.droppableComponent,
+        className: props.className,
+        style: props.style,
+    }), [columns, renderColumn, props.droppableComponent, props.className, props.style]);
+
     return (
         <DragDropContext
             onDragEnd={onDragEnd}
         >
-            {components.ui.renderView(props.view || 'content.KanbanView', {
-                ...props,
-                columns,
-                renderColumn,
-            })}
+            {components.ui.renderView(props.view || 'content.KanbanView', viewProps)}
         </DragDropContext>
     );
 }

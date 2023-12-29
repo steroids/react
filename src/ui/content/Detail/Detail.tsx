@@ -249,11 +249,19 @@ export default function Detail(props: IDetailProps): JSX.Element {
         setRows(createRows(detailItems, column, props.layout));
     }, [column, detailItems, props.layout]);
 
-    return components.ui.renderView(props.view || 'content.DetailView', {
-        ...props,
+    const viewProps = useMemo(() => ({
+        title: props.title,
+        controls: props.controls,
+        layout: props.layout,
         rows,
-        ...(responsiveProps.enable ? {resizedNodeRef} : {}),
-    });
+        resizedNodeRef: responsiveProps.enable ? {resizedNodeRef} : {},
+        size: props.size,
+        className: props.className,
+        style: props.style,
+    }), [props.title, props.controls, props.layout, props.size, props.className,
+        props.style, rows, responsiveProps.enable, resizedNodeRef]);
+
+    return components.ui.renderView(props.view || 'content.DetailView', viewProps);
 }
 
 Detail.defaultProps = {

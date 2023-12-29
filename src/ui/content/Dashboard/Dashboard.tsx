@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import FlexGrid, {IFlexGridItem, IFlexGridProps} from '../../../ui/list/FlexGrid/FlexGrid';
 import {useComponents} from '../../../hooks';
 
@@ -52,10 +52,14 @@ function Dashboard(props: IDashboardProps): JSX.Element {
         ),
     })), [DashboardItemView, props.items]);
 
+    const viewProps = useMemo(() => ({
+        ...props,
+        items: flexGridItems,
+    }), [flexGridItems, props]);
+
     return (
         <FlexGrid
-            {...props}
-            items={flexGridItems}
+            {...viewProps}
         />
     );
 }

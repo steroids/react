@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {IFileFieldProps} from '../../form/FileField/FileField';
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../Avatar/Avatar';
@@ -145,10 +145,14 @@ export default function Chat(props: IChatProps) {
         />
     ), [ChatInputView, onSendMessage, onUploadFiles, props.chatId, props.customInputPlaceholder, props.fileFieldProps]);
 
-    return components.ui.renderView(props.view || 'content.ChatView', {
+    const viewProps = useMemo(() => ({
         currentUser: props.currentUser,
         groupedMessagesByDates,
         onSendMessage,
         renderChatInput,
-    });
+        className: props.className,
+        style: props.style,
+    }), [groupedMessagesByDates, onSendMessage, props.className, props.currentUser, props.style, renderChatInput]);
+
+    return components.ui.renderView(props.view || 'content.ChatView', viewProps);
 }

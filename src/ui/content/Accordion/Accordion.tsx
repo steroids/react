@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface IAccordionIcon {
@@ -94,15 +95,16 @@ export interface IAccordionProps extends IUiComponent {
     showIcon?: boolean,
 }
 
-export interface IAccordionViewProps extends IAccordionProps {
+export interface IAccordionItemProps extends Omit<IAccordionProps, 'onChange'> {
     toggleAccordion?: (number) => void,
     toggleCollapse?: (number) => void,
     childIndex?: number,
     isShowMore?: boolean,
 }
 
-export type IAccordionItemProps = IAccordionProps;
-export type IAccordionItemViewProps = IAccordionViewProps;
+export type IAccordionViewProps = Pick<IAccordionProps, 'children' | 'className'>
+
+export type IAccordionItemViewProps = IAccordionItemProps & IUiComponent;
 
 function Accordion(props: IAccordionProps) {
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
@@ -138,12 +140,16 @@ function Accordion(props: IAccordionProps) {
     };
 
     const components = useComponents();
+
+    const viewProps = useMemo(() => ({
+        className: props.className,
+        children: props.children,
+    }), [props.children, props.className]);
+
     const AccordionView = components.ui.getView(props.view || 'content.AccordionView');
 
     return (
-        <AccordionView
-            {...props}
-        >
+        <AccordionView {...viewProps}>
             {
                 React.Children.map(props.children, (child: any, index) => React.cloneElement(child, {
                     style: props.style,

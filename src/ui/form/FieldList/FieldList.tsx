@@ -234,7 +234,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         reducer: context.reducer,
     }), [context.provider, context.reducer, props.formId, props.model, props.prefix, props.size]);
 
-    const commonProps = {
+    const commonProps = useMemo(() => ({
         showAdd: props.showAdd,
         showRemove: props.showRemove,
         size: props.size,
@@ -243,21 +243,23 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         className: props.className,
         tableClassName: props.tableClassName,
         items,
-    };
+    }), [items, props.className, props.disabled, props.required, props.showAdd, props.showRemove, props.size, props.tableClassName]);
 
     const viewProps = useMemo(() => ({
-        forwardedRef: nodeRef,
         ...commonProps,
+        ...props.viewProps,
+        forwardedRef: nodeRef,
         onAdd,
         hasAlternatingColors: props.hasAlternatingColors,
         style: props.style,
         children: props.children,
-    }), [commonProps, onAdd, props.children, props.hasAlternatingColors, props.style]);
+    }), [commonProps, onAdd, props.children, props.hasAlternatingColors, props.style, props.viewProps]);
 
     const itemViewProps = useMemo(() => ({
         ...commonProps,
+        ...props.itemViewProps,
         onRemove,
-    }), [commonProps, onRemove]);
+    }), [commonProps, onRemove, props.itemViewProps]);
 
     const FieldListView = props.view || components.ui.getView('form.FieldListView');
     const FieldListItemView = props.itemView || components.ui.getView('form.FieldListItemView');

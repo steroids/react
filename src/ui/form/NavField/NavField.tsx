@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import Nav, {INavProps, INavItem} from '../../nav/Nav/Nav';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -30,7 +29,7 @@ function NavField(props: INavFieldProps): JSX.Element {
         items: props.items,
     });
 
-    const viewProps = useMemo(() => ({
+    const navProps = useMemo(() => ({
         layout: props.navProps.layout,
         items: items as INavItem[],
         activeTab: props.input.value,
@@ -42,7 +41,7 @@ function NavField(props: INavFieldProps): JSX.Element {
     }), [items, props.className, props.disabled, props.input.value, props.navProps.layout, props.onChange, props.size, props.view]);
 
     return (
-        <Nav {...viewProps} />
+        <Nav {...navProps} />
     );
 }
 

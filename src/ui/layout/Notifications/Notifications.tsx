@@ -163,7 +163,6 @@ function Notifications(props:INotificationsProps): JSX.Element {
 
     const NotificationsItemView = props.itemView || components.ui.getView('layout.NotificationsItemView');
     return components.ui.renderView(props.view || 'layout.NotificationsView', {
-        ...props,
         position: position || '',
         children: items.map(item => (
             <NotificationsItemView

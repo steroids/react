@@ -67,17 +67,17 @@ function ProgressBar(props: IProgressBarProps): JSX.Element {
     });
 
     if (props.type === 'line') {
-        return components.ui.renderView('layout.LineProgressBarView',
-            {percent: props.percent,
-status: props.status,
-size: props.size,
-label: getLabel()});
+        return components.ui.renderView('layout.LineProgressBarView', {
+            percent: props.percent,
+            status: props.status,
+            size: props.size,
+            label: getLabel()});
     }
-    return components.ui.renderView('layout.CircleProgressBarView',
-        {percent: props.percent,
-status: props.status,
-size: props.size,
-label: getLabel()});
+    return components.ui.renderView('layout.CircleProgressBarView', {
+        percent: props.percent,
+        status: props.status,
+        size: props.size,
+        label: getLabel()});
 }
 
 ProgressBar.defaultProps = {

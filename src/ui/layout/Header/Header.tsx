@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {IAvatarProps} from '../../content/Avatar/Avatar';
 import {ILinkProps} from '../../nav/Link/Link';
@@ -124,11 +124,22 @@ function Header(props: IHeaderProps): JSX.Element {
         setIsBurgerOpened(prev => !prev);
     }, []);
 
-    return useComponents().ui.renderView(props.view || 'layout.HeaderView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         toggleBurger,
         isBurgerOpened,
-    });
+        authParams: props.authParams,
+        size: props.size,
+        user: props.user,
+        burgerMenu: props.burgerMenu,
+        logo: props.logo,
+        nav: props.nav,
+        className: props.className,
+        style: props.style,
+        children: props.children,
+    }), [isBurgerOpened, props.authParams, props.burgerMenu, props.children, props.className, props.logo, props.nav,
+        props.size, props.style, props.user, toggleBurger]);
+
+    return useComponents().ui.renderView(props.view || 'layout.HeaderView', viewProps);
 }
 
 Header.defaultProps = {

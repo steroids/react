@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {IMenuProps} from '../../content/Menu/Menu';
 import {INavItem} from '../../nav/Nav/Nav';
 import {IIconProps} from '../../content/Icon/Icon';
@@ -100,12 +100,23 @@ export default function Sidebar(props: ISidebarProps) {
         }
     }, [props]);
 
-    return components.ui.renderView(props.view || 'layout.SidebarView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         isOpened,
         toggleSidebar,
         onClickNav,
-    });
+        hasSeparatedNavItem: props.hasSeparatedNavItem,
+        className: props.className,
+        style: props.style,
+        logo: props.logo,
+        menu: props.menu,
+        user: props.user,
+        items: props.items,
+        footerIcons: props.footerIcons,
+        isShink: props.isShink,
+    }), [isOpened, onClickNav, props.className, props.footerIcons, props.hasSeparatedNavItem, props.isShink, props.items,
+        props.logo, props.menu, props.style, props.user, toggleSidebar]);
+
+    return components.ui.renderView(props.view || 'layout.SidebarView', viewProps);
 }
 
 Sidebar.defaultProps = {

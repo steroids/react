@@ -192,7 +192,7 @@ export default function useAbsolutePositioning(props: IAbsolutePositioningInputP
         if (timerRef.current) {
             clearTimeout(timerRef.current);
         }
-        // TODO add time value to props
+
         timerRef.current = setTimeout(() => setIsComponentExist(false), props.componentDestroyDelay);
     }, [props.componentDestroyDelay]);
 

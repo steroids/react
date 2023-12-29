@@ -358,7 +358,6 @@ function Form(props: IFormProps): JSX.Element {
     const onSubmit = useCallback(async (e = null) => {
         dispatch(formSetSubmitting(props.formId, true));
 
-        // TODO
         if (e) {
             e.preventDefault();
         }

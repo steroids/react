@@ -133,7 +133,6 @@ export const queryReplace = (model: Model, location, values, useHash) => {
 
     let query = queryString.stringify(result);
     if (useHash) {
-        // TODO May be window.location?
         query = '#' + query;
         if (location.hash !== query) {
             location.hash = query;

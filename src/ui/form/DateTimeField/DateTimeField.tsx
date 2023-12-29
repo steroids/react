@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';

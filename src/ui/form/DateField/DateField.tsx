@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
@@ -83,8 +83,8 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     }), [props.calendarProps, props.input.onChange, props.input.value, props.valueFormat]);
 
     const viewProps = useMemo(() => ({
-        calendarProps,
         ...props.viewProps,
+        calendarProps,
         onClear,
         onClose,
         isOpened,

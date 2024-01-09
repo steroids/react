@@ -161,7 +161,8 @@ function Notifications(props:INotificationsProps): JSX.Element {
     [innerNotifications, closing, closingIds, onClose]);
 
     const NotificationsItemView = props.itemView || components.ui.getView('layout.NotificationsItemView');
-    return components.ui.renderView(props.view || 'layout.NotificationsView', {
+
+    const viewProps = useMemo(() => ({
         className: props.className,
         position: position || '',
         children: items.map(item => (
@@ -170,7 +171,9 @@ function Notifications(props:INotificationsProps): JSX.Element {
                 {...item}
             />
         )),
-    });
+    }), [props.className, position, items, NotificationsItemView]);
+
+    return components.ui.renderView(props.view || 'layout.NotificationsView', viewProps);
 }
 
 Notifications.defaultProps = {

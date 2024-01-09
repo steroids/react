@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import _isBoolean from 'lodash-es/isBoolean';
 import _range from 'lodash-es/range';
 import _concat from 'lodash-es/concat';
@@ -6,7 +6,6 @@ import _last from 'lodash-es/last';
 import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
 import {useEvent, useMount} from 'react-use';
-import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {ModelAttribute} from 'src/components/MetaComponent';
 import {useComponents, useSelector} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';

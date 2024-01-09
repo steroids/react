@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
-import {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
@@ -320,7 +319,6 @@ function Form(props: IFormProps): JSX.Element {
     const {
         values,
         submitCounter,
-        isInvalid,
         isSubmitting,
         errors,
         setErrors,

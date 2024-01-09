@@ -1,47 +1,72 @@
-import 'jest-enzyme';
-import mountWithApp from '../../../mocks/mountWithApp';
+import '@testing-library/jest-dom';
 import ProgressBar from '../../../../src/ui/layout/ProgressBar/ProgressBar';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 
-describe.skip('ProgressBar tests', () => {
-    it('should render something without props and views', () => {
-        const wrapper = mountWithApp(ProgressBar);
-        expect(wrapper.find('ProgressBar')).not.toBeEmptyRender();
+describe('CircleProgressBar tests', () => {
+    const props = {
+        percent: 30,
+        type: 'circle',
+        showLabel: true,
+        label: percent => `${percent}%`,
+    };
+
+    const expectedCircleProgressBarClassName = 'CircleProgressBarView';
+
+    const wrapper = JSXWrapper(ProgressBar, props);
+
+    it('should be in the document', async () => {
+        const {container} = render(wrapper);
+        const progressBar = getElementByClassName(container, expectedCircleProgressBarClassName);
+
+        expect(progressBar).toBeInTheDocument();
     });
 
-    describe('CircleProgressBar tests', () => {
-        const props = {
-            percent: 30,
-            status: 'success',
-            type: 'circle',
-            showLabel: false,
-        };
+    it('should have label', () => {
+        const expectedLabel = props.percent + '%';
 
-        const wrapper = mountWithApp(ProgressBar, {...props});
+        const {getByText} = render(wrapper);
 
-        it('should static props transmitted unchanged', () => {
-            expect(wrapper.find('ProgressBar')).toHaveProp(props);
-        });
-        it('should be circle', () => {
-            expect(wrapper.find('.CircleProgressBarView')).toExist();
-        });
+        expect(getByText(expectedLabel)).toBeInTheDocument();
+    });
+});
+
+describe('LineProgressBar tests', () => {
+    const props = {
+        percent: 30,
+        type: 'line',
+        showLabel: true,
+        label: percent => `${percent}%`,
+    };
+
+    const expectedLineProgressBarClassName = 'LineProgressBarView';
+
+    const wrapper = JSXWrapper(ProgressBar, props);
+
+    it('should be in the document', async () => {
+        const {container} = render(wrapper);
+        const progressBar = getElementByClassName(container, expectedLineProgressBarClassName);
+
+        expect(progressBar).toBeInTheDocument();
     });
 
-    describe('LineProgressBar tests', () => {
-        const props = {
-            percent: 30,
-            status: 'success',
-            type: 'line',
-            showLabel: true,
-            label: percent => `${percent}%`,
+    it('should have percent styles', () => {
+        const progressLineClassName = 'LineProgressBarView__progressLine';
+        const expectedStyles = {
+            width: props.percent + '%',
         };
 
-        const wrapper = mountWithApp(ProgressBar, {...props});
+        const {container} = render(wrapper);
 
-        it('should static props transmitted unchanged', () => {
-            expect(wrapper.find('ProgressBar')).toHaveProp(props);
-        });
-        it('should be line', () => {
-            expect(wrapper.find('.LineProgressBarView')).toExist();
-        });
+        const progress = getElementByClassName(container, progressLineClassName);
+
+        expect(progress).toHaveStyle(expectedStyles);
+    });
+
+    it('should have label', () => {
+        const expectedLabel = props.percent + '%';
+
+        const {getByText} = render(wrapper);
+
+        expect(getByText(expectedLabel)).toBeInTheDocument();
     });
 });

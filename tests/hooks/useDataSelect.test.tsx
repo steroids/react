@@ -43,7 +43,7 @@ const items = [
     },
 ];
 
-describe.skip('hook useDataSelect', () => {
+describe('hook useDataSelect', () => {
     // TODO keyboard test
 
     it('select multiple', async () => {

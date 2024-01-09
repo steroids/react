@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, IListOutput} from '../../../hooks/useList';
 
@@ -109,8 +110,7 @@ export default function List(props: IListProps): JSX.Element {
         />
     ));
 
-    return components.ui.renderView(props.view || 'list.ListView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         list,
         paginationPosition,
         paginationSizePosition,
@@ -124,5 +124,11 @@ export default function List(props: IListProps): JSX.Element {
         //onFetch,
         //onSort,
         content,
-    });
+        isLoading: props.isLoading,
+        className: props.className,
+        contentClassName: props.contentClassName,
+    }), [content, layoutNamesPosition, list, paginationPosition, paginationSizePosition, props.className, props.contentClassName,
+        props.isLoading, renderEmpty, renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm]);
+
+    return components.ui.renderView(props.view || 'list.ListView', viewProps);
 }

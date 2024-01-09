@@ -1,7 +1,5 @@
 import _get from 'lodash-es/get';
-import {useCallback, useMemo} from 'react';
-import * as React from 'react';
-import {useUpdateEffect} from 'react-use';
+import React, {useCallback, useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
@@ -202,6 +200,24 @@ function Pagination(props: IPaginationProps): JSX.Element {
         onSelect(FIRST_PAGE);
     }, [onSelect]);
 
+    const viewProps = useMemo(() => ({
+        totalPages,
+        pages,
+        onSelect,
+        onSelectNext,
+        onSelectPrev,
+        onSelectLast,
+        onSelectFirst,
+        isFirstPage,
+        isLastPage,
+        size: props.size,
+        className: props.className,
+        showEdgeSteps: props.showEdgeSteps,
+        showSteps: props.showSteps,
+        buttonProps: props.buttonProps,
+    }), [isFirstPage, isLastPage, onSelect, onSelectFirst, onSelectLast, onSelectNext, onSelectPrev, pages, props.buttonProps,
+        props.className, props.showEdgeSteps, props.showSteps, props.size, totalPages]);
+
     if (!props.list || !page || !pageSize || props.list.total <= pageSize) {
         return null;
     }
@@ -212,18 +228,7 @@ function Pagination(props: IPaginationProps): JSX.Element {
     }
 
     const defaultView = (props.loadMore ? 'list.PaginationMoreView' : 'list.PaginationButtonView');
-    return components.ui.renderView(props.view || defaultView, {
-        ...props,
-        totalPages,
-        pages,
-        onSelect,
-        onSelectNext,
-        onSelectPrev,
-        onSelectLast,
-        onSelectFirst,
-        isFirstPage,
-        isLastPage,
-    });
+    return components.ui.renderView(props.view || defaultView, viewProps);
 }
 
 Pagination.defaultProps = {

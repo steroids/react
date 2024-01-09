@@ -92,7 +92,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     }, [onStepDown, onStepUp]);
 
     const inputProps = useMemo(() => ({
-        ...props.viewProps,
         ...props.inputProps,
         name: props.input.name,
         value: props.input.value ?? '',
@@ -105,9 +104,10 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         disabled: props.disabled,
         autoComplete: 'off',
         onKeyDown,
-    }), [props.viewProps, props.inputProps, props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, onInputChange, onKeyDown]);
+    }), [props.inputProps, props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, onInputChange, onKeyDown]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         inputProps,
         onStepUp,
         onStepDown,

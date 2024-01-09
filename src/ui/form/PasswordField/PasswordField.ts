@@ -92,10 +92,10 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         onChange,
         type,
         ...props.inputProps,
-        ...props.viewProps,
-    }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.viewProps, type]);
+    }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, type]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         inputProps,
         securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
         onClear,
@@ -105,7 +105,8 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         className: props.className,
         showSecurityIcon: props.showSecurityIcon,
         showSecurityBar: props.showSecurityBar,
-    }), [inputProps, onClear, onShowButtonClick, props.className, props.input, props.showSecurityBar, props.showSecurityIcon, props.size]);
+    }), [inputProps, onClear, onShowButtonClick, props.className, props.input, props.showSecurityBar, props.showSecurityIcon,
+        props.size, props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', viewProps);
 }

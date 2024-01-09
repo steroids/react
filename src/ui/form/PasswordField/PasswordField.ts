@@ -84,8 +84,6 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
     }, [type]);
 
     const inputProps = useMemo(() => ({
-        ...props.inputProps,
-        ...props.viewProps,
         name: props.input.name,
         defaultValue: props.input.value ?? '',
         placeholder: props.placeholder,
@@ -93,6 +91,8 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
         ref: inputRef,
         onChange,
         type,
+        ...props.inputProps,
+        ...props.viewProps,
     }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.viewProps, type]);
 
     const viewProps = useMemo(() => ({

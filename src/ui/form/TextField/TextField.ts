@@ -64,13 +64,14 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     }), [props.input.name, props.input.value, props.placeholder, props.disabled, props.inputProps, handleChange, onKeyUp, inputRef]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         inputProps,
         onClear,
         errors: props.errors,
         size: props.size,
         className: props.className,
         showClear: props.showClear,
-    }), [inputProps, onClear, props.className, props.errors, props.showClear, props.size]);
+    }), [inputProps, onClear, props.className, props.errors, props.showClear, props.size, props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.TextFieldView', viewProps);
 }

@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, {useMemo} from 'react';
 import _toInteger from 'lodash-es/toInteger';
-import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 

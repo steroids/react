@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import fieldWrapper, {

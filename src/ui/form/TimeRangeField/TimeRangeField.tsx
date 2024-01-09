@@ -188,6 +188,7 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
     }), [inputPropsTo.onChange, inputPropsTo.value, onCloseTo, onNowTo, props.timePanelViewProps]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         onClear,
         onClose,
         inputPropsFrom: extendedInputPropsFrom,
@@ -205,8 +206,8 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         showRemove: props.showRemove,
         className: props.className,
     }), [extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
-        props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size, props.style, timePanelFromViewProps,
-        timePanelToViewProps]);
+        props.disabled, props.errors, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size, props.style,
+        props.viewProps, timePanelFromViewProps, timePanelToViewProps]);
 
     return components.ui.renderView(props.view || 'form.TimeRangeFieldView', viewProps);
 }

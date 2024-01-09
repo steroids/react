@@ -521,6 +521,7 @@ function Form(props: IFormProps): JSX.Element {
     }), [dispatch, props.formId, props.model, props.prefix, props.size, provider, reducer]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         isSubmitting,
         onSubmit,
         submitLabel: props.submitLabel,
@@ -529,7 +530,7 @@ function Form(props: IFormProps): JSX.Element {
         className: props.className,
         style: props.style,
         autoFocus: props.autoFocus,
-    }), [isSubmitting, onSubmit, props.autoFocus, props.children, props.className, props.fields, props.style, props.submitLabel]);
+    }), [isSubmitting, onSubmit, props.autoFocus, props.children, props.className, props.fields, props.style, props.submitLabel, props.viewProps]);
 
     // Wait initialization (only for redux)
     if (values === undefined) {

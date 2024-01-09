@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, {useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import {IBaseFieldProps} from '../InputField/InputField';

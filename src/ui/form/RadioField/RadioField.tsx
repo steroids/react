@@ -1,6 +1,4 @@
-import * as React from 'react';
-import {useMemo} from 'react';
-import {checkPassword} from '@steroidsjs/core/ui/form/PasswordField/PasswordField';
+import React, {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 

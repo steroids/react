@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface ICounter {
@@ -86,11 +86,21 @@ function Badge(props: IBadgeProps): JSX.Element {
         }
     }, [props]);
 
-    return components.ui.renderView(props.view || 'content.BadgeView', {
-        ...props,
-        isExist,
+    const viewProps = useMemo(() => ({
+        type: props.type,
+        size: props.size,
+        showClose: props.showClose,
+        roundingStyle: props.roundingStyle,
+        counter: props.counter,
+        message: props.message,
+        className: props.className,
+        style: props.style,
         onClose,
-    });
+        isExist,
+    }), [props.type, props.size, props.showClose, props.roundingStyle, props.counter, props.message,
+        props.className, props.style, onClose, isExist]);
+
+    return components.ui.renderView(props.view || 'content.BadgeView', viewProps);
 }
 
 Badge.defaultProps = {

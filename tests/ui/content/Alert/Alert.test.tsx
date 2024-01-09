@@ -14,12 +14,12 @@ describe('Alert', () => {
         style: {width: '45%'},
         showClose: true,
         showIcon: true,
-        testId: 'alert-test',
         view: AlertView,
     };
 
     const wrapper = JSXWrapper(Alert, props);
     const expectedAlertClass = 'AlertView';
+    const testId = 'alert-test';
 
     it('should render something without props', () => {
         const {container} = render(<Alert view={AlertView} />);
@@ -29,7 +29,7 @@ describe('Alert', () => {
 
     it('should be in the document', () => {
         const {getByTestId} = render(wrapper);
-        const alert = getByTestId(props.testId);
+        const alert = getByTestId(testId);
 
         expect(alert).toBeInTheDocument();
         expect(alert).toHaveClass(expectedAlertClass);
@@ -37,7 +37,7 @@ describe('Alert', () => {
 
     it('should render right icons', () => {
         const {getByTestId, getAllByRole} = render(wrapper);
-        const alert = getByTestId(props.testId);
+        const alert = getByTestId(testId);
         const closeIconIndex = 1;
         const closeIcon = getAllByRole('img')[closeIconIndex];
 
@@ -47,7 +47,7 @@ describe('Alert', () => {
 
     it('should have right external className', () => {
         const {getByTestId} = render(wrapper);
-        const alert = getByTestId(props.testId);
+        const alert = getByTestId(testId);
 
         expect(alert).toHaveClass(props.className);
     });
@@ -61,7 +61,7 @@ describe('Alert', () => {
 
     it('should have right external style', () => {
         const {getByTestId} = render(wrapper);
-        const alert = getByTestId(props.testId);
+        const alert = getByTestId(testId);
 
         expect(alert).toHaveStyle(props.style);
     });

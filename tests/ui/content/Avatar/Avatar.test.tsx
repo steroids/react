@@ -13,17 +13,17 @@ describe('Avatar tests', () => {
         shape: 'circle',
         status: true,
         style: {width: '30px'},
-        testId: 'avatar-test',
-        bodyTestId: 'body-test',
         view: AvatarView,
     };
 
+    const testId = 'avatar-test';
+    const bodyTestId = 'body-test';
     const expectedAvatarClass = 'AvatarView';
     const wrapper = JSXWrapper(Avatar, props);
 
     it('avatar should be in the document', () => {
         const {getByTestId} = render(wrapper);
-        const avatar = getByTestId(props.testId);
+        const avatar = getByTestId(testId);
 
         expect(avatar).toBeInTheDocument();
         expect(avatar).toHaveClass(expectedAvatarClass);
@@ -32,7 +32,7 @@ describe('Avatar tests', () => {
 
     it('avatar should have right size, shape, status', () => {
         const {getByTestId} = render(wrapper);
-        const avatar = getByTestId(props.testId);
+        const avatar = getByTestId(testId);
 
         expect(avatar).toHaveClass(`${expectedAvatarClass}_size_${props.size}`);
         expect(avatar).toHaveClass(`${expectedAvatarClass}_shape_${props.shape}`);
@@ -51,7 +51,7 @@ describe('Avatar tests', () => {
 
     it('body should have right style', () => {
         const {getByTestId} = render(wrapper);
-        const body = getByTestId(props.bodyTestId);
+        const body = getByTestId(bodyTestId);
 
         expect(body).toBeInTheDocument();
         expect(body).toHaveStyle(props.style);

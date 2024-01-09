@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import useComponents from '../../../hooks/useComponents';
 import {IDropDownProps} from '../DropDown/DropDown';
 
@@ -67,10 +67,16 @@ function Menu(props: IMenuProps): JSX.Element {
     const components = useComponents();
     const MenuItemView = components.ui.getView(props.itemView || 'content.MenuItemView');
 
-    return components.ui.renderView(props.view || 'content.MenuView', {
-        ...props,
+    const viewProps = useMemo(() => ({
+        items: props.items,
+        dropDownProps: props.dropDownProps,
+        icon: props.icon,
+        className: props.className,
+        style: props.style,
         itemView: MenuItemView,
-    });
+    }), [MenuItemView, props.className, props.dropDownProps, props.icon, props.items, props.style]);
+
+    return components.ui.renderView(props.view || 'content.MenuView', viewProps);
 }
 
 export default Menu;

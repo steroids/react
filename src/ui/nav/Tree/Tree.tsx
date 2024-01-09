@@ -52,10 +52,10 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
     levelPadding?: number,
 
     /**
-     * Показать иконку c лева от элемента
+     * Скрыть иконку c лева от элемента
      * @example true
      */
-    showIcon?: boolean,
+    hideIcon?: boolean,
 
     /**
      * Кастомная иконка, заменяющая иконку раскрытия по умолчанию
@@ -100,5 +100,5 @@ Tree.defaultProps = {
     levelPadding: 32,
     hasIconExpandOnly: false,
     useSameSelectedItemId: true,
-    showIcon: true,
+    hideIcon: false,
 };

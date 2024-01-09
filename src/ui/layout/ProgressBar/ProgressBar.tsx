@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useMemo} from 'react';
 import Icon from '../../content/Icon/Icon';
 import {useComponents} from '../../../hooks';
 
@@ -66,18 +67,17 @@ function ProgressBar(props: IProgressBarProps): JSX.Element {
         return props.label(props.percent);
     });
 
-    if (props.type === 'line') {
-        return components.ui.renderView('layout.LineProgressBarView', {
-            percent: props.percent,
-            status: props.status,
-            size: props.size,
-            label: getLabel()});
-    }
-    return components.ui.renderView('layout.CircleProgressBarView', {
+    const viewProps = useMemo(() => ({
         percent: props.percent,
         status: props.status,
         size: props.size,
-        label: getLabel()});
+        label: getLabel(),
+    }), [props.percent, props.status, props.size, getLabel]);
+
+    if (props.type === 'line') {
+        return components.ui.renderView('layout.LineProgressBarView', viewProps);
+    }
+    return components.ui.renderView('layout.CircleProgressBarView', viewProps);
 }
 
 ProgressBar.defaultProps = {

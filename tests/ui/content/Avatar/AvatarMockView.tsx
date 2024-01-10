@@ -4,8 +4,6 @@ import {useBem} from '../../../../src/hooks';
 
 interface IAvatarProps extends IAvatarViewProps {
     formattedTitle: any,
-    testId: string,
-    bodyTestId: string,
 }
 
 export default function Avatar(props: IAvatarProps) {
@@ -38,7 +36,7 @@ export default function Avatar(props: IAvatarProps) {
 
     return (
         <div
-            data-testid={props.testId}
+            data-testid='avatar-test'
             className={bem(bem.block({
                 size: props.size,
                 shape: props.shape,
@@ -54,7 +52,7 @@ export default function Avatar(props: IAvatarProps) {
                     ...props.style,
                     ...customSize,
                 }}
-                data-testid={props.bodyTestId}
+                data-testid='body-test'
             >
                 {(props.src && renderImage()) || (
                     <span>

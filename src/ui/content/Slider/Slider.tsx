@@ -36,7 +36,5 @@ export type ISliderViewProps = ISliderProps
 export default function Slider(props: ISliderProps) {
     const components = useComponents();
 
-    return components.ui.renderView(props.view || 'content.SliderView', {
-        ...props,
-    });
+    return components.ui.renderView(props.view || 'content.SliderView', props);
 }

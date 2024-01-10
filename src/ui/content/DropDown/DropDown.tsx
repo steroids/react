@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback, useRef} from 'react';
+import {useCallback, useMemo, useRef} from 'react';
 import {useClickAway, useEvent} from 'react-use';
 import {useComponents} from '../../../hooks';
 import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
@@ -113,6 +113,20 @@ function DropDown(props: IDropDownProps): JSX.Element {
             onShow();
         };
     }
+
+    const viewProps = useMemo(() => ({
+        className: props.className,
+        forwardedRef,
+        content: props.content,
+        position,
+        style,
+        arrowPosition,
+        calculatePosition,
+        isComponentVisible,
+        onClose: onHide,
+        hasArrow: props.hasArrow,
+    }), [arrowPosition, calculatePosition, isComponentVisible, onHide, props.className, props.content, props.hasArrow, position, style]);
+
     return (
         <>
             {childrenElement
@@ -126,16 +140,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
                 // TODO Change Portal to global
                 <TooltipInnerPortal>
                     <DropDownView
-                        {...props}
-                        className={props.className}
-                        forwardedRef={forwardedRef}
-                        content={props.content}
-                        position={position}
-                        style={style}
-                        arrowPosition={arrowPosition}
-                        calculatePosition={calculatePosition}
-                        isComponentVisible={isComponentVisible}
-                        onClose={onHide}
+                        {...viewProps}
                     />
                 </TooltipInnerPortal>
             )}

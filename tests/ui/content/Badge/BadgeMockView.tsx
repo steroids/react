@@ -4,17 +4,13 @@ import {IBadgeViewProps} from '../../../../src/ui/content/Badge/Badge';
 import Icon from '../../../../src/ui/content/Icon/Icon';
 import IconMockView from '../Icon/IconMockView';
 
-interface IBadgeMockProps extends IBadgeViewProps {
-    testId: string,
-}
-
-export default function BadgeView(props: IBadgeMockProps) {
+export default function BadgeView(props: IBadgeViewProps) {
     const bem = useBem('BadgeView');
 
     return (
         props.isExist && (
             <div
-                data-testid={props.testId}
+                data-testid='badge-test'
                 className={bem(
                     bem.block({
                         [props.type]: !!props.type,

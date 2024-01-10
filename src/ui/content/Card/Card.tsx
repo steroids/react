@@ -1,3 +1,4 @@
+import React from 'react';
 import {ILinkProps} from '../../nav/Link/Link';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
@@ -121,9 +122,8 @@ export type ICardViewProps = ICardProps
 
 function Card(props: ICardProps) {
     const components = useComponents();
-    return components.ui.renderView(props.view || 'content.CardView', {
-        ...props,
-    });
+
+    return components.ui.renderView(props.view || 'content.CardView', props);
 }
 
 export default Card;

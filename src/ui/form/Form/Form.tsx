@@ -188,6 +188,11 @@ export interface IFormProps extends IUiComponent {
      */
     autoDestroy?: boolean,
 
+    /**
+     * Дополнительные кнопки
+     */
+    buttons?: React.ReactNode,
+
     [key: string]: any,
 }
 
@@ -199,6 +204,7 @@ export interface IFormViewProps {
     autoFocus?: boolean,
     style?: CustomStyle,
     children?: React.ReactNode,
+    buttons?: React.ReactNode,
 }
 
 export interface IFormReducerState {
@@ -358,7 +364,6 @@ function Form(props: IFormProps): JSX.Element {
     const onSubmit = useCallback(async (e = null) => {
         dispatch(formSetSubmitting(props.formId, true));
 
-        // TODO
         if (e) {
             e.preventDefault();
         }
@@ -536,6 +541,7 @@ function Form(props: IFormProps): JSX.Element {
                     submitLabel: props.submitLabel,
                     fields: props.fields,
                     children: props.children,
+                    buttons: props.buttons,
                     className: props.className,
                     style: props.style,
                     autoFocus: props.autoFocus,

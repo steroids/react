@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 
 /**
@@ -96,12 +96,20 @@ function Alert(props: IAlertProps): JSX.Element {
         }
     }, [props]);
 
-    return components.ui.renderView(props.view || 'content.AlertView', {
-        ...props,
+    const viewProps = useMemo(() => ({
+        type: props.type,
+        showIcon: props.showIcon,
+        message: props.message,
+        description: props.description,
+        showClose: props.showClose,
+        className: props.className,
+        style: props.style,
         isExist,
         isVisible,
         onClose,
-    });
+    }), [isExist, isVisible, onClose, props.className, props.description, props.message, props.showClose, props.showIcon, props.style, props.type]);
+
+    return components.ui.renderView(props.view || 'content.AlertView', viewProps);
 }
 
 Alert.defaultProps = {

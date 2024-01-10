@@ -1,12 +1,7 @@
 import '@testing-library/jest-dom';
+import {waitFor} from '@testing-library/react';
 import Tooltip from '../../../../src/ui/layout/Tooltip/Tooltip';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-
-/*
-* @Todo
-* - Write a test to toHaveClass(`TooltipView_show')
-*
-* */
 
 describe('Tooltip tests', () => {
     const props = {
@@ -26,6 +21,18 @@ describe('Tooltip tests', () => {
 
         expect(tooltip).toBeInTheDocument();
         expect(tooltip).toHaveClass(expectedTooltipClass);
+    });
+
+    it('should have a class modifier from the absolute positioning hook', async () => {
+        const expectedTooltipShowClass = 'TooltipView_show';
+
+        const {getByTestId} = render(wrapper);
+        const tooltip = getByTestId(props.testId);
+
+        await waitFor(() => {
+            expect(tooltip).toBeInTheDocument();
+            expect(tooltip).toHaveClass(expectedTooltipShowClass);
+        });
     });
 
     it('should have correct content', () => {

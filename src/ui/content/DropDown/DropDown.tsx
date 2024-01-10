@@ -137,7 +137,6 @@ function DropDown(props: IDropDownProps): JSX.Element {
                     </span>
                 )}
             {isComponentExist && (
-                // TODO Change Portal to global
                 <TooltipInnerPortal>
                     <DropDownView
                         {...viewProps}

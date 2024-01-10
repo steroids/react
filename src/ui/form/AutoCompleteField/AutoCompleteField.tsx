@@ -55,7 +55,6 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
         value: string | number,
         disabled: boolean,
         onChange: (value: string) => void,
-        onFocus: (e: Event | React.FocusEvent) => void,
         onBlur: (e: Event | React.FocusEvent) => void,
         className?: CssClassName,
     },
@@ -140,17 +139,6 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         setQuery(value);
         props.input.onChange.call(null, value);
     }, [props.input.onChange]);
-
-    // TODO
-    const onFocus = (e) => {
-        props.onOpen();
-        if (props.searchOnFocus) {
-            props.onSearch(props.input.value);
-        }
-        if (props.inputProps && props.inputProps.onFocus) {
-            props.inputProps.onFocus(e);
-        }
-    };
 
     const onBlur = useCallback((e) => {
         setTimeout(() => {

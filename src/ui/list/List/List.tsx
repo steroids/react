@@ -70,8 +70,6 @@ export default function List(props: IListProps): JSX.Element {
         renderPaginationSize,
         renderLayoutNames,
         renderSearchForm,
-        //onFetch,
-        //onSort,
     } = useList({
         listId: props.listId,
         primaryKey: props.primaryKey,
@@ -121,8 +119,6 @@ export default function List(props: IListProps): JSX.Element {
         renderPaginationSize,
         renderLayoutNames,
         renderSearchForm,
-        //onFetch,
-        //onSort,
         content,
         isLoading: props.isLoading,
         className: props.className,

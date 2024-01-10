@@ -1,10 +1,16 @@
 import configureMockStore from 'redux-mock-store';
 import {
+    IList,
     add,
     deleteItem,
     listInit,
     listSetItems,
     listSetLayout,
+    toggleAll,
+    toggleItem,
+    update,
+    httpFetchHandler,
+    localFetchHandler,
     LIST_INIT,
     LIST_ITEM_ADD,
     LIST_ITEM_DELETE,
@@ -13,11 +19,166 @@ import {
     LIST_SET_LAYOUT,
     LIST_TOGGLE_ALL,
     LIST_TOGGLE_ITEM,
-    toggleAll,
-    toggleItem,
-    update,
 } from '../../src/actions/list';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
+
+describe('httpFetchHandler function', () => {
+    const expectedData = 'mockData';
+    const mockHttp = {
+        send: jest.fn().mockResolvedValue({data: expectedData}),
+    };
+    const mockList: IList = {
+        action: '/api/v1/mock',
+        actionMethod: 'GET',
+        scope: ['mockScope1', 'mockScope2'],
+    };
+    const mockQuery = {
+        page: 1,
+        pageSize: 50,
+    };
+    const mockComponents = {
+        http: mockHttp,
+    };
+
+    it('should call http.send with correct parameters', async () => {
+        const expectedUrl = `${mockList.action}?scope=${mockList.scope.join(',')}`;
+
+        await httpFetchHandler(mockList, mockQuery, mockComponents);
+
+        expect(mockHttp.send).toHaveBeenCalledWith(mockList.actionMethod, expectedUrl, mockQuery);
+    });
+
+    it('should return correct data', async () => {
+        const result = await httpFetchHandler(mockList, mockQuery, mockComponents);
+
+        expect(result).toEqual(expectedData);
+    });
+
+    it('should call onError when http.send throws an error', async () => {
+        const mockError = new Error('mockError');
+        mockHttp.send.mockRejectedValue(mockError);
+        mockList.onError = jest.fn();
+
+        try {
+            await httpFetchHandler(mockList, mockQuery, mockComponents);
+        } catch (e) {
+            expect(mockList.onError).toHaveBeenCalledWith(mockError);
+        }
+    });
+});
+
+describe('localFetchHandler', () => {
+    const items = [
+        {
+            id: 1,
+            departureCity: 'Moscow',
+            destinationCity: 'Kaliningrad',
+            distance: 100,
+        },
+        {
+            id: 2,
+            departureCity: 'Yekaterinburg',
+            destinationCity: 'Vladivostok',
+            distance: 200,
+        },
+        {
+            id: 3,
+            departureCity: 'Novosibirsk',
+            destinationCity: 'Yekaterinburg',
+            distance: 852,
+        },
+        {
+            id: 4,
+            departureCity: 'Moscow',
+            destinationCity: 'Kazan',
+            distance: 268,
+        },
+    ];
+
+    const mockList: IList = {
+        items,
+        pageAttribute: 'page',
+        pageSizeAttribute: 'pageSize',
+        sortAttribute: 'distance',
+        sourceItems: items,
+    };
+
+    it('should correctly filter items', () => {
+        const expectedFilteredItems = [
+            items[0], items[3],
+        ];
+
+        const result = localFetchHandler(mockList, {
+            departureCity: 'moscow',
+        });
+
+        expect(result.items).toEqual(expectedFilteredItems);
+        expect(result.total).toBe(expectedFilteredItems.length);
+    });
+
+    it('should correctly sort items', () => {
+        const expectedSortedItems = items.sort((item1, item2) => item1.distance - item2.distance);
+
+        const result = localFetchHandler(mockList, {
+            distance: 'distance',
+        });
+
+        expect(result.items).toEqual(expectedSortedItems);
+        expect(result.total).toBe(expectedSortedItems.length);
+    });
+
+    it('should correctly paginate items', () => {
+        const expectedFilteredItems = [
+            items[1],
+        ];
+
+        const result = localFetchHandler(mockList, {
+            page: 2,
+            pageSize: 1,
+        });
+
+        expect(result.items).toEqual(expectedFilteredItems);
+    });
+
+    it('should correctly handle null or undefined query values', () => {
+        const result = localFetchHandler(mockList, {
+            page: null,
+            pageSize: undefined,
+        });
+
+        expect(result.items).toEqual(items);
+        expect(result.total).toBe(items.length);
+    });
+
+    it('should return an empty array when items is empty', () => {
+        const expectedResult = {
+            items: [],
+            total: 0,
+        };
+
+        const result = localFetchHandler({
+            ...mockList,
+            items: [],
+            sourceItems: [],
+        }, {});
+
+        expect(result.items).toEqual(expectedResult.items);
+        expect(result.total).toEqual(expectedResult.total);
+    });
+
+    it('should return all items when query are not provided', () => {
+        const result = localFetchHandler(mockList, {});
+
+        expect(result.items).toEqual(mockList.items);
+        expect(result.total).toBe(mockList.items.length);
+    });
+
+    it('should return the same items when items are equal to sourceItems', () => {
+        const result = localFetchHandler(mockList, {});
+
+        expect(result.items).toEqual(items);
+    });
+});
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
@@ -26,8 +187,6 @@ describe('auth actions', () => {
     beforeEach(() => {
         store.clearActions();
     });
-
-    //TODO httpFetchHandler localFetchHandler
 
     it('listInit', () => {
         const listId = 'list1';

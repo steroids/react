@@ -47,6 +47,12 @@ export default {
     'content.ChatInputView': {
         lazy: () => require('./content/Chat/mockViews/ChatInput/ChatInputMockView').default,
     },
+    'layout.LineProgressBarView': {
+        lazy: () => require('./layout/ProgressBar/LineProgressBarMockView').default,
+    },
+    'layout.CircleProgressBarView': {
+        lazy: () => require('./layout/ProgressBar/CircleProgressBarMockView').default,
+    },
     'layout.TooltipView': {
         lazy: () => require('./layout/Tooltip/TooltipMockView').default,
     },

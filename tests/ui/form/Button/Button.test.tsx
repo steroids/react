@@ -11,6 +11,18 @@ describe('Button tests', () => {
 
     const expectedButtonClass = 'ButtonView';
 
+    let windowSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+        windowSpy = jest.spyOn(global.window, 'confirm');
+        process.env.IS_WEB = 'true';
+    });
+
+    afterEach(() => {
+        windowSpy.mockRestore();
+        process.env.IS_WEB = undefined;
+    });
+
     it('button should be in the document', () => {
         const {container} = render(JSXWrapper(Button, props));
         const button = getElementByClassName(container, expectedButtonClass);
@@ -160,5 +172,17 @@ describe('Button tests', () => {
         expect(mockedOnClick.mock.calls.length).toBe(expectedClickCallCount);
     });
 
-    //Todo confirm action
+    it('should open confirm window on click', () => {
+        const confirmText = 'Test Confirm';
+
+        const {container} = render(JSXWrapper(Button, {
+            ...props,
+            confirm: confirmText,
+        }));
+
+        const button = getElementByTag(container, 'button');
+        fireEvent.click(button);
+
+        expect(windowSpy).toHaveBeenCalledWith(confirmText);
+    });
 });

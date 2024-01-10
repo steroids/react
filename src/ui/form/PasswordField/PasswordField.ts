@@ -95,7 +95,7 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
     }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, type]);
 
     const viewProps = useMemo(() => ({
-        ...props.viewProps,
+        viewProps: props.viewProps,
         inputProps,
         securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
         onClear,

@@ -251,13 +251,14 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         disabled: props.disabled,
         className: props.className,
         showRemove: props.showRemove,
-        errors: props.errors,
+        errorsFrom: props.errorsFrom,
+        errorsTo: props.errorsTo,
         inputPropsTo: extendedInputPropsTo,
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         style: props.style,
-    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose,
-        props.className, props.disabled, props.errors, props.icon, props.showRemove, props.size, props.style]);
+    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear,
+        onClose, props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size, props.style]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);
 }
@@ -271,7 +272,6 @@ DateRangeField.defaultProps = {
     showRemove: true,
     hasInitialFocus: false,
     icon: true,
-    noBorder: false,
     size: 'md',
     maskOptions: {
         from: maskitoDateOptionsGenerator({

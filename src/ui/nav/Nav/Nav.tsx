@@ -1,15 +1,12 @@
-import * as React from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import {useCallback, useEffect, useMemo, useState} from 'react';
 import __isEmpty from 'lodash-es/isEmpty';
-import __isArray from 'lodash-es/isArray';
 import {useComponents, useSelector} from '../../../hooks';
 import {
     getActiveRouteIds, getNavItems, getRouteParams,
-    getRouterParams,
 } from '../../../reducers/router';
 import {IButtonProps} from '../../form/Button/Button';
 
@@ -178,7 +175,7 @@ function Nav(props: INavProps): JSX.Element {
         }
     }, [props.activeTab]);
 
-    const renderContent = () => {
+    const renderContent = useCallback(() => {
         const items = Array.isArray(props.items) ? props.items : [];
         const activeItem = items.find((item, index) => activeTab === (_has(item, 'id') ? item.id : index));
         if (!activeItem || !activeItem.content) {
@@ -194,7 +191,7 @@ function Nav(props: INavProps): JSX.Element {
             );
         }
         return activeItem.content;
-    };
+    }, [activeTab, props.items]);
 
     const onClick = useCallback((item, index) => {
         const newActiveTab = _has(item, 'id') ? item.id : index;
@@ -232,13 +229,18 @@ function Nav(props: INavProps): JSX.Element {
     const items = useMemo(() => formatItems(),
         [formatItems]);
 
-    return components.ui.renderView(props.view || defaultViewMap[props.layout], {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
         onClick,
         disabled: props.disabled,
+        size: props.size,
+        icon: props.icon,
+        className: props.className,
+        navClassName: props.navClassName,
         children: renderContent(),
-    });
+    }), [items, onClick, props.className, props.disabled, props.icon, props.navClassName, props.size, renderContent]);
+
+    return components.ui.renderView(props.view || defaultViewMap[props.layout], viewProps);
 }
 
 Nav.defaultProps = {

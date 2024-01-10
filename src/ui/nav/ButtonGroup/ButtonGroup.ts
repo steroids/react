@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, {Dispatch, SetStateAction, useMemo, useState} from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
@@ -74,12 +74,12 @@ function ButtonGroup(props: IButtonGroupProps): JSX.Element {
         }
     }, [props.activeButton]);
 
-    const onClick = (buttonId: number | string | boolean) => {
+    const onClick = React.useCallback((buttonId: number | string | boolean) => {
         setActiveButton(buttonId);
         props.onClick(buttonId);
-    };
+    }, [props]);
 
-    return components.ui.renderView(props.view || 'nav.ButtonGroupView', {
+    const viewProps = useMemo(() => ({
         className: props.className,
         style: props.style,
         buttonProps: props.buttonProps,
@@ -87,7 +87,9 @@ function ButtonGroup(props: IButtonGroupProps): JSX.Element {
         activeButton,
         items,
         onClick,
-    });
+    }), [activeButton, items, onClick, props.buttonProps, props.className, props.style]);
+
+    return components.ui.renderView(props.view || 'nav.ButtonGroupView', viewProps);
 }
 
 export default ButtonGroup;

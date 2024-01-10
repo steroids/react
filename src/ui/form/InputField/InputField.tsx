@@ -196,7 +196,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         placeholder: props.placeholder,
         required: props.required,
         id: props.id,
-        ...props,
+        viewProps: props.viewProps,
     }), [inputProps, inputRef, onClear, props]);
 
     // No render for hidden input

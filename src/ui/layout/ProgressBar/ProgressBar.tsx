@@ -51,33 +51,34 @@ export interface IProgressBarProps {
 function ProgressBar(props: IProgressBarProps): JSX.Element {
     const components = useComponents();
 
-    const getLabel = (() => {
-        if (!props.showLabel) {
-            return null;
-        }
-        if (props.icon) {
-            return props.icon(props.status, props.percent);
-        }
-        if (props.status === 'success') {
-            return <Icon name="check" />;
-        }
-        if (props.status === 'exception') {
-            return <Icon name="times" />;
-        }
-        return props.label(props.percent);
-    });
+    const viewProps = useMemo(() => {
+        const getLabel = (() => {
+            if (!props.showLabel) {
+                return null;
+            }
+            if (props.icon) {
+                return props.icon(props.status, props.percent);
+            }
+            if (props.status === 'success') {
+                return <Icon name="check" />;
+            }
+            if (props.status === 'exception') {
+                return <Icon name="times" />;
+            }
+            return props.label(props.percent);
+        });
 
-    const viewProps = useMemo(() => ({
-        percent: props.percent,
-        status: props.status,
-        size: props.size,
-        label: getLabel(),
-    }), [props.percent, props.status, props.size, getLabel]);
+        return {
+            percent: props.percent,
+            status: props.status,
+            size: props.size,
+            label: getLabel(),
+        };
+    }, [props]);
 
-    if (props.type === 'line') {
-        return components.ui.renderView('layout.LineProgressBarView', viewProps);
-    }
-    return components.ui.renderView('layout.CircleProgressBarView', viewProps);
+    const ViewComponent = props.type === 'line' ? 'layout.LineProgressBarView' : 'layout.CircleProgressBarView';
+
+    return components.ui.renderView(ViewComponent, viewProps);
 }
 
 ProgressBar.defaultProps = {

@@ -1,7 +1,7 @@
 import * as React from 'react';
+import {useMemo} from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
-import {IControlItem} from '../../nav/Controls/Controls';
 
 /**
  * Modal
@@ -131,8 +131,22 @@ function Modal(props: IModalProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const viewProps = useMemo(() => ({
+        size: props.size,
+        className: props.className,
+        closeTimeoutMs: props.closeTimeoutMs,
+        isClosing: props.isClosing,
+        onClose: props.onClose,
+        shouldCloseOnEsc: props.shouldCloseOnEsc,
+        shouldCloseOnOverlayClick: props.shouldCloseOnOverlayClick,
+        title: props.title,
+        children: props.children,
+        buttons: props.buttons,
+    }), [props.buttons, props.children, props.className, props.closeTimeoutMs, props.isClosing, props.onClose, props.shouldCloseOnEsc,
+        props.shouldCloseOnOverlayClick, props.size, props.title]);
+
     return (
-        <ModalView {...props}>
+        <ModalView {...viewProps}>
             {(ContentComponent && (
                 <ContentComponent
                     {...props}

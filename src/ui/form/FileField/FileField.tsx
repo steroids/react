@@ -2,7 +2,7 @@ import * as React from 'react';
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -160,63 +160,68 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
         }
     }, [files, props]);
 
-    return (
-        <FileFieldView
-            {...props}
-            buttonView={props.buttonView}
-            buttonProps={{
-                label: props.filesLayout === FilesLayout.wall
-                    ? __('Upload')
-                    : __('Click to Upload'),
-                size: props.size,
+    const viewProps = useMemo(() => ({
+        buttonView: props.buttonView,
+        buttonProps: {
+            label: props.filesLayout === FilesLayout.wall
+                ? __('Upload')
+                : __('Click to Upload'),
+            size: props.size,
+            disabled: props.disabled,
+            onClick: onBrowse,
+            ...props.buttonProps,
+        },
+        itemView: FileFieldItemView,
+        filesLayout: props.filesLayout,
+        className: props.className,
+        itemProps: props.itemProps,
+        items: files.map(file => {
+            const data = file.getResultHttpMessage() || {};
+            const item = {
+                uid: file.getUid(),
+                fileId: data.id || null,
+                title: file.getName(),
+                size: data.size || data.fileSize,
                 disabled: props.disabled,
-                onClick: onBrowse,
-                ...props.buttonProps,
-            }}
-            itemView={FileFieldItemView}
-            items={files.map(file => {
-                const data = file.getResultHttpMessage() || {};
-                const item = {
-                    uid: file.getUid(),
-                    fileId: data.id || null,
-                    title: file.getName(),
-                    size: data.size || data.fileSize,
-                    disabled: props.disabled,
-                    showRemove: props.showRemove,
-                    onRemove: () => onRemove(file),
-                    error: null,
-                    image: null,
-                    progress: null,
-                    item: data,
+                showRemove: props.showRemove,
+                onRemove: () => onRemove(file),
+                error: null,
+                image: null,
+                progress: null,
+                item: data,
+            };
+            // Add error
+            if (file.getResult() === File.RESULT_ERROR) {
+                if (typeof file.getResultHttpMessage() === 'string'
+                    && file.getResultHttpMessage().substr(0, 1) === '{') {
+                    const errorResponse = JSON.parse(file.getResultHttpMessage());
+                    item.error = errorResponse.error || errorResponse.message || __('Ошибка');
+                } else {
+                    item.error = file.getResultHttpMessage()
+                        ? JSON.stringify(file.getResultHttpMessage())
+                        : __('Ошибка');
+                }
+            }
+            // Add thumbnail image
+            if (props.imagesOnly && data.images) {
+                // Image object has properties: url, width, height
+                item.image = data.images[props.imagesProcessor]
+                    || _first(_values(data.images));
+            }
+            // Add progress
+            if (file.getStatus() === File.STATUS_PROCESS) {
+                item.progress = {
+                    bytesUploaded: file.getBytesUploaded(),
+                    percent: file.progress.getPercent(),
                 };
-                // Add error
-                if (file.getResult() === File.RESULT_ERROR) {
-                    if (typeof file.getResultHttpMessage() === 'string'
-                            && file.getResultHttpMessage().substr(0, 1) === '{') {
-                        const errorResponse = JSON.parse(file.getResultHttpMessage());
-                        item.error = errorResponse.error || errorResponse.message || __('Ошибка');
-                    } else {
-                        item.error = file.getResultHttpMessage()
-                            ? JSON.stringify(file.getResultHttpMessage())
-                            : __('Ошибка');
-                    }
-                }
-                // Add thumbnail image
-                if (props.imagesOnly && data.images) {
-                    // Image object has properties: url, width, height
-                    item.image = data.images[props.imagesProcessor]
-                        || _first(_values(data.images));
-                }
-                // Add progress
-                if (file.getStatus() === File.STATUS_PROCESS) {
-                    item.progress = {
-                        bytesUploaded: file.getBytesUploaded(),
-                        percent: file.progress.getPercent(),
-                    };
-                }
-                return item;
-            })}
-        />
+            }
+            return item;
+        }),
+    }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled,
+        props.filesLayout, props.imagesOnly, props.imagesProcessor, props.itemProps, props.showRemove, props.size]);
+
+    return (
+        <FileFieldView {...viewProps} />
     );
 }
 function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {

@@ -68,17 +68,17 @@ function Field(props: IFieldProps): JSX.Element {
         ? components.ui.getField(`form.${component}`)
         : component;
 
-    const componentProps = {
+    const viewProps = useMemo(() => ({
         ...fieldModel,
         ...props,
         ...fieldModel.fieldProps,
         ...fieldModel.searchFieldProps,
-    };
+    }), [fieldModel, props]);
 
     // Render
     return _isFunction(ComponentField)
-        ? ComponentField(componentProps)
-        : <ComponentField {...componentProps} />;
+        ? ComponentField(viewProps)
+        : <ComponentField {...viewProps} />;
 }
 
 export default React.memo(Field);

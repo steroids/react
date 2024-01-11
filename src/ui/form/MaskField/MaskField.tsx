@@ -1,5 +1,4 @@
 import React from 'react';
-import {MaskitoOptions} from '@maskito/core';
 import InputField, {IInputFieldProps} from '../InputField/InputField';
 
 /**
@@ -10,13 +9,8 @@ import InputField, {IInputFieldProps} from '../InputField/InputField';
 export type IMaskFieldProps = IInputFieldProps
 
 function MaskField(props: IMaskFieldProps): JSX.Element {
-    const {mask, maskProps, ...inputProps} = props;
-
     return (
-        <InputField
-            {...inputProps}
-            maskOptions={props.maskOptions}
-        />
+        <InputField {...props} />
     );
 }
 

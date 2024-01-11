@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import _isBoolean from 'lodash-es/isBoolean';
 import _range from 'lodash-es/range';
 import _concat from 'lodash-es/concat';
@@ -6,7 +6,6 @@ import _last from 'lodash-es/last';
 import _isEmpty from 'lodash-es/isEmpty';
 import _get from 'lodash-es/get';
 import {useEvent, useMount} from 'react-use';
-import {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {ModelAttribute} from 'src/components/MetaComponent';
 import {useComponents, useSelector} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
@@ -234,7 +233,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         reducer: context.reducer,
     }), [context.provider, context.reducer, props.formId, props.model, props.prefix, props.size]);
 
-    const commonProps = {
+    const commonProps = useMemo(() => ({
         showAdd: props.showAdd,
         showRemove: props.showRemove,
         size: props.size,
@@ -243,25 +242,35 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         className: props.className,
         tableClassName: props.tableClassName,
         items,
-    };
+    }), [items, props.className, props.disabled, props.required, props.showAdd, props.showRemove, props.size, props.tableClassName]);
+
+    const viewProps = useMemo(() => ({
+        ...commonProps,
+        ...props.viewProps,
+        forwardedRef: nodeRef,
+        onAdd,
+        hasAlternatingColors: props.hasAlternatingColors,
+        style: props.style,
+        children: props.children,
+    }), [commonProps, onAdd, props.children, props.hasAlternatingColors, props.style, props.viewProps]);
+
+    const itemViewProps = useMemo(() => ({
+        ...commonProps,
+        ...props.itemViewProps,
+        onRemove,
+    }), [commonProps, onRemove, props.itemViewProps]);
 
     const FieldListView = props.view || components.ui.getView('form.FieldListView');
     const FieldListItemView = props.itemView || components.ui.getView('form.FieldListItemView');
     return (
         <FormContext.Provider value={contextValue}>
             <FieldListView
-                {...props.viewProps}
-                {...commonProps}
-                forwardedRef={nodeRef}
-                onAdd={onAdd}
-                hasAlternatingColors={props.hasAlternatingColors}
+                {...viewProps}
             >
                 {!_isEmpty(storeToRowIndexMap) && _range(props.input.value || 0).map((index) => (
                     <FieldListItemView
-                        {...props.itemViewProps}
-                        {...commonProps}
+                        {...itemViewProps}
                         key={isWithReduxForm ? storeToRowIndexMap[index] : index}
-                        onRemove={onRemove}
                         prefix={props.input.name + '.' + index}
                         rowIndex={index}
                     />

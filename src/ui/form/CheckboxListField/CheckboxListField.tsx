@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 import Enum from '../../../base/Enum';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
@@ -147,14 +146,18 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         />
     );
 
-    return components.ui.renderView(props.view || 'form.CheckboxListFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
         inputProps,
         onItemSelect,
         selectedIds,
         renderCheckbox,
-    });
+        orientation: props.orientation,
+        size: props.size,
+        disabled: props.disabled,
+    }), [inputProps, items, onItemSelect, props.disabled, props.orientation, props.size, renderCheckbox, selectedIds]);
+
+    return components.ui.renderView(props.view || 'form.CheckboxListFieldView', viewProps);
 }
 
 CheckboxListField.defaultProps = {

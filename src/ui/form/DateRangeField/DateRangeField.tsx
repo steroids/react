@@ -242,24 +242,25 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange,
         props.inputTo.value, props.valueFormat]);
 
-    return components.ui.renderView(props.view || 'form.DateRangeFieldView', {
-        ...props.viewProps,
+    const viewProps = useMemo(() => ({
         onClear,
         onClose,
         calendarProps,
         icon: props.icon,
         size: props.size,
-        errorsTo: props.errorsTo,
         disabled: props.disabled,
-        noBorder: props.noBorder,
         className: props.className,
         showRemove: props.showRemove,
         errorsFrom: props.errorsFrom,
+        errorsTo: props.errorsTo,
         inputPropsTo: extendedInputPropsTo,
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         style: props.style,
-    });
+    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear,
+        onClose, props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size, props.style]);
+
+    return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);
 }
 
 DateRangeField.defaultProps = {
@@ -271,7 +272,6 @@ DateRangeField.defaultProps = {
     showRemove: true,
     hasInitialFocus: false,
     icon: true,
-    noBorder: false,
     size: 'md',
     maskOptions: {
         from: maskitoDateOptionsGenerator({

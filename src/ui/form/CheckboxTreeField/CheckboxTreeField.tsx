@@ -169,13 +169,16 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         />
     );
 
-    return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items: treeItems,
         onItemSelect,
         selectedIds,
         renderCheckbox,
-    });
+        size: props.size,
+        levelPadding: props.levelPadding,
+    }), [onItemSelect, props.levelPadding, props.size, renderCheckbox, selectedIds, treeItems]);
+
+    return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);
 }
 
 CheckboxTreeField.defaultProps = {

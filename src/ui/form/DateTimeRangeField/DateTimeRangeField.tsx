@@ -268,25 +268,27 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         timeValueTo,
     ]);
 
-    return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', {
-        ...props.viewProps,
+    const viewProps = useMemo(() => ({
         onClear,
         onClose,
         calendarProps,
         timePanelViewProps,
         icon: props.icon,
         size: props.size,
+        errorsFrom: props.errorsFrom,
         errorsTo: props.errorsTo,
         className: props.className,
         showRemove: props.showRemove,
-        errorsFrom: props.errorsFrom,
         inputPropsTo: extendedInputPropsTo,
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         disabled: props.disabled,
-        noBorder: props.noBorder,
         style: props.style,
-    });
+    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose,
+        props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size,
+        props.style, timePanelViewProps]);
+
+    return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', viewProps);
 }
 
 DateTimeRangeField.defaultProps = {

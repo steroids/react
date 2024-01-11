@@ -1,7 +1,6 @@
-import * as React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import _upperFirst from 'lodash-es/upperFirst';
 import _isString from 'lodash-es/isString';
-import {useCallback, useMemo} from 'react';
 import {ILinkProps} from '../../nav/Link/Link';
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, ListControlPosition} from '../../../hooks/useList';
@@ -361,8 +360,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         [props.columns, props.controls, props.itemsIndexing, renderLabel],
     );
 
-    return components.ui.renderView(props.view || 'list.GridView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         list,
         paginationPosition,
         paginationSizePosition,
@@ -378,7 +376,18 @@ export default function Grid(props: IGridProps): JSX.Element {
         onFetch,
         onSort,
         items: list?.items || [],
-    });
+        searchForm: props.searchForm,
+        listId: props.listId,
+        isLoading: props.isLoading,
+        size: props.size,
+        hasAlternatingColors: props.hasAlternatingColors,
+        className: props.className,
+        primaryKey: props.primaryKey,
+    }), [columns, layoutNamesPosition, list, onFetch, onSort, paginationPosition, paginationSizePosition, props.className,
+        props.hasAlternatingColors, props.isLoading, props.listId, props.primaryKey, props.searchForm, props.size, renderEmpty,
+        renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm, renderValue]);
+
+    return components.ui.renderView(props.view || 'list.GridView', viewProps);
 }
 
 Grid.defaultProps = {

@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, {useCallback} from 'react';
 import _get from 'lodash-es/get';
-import {useCallback} from 'react';
 import {useComponents} from '../../../hooks';
 import {INavItem} from '../../nav/Nav/Nav';
 import {ListControlPosition} from '../../../hooks/useList';

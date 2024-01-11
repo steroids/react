@@ -78,8 +78,12 @@ export default function ControlsColumn(props: IControlsColumnProps): JSX.Element
         [props],
     );
 
-    return components.ui.renderView(props.view || 'list.ControlsColumnView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
-    });
+        view: props.view,
+        controls: props.controls,
+        primaryKey: props.primaryKey,
+    }), [items, props.controls, props.primaryKey, props.view]);
+
+    return components.ui.renderView(props.view || 'list.ControlsColumnView', viewProps);
 }

@@ -1,6 +1,5 @@
-import {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
-import * as React from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
@@ -89,15 +88,19 @@ function PaginationSize(props: IPaginationSizeProps): JSX.Element {
         }
     }, [formDispatch, formId, props.attribute, props.onChange]);
 
+    const viewProps = useMemo(() => ({
+        items,
+        onSelect,
+        className: props.className,
+        defaultValue: props.defaultValue,
+        buttonProps: props.buttonProps,
+    }), [items, onSelect, props.buttonProps, props.className, props.defaultValue]);
+
     if (!props.list?.items?.length) {
         return null;
     }
 
-    return components.ui.renderView(props.view || 'list.PaginationSizeView', {
-        ...props,
-        items,
-        onSelect,
-    });
+    return components.ui.renderView(props.view || 'list.PaginationSizeView', viewProps);
 }
 
 PaginationSize.defaultProps = {

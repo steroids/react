@@ -123,10 +123,13 @@ function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps):
         sitekey: props.sitekey || components.resource.googleCaptchaSiteKey,
     }), [components.resource.googleCaptchaSiteKey, onChange, props.asyncScriptOnLoad, props.badge, props.hl, props.isolated, props.onErrored, props.onExpired, props.ref, props.sitekey, props.stoken, props.tabindex, props.type]);
 
-    return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         recaptchaOptions,
-    });
+        className: props.className,
+        style: props.style,
+    }), [props.className, props.style, recaptchaOptions]);
+
+    return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', viewProps);
 }
 
 export default fieldWrapper<IReCaptchaFieldProps>('ReCaptchaField', ReCaptchaField);

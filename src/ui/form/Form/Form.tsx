@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
-import {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
@@ -320,7 +319,6 @@ function Form(props: IFormProps): JSX.Element {
     const {
         values,
         submitCounter,
-        isInvalid,
         isSubmitting,
         errors,
         setErrors,
@@ -525,6 +523,20 @@ function Form(props: IFormProps): JSX.Element {
         dispatch,
     }), [dispatch, props.formId, props.model, props.prefix, props.size, provider, reducer]);
 
+    const viewProps = useMemo(() => ({
+        ...props.viewProps,
+        isSubmitting,
+        onSubmit,
+        submitLabel: props.submitLabel,
+        fields: props.fields,
+        children: props.children,
+        className: props.className,
+        style: props.style,
+        autoFocus: props.autoFocus,
+        buttons: props.buttons,
+    }), [isSubmitting, onSubmit, props.autoFocus, props.buttons, props.children, props.className, props.fields, props.style,
+        props.submitLabel, props.viewProps]);
+
     // Wait initialization (only for redux)
     if (values === undefined) {
         return null;
@@ -534,18 +546,7 @@ function Form(props: IFormProps): JSX.Element {
     return (
         <FormContext.Provider value={formContextValue}>
             {props.view !== false
-                ? components.ui.renderView(props.view || 'form.FormView', {
-                    ...props.viewProps,
-                    isSubmitting,
-                    onSubmit,
-                    submitLabel: props.submitLabel,
-                    fields: props.fields,
-                    children: props.children,
-                    buttons: props.buttons,
-                    className: props.className,
-                    style: props.style,
-                    autoFocus: props.autoFocus,
-                })
+                ? components.ui.renderView(props.view || 'form.FormView', viewProps)
                 : props.children}
         </FormContext.Provider>
     );

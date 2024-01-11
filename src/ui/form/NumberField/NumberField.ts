@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, {ChangeEvent, useMemo, useCallback, useRef} from 'react';
+import React, {ChangeEvent, useMemo, useCallback} from 'react';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -92,6 +92,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     }, [onStepDown, onStepUp]);
 
     const inputProps = useMemo(() => ({
+        ...props.inputProps,
         name: props.input.name,
         value: props.input.value ?? '',
         onChange: onInputChange,
@@ -103,16 +104,23 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         disabled: props.disabled,
         autoComplete: 'off',
         onKeyDown,
-        ...props.inputProps,
-    }), [props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, props.inputProps, onInputChange, onKeyDown]);
+    }), [props.inputProps, props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, onInputChange, onKeyDown]);
 
-    return components.ui.renderView(props.view || 'form.NumberFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
+        viewProps: props.viewProps,
         inputProps,
         onStepUp,
         onStepDown,
+        input: props.input,
         inputRef: currentInputRef,
-    });
+        size: props.size,
+        errors: props.errors,
+        className: props.className,
+        disabled: props.disabled,
+        id: props.id,
+    }), [currentInputRef, inputProps, onStepDown, onStepUp, props]);
+
+    return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);
 }
 
 NumberField.defaultProps = {

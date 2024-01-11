@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -52,10 +52,19 @@ function RadioField(props: IRadioFieldProps & IFieldWrapperOutputProps): JSX.Ele
         ...props.inputProps,
     }), [onChangeHandler, props.disabled, props.input.name, props.input.value, props.inputProps]);
 
-    return components.ui.renderView(props.view || 'form.RadioFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         inputProps,
-    });
+        errors: props.errors,
+        size: props.size,
+        className: props.className,
+        onChange: props.onChange,
+        checked: props.checked,
+        disabled: props.disabled,
+        required: props.required,
+        label: props.label,
+    }), [inputProps, props.checked, props.className, props.disabled, props.errors, props.label, props.onChange, props.required, props.size]);
+
+    return components.ui.renderView(props.view || 'form.RadioFieldView', viewProps);
 }
 
 RadioField.defaultProps = {

@@ -1,5 +1,4 @@
-/* eslint-disable max-len */
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import {IBaseFieldProps} from '../InputField/InputField';
 import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
@@ -33,12 +32,36 @@ function EmailField(props: IEmailFieldProps) {
         ...props.inputProps,
     }), [onInputChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.required]);
 
-    return components.ui.renderView(props.view || 'form.InputFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         inputProps,
         inputRef: currentInputRef,
         onClear,
-    });
+        size: props.size,
+        errors: props.errors,
+        leadIcon: props.leadIcon,
+        showClear: props.showClear,
+        disabled: props.disabled,
+        input: props.input,
+        addonAfter: props.addonAfter,
+        addonBefore: props.addonBefore,
+        textAfter: props.textAfter,
+        textBefore: props.textBefore,
+        placeholder: props.placeholder,
+        required: props.required,
+        id: props.id,
+        maskOptions: props.maskOptions,
+        maskProps: props.maskProps,
+        onBlur: props.onBlur,
+        onFocus: props.onFocus,
+        onMouseDown: props.onMouseDown,
+        className: props.className,
+        style: props.style,
+    }), [inputProps, currentInputRef, onClear, props.size, props.errors, props.leadIcon, props.showClear,
+        props.disabled, props.input, props.addonAfter, props.addonBefore, props.textAfter, props.textBefore,
+        props.placeholder, props.required, props.id, props.maskOptions, props.maskProps, props.onBlur, props.onFocus,
+        props.onMouseDown, props.className, props.style]);
+
+    return components.ui.renderView(props.view || 'form.InputFieldView', viewProps);
 }
 
 EmailField.defaultProps = {

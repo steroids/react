@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 import Enum from '../../../base/Enum';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';

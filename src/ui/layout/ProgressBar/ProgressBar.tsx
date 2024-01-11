@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useMemo} from 'react';
 import Icon from '../../content/Icon/Icon';
 import {useComponents} from '../../../hooks';
 
@@ -50,38 +50,34 @@ export interface IProgressBarProps {
 function ProgressBar(props: IProgressBarProps): JSX.Element {
     const components = useComponents();
 
-    const getLabel = (() => {
-        if (!props.showLabel) {
-            return null;
-        }
-        if (props.icon) {
-            return props.icon(props.status, props.percent);
-        }
-        if (props.status === 'success') {
-            return <Icon name="check" />;
-        }
-        if (props.status === 'exception') {
-            return <Icon name="times" />;
-        }
-        return props.label(props.percent);
-    });
+    const viewProps = useMemo(() => {
+        const getLabel = (() => {
+            if (!props.showLabel) {
+                return null;
+            }
+            if (props.icon) {
+                return props.icon(props.status, props.percent);
+            }
+            if (props.status === 'success') {
+                return <Icon name="check" />;
+            }
+            if (props.status === 'exception') {
+                return <Icon name="times" />;
+            }
+            return props.label(props.percent);
+        });
 
-    if (props.type === 'line') {
-        return components.ui.renderView('layout.LineProgressBarView',
-            {
-                percent: props.percent,
-                status: props.status,
-                size: props.size,
-                label: getLabel(),
-            });
-    }
-    return components.ui.renderView('layout.CircleProgressBarView',
-        {
+        return {
             percent: props.percent,
             status: props.status,
             size: props.size,
             label: getLabel(),
-        });
+        };
+    }, [props]);
+
+    const ViewComponent = props.type === 'line' ? 'layout.LineProgressBarView' : 'layout.CircleProgressBarView';
+
+    return components.ui.renderView(ViewComponent, viewProps);
 }
 
 ProgressBar.defaultProps = {

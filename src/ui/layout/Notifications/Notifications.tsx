@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import _orderBy from 'lodash-es/orderBy';
-import {useCallback, useMemo, useState} from 'react';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
 import useDispatch from '../../../hooks/useDispatch';
 import {useComponents, useSelector} from '../../../hooks';
@@ -162,8 +161,9 @@ function Notifications(props:INotificationsProps): JSX.Element {
     [innerNotifications, closing, closingIds, onClose]);
 
     const NotificationsItemView = props.itemView || components.ui.getView('layout.NotificationsItemView');
-    return components.ui.renderView(props.view || 'layout.NotificationsView', {
-        ...props,
+
+    const viewProps = useMemo(() => ({
+        className: props.className,
         position: position || '',
         children: items.map(item => (
             <NotificationsItemView
@@ -171,7 +171,9 @@ function Notifications(props:INotificationsProps): JSX.Element {
                 {...item}
             />
         )),
-    });
+    }), [props.className, position, items, NotificationsItemView]);
+
+    return components.ui.renderView(props.view || 'layout.NotificationsView', viewProps);
 }
 
 Notifications.defaultProps = {

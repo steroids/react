@@ -8,7 +8,8 @@ import _isNil from 'lodash-es/isNil';
 import _keys from 'lodash-es/keys';
 import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
-import {useComponents} from '@steroidsjs/core/hooks/index';
+import {useFirstMountState} from 'react-use';
+import useComponents from './useComponents';
 import useSelector from './useSelector';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
 
@@ -129,7 +130,7 @@ export interface ITreeConfig {
     useSameSelectedItemId?: boolean,
 
     /**
-     * Сохранение в localStorage уровени вложенности.
+     * Сохранение в localStorage уровней вложенности.
      * @example true
     */
     saveInClientStorage?: boolean,
@@ -138,13 +139,15 @@ export interface ITreeConfig {
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции.
      * @example 'exampleTree'
      */
-    idStorage?: string,
+    storageId?: string,
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
 const DOT_SEPARATOR = '.';
 const EMPTY_PARENT_ID = '';
 const FIRST_LEVEL_PARENT_ID = '0';
+const STORAGE_KEY = '_tree';
+const STORAGE_NAME = 'local';
 
 const defaultProps = {
     itemsKey: 'items',
@@ -260,13 +263,12 @@ const isSelectedItem = (selectedUniqueId, uniqueId, activeRouteIds, item, router
 export default function useTree(config: ITreeConfig): ITreeOutput {
     // Get primary key
     const primaryKey = config.itemsKey || defaultProps.itemsKey;
-    const storageKey = '_tree';
 
     const [selectedUniqueId, setSelectedUniqueId] = useState<string>(null);
 
     const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean,}>({});
 
-    const [isInitializationTree, setIsInitializationTree] = useState(false);
+    const isFirstMount = useFirstMountState();
 
     const {clientStorage} = useComponents();
 
@@ -309,21 +311,19 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     useEffect(() => {
         if (config.saveInClientStorage) {
-            const localTree = JSON.parse(clientStorage.get(storageKey, 'local')) || {};
-            const treeData = localTree[config.idStorage];
+            const localTree = JSON.parse(clientStorage.get(STORAGE_KEY, STORAGE_NAME)) || {};
+            const treeData = localTree[config.storageId];
 
-            if (isInitializationTree) {
-                localTree[config.idStorage] = expandedItems;
-                clientStorage.set(storageKey, JSON.stringify(localTree), 'local');
-                return;
+            if (!_isEmpty(expandedItems)) {
+                localTree[config.storageId] = expandedItems;
+                clientStorage.set(STORAGE_KEY, JSON.stringify(localTree), STORAGE_NAME);
             }
 
-            if (treeData) {
+            if (treeData && isFirstMount) {
                 setExpandedItems(treeData);
             }
-            setIsInitializationTree(true);
         }
-    }, [clientStorage, expandedItems, isInitializationTree, config.saveInClientStorage, config.idStorage]);
+    }, [clientStorage, config.storageId, config.saveInClientStorage, expandedItems, isFirstMount]);
 
     const onExpand = useCallback((e: Event | React.MouseEvent, uniqueId: string, item: ITreeItem) => {
         e.preventDefault();

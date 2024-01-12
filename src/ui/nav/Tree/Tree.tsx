@@ -15,7 +15,7 @@ export interface ITreeItemViewProps extends ITreeProps {
  * Tree
  * Компонент, который представляет в виде дерева список с иерархической структурой данных
  */
-export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'>, Pick<ITreeConfig, 'saveInClientStorage' | 'idStorage'> {
+export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'> {
     /**
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами
      * @example 'exampleTree'
@@ -84,8 +84,8 @@ export default function Tree(props: ITreeProps) {
         level: props.level,
         alwaysOpened: props.alwaysOpened,
         useSameSelectedItemId: props.useSameSelectedItemId,
-        saveInClientStorage: props.saveInClientStorage,
-        idStorage: props.id,
+        saveInClientStorage: props.autoSave,
+        storageId: props.id,
     });
 
     return components.ui.renderView(props.view || 'nav.TreeView', {
@@ -103,5 +103,5 @@ Tree.defaultProps = {
     hasIconExpandOnly: false,
     useSameSelectedItemId: true,
     hideIcon: false,
-    saveInClientStorage: true,
+    saveInClientStorage: false,
 };

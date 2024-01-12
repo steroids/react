@@ -137,7 +137,7 @@ export interface INavProps {
      */
     size?: Size,
 
-    navClassName?: string,
+    navClassName?: CssClassName,
 
     /**
      * Переводит кнопку в состояние "не активна"
@@ -154,7 +154,6 @@ export interface INavViewProps extends INavProps {
         isActive: boolean,
         isActiveNested: boolean,
     })[],
-    navClassName?: CssClassName,
 }
 
 const defaultViewMap = {

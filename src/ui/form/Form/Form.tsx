@@ -335,7 +335,7 @@ function Form(props: IFormProps): JSX.Element {
     useUpdateEffect(() => {
         if (props.autoSave && values) {
             // TODO
-            //AutoSaveHelper.save(components.clientStorage, props.formId, values);
+            AutoSaveHelper.save(components.clientStorage, props.formId, values);
         }
     }, [props.autoSave, values]);
 
@@ -496,8 +496,7 @@ function Form(props: IFormProps): JSX.Element {
         }
         if (props.autoSave) {
             // TODO
-            //const AutoSaveHelper = require('../ui/form/Form/AutoSaveHelper').default;
-            //AutoSaveHelper.remove(props.clientStorage, props.formId);
+            AutoSaveHelper.remove(props.clientStorage, props.formId);
         }
 
         dispatch(formSetSubmitting(props.formId, false));

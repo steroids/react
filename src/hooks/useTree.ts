@@ -135,7 +135,7 @@ export interface ITreeConfig {
     saveInClientStorage?: boolean,
 
     /**
-     * Идентификатор (ключ) для сохранения в LocalStorage коллекции с раскрытыми узлами
+     * Идентификатор (ключ) для сохранения в LocalStorage коллекции.
      * @example 'exampleTree'
      */
     idStorage?: string,

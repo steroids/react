@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useMemo, useState} from 'react';
+import {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState} from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
@@ -68,13 +68,13 @@ function ButtonGroup(props: IButtonGroupProps): JSX.Element {
 
     const [activeButton, setActiveButton] = useState(props.activeButton || props.defaultActiveButton || items[0]?.id);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.activeButton) {
             setActiveButton(props.activeButton);
         }
     }, [props.activeButton]);
 
-    const onClick = React.useCallback((buttonId: number | string | boolean) => {
+    const onClick = useCallback((buttonId: number | string | boolean) => {
         setActiveButton(buttonId);
         props.onClick(buttonId);
     }, [props]);

@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Route, Switch, Redirect, StaticRouter} from 'react-router';
 import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
-import {useEffect, useMemo, useState} from 'react';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
 import {closeModal, openModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';

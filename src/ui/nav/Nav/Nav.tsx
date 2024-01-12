@@ -137,6 +137,14 @@ export interface INavProps {
      */
     size?: Size,
 
+    navClassName?: string,
+
+    /**
+     * Переводит кнопку в состояние "не активна"
+     * @example true
+     */
+    disabled?: boolean,
+
     [key: string]: any,
 }
 
@@ -202,7 +210,7 @@ function Nav(props: INavProps): JSX.Element {
         }
     }, [props.onChange]);
 
-    const formatItems = React.useCallback((items = props.items) => {
+    const formatItems = useCallback((items = props.items) => {
         if (Array.isArray(items)) {
             return items.map((item, index) => ({
                 ...item,

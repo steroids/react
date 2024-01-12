@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useMemo} from 'react';
+import React, {ComponentProps, useEffect, useMemo} from 'react';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
 
@@ -18,7 +17,7 @@ export interface IModalProps {
      * Компонент, который отрендерится внутри Modal
      * @example () => <InnerModalComponent />
      */
-    component?: (props: React.ComponentProps<any>) => JSX.Element,
+    component?: (props: ComponentProps<any>) => JSX.Element,
 
     /**
      * Свойства для внутреннего компонента
@@ -124,7 +123,7 @@ function Modal(props: IModalProps): JSX.Element {
     const ModalView = props.view || components.ui.getView('modal.ModalView');
     const ContentComponent = props.component;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.closeAfterMs) {
             setTimeout(() => props.onClose(), props.closeAfterMs);
         }

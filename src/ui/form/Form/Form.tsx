@@ -310,7 +310,7 @@ function Form(props: IFormProps): JSX.Element {
 
         // Local storage
         if (props.autoSave) {
-            initialValues = AutoSaveHelper.restore(props.clientStorage, props.formId, initialValues);
+            initialValues = AutoSaveHelper.restore(components.clientStorage, props.formId, initialValues);
         }
     }
 
@@ -334,10 +334,9 @@ function Form(props: IFormProps): JSX.Element {
     // Auto save
     useUpdateEffect(() => {
         if (props.autoSave && values) {
-            // TODO
             AutoSaveHelper.save(components.clientStorage, props.formId, values);
         }
-    }, [props.autoSave, values]);
+    }, [components.clientStorage, props.autoSave, props.formId, values]);
 
     // Auto destroy
     useUnmount(() => {
@@ -495,14 +494,13 @@ function Form(props: IFormProps): JSX.Element {
             props.onComplete.call(null, cleanedValues, data, response);
         }
         if (props.autoSave) {
-            // TODO
-            AutoSaveHelper.remove(props.clientStorage, props.formId);
+            AutoSaveHelper.remove(components.clientStorage, props.formId);
         }
 
         dispatch(formSetSubmitting(props.formId, false));
         return null;
     }, [dispatch, props, values, components.ui, components.resource,
-        components.http, reduxDispatch, setErrors]);
+        components.http, components.clientStorage, setErrors, reduxDispatch]);
 
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);

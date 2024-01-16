@@ -137,6 +137,9 @@ export interface INavProps {
      */
     size?: Size,
 
+    /**
+     * CSS-класс для элемента навигации.
+     */
     navClassName?: CssClassName,
 
     /**

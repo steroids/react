@@ -182,7 +182,7 @@ export interface IButtonProps extends IUiComponent {
     /**
      * Цвет текста кнопки или ссылки
      */
-    textColor?: any,
+    textColor?: string,
 
     [key: string]: any,
 }
@@ -192,7 +192,7 @@ export interface IButtonViewProps extends IButtonProps {
     url?: string,
     formId?: string,
     disabled?: boolean,
-    onClick?: any,
+    onClick?: (e: Event | React.MouseEvent) => Promise<any> | any,
     submitting?: boolean,
 }
 

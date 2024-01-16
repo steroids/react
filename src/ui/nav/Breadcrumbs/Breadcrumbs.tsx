@@ -65,7 +65,7 @@ export interface IBreadcrumbsProps {
 }
 
 export type IBreadcrumbsViewProps = IBreadcrumbsProps & {
-    routeParams?: any,
+    routeParams?: Record<string, unknown>,
 };
 
 export default function Breadcrumbs(props: IBreadcrumbsProps): JSX.Element {

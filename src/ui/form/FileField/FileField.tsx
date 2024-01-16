@@ -49,7 +49,7 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldComm
      * View компонент для кнопки
      * @example true
      */
-    buttonView?: any,
+    buttonView?: boolean,
 
     /**
      * Пропсы для кнопки
@@ -61,7 +61,7 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldComm
      * View компонент для элемента списка файлов
      * @example true
      */
-    itemView?: any,
+    itemView?: boolean,
 
     /**
      * Пропсы для элемента файла

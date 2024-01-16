@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import React, {ComponentType, useCallback, useContext, useMemo, useRef, useState} from 'react';
 import _isBoolean from 'lodash-es/isBoolean';
 import _range from 'lodash-es/range';
 import _concat from 'lodash-es/concat';
@@ -24,7 +24,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
      * Какой компонент для item использовать?
      * @example NumberField
      */
-    component?: any,
+    component?: ComponentType<any>,
 
     /**
      * Placeholder подсказка

@@ -40,7 +40,7 @@ export interface IFieldProps extends IFieldWrapperInputProps {
      * Компонент поля
      * @example DropDownField
      */
-    component?: string,
+    component?: any,
 
     [key: string]: any,
 }

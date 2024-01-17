@@ -61,7 +61,7 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldComm
      * View компонент для элемента списка файлов
      * @example true
      */
-    itemView?: () => void,
+    itemView?: any,
 
     /**
      * Пропсы для элемента файла

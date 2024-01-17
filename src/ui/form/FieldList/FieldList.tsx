@@ -1,4 +1,4 @@
-import React, {ComponentType, useCallback, useContext, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import _isBoolean from 'lodash-es/isBoolean';
 import _range from 'lodash-es/range';
 import _concat from 'lodash-es/concat';
@@ -24,7 +24,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
      * Какой компонент для item использовать?
      * @example NumberField
      */
-    component?: ComponentType<any>,
+    component?: any,
 
     /**
      * Placeholder подсказка
@@ -93,18 +93,18 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Пропсы для компонента отображения списка с группами полей - FieldListView
      */
-    viewProps?: any,
+    viewProps?: Record<string, unknown>,
 
     /**
      * Переопределение view React компонента для кастомизации отображения группы полей
      * @example MyCustomView
      */
-    itemView?: any,
+    itemView?: CustomView,
 
     /**
      * Пропсы для компонента отображения группы полей - FieldListItemView
      */
-    itemViewProps?: any,
+    itemViewProps?: Record<string, unknown>,
 
     /**
      * При фокусировке на одном из элементов формы и нажатию на клавиши стрелок вверх/вниз + Shift

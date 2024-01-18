@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
 import {useComponents, useTree} from '../../../hooks';
 
@@ -86,10 +86,13 @@ export default function Tree(props: ITreeProps) {
         useSameSelectedItemId: props.useSameSelectedItemId,
     });
 
-    return components.ui.renderView(props.view || 'nav.TreeView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items: treeItems,
-    });
+        levelPadding: props.levelPadding,
+        className: props.className,
+    }), [props.className, props.levelPadding, treeItems]);
+
+    return components.ui.renderView(props.view || 'nav.TreeView', viewProps);
 }
 
 Tree.defaultProps = {

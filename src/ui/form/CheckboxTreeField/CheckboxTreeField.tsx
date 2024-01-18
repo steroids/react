@@ -25,7 +25,7 @@ type CheckboxTreeItems = string
 export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'>, IUiComponent,
-    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'showIcon' | 'customIcon'> {
+    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'showIcon' | 'customIcon' | 'saveInClientStorage'> {
     /**
      * Свойства для элемента input
      * @example { onKeyDown: ... }
@@ -115,6 +115,8 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         items,
         autoOpenLevels: 0,
         alwaysOpened: props.alwaysOpened,
+        saveInClientStorage: props.saveInClientStorage,
+        clientStorageId: props.id,
     });
 
     // Data select
@@ -185,6 +187,7 @@ CheckboxTreeField.defaultProps = {
     levelPadding: 32,
     alwaysOpened: false,
     primaryKey: 'items',
+    saveInClientStorage: false,
 };
 
 export default fieldWrapper<ICheckboxTreeFieldProps>('CheckboxTreeField', CheckboxTreeField);

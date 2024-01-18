@@ -85,7 +85,7 @@ export default function Tree(props: ITreeProps) {
         alwaysOpened: props.alwaysOpened,
         useSameSelectedItemId: props.useSameSelectedItemId,
         saveInClientStorage: props.autoSave,
-        storageId: props.id,
+        clientStorageId: props.id,
     });
 
     return components.ui.renderView(props.view || 'nav.TreeView', {

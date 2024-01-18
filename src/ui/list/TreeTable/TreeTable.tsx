@@ -72,7 +72,7 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
         currentPage: list?.page,
         itemsOnPage: list?.pageSize,
         saveInClientStorage: props.saveInClientStorage,
-        storageId: props.listId,
+        clientStorageId: props.listId,
     });
 
     return (
@@ -88,5 +88,5 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
 TreeTable.defaultProps = {
     levelPadding: 32,
     alwaysOpened: false,
-    saveInClientStorage: true,
+    saveInClientStorage: false,
 };

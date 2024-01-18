@@ -139,15 +139,14 @@ export interface ITreeConfig {
      * Идентификатор (ключ) для сохранения в LocalStorage коллекции.
      * @example 'exampleTree'
      */
-    storageId?: string,
+    clientStorageId?: string,
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
 const DOT_SEPARATOR = '.';
 const EMPTY_PARENT_ID = '';
 const FIRST_LEVEL_PARENT_ID = '0';
-const STORAGE_KEY = '_tree';
-const STORAGE_NAME = 'local';
+const CLIENT_STORAGE_KEY = '_tree';
 
 const defaultProps = {
     itemsKey: 'items',
@@ -311,19 +310,20 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     useEffect(() => {
         if (config.saveInClientStorage) {
-            const localTree = JSON.parse(clientStorage.get(STORAGE_KEY, STORAGE_NAME)) || {};
-            const treeData = localTree[config.storageId];
+            const localTree = JSON.parse(clientStorage.get(CLIENT_STORAGE_KEY)) || {};
+            const treeData = localTree[config.clientStorageId];
+            const isExpandedItemsChanged = JSON.stringify(expandedItems) !== JSON.stringify(treeData);
 
-            if (!_isEmpty(expandedItems)) {
-                localTree[config.storageId] = expandedItems;
-                clientStorage.set(STORAGE_KEY, JSON.stringify(localTree), STORAGE_NAME);
+            if (!_isEmpty(expandedItems) && isExpandedItemsChanged) {
+                localTree[config.clientStorageId] = expandedItems;
+                clientStorage.set(CLIENT_STORAGE_KEY, JSON.stringify(localTree));
             }
 
-            if (treeData && isFirstMount) {
+            if (treeData && isFirstMount && isExpandedItemsChanged) {
                 setExpandedItems(treeData);
             }
         }
-    }, [clientStorage, config.storageId, config.saveInClientStorage, expandedItems, isFirstMount]);
+    }, [clientStorage, config.clientStorageId, config.saveInClientStorage, expandedItems, isFirstMount]);
 
     const onExpand = useCallback((e: Event | React.MouseEvent, uniqueId: string, item: ITreeItem) => {
         e.preventDefault();

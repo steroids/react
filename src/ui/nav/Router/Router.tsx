@@ -4,6 +4,7 @@ import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
+import _isBoolean from 'lodash-es/isBoolean';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
 import {closeModal, openModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';
@@ -163,7 +164,7 @@ export interface IRouterProps {
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes: IRouteItem[] | {[key: string]: IRouteItem,},
+    routes: IRouteItem[] | IRouteItem | {[key: string]: IRouteItem,},
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент
@@ -191,10 +192,14 @@ export interface IRouterProps {
     alwaysAppendParentRoutePath?: boolean,
 }
 
-const renderComponent = (route: IRouteItem, activePath, routeProps) => {
+const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppendParentRoutePath) => {
     const routePath = buildUrl(route.path, routeProps?.match?.params);
+
     if (route.redirectTo && routePath === activePath) {
-        const to = findRedirectPathRecursive(route);
+        const to = alwaysAppendParentRoutePath && _isBoolean(route.redirectTo)
+            ? findRedirectPathRecursive(route, activePath)
+            : findRedirectPathRecursive(route);
+
         if (to === null) {
             // eslint-disable-next-line no-console
             console.error('Not found path for redirect in route:', route);
@@ -343,7 +348,7 @@ function Router(props: IRouterProps): JSX.Element {
             children = renderComponent(activeRoute, activePath, {
                 ...routeProps,
                 children,
-            }) || children;
+            }, props.alwaysAppendParentRoutePath) || children;
 
             // Stop, if route is exact
             if (activeRoute.exact) {
@@ -353,10 +358,15 @@ function Router(props: IRouterProps): JSX.Element {
             return false;
         });
 
-        const result = renderComponent(routeItem, activePath, {
-            ...routeProps,
-            children,
-        });
+        const result = renderComponent(
+            routeItem,
+            activePath,
+            {
+                ...routeProps,
+                children,
+            },
+            props.alwaysAppendParentRoutePath,
+        );
         if (!result) {
             if (children) {
                 return children;

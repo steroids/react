@@ -88,5 +88,5 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
 TreeTable.defaultProps = {
     levelPadding: 32,
     alwaysOpened: false,
-    saveInClientStorage: false,
+    saveInClientStorage: true,
 };

@@ -4,7 +4,6 @@ import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
-import _isBoolean from 'lodash-es/isBoolean';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
 import {closeModal, openModal} from '../../../actions/modal';
 import {getOpened} from '../../../reducers/modal';
@@ -196,18 +195,18 @@ const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppend
     const routePath = buildUrl(route.path, routeProps?.match?.params);
 
     if (route.redirectTo && routePath === activePath) {
-        const to = alwaysAppendParentRoutePath && _isBoolean(route.redirectTo)
+        const redirectPath = alwaysAppendParentRoutePath
             ? findRedirectPathRecursive(route, activePath)
             : findRedirectPathRecursive(route);
 
-        if (to === null) {
+        if (redirectPath === null) {
             // eslint-disable-next-line no-console
             console.error('Not found path for redirect in route:', route);
             return null;
         }
 
         // Check already redirected
-        const toPath = buildUrl(to, routeProps?.match?.params);
+        const toPath = buildUrl(redirectPath, routeProps?.match?.params);
         if (activePath !== toPath) {
             return (
                 <Redirect

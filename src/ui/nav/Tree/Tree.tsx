@@ -90,7 +90,10 @@ export default function Tree(props: ITreeProps) {
         items: treeItems,
         levelPadding: props.levelPadding,
         className: props.className,
-    }), [props.className, props.levelPadding, treeItems]);
+        hideIcon: props.hideIcon,
+        customIcon: props.customIcon,
+        hasIconExpandOnly: props.hasIconExpandOnly,
+    }), [props.className, props.customIcon, props.hasIconExpandOnly, props.hideIcon, props.levelPadding, treeItems]);
 
     return components.ui.renderView(props.view || 'nav.TreeView', viewProps);
 }

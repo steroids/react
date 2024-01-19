@@ -25,7 +25,7 @@ type CheckboxTreeItems = string
 export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'>, IUiComponent,
-    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'showIcon' | 'customIcon' | 'saveInClientStorage'> {
+    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'customIcon' | 'saveInClientStorage'> {
     /**
      * Свойства для элемента input
      * @example { onKeyDown: ... }
@@ -115,8 +115,6 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         items,
         autoOpenLevels: 0,
         alwaysOpened: props.alwaysOpened,
-        saveInClientStorage: props.saveInClientStorage,
-        clientStorageId: props.id,
     });
 
     // Data select
@@ -171,13 +169,16 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         />
     );
 
-    return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items: treeItems,
         onItemSelect,
         selectedIds,
         renderCheckbox,
-    });
+        size: props.size,
+        levelPadding: props.levelPadding,
+    }), [onItemSelect, props.levelPadding, props.size, renderCheckbox, selectedIds, treeItems]);
+
+    return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);
 }
 
 CheckboxTreeField.defaultProps = {

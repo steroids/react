@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
 import useComponents from '../../../hooks/useComponents';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../../ui/form/Field/fieldWrapper';
@@ -55,7 +54,6 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
         value: string | number,
         disabled: boolean,
         onChange: (value: string) => void,
-        onFocus: (e: Event | React.FocusEvent) => void,
         onBlur: (e: Event | React.FocusEvent) => void,
         className?: CssClassName,
     },
@@ -141,17 +139,6 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         props.input.onChange.call(null, value);
     }, [props.input.onChange]);
 
-    // TODO
-    const onFocus = (e) => {
-        props.onOpen();
-        if (props.searchOnFocus) {
-            props.onSearch(props.input.value);
-        }
-        if (props.inputProps && props.inputProps.onFocus) {
-            props.inputProps.onFocus(e);
-        }
-    };
-
     const onBlur = useCallback((e) => {
         setTimeout(() => {
             if (props.isOpened) {
@@ -179,8 +166,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         props.input.onChange.call(null, selectedIds[0] || null);
     }, [props.input.onChange, selectedIds]);
 
-    return components.ui.renderView(props.view || 'form.AutoCompleteFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         inputProps,
         items,
         isLoading,
@@ -192,8 +178,19 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         forwardedRef,
         onItemHover,
         onItemSelect,
+        primaryKey: props.primaryKey,
+        size: props.size,
+        placeholder: props.placeholder,
+        disabled: props.disabled,
+        required: props.required,
         categories: getCategories(props.items),
-    });
+        className: props.className,
+        style: props.style,
+    }), [inputProps, items, isLoading, hoveredId, selectedIds, onOpen, isOpened, onClose,
+        onItemHover, onItemSelect, props.primaryKey, props.size, props.placeholder, props.disabled,
+        props.required, props.items, props.className, props.style]);
+
+    return components.ui.renderView(props.view || 'form.AutoCompleteFieldView', viewProps);
 }
 
 AutoCompleteField.defaultProps = {

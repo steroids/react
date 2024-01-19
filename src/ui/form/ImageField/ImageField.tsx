@@ -5,6 +5,7 @@ import _values from 'lodash-es/values';
 import {useMemo, useCallback, useState, useEffect} from 'react';
 import _uniqueId from 'lodash-es/uniqueId';
 import ReactCropProps, {Crop} from 'react-image-crop';
+import {usePrevious} from 'react-use';
 import {useComponents} from '../../../hooks';
 import {IModalProps} from '../../modal/Modal/Modal';
 import useDispatch from '../../../hooks/useDispatch';
@@ -152,9 +153,11 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         },
     });
 
+    const oldCroppedImage = usePrevious(croppedImage);
+
     // Fetch cropped image
     useEffect(() => {
-        if (croppedImage) {
+        if (croppedImage && !oldCroppedImage) {
             components.http.post(props.crop.backendUrl, croppedImage).then((res: any) => {
                 setCroppedImage(null);
                 onAdd(new File({
@@ -165,9 +168,10 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
                     resultHttpMessage: res,
                     uid: res.uid,
                 }));
+                props.input.onChange(res.id);
             });
         }
-    }, [components.http, croppedImage, onAdd, onRemove, props.crop.backendUrl]);
+    }, [components.http, croppedImage, onAdd, onRemove, props.crop.backendUrl, props.input, oldCroppedImage]);
 
     const ImageFieldView = props.view || components.ui.getView('form.ImageFieldView');
 
@@ -218,11 +222,16 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         return result;
     }, [files, onRemove, props.disabled, props.imagesProcessor, props.size]);
 
+    const viewProps = useMemo(() => ({
+        item,
+        onClick: onBrowse,
+        buttonProps: props.buttonProps,
+        label: props.label,
+    }), [item, onBrowse, props.buttonProps, props.label]);
+
     return (
         <ImageFieldView
-            {...props}
-            item={item}
-            onClick={onBrowse}
+            {...viewProps}
         />
     );
 }
@@ -233,11 +242,6 @@ ImageField.defaultProps = {
     className: '',
     modalProps: {},
     label: 'Upload',
-    crop: {
-        initialValues: {
-            aspect: 1,
-        },
-    },
     buttonProps: {
         color: 'basic',
         outline: true,

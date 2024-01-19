@@ -1,26 +1,11 @@
 import _get from 'lodash-es/get';
 import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
+import _isBoolean from 'lodash-es/isBoolean';
+import _isString from 'lodash-es/isString';
 import {IRouteItem} from './Router';
 
 const SLASH = '/';
-
-export const findRedirectPathRecursive = (route: IRouteItem) => {
-    if (!route) {
-        return null;
-    }
-
-    if (typeof route.redirectTo === 'boolean') {
-        const key = _isObject(route.items) && !_isArray(route.items) ? Object.keys(route.items)[0] : '0';
-        return findRedirectPathRecursive(_get(route, ['items', key]));
-    } if (typeof route.redirectTo === 'string') {
-        return route.redirectTo;
-    }
-
-    return route.path || route.path === ''
-        ? route.path
-        : null;
-};
 
 const addSlashIfNotPresent = (path = '') => path.startsWith(SLASH) ? path : (SLASH + path);
 
@@ -42,6 +27,25 @@ const appendChildIfNoSlash = (path = '', parentPath = null) => {
     }
 
     return path;
+};
+
+export const findRedirectPathRecursive = (route: IRouteItem, parentPath = '') => {
+    if (!route) {
+        return null;
+    }
+
+    if (_isBoolean(route.redirectTo)) {
+        const key = _isObject(route.items) && !_isArray(route.items) ? Object.keys(route.items)[0] : '0';
+        return findRedirectPathRecursive(_get(route, ['items', key]), parentPath);
+    }
+
+    if (_isString(route.redirectTo)) {
+        return route.redirectTo;
+    }
+
+    return route.path || route.path === ''
+        ? joinChildAndParentPaths(route.path, parentPath)
+        : null;
 };
 
 export const walkRoutesRecursive = (

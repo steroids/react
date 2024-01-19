@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
@@ -106,14 +105,19 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
 
     const renderRadio = (radioProps: IRadioFieldViewProps) => <RadioFieldView {...radioProps} />;
 
-    return components.ui.renderView(props.view || 'form.RadioListFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
         inputProps,
         onItemSelect,
         selectedIds,
         renderRadio,
-    });
+        orientation: props.orientation,
+        className: props.className,
+        disabled: props.disabled,
+        size: props.size,
+    }), [inputProps, items, onItemSelect, props.className, props.disabled, props.orientation, props.size, renderRadio, selectedIds]);
+
+    return components.ui.renderView(props.view || 'form.RadioListFieldView', viewProps);
 }
 
 RadioListField.defaultProps = {

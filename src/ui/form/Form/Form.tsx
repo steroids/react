@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
-import {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
@@ -311,7 +310,7 @@ function Form(props: IFormProps): JSX.Element {
 
         // Local storage
         if (props.autoSave) {
-            initialValues = AutoSaveHelper.restore(props.clientStorage, props.formId, initialValues);
+            initialValues = AutoSaveHelper.restore(components.clientStorage, props.formId, initialValues);
         }
     }
 
@@ -320,7 +319,6 @@ function Form(props: IFormProps): JSX.Element {
     const {
         values,
         submitCounter,
-        isInvalid,
         isSubmitting,
         errors,
         setErrors,
@@ -336,10 +334,9 @@ function Form(props: IFormProps): JSX.Element {
     // Auto save
     useUpdateEffect(() => {
         if (props.autoSave && values) {
-            // TODO
-            //AutoSaveHelper.save(components.clientStorage, props.formId, values);
+            AutoSaveHelper.save(components.clientStorage, props.formId, values);
         }
-    }, [props.autoSave, values]);
+    }, [components.clientStorage, props.autoSave, props.formId, values]);
 
     // Auto destroy
     useUnmount(() => {
@@ -497,15 +494,13 @@ function Form(props: IFormProps): JSX.Element {
             props.onComplete.call(null, cleanedValues, data, response);
         }
         if (props.autoSave) {
-            // TODO
-            //const AutoSaveHelper = require('../ui/form/Form/AutoSaveHelper').default;
-            //AutoSaveHelper.remove(props.clientStorage, props.formId);
+            AutoSaveHelper.remove(components.clientStorage, props.formId);
         }
 
         dispatch(formSetSubmitting(props.formId, false));
         return null;
     }, [dispatch, props, values, components.ui, components.resource,
-        components.http, reduxDispatch, setErrors]);
+        components.http, components.clientStorage, setErrors, reduxDispatch]);
 
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);
@@ -525,6 +520,20 @@ function Form(props: IFormProps): JSX.Element {
         dispatch,
     }), [dispatch, props.formId, props.model, props.prefix, props.size, provider, reducer]);
 
+    const viewProps = useMemo(() => ({
+        ...props.viewProps,
+        isSubmitting,
+        onSubmit,
+        submitLabel: props.submitLabel,
+        fields: props.fields,
+        children: props.children,
+        className: props.className,
+        style: props.style,
+        autoFocus: props.autoFocus,
+        buttons: props.buttons,
+    }), [isSubmitting, onSubmit, props.autoFocus, props.buttons, props.children, props.className, props.fields, props.style,
+        props.submitLabel, props.viewProps]);
+
     // Wait initialization (only for redux)
     if (values === undefined) {
         return null;
@@ -534,18 +543,7 @@ function Form(props: IFormProps): JSX.Element {
     return (
         <FormContext.Provider value={formContextValue}>
             {props.view !== false
-                ? components.ui.renderView(props.view || 'form.FormView', {
-                    ...props.viewProps,
-                    isSubmitting,
-                    onSubmit,
-                    submitLabel: props.submitLabel,
-                    fields: props.fields,
-                    children: props.children,
-                    buttons: props.buttons,
-                    className: props.className,
-                    style: props.style,
-                    autoFocus: props.autoFocus,
-                })
+                ? components.ui.renderView(props.view || 'form.FormView', viewProps)
                 : props.children}
         </FormContext.Provider>
     );

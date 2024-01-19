@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
@@ -111,25 +111,26 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         onSelect: onTimeSelect,
     }), [onClose, onTimeSelect, timeValue]);
 
-    return components.ui.renderView(props.view || 'form.DateTimeFieldView', {
-        ...props.viewProps,
+    const viewProps = useMemo(() => ({
         isOpened,
         onClear,
         onClose,
+        maskInputRef,
         inputProps,
         calendarProps,
         timePanelViewProps,
+        placeholder: props.placeholder,
         size: props.size,
         icon: props.icon,
-        label: props.label,
         errors: props.errors,
         className: props.className,
         showRemove: props.showRemove,
-        isInvalid: props.isInvalid,
         disabled: props.disabled,
         style: props.style,
-        maskInputRef,
-    });
+    }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors, props.icon,
+        props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps]);
+
+    return components.ui.renderView(props.view || 'form.DateTimeFieldView', viewProps);
 }
 
 DateTimeField.defaultProps = {

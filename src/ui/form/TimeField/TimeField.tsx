@@ -73,7 +73,7 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         ...props.timePanelViewProps,
     }), [inputProps.onChange, inputProps.value, onClose, onNow, props.timePanelViewProps]);
 
-    return components.ui.renderView(props.view || 'form.TimeFieldView', {
+    const viewProps = useMemo(() => ({
         ...props.viewProps,
         onNow,
         onClear,
@@ -87,8 +87,12 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         noBorder: props.noBorder,
         disabled: props.disabled,
         className: props.className,
+        style: props.style,
         showRemove: props.showRemove,
-    });
+    }), [inputProps, isOpened, onClear, onClose, onNow, props.className, props.disabled, props.errors, props.icon, props.noBorder,
+        props.showRemove, props.size, props.style, props.viewProps, timePanelViewProps]);
+
+    return components.ui.renderView(props.view || 'form.TimeFieldView', viewProps);
 }
 
 TimeField.defaultProps = {

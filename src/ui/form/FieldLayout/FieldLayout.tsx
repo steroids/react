@@ -1,5 +1,6 @@
 import * as React from 'react';
 import _get from 'lodash-es/get';
+import {useMemo} from 'react';
 import {useComponents, useForm} from '../../../hooks';
 
 /**
@@ -61,10 +62,18 @@ function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     // Error from state
     const errors = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
 
-    return components.ui.renderView(props.view || 'form.FieldLayoutView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         errors: props.errors || errors,
-    });
+        className: props.className,
+        label: props.label,
+        id: props.id,
+        required: props.required,
+        size: props.size,
+        children: props.children,
+        hint: props.hint,
+    }), [errors, props.children, props.className, props.errors, props.hint, props.id, props.label, props.required, props.size]);
+
+    return components.ui.renderView(props.view || 'form.FieldLayoutView', viewProps);
 }
 
 export default React.memo(FieldLayout);

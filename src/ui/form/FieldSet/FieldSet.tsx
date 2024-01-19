@@ -57,14 +57,18 @@ function FieldSet(props: IFieldSetProps): JSX.Element {
     }), [context.formId, context.model, context.prefix, context.provider, context.reducer,
         context.size, props.formId, props.model, props.prefix, props.size]);
 
+    const viewProps = useMemo(() => ({
+        className: props.className,
+        label: props.label,
+        children: props.children,
+    }), [props]);
+
     const FieldSetView = props.view || components.ui.getView('form.FieldSetView');
 
     return (
         <FormContext.Provider value={contextValue}>
             <FieldSetView
-                className={props.className}
-                label={props.label}
-                {...props}
+                {...viewProps}
             >
                 {props.children}
                 {(props.fields || []).map((field: any, index) => (

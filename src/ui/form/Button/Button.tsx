@@ -1,6 +1,5 @@
-import * as React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {goToRoute} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {useComponents, useForm} from '../../../hooks';
@@ -301,21 +300,34 @@ function Button(props: IButtonProps): JSX.Element {
         }
     }, [dispatch, props, tag]);
 
-    const button = components.ui.renderView(props.view || 'form.ButtonView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         badge,
         isFailed,
         isLoading,
         disabled,
         submitting,
         tag,
+        label: props.label,
+        hint: props.hint,
+        icon: props.icon,
+        link: props.link,
+        outline: props.outline,
+        color: props.color,
+        block: props.block,
+        target: props.target,
+        type: props.type,
+        size: props.size,
         formId: context?.formId || null,
         url: url || (tag === 'a' ? '#' : null),
         onClick: !disabled ? onClick : undefined,
         children: props.label || props.children,
-    });
+        className: props.className,
+        style: props.style,
+    }), [badge, context?.formId, disabled, isFailed, isLoading, onClick, props.block,
+        props.children, props.className, props.color, props.hint, props.icon, props.label,
+        props.link, props.outline, props.size, props.style, props.target, props.type, submitting, tag, url]);
 
-    return button;
+    return components.ui.renderView(props.view || 'form.ButtonView', viewProps);
 }
 
 Button.defaultProps = {

@@ -84,13 +84,16 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
         props.editorProps,
     ), [props.editorProps, uploadUrl, uploadImagesProcessor]);
 
-    return components.ui.renderView(props.view || 'form.HtmlFieldView', {
+    const viewProps = useMemo(() => ({
         onFocus,
         onBlur,
         onChange,
-        ...props,
         editorProps,
-    });
+        disabled: props.disabled,
+        input: props.input,
+    }), [editorProps, onBlur, onChange, onFocus, props.disabled, props.input]);
+
+    return components.ui.renderView(props.view || 'form.HtmlFieldView', viewProps);
 }
 
 HtmlField.defaultProps = {

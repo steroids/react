@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import fieldWrapper, {
@@ -96,15 +95,19 @@ function SwitcherField(props: ISwitcherFieldProps): JSX.Element {
         }
     }, [selectedIds, props.input.onChange, prevSelectedIds, props, items]);
 
-    return components.ui.renderView(props.view || 'form.SwitcherFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
         inputProps,
         hoveredId,
         selectedIds,
         onItemHover,
         onItemSelect,
-    });
+        className: props.className,
+        style: props.style,
+        size: props.size,
+    }), [hoveredId, inputProps, items, onItemHover, onItemSelect, props.className, props.size, props.style, selectedIds]);
+
+    return components.ui.renderView(props.view || 'form.SwitcherFieldView', viewProps);
 }
 
 SwitcherField.defaultProps = {

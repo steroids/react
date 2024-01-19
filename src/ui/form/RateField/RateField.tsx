@@ -83,12 +83,18 @@ function RateField(props: IRateFieldProps): JSX.Element {
         ...props.inputProps,
     }), [props.disabled, props.input, props.inputProps]);
 
-    return components.ui.renderView(props.view || 'form.RateFieldView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         inputProps,
         onItemClick,
         items,
-    });
+        size: props.size,
+        disabled: props.disabled,
+        className: props.className,
+        style: props.style,
+        badge: props.badge,
+    }), [inputProps, items, onItemClick, props.badge, props.className, props.disabled, props.size, props.style]);
+
+    return components.ui.renderView(props.view || 'form.RateFieldView', viewProps);
 }
 
 RateField.defaultProps = {

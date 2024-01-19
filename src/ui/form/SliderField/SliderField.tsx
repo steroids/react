@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, {useMemo} from 'react';
 import _toInteger from 'lodash-es/toInteger';
-import {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -103,13 +102,19 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
             value = normalizeValue(value);
             props.input.onChange.call(null, value);
         },
-    // eslint-disable-next-line max-len
-    }), [props.min, props.max, props.step, props.marks, props.isRange, props.disabled, props.isVertical, props.input.value, props.input.onChange, props.valuePostfix, props.defaultValue, props.tooltipIsVisible]);
+    }), [props.min, props.max, props.step, props.marks, props.isRange, props.disabled, props.isVertical, props.input.value,
+        props.input.onChange, props.valuePostfix, props.defaultValue, props.tooltipIsVisible]);
 
-    return components.ui.renderView(props.view || 'form.SliderFieldView', {
-        ...props,
-        sliderProps,
-    });
+    const viewProps = useMemo(() => ({
+        ...sliderProps,
+        slider: props.slider,
+        className: props.className,
+        rangeDefaultValue: props.rangeDefaultValue,
+        sliderDefaultValue: props.sliderDefaultValue,
+        style: props.style,
+    }), [props.className, props.rangeDefaultValue, props.slider, props.sliderDefaultValue, props.style, sliderProps]);
+
+    return components.ui.renderView(props.view || 'form.SliderFieldView', viewProps);
 }
 
 SliderField.defaultProps = {

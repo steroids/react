@@ -163,7 +163,7 @@ export interface IRouterProps {
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes: IRouteItem[] | {[key: string]: IRouteItem,},
+    routes: IRouteItem[] | IRouteItem | {[key: string]: IRouteItem,},
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент
@@ -191,18 +191,22 @@ export interface IRouterProps {
     alwaysAppendParentRoutePath?: boolean,
 }
 
-const renderComponent = (route: IRouteItem, activePath, routeProps) => {
+const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppendParentRoutePath) => {
     const routePath = buildUrl(route.path, routeProps?.match?.params);
+
     if (route.redirectTo && routePath === activePath) {
-        const to = findRedirectPathRecursive(route);
-        if (to === null) {
+        const redirectPath = alwaysAppendParentRoutePath
+            ? findRedirectPathRecursive(route, activePath)
+            : findRedirectPathRecursive(route);
+
+        if (redirectPath === null) {
             // eslint-disable-next-line no-console
             console.error('Not found path for redirect in route:', route);
             return null;
         }
 
         // Check already redirected
-        const toPath = buildUrl(to, routeProps?.match?.params);
+        const toPath = buildUrl(redirectPath, routeProps?.match?.params);
         if (activePath !== toPath) {
             return (
                 <Redirect
@@ -343,7 +347,7 @@ function Router(props: IRouterProps): JSX.Element {
             children = renderComponent(activeRoute, activePath, {
                 ...routeProps,
                 children,
-            }) || children;
+            }, props.alwaysAppendParentRoutePath) || children;
 
             // Stop, if route is exact
             if (activeRoute.exact) {
@@ -353,10 +357,15 @@ function Router(props: IRouterProps): JSX.Element {
             return false;
         });
 
-        const result = renderComponent(routeItem, activePath, {
-            ...routeProps,
-            children,
-        });
+        const result = renderComponent(
+            routeItem,
+            activePath,
+            {
+                ...routeProps,
+                children,
+            },
+            props.alwaysAppendParentRoutePath,
+        );
         if (!result) {
             if (children) {
                 return children;

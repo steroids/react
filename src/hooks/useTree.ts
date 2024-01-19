@@ -8,7 +8,7 @@ import _isNil from 'lodash-es/isNil';
 import _keys from 'lodash-es/keys';
 import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
-import {useFirstMountState} from 'react-use';
+import {useMount, useUnmount} from 'react-use';
 import useComponents from './useComponents';
 import useSelector from './useSelector';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
@@ -267,8 +267,6 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean,}>({});
 
-    const isFirstMount = useFirstMountState();
-
     const {clientStorage} = useComponents();
 
     //Redux connection
@@ -308,22 +306,30 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         setSelectedUniqueId(selectedItem ? selectedItem.uniqueId : null);
     }, [items]);
 
-    useEffect(() => {
+    const localTree = JSON.parse(clientStorage.get(CLIENT_STORAGE_KEY)) || {};
+
+    const saveInClientStorage = () => {
         if (config.saveInClientStorage) {
-            const localTree = JSON.parse(clientStorage.get(CLIENT_STORAGE_KEY)) || {};
+            localTree[config.clientStorageId] = expandedItems;
+            clientStorage.set(CLIENT_STORAGE_KEY, JSON.stringify(localTree));
+        }
+    };
+
+    useMount(() => {
+        if (config.saveInClientStorage) {
             const treeData = localTree[config.clientStorageId];
-            const isExpandedItemsChanged = JSON.stringify(expandedItems) !== JSON.stringify(treeData);
 
-            if (!_isEmpty(expandedItems) && isExpandedItemsChanged) {
-                localTree[config.clientStorageId] = expandedItems;
-                clientStorage.set(CLIENT_STORAGE_KEY, JSON.stringify(localTree));
-            }
-
-            if (treeData && isFirstMount && isExpandedItemsChanged) {
+            if (treeData) {
                 setExpandedItems(treeData);
             }
         }
-    }, [clientStorage, config.clientStorageId, config.saveInClientStorage, expandedItems, isFirstMount]);
+    });
+
+    useUnmount(() => {
+        saveInClientStorage();
+    });
+
+    window.addEventListener('beforeunload', saveInClientStorage);
 
     const onExpand = useCallback((e: Event | React.MouseEvent, uniqueId: string, item: ITreeItem) => {
         e.preventDefault();

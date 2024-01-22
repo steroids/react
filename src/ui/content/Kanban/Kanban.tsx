@@ -59,7 +59,7 @@ export interface IKanbanColumn {
     tasks: IKanbanTask[],
 }
 
-export interface IKanbanModalViewProps extends IModalProps {
+export interface IKanbanModalViewProps extends IModalProps, Pick<IKanbanConfig, 'createTaskEditorConfig'> {
     modalType: KanbanModalTypeEnum,
     formId: string,
     columns: IKanbanColumn[],
@@ -91,6 +91,12 @@ export interface IKanbanTaskDetailsModalViewProps extends IModalProps {
  * Для работы этого компонента необходимо установить в проекте зависимости `react-beautiful-dnd`
  * и передать в пропсы `droppableComponent`, `draggableComponent` и `dndContext`
  * компоненты `Droppable`, `Draggable` и `DragDropContext` соответственно.
+ *
+ * Для корректной работы функционала создания задач,
+ * необходимо установить в проекте зависимости `@ckeditor/ckeditor5-react` и `@steroidsjs/ckeditor5`,
+ * затем импортировать `CKEditor` из `@ckeditor/ckeditor5-react` и `ClassicEditor` из `@steroidsjs/ckeditor5/packages/ckeditor5-build-classic`.
+ * Импортированные компоненты нужно передать в проп `createTaskEditorConfig`,
+ * в поле `htmlComponent` передать `CKEditor`, а в `editorConstructor` передать `ClassicEditor`.
  */
 export interface IKanbanProps extends IKanbanConfig, IUiComponent {
     /**
@@ -151,6 +157,7 @@ export default function Kanban(props: IKanbanProps) {
         tags: props.tags,
         lastTaskId: props.lastTaskId,
         onDragEnd: props.onDragEnd,
+        createTaskEditorConfig: props.createTaskEditorConfig,
     });
 
     // Task

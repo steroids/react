@@ -209,7 +209,6 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
 InputField.defaultProps = {
     type: 'text',
-    size: 'md',
     disabled: false,
     required: false,
     showClear: false,

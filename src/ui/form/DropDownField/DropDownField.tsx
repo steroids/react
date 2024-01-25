@@ -429,7 +429,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 DropDownField.defaultProps = {
     primaryKey: 'id',
     outline: false,
-    size: 'md',
     color: 'basic',
     disabled: false,
     required: false,

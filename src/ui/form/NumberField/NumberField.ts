@@ -126,7 +126,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 NumberField.defaultProps = {
     disabled: false,
     required: false,
-    size: 'md',
 };
 
 export default fieldWrapper<INumberFieldProps>('NumberField', NumberField);

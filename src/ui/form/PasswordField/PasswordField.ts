@@ -116,7 +116,6 @@ PasswordField.defaultProps = {
     showSecurityBar: false,
     showSecurityIcon: true,
     required: false,
-    size: 'md',
 };
 
 export default fieldWrapper<IPasswordFieldProps>('PasswordField', PasswordField);

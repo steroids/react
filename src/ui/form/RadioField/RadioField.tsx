@@ -71,7 +71,6 @@ RadioField.defaultProps = {
     disabled: false,
     required: false,
     className: '',
-    size: 'md',
     inputProps: {},
 };
 

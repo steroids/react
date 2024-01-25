@@ -302,7 +302,6 @@ DateTimeRangeField.defaultProps = {
     useUTC: false,
     dateInUTC: false,
     icon: true,
-    size: 'md',
     maskOptions: {
         from: maskitoDateTimeOptionsGenerator({
             dateMode: 'dd/mm/yyyy',

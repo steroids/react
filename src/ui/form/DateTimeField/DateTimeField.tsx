@@ -141,7 +141,6 @@ DateTimeField.defaultProps = {
     valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
     useUTC: false,
     dateInUTC: false,
-    size: 'md',
     icon: true,
     maskOptions: maskitoDateTimeOptionsGenerator({
         dateMode: 'dd/mm/yyyy',

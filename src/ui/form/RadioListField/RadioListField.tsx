@@ -42,6 +42,7 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
         isSelected: boolean,
         isHovered: boolean,
         required?: boolean,
+        size?: Size,
     }[],
     selectedIds: (PrimaryKey | any)[],
     className?: CssClassName,
@@ -127,7 +128,6 @@ RadioListField.defaultProps = {
     className: '',
     multiple: true,
     errors: null,
-    size: 'md',
     orientation: 'vertical',
 };
 

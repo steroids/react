@@ -272,7 +272,6 @@ DateRangeField.defaultProps = {
     showRemove: true,
     hasInitialFocus: false,
     icon: true,
-    size: 'md',
     maskOptions: {
         from: maskitoDateOptionsGenerator({
             mode: 'dd/mm/yyyy',

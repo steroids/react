@@ -222,7 +222,6 @@ TimeRangeField.defaultProps = {
     valueFormat: 'HH:mm',
     useUTC: true,
     dateInUTC: false,
-    size: 'md',
     icon: true,
 };
 

@@ -199,7 +199,6 @@ AutoCompleteField.defaultProps = {
     multiple: false,
     disabled: false,
     required: false,
-    size: 'md',
 };
 
 export default fieldWrapper<IAutoCompleteFieldProps>('AutoCompleteField', AutoCompleteField);

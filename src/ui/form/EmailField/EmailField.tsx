@@ -65,7 +65,6 @@ function EmailField(props: IEmailFieldProps) {
 }
 
 EmailField.defaultProps = {
-    size: 'md',
     disabled: false,
     required: false,
     showClear: false,

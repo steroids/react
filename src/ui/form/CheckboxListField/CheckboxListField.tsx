@@ -72,6 +72,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
         isHovered: boolean,
         color?: string,
         required?: boolean,
+        size?: Size,
     }[],
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,

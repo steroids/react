@@ -146,6 +146,8 @@ export interface FieldWrapperComponent<T> {
     defaultProps: any,
 }
 
+const DEFAULT_SIZE = 'md';
+
 const getKey = (baseName, attribute) => baseName + _upperFirst(attribute || '');
 
 const createDynamicField = (componentId: string, Component, options: IFieldWrapperOptions) => {
@@ -262,13 +264,18 @@ export default function fieldWrapper<T = any>(
         const inputId = props.id || uniqueId;
 
         if (props.isRenderWithoutFieldLayout) {
-            return components.ui.renderView(Component.DynamicField, props);
+            return components.ui.renderView(Component.DynamicField, {
+                ...props,
+                size: props.size || DEFAULT_SIZE,
+            });
         }
+
+        const size = props.size || context.size || DEFAULT_SIZE;
 
         return components.ui.renderView(FieldLayout, {
             ...attributesProps,
+            size,
             className: props.fieldLayoutClassName,
-            size: props.size || context.size || null,
             required: _has(props, 'required') ? props.required : metaProps.required,
             label: options.label === false ? null : (_has(props, 'label') ? props.label : metaProps.label),
             hint: _has(props, 'hint') ? props.hint : metaProps.hint,
@@ -278,6 +285,7 @@ export default function fieldWrapper<T = any>(
                 <Component.DynamicField
                     {...props}
                     id={inputId}
+                    size={size}
                 />
             ),
         });

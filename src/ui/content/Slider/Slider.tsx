@@ -33,8 +33,13 @@ export interface ISliderProps extends IUiComponent, Omit<SplideProps, 'items'> {
 
 export type ISliderViewProps = ISliderProps
 
-export default function Slider(props: ISliderProps) {
+function Slider(props: ISliderProps, ref) {
     const components = useComponents();
 
-    return components.ui.renderView(props.view || 'content.SliderView', props);
+    return components.ui.renderView(props.view || 'content.SliderView', {
+        ...props,
+        ref,
+    });
 }
+
+export default React.forwardRef(Slider);

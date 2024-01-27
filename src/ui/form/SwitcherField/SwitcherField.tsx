@@ -116,7 +116,6 @@ SwitcherField.defaultProps = {
     required: false,
     className: '',
     errors: null,
-    size: 'md',
 };
 
 export default fieldWrapper<ISwitcherFieldProps>('SwitcherField', SwitcherField);

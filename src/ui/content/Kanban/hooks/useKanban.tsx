@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 import {useMount} from 'react-use';
+import {IHtmlFieldProps} from '@steroidsjs/core/ui/form/HtmlField/HtmlField';
 import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
 import {closeModal, openModal} from '../../../../actions/modal';
 import {useSelector, useDispatch, useComponents} from '../../../../hooks';
@@ -60,6 +61,12 @@ export interface IKanbanConfig {
      * Массив исполнителей, которых можно назначить для выполнения задачи
      */
     assigners?: ITaskAssigner[],
+
+    /**
+     * Компоненты для подключения wysiwyg редактора
+     * @example CKEditor
+     */
+    createTaskEditorConfig: Pick<IHtmlFieldProps, 'htmlComponent' | 'editorConstructor'>,
 
     /**
      * Обработчик события окончания перетаскивания карточки или колонки
@@ -176,10 +183,11 @@ export default function useKanban(config: IKanbanConfig) {
     // common modal
     const KanbanModalView = components.ui.getView('content.KanbanModalView');
     const createOrEditTaskCommonModalProps = React.useMemo(() => ({
+        createTaskEditorConfig: config.createTaskEditorConfig,
         columns: kanban?.columns,
         assigners: normalizeAssignersForDropDownItems(config.assigners || []),
         tags,
-    }), [config.assigners, kanban?.columns, tags]);
+    }), [config.createTaskEditorConfig, config.assigners, kanban?.columns, tags]);
 
     // create task modal
     const onOpenCreateTaskModal = React.useCallback((columnId) => {

@@ -171,7 +171,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
                 props.input.onChange(res.id);
             });
         }
-    }, [components.http, croppedImage, onAdd, onRemove, props.crop.backendUrl, props.input, oldCroppedImage]);
+    }, [components.http, croppedImage, onAdd, onRemove, props.crop?.backendUrl, props.input, oldCroppedImage]);
 
     const ImageFieldView = props.view || components.ui.getView('form.ImageFieldView');
 

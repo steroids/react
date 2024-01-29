@@ -130,7 +130,8 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         placeholder: props.placeholder,
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
-
+        useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
     });
 
     // Input 'to'
@@ -149,7 +150,8 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         placeholder: props.placeholder,
         valueFormat: props.valueFormat,
         displayFormat: props.displayFormat,
-
+        useUTC: props.useUTC,
+        dateInUTC: props.dateInUTC,
     });
 
     const {
@@ -220,7 +222,7 @@ TimeRangeField.defaultProps = {
     hasInitialFocus: false,
     type: 'text',
     valueFormat: 'HH:mm',
-    useUTC: true,
+    useUTC: false,
     dateInUTC: false,
     icon: true,
 };

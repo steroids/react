@@ -103,7 +103,7 @@ TimeField.defaultProps = {
     showRemove: true,
     type: 'text',
     valueFormat: 'HH:mm',
-    useUTC: true,
+    useUTC: false,
     dateInUTC: false,
     icon: true,
 };

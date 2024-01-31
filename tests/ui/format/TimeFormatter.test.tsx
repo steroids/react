@@ -11,9 +11,24 @@ describe('TimeFormatter tests', () => {
         value: '2018-05-04 16:15:00',
     } as ITimeFormatterProps;
 
-    it('should be correct conversion time', () => {
+    const expectedTime = '16:15';
+
+    it('should display the correct time when only the time is passed', () => {
         const {getByText} = render(JSXWrapper(TimeFormatter, props));
-        const date = getByText('16:15');
+        const date = getByText(expectedTime);
+
+        expect(date).toBeInTheDocument();
+    });
+
+    it('should display the correct time when a date object is passed', () => {
+        const dateObj = new Date('2018-05-04 16:15:00');
+        const propsWithDate = {
+            ...props,
+            value: dateObj,
+        };
+
+        const {getByText} = render(JSXWrapper(TimeFormatter, propsWithDate));
+        const date = getByText(expectedTime);
 
         expect(date).toBeInTheDocument();
     });

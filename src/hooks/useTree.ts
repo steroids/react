@@ -8,7 +8,7 @@ import _isNil from 'lodash-es/isNil';
 import _keys from 'lodash-es/keys';
 import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
-import {useMount, useUnmount} from 'react-use';
+import {useBeforeUnload, useMount, useUnmount} from 'react-use';
 import useComponents from './useComponents';
 import useSelector from './useSelector';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
@@ -329,7 +329,10 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         saveInClientStorage();
     });
 
-    window.addEventListener('beforeunload', saveInClientStorage);
+    useBeforeUnload(() => {
+        saveInClientStorage();
+        return true;
+    });
 
     const onExpand = useCallback((e: Event | React.MouseEvent, uniqueId: string, item: ITreeItem) => {
         e.preventDefault();

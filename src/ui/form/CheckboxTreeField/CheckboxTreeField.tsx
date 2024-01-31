@@ -143,7 +143,7 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
             const selectedItemIds = getNestedItemsIds(checkbox, props.primaryKey);
 
             setSelectedIds(selectedItemIds);
-        } else if (checkbox.id) {
+        } else if (checkbox.id && !checkbox.hasItems) {
             setSelectedIds(checkbox.id);
         }
     }, [props.hasOnlyLeafCheckboxes, props.primaryKey, setSelectedIds]);

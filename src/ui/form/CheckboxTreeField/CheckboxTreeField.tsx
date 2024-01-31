@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 import _isArray from 'lodash-es/isArray';
+import _isEqual from 'lodash-es/isEqual';
 import {IPreparedTreeItem} from '../../../hooks/useTree';
 import Enum from '../../../base/Enum';
 import {useComponents, useDataProvider, useDataSelect, useTree} from '../../../hooks';
@@ -55,6 +56,11 @@ export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
      */
     primaryKey?: string,
 
+    /**
+     * Отображать чекбоксы только на узлах, не имеющих вложенных элементов
+     */
+    hasOnlyLeafCheckboxes?: boolean,
+
     [key: string]: any,
 }
 
@@ -73,6 +79,7 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
     onItemSelect: (checkbox: IPreparedTreeItem) => void,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
     size?: Size,
+    hasOnlyLeafCheckboxes?: boolean,
 }
 
 export const getNestedItemsIds = (item, groupAttribute) => {
@@ -108,6 +115,8 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
     // Data Provider
     const {items} = useDataProvider({
         items: props.items as DataProviderItems,
+        initialSelectedIds: inputSelectedIds,
+        dataProvider: props.dataProvider,
     });
 
     // Tree items
@@ -130,27 +139,29 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
     });
 
     const onItemSelect = useCallback((checkbox) => {
-        if (checkbox.hasItems) {
+        if (checkbox.hasItems && !props.hasOnlyLeafCheckboxes) {
             const selectedItemIds = getNestedItemsIds(checkbox, props.primaryKey);
 
             setSelectedIds(selectedItemIds);
-        } else {
+        } else if (checkbox.id) {
             setSelectedIds(checkbox.id);
         }
-    }, [props.primaryKey, setSelectedIds]);
-
-    // Sync with form
-    useEffect(() => {
-        props.input.onChange.call(null, selectedIds);
-
-        if (props.onChange) {
-            props.onChange(selectedIds);
-        }
-    }, [props, props.input.onChange, selectedIds]);
+    }, [props.hasOnlyLeafCheckboxes, props.primaryKey, setSelectedIds]);
 
     const onReset = useCallback(() => {
         setSelectedIds([]);
     }, [setSelectedIds]);
+
+    // Sync with form
+    const prevSelectedIds = usePrevious(selectedIds);
+    useEffect(() => {
+        if (!_isEqual(prevSelectedIds || [], selectedIds)) {
+            props.input.onChange.call(null, selectedIds);
+            if (props.onChange) {
+                props.onChange.call(null, selectedIds);
+            }
+        }
+    }, [prevSelectedIds, props.input.onChange, props.multiple, props.onChange, selectedIds]);
 
     // Reset selected ids on form reset
     const prevInputValue = usePrevious(props.input.value);
@@ -176,7 +187,8 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         renderCheckbox,
         size: props.size,
         levelPadding: props.levelPadding,
-    }), [onItemSelect, props.levelPadding, props.size, renderCheckbox, selectedIds, treeItems]);
+        hasOnlyLeafCheckboxes: props.hasOnlyLeafCheckboxes,
+    }), [onItemSelect, props.levelPadding, props.hasOnlyLeafCheckboxes, props.size, renderCheckbox, selectedIds, treeItems]);
 
     return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);
 }
@@ -188,6 +200,7 @@ CheckboxTreeField.defaultProps = {
     levelPadding: 32,
     alwaysOpened: false,
     primaryKey: 'items',
+    hasOnlyLeafCheckboxes: false,
 };
 
 export default fieldWrapper<ICheckboxTreeFieldProps>('CheckboxTreeField', CheckboxTreeField);

@@ -5,6 +5,7 @@ import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import AutoSaveHelper from './AutoSaveHelper';
@@ -163,6 +164,14 @@ export interface IFormProps extends IUiComponent {
     submitLabel?: string,
 
     /**
+     * Параметры для кнопки отправки формы
+     * @example {
+     *     block: true,
+     * }
+     */
+    submitButtonProps?: IButtonProps,
+
+    /**
      * Синхронизация значений формы с адресной строкой
      * @example true
      */
@@ -192,6 +201,11 @@ export interface IFormProps extends IUiComponent {
      */
     buttons?: React.ReactNode,
 
+    /**
+     * Размер компонента и вложенных полей
+     */
+    size?: Size,
+
     [key: string]: any,
 }
 
@@ -204,6 +218,8 @@ export interface IFormViewProps {
     style?: CustomStyle,
     children?: React.ReactNode,
     buttons?: React.ReactNode,
+    submitButtonProps?: IButtonProps,
+    size?: Size,
 }
 
 export interface IFormReducerState {
@@ -232,7 +248,7 @@ export interface IFormContext {
     prefix?: string | boolean,
 
     /**
-    * Размер компонента
+    * Размер компонента и вложенных полей
     */
     size?: Size,
 
@@ -310,7 +326,7 @@ function Form(props: IFormProps): JSX.Element {
 
         // Local storage
         if (props.autoSave) {
-            initialValues = AutoSaveHelper.restore(props.clientStorage, props.formId, initialValues);
+            initialValues = AutoSaveHelper.restore(components.clientStorage, props.formId, initialValues);
         }
     }
 
@@ -334,10 +350,9 @@ function Form(props: IFormProps): JSX.Element {
     // Auto save
     useUpdateEffect(() => {
         if (props.autoSave && values) {
-            // TODO
-            //AutoSaveHelper.save(components.clientStorage, props.formId, values);
+            AutoSaveHelper.save(components.clientStorage, props.formId, values);
         }
-    }, [props.autoSave, values]);
+    }, [components.clientStorage, props.autoSave, props.formId, values]);
 
     // Auto destroy
     useUnmount(() => {
@@ -495,15 +510,13 @@ function Form(props: IFormProps): JSX.Element {
             props.onComplete.call(null, cleanedValues, data, response);
         }
         if (props.autoSave) {
-            // TODO
-            //const AutoSaveHelper = require('../ui/form/Form/AutoSaveHelper').default;
-            //AutoSaveHelper.remove(props.clientStorage, props.formId);
+            AutoSaveHelper.remove(components.clientStorage, props.formId);
         }
 
         dispatch(formSetSubmitting(props.formId, false));
         return null;
     }, [dispatch, props, values, components.ui, components.resource,
-        components.http, reduxDispatch, setErrors]);
+        components.http, components.clientStorage, setErrors, reduxDispatch]);
 
     // Manual submit form by reducer action
     const prevSubmitCounter = usePrevious(submitCounter);
@@ -528,14 +541,16 @@ function Form(props: IFormProps): JSX.Element {
         isSubmitting,
         onSubmit,
         submitLabel: props.submitLabel,
+        submitButtonProps: props.submitButtonProps,
         fields: props.fields,
         children: props.children,
         className: props.className,
         style: props.style,
         autoFocus: props.autoFocus,
         buttons: props.buttons,
-    }), [isSubmitting, onSubmit, props.autoFocus, props.buttons, props.children, props.className, props.fields, props.style,
-        props.submitLabel, props.viewProps]);
+        size: props.size,
+    }), [isSubmitting, onSubmit, props.autoFocus, props.buttons, props.children, props.className, props.fields,
+        props.size, props.style, props.submitButtonProps, props.submitLabel, props.viewProps]);
 
     // Wait initialization (only for redux)
     if (values === undefined) {
@@ -556,6 +571,7 @@ Form.defaultProps = {
     actionMethod: 'POST',
     autoStartTwoFactor: true,
     captchaActionName: 'submit',
+    size: 'md',
 };
 
 export default Form;

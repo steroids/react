@@ -101,7 +101,6 @@ RateField.defaultProps = {
     allowClear: false,
     itemsCount: 5,
     disabled: false,
-    size: 'md',
 };
 
 export default fieldWrapper<IRateFieldProps>('RateField', RateField);

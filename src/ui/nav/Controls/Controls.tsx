@@ -118,8 +118,11 @@ export default function Controls(props: IControlsProps): JSX.Element {
         ...item,
     })), [defaultItems, props.items]);
 
-    return components.ui.renderView(props.view || 'nav.ControlsView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
-    });
+        className: props.className,
+        navProps: props.navProps,
+    }), [items, props.className, props.navProps]);
+
+    return components.ui.renderView(props.view || 'nav.ControlsView', viewProps);
 }

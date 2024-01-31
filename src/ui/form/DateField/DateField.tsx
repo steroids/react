@@ -118,7 +118,6 @@ DateField.defaultProps = {
         mode: 'dd/mm/yyyy',
         separator: '.',
     }),
-    size: 'md',
 };
 
 export default fieldWrapper<IDateFieldProps>('DateField', DateField);

@@ -137,6 +137,17 @@ export interface INavProps {
      */
     size?: Size,
 
+    /**
+     * CSS-класс для элемента навигации.
+     */
+    navClassName?: CssClassName,
+
+    /**
+     * Переводит кнопку в состояние "не активна"
+     * @example true
+     */
+    disabled?: boolean,
+
     [key: string]: any,
 }
 
@@ -146,7 +157,6 @@ export interface INavViewProps extends INavProps {
         isActive: boolean,
         isActiveNested: boolean,
     })[],
-    navClassName?: CssClassName,
 }
 
 const defaultViewMap = {
@@ -175,7 +185,7 @@ function Nav(props: INavProps): JSX.Element {
         }
     }, [props.activeTab]);
 
-    const renderContent = () => {
+    const renderContent = useCallback(() => {
         const items = Array.isArray(props.items) ? props.items : [];
         const activeItem = items.find((item, index) => activeTab === (_has(item, 'id') ? item.id : index));
         if (!activeItem || !activeItem.content) {
@@ -191,7 +201,7 @@ function Nav(props: INavProps): JSX.Element {
             );
         }
         return activeItem.content;
-    };
+    }, [activeTab, props.items]);
 
     const onClick = useCallback((item, index) => {
         const newActiveTab = _has(item, 'id') ? item.id : index;
@@ -202,7 +212,7 @@ function Nav(props: INavProps): JSX.Element {
         }
     }, [props.onChange]);
 
-    const formatItems = React.useCallback((items = props.items) => {
+    const formatItems = useCallback((items = props.items) => {
         if (Array.isArray(items)) {
             return items.map((item, index) => ({
                 ...item,
@@ -229,13 +239,18 @@ function Nav(props: INavProps): JSX.Element {
     const items = useMemo(() => formatItems(),
         [formatItems]);
 
-    return components.ui.renderView(props.view || defaultViewMap[props.layout], {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
         onClick,
         disabled: props.disabled,
+        size: props.size,
+        icon: props.icon,
+        className: props.className,
+        navClassName: props.navClassName,
         children: renderContent(),
-    });
+    }), [items, onClick, props.className, props.disabled, props.icon, props.navClassName, props.size, renderContent]);
+
+    return components.ui.renderView(props.view || defaultViewMap[props.layout], viewProps);
 }
 
 Nav.defaultProps = {

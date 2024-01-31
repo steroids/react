@@ -9,9 +9,30 @@ import fieldWrapper, {
 
 /**
  * HtmlField
- * Компонент для создания HTML-разметки, использующий WYSIWYG редактор
+ * Компонент для создания HTML-разметки, использующий WYSIWYG редактор.
+ *
+ * Для использования WYSIWYG редактора, необходимо установить в проекте зависимости `@ckeditor/ckeditor5-react` и `@steroidsjs/ckeditor5`,
+ * затем импортировать `CKEditor` из `@ckeditor/ckeditor5-react` и `ClassicEditor` из `@steroidsjs/ckeditor5/packages/ckeditor5-build-classic`.
+ * Компонент `CKEditor` нужно передать в проп `htmlComponent`, а конструктор `ClassicEditor` в проп `editorConstructor`.
+ *
+ * При передаче `HtmlField` с бэкенда, необходимо переопределить `view` компонента, указав локальный.
+ * В локальном компоненте добавить вместо пропсов `htmlComponent` и `editorConstructor` импорты `CKEditor` и `ClassicEditor` соотвественно.
  */
 export interface IHtmlFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IUiComponent {
+    /**
+     * Компонент редактора 'ckeditor5-react' из библиотеки @ckeditor
+     * Примечание: для использования встроенного отображения 'HtmlField', данный компонент должен быть передан
+     * @example CKEditor
+     */
+    htmlComponent?: any,
+
+    /**
+     * Конструктор редактора 'ckeditor5-react' из библиотеки @steroidsjs/ckeditor5/packages/ckeditor5-build-classic
+     * Примечание: для использования встроенного отображения 'HtmlField', данный компонент должен быть передан
+     * @example ClassicEditor
+     */
+    editorConstructor?: any,
+
     /**
      * Конфигурация wysiwyg реадактора
      */
@@ -89,9 +110,11 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
         onBlur,
         onChange,
         editorProps,
+        htmlComponent: props.htmlComponent,
+        editorConstructor: props.editorConstructor,
         disabled: props.disabled,
         input: props.input,
-    }), [editorProps, onBlur, onChange, onFocus, props.disabled, props.input]);
+    }), [editorProps, onBlur, onChange, onFocus, props.disabled, props.editorConstructor, props.htmlComponent, props.input]);
 
     return components.ui.renderView(props.view || 'form.HtmlFieldView', viewProps);
 }

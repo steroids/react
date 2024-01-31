@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useComponents, useSelector} from '../../../hooks';
 import {getRouteBreadcrumbs, getRouteParams} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
@@ -75,9 +75,14 @@ export default function Breadcrumbs(props: IBreadcrumbsProps): JSX.Element {
     const routeParams = useSelector(state => getRouteParams(state));
     const items = props.items || routeItems;
 
-    return components.ui.renderView(props.view || 'nav.BreadcrumbsView', {
-        ...props,
+    const viewProps = useMemo(() => ({
         items,
         routeParams,
-    });
+        customIcon: props.customIcon,
+        showIcon: props.showIcon,
+        className: props.className,
+        pageTitle: props.pageTitle,
+    }), [items, props.className, props.customIcon, props.pageTitle, props.showIcon, routeParams]);
+
+    return components.ui.renderView(props.view || 'nav.BreadcrumbsView', viewProps);
 }

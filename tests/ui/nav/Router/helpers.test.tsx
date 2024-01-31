@@ -163,8 +163,8 @@ describe('Function findRedirectPathRecursive', () => {
         expect(findRedirectPathRecursive(route)).toBe(somePath);
     });
 
-    it('returns empty string when passed an object with path equal to an empty string', () => {
-        const emptyPath = '';
+    it('returns slash when passed an object with path equal to an empty string', () => {
+        const emptyPath = '/';
         const route = {path: emptyPath};
         expect(findRedirectPathRecursive(route)).toBe(emptyPath);
     });

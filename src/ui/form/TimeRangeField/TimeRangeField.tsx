@@ -29,7 +29,7 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
     /**
     * Свойства для view компонента
     */
-    viewProps?: Record<string, unknown>,
+    viewProps?: CustomViewProps,
 
     /**
      * Свойства для компонента панели времени

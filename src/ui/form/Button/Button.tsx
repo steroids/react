@@ -41,13 +41,13 @@ export interface IButtonProps extends IUiComponent {
      * Текст кнопки или ссылки
      * @example Save
      */
-    label?: string | any,
+    label?: string,
 
     /**
      * Подсказка, отображается при наведении (через тег title)
      * @example Save
      */
-    hint?: string | any,
+    hint?: string,
 
     /**
      * HTML Тип
@@ -125,7 +125,7 @@ export interface IButtonProps extends IUiComponent {
      * автоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
      * @param e => fetch(...)
      */
-    onClick?: (e: Event | React.MouseEvent) => Promise<any> | any,
+    onClick?: any,
 
     /**
      * Переводит кнопку в состояние "не активна"
@@ -192,7 +192,7 @@ export interface IButtonViewProps extends IButtonProps {
     url?: string,
     formId?: string,
     disabled?: boolean,
-    onClick?: (e: Event | React.MouseEvent) => Promise<any> | any,
+    onClick?: any,
     submitting?: boolean,
 }
 

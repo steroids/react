@@ -56,7 +56,7 @@ export interface ITooltipProps {
      * Текст подсказки
      * @example 'Это всплывающая подсказка.'
      */
-    content?: string | any,
+    content?: string,
 
     /**
      * Вложенные элементы
@@ -115,7 +115,7 @@ export interface ITooltipProps {
 
 export interface ITooltipViewProps extends ITooltipProps {
     isTooltipVisible: boolean,
-    content: string | any,
+    content: string,
     position: PositionType,
     style: ITooltipStylePosition,
     className?: CssClassName,

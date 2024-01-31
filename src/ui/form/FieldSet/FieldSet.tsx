@@ -38,7 +38,7 @@ export interface IFieldSetProps extends IFormContext {
 export interface IFieldSetViewProps {
     className?: CssClassName,
     children?: React.ReactNode,
-    label?: string | any,
+    label?: string,
 }
 
 function FieldSet(props: IFieldSetProps): JSX.Element {

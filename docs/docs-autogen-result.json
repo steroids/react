@@ -4636,6 +4636,14 @@
                     "required": false,
                     "type": "string | number",
                     "example": "2"
+                },
+                {
+                    "name": "useSameSelectedItemId",
+                    "decorators": [],
+                    "description": "При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
                 }
             ],
             "methods": [
@@ -5557,6 +5565,184 @@
             ],
             "methods": []
         },
+        "IAccordionItemProps": {
+            "name": "IAccordionItemProps",
+            "moduleName": "ui/content/Accordion/Accordion",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Omit<IAccordionProps",
+                "'onChange'>"
+            ],
+            "properties": [
+                {
+                    "name": "activeKey",
+                    "decorators": [],
+                    "description": "Номер активного AccordionItem, который может меняться динамический или быть статичным",
+                    "required": false,
+                    "type": "number",
+                    "example": "1",
+                    "defaultValue": null
+                },
+                {
+                    "name": "childIndex",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "children",
+                    "decorators": [],
+                    "description": "Дочерние элементы",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит Accordion в выключенное состояние",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
+                    "name": "hasOneOpenItem",
+                    "decorators": [],
+                    "description": "Включает режим в котором можно открыть только один AccordionItem",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": null
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Пользовательская иконка svg или название иконки или объект с иконками open и close",
+                    "required": false,
+                    "type": "string | ReactElement | IAccordionIcon",
+                    "example": "'circle'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "isShowMore",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "position",
+                    "decorators": [],
+                    "description": "Стилизация позиционирования.\nПри значении \"top\" верхняя часть шапки будет закруглена.",
+                    "required": false,
+                    "type": "\"top\" | \"bottom\" | \"middle\"",
+                    "example": "'top'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "showIcon",
+                    "decorators": [],
+                    "description": "Отображать ли иконку у AccordionItem",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}",
+                    "defaultValue": null
+                },
+                {
+                    "name": "theme",
+                    "decorators": [],
+                    "description": "Тема аккордеона",
+                    "required": false,
+                    "type": "\"light\" | \"dark\" | \"intermediate\"",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "Название AccordionItem",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Подробнее'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView",
+                    "defaultValue": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "toggleAccordion",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "number",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "toggleCollapse",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "number",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
         "IAccordionProps": {
             "name": "IAccordionProps",
             "moduleName": "ui/content/Accordion/Accordion",
@@ -5686,178 +5872,6 @@
                     "type": "void",
                     "example": "{\n () => { console.log('success') }\n}",
                     "parameters": []
-                }
-            ]
-        },
-        "IAccordionViewProps": {
-            "name": "IAccordionViewProps",
-            "moduleName": "ui/content/Accordion/Accordion",
-            "title": "",
-            "description": "",
-            "tags": {},
-            "defaultProps": null,
-            "extends": [
-                "IAccordionProps"
-            ],
-            "properties": [
-                {
-                    "name": "activeKey",
-                    "decorators": [],
-                    "description": "Номер активного AccordionItem, который может меняться динамический или быть статичным",
-                    "required": false,
-                    "type": "number",
-                    "example": "1"
-                },
-                {
-                    "name": "childIndex",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "number",
-                    "example": null
-                },
-                {
-                    "name": "children",
-                    "decorators": [],
-                    "description": "Дочерние элементы",
-                    "required": false,
-                    "type": "ReactNode",
-                    "example": null
-                },
-                {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "Дополнительный CSS-класс для элемента отображения",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
-                {
-                    "name": "disabled",
-                    "decorators": [],
-                    "description": "Переводит Accordion в выключенное состояние",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "hasOneOpenItem",
-                    "decorators": [],
-                    "description": "Включает режим в котором можно открыть только один AccordionItem",
-                    "required": false,
-                    "type": "boolean",
-                    "example": "true"
-                },
-                {
-                    "name": "icon",
-                    "decorators": [],
-                    "description": "Пользовательская иконка svg или название иконки или объект с иконками open и close",
-                    "required": false,
-                    "type": "string | ReactElement | IAccordionIcon",
-                    "example": "'circle'"
-                },
-                {
-                    "name": "isShowMore",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                },
-                {
-                    "name": "position",
-                    "decorators": [],
-                    "description": "Стилизация позиционирования.\nПри значении \"top\" верхняя часть шапки будет закруглена.",
-                    "required": false,
-                    "type": "\"top\" | \"bottom\" | \"middle\"",
-                    "example": "'top'"
-                },
-                {
-                    "name": "showIcon",
-                    "decorators": [],
-                    "description": "Отображать ли иконку у AccordionItem",
-                    "required": false,
-                    "type": "boolean",
-                    "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "Объект CSS стилей",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": "{width: '45%'}"
-                },
-                {
-                    "name": "theme",
-                    "decorators": [],
-                    "description": "Тема аккордеона",
-                    "required": false,
-                    "type": "\"light\" | \"dark\" | \"intermediate\"",
-                    "example": null
-                },
-                {
-                    "name": "title",
-                    "decorators": [],
-                    "description": "Название AccordionItem",
-                    "required": false,
-                    "type": "string",
-                    "example": "'Подробнее'"
-                },
-                {
-                    "name": "view",
-                    "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизации отображения",
-                    "required": false,
-                    "type": "React.ReactNode | {}",
-                    "example": "MyCustomView"
-                }
-            ],
-            "methods": [
-                {
-                    "name": "onChange",
-                    "decorators": [],
-                    "description": "Вызываемая функция при каждом изменении состояния",
-                    "required": false,
-                    "type": "void",
-                    "example": "{\n () => { console.log('success') }\n}",
-                    "parameters": []
-                },
-                {
-                    "name": "toggleAccordion",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "void",
-                    "example": null,
-                    "parameters": [
-                        {
-                            "name": "number",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "any",
-                            "example": null
-                        }
-                    ]
-                },
-                {
-                    "name": "toggleCollapse",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "void",
-                    "example": null,
-                    "parameters": [
-                        {
-                            "name": "number",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "any",
-                            "example": null
-                        }
-                    ]
                 }
             ]
         },
@@ -7413,7 +7427,7 @@
                     ]
                 },
                 {
-                    "name": "onEventSubmit",
+                    "name": "onModalFormSubmit",
                     "decorators": [],
                     "description": "",
                     "required": false,
@@ -7451,6 +7465,15 @@
                 "IUiComponent"
             ],
             "properties": [
+                {
+                    "name": "additionalViewProps",
+                    "decorators": [],
+                    "description": "Дополнительные свойства, которые передаются во view компонента",
+                    "required": false,
+                    "type": "Record",
+                    "example": null,
+                    "defaultValue": null
+                },
                 {
                     "name": "calendarModalProps",
                     "decorators": [],
@@ -7535,16 +7558,16 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "Omit<ICalendarSystemProps",
-                "'calendarGroups'>"
+                "Pick<ICalendarSystemProps",
+                "'className' | 'style' | 'additionalViewProps'>"
             ],
             "properties": [
                 {
-                    "name": "allHours",
+                    "name": "additionalViewProps",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "string[]",
+                    "description": "Дополнительные свойства, которые передаются во view компонента",
+                    "required": false,
+                    "type": "Record",
                     "example": null
                 },
                 {
@@ -7556,11 +7579,11 @@
                     "example": null
                 },
                 {
-                    "name": "currentWeekDays",
+                    "name": "className",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "IDay[]",
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
                     "example": null
                 },
                 {
@@ -7588,11 +7611,11 @@
                     "example": null
                 },
                 {
-                    "name": "monthCalendarDays",
+                    "name": "monthGridProps",
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "IDay[]",
+                    "type": "{monthGridCalendarDays: IDay[], monthGridWeekDays: string[], getEventsFromDate: null, openCreateModal: null, openEditModal: null}",
                     "example": null
                 },
                 {
@@ -7604,69 +7627,25 @@
                     "example": null
                 },
                 {
-                    "name": "selectedCalendarGroupsIds",
+                    "name": "style",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
-                    "type": "number[]",
-                    "example": null
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
                 },
                 {
-                    "name": "weekDays",
+                    "name": "weekGridProps",
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "string[]",
+                    "type": "{weekGridCurrentWeekDays: IDay[], weekGridTwentyFourHoursArray: string[], getEventsFromDate: null, openCreateModal: null, openEditModal: null}",
                     "example": null
                 }
             ],
             "methods": [
                 {
-                    "name": "applyControl",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "void",
-                    "example": null,
-                    "parameters": [
-                        {
-                            "name": "event",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "MouseEvent",
-                            "example": null
-                        }
-                    ]
-                },
-                {
-                    "name": "getEventsFromDate",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "IEvent[]",
-                    "example": null,
-                    "parameters": [
-                        {
-                            "name": "dateFromDay",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "Date",
-                            "example": null
-                        },
-                        {
-                            "name": "currentCalendarType",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "default",
-                            "example": null
-                        }
-                    ]
-                },
-                {
-                    "name": "onChangeCalendarType",
+                    "name": "handleCalendarTypeChange",
                     "decorators": [],
                     "description": "",
                     "required": false,
@@ -7679,6 +7658,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "handleControlClick",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "event",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "MouseEvent",
                             "example": null
                         }
                     ]
@@ -7702,7 +7699,7 @@
                     ]
                 },
                 {
-                    "name": "onMonthChange",
+                    "name": "onInnerCalendarChangeMonth",
                     "decorators": [],
                     "description": "",
                     "required": false,
@@ -7733,24 +7730,6 @@
                             "description": "",
                             "required": false,
                             "type": "IDay",
-                            "example": null
-                        }
-                    ]
-                },
-                {
-                    "name": "openEditModal",
-                    "decorators": [],
-                    "description": "",
-                    "required": false,
-                    "type": "void",
-                    "example": null,
-                    "parameters": [
-                        {
-                            "name": "event",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "IEvent",
                             "example": null
                         }
                     ]
@@ -8282,6 +8261,82 @@
             ],
             "methods": []
         },
+        "IChatInputViewProps": {
+            "name": "IChatInputViewProps",
+            "moduleName": "ui/content/Chat/Chat",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Pick<IChatProps",
+                "'chatId' | 'fileFieldProps'>"
+            ],
+            "properties": [
+                {
+                    "name": "chatId",
+                    "decorators": [],
+                    "description": "Идентификатор чата",
+                    "required": true,
+                    "type": "string",
+                    "example": "TaskChat"
+                },
+                {
+                    "name": "fileFieldProps",
+                    "decorators": [],
+                    "description": "Пропсы для инпута загрузки файлов",
+                    "required": false,
+                    "type": "IFileFieldProps",
+                    "example": null
+                },
+                {
+                    "name": "inputPlaceholder",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onSendMessage",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "data",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onUploadFiles",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "files",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
         "IChatMessage": {
             "name": "IChatMessage",
             "moduleName": "ui/content/Chat/Chat",
@@ -8291,6 +8346,14 @@
             "defaultProps": null,
             "extends": [],
             "properties": [
+                {
+                    "name": "files",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IMessageFile[]",
+                    "example": null
+                },
                 {
                     "name": "id",
                     "decorators": [],
@@ -8365,12 +8428,39 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "customChatInputView",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения элемента инпута",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": "MyCustomView",
+                    "defaultValue": null
+                },
+                {
+                    "name": "customInputPlaceholder",
+                    "decorators": [],
+                    "description": "Кастомный placeholder для инпута",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "fileFieldProps",
+                    "decorators": [],
+                    "description": "Пропсы для инпута загрузки файлов",
+                    "required": false,
+                    "type": "IFileFieldProps",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "messages",
                     "decorators": [],
                     "description": "Коллекция сообщений",
                     "required": true,
                     "type": "IChatMessage[]",
-                    "example": "[\n {\n  id: 1,\n  text: 'Всем привет!',\n  user: {\n    id: 1,\n    firstName: 'Olga',\n    lastName: 'Petrova',\n    avatar: {\n      src: 'images.com/image.png',\n      status: true,\n    },\n  },\n  timestamp: '2023-10-25T12:38:00',\n },\n]",
+                    "example": "[\n {\n  id: 1,\n  text: 'Всем привет!',\n  files: [\n     {\n      id: 929,\n      uid: 'c46f3d14-5891-4601-9e98-06f2c1e70a07',\n      title: 'image.jpg',\n      url: 'https://kozhin.dev/files/uploaded/c46f3d14-5891-4601-9e98-06f2c1e70a07.jpg',\n      size: 47305,\n     }\n  ],\n  user: {\n    id: 1,\n    firstName: 'Olga',\n    lastName: 'Petrova',\n    avatar: {\n      src: 'images.com/image.png',\n      status: true,\n    },\n  },\n  timestamp: '2023-10-25T12:38:00',\n },\n]",
                     "defaultValue": null
                 },
                 {
@@ -8473,26 +8563,10 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "Omit<IChatProps",
-                "'messages'>"
+                "Pick<IChatProps",
+                "'currentUser'>"
             ],
             "properties": [
-                {
-                    "name": "chatId",
-                    "decorators": [],
-                    "description": "Идентификатор чата",
-                    "required": true,
-                    "type": "string",
-                    "example": "TaskChat"
-                },
-                {
-                    "name": "className",
-                    "decorators": [],
-                    "description": "Дополнительный CSS-класс для элемента отображения",
-                    "required": false,
-                    "type": "string",
-                    "example": null
-                },
                 {
                     "name": "currentUser",
                     "decorators": [],
@@ -8508,44 +8582,87 @@
                     "required": true,
                     "type": "Record",
                     "example": null
-                },
-                {
-                    "name": "style",
-                    "decorators": [],
-                    "description": "Объект CSS стилей",
-                    "required": false,
-                    "type": "CSSProperties",
-                    "example": "{width: '45%'}"
-                },
-                {
-                    "name": "view",
-                    "decorators": [],
-                    "description": "Переопределение view React компонента для кастомизации отображения",
-                    "required": false,
-                    "type": "React.ReactNode | {}",
-                    "example": "MyCustomView"
                 }
             ],
             "methods": [
                 {
-                    "name": "onSendMessage",
+                    "name": "renderChatInput",
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "void",
+                    "type": "Element",
                     "example": null,
-                    "parameters": [
-                        {
-                            "name": "data",
-                            "decorators": [],
-                            "description": "",
-                            "required": true,
-                            "type": "any",
-                            "example": null
-                        }
-                    ]
+                    "parameters": []
                 }
             ]
+        },
+        "IMessageFile": {
+            "name": "IMessageFile",
+            "moduleName": "ui/content/Chat/Chat",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "downloadUrl",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "fullHeight",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "fullWidth",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "uid",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "url",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": []
         },
         "IGroupedMessage": {
             "name": "IGroupedMessage",
@@ -8558,6 +8675,14 @@
                 "IChatMessage"
             ],
             "properties": [
+                {
+                    "name": "files",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IMessageFile[]",
+                    "example": null
+                },
                 {
                     "name": "id",
                     "decorators": [],
@@ -8961,7 +9086,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства align-items",
                     "required": false,
-                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\"",
+                    "type": "\"center\" | \"stretch\" | \"end\" | \"flex-end\" | \"flex-start\" | \"start\"",
                     "example": null,
                     "defaultValue": null
                 },
@@ -8988,7 +9113,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства flex-direction",
                     "required": false,
-                    "type": "\"column\" | \"row\" | \"column-reverse\" | \"row-reverse\"",
+                    "type": "\"column\" | \"column-reverse\" | \"row\" | \"row-reverse\"",
                     "example": null,
                     "defaultValue": null
                 },
@@ -9033,7 +9158,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства justify-content",
                     "required": false,
-                    "type": "\"right\" | \"left\" | \"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "type": "\"right\" | \"left\" | \"center\" | \"space-around\" | \"space-between\" | \"space-evenly\" | \"stretch\" | \"end\" | \"flex-end\" | \"flex-start\" | \"start\"",
                     "example": null,
                     "defaultValue": null
                 },
@@ -11754,6 +11879,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Пользовательская иконка svg или название иконки",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": "'circle'",
+                    "defaultValue": null
+                },
+                {
                     "name": "id",
                     "decorators": [],
                     "description": "Идентификатор роута",
@@ -11820,7 +11954,7 @@
                     "name": "path",
                     "decorators": [],
                     "description": "Путь до роута",
-                    "required": false,
+                    "required": true,
                     "type": "string",
                     "example": "'/catalog'",
                     "defaultValue": null
@@ -11859,6 +11993,15 @@
                     "required": false,
                     "type": "string[]",
                     "example": "['user', 'admin']",
+                    "defaultValue": null
+                },
+                {
+                    "name": "strict",
+                    "decorators": [],
+                    "description": "Если true, то location.pathname будет совпадать с теми путями, которые содержат слеш в конце.\nНапример, если указать путь '/catalog/', тогда совпадение будет с '/catalog/' и '/catalog/chapter', но не '/catalog'.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "'/catalog'",
                     "defaultValue": null
                 },
                 {
@@ -13285,7 +13428,7 @@
                     "decorators": [],
                     "description": "",
                     "required": true,
-                    "type": "{className: string, disabled: boolean, name: string, placeholder: string, type: string, value: string | number, onBlur: null, onChange: null, onFocus: null}",
+                    "type": "{className: string, disabled: boolean, name: string, placeholder: string, type: string, value: string | number, onBlur: null, onChange: null}",
                     "example": null
                 },
                 {
@@ -15142,7 +15285,7 @@
                 "'items'>",
                 "IUiComponent",
                 "Pick<ITreeProps",
-                "'levelPadding' | 'alwaysOpened'>"
+                "'levelPadding' | 'alwaysOpened' | 'showIcon' | 'customIcon'>"
             ],
             "properties": [
                 {
@@ -15187,6 +15330,15 @@
                     "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "customIcon",
+                    "decorators": [],
+                    "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
+                    "required": false,
+                    "type": "string | ReactElement",
                     "example": null,
                     "defaultValue": null
                 },
@@ -15481,7 +15633,9 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "IFieldWrapperOutputProps"
+                "IFieldWrapperOutputProps",
+                "Pick<ITreeProps",
+                "'levelPadding' | 'customIcon'>"
             ],
             "properties": [
                 {
@@ -15490,6 +15644,14 @@
                     "description": "Id компонента",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "customIcon",
+                    "decorators": [],
+                    "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
+                    "required": false,
+                    "type": "string | ReactElement",
                     "example": null
                 },
                 {
@@ -15527,10 +15689,10 @@
                 {
                     "name": "levelPadding",
                     "decorators": [],
-                    "description": "",
-                    "required": true,
+                    "description": "Расстояние вложенных элементов от родителя для каждого уровня",
+                    "required": false,
                     "type": "number",
-                    "example": null
+                    "example": "32"
                 },
                 {
                     "name": "selectedIds",
@@ -15597,7 +15759,9 @@
             "defaultProps": null,
             "extends": [
                 "IDateInputStateInput",
-                "IUiComponent"
+                "IUiComponent",
+                "Pick<IAbsolutePositioningInputProps",
+                "'autoPositioning'>"
             ],
             "properties": [
                 {
@@ -15607,6 +15771,15 @@
                     "required": false,
                     "type": "string",
                     "example": "'isVisible'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "autoPositioning",
+                    "decorators": [],
+                    "description": "Включает \"умное\" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом\nи краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
                     "defaultValue": null
                 },
                 {
@@ -15893,9 +16066,17 @@
             "extends": [
                 "IDateInputStateOutput",
                 "Pick<IDateFieldProps",
-                "'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps'>"
+                "'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps' | 'autoPositioning'>"
             ],
             "properties": [
+                {
+                    "name": "autoPositioning",
+                    "decorators": [],
+                    "description": "Включает \"умное\" позиционирование - если компонент не может быть помещен в промежуток между целевым компонентом\nи краем viewport, тогда он будет показан в противоположном направлении от заданного в свойстве position.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
                 {
                     "name": "calendarProps",
                     "decorators": [],
@@ -16476,6 +16657,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "maskOptions",
+                    "decorators": [],
+                    "description": "Опции маски для полей",
+                    "required": false,
+                    "type": "{from: MaskitoOptions, to: MaskitoOptions}",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "model",
                     "decorators": [],
                     "description": "Модель с полями формы",
@@ -16617,7 +16807,7 @@
                 "Omit<IFieldWrapperOutputProps",
                 "'input'>",
                 "Pick<IDateRangeFieldProps",
-                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'\n        | 'noBorder' | 'style'>"
+                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'\r\n        | 'noBorder' | 'style'>"
             ],
             "properties": [
                 {
@@ -16722,6 +16912,22 @@
                     "description": "Показать или скрыть выпадающую панель",
                     "required": false,
                     "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "maskInputFromRef",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
+                    "name": "maskInputFromTo",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
                     "example": null
                 },
                 {
@@ -16936,6 +17142,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "maskOptions",
+                    "decorators": [],
+                    "description": "Опции маски для поля ввода",
+                    "required": false,
+                    "type": "MaskitoOptions",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "model",
                     "decorators": [],
                     "description": "Модель с полями формы",
@@ -17119,6 +17334,14 @@
                     "example": null
                 },
                 {
+                    "name": "maskInputRef",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "{}",
+                    "example": null
+                },
+                {
                     "name": "showRemove",
                     "decorators": [],
                     "description": "Показывать при наведении на поле иконку для сброса значения поля в начальное состояние",
@@ -17252,6 +17475,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "maskOptions",
+                    "decorators": [],
+                    "description": "Опции маски для полей",
+                    "required": false,
+                    "type": "{from: MaskitoOptions, to: MaskitoOptions}",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "pickerProps",
                     "decorators": [],
                     "description": "Свойства для компонента DayPickerInput",
@@ -17302,7 +17534,7 @@
                 "Omit<IFieldWrapperOutputProps",
                 "'input'>",
                 "Pick<IDateRangeFieldProps",
-                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'\n        | 'noBorder' | 'style'>"
+                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'\r\n        | 'noBorder' | 'style'>"
             ],
             "properties": [
                 {
@@ -17724,15 +17956,6 @@
             ],
             "methods": [
                 {
-                    "name": "onChange",
-                    "decorators": [],
-                    "description": "Вызываемая функция при каждом изменении состояния",
-                    "required": false,
-                    "type": "void",
-                    "example": "{\n () => { console.log('success') }\n}",
-                    "parameters": []
-                },
-                {
                     "name": "onItemHover",
                     "decorators": [],
                     "description": "",
@@ -17982,6 +18205,15 @@
                     "required": false,
                     "type": "boolean | {id: string, label: string}",
                     "example": "{\n label: 'All',\n id: 'all'\n}",
+                    "defaultValue": null
+                },
+                {
+                    "name": "itemView",
+                    "decorators": [],
+                    "description": "Кастомная вьюшка для элемента",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": null,
                     "defaultValue": null
                 },
                 {
@@ -18396,6 +18628,14 @@
                     "description": "Добавляет кнопку при нажатии на которую выбираются все элементы, работает только при multiple: true",
                     "required": true,
                     "type": "{id: string, label: string}",
+                    "example": null
+                },
+                {
+                    "name": "itemView",
+                    "decorators": [],
+                    "description": "Кастомная вьюшка для элемента",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
                     "example": null
                 },
                 {
@@ -21421,6 +21661,15 @@
                     "defaultValue": "true"
                 },
                 {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Дополнительные кнопки",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "captchaActionName",
                     "decorators": [],
                     "description": "Название действия, которое передаётся в API Google reCAPTCHA v3, для более детального анализа\nповедения пользователя (https://developers.google.com/recaptcha/docs/v3)",
@@ -21751,6 +22000,14 @@
                     "description": "",
                     "required": false,
                     "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
                     "example": null
                 },
                 {
@@ -30008,6 +30265,404 @@
                 }
             ]
         },
+        "IWizardFormProps": {
+            "name": "IWizardFormProps",
+            "moduleName": "ui/form/WizardForm/WizardForm",
+            "title": "WizardForm",
+            "description": "\nКомпонент для создания пошаговой формы. Предоставляет управление и синхронизацию состояния формы,\nа также список шагов формы для удобной навигации.\nПоля для шагов можно передавать как в виде компонентов, так и в виде объекта с названием поля.\nПозволяет выполнять отправку данных формы на сервер с возможностью валидации и перехода к неверно заполненным полям.\n\n",
+            "tags": {},
+            "defaultProps": {
+                "formProps": {
+                    "label": "string"
+                },
+                "nextStepButtonProps": {
+                    "label": "string"
+                },
+                "prevStepButtonProps": {
+                    "color": "'primary'",
+                    "icon": "'left_12x12'",
+                    "label": "string",
+                    "outline": "true"
+                },
+                "showSteps": "true"
+            },
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "Идентификатор формы",
+                    "required": true,
+                    "type": "string",
+                    "example": "WizardForm",
+                    "defaultValue": null
+                },
+                {
+                    "name": "formProps",
+                    "decorators": [],
+                    "description": "Свойства для Form",
+                    "required": true,
+                    "type": "IFormProps",
+                    "example": null,
+                    "defaultValue": {
+                        "label": "string"
+                    }
+                },
+                {
+                    "name": "nextStepButtonProps",
+                    "decorators": [],
+                    "description": "Свойства для кнопки продолжить/отправить",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null,
+                    "defaultValue": {
+                        "label": "string"
+                    }
+                },
+                {
+                    "name": "prevStepButtonProps",
+                    "decorators": [],
+                    "description": "Свойства для кнопки возврата",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null,
+                    "defaultValue": {
+                        "color": "'primary'",
+                        "icon": "'left_12x12'",
+                        "label": "string",
+                        "outline": "true"
+                    }
+                },
+                {
+                    "name": "showSteps",
+                    "decorators": [],
+                    "description": "Показывать ли шаги",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": "true"
+                },
+                {
+                    "name": "stepTitleOrientation",
+                    "decorators": [],
+                    "description": "Ориентация списка шагов формы",
+                    "required": false,
+                    "type": "string",
+                    "example": "'horizontal'",
+                    "defaultValue": null
+                },
+                {
+                    "name": "steps",
+                    "decorators": [],
+                    "description": "Коллекция полей и аттрибутов для каждого шага формы. Можно передавать как компонент, так и объект с полями.\nГлавное, чтобы внутри шага использовался один из способов.",
+                    "required": true,
+                    "type": "IWizardStepItem[]",
+                    "example": "[\n {\n  title: 'Step 1',\n  fields: [\n    {\n      attribute: 'category',\n      component: 'DropDownField'\n    },\n  ],\n },\n {\n  title: 'Step 2',\n  component: (\n     <InputField\n       attribute='address'\n     />\n  )\n }\n]",
+                    "defaultValue": null
+                },
+                {
+                    "name": "stepsProps",
+                    "decorators": [],
+                    "description": "Свойства для Steps",
+                    "required": false,
+                    "type": "Pick",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}",
+                    "defaultValue": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView",
+                    "defaultValue": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onNextStep",
+                    "decorators": [],
+                    "description": "Обработчик, который вызывается после перехода на следующий шаг формы",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "nextStep",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "number",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onPrevStep",
+                    "decorators": [],
+                    "description": "Обработчик, который вызывается после возврата на предыдущий шаг формы",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "prevStep",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "number",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "IWizardFormViewProps": {
+            "name": "IWizardFormViewProps",
+            "moduleName": "ui/form/WizardForm/WizardForm",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Pick<IWizardFormProps",
+                "'prevStepButtonProps'\r\n    | 'nextStepButtonProps'\r\n    | 'stepsProps'\r\n    | 'showSteps'\r\n>"
+            ],
+            "properties": [
+                {
+                    "name": "currentStep",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "isLastStep",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "nextStepButtonProps",
+                    "decorators": [],
+                    "description": "Свойства для кнопки продолжить/отправить",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
+                },
+                {
+                    "name": "prevStepButtonProps",
+                    "decorators": [],
+                    "description": "Свойства для кнопки возврата",
+                    "required": false,
+                    "type": "IButtonProps",
+                    "example": null
+                },
+                {
+                    "name": "showSteps",
+                    "decorators": [],
+                    "description": "Показывать ли шаги",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "stepItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IStepItem[]",
+                    "example": null
+                },
+                {
+                    "name": "stepTitle",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "stepsProps",
+                    "decorators": [],
+                    "description": "Свойства для Steps",
+                    "required": false,
+                    "type": "Pick",
+                    "example": null
+                },
+                {
+                    "name": "totalSteps",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onPrevStep",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "renderStep",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Element",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "header",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ReactNode",
+                            "example": null
+                        },
+                        {
+                            "name": "buttons",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ReactNode",
+                            "example": null
+                        },
+                        {
+                            "name": "viewProps",
+                            "decorators": [],
+                            "description": "",
+                            "required": false,
+                            "type": "IUiComponent",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "IWizardStepItem": {
+            "name": "IWizardStepItem",
+            "moduleName": "ui/form/WizardForm/WizardForm",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "Partial<IStepItem>"
+            ],
+            "properties": [
+                {
+                    "name": "component",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "description",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "fields",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IFieldProps[]",
+                    "example": null
+                },
+                {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "number",
+                    "example": null
+                },
+                {
+                    "name": "isError",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "stepLabel",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "subtitle",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "title",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                }
+            ],
+            "methods": []
+        },
         "IBooleanFormatterProps": {
             "name": "IBooleanFormatterProps",
             "moduleName": "ui/format/BooleanFormatter/BooleanFormatter",
@@ -30374,6 +31029,45 @@
                     "required": false,
                     "type": "any",
                     "example": null,
+                    "defaultValue": null
+                }
+            ],
+            "methods": []
+        },
+        "ITimeFormatterProps": {
+            "name": "ITimeFormatterProps",
+            "moduleName": "ui/format/TimeFormatter/TimeFormatter",
+            "title": "TimeFormatter",
+            "description": "\nКомпонент TimeFormatter предназначен для форматирования времени с использованием заданного формата.\nОн позволяет кастомизировать отображение времени, используя переданный view React компонент.\n",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "format",
+                    "decorators": [],
+                    "description": "Формат времени",
+                    "required": false,
+                    "type": "string",
+                    "example": "HH:mm",
+                    "defaultValue": null
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Время",
+                    "required": false,
+                    "type": "string",
+                    "example": "16:15",
+                    "defaultValue": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения колонки",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView",
                     "defaultValue": null
                 }
             ],
@@ -31015,7 +31709,7 @@
                 {
                     "name": "content",
                     "decorators": [],
-                    "description": "Контент, который отобразиться, если элемент навигации будет активен",
+                    "description": "Контент, который отобразится, если элемент навигации будет активен",
                     "required": false,
                     "type": "any",
                     "example": "ContentComponent"
@@ -32714,7 +33408,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства align-items",
                     "required": false,
-                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\"",
+                    "type": "\"center\" | \"stretch\" | \"end\" | \"flex-end\" | \"flex-start\" | \"start\"",
                     "example": null,
                     "defaultValue": null
                 },
@@ -32741,7 +33435,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства flex-direction",
                     "required": false,
-                    "type": "\"column\" | \"row\" | \"column-reverse\" | \"row-reverse\"",
+                    "type": "\"column\" | \"column-reverse\" | \"row\" | \"row-reverse\"",
                     "example": null,
                     "defaultValue": null
                 },
@@ -32777,7 +33471,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства justify-content",
                     "required": false,
-                    "type": "\"right\" | \"left\" | \"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "type": "\"right\" | \"left\" | \"center\" | \"space-around\" | \"space-between\" | \"space-evenly\" | \"stretch\" | \"end\" | \"flex-end\" | \"flex-start\" | \"start\"",
                     "example": null,
                     "defaultValue": null
                 },
@@ -32827,7 +33521,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства align-items",
                     "required": false,
-                    "type": "\"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\"",
+                    "type": "\"center\" | \"stretch\" | \"end\" | \"flex-end\" | \"flex-start\" | \"start\"",
                     "example": null
                 },
                 {
@@ -32859,7 +33553,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства flex-direction",
                     "required": false,
-                    "type": "\"column\" | \"row\" | \"column-reverse\" | \"row-reverse\"",
+                    "type": "\"column\" | \"column-reverse\" | \"row\" | \"row-reverse\"",
                     "example": null
                 },
                 {
@@ -32891,7 +33585,7 @@
                     "decorators": [],
                     "description": "Значение для css-свойства justify-content",
                     "required": false,
-                    "type": "\"right\" | \"left\" | \"center\" | \"end\" | \"start\" | \"stretch\" | \"flex-start\" | \"flex-end\" | \"space-between\" | \"space-around\" | \"space-evenly\"",
+                    "type": "\"right\" | \"left\" | \"center\" | \"space-around\" | \"space-between\" | \"space-evenly\" | \"stretch\" | \"end\" | \"flex-end\" | \"flex-start\" | \"start\"",
                     "example": null
                 },
                 {
@@ -35131,6 +35825,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "buttons",
+                    "decorators": [],
+                    "description": "Дополнительные кнопки",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "captchaActionName",
                     "decorators": [],
                     "description": "Название действия, которое передаётся в API Google reCAPTCHA v3, для более детального анализа\nповедения пользователя (https://developers.google.com/recaptcha/docs/v3)",
@@ -35429,11 +36132,27 @@
                     "example": null
                 },
                 {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                },
+                {
                     "name": "isError",
                     "decorators": [],
                     "description": "",
                     "required": false,
                     "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "status",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
                     "example": null
                 },
                 {
@@ -35462,12 +36181,16 @@
             "description": "",
             "tags": {},
             "defaultProps": null,
-            "extends": [],
+            "extends": [
+                "Pick<IStepsProps",
+                "'showDivider' | 'stepTitleOrientation' | 'onChange'>",
+                "IUiComponent"
+            ],
             "properties": [
                 {
                     "name": "className",
                     "decorators": [],
-                    "description": "",
+                    "description": "Дополнительный CSS-класс для элемента отображения",
                     "required": false,
                     "type": "string",
                     "example": null
@@ -35489,6 +36212,14 @@
                     "example": null
                 },
                 {
+                    "name": "showDivider",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "status",
                     "decorators": [],
                     "description": "",
@@ -35503,6 +36234,30 @@
                     "required": true,
                     "type": "IStepItem",
                     "example": null
+                },
+                {
+                    "name": "stepTitleOrientation",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
                 }
             ],
             "methods": [
@@ -35513,7 +36268,133 @@
                     "required": false,
                     "type": "void",
                     "example": null,
-                    "parameters": []
+                    "parameters": [
+                        {
+                            "name": "index",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "number",
+                            "example": null
+                        }
+                    ]
+                }
+            ]
+        },
+        "IStepsProps": {
+            "name": "IStepsProps",
+            "moduleName": "ui/list/Steps/Steps",
+            "title": "Компонент Steps предоставляет шаги для выполнения определенного процесса.",
+            "description": "",
+            "tags": {},
+            "defaultProps": {
+                "showDivider": "true",
+                "stepTitleOrientation": "'vertical'"
+            },
+            "extends": [
+                "IUiComponent"
+            ],
+            "properties": [
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "currentStep",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "isChangeable",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "showDivider",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": "true"
+                },
+                {
+                    "name": "stepItemView",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "ReactNode",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "stepItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number | IStepItem[]",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "stepTitleOrientation",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": "'vertical'"
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}",
+                    "defaultValue": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView",
+                    "defaultValue": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "index",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "number",
+                            "example": null
+                        }
+                    ]
                 }
             ]
         },
@@ -35555,7 +36436,7 @@
             "extends": [
                 "IColumnViewProps",
                 "Pick<ITreeTableProps",
-                "'levelPadding'>"
+                "'levelPadding' | 'customIcon'>"
             ],
             "properties": [
                 {
@@ -35572,6 +36453,14 @@
                     "description": "CSS-класс для ячейки со значением",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "customIcon",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | ReactElement",
                     "example": null
                 },
                 {
@@ -35759,7 +36648,7 @@
                 "Omit<IGridProps",
                 "'items'>",
                 "Pick<ITreeProps",
-                "'alwaysOpened' | 'levelPadding'>"
+                "'alwaysOpened' | 'levelPadding' | 'customIcon'>"
             ],
             "properties": [
                 {
@@ -35770,6 +36659,15 @@
                     "type": "boolean",
                     "example": null,
                     "defaultValue": "false"
+                },
+                {
+                    "name": "customIcon",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": null,
+                    "defaultValue": null
                 },
                 {
                     "name": "items",
@@ -37035,7 +37933,7 @@
                 {
                     "name": "content",
                     "decorators": [],
-                    "description": "Контент, который отобразиться, если элемент навигации будет активен",
+                    "description": "Контент, который отобразится, если элемент навигации будет активен",
                     "required": false,
                     "type": "any",
                     "example": "ContentComponent"
@@ -37515,6 +38413,14 @@
                     "example": "'/catalog'"
                 },
                 {
+                    "name": "icon",
+                    "decorators": [],
+                    "description": "Пользовательская иконка svg или название иконки",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": "'circle'"
+                },
+                {
                     "name": "id",
                     "decorators": [],
                     "description": "Идентификатор роута",
@@ -37574,7 +38480,7 @@
                     "name": "path",
                     "decorators": [],
                     "description": "Путь до роута",
-                    "required": false,
+                    "required": true,
                     "type": "string",
                     "example": "'/catalog'"
                 },
@@ -37601,6 +38507,14 @@
                     "required": false,
                     "type": "string[]",
                     "example": "['user', 'admin']"
+                },
+                {
+                    "name": "strict",
+                    "decorators": [],
+                    "description": "Если true, то location.pathname будет совпадать с теми путями, которые содержат слеш в конце.\nНапример, если указать путь '/catalog/', тогда совпадение будет с '/catalog/' и '/catalog/chapter', но не '/catalog'.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "'/catalog'"
                 },
                 {
                     "name": "title",
@@ -37639,10 +38553,20 @@
             "description": "",
             "tags": {},
             "defaultProps": {
+                "alwaysAppendParentRoutePath": "true",
                 "autoScrollTop": "true"
             },
             "extends": [],
             "properties": [
+                {
+                    "name": "alwaysAppendParentRoutePath",
+                    "decorators": [],
+                    "description": "Флаг, который позволяет использовать вложенные роуты c указанием вложенного пути",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": "true"
+                },
                 {
                     "name": "autoScrollTop",
                     "decorators": [],
@@ -37674,7 +38598,7 @@
                     "name": "routes",
                     "decorators": [],
                     "description": "Дерево роутов",
-                    "required": false,
+                    "required": true,
                     "type": "IRouteItem[] | {}",
                     "example": "{id: 'root', path: '/', component: IndexPage, items: [...]}",
                     "defaultValue": null
@@ -37752,12 +38676,28 @@
                     "example": null
                 },
                 {
+                    "name": "customIcon",
+                    "decorators": [],
+                    "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": null
+                },
+                {
                     "name": "hasIconExpandOnly",
                     "decorators": [],
                     "description": "Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку",
                     "required": false,
                     "type": "boolean",
                     "example": "false"
+                },
+                {
+                    "name": "hideIcon",
+                    "decorators": [],
+                    "description": "Скрыть иконку c лева от элемента",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
                 },
                 {
                     "name": "id",
@@ -37824,6 +38764,14 @@
                     "example": "2"
                 },
                 {
+                    "name": "useSameSelectedItemId",
+                    "decorators": [],
+                    "description": "При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "view",
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
@@ -37860,11 +38808,19 @@
                     "example": null,
                     "parameters": [
                         {
-                            "name": "args",
+                            "name": "event",
                             "decorators": [],
-                            "description": "\n",
+                            "description": "",
                             "required": true,
-                            "type": "any[]",
+                            "type": "MouseEvent",
+                            "example": null
+                        },
+                        {
+                            "name": "item",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ITreeItem",
                             "example": null
                         }
                     ]
@@ -37881,9 +38837,11 @@
                 "autoOpenLevels": "1",
                 "autoSave": "false",
                 "hasIconExpandOnly": "false",
+                "hideIcon": "false",
                 "itemsKey": "'items'",
                 "level": "0",
-                "levelPadding": "32"
+                "levelPadding": "32",
+                "useSameSelectedItemId": "true"
             },
             "extends": [
                 "Omit<ITreeConfig",
@@ -37927,12 +38885,30 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "customIcon",
+                    "decorators": [],
+                    "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "hasIconExpandOnly",
                     "decorators": [],
                     "description": "Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку",
                     "required": false,
                     "type": "boolean",
                     "example": "false",
+                    "defaultValue": "false"
+                },
+                {
+                    "name": "hideIcon",
+                    "decorators": [],
+                    "description": "Скрыть иконку c лева от элемента",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
                     "defaultValue": "false"
                 },
                 {
@@ -37999,6 +38975,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "useSameSelectedItemId",
+                    "decorators": [],
+                    "description": "При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true",
+                    "defaultValue": "true"
+                },
+                {
                     "name": "view",
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
@@ -38036,11 +39021,19 @@
                     "example": null,
                     "parameters": [
                         {
-                            "name": "args",
+                            "name": "event",
                             "decorators": [],
-                            "description": "\n",
+                            "description": "",
                             "required": true,
-                            "type": "any[]",
+                            "type": "MouseEvent",
+                            "example": null
+                        },
+                        {
+                            "name": "item",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ITreeItem",
                             "example": null
                         }
                     ]
@@ -38091,12 +39084,28 @@
                     "example": null
                 },
                 {
+                    "name": "customIcon",
+                    "decorators": [],
+                    "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": null
+                },
+                {
                     "name": "hasIconExpandOnly",
                     "decorators": [],
                     "description": "Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку",
                     "required": false,
                     "type": "boolean",
                     "example": "false"
+                },
+                {
+                    "name": "hideIcon",
+                    "decorators": [],
+                    "description": "Скрыть иконку c лева от элемента",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
                 },
                 {
                     "name": "id",
@@ -38155,6 +39164,14 @@
                     "example": "2"
                 },
                 {
+                    "name": "useSameSelectedItemId",
+                    "decorators": [],
+                    "description": "При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
                     "name": "view",
                     "decorators": [],
                     "description": "Переопределение view React компонента для кастомизации отображения элемента",
@@ -38191,11 +39208,19 @@
                     "example": null,
                     "parameters": [
                         {
-                            "name": "args",
+                            "name": "event",
                             "decorators": [],
-                            "description": "\n",
+                            "description": "",
                             "required": true,
-                            "type": "any[]",
+                            "type": "MouseEvent",
+                            "example": null
+                        },
+                        {
+                            "name": "item",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "ITreeItem",
                             "example": null
                         }
                     ]
@@ -38492,20 +39517,20 @@
             "type": "{items: any[], position: string}",
             "example": null
         },
-        "IAccordionItemProps": {
-            "name": "IAccordionItemProps",
-            "decorators": [],
-            "description": "",
-            "required": true,
-            "type": "IAccordionProps",
-            "example": null
-        },
         "IAccordionItemViewProps": {
             "name": "IAccordionItemViewProps",
             "decorators": [],
             "description": "",
             "required": true,
-            "type": "IAccordionViewProps",
+            "type": "IAccordionItemProps & IUiComponent",
+            "example": null
+        },
+        "IAccordionViewProps": {
+            "name": "IAccordionViewProps",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "Pick",
             "example": null
         },
         "IAvatarGroupViewProps": {
@@ -41832,13 +42857,6 @@
             "description": "",
             "tags": {}
         },
-        "ui/form/MaskField/MaskField": {
-            "name": "default",
-            "moduleName": "ui/form/MaskField/MaskField",
-            "title": "",
-            "description": "",
-            "tags": {}
-        },
         "ui/form/NavField/NavField": {
             "name": "default",
             "moduleName": "ui/form/NavField/NavField",
@@ -41968,6 +42986,13 @@
         "ui/format/MoneyFormatter/MoneyFormatter": {
             "name": "default",
             "moduleName": "ui/format/MoneyFormatter/MoneyFormatter",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/format/TimeFormatter/TimeFormatter": {
+            "name": "default",
+            "moduleName": "ui/format/TimeFormatter/TimeFormatter",
             "title": "",
             "description": "",
             "tags": {}

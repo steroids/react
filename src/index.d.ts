@@ -80,7 +80,7 @@ declare type CustomStyle = React.CSSProperties;
 declare type CustomView = React.ReactNode | ((props: React.ComponentProps<any>) => JSX.Element);
 
 /**
- * Принимает любые свойства, которые могут быть переданы компоненту React
+ * Свойства для view компонента
  */
 declare type CustomViewProps = React.ComponentProps<any>;
 

@@ -9,6 +9,8 @@ export interface ITreeViewProps extends ITreeProps {
 export interface ITreeItemViewProps extends ITreeProps {
     item: IPreparedTreeItem,
     children?: JSX.Element,
+    onNestedItemClick?: () => void,
+    withoutPointerOnLabel?: boolean,
 }
 
 /**

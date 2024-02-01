@@ -251,7 +251,7 @@ export default class MetaComponent implements IMetaComponent {
             time: {
                 jsType: 'string',
                 field: 'TimeField',
-                // TODO formatter: 'TimeFormatter',
+                formatter: 'TimeFormatter',
             },
         };
     }

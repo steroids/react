@@ -26,7 +26,7 @@ type CheckboxTreeItems = string
 export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
     Omit<IDataProviderConfig, 'items'>,
     Omit<IDataSelectConfig, 'items'>, IUiComponent,
-    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'customIcon'> {
+    Pick<ITreeProps, 'levelPadding' | 'alwaysOpened' | 'hasIconExpandOnly' | 'customIcon'> {
     /**
      * Свойства для элемента input
      * @example { onKeyDown: ... }
@@ -65,7 +65,7 @@ export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
 }
 
 export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
-    Pick<ITreeProps, 'levelPadding' | 'customIcon'>
+    Pick<ITreeProps, 'levelPadding' | 'hasIconExpandOnly' | 'customIcon'>
 {
     items: {
         id: number | string | boolean,
@@ -82,13 +82,13 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
     hasOnlyLeafCheckboxes?: boolean,
 }
 
-export const getNestedItemsIds = (item, groupAttribute) => {
+export const getNestedItemsIds = (item, groupAttribute, hasOnlyLeafCheckboxes = false) => {
     if (item.disabled) {
         return [];
     }
 
     const {[groupAttribute]: nestedItems = []} = item;
-    const result = [item.id];
+    const result = hasOnlyLeafCheckboxes ? [] : [item.id];
 
     if (groupAttribute && _isArray(nestedItems)) {
         nestedItems.reduce((acc, nestedItem) => {
@@ -139,8 +139,8 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
     });
 
     const onItemSelect = useCallback((checkbox) => {
-        if (checkbox.hasItems && !props.hasOnlyLeafCheckboxes) {
-            const selectedItemIds = getNestedItemsIds(checkbox, props.primaryKey);
+        if (checkbox.hasItems) {
+            const selectedItemIds = getNestedItemsIds(checkbox, props.primaryKey, props.hasOnlyLeafCheckboxes);
 
             setSelectedIds(selectedItemIds);
         } else if (checkbox.id && !checkbox.hasItems) {
@@ -188,7 +188,8 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         size: props.size,
         levelPadding: props.levelPadding,
         hasOnlyLeafCheckboxes: props.hasOnlyLeafCheckboxes,
-    }), [onItemSelect, props.levelPadding, props.hasOnlyLeafCheckboxes, props.size, renderCheckbox, selectedIds, treeItems]);
+        hasIconExpandOnly: props.hasIconExpandOnly,
+    }), [treeItems, onItemSelect, selectedIds, renderCheckbox, props.size, props.levelPadding, props.hasOnlyLeafCheckboxes, props.hasIconExpandOnly]);
 
     return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);
 }
@@ -201,6 +202,7 @@ CheckboxTreeField.defaultProps = {
     alwaysOpened: false,
     primaryKey: 'items',
     hasOnlyLeafCheckboxes: false,
+    hasIconExpandOnly: true,
 };
 
 export default fieldWrapper<ICheckboxTreeFieldProps>('CheckboxTreeField', CheckboxTreeField);

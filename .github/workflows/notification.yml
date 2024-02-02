@@ -1,8 +1,5 @@
 name: Notification
-on:
-  push:
-    tags:
-      - 'v*'
+on: push
 jobs:
   Notification:
     runs-on: ubuntu-latest

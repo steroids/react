@@ -8,7 +8,7 @@ import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 import Grid from '../Grid';
 import useSelector from '../../../hooks/useSelector';
 
-export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon'> {
+export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon' > {
     item: IPreparedTreeItem,
 }
 
@@ -17,7 +17,8 @@ export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableP
  *
  * Компонент для представления данных коллекции в виде иерархической структуры.
  */
-export interface ITreeTableProps extends Omit<IGridProps, 'items'>, Pick<ITreeProps, 'alwaysOpened' | 'levelPadding' | 'customIcon'>{
+export interface ITreeTableProps extends Omit<IGridProps, 'items'>,
+    Pick<ITreeProps, 'alwaysOpened' | 'levelPadding' | 'customIcon' | 'saveInClientStorage'>{
     /**
      * Элементы коллекции
      * @example
@@ -70,6 +71,8 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
         alwaysOpened: props.alwaysOpened,
         currentPage: list?.page,
         itemsOnPage: list?.pageSize,
+        saveInClientStorage: props.saveInClientStorage,
+        clientStorageId: props.listId,
     });
 
     return (
@@ -85,4 +88,5 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
 TreeTable.defaultProps = {
     levelPadding: 32,
     alwaysOpened: false,
+    saveInClientStorage: false,
 };

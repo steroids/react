@@ -86,6 +86,8 @@ export default function Tree(props: ITreeProps) {
         level: props.level,
         alwaysOpened: props.alwaysOpened,
         useSameSelectedItemId: props.useSameSelectedItemId,
+        saveInClientStorage: props.autoSave,
+        clientStorageId: props.id,
     });
 
     const viewProps = useMemo(() => ({
@@ -109,4 +111,5 @@ Tree.defaultProps = {
     hasIconExpandOnly: false,
     useSameSelectedItemId: true,
     hideIcon: false,
+    saveInClientStorage: false,
 };

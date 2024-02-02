@@ -63,6 +63,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             max: props.max,
             min: props.min,
             value: props.input.value,
+            required: props.required,
         },
         onChange,
     );

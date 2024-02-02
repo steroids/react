@@ -4,6 +4,7 @@ interface IInputTypeNumberProps {
     max: any,
     min: any,
     value: string | undefined | null,
+    required?: boolean,
 }
 
 const useInputTypeNumber = (
@@ -12,16 +13,19 @@ const useInputTypeNumber = (
     onChange: (event: React.ChangeEvent<HTMLInputElement>, value?: any) => void,
 ) => {
     React.useEffect(() => {
-        const defaultValidity = 'The number is not valid.';
+        const defaultValidity = __('The number is not valid.');
 
-        const errorMessage = inputTypeNumberProps.value > inputTypeNumberProps.max
+        const errorMessage = inputTypeNumberProps.required
+        && (
+            inputTypeNumberProps.value > inputTypeNumberProps.max
             || inputTypeNumberProps.value < inputTypeNumberProps.min
             || !inputTypeNumberProps.value
-            ? __(defaultValidity)
+        )
+            ? defaultValidity
             : '';
 
         currentInputRef.current?.setCustomValidity(errorMessage);
-    }, [currentInputRef, inputTypeNumberProps.value, inputTypeNumberProps.max, inputTypeNumberProps.min]);
+    }, [currentInputRef, inputTypeNumberProps.value, inputTypeNumberProps.max, inputTypeNumberProps.min, inputTypeNumberProps.required]);
 
     const isValueNumeric = (value) => {
         if (!value) {

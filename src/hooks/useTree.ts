@@ -8,6 +8,8 @@ import _isNil from 'lodash-es/isNil';
 import _keys from 'lodash-es/keys';
 import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
+import {useBeforeUnload, useMount, useUnmount} from 'react-use';
+import useComponents from './useComponents';
 import useSelector from './useSelector';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
 
@@ -126,12 +128,25 @@ export interface ITreeConfig {
      * @example true
     */
     useSameSelectedItemId?: boolean,
+
+    /**
+     * Сохранение в localStorage уровней вложенности.
+     * @example true
+    */
+    saveInClientStorage?: boolean,
+
+    /**
+     * Идентификатор (ключ) для сохранения в LocalStorage коллекции.
+     * @example 'exampleTree'
+     */
+    clientStorageId?: string,
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
 const DOT_SEPARATOR = '.';
 const EMPTY_PARENT_ID = '';
 const FIRST_LEVEL_PARENT_ID = '0';
+const CLIENT_STORAGE_KEY = '_tree';
 
 const defaultProps = {
     itemsKey: 'items',
@@ -252,6 +267,8 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean,}>({});
 
+    const {clientStorage} = useComponents();
+
     //Redux connection
     const {
         routes,
@@ -281,7 +298,6 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     // Initial expanded items
     useEffect(() => {
-        // TODO add clientStorage
         setExpandedItems(
             getAutoExpandedItems(items, selectedItemId, primaryKey, config.autoOpenLevels),
         );
@@ -289,6 +305,34 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         const selectedItem = findChildById(items as ITreeItem[], selectedItemId, primaryKey);
         setSelectedUniqueId(selectedItem ? selectedItem.uniqueId : null);
     }, [items]);
+
+    const localTree = JSON.parse(clientStorage.get(CLIENT_STORAGE_KEY)) || {};
+
+    const saveInClientStorage = () => {
+        if (config.saveInClientStorage) {
+            localTree[config.clientStorageId] = expandedItems;
+            clientStorage.set(CLIENT_STORAGE_KEY, JSON.stringify(localTree));
+        }
+    };
+
+    useMount(() => {
+        if (config.saveInClientStorage) {
+            const treeData = localTree[config.clientStorageId];
+
+            if (treeData) {
+                setExpandedItems(treeData);
+            }
+        }
+    });
+
+    useUnmount(() => {
+        saveInClientStorage();
+    });
+
+    useBeforeUnload(() => {
+        saveInClientStorage();
+        return true;
+    });
 
     const onExpand = useCallback((e: Event | React.MouseEvent, uniqueId: string, item: ITreeItem) => {
         e.preventDefault();

@@ -19,7 +19,7 @@ export const init = (skipInitialized = false) => (dispatch, getState) => {
 
 export const reInit = () => init();
 
-export const login = (token, redirectPageId: string | boolean = 'root', params?: any) => (
+export const login = (token, redirectPageId: string | boolean = 'root', params?: RouteParams) => (
     dispatch,
     getState,
     {http},
@@ -49,7 +49,7 @@ export const setData = data => ({
     data,
 });
 
-export const logout = (routeId: string | boolean = 'root', routeParams: any = null) => (dispatch, getState, {http}) => {
+export const logout = (routeId: string | boolean = 'root', routeParams: RouteParams = null) => (dispatch, getState, {http}) => {
     http.onLogout();
     return dispatch([
         setUser(null),

@@ -294,7 +294,7 @@ export const listSetLayout = (listId, layoutName) => ({
  * @param listId
  * @param query
  */
-export const listFetch = (listId: string, query: any = {}) => (dispatch, getState, components) => {
+export const listFetch = (listId: string, query: Record<string, any> = {}) => (dispatch, getState, components) => {
     const state = getState();
 
     const list = _get(state, ['list', 'lists', listId]) as IList;
@@ -366,7 +366,7 @@ export const listFetch = (listId: string, query: any = {}) => (dispatch, getStat
  * @param listId
  * @param query
  */
-export const listLazyFetch = (listId: string, query: any = {}) => dispatch => {
+export const listLazyFetch = (listId: string, query: Record<string, any> = {}) => dispatch => {
     if (lazyTimers[listId]) {
         clearTimeout(lazyTimers[listId]);
     }

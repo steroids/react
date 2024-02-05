@@ -30,23 +30,23 @@ export interface IFileInput {
      * Экшен для отправки на бэкенд
      * @example '/api/v1/user/avatar/crop'
      */
-    backendUrl?: any,
+    backendUrl?: string,
 
     /**
     * Список mime-типов
     */
-    mimeTypes?: any,
+    mimeTypes?: string[],
 
     /**
     * Использовать только изображения
     */
-    imagesOnly?: any,
-    imagesProcessor?: any,
+    imagesOnly?: boolean,
+    imagesProcessor?: string,
 
     /**
     * Точные размеры изображений
     */
-    imagesExactSize?: any,
+    imagesExactSize?: boolean,
 
     /**
     * Начальные файлы

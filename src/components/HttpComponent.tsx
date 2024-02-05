@@ -8,7 +8,7 @@ import {setFlashes} from '../actions/notifications';
 
 interface IHttpRequestOptions {
     lazy?: boolean | number,
-    cancelToken?: any,
+    cancelToken?: string,
     onTwoFactor?: (providerName: string) => Promise<any>,
     responseType?: string,
 }

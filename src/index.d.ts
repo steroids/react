@@ -113,3 +113,8 @@ declare interface IUiComponent {
      */
     style?: CustomStyle,
 }
+
+/**
+ * Тип данных для параметров маршрута.
+ */
+declare type RouteParams = Record<string, any> | null;

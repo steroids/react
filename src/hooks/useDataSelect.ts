@@ -38,7 +38,7 @@ export interface IDataSelectConfig {
      * Сделать активным первый элемент в списке
      * @example true
      */
-    selectFirst?: any,
+    selectFirst?: boolean,
 
     /**
      * Список с идентификаторами выбранных элементов

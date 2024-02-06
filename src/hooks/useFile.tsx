@@ -46,7 +46,7 @@ export interface IFileInput {
     /**
     * Точные размеры изображений
     */
-    imagesExactSize?: boolean,
+    imagesExactSize?: string,
 
     /**
     * Начальные файлы

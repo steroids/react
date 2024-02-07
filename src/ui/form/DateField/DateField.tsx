@@ -24,7 +24,7 @@ export interface IDateFieldProps extends IDateInputStateInput, IUiComponent, Pic
     /**
      * Свойства для view компонента
      */
-    viewProps?: Record<string, unknown>,
+    viewProps?: CustomViewProps,
 
     /**
      * Свойства для компонента Calendar

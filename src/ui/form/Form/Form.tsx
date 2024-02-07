@@ -80,7 +80,7 @@ export interface IFormProps extends IUiComponent {
      *  ['age', 'integer']
      * ]
      */
-    validators?: any[],
+    validators?: Array<[string | string[], string, Record<string, any>?]>,
 
     /**
      * Обработчик события перед отправкой формы
@@ -255,7 +255,7 @@ export interface IFormContext {
     /**
     * Провайдер
     */
-    provider?: any,
+    provider?: typeof providers.redux | typeof providers.reducer,
 
     /**
     * Редьюсер
@@ -265,7 +265,7 @@ export interface IFormContext {
     /**
     * Диспатч
     */
-    dispatch?: any,
+    dispatch?: React.Dispatch<any>,
 }
 
 export const FormContext = React.createContext<IFormContext>({});

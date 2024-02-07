@@ -170,4 +170,7 @@ export default {
     'form.RateFieldView': {
         lazy: () => require('./form/RateField/RateFieldMockView').default,
     },
+    'form.FileFieldItemView': {
+        lazy: () => require('./form/FileField/FileFieldItemMockView').default,
+    },
 };

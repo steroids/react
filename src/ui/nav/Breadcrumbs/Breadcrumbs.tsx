@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {useComponents, useSelector} from '../../../hooks';
 import {getRouteBreadcrumbs, getRouteParams} from '../../../reducers/router';
 import {IRouteItem} from '../Router/Router';
@@ -66,7 +66,7 @@ export interface IBreadcrumbsProps {
 }
 
 export type IBreadcrumbsViewProps = IBreadcrumbsProps & {
-    routeParams?: any,
+    routeParams?: Record<string, unknown>,
 };
 
 export default function Breadcrumbs(props: IBreadcrumbsProps): JSX.Element {

@@ -1,8 +1,6 @@
 import {push, replace} from 'connected-react-router';
 import {parse} from 'path-to-regexp';
 
-type TParams = Record<string, any> | null;
-
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
 export const ROUTER_SET_PARAMS = 'ROUTER_SET_PARAMS';
 export const ROUTER_SET_DATA = 'ROUTER_SET_DATA';
@@ -30,7 +28,7 @@ const filterParamsForPath = (path: string, params: Record<string, string | numbe
     }, {});
 };
 
-export const goToRoute = (routeId, params: TParams = null, isReplace = false) => (dispatch, getState, {store}) => {
+export const goToRoute = (routeId, params: RouteParams = null, isReplace = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
         return [];

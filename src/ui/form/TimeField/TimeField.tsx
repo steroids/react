@@ -27,7 +27,7 @@ export interface ITimeFieldProps extends IDateInputStateInput, IUiComponent {
     /**
      * Свойства для view компонента
      */
-    viewProps?: Record<string, unknown>,
+    viewProps?: CustomViewProps,
 
     /**
      * Свойства для компонента панели времени

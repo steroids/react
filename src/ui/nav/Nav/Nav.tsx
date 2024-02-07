@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ComponentType, useCallback, useEffect, useMemo, useState} from 'react';
 import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
 import _isFunction from 'lodash-es/isFunction';
@@ -55,7 +55,7 @@ export interface INavItem extends IButtonProps {
      * Контент, который отобразится, если элемент навигации будет активен
      * @example ContentComponent
      */
-    content?: any,
+    content?: ComponentType<any> | string,
 
     /**
      * Свойства для компонента с контентом
@@ -64,7 +64,7 @@ export interface INavItem extends IButtonProps {
      *  content: 'Some text'
      * }
      */
-    contentProps?: any,
+    contentProps?: Record<string, any>,
 
     /**
     * Вложенные элементы

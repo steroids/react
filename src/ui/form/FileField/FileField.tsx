@@ -1,12 +1,12 @@
-import * as React from 'react';
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IButtonProps} from '../Button/Button';
+import IntrinsicAttributes = JSX.IntrinsicAttributes;
 
 export enum FilesLayout {
     list = 'list',
@@ -61,7 +61,7 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldComm
      * View компонент для элемента списка файлов
      * @example true
      */
-    itemView?: any,
+    itemView?: CustomView,
 
     /**
      * Пропсы для элемента файла

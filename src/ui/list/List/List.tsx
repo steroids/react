@@ -17,7 +17,7 @@ export interface IListProps extends IListConfig {
     /**
      * Свойства для элемента коллекции
      */
-    itemProps?: Record<string, unknown>,
+    itemProps?: CustomViewProps,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -47,8 +47,8 @@ export interface IListItemViewProps {
     primaryKey: PrimaryKey,
     item: {
         id?: PrimaryKey,
-        title?: string | any,
-        label?: string | any,
+        title?: string,
+        label?: string,
         [key: string]: any,
     },
     index: number,

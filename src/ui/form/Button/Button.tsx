@@ -41,13 +41,13 @@ export interface IButtonProps extends IUiComponent {
      * Текст кнопки или ссылки
      * @example Save
      */
-    label?: string | any,
+    label?: string,
 
     /**
      * Подсказка, отображается при наведении (через тег title)
      * @example Save
      */
-    hint?: string | any,
+    hint?: string,
 
     /**
      * HTML Тип
@@ -182,7 +182,7 @@ export interface IButtonProps extends IUiComponent {
     /**
      * Цвет текста кнопки или ссылки
      */
-    textColor?: any,
+    textColor?: string,
 
     [key: string]: any,
 }

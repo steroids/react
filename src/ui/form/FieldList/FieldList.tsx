@@ -93,18 +93,18 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
      * Пропсы для компонента отображения списка с группами полей - FieldListView
      */
-    viewProps?: any,
+    viewProps?: CustomViewProps,
 
     /**
      * Переопределение view React компонента для кастомизации отображения группы полей
      * @example MyCustomView
      */
-    itemView?: any,
+    itemView?: CustomView,
 
     /**
      * Пропсы для компонента отображения группы полей - FieldListItemView
      */
-    itemViewProps?: any,
+    itemViewProps?: CustomViewProps,
 
     /**
      * При фокусировке на одном из элементов формы и нажатию на клавиши стрелок вверх/вниз + Shift

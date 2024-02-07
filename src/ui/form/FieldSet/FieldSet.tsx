@@ -19,7 +19,7 @@ export interface IFieldSetProps extends IFormContext {
      * Заголовок для группы полей в форме
      * @example Save
      */
-    label?: any,
+    label?: string,
 
     /**
      * Переопределение view React компонента для кастомизации отображения
@@ -38,7 +38,7 @@ export interface IFieldSetProps extends IFormContext {
 export interface IFieldSetViewProps {
     className?: CssClassName,
     children?: React.ReactNode,
-    label?: string | any,
+    label?: string,
 }
 
 function FieldSet(props: IFieldSetProps): JSX.Element {

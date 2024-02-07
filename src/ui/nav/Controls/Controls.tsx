@@ -68,7 +68,7 @@ export interface IControlsViewProps extends IControlsProps {
     className?: CssClassName,
     items: (IControlItem & {
         icon?: string,
-        label?: string | any,
+        label?: string,
         confirm?: string,
         color?: ColorName,
         outline?: boolean,

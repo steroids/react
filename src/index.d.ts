@@ -80,6 +80,11 @@ declare type CustomStyle = React.CSSProperties;
 declare type CustomView = React.ReactNode | ((props: React.ComponentProps<any>) => JSX.Element);
 
 /**
+ * Свойства для view компонента
+ */
+declare type CustomViewProps = React.ComponentProps<any>;
+
+/**
  * Кастомная иконка
  * @example custom-icon
  */
@@ -108,3 +113,8 @@ declare interface IUiComponent {
      */
     style?: CustomStyle,
 }
+
+/**
+ * Тип данных для параметров маршрута.
+ */
+declare type RouteParams = Record<string, any> | null;

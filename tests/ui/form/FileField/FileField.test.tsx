@@ -6,7 +6,6 @@ import FileField, {IFileFieldProps} from '../../../../src/ui/form/FileField/File
 describe('FileField tests', () => {
     const props = {
         view: FileFieldMockView,
-        itemView: () => {},
         className: 'externalClass',
         filesLayout: 'wall',
     } as IFileFieldProps;

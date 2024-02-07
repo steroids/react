@@ -20,7 +20,7 @@ export interface IFieldProps extends IFieldWrapperInputProps {
      * Аттрибут (название) поля в форме
      * @example isVisible
      */
-    attribute?: any,
+    attribute?: string,
 
     /**
      * Модель с полями формы

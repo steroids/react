@@ -29,31 +29,40 @@ export interface ModelAttribute {
 export interface IMetaComponent {
     /**
      * Изменить модель
+     * @param name Имя модели.
+     * @param item Модель.
      */
     setModel(name: string, item: Model): void,
 
     /**
      * Получить модель
+     * @param name Имя модели.
      */
     getModel(name: string): Model,
 
     /**
      * Изменить тип
+     * @param name Имя типа.
+     * @param config Конфиг.
      */
     setType(name: string, config: Record<string, any>): void,
 
     /**
      * Получить тип
+     * @param name Имя типа.
      */
     getType(name: string): any,
 
     /**
      * Форматирование названия модели
+     * @param name Имя модели.
      */
     normalizeName(name: string): string,
 
     /**
      * Форматирование модели модели
+     * @param inputModel Модель.
+     * @param defaultModel Модель по-умолчанию.
      */
     normalizeModel(inputModel: Model, defaultModel: Model | any): Model,
 }

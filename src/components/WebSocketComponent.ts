@@ -43,6 +43,7 @@ export interface IWebSocketComponentConfig {
 export interface IWebSocketComponent extends IWebSocketComponentConfig{
     /**
      * Открытие websocket соединения
+     * @param closePrevious Флаг для закрытия предыдущего соединения.
      */
     open(closePrevious?: boolean): void,
 
@@ -53,21 +54,27 @@ export interface IWebSocketComponent extends IWebSocketComponentConfig{
 
     /**
      * Подписка на stream
+     * @param stream Поток, на который нужно подписаться.
+     * @param id Идентификатор потока.
      */
     subscribeStream(stream: TStream, id: string | number): void,
 
     /**
      * Подписка на streams
+     * @param streams Потоки, на которые нужно подписаться.
      */
     subscribe(streams: TStreams): void,
 
     /**
      * Отписка от stream
+     * @param stream Поток, от которого нужно подписаться.
+     * @param id Идентификатор потока.
      */
     unsubscribeStream(stream: TStream, id: string | number): void,
 
     /**
      * Отписка от streams
+     * @param streams Потоки, от которых нужно подписаться.
      */
     unsubscribe(streams: TStreams): void,
 }

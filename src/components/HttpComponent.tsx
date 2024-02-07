@@ -44,7 +44,7 @@ export interface IHttpComponent extends IHttpComponentConfig {
 
     /**
      * Изменение csrf токена
-     * @param {string} value
+     * @param {string} value Значение csrf токена.
      */
     setCsrfToken(value: string): void,
 
@@ -55,7 +55,7 @@ export interface IHttpComponent extends IHttpComponentConfig {
 
     /**
      * Изменение токена
-     * @param {string} value
+     * @param {string} value Значение токена.
      */
     setAccessToken(value: string): any,
 
@@ -77,13 +77,13 @@ export interface IHttpComponent extends IHttpComponentConfig {
 
     /**
      * Метод, который можно вызвать при login
-     * @param {{accessToken: string}} params
+     * @param {{accessToken: string}} params Параметры для авторизации (accessToken).
      */
     onLogin(params: {accessToken: string,}): void,
 
     /**
      * Получение url по методу
-     * @param {string} method
+     * @param {string} method Метод.
      * @returns {string} url
      */
     getUrl(method: string): string,
@@ -96,26 +96,42 @@ export interface IHttpComponent extends IHttpComponentConfig {
 
     /**
      * Вызов метода get
+     * @param url URL для HTTP-запроса.
+     * @param params Параметры для запроса.
+     * @param options Опции для HTTP-запроса, заголовки и т.д.
      */
     get(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Вызов метода post
+     * @param url URL для HTTP-запроса.
+     * @param params Параметры для запроса.
+     * @param options Опции для HTTP-запроса, заголовки и т.д.
      */
     post(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Вызов метода delete
+     * @param url URL для HTTP-запроса.
+     * @param params Параметры для запроса.
+     * @param options Опции для HTTP-запроса, заголовки и т.д.
      */
     delete(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Вызов http-метода
+     * @param method Метод запроса (GET, POST и т.д.).
+     * @param url URL для HTTP-запроса.
+     * @param params Параметры для запроса.
+     * @param options Опции для HTTP-запроса, заголовки и т.д.
      */
     send(method: string, url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
 
     /**
      * Метод, который вызывается после запроса
+     * @param response Ответ, полученный после выполнения HTTP-запроса.
+     * @param config Конфиг запроса.
+     * @param options Опции для HTTP-запроса, заголовки и т.д.
      */
     afterRequest(response: any, config: Record<string, any>, options: IHttpRequestOptions): Promise<any>,
 

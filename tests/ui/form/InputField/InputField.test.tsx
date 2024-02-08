@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
+import {waitFor} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import InputField, {IInputFieldProps} from '../../../../src/ui/form/InputField/InputField';
 import InputFieldMockView from './InputFieldMockView';
@@ -68,8 +69,29 @@ describe('InputField tests', () => {
 
         fireEvent.change(input, {target: {value: 'test'}});
 
+        waitFor(() => {
+            const inputField = getElementByClassName(container, expectedInputFieldClass);
+
+            expect(inputField).toHaveClass(`${expectedInputFieldClass}_filled`);
+        });
+    });
+
+    it('should be disabled', () => {
+        const expectedDisabledInputFieldClassName = 'InputFieldView_disabled';
+
+        const {container} = render(JSXWrapper(InputField, {
+            ...props,
+            disabled: true,
+        }));
+
+        const input = getElementByClassName(container, 'InputFieldView__input');
+
+        expect(input).toHaveAttribute('disabled');
+
+        fireEvent.change(input, {target: {value: 'test'}});
+
         const inputField = getElementByClassName(container, expectedInputFieldClass);
 
-        expect(inputField).toHaveClass(`${expectedInputFieldClass}_filled`);
+        expect(inputField).toHaveClass(expectedDisabledInputFieldClassName);
     });
 });

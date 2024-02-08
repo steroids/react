@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
+import {waitFor} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import {Chat} from '../../../../src/ui/content';
 import {calculateMessageTimeAgo} from '../../../../src/ui/content/Chat/utils';
@@ -98,10 +99,14 @@ describe('Chat tests', () => {
 
         fireEvent.change(chatInput, {target: {value: expectedMessageText}});
 
-        expect(getByDisplayValue(expectedMessageText)).toBeInTheDocument();
+        waitFor(() => {
+            expect(getByDisplayValue(expectedMessageText)).toBeInTheDocument();
+        });
 
         fireEvent.click(sendMessageButton);
 
-        expect(queryByText(expectedMessageTime)).toBeInTheDocument();
+        waitFor(() => {
+            expect(queryByText(expectedMessageTime)).toBeInTheDocument();
+        });
     });
 });

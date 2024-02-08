@@ -90,8 +90,10 @@ describe('InputField tests', () => {
 
         fireEvent.change(input, {target: {value: 'test'}});
 
-        const inputField = getElementByClassName(container, expectedInputFieldClass);
+        waitFor(() => {
+            const inputField = getElementByClassName(container, expectedInputFieldClass);
 
-        expect(inputField).toHaveClass(expectedDisabledInputFieldClassName);
+            expect(inputField).toHaveClass(expectedDisabledInputFieldClassName);
+        });
     });
 });

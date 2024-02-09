@@ -11,7 +11,7 @@ const useInputTypeNumber = (
     currentInputRef: React.MutableRefObject<HTMLInputElement>,
     inputTypeNumberProps: IInputTypeNumberProps,
     onChange: (event: React.ChangeEvent<HTMLInputElement>, value?: any) => void,
-    decimalPlaces: number,
+    decimal: number,
 ) => {
     React.useEffect(() => {
         const defaultValidity = __('The number is not valid.');
@@ -38,7 +38,7 @@ const useInputTypeNumber = (
         * @example -1
         * @example 1
         */
-        const numericRegExp = new RegExp(`^-?\\d*\\.?\\d{0,${decimalPlaces}}$`);
+        const numericRegExp = new RegExp(`^-?\\d*\\.?\\d{0,${decimal}}$`);
 
         return numericRegExp.test(value);
     };

@@ -34,7 +34,7 @@ export interface INumberFieldProps extends IBaseFieldProps {
     /**
     * Допустимое количество символов после разделителя
     */
-    decimalPlaces?: number,
+    decimal?: number,
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
@@ -71,19 +71,23 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             required: props.required,
         },
         onChange,
-        props.decimalPlaces,
+        props.decimal,
     );
 
     const onStep = useCallback((isIncrement: boolean) => {
         const currentValue = Number(currentInputRef?.current?.value);
         let newValue;
+
+        const fixToDecimal = (value) => value.toFixed(props.decimal);
+
         if (isIncrement) {
-            newValue = (currentValue + step).toFixed(props.decimalPlaces);
+            newValue = fixToDecimal(currentValue + step);
         } else {
-            newValue = (currentValue - step).toFixed(props.decimalPlaces);
+            newValue = fixToDecimal(currentValue - step);
         }
+
         onChange(null, String(newValue));
-    }, [currentInputRef, onChange, props.decimalPlaces, step]);
+    }, [currentInputRef, onChange, props.decimal, step]);
 
     const onStepUp = useCallback(() => {
         if (!(Number(currentInputRef.current.value) + step > props.max)) {
@@ -140,7 +144,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 NumberField.defaultProps = {
     disabled: false,
     required: false,
-    decimalPlaces: 2,
+    decimal: 2,
 };
 
 export default fieldWrapper<INumberFieldProps>('NumberField', NumberField);

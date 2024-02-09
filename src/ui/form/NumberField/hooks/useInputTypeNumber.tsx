@@ -34,13 +34,20 @@ const useInputTypeNumber = (
         }
 
         /**
-        * Подходят как отрицательные так и положительные числа
-        * @example -1
-        * @example 1
+        * Подходят как отрицательные так и положительные числа с плавающей точкой
+        * @example -1.0
+        * @example 1.1
         */
-        const numericRegExp = new RegExp(`^-?\\d*\\.?\\d{0,${decimal}}$`);
+        const numericFloatRegExp = new RegExp(`^-?\\d*\\.?\\d{0,${decimal}}$`);
 
-        return numericRegExp.test(value);
+        /**
+        * Подходят как отрицательные так и положительные целые числа
+        * @example 1
+        * @example -2
+        */
+        const numericRegExp = new RegExp('^-?\\d*$');
+
+        return decimal ? numericFloatRegExp.test(value) : numericRegExp.test(value);
     };
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

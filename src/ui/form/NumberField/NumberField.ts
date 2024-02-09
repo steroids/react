@@ -78,7 +78,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         const currentValue = Number(currentInputRef?.current?.value);
         let newValue;
 
-        const fixToDecimal = (value) => value.toFixed(props.decimal);
+        const fixToDecimal = (value) => props.decimal ? value.toFixed(props.decimal) : value;
 
         if (isIncrement) {
             newValue = fixToDecimal(currentValue + step);
@@ -144,7 +144,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 NumberField.defaultProps = {
     disabled: false,
     required: false,
-    decimal: 2,
 };
 
 export default fieldWrapper<INumberFieldProps>('NumberField', NumberField);

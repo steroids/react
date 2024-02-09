@@ -11,6 +11,7 @@ const useInputTypeNumber = (
     currentInputRef: React.MutableRefObject<HTMLInputElement>,
     inputTypeNumberProps: IInputTypeNumberProps,
     onChange: (event: React.ChangeEvent<HTMLInputElement>, value?: any) => void,
+    decimal: number,
 ) => {
     React.useEffect(() => {
         const defaultValidity = __('The number is not valid.');
@@ -33,12 +34,20 @@ const useInputTypeNumber = (
         }
 
         /**
-        * Подходят как отрицательные так и положительные числа
-        * @example -1
-        * @example 1
+        * Подходят как отрицательные так и положительные числа с плавающей точкой
+        * @example -1.0
+        * @example 1.1
         */
-        const numericRegex = /^-?\d*\.?\d+$/;
-        return numericRegex.test(value);
+        const numericFloatRegExp = new RegExp(`^-?\\d*\\.?\\d{0,${decimal}}$`);
+
+        /**
+        * Подходят как отрицательные так и положительные целые числа
+        * @example 1
+        * @example -2
+        */
+        const numericRegExp = new RegExp('^-?\\d*$');
+
+        return decimal ? numericFloatRegExp.test(value) : numericRegExp.test(value);
     };
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -80,7 +80,7 @@ export interface IFormProps extends IUiComponent {
      *  ['age', 'integer']
      * ]
      */
-    validators?: Array<[string | string[], string, Record<string, any>?]>,
+    validators?: string[] | Array<string[]> | Array<Record<string, any>>,
 
     /**
      * Обработчик события перед отправкой формы

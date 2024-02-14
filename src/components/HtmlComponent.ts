@@ -3,25 +3,27 @@ import _isString from 'lodash-es/isString';
 export interface IHtmlComponent {
     /**
      * Утилита для создания css-классов по БЭМ
+     * @param blockName Название блока.
      */
     bem(blockName: string): any,
 
     /**
      * Метод для соединения нескольких classNames
+     * @param names Массив названий классов.
      */
     classNames(...names: string[]): string,
 
     /**
      * Метод для добавления css-класса к элементу
-     * @param node Элемент, к которому нужно добавить класс
-     * @param className Название класса
+     * @param node Элемент, к которому нужно добавить класс.
+     * @param className Название класса.
      */
     addClass(node: React.ReactNode, className: string): void,
 
     /**
      * Метод для удаления css-класса у элемента
-     * @param node Элемент, у которого нужно удалить класс
-     * @param className Название класса
+     * @param node Элемент, у которого нужно удалить класс.
+     * @param className Название класса.
      */
     removeClass(node: React.ReactNode, className: string): void,
 

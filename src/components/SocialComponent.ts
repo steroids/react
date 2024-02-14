@@ -8,7 +8,7 @@ export interface ISocialComponent {
 
     /**
      * Старт
-     * @param socialName Название social
+     * @param socialName Название social.
      */
     start(socialName: string): void,
 

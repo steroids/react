@@ -40,24 +40,24 @@ export interface ILocaleComponentConfig {
 export interface ILocaleComponent extends ILocaleComponentConfig {
     /**
      * Получение экземпляра `dayjs` с учетом временной зоны бекенда
-     * @param date Дата
-     * @param format Формат даты
+     * @param date Дата.
+     * @param format Формат даты.
      * @returns Экземпляр `dayjs`
      */
     dayjs(date?: string, format?: string): dayjs.Dayjs,
 
     /**
      * Алиас для метода `translate`
-     * @param message Сообщение для перевода
-     * @param params Параметры перевода
+     * @param message Сообщение для перевода.
+     * @param params Параметры перевода.
      * @returns Переведенное сообщение
      */
     t(message: string, params?: Record<string, any>): string,
 
     /**
      * Перевод сообщения
-     * @param message Сообщение для перевода
-     * @param params Параметры перевода
+     * @param message Сообщение для перевода.
+     * @param params Параметры перевода.
      * @returns Переведенное сообщение
      */
     translate(message: string, params?: Record<string, any>): string,

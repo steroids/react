@@ -36,7 +36,7 @@ export interface IMetricsComponent {
 
     /**
      * Поменять счетчики
-     * @param values Значения
+     * @param values Значения.
      */
     setCounters(values: any): void,
 }

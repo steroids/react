@@ -50,26 +50,31 @@ export interface IStoreComponent {
 
     /**
      * Метод для dispatch
+     * @param action Экшен для изменения состояния.
      */
     dispatch(action): void,
 
     /**
-     * Получение состояние
+     * Получение состояния
      */
     getState(): void,
 
     /**
      * Подписка
+     * @param handler Обработчик изменения состояния.
      */
     subscribe(handler): void,
 
     /**
      * Добавление редьюсеров
+     * @param asyncReducers Коллекция редьюсеров.
      */
     addReducers(asyncReducers): void,
 
     /**
      * Метод, который вызывается при ошибке
+     * @param error Объект ошибки.
+     * @param action Callback функция вызываемая при ошибке.
      */
     errorHandler(error, action): void,
 
@@ -78,7 +83,7 @@ export interface IStoreComponent {
 
 /**
  * Store Component
- * Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router
+ * Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router.
  */
 export default class StoreComponent implements IStoreComponent {
     _asyncReducers: any;

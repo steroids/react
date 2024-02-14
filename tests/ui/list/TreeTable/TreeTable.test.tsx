@@ -41,6 +41,8 @@ describe('addTreeColumnFieldsToFirstColumn function', () => {
     });
 });
 
+JSON.parse = jest.fn().mockImplementationOnce(() => ({}));
+
 describe('TreeTable tests', () => {
     const expectedTreeColumnViewClass = 'TreeItemView';
     const expectedTreeColumnHeaderClass = 'TreeColumnHeader';

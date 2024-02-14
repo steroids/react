@@ -48,4 +48,5 @@ export default function TreeTableMock(props: ITreeTableProps): JSX.Element {
 
 TreeTableMock.defaultProps = {
     levelPadding: 32,
+    saveInClientStorage: false,
 };

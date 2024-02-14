@@ -142,4 +142,21 @@ describe('DropDownField tests', () => {
         fireEvent.click(dropDownTriggerElement);
         expect(getByText(customAllLabel)).toBeInTheDocument();
     });
+
+    it('should clear selected items on button click', async () => {
+        const expectedSelectedItemLabel = items[0].label;
+
+        const {container, getByText} = render(JSXWrapper(DropDownField, {
+            ...props,
+            selectedIds: [items[0].id],
+        }));
+
+        expect(getByText(expectedSelectedItemLabel)).toBeInTheDocument();
+
+        const dropDownResetElement = getElementByClassName(container, `${expectedDropDownFieldClassName}__icon-close`);
+
+        fireEvent.click(dropDownResetElement);
+
+        expect(getByText(props.placeholder)).toBeInTheDocument();
+    });
 });

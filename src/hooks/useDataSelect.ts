@@ -1,4 +1,5 @@
 import _isEqual from 'lodash-es/isEqual';
+import _isEmpty from 'lodash-es/isEmpty';
 import _isArray from 'lodash-es/isArray';
 import _isNil from 'lodash-es/isNil';
 import _difference from 'lodash-es/difference';
@@ -154,6 +155,11 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         if (_isArray(ids)) {
             if (!config.multiple && ids.length > 1) {
                 ids = [ids[0]];
+            }
+
+            if (_isEmpty(ids)) {
+                setSelectedIdsInternal([]);
+                return;
             }
 
             // If all elements of selectedIds are equal to ids, remove all elements

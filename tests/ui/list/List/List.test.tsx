@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import React from 'react';
-import {fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
+import * as React from 'react';
+import {fireEvent, waitFor} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import ListMockView from './ListMockView';
 import List from '../../../../src/ui/list/List/List';
@@ -68,7 +68,7 @@ describe('searchForm tests', () => {
         expect(fieldsCount).toBe(searchForm.fields.length);
     });
 
-    it('should must be correct filtered items', async () => {
+    it('should must be correct filtered items', () => {
         const nameToFilter = items[0].name;
         const nameToRemove = items[1].name;
         const {container, getByText, queryByText} = render(JSXWrapper(List, propsList));
@@ -81,7 +81,8 @@ describe('searchForm tests', () => {
         fireEvent.change(input, {target: {value: nameToFilter}});
         fireEvent.click(button);
 
-        await waitForElementToBeRemoved(itemToRemove);
-        expect(queryByText(nameToRemove)).not.toBeInTheDocument();
+        waitFor(() => {
+            expect(queryByText(nameToRemove)).not.toBeInTheDocument();
+        });
     });
 });

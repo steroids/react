@@ -13,7 +13,7 @@ export default function InputFieldView(props: IInputFieldViewProps) {
         <div
             className={bem(
                 bem.block({
-                    disabled: props.inputProps?.disabled,
+                    disabled: props.disabled,
                     size: props.size,
                     hasError: !!props.errors,
                     hasLeadIcon: !!props.leadIcon,
@@ -58,8 +58,7 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                                 }),
                             )}
                             {...props.inputProps}
-                            onInput={e => props.input?.onChange(e.currentTarget.value)}
-                            type={props.type}
+                            type={props.inputProps.type}
                             placeholder={props.placeholder}
                             disabled={props.disabled}
                             required={props.required}
@@ -75,11 +74,11 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                                 }),
                             )}
                             {...props.inputProps}
-                            onChange={e => props.input?.onChange(e.target.value)}
-                            type={props.type}
+                            type={props.inputProps?.type}
                             placeholder={props.placeholder}
                             disabled={props.disabled}
                             required={props.required}
+                            id={props.id}
                             ref={props.inputRef}
                         />
                     )}

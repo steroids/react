@@ -171,9 +171,8 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         value: props.input.value ?? '',
         onInput: onChange,
         placeholder: props.placeholder,
-        disabled: props.disabled,
         ...props.inputProps,
-    }), [onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
+    }), [onChange, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
 
     const viewProps = useMemo(() => ({
         inputRef: INPUT_TYPES_SUPPORTED_SELECTION.includes(props.type) ? inputRef : null,
@@ -197,6 +196,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         required: props.required,
         id: props.id,
         viewProps: props.viewProps,
+        disabled: props.disabled,
     }), [inputProps, inputRef, onClear, props]);
 
     // No render for hidden input

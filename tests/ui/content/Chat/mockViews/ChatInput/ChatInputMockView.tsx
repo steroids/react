@@ -3,6 +3,7 @@ import {Button, FileField, Form, InputField} from '../../../../../../src/ui/form
 import {useBem} from '../../../../../../src/hooks';
 import {IChatInputViewProps} from '../../../../../../src/ui/content/Chat/Chat';
 import ChatFileItemMockView from '../ChatFileItem';
+import InputFieldMockView from '../../../../form/InputField/InputFieldMockView';
 
 const HiddenUploadFileButton = React.forwardRef<HTMLButtonElement, any>((props, ref) => (
     <button

@@ -34,6 +34,7 @@ export default function TreeTableMock(props: ITreeTableProps): JSX.Element {
         alwaysOpened: props.alwaysOpened,
         currentPage: list?.page,
         itemsOnPage: list?.pageSize,
+        saveInClientStorage: props.saveInClientStorage,
     });
 
     return (

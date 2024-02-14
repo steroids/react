@@ -85,6 +85,7 @@ describe('TreeTable tests', () => {
         size: 'md',
         levelPadding: 32,
         alwaysOpened: false,
+        saveInClientStorage: false,
     } as ITreeTableProps;
 
     it('should add tree view to the first column', () => {

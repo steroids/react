@@ -184,6 +184,11 @@ export interface IButtonProps extends IUiComponent {
      */
     textColor?: string,
 
+    /**
+    * Дополнительный свойства для view части компонента
+    */
+    viewProps?: Record<string, any>,
+
     [key: string]: any,
 }
 
@@ -323,9 +328,10 @@ function Button(props: IButtonProps): JSX.Element {
         children: props.label || props.children,
         className: props.className,
         style: props.style,
+        viewProps: props.viewProps,
     }), [badge, context?.formId, disabled, isFailed, isLoading, onClick, props.block,
         props.children, props.className, props.color, props.hint, props.icon, props.label,
-        props.link, props.outline, props.size, props.style, props.target, props.type, submitting, tag, url]);
+        props.link, props.outline, props.size, props.style, props.target, props.type, submitting, tag, url, props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.ButtonView', viewProps);
 }

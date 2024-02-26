@@ -55,10 +55,21 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
      */
     itemView?: CustomView,
 
+    /**
+     * Свойства для компонента отображения
+     * @example
+     * {
+     *  customHandler: () => {...}
+     * }
+     */
+    viewProps?: {
+        [key: string]: any,
+    },
+
     [key: string]: any,
 }
 
-export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
+export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, IUiComponent {
     inputProps: {
         name: string,
         type: string,
@@ -73,6 +84,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps {
         color?: string,
         required?: boolean,
         size?: Size,
+        disabled?: boolean,
     }[],
     selectedIds: (PrimaryKey | any)[],
     onItemSelect: (id: PrimaryKey | any) => void,
@@ -142,11 +154,11 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
 
     const CheckboxFieldView = props.itemView || components.ui.getView('form.CheckboxFieldView');
 
-    const renderCheckbox = (checkboxProps: ICheckboxFieldViewProps) => (
+    const renderCheckbox = useCallback((checkboxProps: ICheckboxFieldViewProps) => (
         <CheckboxFieldView
             {...checkboxProps}
         />
-    );
+    ), [CheckboxFieldView]);
 
     const viewProps = useMemo(() => ({
         items,
@@ -157,7 +169,10 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         orientation: props.orientation,
         size: props.size,
         disabled: props.disabled,
-    }), [inputProps, items, onItemSelect, props.disabled, props.orientation, props.size, renderCheckbox, selectedIds]);
+        className: props.className,
+        style: props.style,
+        viewProps: props.viewProps,
+    }), [inputProps, items, onItemSelect, props.className, props.disabled, props.orientation, props.size, props.style, props.viewProps, renderCheckbox, selectedIds]);
 
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', viewProps);
 }

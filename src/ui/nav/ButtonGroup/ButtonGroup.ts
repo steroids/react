@@ -46,6 +46,17 @@ export interface IButtonGroupProps extends IUiComponent {
      * }
      */
     buttonProps?: IButtonProps,
+
+    /**
+     * Свойства для компонента отображения
+     * @example
+     * {
+     *  customHandler: () => {...}
+     * }
+     */
+    viewProps?: {
+        [key: string]: any,
+    },
 }
 
 export interface IButtonGroupViewProps extends Omit<IButtonGroupProps, 'items'> {
@@ -87,7 +98,8 @@ function ButtonGroup(props: IButtonGroupProps): JSX.Element {
         activeButton,
         items,
         onClick,
-    }), [activeButton, items, onClick, props.buttonProps, props.className, props.style]);
+        viewProps: props.viewProps,
+    }), [activeButton, items, onClick, props.buttonProps, props.className, props.style, props.viewProps]);
 
     return components.ui.renderView(props.view || 'nav.ButtonGroupView', viewProps);
 }

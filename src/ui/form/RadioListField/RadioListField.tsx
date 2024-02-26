@@ -105,7 +105,10 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
 
     const RadioFieldView = components.ui.getView('form.RadioFieldView');
 
-    const renderRadio = (radioProps: IRadioFieldViewProps) => <RadioFieldView {...radioProps} />;
+    const renderRadio = useCallback(
+        (radioProps: IRadioFieldViewProps) => <RadioFieldView {...radioProps} />,
+        [RadioFieldView],
+    );
 
     const viewProps = useMemo(() => ({
         items,

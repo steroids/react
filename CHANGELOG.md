@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.0.10 (27.02.2024)
+
+### Added
+
+- Добавлено свойство viewProps для компонентов 'ButtonGroup', 'CheckboxListField'
+- Теперь для каждого элемента массива items в 'CheckboxListField' можно передать флаг disabled
+
 ## v3.0.9 (21.02.2024)
 
 ### Added

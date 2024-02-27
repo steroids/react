@@ -172,7 +172,19 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         className: props.className,
         style: props.style,
         viewProps: props.viewProps,
-    }), [inputProps, items, onItemSelect, props.className, props.disabled, props.orientation, props.size, props.style, props.viewProps, renderCheckbox, selectedIds]);
+    }), [
+        inputProps,
+        items,
+        onItemSelect,
+        props.className,
+        props.disabled,
+        props.orientation,
+        props.size,
+        props.style,
+        props.viewProps,
+        renderCheckbox,
+        selectedIds,
+    ]);
 
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', viewProps);
 }

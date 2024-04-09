@@ -306,7 +306,11 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         setSelectedUniqueId(selectedItem ? selectedItem.uniqueId : null);
     }, [items]);
 
-    const localTree = JSON.parse(clientStorage.get(CLIENT_STORAGE_KEY)) || {};
+    const localTree = useMemo(() => {
+        const rawLocalTree = clientStorage.get(CLIENT_STORAGE_KEY);
+
+        return rawLocalTree ? JSON.parse(rawLocalTree) : {};
+    }, [clientStorage]);
 
     const saveInClientStorage = () => {
         if (config.saveInClientStorage) {

@@ -310,7 +310,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         const rawLocalTree = clientStorage.get(CLIENT_STORAGE_KEY);
 
         return rawLocalTree ? JSON.parse(rawLocalTree) : {};
-    }, [])
+    }, [clientStorage]);
 
     const saveInClientStorage = () => {
         if (config.saveInClientStorage) {

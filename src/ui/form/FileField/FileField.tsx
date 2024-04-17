@@ -220,6 +220,8 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
     }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled,
         props.filesLayout, props.imagesOnly, props.imagesProcessor, props.itemProps, props.showRemove, props.size]);
 
+    console.log('FileField props:', viewProps);
+
     return (
         <FileFieldView {...viewProps} />
     );

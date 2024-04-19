@@ -85,6 +85,7 @@ export default function Tree(props: ITreeProps) {
         level: props.level,
         alwaysOpened: props.alwaysOpened,
         useSameSelectedItemId: props.useSameSelectedItemId,
+        collapseChildItems: props.collapseChildItems,
         saveInClientStorage: props.autoSave,
         clientStorageId: props.id,
     });
@@ -111,4 +112,5 @@ Tree.defaultProps = {
     useSameSelectedItemId: true,
     hideIcon: false,
     saveInClientStorage: false,
+    collapseChildItems: false,
 };

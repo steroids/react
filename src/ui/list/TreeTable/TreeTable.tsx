@@ -18,7 +18,7 @@ export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableP
  * Компонент для представления данных коллекции в виде иерархической структуры.
  */
 export interface ITreeTableProps extends Omit<IGridProps, 'items'>,
-    Pick<ITreeProps, 'alwaysOpened' | 'levelPadding' | 'customIcon' | 'saveInClientStorage'>{
+    Pick<ITreeProps, 'alwaysOpened' | 'levelPadding' | 'customIcon' | 'saveInClientStorage' | 'collapseChildItems'>{
     /**
      * Элементы коллекции
      * @example
@@ -71,6 +71,7 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
         alwaysOpened: props.alwaysOpened,
         currentPage: list?.page,
         itemsOnPage: list?.pageSize,
+        collapseChildItems: props.collapseChildItems,
         saveInClientStorage: props.saveInClientStorage,
         clientStorageId: props.listId,
     });
@@ -89,4 +90,5 @@ TreeTable.defaultProps = {
     levelPadding: 32,
     alwaysOpened: false,
     saveInClientStorage: false,
+    collapseChildItems: false,
 };

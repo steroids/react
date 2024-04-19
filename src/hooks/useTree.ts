@@ -6,6 +6,7 @@ import _isEqual from 'lodash-es/isEqual';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isNil from 'lodash-es/isNil';
 import _keys from 'lodash-es/keys';
+import _pickBy from 'lodash-es/pickBy';
 import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
 import {useMount, useUnmount} from 'react-use';
@@ -100,25 +101,25 @@ export interface ITreeConfig {
     onExpand?: (...args: any[]) => any,
 
     /**
-     *  Используется для управления раскрытием всех элементов в дереве
+     * Используется для управления раскрытием всех элементов в дереве
      * @example: true
      */
     alwaysOpened?: boolean,
 
     /**
-     *  Текущая страница, используется для корректного отображения пагинации
+     * Текущая страница, используется для корректного отображения пагинации
      * @example: 1
      */
     currentPage?: number,
 
     /**
-     *  Количество элементов на странице, используется для корректного отображения пагинации
+     * Количество элементов на странице, используется для корректного отображения пагинации
      * @example: 4
      */
     itemsOnPage?: number,
 
     /**
-     *  Параметры роутинга
+     * Параметры роутинга
      * @example: true
      */
     routerParams?: any,
@@ -128,6 +129,12 @@ export interface ITreeConfig {
      * @example true
     */
     useSameSelectedItemId?: boolean,
+
+    /**
+     * Скрывать открытые вложенные узлы, если скрыли родительский узел
+     * @example true
+     */
+    collapseChildItems?: boolean,
 
     /**
      * Сохранение в localStorage уровней вложенности.
@@ -210,6 +217,11 @@ const findChildById = (
 
     return foundedItem;
 };
+
+const removeClosedChildItems = (expandedItems, collapsedItemUniqueId) => _pickBy(
+    expandedItems,
+    (_, expandedItemUniqueId) => !expandedItemUniqueId.startsWith(collapsedItemUniqueId),
+);
 
 const getAutoExpandedItems = (
     sourceItems: ITreeItem[],
@@ -353,12 +365,22 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         setSelectedUniqueId(selectedUniqueId === uniqueId ? sameUniqueIdAccordingToSettings : uniqueId);
 
         if (!_isEmpty(item[primaryKey])) {
-            setExpandedItems({
-                ...expandedItems,
-                [uniqueId]: !expandedItems[uniqueId],
+            setExpandedItems((prevState) => {
+                // Hide child elements when closing the parent
+                if (config.collapseChildItems && prevState[uniqueId]) {
+                    return {
+                        ...removeClosedChildItems(prevState, uniqueId),
+                    };
+                }
+
+                // Hide/expand only the element that was clicked
+                return {
+                    ...prevState,
+                    [uniqueId]: !prevState[uniqueId],
+                };
             });
         }
-    }, [config.onExpand, config.useSameSelectedItemId, expandedItems, primaryKey, selectedUniqueId]);
+    }, [config.collapseChildItems, config.onExpand, config.useSameSelectedItemId, primaryKey, selectedUniqueId]);
 
     const resultTreeItems = useMemo(() => {
         const getItems = (

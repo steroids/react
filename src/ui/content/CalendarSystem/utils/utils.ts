@@ -36,6 +36,17 @@ export const sortEventsInGroup = (group: IEventGroup) => group.events.sort((even
 
 export const getSourceCalendarControl = (control: string) => document.querySelector(`[data-sourcecontrol="${control}"]`) as HTMLElement;
 
+export const getFormattedTodayDate = () => {
+    const now = new Date();
+
+    return {
+        dayNumber: now.getDate(),
+        date: new Date(now),
+        formattedDisplay: convertDate(now, null, WEEK_DAY_FORMAT),
+        isToday: isDateIsToday(now),
+    };
+};
+
 export const getFormattedWeekFromDate = (fromDate: Date = null) => {
     const currentWeek = getWeekDaysFromDate(fromDate || new Date());
 
@@ -47,4 +58,13 @@ export const getFormattedWeekFromDate = (fromDate: Date = null) => {
 
         return copyOfDayWeek;
     });
+};
+
+export const getTwentyFourHoursArray = () => {
+    const hoursArray: string[] = [];
+    for (let i = 0; i < 24; i++) {
+        const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
+        hoursArray.push(formattedHour);
+    }
+    return hoursArray;
 };

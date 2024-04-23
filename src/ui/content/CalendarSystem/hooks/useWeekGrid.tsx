@@ -3,18 +3,9 @@ import React from 'react';
 import dayjs from 'dayjs';
 import {IDay} from '../CalendarSystem';
 import DateControlEnum from '../enums/DateControlType';
-import {getFormattedWeekFromDate, getSourceCalendarControl} from '../utils/utils';
+import {getFormattedWeekFromDate, getSourceCalendarControl, getTwentyFourHoursArray} from '../utils/utils';
 
 const ONE_DAY = 1;
-
-const getTwentyFourHoursArray = () => {
-    const hoursArray = [];
-    for (let i = 0; i < 24; i++) {
-        const formattedHour = dayjs().startOf('day').add(i, 'hour').format('HH:00');
-        hoursArray.push(formattedHour);
-    }
-    return hoursArray;
-};
 
 const useWeekGrid = (currentMonthFirstDayDate: Date) => {
     const [currentWeek, setCurrentWeek] = React.useState(getFormattedWeekFromDate());

@@ -1,27 +1,29 @@
-import React from 'react';
+import {useMemo, useState} from 'react';
 import _upperFirst from 'lodash-es/upperFirst';
 import {convertDate} from '../../../../utils/calendar';
+import DisplayDateFormatType from '../enums/DisplayDateFormatType';
+import {IDay} from '../CalendarSystem';
 
-export const MONTH_CONVERT_FORMAT = 'MMMM YYYY';
+const convertDateToRequiredFormat = (
+    date: Date | string,
+    toFormat,
+) => convertDate(date, null, DisplayDateFormatType.getLabel(toFormat));
 
-const getFirstDayOfCurrentMonth = () => {
-    const currentDate = new Date();
-    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    return firstDayOfMonth;
-};
+const useDisplayDate = (generalCurrentDay: IDay) => {
+    const [displayFormat, setDisplayFormat] = useState<string>(DisplayDateFormatType.DEFAULT);
 
-const convertDateToRequiredFormat = (date: Date) => convertDate(date, null, MONTH_CONVERT_FORMAT);
+    const dateToDisplay = useMemo(() => _upperFirst(
+        convertDateToRequiredFormat(generalCurrentDay.date, displayFormat),
+    ), [displayFormat, generalCurrentDay.date]);
 
-const useDisplayDate = () => {
-    const [dateToDisplay, setDateToDisplay] = React.useState(_upperFirst(convertDateToRequiredFormat(getFirstDayOfCurrentMonth())));
-
-    const setNewDateToDisplay = (newDate: Date) => {
-        setDateToDisplay(convertDateToRequiredFormat(newDate));
+    const changeDisplayFormat = (newFormat: string) => {
+        setDisplayFormat(newFormat);
     };
 
     return {
         dateToDisplay,
-        setNewDateToDisplay,
+        displayFormat,
+        changeDisplayFormat,
     };
 };
 

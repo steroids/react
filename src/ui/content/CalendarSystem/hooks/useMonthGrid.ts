@@ -1,34 +1,27 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable import/order */
-import React from 'react';
+import {useMemo} from 'react';
 import {IDay} from '../CalendarSystem';
-import {getWeekDaysFromDate, isDateIsToday} from '../utils/utils';
-import _concat from 'lodash-es/concat';
-import _slice from 'lodash-es/slice';
-import dayjs from 'dayjs';
+import {getWeekDays, getWeekDaysFromDate, isDateIsToday} from '../utils/utils';
 import _upperFirst from 'lodash-es/upperFirst';
 
 const FIRST_DAY = 1;
 const ONE_MONTH = 1;
 const TOTAL_DAYS_IN_CALENDAR = 42;
 
-const useMonthGrid = (currentMonthFirstDayDate: Date, setCurrentMonthFirstDayDate: React.Dispatch<React.SetStateAction<Date>>) => {
-    const getCurrentMonthDataUTC = React.useCallback(() => {
-        const currentYear = currentMonthFirstDayDate?.getFullYear() || new Date().getFullYear();
+const useMonthGrid = (generalCurrentDay: IDay) => {
+    const currentMonthData = useMemo(() => {
+        const currentYear = generalCurrentDay.date?.getFullYear();
 
-        const month = currentMonthFirstDayDate?.getMonth() || new Date().getMonth();
+        const month = generalCurrentDay.date?.getMonth();
         const nextMonthFirstDay = new Date(currentYear, month + ONE_MONTH, FIRST_DAY);
-        const lastDayOfCurrentMonth = new Date(nextMonthFirstDay.getTime() - FIRST_DAY).getDate();
-        const firstDayOfCurrentMonth = new Date(Date.UTC(currentYear, month, FIRST_DAY));
-
-        if (currentMonthFirstDayDate === null) {
-            setCurrentMonthFirstDayDate(firstDayOfCurrentMonth);
-        }
+        const lastDateOfCurrentMonth = new Date(nextMonthFirstDay.getTime() - FIRST_DAY).getDate();
+        const firstDateOfCurrentMonth = new Date(Date.UTC(currentYear, month, FIRST_DAY));
 
         const daysInCurrentMonth = [];
 
         // Пройдемся по всем дням месяца и добавим их в массив
-        for (let dayNumber = 1; dayNumber <= lastDayOfCurrentMonth; dayNumber++) {
+        for (let dayNumber = 1; dayNumber <= lastDateOfCurrentMonth; dayNumber++) {
             const date = new Date(Date.UTC(currentYear, month, dayNumber));
             daysInCurrentMonth.push({
                 date,
@@ -38,29 +31,29 @@ const useMonthGrid = (currentMonthFirstDayDate: Date, setCurrentMonthFirstDayDat
 
         return {
             currentMonth: month,
-            lastDayOfCurrentMonth,
-            firstDayOfCurrentMonth,
+            lastDateOfCurrentMonth,
+            firstDateOfCurrentMonth,
             daysInCurrentMonth,
         };
-    }, [currentMonthFirstDayDate, setCurrentMonthFirstDayDate]);
+    }, [generalCurrentDay.date]);
 
-    const getCalendarArray = React.useCallback(() => {
-        const calendarArray: IDay[] = [];
+    const calendarArray = useMemo(() => {
+        const innerCalendarArray: IDay[] = [];
 
-        const {firstDayOfCurrentMonth, currentMonth: month, daysInCurrentMonth} = getCurrentMonthDataUTC();
+        const {firstDateOfCurrentMonth, currentMonth, daysInCurrentMonth} = currentMonthData;
 
-        const firstWeekInMonth = getWeekDaysFromDate(firstDayOfCurrentMonth);
+        const firstWeekInMonth = getWeekDaysFromDate(firstDateOfCurrentMonth);
 
-        firstWeekInMonth.forEach((day) => calendarArray.push({
+        firstWeekInMonth.forEach((day) => innerCalendarArray.push({
             date: day.date,
             dayNumber: day.dayNumber,
-            outOfRange: day.date.getMonth() < month,
+            outOfRange: day.date.getMonth() < currentMonth,
         }));
 
         daysInCurrentMonth.forEach((day) => {
-            const existingDay = calendarArray.find((item) => item.date.getTime() === day.date.getTime());
+            const existingDay = innerCalendarArray.find((item) => item.date.getTime() === day.date.getTime());
             if (!existingDay) {
-                calendarArray.push({
+                innerCalendarArray.push({
                     date: day.date,
                     dayNumber: day.dayNumber,
                     outOfRange: false,
@@ -68,36 +61,27 @@ const useMonthGrid = (currentMonthFirstDayDate: Date, setCurrentMonthFirstDayDat
             }
         });
 
-        const daysAfterCurrentMonth = TOTAL_DAYS_IN_CALENDAR - calendarArray.length;
+        const daysAfterCurrentMonth = TOTAL_DAYS_IN_CALENDAR - innerCalendarArray.length;
 
         for (let i = 1; i <= daysAfterCurrentMonth; i++) {
-            const currentDate = new Date(currentMonthFirstDayDate?.getFullYear(), month + 1, i);
+            const currentDate = new Date(generalCurrentDay.date.getFullYear(), currentMonth + 1, i);
 
-            calendarArray.push({
+            innerCalendarArray.push({
                 date: currentDate,
                 dayNumber: currentDate.getDate(),
-                outOfRange: currentDate.getMonth() > month,
+                outOfRange: currentDate.getMonth() > currentMonth,
             });
         }
 
-        return calendarArray.map((day) => isDateIsToday(day.date) ? ({
+        return innerCalendarArray.map((day) => isDateIsToday(day.date) ? ({
             ...day,
             isToday: true,
         }) : day);
-    }, [currentMonthFirstDayDate, getCurrentMonthDataUTC]);
-
-    const weekDays = React.useMemo(() => {
-        const unformattedDaysOfWeek = dayjs.weekdaysMin();
-
-        return _concat(_slice(unformattedDaysOfWeek, 1), unformattedDaysOfWeek[0]).map(weekDay => __(`${_upperFirst(weekDay)}`));
-    }, []);
+    }, [generalCurrentDay.date, currentMonthData]);
 
     return {
-        monthGridWeekDays: weekDays,
-        monthGridCalendarDays: getCalendarArray(),
-        getCalendarArray,
-        getCurrentMonthDataUTC,
-        getWeekFromDate: getWeekDaysFromDate,
+        monthGridWeekDays: getWeekDays(),
+        monthGridCalendarDays: calendarArray,
     };
 };
 

@@ -17,14 +17,16 @@ import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {useComponents} from '../../../hooks';
 import {useCalendarSystem} from './hooks/useCalendarSystem';
 import CalendarEnum from './enums/CalendarType';
+import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
 
 dayjs.extend(localeData);
 
-export type CalendarSystemModalFields = 'title' | 'eventGroupId' | 'date' | 'description';
+export type CalendarSystemModalFields = 'title' | 'eventGroupId' | 'description' | 'startDate' | 'endDate' | 'id' | 'usersIds';
 export type CalendarSystemEventGroupModalFields = 'label' | 'color';
 
 export interface IEventInitialValues extends IEvent {
     eventGroupId: string,
+    usersIds: number[],
 }
 export interface IDay {
     dayNumber: number,
@@ -49,9 +51,13 @@ export interface IEvent {
     */
     id: number,
     /**
-    * Дата
+    * Начальная дата
     */
-    date: Date,
+    startDate: Date,
+    /**
+    * Конечная дата
+    */
+    endDate: Date,
     /**
     * Заголовок
     */
@@ -96,7 +102,13 @@ export interface ICalendarUser {
     id: number,
     name: string,
     caption: string,
-    eventIds: IEvent['id'][],
+    eventsIds: IEvent['id'][],
+}
+
+export interface IGridViews {
+    eventView?: CustomView,
+    hourView?: CustomView,
+    gridView?: CustomView,
 }
 
 /**
@@ -137,14 +149,19 @@ export interface ICalendarSystemProps extends IUiComponent {
     },
 
     /**
-    * Свойства для сетки вида дня
+    * Свойства для сетки  дня
     */
-    dayGrid?: {
-        //TODO сделать eventView
-        eventView?: CustomView,
-    },
+    dayGrid?: IGridViews,
+    /**
+    * Свойства для сетки  недели
+    */
+    weekGrid?: IGridViews,
+    /**
+    * Свойства для сетки  недели
+    */
+    monthGrid?: IGridViews,
 
-    users?: ICalendarUser[],
+    users: ICalendarUser[],
 
     /**
     * Дополнительные свойства, которые передаются во view компонента
@@ -155,14 +172,14 @@ export interface ICalendarSystemProps extends IUiComponent {
 }
 
 export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps' | 'users'> {
-    onInnerCalendarChangeMonth: (newDate: Date) => void,
+    onCalendarChangedMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
     eventGroupsTitle: string,
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
-    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void,
+    onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
     calendarType: CalendarEnum,
 
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
@@ -172,17 +189,17 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     monthGridProps: {
         monthGridWeekDays: string[],
         monthGridCalendarDays: IDay[],
-    },
+    } & ICustomViews,
 
     weekGridProps: {
         weekGridTwentyFourHoursArray: string[],
         weekGridCurrentWeekDays: IDay[],
-    },
+    } & ICustomViews,
 
     dayGridProps: {
         dayGridTwentyFourHoursArray: string[],
         dayGridCurrentDay: IDay,
-    },
+    } & ICustomViews,
 }
 
 export interface ICalendarSystemModalViewProps extends IModalProps {
@@ -190,6 +207,7 @@ export interface ICalendarSystemModalViewProps extends IModalProps {
     onModalFormSubmit: (fields: Record<CalendarSystemModalFields, string>, eventInitialValues?: IEventInitialValues) => void,
     isCreate: boolean,
     eventInitialValues?: any,
+    users: ICalendarUser[],
 }
 
 export interface CalendarSystemEventGroupModalViewProps extends IModalProps {
@@ -206,11 +224,13 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
 
     const calendarSystem = useCalendarSystem(props);
 
+    const {dayGridViews, monthGridViews, weekGridViews} = useCustomViews(props);
+
     const viewProps: ICalendarSystemViewProps = React.useMemo(() => ({
         className: props.className,
         style: props.style,
         additionalViewProps: props.additionalViewProps,
-        users: props.users,
+        users: calendarSystem.users,
         eventGroupsTitle: props.eventBlock.title,
 
         dateToDisplay: calendarSystem.dateToDisplay,
@@ -218,27 +238,30 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         calendarType: calendarSystem.calendarType,
 
         openCreateModal: calendarSystem.openCreateModal,
-        onInnerCalendarChangeMonth: calendarSystem.onInnerCalendarChangeMonth,
+        onCalendarChangedMonth: calendarSystem.onCalendarChangedMonth,
         onChangeEventGroupsIds: (newSelectedEventGroupsIds: number[]) => calendarSystem.setSelectedEventGroupsIds(newSelectedEventGroupsIds),
         openCreateEventGroupModal: calendarSystem.openCreateEventGroupModal,
         handleCalendarTypeChange: calendarSystem.handleCalendarTypeChange,
-        handleControlClick: calendarSystem.handleControlClick,
+        onClickControl: calendarSystem.onClickControl,
         getEventsFromDate: calendarSystem.getEventsFromDate,
         openEditModal: calendarSystem.openEditModal,
 
         monthGridProps: {
             monthGridWeekDays: calendarSystem.monthGridWeekDays,
             monthGridCalendarDays: calendarSystem.monthGridCalendarDays,
+            ...monthGridViews,
         },
         weekGridProps: {
             weekGridTwentyFourHoursArray: calendarSystem.weekGridTwentyFourHoursArray,
             weekGridCurrentWeekDays: calendarSystem.weekGridCurrentWeekDays,
+            ...weekGridViews,
         },
         dayGridProps: {
             dayGridTwentyFourHoursArray: calendarSystem.dayGridTwentyFourHoursArray,
             dayGridCurrentDay: calendarSystem.dayGridCurrentDay,
+            ...dayGridViews,
         },
-    }), [props.className, props.style, props.additionalViewProps, props.users, props.eventBlock.title, calendarSystem]);
+    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

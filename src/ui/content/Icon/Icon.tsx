@@ -52,6 +52,11 @@ export interface IIconProps extends Omit<IUiComponent, 'className' | 'style'>, P
     */
     onClick?: any,
 
+    /**
+    * Дополнительные данные которые попадут в дата аттрибут data-icon
+    */
+    dataIcon?: any,
+
     [key: string]: any,
 }
 
@@ -104,7 +109,8 @@ export default function Icon(props: IIconProps): JSX.Element {
         className: props.className,
         style: props.style,
         icon,
-    }), [props.onClick, props.tabIndex, props.title, props.className, props.style, icon]);
+        dataIcon: props.dataIcon,
+    }), [props.onClick, props.tabIndex, props.title, props.className, props.style, props.dataIcon, icon]);
 
     if (!_isString(name)) {
         return null;

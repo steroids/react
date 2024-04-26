@@ -58,7 +58,6 @@ export const useEventsFromDate = (innerEventGroups: IEventGroup[], selectedEvent
                 resultEventsOnDate,
             );
         });
-        console.log(resultEventsOnDate);
 
         return resultEventsOnDate;
     }, [innerEventGroups, selectedEventGroupsIds]);

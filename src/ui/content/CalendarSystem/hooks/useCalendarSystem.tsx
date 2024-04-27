@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {ICalendarSystemProps, ICalendarUser, IEventGroup} from '../CalendarSystem';
 import useDisplayDate from './useDisplayDate';
 import {useDayGrid} from './useDayGrid';

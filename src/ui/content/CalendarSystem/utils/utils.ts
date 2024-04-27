@@ -5,6 +5,7 @@ import _concat from 'lodash-es/concat';
 import _slice from 'lodash-es/slice';
 import _upperFirst from 'lodash-es/upperFirst';
 import _ceil from 'lodash-es/ceil';
+import {CSSProperties} from 'react';
 import {IDay, IEvent, IEventGroup} from '../CalendarSystem';
 import {convertDate} from '../../../../utils/calendar';
 
@@ -93,7 +94,21 @@ export const getProportionFromEvent = (event: IEvent) => {
 
     const durationInMinutest = endDate.diff(startDate, 'minutes');
 
-    return _ceil(durationInMinutest / 60, 1);
+    return 100 * _ceil(durationInMinutest / 60, 1);
+};
+
+export const getTopMarginFromEvent = (event: IEvent) => {
+    const startDate = dayjs(event.startDate);
+
+    const startDateHour = startDate.set('minutes', 0);
+
+    const durationInMinutest = startDate.diff(startDateHour, 'minutes');
+
+    const topMargin = _ceil(durationInMinutest / 60, 1) * 100;
+
+    return {
+        top: `${topMargin}%`,
+    } as CSSProperties;
 };
 
 export const formatEventTime = (date: Date) => convertDate(date, null, 'HH:mm');

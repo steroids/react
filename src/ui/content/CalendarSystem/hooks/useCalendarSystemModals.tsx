@@ -3,6 +3,7 @@ import {useDispatch} from 'react-redux';
 import _isEqual from 'lodash-es/isEqual';
 import _maxBy from 'lodash-es/maxBy';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _isEmpty from 'lodash-es/isEmpty';
 import {openModal} from '../../../../actions/modal';
 import {IModalProps} from '../../../modal/Modal/Modal';
 import useComponents from '../../../../hooks/useComponents';
@@ -72,18 +73,26 @@ const useCalendarSystemModals = (
 
         setInnerEventGroups(currentEventGroups);
 
-        const newUsers = (_cloneDeep(users) as ICalendarUser[]).map(user => {
-            if (!(usersIds as number[]).includes(user.id)) {
-                return user;
+        let newUsers: ICalendarUser[] = _cloneDeep(users);
+
+        newUsers = newUsers.map(user => {
+            const newUser: ICalendarUser = _cloneDeep(user);
+
+            if (newUser.eventsIds.includes(updatedEvent.id) && !(usersIds as number[]).includes(newUser.id)) {
+                return {
+                    ...newUser,
+                    eventsIds: [...newUser.eventsIds].filter(eventId => eventId !== updatedEvent.id),
+                };
             }
 
-            return ({
-                ...user,
-                eventsIds: [
-                    ...user.eventsIds,
-                    updatedEvent.id,
-                ] as number[],
-            });
+            if ((usersIds as number[]).includes(newUser.id) && !newUser.eventsIds.includes(updatedEvent.id)) {
+                return {
+                    ...newUser,
+                    eventsIds: [...newUser.eventsIds, updatedEvent.id],
+                };
+            }
+
+            return newUser;
         });
 
         setUsers(newUsers);

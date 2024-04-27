@@ -157,7 +157,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     */
     weekGrid?: IGridViews,
     /**
-    * Свойства для сетки  недели
+    * Свойства для сетки  месяца
     */
     monthGrid?: IGridViews,
 

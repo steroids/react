@@ -309,7 +309,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         return [];
     }, [config.items, config.routerParams, routes]);
 
-    // Выполняет поиск текущего роута в дереве: раскрывает дерево до элемента, делает элемент аткивным
+    // Выполняет поиск текущего роута в дереве: раскрывает дерево до элемента, делает элемент активным
     const onItemFocus = useCallback(() => {
         const currentRouteAsTreeItem = findChildById(items as ITreeItem[], selectedItemId, primaryKey);
         const currentPageUniqueIdParts = currentRouteAsTreeItem.uniqueId.split(DOT_SEPARATOR); // Get all parent levels of item

@@ -4,6 +4,7 @@ import {useComponents, useTree} from '../../../hooks';
 
 export interface ITreeViewProps extends ITreeProps {
     items: IPreparedTreeItem[],
+    onItemFocus?: () => void,
 }
 
 export interface ITreeItemViewProps extends ITreeProps {
@@ -69,13 +70,19 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      */
     hasIconExpandOnly?: boolean,
 
+    /**
+     * Флаг, определяющий отображение иконки для поиска текущего роута в дереве
+     * @example false
+     */
+    focusButton?: string | boolean,
+
     [key: string]: any,
 }
 
 export default function Tree(props: ITreeProps) {
     const components = useComponents();
 
-    const {treeItems} = useTree({
+    const {treeItems, onItemFocus} = useTree({
         items: props.items,
         selectedItemId: props.selectedItemId,
         routerParams: props.routerParams,
@@ -91,13 +98,16 @@ export default function Tree(props: ITreeProps) {
     });
 
     const viewProps = useMemo(() => ({
+        ...props,
+        onItemFocus,
         items: treeItems,
         levelPadding: props.levelPadding,
         className: props.className,
         hideIcon: props.hideIcon,
         customIcon: props.customIcon,
         hasIconExpandOnly: props.hasIconExpandOnly,
-    }), [props.className, props.customIcon, props.hasIconExpandOnly, props.hideIcon, props.levelPadding, treeItems]);
+        focusButton: props.focusButton,
+    }), [props, treeItems, onItemFocus]);
 
     return components.ui.renderView(props.view || 'nav.TreeView', viewProps);
 }

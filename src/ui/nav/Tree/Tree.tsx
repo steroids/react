@@ -4,6 +4,7 @@ import {useComponents, useTree} from '../../../hooks';
 
 export interface ITreeViewProps extends ITreeProps {
     items: IPreparedTreeItem[],
+    onItemFocus?: () => void,
 }
 
 export interface ITreeItemViewProps extends ITreeProps {
@@ -15,6 +16,12 @@ export interface ITreeItemViewProps extends ITreeProps {
 /**
  * Tree
  * Компонент, который представляет в виде дерева список с иерархической структурой данных
+ *
+ * Дополнительный функционал: в кастомном view компонента есть возможность реализовать кнопку, по клику на которую
+ * будет вызываться функция props.onItemFocus. Данная функция "находит" текущий роут в дереве -
+ * раскрывает родительские уровни, делает элемент активным.
+ * Данная функция не включает скролл к активному компоненту внутри дерева, это также необходимо
+ * реализовать в кастомном view локально в проекте.
  */
 export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPage'> {
     /**
@@ -75,7 +82,7 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
 export default function Tree(props: ITreeProps) {
     const components = useComponents();
 
-    const {treeItems} = useTree({
+    const {treeItems, onItemFocus} = useTree({
         items: props.items,
         selectedItemId: props.selectedItemId,
         routerParams: props.routerParams,
@@ -91,13 +98,15 @@ export default function Tree(props: ITreeProps) {
     });
 
     const viewProps = useMemo(() => ({
+        ...props,
+        onItemFocus,
         items: treeItems,
         levelPadding: props.levelPadding,
         className: props.className,
         hideIcon: props.hideIcon,
         customIcon: props.customIcon,
         hasIconExpandOnly: props.hasIconExpandOnly,
-    }), [props.className, props.customIcon, props.hasIconExpandOnly, props.hideIcon, props.levelPadding, treeItems]);
+    }), [props, treeItems, onItemFocus]);
 
     return components.ui.renderView(props.view || 'nav.TreeView', viewProps);
 }

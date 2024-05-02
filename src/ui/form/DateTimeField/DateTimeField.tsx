@@ -146,6 +146,7 @@ DateTimeField.defaultProps = {
         dateMode: 'dd/mm/yyyy',
         timeMode: 'HH:MM',
         dateSeparator: '.',
+        dateTimeSeparator: DATE_TIME_SEPARATOR,
     }),
 };
 

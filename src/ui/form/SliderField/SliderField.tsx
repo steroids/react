@@ -63,6 +63,15 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
     marks?: Record<string, {style: {color,}, label,} | React.ReactNode | string>,
 
     /**
+     * Функция, вызываемая в момент перетаскивания tip'а у слайдера
+     * @example
+     * {
+     *  () => console.log('Slider is moving')
+     * }
+     */
+    onChange?: (value: any) => void,
+
+    /**
      * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
      * @see https://github.com/schrodinger/rc-slider
      * @example
@@ -85,11 +94,12 @@ const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) 
 function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const onChange = useCallback((range) => {
+    const onChange = useCallback((value) => {
         if (props.onChange) {
-            props.onChange(range);
+            props.onChange(value);
         }
-        props.input.onChange.call(null, range);
+
+        props.input.onChange.call(null, value);
     }, [props]);
 
     const onAfterChange = useCallback((value) => {
@@ -98,6 +108,7 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
         if (props.onAfterChange) {
             props.onAfterChange(value);
         }
+
         props.input.onChange.call(null, value);
     }, [props]);
 

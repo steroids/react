@@ -99,17 +99,17 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
             props.onChange(value);
         }
 
-        props.input.onChange.call(null, value);
+        props.input.onChange(value);
     }, [props]);
 
     const onAfterChange = useCallback((value) => {
-        value = normalizeValue(value);
+        const normalizedValue = normalizeValue(value);
 
         if (props.onAfterChange) {
-            props.onAfterChange(value);
+            props.onAfterChange(normalizedValue);
         }
 
-        props.input.onChange.call(null, value);
+        props.input.onChange(normalizedValue);
     }, [props]);
 
     const sliderProps = useMemo(() => ({

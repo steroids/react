@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import _toInteger from 'lodash-es/toInteger';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -63,6 +63,15 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
     marks?: Record<string, {style: {color,}, label,} | React.ReactNode | string>,
 
     /**
+     * Функция, вызываемая в момент перетаскивания tip'а у слайдера
+     * @example
+     * {
+     *  () => console.log('Slider is moving')
+     * }
+     */
+    onChange?: (value: any) => void,
+
+    /**
      * Функция, вызываемая после отпускания tip'а у слайдера (при событии onmouseup)
      * @see https://github.com/schrodinger/rc-slider
      * @example
@@ -85,6 +94,24 @@ const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) 
 function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
+    const onChange = useCallback((value) => {
+        if (props.onChange) {
+            props.onChange(value);
+        }
+
+        props.input.onChange(value);
+    }, [props]);
+
+    const onAfterChange = useCallback((value) => {
+        const normalizedValue = normalizeValue(value);
+
+        if (props.onAfterChange) {
+            props.onAfterChange(normalizedValue);
+        }
+
+        props.input.onChange(normalizedValue);
+    }, [props]);
+
     const sliderProps = useMemo(() => ({
         min: props.min,
         max: props.max,
@@ -97,13 +124,10 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
         valuePostfix: props.valuePostfix,
         defaultValue: props.defaultValue,
         tooltipIsVisible: props.tooltipIsVisible,
-        onChange: range => props.input.onChange.call(null, range),
-        onAfterChange: value => {
-            value = normalizeValue(value);
-            props.input.onChange.call(null, value);
-        },
-    }), [props.min, props.max, props.step, props.marks, props.isRange, props.disabled, props.isVertical, props.input.value,
-        props.input.onChange, props.valuePostfix, props.defaultValue, props.tooltipIsVisible]);
+        onChange,
+        onAfterChange,
+    }), [onAfterChange, onChange, props.defaultValue, props.disabled, props.input.value, props.isRange,
+        props.isVertical, props.marks, props.max, props.min, props.step, props.tooltipIsVisible, props.valuePostfix]);
 
     const viewProps = useMemo(() => ({
         ...sliderProps,

@@ -1444,20 +1444,20 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@maskito/core@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-1.7.0.tgz#e486ca1db2219f03beee5085c362688226fbaeec"
-  integrity sha512-sjdv1MSJnWWor/Qy1u1+ZZtqejzfVt6zqMUfy5RToEPZSBWlsCg1JSfjRu9WRb3yirpZnj3j80JkTGCicFrvuw==
+"@maskito/core@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@maskito/core/-/core-2.3.1.tgz#acc39583ec8f52ed605a81b54113d5f423f96d4d"
+  integrity sha512-KmRGNK4g0hyXnLVKVlnCRfokPaRkOVEH4nMI8NK9p6cKPlRwC9V0l2MRxZKgBAhVvenQ8t5GM8xvl+wqOGUTFQ==
 
-"@maskito/kit@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@maskito/kit/-/kit-1.7.0.tgz#0a0085836b64d1813ac465971b23f9901337d172"
-  integrity sha512-LX/ngWFnPKWnQfvU9m5fss8NIBO261DlQdXOtlbhoXgyscVoR8RVeUHRVuRKEhJgd1I+dvlP1vUxms2qltFTjw==
+"@maskito/kit@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@maskito/kit/-/kit-2.3.1.tgz#0fbba09cbb5e792cb2af6da95760fda426d82d4c"
+  integrity sha512-AhW7IsEC4j2pg4qmGGFcVrcAx3PFYFKiza1vf5NRn7/2LU88/5uS6fIhKs6Uvdp3VzdNAHRQUOSVU2Ek13MOTA==
 
-"@maskito/react@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@maskito/react/-/react-0.12.1.tgz#44655526db15086ce894866515722a69d0cd2d51"
-  integrity sha512-3kZSU+VdAb522pxHeraJPbOhxYr8QqYmlxbaGAOBPj0yquGS9sKAXi7tVD5Q7CBk9u+WrQC3BbBPvXAOiiSyVg==
+"@maskito/react@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@maskito/react/-/react-2.3.1.tgz#0d640ab46535fe78376d0edf4d0ab62a1f3d2a90"
+  integrity sha512-kFUvyyGLbAEe0Q2vEfcNtrgtL5/rtujOE7BmfIK+DCRiKS7whmO+/YVIOFPnDtnXnPgXjhyqWDQKbH9XOk3+ig==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"

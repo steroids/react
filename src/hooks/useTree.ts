@@ -53,6 +53,7 @@ export interface IPreparedTreeItem extends ITreeItem {
 
 export interface ITreeOutput {
     treeItems: IPreparedTreeItem[],
+    onItemFocus: (e: Event | React.MouseEvent | any) => void,
 }
 
 export interface ITreeConfig {
@@ -127,7 +128,7 @@ export interface ITreeConfig {
     /**
      * При повторном нажатии на выбранный элемент из дерева, он продолжит отображаться как активный.
      * @example true
-    */
+     */
     useSameSelectedItemId?: boolean,
 
     /**
@@ -139,7 +140,7 @@ export interface ITreeConfig {
     /**
      * Сохранение в localStorage уровней вложенности.
      * @example true
-    */
+     */
     saveInClientStorage?: boolean,
 
     /**
@@ -308,6 +309,30 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         return [];
     }, [config.items, config.routerParams, routes]);
 
+    // Выполняет поиск текущего роута в дереве: раскрывает дерево до элемента, делает элемент активным
+    const onItemFocus = useCallback(() => {
+        const currentRouteAsTreeItem = findChildById(items as ITreeItem[], selectedItemId, primaryKey);
+        const currentRouteUniqueIdParts = currentRouteAsTreeItem.uniqueId.split(DOT_SEPARATOR); // Get all parent levels of item
+
+        const itemsToExpand = {};
+        let itemToExpandKey: string;
+
+        currentRouteUniqueIdParts.forEach((item: string, index: number) => {
+            if (index === 0) {
+                itemToExpandKey = item;
+            } else {
+                itemToExpandKey = [itemToExpandKey, item].join(DOT_SEPARATOR);
+                itemsToExpand[itemToExpandKey] = true;
+            }
+        });
+
+        setSelectedUniqueId(currentRouteAsTreeItem ? currentRouteAsTreeItem.uniqueId : null);
+        setExpandedItems(prev => ({
+            ...prev,
+            ...itemsToExpand,
+        }));
+    }, [items, primaryKey, selectedItemId]);
+
     // Initial expanded items
     useEffect(() => {
         setExpandedItems(
@@ -434,5 +459,6 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     return {
         treeItems: resultTreeItems,
+        onItemFocus,
     };
 }

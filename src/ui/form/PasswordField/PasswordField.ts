@@ -85,28 +85,34 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     const inputProps = useMemo(() => ({
         name: props.input.name,
-        defaultValue: props.input.value ?? '',
+        value: props.input.value ?? '',
         placeholder: props.placeholder,
-        disabled: props.disabled,
         ref: inputRef,
         onChange,
         type,
         ...props.inputProps,
-    }), [inputRef, onChange, props.disabled, props.input.name, props.input.value, props.inputProps, props.placeholder, type]);
+    }), [inputRef, onChange, props.input.name, props.input.value, props.inputProps, props.placeholder, type]);
 
     const viewProps = useMemo(() => ({
-        viewProps: props.viewProps,
+        inputRef,
         inputProps,
-        securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
         onClear,
         onShowButtonClick,
+        securityLevel: props.showSecurityBar ? checkPassword(props.input.value) : null,
         size: props.size,
         input: props.input,
         className: props.className,
         showSecurityIcon: props.showSecurityIcon,
         showSecurityBar: props.showSecurityBar,
-    }), [inputProps, onClear, onShowButtonClick, props.className, props.input, props.showSecurityBar, props.showSecurityIcon,
-        props.size, props.viewProps]);
+        errors: props.errors,
+        style: props.style,
+        placeholder: props.placeholder,
+        required: props.required,
+        id: props.id,
+        viewProps: props.viewProps,
+        disabled: props.disabled,
+    }), [inputProps, inputRef, onClear, onShowButtonClick, props.className, props.disabled, props.errors, props.id,
+        props.input, props.placeholder, props.required, props.showSecurityBar, props.showSecurityIcon, props.size, props.style, props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', viewProps);
 }

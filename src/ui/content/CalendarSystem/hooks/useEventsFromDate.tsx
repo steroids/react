@@ -19,6 +19,15 @@ const CALENDAR_TYPE_GETTING_EVENTS_PROPERTIES = {
         },
         unit: 'hours',
     },
+    [CalendarEnum.DAY]: {
+        getDayJsDate: (date: Date) => {
+            const eventDate = new Date(date);
+            eventDate.setHours(eventDate.getHours(), 0, 0, 0);
+
+            return dayjs(eventDate);
+        },
+        unit: 'hours',
+    },
 };
 
 export const useEventsFromDate = (innerEventGroups: IEventGroup[], selectedEventGroupsIds: number[]) => {
@@ -37,7 +46,7 @@ export const useEventsFromDate = (innerEventGroups: IEventGroup[], selectedEvent
         const calendarTypeProperties = CALENDAR_TYPE_GETTING_EVENTS_PROPERTIES[currentCalendarType as string];
 
         forEachEventGroupEvent((event, eventGroup) => {
-            const eventDateDayJs = calendarTypeProperties.getDayJsDate(event.date);
+            const eventDateDayJs = calendarTypeProperties.getDayJsDate(event.startDate);
 
             addEventIfMatchDate(
                 eventDateDayJs,

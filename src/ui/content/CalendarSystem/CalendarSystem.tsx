@@ -14,24 +14,19 @@ import _set from 'lodash-es/set';
 import _pullAt from 'lodash-es/pullAt';
 import _indexOf from 'lodash-es/indexOf';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
-import useCalendarControls from './hooks/useCalendarControls';
-import useDisplayDate from './hooks/useDisplayDate';
-import useMonthGrid from './hooks/useMonthGrid';
 import {useComponents} from '../../../hooks';
+import {useCalendarSystem} from './hooks/useCalendarSystem';
 import CalendarEnum from './enums/CalendarType';
-import useCalendarSystemModals from './hooks/useCalendarSystemModals';
-import {useCalendarSystemEventGroupModals} from './hooks/useCalendarSystemEventGroupModals';
-import useWeekGrid from './hooks/useWeekGrid';
-import {useCalendarType} from './hooks/useCalendarType';
-import {useEventsFromDate} from './hooks/useEventsFromDate';
+import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
 
 dayjs.extend(localeData);
 
-export type CalendarSystemModalFields = 'title' | 'eventGroupId' | 'date' | 'description';
+export type CalendarSystemModalFields = 'title' | 'eventGroupId' | 'description' | 'startDate' | 'endDate' | 'id' | 'usersIds';
 export type CalendarSystemEventGroupModalFields = 'label' | 'color';
 
 export interface IEventInitialValues extends IEvent {
     eventGroupId: string,
+    usersIds: number[],
 }
 export interface IDay {
     dayNumber: number,
@@ -56,9 +51,13 @@ export interface IEvent {
     */
     id: number,
     /**
-    * Дата
+    * Начальная дата
     */
-    date: Date,
+    startDate: Date,
+    /**
+    * Конечная дата
+    */
+    endDate: Date,
     /**
     * Заголовок
     */
@@ -99,6 +98,19 @@ export interface IEventGroup {
     events: Omit<IEvent, 'color'>[],
 }
 
+export interface ICalendarUser {
+    id: number,
+    name: string,
+    caption: string,
+    eventsIds: IEvent['id'][],
+}
+
+export interface IGridViews {
+    eventView?: CustomView,
+    hourView?: CustomView,
+    gridView?: CustomView,
+}
+
 /**
  * CalendarSystem
  *
@@ -135,6 +147,22 @@ export interface ICalendarSystemProps extends IUiComponent {
         */
         eventGroups: IEventGroup[],
     },
+
+    /**
+    * Свойства для сетки  дня
+    */
+    dayGrid?: IGridViews,
+    /**
+    * Свойства для сетки  недели
+    */
+    weekGrid?: IGridViews,
+    /**
+    * Свойства для сетки  месяца
+    */
+    monthGrid?: IGridViews,
+
+    users: ICalendarUser[],
+
     /**
     * Дополнительные свойства, которые передаются во view компонента
     */
@@ -143,32 +171,35 @@ export interface ICalendarSystemProps extends IUiComponent {
     [key: string]: any,
 }
 
-export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps'> {
-    openCreateModal: (eventInitialDay?: IDay) => void,
-    onInnerCalendarChangeMonth: (newDate: Date) => void,
+export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps' | 'users'> {
+    onCalendarChangedMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
     eventGroupsTitle: string,
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
-    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void,
+    onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
     calendarType: CalendarEnum,
+
+    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
+    openEditModal: (event: IEvent) => void,
+    openCreateModal: (eventInitialDay?: IDay) => void,
 
     monthGridProps: {
         monthGridWeekDays: string[],
         monthGridCalendarDays: IDay[],
-        getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
-        openEditModal: (event: IEvent) => void,
-        openCreateModal: (eventInitialDay?: IDay) => void,
-    },
+    } & ICustomViews,
+
     weekGridProps: {
         weekGridTwentyFourHoursArray: string[],
         weekGridCurrentWeekDays: IDay[],
-        getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
-        openEditModal: (event: IEvent) => void,
-        openCreateModal: (eventInitialDay?: IDay) => void,
-    },
+    } & ICustomViews,
+
+    dayGridProps: {
+        dayGridTwentyFourHoursArray: string[],
+        dayGridCurrentDay: IDay,
+    } & ICustomViews,
 }
 
 export interface ICalendarSystemModalViewProps extends IModalProps {
@@ -176,6 +207,7 @@ export interface ICalendarSystemModalViewProps extends IModalProps {
     onModalFormSubmit: (fields: Record<CalendarSystemModalFields, string>, eventInitialValues?: IEventInitialValues) => void,
     isCreate: boolean,
     eventInitialValues?: any,
+    users: ICalendarUser[],
 }
 
 export interface CalendarSystemEventGroupModalViewProps extends IModalProps {
@@ -190,105 +222,46 @@ export interface CalendarSystemEventGroupModalViewProps extends IModalProps {
 export default function CalendarSystem(props: ICalendarSystemProps) {
     const components = useComponents();
 
-    const [innerEventGroups, setInnerEventGroups] = React.useState<IEventGroup[]>(props.eventBlock.eventGroups || []);
-    const [selectedEventGroupsIds, setSelectedEventGroupsIds] = React.useState<number[]>([]);
-    const [currentMonthFirstDayDate, setCurrentMonthFirstDayDate] = React.useState<Date | null>(null);
+    const calendarSystem = useCalendarSystem(props);
 
-    const {dateToDisplay, setNewDateToDisplay} = useDisplayDate();
-
-    const {calendarType, handleCalendarTypeChange} = useCalendarType();
-
-    const {
-        monthGridWeekDays,
-        monthGridCalendarDays,
-    } = useMonthGrid(
-        currentMonthFirstDayDate,
-        setCurrentMonthFirstDayDate,
-    );
-
-    const {
-        weekGridTwentyFourHoursArray,
-        weekGridCurrentWeekDays,
-        weekGridControls,
-        updateWeekOnMonthChange,
-    } = useWeekGrid(
-        currentMonthFirstDayDate,
-    );
-
-    const handleControlClick = useCalendarControls(calendarType, weekGridControls);
-
-    const {
-        openCreateModal,
-        openEditModal,
-    } = useCalendarSystemModals(
-        props.calendarModalProps,
-        innerEventGroups,
-        setInnerEventGroups,
-    );
-
-    const {openCreateEventGroupModal} = useCalendarSystemEventGroupModals(
-        innerEventGroups,
-        setInnerEventGroups,
-        props.eventGroupModalProps,
-    );
-
-    const onInnerCalendarChangeMonth = React.useCallback((newDate: Date) => {
-        setNewDateToDisplay(newDate);
-        setCurrentMonthFirstDayDate(newDate);
-        updateWeekOnMonthChange(newDate);
-    }, [updateWeekOnMonthChange, setCurrentMonthFirstDayDate, setNewDateToDisplay]);
-
-    const {getEventsFromDate} = useEventsFromDate(innerEventGroups, selectedEventGroupsIds);
+    const {dayGridViews, monthGridViews, weekGridViews} = useCustomViews(props);
 
     const viewProps: ICalendarSystemViewProps = React.useMemo(() => ({
         className: props.className,
         style: props.style,
-        openCreateModal,
-        onInnerCalendarChangeMonth,
-        eventGroups: innerEventGroups,
-        eventGroupsTitle: props.eventBlock.title,
-        onChangeEventGroupsIds: (newSelectedEventGroupsIds: number[]) => setSelectedEventGroupsIds(newSelectedEventGroupsIds),
-        openCreateEventGroupModal,
-        dateToDisplay,
-        handleCalendarTypeChange,
-        handleControlClick,
-        calendarType,
         additionalViewProps: props.additionalViewProps,
+        users: calendarSystem.users,
+        eventGroupsTitle: props.eventBlock.title,
+
+        dateToDisplay: calendarSystem.dateToDisplay,
+        eventGroups: calendarSystem.innerEventGroups,
+        calendarType: calendarSystem.calendarType,
+
+        openCreateModal: calendarSystem.openCreateModal,
+        onCalendarChangedMonth: calendarSystem.onCalendarChangedMonth,
+        onChangeEventGroupsIds: (newSelectedEventGroupsIds: number[]) => calendarSystem.setSelectedEventGroupsIds(newSelectedEventGroupsIds),
+        openCreateEventGroupModal: calendarSystem.openCreateEventGroupModal,
+        handleCalendarTypeChange: calendarSystem.handleCalendarTypeChange,
+        onClickControl: calendarSystem.onClickControl,
+        getEventsFromDate: calendarSystem.getEventsFromDate,
+        openEditModal: calendarSystem.openEditModal,
 
         monthGridProps: {
-            monthGridWeekDays,
-            monthGridCalendarDays,
-            getEventsFromDate,
-            openCreateModal,
-            openEditModal,
+            monthGridWeekDays: calendarSystem.monthGridWeekDays,
+            monthGridCalendarDays: calendarSystem.monthGridCalendarDays,
+            ...monthGridViews,
         },
         weekGridProps: {
-            weekGridTwentyFourHoursArray,
-            weekGridCurrentWeekDays,
-            getEventsFromDate,
-            openCreateModal,
-            openEditModal,
+            weekGridTwentyFourHoursArray: calendarSystem.weekGridTwentyFourHoursArray,
+            weekGridCurrentWeekDays: calendarSystem.weekGridCurrentWeekDays,
+            ...weekGridViews,
         },
-    }), [
-        props.className,
-        props.style,
-        props.eventBlock.title,
-        openCreateModal,
-        onInnerCalendarChangeMonth,
-        innerEventGroups,
-        openCreateEventGroupModal,
-        dateToDisplay,
-        handleCalendarTypeChange,
-        handleControlClick,
-        calendarType,
-        monthGridWeekDays,
-        monthGridCalendarDays,
-        getEventsFromDate,
-        openEditModal,
-        weekGridTwentyFourHoursArray,
-        weekGridCurrentWeekDays,
-        props.additionalViewProps,
-    ]);
+        dayGridProps: {
+            dayGridTwentyFourHoursArray: calendarSystem.dayGridTwentyFourHoursArray,
+            dayGridCurrentDay: calendarSystem.dayGridCurrentDay,
+            ...dayGridViews,
+        },
+    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

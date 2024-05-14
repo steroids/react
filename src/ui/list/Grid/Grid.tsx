@@ -225,6 +225,7 @@ export interface IGridViewProps extends Omit<IGridProps, 'onFetch'> {
     layoutNamesPosition: ListControlPosition,
     renderList: (children: any) => any,
     renderEmpty: () => any,
+    renderLoading: () => any,
     renderPagination: () => any,
     renderPaginationSize: () => any,
     renderLayoutNames: () => any,
@@ -244,6 +245,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         paginationSizePosition,
         layoutNamesPosition,
         renderList,
+        renderLoading,
         renderEmpty,
         renderPagination,
         renderPaginationSize,
@@ -366,6 +368,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         paginationSizePosition,
         layoutNamesPosition,
         renderList,
+        renderLoading,
         renderEmpty,
         renderPagination,
         renderPaginationSize,
@@ -385,7 +388,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         primaryKey: props.primaryKey,
     }), [columns, layoutNamesPosition, list, onFetch, onSort, paginationPosition, paginationSizePosition, props.className,
         props.hasAlternatingColors, props.isLoading, props.listId, props.primaryKey, props.searchForm, props.size, renderEmpty,
-        renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm, renderValue]);
+        renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm, renderValue, renderLoading]);
 
     return components.ui.renderView(props.view || 'list.GridView', viewProps);
 }

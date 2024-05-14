@@ -65,6 +65,7 @@ export default function List(props: IListProps): JSX.Element {
         paginationSizePosition,
         layoutNamesPosition,
         renderList,
+        renderLoading,
         renderEmpty,
         renderPagination,
         renderPaginationSize,
@@ -114,6 +115,7 @@ export default function List(props: IListProps): JSX.Element {
         paginationSizePosition,
         layoutNamesPosition,
         renderList,
+        renderLoading,
         renderEmpty,
         renderPagination,
         renderPaginationSize,
@@ -124,7 +126,7 @@ export default function List(props: IListProps): JSX.Element {
         className: props.className,
         contentClassName: props.contentClassName,
     }), [content, layoutNamesPosition, list, paginationPosition, paginationSizePosition, props.className, props.contentClassName,
-        props.isLoading, renderEmpty, renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm]);
+        props.isLoading, renderEmpty, renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm, renderLoading]);
 
     return components.ui.renderView(props.view || 'list.ListView', viewProps);
 }

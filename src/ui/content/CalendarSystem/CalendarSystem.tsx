@@ -6,6 +6,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
+import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {useComponents} from '../../../hooks';
 import {useCalendarSystem} from './hooks/useCalendarSystem';
@@ -166,10 +167,15 @@ export interface ICalendarSystemProps extends IUiComponent {
     */
     additionalViewProps?: Record<string, any>,
 
+    /**
+     * Дополнительные свойства для бокового календаря
+     */
+    asideCalendarProps?: ICalendarProps,
+
     [key: string]: any,
 }
 
-export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps' | 'users'> {
+export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps' | 'users' | 'asideCalendarProps'> {
     onCalendarChangedMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
     eventGroupsTitle: string,
@@ -230,6 +236,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         additionalViewProps: props.additionalViewProps,
         users: calendarSystem.users,
         eventGroupsTitle: props.eventBlock.title,
+        asideCalendarProps: props.asideCalendarProps,
 
         dateToDisplay: calendarSystem.dateToDisplay,
         eventGroups: calendarSystem.innerEventGroups,
@@ -259,7 +266,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             dayGridCurrentDay: calendarSystem.dayGridCurrentDay,
             ...dayGridViews,
         },
-    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
+    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.asideCalendarProps, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

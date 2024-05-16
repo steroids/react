@@ -6,13 +6,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
-import _take from 'lodash-es/take';
-import _omit from 'lodash-es/omit';
-import _maxBy from 'lodash-es/maxBy';
-import _isEqual from 'lodash-es/isEqual';
-import _set from 'lodash-es/set';
-import _pullAt from 'lodash-es/pullAt';
-import _indexOf from 'lodash-es/indexOf';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {useComponents} from '../../../hooks';
 import {useCalendarSystem} from './hooks/useCalendarSystem';
@@ -123,17 +116,20 @@ export interface IGridViews {
  */
 export interface ICalendarSystemProps extends IUiComponent {
     /**
-    * Функция, которая вызовется при смене типа календаря
+    * Функция, которая вызывется при смене типа календаря
     */
     onChangeCalendarType?: (newType: string) => void,
+
     /**
     * Свойства для модального окна
     */
     calendarModalProps?: IModalProps,
+
     /**
     * Свойства для модалного окна группы событий
     */
     eventGroupModalProps?: IModalProps,
+
     /**
     * Параметры для групп событий
     */
@@ -149,15 +145,17 @@ export interface ICalendarSystemProps extends IUiComponent {
     },
 
     /**
-    * Свойства для сетки  дня
+    * Свойства для сетки дня
     */
     dayGrid?: IGridViews,
+
     /**
-    * Свойства для сетки  недели
+    * Свойства для сетки недели
     */
     weekGrid?: IGridViews,
+
     /**
-    * Свойства для сетки  месяца
+    * Свойства для сетки месяца
     */
     monthGrid?: IGridViews,
 

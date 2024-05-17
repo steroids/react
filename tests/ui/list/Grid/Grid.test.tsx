@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import {waitFor} from '@testing-library/react';
 import Grid, {IGridProps} from '../../../../src/ui/list/Grid/Grid';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import GridMockView from './GridMockView';
@@ -177,7 +178,22 @@ describe('Grid tests', () => {
         expect(isLeftContent).toBeInTheDocument();
     });
 
-    it('should have other props', () => {
+    it('should have other props', async () => {
+        const paginationItems = [
+            {
+                id: 1,
+                name: 'Max',
+            },
+            {
+                id: 2,
+                name: 'Eva',
+            },
+            {
+                id: 3,
+                name: 'Sam',
+            },
+        ];
+
         const columns = [{
             attribute: 'name',
         }];
@@ -193,22 +209,31 @@ describe('Grid tests', () => {
             ],
         };
 
-        const {container, getByText} = render(JSXWrapper(Grid, {
+        const {container, getByText, rerender} = render(JSXWrapper(Grid, {
             ...props,
             listId: 'test8',
             columns,
+            items: paginationItems,
             itemsIndexing: true,
             searchForm,
             pagination: true,
+            paginationSize: {
+                enable: false,
+                defaultValue: 2,
+                sizes: [1, 2, 3],
+            },
         }));
 
         const indexingHead = getByText('№');
         const searchFormElement = getElementByClassName(container, 'InputFieldView');
-        const pagination = getElementByClassName(container, 'PaginationButtonView');
 
         expect(indexingHead).toBeInTheDocument();
         expect(searchFormElement).toBeInTheDocument();
-        expect(pagination).toBeInTheDocument();
+
+        await waitFor(() => {
+            const pagination = getElementByClassName(container, 'PaginationButtonView');
+            expect(pagination).toBeInTheDocument();
+        });
     });
 
     describe('should be diagram column', () => {

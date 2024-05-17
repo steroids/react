@@ -188,6 +188,34 @@ describe('useList hook', () => {
         },
     };
 
+    const mockedFetchedListStore = {
+        list: {
+            lists: {
+                [listId]: {
+                    isFetched: true,
+                },
+            },
+        },
+    };
+
+    const renderUseListWithFetchedList = (props) => {
+        const store = mockStore({
+            ...mockedFetchedListStore,
+        });
+        implementMockedUseSelectorWithStore(mockedFetchedListStore);
+
+        const {result} = renderHook(() => useList({
+            listId,
+            ...props,
+        }), {
+            store: {
+                store,
+            },
+        });
+
+        return result;
+    };
+
     const enabledProp = {
         enable: true,
     };
@@ -330,7 +358,7 @@ describe('useList hook', () => {
     });
 
     it('should return "Empty" component if empty is enabled', () => {
-        const {result} = renderHook(() => useList({empty: enabledProp}));
+        const result = renderUseListWithFetchedList({empty: enabledProp});
 
         const renderedEmpty = result.current.renderEmpty();
 
@@ -352,7 +380,7 @@ describe('useList hook', () => {
     });
 
     it('should return "PaginationSize" component if pagination size is enabled', () => {
-        const {result} = renderHook(() => useList({paginationSize: enabledProp}));
+        const result = renderUseListWithFetchedList({paginationSize: enabledProp});
 
         const renderedPaginationSize = result.current.renderPaginationSize();
 
@@ -374,7 +402,7 @@ describe('useList hook', () => {
     });
 
     it('should return "Pagination" component if pagination is enabled', () => {
-        const {result} = renderHook(() => useList({pagination: enabledProp}));
+        const result = renderUseListWithFetchedList({pagination: enabledProp});
 
         const renderedPagination = result.current.renderPagination();
 

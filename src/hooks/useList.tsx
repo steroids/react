@@ -19,6 +19,7 @@ import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/Pag
 import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Model} from '../components/MetaComponent';
+import {Loader} from '../ui/layout';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -245,6 +246,7 @@ export interface IListOutput {
     layoutNamesPosition: ListControlPosition,
     renderList: (children: any) => any,
     renderEmpty: () => any,
+    renderLoading: () => any,
     renderPagination: () => any,
     renderPaginationSize: () => any,
     renderLayoutNames: () => any,
@@ -332,11 +334,16 @@ export default function useList(config: IListConfig): IListOutput {
     // Normalize sort config
     const sort = normalizeSortProps(config.sort);
 
+    // Loading
+    const renderLoading = () => list?.isLoading
+        ? <Loader />
+        : null;
+
     // Empty
     const Empty = require('../ui/list/Empty').default;
     const emptyProps = normalizeEmptyProps(config.empty);
     const renderEmpty = () => {
-        if (!emptyProps.enable || list?.isLoading || list?.items?.length > 0) {
+        if (!emptyProps.enable || list?.items?.length > 0 || !list?.isFetched) {
             return null;
         }
         return (
@@ -350,7 +357,7 @@ export default function useList(config: IListConfig): IListOutput {
     // Pagination size
     const PaginationSize = require('../ui/list/PaginationSize').default;
     const paginationSizeProps = normalizePaginationSizeProps(config.paginationSize);
-    const renderPaginationSize = () => paginationSizeProps.enable
+    const renderPaginationSize = () => paginationSizeProps.enable && list?.isFetched
         ? (
             <PaginationSize
                 list={list}
@@ -362,7 +369,7 @@ export default function useList(config: IListConfig): IListOutput {
     // Pagination
     const Pagination = require('../ui/list/Pagination').default;
     const paginationProps = normalizePaginationProps(config.pagination);
-    const renderPagination = () => paginationProps.enable
+    const renderPagination = () => paginationProps.enable && list?.isFetched
         ? (
             <Pagination
                 list={list}
@@ -563,6 +570,7 @@ export default function useList(config: IListConfig): IListOutput {
         paginationSizePosition: paginationSizeProps.position,
         layoutNamesPosition: layoutNamesProps.position,
         renderList,
+        renderLoading,
         renderEmpty,
         renderPagination,
         renderPaginationSize,

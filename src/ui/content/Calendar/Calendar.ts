@@ -55,6 +55,12 @@ export interface ICalendarProps extends IUiComponent {
     showFooter?: boolean,
 
     /**
+     * Callback вызываемый при нажатии на кнопку 'Сегодня'
+     * @param newDate - текущая дата
+     */
+    onTodayButtonClick?: (newDate: Date) => void,
+
+    /**
      * Количество отображаемых за раз месяцев
      * @example 1
      */
@@ -140,7 +146,12 @@ function Calendar(props: ICalendarProps) {
         if (props.onChange) {
             props.onChange.call(null, convertDate(date, null, props.valueFormat, false, true));
         }
-    }, [props.onChange, props.valueFormat]);
+
+        if (props.onTodayButtonClick) {
+            props.onTodayButtonClick(date);
+            setMonth(date);
+        }
+    }, [props]);
 
     const toggleCaptionPanel = useCallback(() => {
         setIsCaptionPanelVisible(!isCaptionPanelVisible);

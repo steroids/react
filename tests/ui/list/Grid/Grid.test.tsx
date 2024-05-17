@@ -24,11 +24,6 @@ describe('Grid tests', () => {
 
     const items = [
         item,
-        item,
-        item,
-        item, item,
-        item,
-
     ];
 
     const props = {

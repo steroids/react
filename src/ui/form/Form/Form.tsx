@@ -206,6 +206,11 @@ export interface IFormProps extends IUiComponent {
      */
     size?: Size,
 
+    /**
+     * Очищать сообщение об ошибке при редактировании поля. По-умолчанию включено
+     */
+    useClearErrors?: boolean,
+
     [key: string]: any,
 }
 
@@ -363,8 +368,12 @@ function Form(props: IFormProps): JSX.Element {
 
     // Clear Errors
     const prevValues = usePrevious(values);
-    useUpdateEffect(() => clearErrors(values, prevValues, errors, setErrors),
-        [errors, prevValues, setErrors, values]);
+    useUpdateEffect(() => {
+        if (props.useClearErrors) {
+            clearErrors(values, prevValues, errors, setErrors);
+        }
+    },
+    [props.useClearErrors, errors, prevValues, setErrors, values]);
 
     // OnChange handler
     useUpdateEffect(() => {
@@ -572,6 +581,7 @@ Form.defaultProps = {
     autoStartTwoFactor: true,
     captchaActionName: 'submit',
     size: 'md',
+    useClearErrors: true,
 };
 
 export default Form;

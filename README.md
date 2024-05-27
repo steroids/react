@@ -24,3 +24,11 @@ Our Open-Source **Steroids** framework is an ecosystem based on React and Redux 
 
 Explore and immerse yourself in the world of rapid development through documentation [Documentation](https://steroids.kozhin.dev/ru/docs/getting-started).
 
+## Directions for applied use of the Steroids framework
+
+- Creation of various websites (for example, an online store website)
+- Creation of CRM and ERP systems
+- Creation of SPA applications
+- Creation of admin panels
+- Creation of personal accounts
+

@@ -59,9 +59,10 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         onKeyUp,
         placeholder: props.placeholder,
         disabled: props.disabled,
+        required: props.required,
         ref: inputRef,
         ...props.inputProps,
-    }), [props.input.name, props.input.value, props.placeholder, props.disabled, props.inputProps, handleChange, onKeyUp, inputRef]);
+    }), [props.input.name, props.input.value, props.placeholder, props.disabled, props.required, props.inputProps, handleChange, onKeyUp, inputRef]);
 
     const viewProps = useMemo(() => ({
         ...props.viewProps,

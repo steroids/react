@@ -208,6 +208,7 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     const prevQuery = usePrevious(config.query);
     const prevParams = usePrevious(dataProvider.params);
     const prevValues = usePrevious(config.initialSelectedIds);
+    const prevAction = usePrevious(config?.dataProvider?.action);
 
     useEffect(() => {
         const fetchRemote = async (isAuto) => {
@@ -253,6 +254,11 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         } else if (!_isEqual(prevValues, config.initialSelectedIds)) {
             fetchRemote(false);
         } else if (autoComplete.enable || (config.autoFetch && isAutoFetchedRef.current === true)) {
+            // Fetch data when action changes
+            if (prevAction !== config?.dataProvider?.action) {
+                fetchRemote(false);
+            }
+
             if (delayTimerRef.current) {
                 clearTimeout(delayTimerRef.current);
             }
@@ -263,9 +269,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
             }
         }
-    }, [autoComplete, components.http, config.autoFetch,
-        config.dataProvider, config.initialSelectedIds, config.query, dataProvider,
-        dataProvider.action, dataProvider.onSearch, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
+    }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider,
+        dataProvider.action, dataProvider.onSearch, prevAction, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
 
     return {
         sourceItems,

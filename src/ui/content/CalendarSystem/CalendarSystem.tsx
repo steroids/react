@@ -172,6 +172,11 @@ export interface ICalendarSystemProps extends IUiComponent {
      */
     asideCalendarProps?: ICalendarProps,
 
+    /**
+     * Дочерние элементы
+     */
+    children?: React.ReactNode,
+
     [key: string]: any,
 }
 
@@ -185,6 +190,7 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     handleCalendarTypeChange: (newType: string) => void,
     onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
     calendarType: CalendarEnum,
+    children: React.ReactNode,
 
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
     openEditModal: (event: IEvent) => void,
@@ -237,6 +243,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         users: calendarSystem.users,
         eventGroupsTitle: props.eventBlock.title,
         asideCalendarProps: props.asideCalendarProps,
+        children: props.children,
 
         dateToDisplay: calendarSystem.dateToDisplay,
         eventGroups: calendarSystem.innerEventGroups,
@@ -266,7 +273,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             dayGridCurrentDay: calendarSystem.dayGridCurrentDay,
             ...dayGridViews,
         },
-    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.asideCalendarProps, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
+    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.asideCalendarProps, props.children, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

@@ -162,6 +162,8 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
     const viewProps = useMemo(() => ({
         input: props.input,
         buttonView: props.buttonView,
+        multiple: props.multiple,
+        imagesOnly: props.imagesOnly,
         buttonProps: {
             label: props.filesLayout === FilesLayout.wall
                 ? __('Upload')

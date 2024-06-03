@@ -35,6 +35,11 @@ export interface INumberFieldProps extends IBaseFieldProps {
     * Допустимое количество символов после разделителя
     */
     decimal?: number,
+
+    /**
+     * Может ли число быть отрицательным
+     */
+    isCanBeNegative?: boolean,
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
@@ -72,6 +77,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         },
         onChange,
         props.decimal,
+        props.isCanBeNegative,
     );
 
     const onStep = useCallback((isIncrement: boolean) => {
@@ -144,6 +150,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 NumberField.defaultProps = {
     disabled: false,
     required: false,
+    isCanBeNegative: true,
 };
 
 export default fieldWrapper<INumberFieldProps>('NumberField', NumberField);

@@ -6,7 +6,6 @@ import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IButtonProps} from '../Button/Button';
-import IntrinsicAttributes = JSX.IntrinsicAttributes;
 
 export enum FilesLayout {
     list = 'list',
@@ -161,7 +160,10 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
     }, [files, props]);
 
     const viewProps = useMemo(() => ({
+        input: props.input,
         buttonView: props.buttonView,
+        multiple: props.multiple,
+        imagesOnly: props.imagesOnly,
         buttonProps: {
             label: props.filesLayout === FilesLayout.wall
                 ? __('Upload')
@@ -217,8 +219,8 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
             }
             return item;
         }),
-    }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled,
-        props.filesLayout, props.imagesOnly, props.imagesProcessor, props.itemProps, props.showRemove, props.size]);
+        // eslint-disable-next-line max-len
+    }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled, props.filesLayout, props.imagesOnly, props.imagesProcessor, props.input, props.itemProps, props.showRemove, props.size]);
 
     return (
         <FileFieldView {...viewProps} />

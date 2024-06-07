@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
+import _isEqual from 'lodash-es/isEqual';
 import Enum from '../../../base/Enum';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import fieldWrapper, {
@@ -65,8 +66,6 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
     viewProps?: {
         [key: string]: any,
     },
-
-    [key: string]: any,
 }
 
 export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, IUiComponent {
@@ -115,6 +114,7 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         selectedIds: inputSelectedIds,
         multiple: props.multiple,
         primaryKey: props.primaryKey,
+        selectFirst: props.selectFirst,
         items,
         inputValue: props.input.value,
     });
@@ -131,13 +131,16 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     }), [props.disabled, props.input, props.inputProps]);
 
     // Sync with form
+    const prevSelectedIds = usePrevious(selectedIds);
     useEffect(() => {
-        props.input.onChange.call(null, selectedIds);
-
-        if (props.onChange) {
-            props.onChange(selectedIds);
+        if (!_isEqual(prevSelectedIds || [], selectedIds)) {
+            props.input.onChange.call(null, selectedIds);
+            if (props.onChange) {
+                props.onChange.call(null, selectedIds);
+            }
         }
-    }, [props, props.input.onChange, selectedIds]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.input.onChange, selectedIds]);
 
     const onReset = useCallback(() => {
         setSelectedIds([]);

@@ -9,6 +9,7 @@ import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
 export default function useSaveCursorPosition(
     inputParams: IInputParams,
+    onChangeCallback?: (value) => void,
 ) {
     const [cursor, setCursor] = React.useState(null);
     const inputRef = React.useRef(null);
@@ -21,10 +22,14 @@ export default function useSaveCursorPosition(
     }, [cursor, inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
+        if (onChangeCallback) {
+            onChangeCallback(value || event.target?.value);
+        }
+
         setCursor(event?.target?.selectionStart);
 
         inputParams.onChange(value || event.target?.value);
-    }, [inputParams]);
+    }, [inputParams, onChangeCallback]);
 
     return {
         inputRef,

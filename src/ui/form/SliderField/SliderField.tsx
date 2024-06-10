@@ -1,5 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import _toInteger from 'lodash-es/toInteger';
+import _head from 'lodash-es/head';
+import _last from 'lodash-es/last';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -103,7 +105,12 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
     }, [props]);
 
     const onAfterChange = useCallback((value) => {
-        const normalizedValue = normalizeValue(value);
+        const normalizedValue = props.isRange
+            ? [
+                normalizeValue(_head(value)),
+                normalizeValue(_last(value)),
+            ]
+            : normalizeValue(value);
 
         if (props.onAfterChange) {
             props.onAfterChange(normalizedValue);
@@ -120,7 +127,7 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
         isRange: props.isRange,
         disabled: props.disabled,
         isVertical: props.isVertical,
-        value: props.input.value || 0,
+        value: props.input.value || 1,
         valuePostfix: props.valuePostfix,
         defaultValue: props.defaultValue,
         tooltipIsVisible: props.tooltipIsVisible,

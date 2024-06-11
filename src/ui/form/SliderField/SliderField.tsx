@@ -127,7 +127,7 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
         isRange: props.isRange,
         disabled: props.disabled,
         isVertical: props.isVertical,
-        value: props.input.value || 1,
+        value: props.input.value || 0,
         valuePostfix: props.valuePostfix,
         defaultValue: props.defaultValue,
         tooltipIsVisible: props.tooltipIsVisible,

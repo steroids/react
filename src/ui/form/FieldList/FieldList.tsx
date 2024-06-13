@@ -9,7 +9,7 @@ import {useEvent, useMount} from 'react-use';
 import {ModelAttribute} from 'src/components/MetaComponent';
 import {useComponents, useSelector} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
-import {formArrayAdd, formArrayRemove} from '../../../actions/form';
+import {formArrayAdd, formArrayRemove, formChange} from '../../../actions/form';
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
@@ -53,7 +53,7 @@ export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
  */
 export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     /**
-     * Начальные значения в полях
+     * Значения для полей при нажатии кнопки 'Добавить'
      * @example
      * {
      *  name: 'Ivan',
@@ -61,6 +61,22 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
      * }
      */
     initialValues?: { [key: string]: any, },
+
+    /**
+     * Начальные элементы списка
+     * @example
+     * [
+     *     {
+     *      name: 'Ivan',
+     *      amount: 5
+     *     },
+     *     {
+     *      name: 'John',
+     *      amount: 1
+     *     }
+     * ]
+     */
+    initialItems?: { [key: string]: any, }[],
 
     /**
      * Список с полями формы
@@ -189,10 +205,15 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         dispatch(formArrayRemove(context.formId, props.input.name, rowIndex));
     }, [context.formId, dispatch, props.input.name, removeRowIndex]);
 
-    // Add initial rows
     useMount(() => {
+        // Add initial rows
         if (!props.input.value) {
             onAdd(props.initialRowsCount);
+        }
+
+        // Add initial items
+        if (props.initialItems) {
+            dispatch(formChange(context.formId, props.input.name, props.initialItems));
         }
     });
 
@@ -282,6 +303,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
 
 FieldList.defaultProps = {
     initialValues: null,
+    initialItems: null,
     disabled: false,
     required: false,
     showAdd: true,

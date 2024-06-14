@@ -39,6 +39,12 @@ export interface IAutoCompleteFieldProps extends IBaseFieldProps, IDataProviderC
      * @example true
      */
     searchOnFocus?: boolean,
+
+    /**
+     * Текст при отсутствии элементов
+     * @example 'Ничего не найдено'
+     */
+    empty?: string,
 }
 
 export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProps, 'items'> {
@@ -61,6 +67,7 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
     isLoading?: boolean,
     onItemSelect: (id: PrimaryKey | any) => void,
     onItemHover: (id: PrimaryKey | any) => void,
+    onClear: () => void,
 }
 
 const getCategories = (items) => {
@@ -86,11 +93,13 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
     const {
         items,
         isLoading,
+        sourceItems,
     } = useDataProvider({
         items: props.items,
         dataProvider: props.dataProvider,
         autoComplete: props.autoComplete,
         autoFetch: props.autoFetch,
+        initialSelectedIds: props.selectedIds,
         query,
     });
 
@@ -108,6 +117,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         primaryKey: props.primaryKey,
         items,
         inputValue: props.input.value,
+        sourceItems,
     });
 
     const onOpen = useCallback(() => {
@@ -129,6 +139,10 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         setIsFocused(false);
         setIsOpened(false);
     }, [setIsFocused, setIsOpened]);
+
+    const onClear = useCallback(() => {
+        setSelectedIds([]);
+    }, [setSelectedIds]);
 
     // Outside click -> close
     const forwardedRef = useRef(null);
@@ -175,6 +189,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         onOpen,
         isOpened,
         onClose,
+        onClear,
         forwardedRef,
         onItemHover,
         onItemSelect,
@@ -186,9 +201,11 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         categories: getCategories(props.items),
         className: props.className,
         style: props.style,
-    }), [inputProps, items, isLoading, hoveredId, selectedIds, onOpen, isOpened, onClose,
-        onItemHover, onItemSelect, props.primaryKey, props.size, props.placeholder, props.disabled,
-        props.required, props.items, props.className, props.style]);
+        showClear: props.showClear,
+        empty: props.empty,
+    }), [inputProps, items, isLoading, hoveredId, selectedIds, onOpen, isOpened, onClose, onClear, onItemHover, onItemSelect,
+        props.primaryKey, props.size, props.placeholder, props.disabled, props.required, props.items, props.className,
+        props.style, props.showClear, props.empty]);
 
     return components.ui.renderView(props.view || 'form.AutoCompleteFieldView', viewProps);
 }
@@ -199,6 +216,7 @@ AutoCompleteField.defaultProps = {
     multiple: false,
     disabled: false,
     required: false,
+    showClear: false,
 };
 
 export default fieldWrapper<IAutoCompleteFieldProps>('AutoCompleteField', AutoCompleteField);

@@ -33,7 +33,7 @@ interface IFileFieldCommonProps extends IFileInput {
 
     /**
      * Текст, который отобразится при загрузке файла
-     * @example true
+     * @example 'Loading...'
      */
     loadingText?: string,
 }

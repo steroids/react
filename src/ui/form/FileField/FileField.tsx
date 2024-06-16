@@ -30,6 +30,12 @@ interface IFileFieldCommonProps extends IFileInput {
      * @example 'list'
      */
     filesLayout?: FilesLayout | string,
+
+    /**
+     * Текст, который отобразится при загрузке файла
+     * @example true
+     */
+    loadingText?: string,
 }
 
 /**
@@ -71,7 +77,7 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldComm
     [key: string]: any,
 }
 
-export interface IFileFieldItemViewProps extends IFileFieldCommonProps{
+export interface IFileFieldItemViewProps extends IFileFieldCommonProps {
     /**
      * Уникальный текстовый идентификатор
      * @example e65f5867-0083-48a7-af43-1121ed9e6280
@@ -177,6 +183,7 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
         filesLayout: props.filesLayout,
         className: props.className,
         itemProps: props.itemProps,
+        loadingText: props.loadingText,
         items: files.map(file => {
             const data = file.getResultHttpMessage() || {};
             const item = {
@@ -220,7 +227,7 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
             return item;
         }),
         // eslint-disable-next-line max-len
-    }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled, props.filesLayout, props.imagesOnly, props.imagesProcessor, props.input, props.itemProps, props.showRemove, props.size]);
+    }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled, props.filesLayout, props.imagesOnly, props.imagesProcessor, props.input, props.itemProps, props.loadingText, props.multiple, props.showRemove, props.size]);
 
     return (
         <FileFieldView {...viewProps} />

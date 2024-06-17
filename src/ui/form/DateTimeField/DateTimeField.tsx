@@ -37,6 +37,11 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
      */
     maskOptions?: MaskitoOptions,
 
+    /**
+     * Разделитель для даты и времени, не влияет на отображение
+     */
+    dateTimeSeparator?: string,
+
     [key: string]: any,
 }
 
@@ -87,7 +92,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         onTimeSelect,
     } = useDateTime({
         displayFormat: props.displayFormat,
-        dateTimeSeparator: DATE_TIME_SEPARATOR,
+        dateTimeSeparator: props.dateTimeSeparator ?? DATE_TIME_SEPARATOR,
         input: props.input,
         valueFormat: props.valueFormat,
         useUTC: props.useUTC,

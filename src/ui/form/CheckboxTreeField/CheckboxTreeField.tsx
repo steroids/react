@@ -63,7 +63,6 @@ export interface ICheckboxTreeFieldProps extends IFieldWrapperInputProps,
 
     /**
      * View компонент для элемента дерева
-     * @example true
      */
     itemView?: CustomView,
 

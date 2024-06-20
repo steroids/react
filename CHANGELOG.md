@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.25 (20.06.2024)
+
+### Added
+
+- Добавлено свойство `itemView` в компоненте `CheckboxTreeField`
+
 ## v3.0.24 (17.06.2024)
 
 ### Added

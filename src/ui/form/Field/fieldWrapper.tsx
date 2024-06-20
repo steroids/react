@@ -250,7 +250,7 @@ export default function fieldWrapper<T = any>(
         }, {});
         const attribute = Object.values(attributesProps)[0];
 
-        // Получаем полный путь до поля, нужно для отображения ошибок во вложенных полях, например, в FieldList
+        // Get full path to the field, it is necessary for displaying errors in nested fields, for example, in FieldList
         const errorsAttribute = [props.prefix, attribute].filter(Boolean).join('.');
 
         // Get UI props and create Field Class dynamically (for add field props - input, errors, model, ...)

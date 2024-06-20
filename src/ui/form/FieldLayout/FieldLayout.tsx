@@ -60,7 +60,7 @@ function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     const components = useComponents();
 
     // Error from state
-    const errors = useForm().formSelector(state => _get(state, 'errors.' + props.attribute));
+    const errors = useForm().formSelector(state => _get(state, 'errors.' + props.errorsAttribute));
 
     const viewProps = useMemo(() => ({
         errors: props.errors || errors,

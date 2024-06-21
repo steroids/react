@@ -250,6 +250,9 @@ export default function fieldWrapper<T = any>(
         }, {});
         const attribute = Object.values(attributesProps)[0];
 
+        // Get full path to the field, it is necessary for displaying errors in nested fields, for example, in FieldList
+        const errorsAttribute = [props.prefix, attribute].filter(Boolean).join('.');
+
         // Get UI props and create Field Class dynamically (for add field props - input, errors, model, ...)
         const metaProps = useMemo(
             () => components.ui.getFieldProps(componentId, model, attribute),
@@ -274,6 +277,7 @@ export default function fieldWrapper<T = any>(
 
         return components.ui.renderView(FieldLayout, {
             ...attributesProps,
+            errorsAttribute,
             size,
             className: props.fieldLayoutClassName,
             required: _has(props, 'required') ? props.required : metaProps.required,

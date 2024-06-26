@@ -165,6 +165,7 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
     required?: boolean,
     rowIndex: number,
     showRemove: boolean,
+    onAdd?: () => void,
 }
 
 function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Element {
@@ -263,17 +264,17 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         className: props.className,
         tableClassName: props.tableClassName,
         items,
-    }), [items, props.className, props.disabled, props.required, props.showAdd, props.showRemove, props.size, props.tableClassName]);
+        onAdd,
+    }), [items, onAdd, props.className, props.disabled, props.required, props.showAdd, props.showRemove, props.size, props.tableClassName]);
 
     const viewProps = useMemo(() => ({
         ...commonProps,
         ...props.viewProps,
         forwardedRef: nodeRef,
-        onAdd,
         hasAlternatingColors: props.hasAlternatingColors,
         style: props.style,
         children: props.children,
-    }), [commonProps, onAdd, props.children, props.hasAlternatingColors, props.style, props.viewProps]);
+    }), [commonProps, props.children, props.hasAlternatingColors, props.style, props.viewProps]);
 
     const itemViewProps = useMemo(() => ({
         ...commonProps,

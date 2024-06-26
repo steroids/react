@@ -160,6 +160,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     itemView?: CustomView,
 
+    /**
+     * Callback-функция, которая вызывается при закрытии DropDown
+     */
+    onClose?: (selectedIds: PrimaryKey[]) => void,
+
     [key: string]: any,
 }
 
@@ -305,9 +310,15 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     }, [setSelectedIds]);
 
     const onClose = useCallback(() => {
-        setIsFocused(false);
-        setIsOpened(false);
-    }, [setIsFocused, setIsOpened]);
+        if (isOpened) {
+            setIsFocused(false);
+            setIsOpened(false);
+
+            if (props.onClose) {
+                props.onClose(selectedIds);
+            }
+        }
+    }, [isOpened, props, selectedIds, setIsFocused, setIsOpened]);
 
     // Outside click -> close
     const forwardedRef = useRef(null);

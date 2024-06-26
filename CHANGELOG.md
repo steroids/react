@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.28 (26.06.2024)
+
+### Added
+
+- Добавлен проп onClose в компоненте `DropDownField`
+
 ## v3.0.27 (24.06.2024)
 
 ### Fixed

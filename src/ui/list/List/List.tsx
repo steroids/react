@@ -83,6 +83,7 @@ export default function List(props: IListProps): JSX.Element {
         empty: props.empty,
         searchForm: props.searchForm,
         autoDestroy: props.autoDestroy,
+        autoDestroySelectedIds: props.autoDestroySelectedIds,
         onFetch: props.onFetch,
         onError: props.onError,
         condition: props.condition,

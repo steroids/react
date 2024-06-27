@@ -8,7 +8,15 @@ import useSelector from './useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
 import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
-import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../actions/list';
+import {
+    IList,
+    listDestroy,
+    listFetch,
+    listInit,
+    listLazyFetch,
+    listSelectedIdsDestroy,
+    listSetItems,
+} from '../actions/list';
 import useDispatch from '../hooks/useDispatch';
 import {formChange, formDestroy} from '../actions/form';
 import {formSelector} from '../reducers/form';
@@ -154,6 +162,12 @@ export interface IListConfig {
     autoDestroy?: boolean,
 
     /**
+     * Удаление данных выбранных элементов списка из хранилища Redux при размонтировании компонента
+     * @example true
+     */
+    autoDestroySelectedIds?: boolean,
+
+    /**
      * Отправлять запрос на обновление данных при изменении данных формы. По-умолчанию - включено.
      * @example false
      */
@@ -259,6 +273,7 @@ export const defaultConfig = {
     actionMethod: 'get',
     primaryKey: 'id',
     autoDestroy: true,
+    autoDestroySelectedIds: true,
     sort: {
         enable: false,
         attribute: 'sort',
@@ -545,13 +560,30 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Destroy
     useUnmount(() => {
-        const autoDestroy = typeof config.autoDestroy === 'boolean' ? config.autoDestroy : defaultConfig.autoDestroy;
+        const autoDestroy = typeof config.autoDestroy === 'boolean'
+            ? config.autoDestroy
+            : defaultConfig.autoDestroy;
+
+        const autoDestroySelectedIds = typeof config.autoDestroySelectedIds === 'boolean'
+            ? config.autoDestroySelectedIds
+            : defaultConfig.autoDestroySelectedIds;
+
+        const toDispatch = [];
+
         if (autoDestroy) {
-            dispatch([
+            toDispatch.push([
                 listDestroy(config.listId),
                 formDestroy(config.listId),
             ]);
         }
+
+        if (autoDestroySelectedIds) {
+            toDispatch.push([
+                listSelectedIdsDestroy(config.listId),
+            ]);
+        }
+
+        dispatch(toDispatch);
     });
 
     const onFetch = useCallback((params = {}) => {

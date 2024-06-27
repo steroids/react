@@ -265,6 +265,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         empty: props.empty,
         searchForm: props.searchForm,
         autoDestroy: props.autoDestroy,
+        autoDestroySelectedIds: props.autoDestroySelectedIds,
         onFetch: props.onFetch,
         condition: props.condition,
         addressBar: props.addressBar,

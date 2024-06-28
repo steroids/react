@@ -19,7 +19,6 @@ export interface IColumnViewProps extends IGridColumn {
 }
 
 export interface IGridColumn {
-
     /**
      * Атрибут колонки, по которому происходит поиск нужного свойства в items и нужного поля в SearchForm
      * @example 'Name'
@@ -151,6 +150,8 @@ export interface IGridColumn {
             percentageAttribute: string,
         }[],
     },
+
+    [key: string]: any,
 }
 
 /**

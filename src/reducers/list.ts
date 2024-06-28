@@ -134,10 +134,14 @@ const reducerMap = {
     }),
     [LIST_DESTROY]: (state, action) => {
         delete state.lists[action.listId];
+        delete state.selectedIds[action.listId];
         return {
             ...state,
             lists: {
                 ...state.lists,
+            },
+            selectedIds: {
+                ...state.selectedIds,
             },
         };
     },

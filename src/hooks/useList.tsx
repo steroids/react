@@ -8,7 +8,14 @@ import useSelector from './useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
 import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
-import {IList, listDestroy, listFetch, listInit, listLazyFetch, listSetItems} from '../actions/list';
+import {
+    IList,
+    listDestroy,
+    listFetch,
+    listInit,
+    listLazyFetch,
+    listSetItems,
+} from '../actions/list';
 import useDispatch from '../hooks/useDispatch';
 import {formChange, formDestroy} from '../actions/form';
 import {formSelector} from '../reducers/form';
@@ -545,7 +552,10 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Destroy
     useUnmount(() => {
-        const autoDestroy = typeof config.autoDestroy === 'boolean' ? config.autoDestroy : defaultConfig.autoDestroy;
+        const autoDestroy = typeof config.autoDestroy === 'boolean'
+            ? config.autoDestroy
+            : defaultConfig.autoDestroy;
+
         if (autoDestroy) {
             dispatch([
                 listDestroy(config.listId),

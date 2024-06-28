@@ -132,7 +132,6 @@ export const LIST_ITEM_ADD = '@list/item_add';
 export const LIST_ITEM_UPDATE = '@list/item_update';
 export const LIST_ITEM_DELETE = '@list/item_delete';
 export const LIST_DESTROY = '@list/destroy';
-export const LIST_SELECTED_IDS_DESTROY = '@list/selected_ids_destroy';
 export const LIST_TOGGLE_ITEM = '@list/toggle_item';
 export const LIST_TOGGLE_ALL = '@list/toggle_all';
 export const LIST_SET_LAYOUT = '@list/set_layout';
@@ -393,15 +392,6 @@ export const listDestroy = (listId: string) => {
         type: LIST_DESTROY,
     };
 };
-
-/**
- * Destroy list selected ids (remove from redux state)
- * @param listId
- */
-export const listSelectedIdsDestroy = (listId: string) => ({
-    listId,
-    type: LIST_SELECTED_IDS_DESTROY,
-});
 
 export const add = (listId, item, prepend = false) => ({
     item,

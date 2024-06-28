@@ -14,7 +14,6 @@ import {
     listFetch,
     listInit,
     listLazyFetch,
-    listSelectedIdsDestroy,
     listSetItems,
 } from '../actions/list';
 import useDispatch from '../hooks/useDispatch';
@@ -162,12 +161,6 @@ export interface IListConfig {
     autoDestroy?: boolean,
 
     /**
-     * Удаление данных выбранных элементов списка из хранилища Redux при размонтировании компонента
-     * @example true
-     */
-    autoDestroySelectedIds?: boolean,
-
-    /**
      * Отправлять запрос на обновление данных при изменении данных формы. По-умолчанию - включено.
      * @example false
      */
@@ -273,7 +266,6 @@ export const defaultConfig = {
     actionMethod: 'get',
     primaryKey: 'id',
     autoDestroy: true,
-    autoDestroySelectedIds: true,
     sort: {
         enable: false,
         attribute: 'sort',
@@ -564,26 +556,12 @@ export default function useList(config: IListConfig): IListOutput {
             ? config.autoDestroy
             : defaultConfig.autoDestroy;
 
-        const autoDestroySelectedIds = typeof config.autoDestroySelectedIds === 'boolean'
-            ? config.autoDestroySelectedIds
-            : defaultConfig.autoDestroySelectedIds;
-
-        const toDispatch = [];
-
         if (autoDestroy) {
-            toDispatch.push([
+            dispatch([
                 listDestroy(config.listId),
                 formDestroy(config.listId),
             ]);
         }
-
-        if (autoDestroySelectedIds) {
-            toDispatch.push([
-                listSelectedIdsDestroy(config.listId),
-            ]);
-        }
-
-        dispatch(toDispatch);
     });
 
     const onFetch = useCallback((params = {}) => {

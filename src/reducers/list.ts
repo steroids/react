@@ -14,7 +14,6 @@ import {
     LIST_TOGGLE_ALL,
     LIST_SET_LAYOUT,
     LIST_ITEM_DELETE,
-    LIST_SELECTED_IDS_DESTROY,
 } from '../actions/list';
 
 const initialState = {
@@ -135,10 +134,14 @@ const reducerMap = {
     }),
     [LIST_DESTROY]: (state, action) => {
         delete state.lists[action.listId];
+        delete state.selectedIds[action.listId];
         return {
             ...state,
             lists: {
                 ...state.lists,
+            },
+            selectedIds: {
+                ...state.selectedIds,
             },
         };
     },
@@ -173,15 +176,6 @@ const reducerMap = {
             };
         }
         return [];
-    },
-    [LIST_SELECTED_IDS_DESTROY]: (state, action) => {
-        delete state.selectedIds[action.listId];
-        return {
-            ...state,
-            selectedIds: {
-                ...state.selectedIds,
-            },
-        };
     },
     [LIST_SET_LAYOUT]: (state, action) => ({
         ...state,

@@ -42,6 +42,12 @@ export interface IDataSelectConfig {
     selectFirst?: boolean,
 
     /**
+     * Сделать активным все элементы в списке
+     * @example true
+     */
+    selectAll?: boolean,
+
+    /**
      * Список с идентификаторами выбранных элементов
      * @example [1, 4]
      */
@@ -127,10 +133,14 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             return [].concat(_isArray(config.inputValue) ? config.inputValue : [config.inputValue]);
         }
 
+        if (config.selectAll && flattenedItems.length > 0) {
+            return flattenedItems.map((flattenedItem) => flattenedItem[primaryKey]).sort();
+        }
+
         return config.selectFirst && flattenedItems.length > 0
             ? [flattenedItems[0][primaryKey]]
             : [];
-    }, [config.selectedIds, config.inputValue, config.selectFirst, flattenedItems, primaryKey]);
+    }, [config.selectedIds, config.inputValue, config.selectAll, config.selectFirst, flattenedItems, primaryKey]);
 
     const initialSelectedItems = useMemo(
         () => flattenedItems.length > 0
@@ -247,6 +257,13 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             setSelectedIdsInternal([flattenedItems[0][primaryKey]]);
         }
     }, [flattenedItems, config.selectFirst, prevItemsLength, primaryKey]);
+
+    // Select all after fetch data
+    useUpdateEffect(() => {
+        if (config.selectAll && prevItemsLength === 0 && flattenedItems.length > 0) {
+            setSelectedIdsInternal(flattenedItems.map((flattenedItem) => flattenedItem[primaryKey]).sort());
+        }
+    }, [flattenedItems, prevItemsLength, primaryKey, config.selectAll]);
 
     // Update selected items on change value
     const prevConfigSelectedIds = usePrevious(config.selectedIds || []);

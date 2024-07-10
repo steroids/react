@@ -54,6 +54,8 @@ const useCalendarSystemModals = (
         const changeableEventGroupIndex = currentEventGroups.findIndex(group => group.id === eventGroupId);
         const changeableEventGroup = {...currentEventGroups[changeableEventGroupIndex]};
 
+        console.log('startDate', startDate);
+
         const updatedEvent = {
             id: id || (_maxBy(changeableEventGroup.events, event => event.id)?.id || DEFAULT_ID) + 1,
             startDate: new Date(startDate as Date),

@@ -156,6 +156,16 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     },
 
     /**
+     * При выборе всех элементов отображать label из itemToSelectAll, работает только при multiple: true
+     * @example
+     * {
+     *  label: 'All',
+     *  id: 'all'
+     * }
+     */
+    showSelectAllLabel?: boolean,
+
+    /**
      * Кастомная вьюшка для элемента
      */
     itemView?: CustomView,
@@ -273,6 +283,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     } = useDataSelect({
         multiple: props.multiple,
         selectFirst: props.selectFirst,
+        selectAll: props.selectAll,
         selectedIds: inputSelectedIds,
         primaryKey: props.primaryKey,
         groupAttribute: props.groupAttribute,
@@ -416,6 +427,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         renderItem,
         onItemRemove,
         hasGroup,
+        isSelectedAll,
+        showSelectAllLabel: props.showSelectAllLabel,
         multiple: props.multiple,
         isSearchAutoFocus: props.isSearchAutoFocus,
         itemToSelectAll: normalizedItemToSelectAll,
@@ -429,8 +442,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         showEllipses: props.showEllipses,
         errors: props.errors,
         disabled: props.disabled,
-    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen,
-        selectedItems, onReset, onClose, renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus,
+    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems,
+        onReset, onClose, renderItem, onItemRemove, hasGroup, isSelectedAll, props.showSelectAllLabel, props.multiple, props.isSearchAutoFocus,
         props.className, props.style, props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses,
         props.errors, props.disabled, normalizedItemToSelectAll]);
 

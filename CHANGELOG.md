@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.0.31 (10.07.2024)
+
+### Added
+
+- Добавлен проп onItemSelect в компоненте `DropDownField`
+
+
 ## v3.0.30 (28.06.2024)
 
 ### Added

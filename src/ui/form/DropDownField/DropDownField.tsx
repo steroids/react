@@ -161,6 +161,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     itemView?: CustomView,
 
     /**
+     * Callback-функция, которая вызывается при выборе элемента DropDown
+     */
+    onItemSelect?: (selectedId: string | number) => void,
+
+    /**
      * Callback-функция, которая вызывается при закрытии DropDown
      */
     onClose?: (selectedIds: PrimaryKey[]) => void,
@@ -299,7 +304,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         }
 
         setSelectedIds(id);
-    }, [normalizedItemToSelectAll, setSelectedAll, setSelectedIds]);
+
+        if (props.onItemSelect) {
+            props.onItemSelect(id);
+        }
+    }, [normalizedItemToSelectAll?.id, props, setSelectedAll, setSelectedIds]);
 
     const onItemRemove = useCallback((id) => {
         setSelectedIds(selectedIds.filter(i => i !== id));

@@ -120,7 +120,6 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         multiple: props.multiple,
         primaryKey: props.primaryKey,
         selectFirst: props.selectFirst,
-        selectAll: props.selectAll,
         items,
         inputValue: props.input.value,
     });

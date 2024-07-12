@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.0.32 (12.07.2024)
+
+### Added
+
+- Добавлен проп itemViewProps в компоненте `CheckboxFieldView`
+- Добавлен проп asideCalendarCheckboxListProps в компоненте `CalendarSystem`
+
+
 ## v3.0.31 (10.07.2024)
 
 ### Added

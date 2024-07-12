@@ -6,6 +6,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
+import {ICheckboxListFieldProps} from '../../../ui/form/CheckboxListField/CheckboxListField';
 import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {useComponents} from '../../../hooks';
@@ -127,7 +128,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     calendarModalProps?: IModalProps,
 
     /**
-    * Свойства для модалного окна группы событий
+    * Свойства для модального окна группы событий
     */
     eventGroupModalProps?: IModalProps,
 
@@ -173,6 +174,11 @@ export interface ICalendarSystemProps extends IUiComponent {
     asideCalendarProps?: ICalendarProps,
 
     /**
+     * Дополнительные свойства для списка календарей бокового календаря
+     */
+    asideCalendarCheckboxListProps?: ICheckboxListFieldProps,
+
+    /**
      * Дочерние элементы
      */
     children?: React.ReactNode,
@@ -180,7 +186,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     [key: string]: any,
 }
 
-export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps' | 'users' | 'asideCalendarProps'> {
+export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'className' | 'style' | 'additionalViewProps' | 'users' | 'asideCalendarProps' | 'asideCalendarCheckboxListProps'> {
     onCalendarChangedMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
     eventGroupsTitle: string,
@@ -243,6 +249,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         users: calendarSystem.users,
         eventGroupsTitle: props.eventBlock.title,
         asideCalendarProps: props.asideCalendarProps,
+        asideCalendarCheckboxListProps: props.asideCalendarCheckboxListProps,
         children: props.children,
 
         dateToDisplay: calendarSystem.dateToDisplay,
@@ -273,7 +280,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             dayGridCurrentDay: calendarSystem.dayGridCurrentDay,
             ...dayGridViews,
         },
-    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.asideCalendarProps, props.children, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
+    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.asideCalendarProps, props.asideCalendarCheckboxListProps, props.children, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

@@ -438,8 +438,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         showEllipses: props.showEllipses,
         errors: props.errors,
         disabled: props.disabled,
-    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen,
-        selectedItems, onReset, onClose, renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus,
+    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems,
+        onReset, onClose, renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus,
         props.className, props.style, props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses,
         props.errors, props.disabled, normalizedItemToSelectAll]);
 

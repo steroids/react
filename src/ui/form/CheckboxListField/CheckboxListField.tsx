@@ -57,6 +57,11 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
     itemView?: CustomView,
 
     /**
+     * Пропсы для отображения элемента
+     */
+    itemViewProps?: CustomViewProps,
+
+    /**
      * Свойства для компонента отображения
      * @example
      * {
@@ -160,8 +165,9 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     const renderCheckbox = useCallback((checkboxProps: ICheckboxFieldViewProps) => (
         <CheckboxFieldView
             {...checkboxProps}
+            {...props.itemViewProps}
         />
-    ), [CheckboxFieldView]);
+    ), [CheckboxFieldView, props.itemViewProps]);
 
     const viewProps = useMemo(() => ({
         items,

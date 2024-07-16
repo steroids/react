@@ -86,6 +86,7 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
     size?: Size,
     hasOnlyLeafCheckboxes?: boolean,
     itemView: CustomView,
+    itemProps: CustomViewProps,
 }
 
 export const getNestedItemsIds = (item, groupAttribute, hasOnlyLeafCheckboxes = false) => {
@@ -199,8 +200,9 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         hasOnlyLeafCheckboxes: props.hasOnlyLeafCheckboxes,
         hasIconExpandOnly: props.hasIconExpandOnly,
         itemView: TreeItemView,
-    }), [treeItems, onItemSelect, selectedIds, renderCheckbox, props.size, props.levelPadding, props.hasOnlyLeafCheckboxes,
-        props.hasIconExpandOnly, TreeItemView]);
+        itemProps: props.itemProps,
+    }), [treeItems, onItemSelect, selectedIds, renderCheckbox, props.size, props.levelPadding,
+        props.hasOnlyLeafCheckboxes, props.hasIconExpandOnly, props.itemProps, TreeItemView]);
 
     return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);
 }

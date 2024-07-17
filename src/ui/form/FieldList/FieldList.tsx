@@ -102,6 +102,12 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
     showRemove?: boolean,
 
     /**
+     * Название иконки, которая отобразится для удаления группы с полями
+     * @example 'remove'
+     */
+    removeIcon?: string,
+
+    /**
      * Дополнительный CSS-класс для таблицы
      */
     tableClassName?: CssClassName,
@@ -165,6 +171,7 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
     required?: boolean,
     rowIndex: number,
     showRemove: boolean,
+    removeIcon?: string,
     onAdd?: (rowsCount?: number) => void,
 }
 
@@ -280,7 +287,8 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         ...commonProps,
         ...props.itemViewProps,
         onRemove,
-    }), [commonProps, onRemove, props.itemViewProps]);
+        removeIcon: props.removeIcon,
+    }), [commonProps, onRemove, props.itemViewProps, props.removeIcon]);
 
     const FieldListView = props.view || components.ui.getView('form.FieldListView');
     const FieldListItemView = props.itemView || components.ui.getView('form.FieldListItemView');

@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.33 (17.07.2024)
+
+### Added
+
+- Добавлен проп itemProps в компоненте `CheckboxTreeField`
+
 ## v3.0.32 (12.07.2024)
 
 ### Added

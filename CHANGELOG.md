@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.0.34 (18.07.2024)
+
+### Added
+
+- Добавлена проп removeIcon в компоненте `FieldList`
+
+### Fixed
+
+- Исправлен проп itemView в компоненте `Menu`
+
 ## v3.0.33 (17.07.2024)
 
 ### Added

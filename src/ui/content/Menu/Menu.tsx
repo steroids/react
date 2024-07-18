@@ -22,6 +22,8 @@ export interface IMenuItem {
      * Нижний border
      */
     hasBorder?: boolean,
+
+    [key: string]: any,
 }
 
 /**
@@ -65,7 +67,7 @@ export type IMenuViewProps = IMenuProps;
 
 function Menu(props: IMenuProps): JSX.Element {
     const components = useComponents();
-    const MenuItemView = components.ui.getView(props.itemView || 'content.MenuItemView');
+    const MenuItemView = props.itemView || components.ui.getView('content.MenuItemView');
 
     const viewProps = useMemo(() => ({
         items: props.items,

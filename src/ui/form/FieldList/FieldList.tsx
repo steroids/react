@@ -173,6 +173,8 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
     showRemove: boolean,
     removeIcon?: string,
     onAdd?: (rowsCount?: number) => void,
+
+    [key: string]: any,
 }
 
 function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Element {

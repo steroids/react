@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.35 (22.07.2024)
+
+### Added
+
+- Добавлен dataProvider для компонентов `CheckboxListField` и `RadioListField`
+
 ## v3.0.34 (18.07.2024)
 
 ### Added

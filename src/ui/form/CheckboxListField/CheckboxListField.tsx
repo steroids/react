@@ -49,7 +49,7 @@ export interface ICheckboxListFieldProps extends IFieldWrapperInputProps,
      *  }
      * ]
      */
-    items: CheckboxFieldListItems,
+    items?: CheckboxFieldListItems,
 
     /**
      * Кастомная вьюшка для элемента
@@ -109,6 +109,8 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     // Data Provider
     const {items} = useDataProvider({
         items: props.items as DataProviderItems,
+        initialSelectedIds: inputSelectedIds,
+        dataProvider: props.dataProvider,
     });
 
     // Data select

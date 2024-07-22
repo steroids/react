@@ -64,6 +64,8 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
     // Data provider
     const {items} = useDataProvider({
         items: props.items,
+        initialSelectedIds: inputSelectedIds,
+        dataProvider: props.dataProvider,
     });
 
     // Data select

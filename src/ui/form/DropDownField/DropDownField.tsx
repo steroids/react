@@ -166,6 +166,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     onItemSelect?: (selectedId: string | number) => void,
 
     /**
+     * Callback-функция, которая вызывается при очистке выбранных элементов DropDown
+     */
+    onReset?: () => void,
+
+    /**
      * Callback-функция, которая вызывается при закрытии DropDown
      */
     onClose?: (selectedIds: PrimaryKey[]) => void,
@@ -316,7 +321,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const onReset = useCallback(() => {
         setSelectedIds([]);
-    }, [setSelectedIds]);
+
+        if (props.onReset) {
+            props.onReset();
+        }
+    }, [props.onReset, setSelectedIds]);
 
     const onClose = useCallback(() => {
         if (isOpened) {

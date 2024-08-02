@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.36 (02.08.2024)
+
+### Added
+
+- Добавлены viewProps для компонента `EmailField`
+
 ## v3.0.35 (22.07.2024)
 
 ### Added

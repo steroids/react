@@ -56,10 +56,11 @@ function EmailField(props: IEmailFieldProps) {
         onMouseDown: props.onMouseDown,
         className: props.className,
         style: props.style,
-    }), [inputProps, currentInputRef, onClear, props.size, props.errors, props.leadIcon, props.showClear,
-        props.disabled, props.input, props.addonAfter, props.addonBefore, props.textAfter, props.textBefore,
-        props.placeholder, props.required, props.id, props.maskOptions, props.maskProps, props.onBlur, props.onFocus,
-        props.onMouseDown, props.className, props.style]);
+        viewProps: props.viewProps,
+    }), [inputProps, currentInputRef, onClear, props.size, props.errors, props.leadIcon, props.showClear, props.disabled,
+        props.input, props.addonAfter, props.addonBefore, props.textAfter, props.textBefore, props.placeholder, props.required,
+        props.id, props.maskOptions, props.maskProps, props.onBlur, props.onFocus, props.onMouseDown, props.className, props.style,
+        props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.InputFieldView', viewProps);
 }

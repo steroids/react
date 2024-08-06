@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.37 (06.08.2024)
+
+### Added
+
+- Добавлены viewProps для компонента `DropDownField`
+
 ## v3.0.36 (02.08.2024)
 
 ### Added

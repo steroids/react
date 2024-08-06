@@ -161,6 +161,17 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     itemView?: CustomView,
 
     /**
+     * Свойства для компонента отображения
+     * @example
+     * {
+     *  customHandler: () => {...}
+     * }
+     */
+    viewProps?: {
+        [key: string]: any,
+    },
+
+    /**
      * Callback-функция, которая вызывается при выборе элемента DropDown
      */
     onItemSelect?: (selectedId: string | number) => void,
@@ -438,6 +449,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isSearchAutoFocus: props.isSearchAutoFocus,
         itemToSelectAll: normalizedItemToSelectAll,
         className: props.className,
+        viewProps: props.viewProps,
         style: props.style,
         size: props.size,
         color: props.color,
@@ -447,10 +459,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         showEllipses: props.showEllipses,
         errors: props.errors,
         disabled: props.disabled,
-    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems,
-        onReset, onClose, renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus,
-        props.className, props.style, props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses,
-        props.errors, props.disabled, normalizedItemToSelectAll]);
+    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
+        renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style, props.size,
+        props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }

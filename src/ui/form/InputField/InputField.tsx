@@ -60,6 +60,11 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
     showClear?: boolean,
 
     /**
+     * Callback-функция, которая вызывается при очистке input
+     */
+    onClear?: (value: string) => void,
+
+    /**
      * Свойства для компонента отображения
      * @example
      * {
@@ -153,6 +158,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     const {inputRef, onChange} = useSaveCursorPosition(
         props.input,
+        props.onChange,
     );
 
     React.useEffect(() => {
@@ -163,7 +169,13 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     useInputFieldWarningByType(props.type);
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const onClear = React.useCallback(() => {
+        if (props.onClear) {
+            props.onClear('');
+        }
+
+        props.input.onChange('');
+    }, [props.input, props.onClear]);
 
     const inputProps = useMemo(() => ({
         type: props.type,

@@ -77,7 +77,7 @@ export interface IEventGroup {
     /**
     * Идентификатор
     */
-    id: number,
+    id: number | string,
     /**
     * Название группы
     */
@@ -144,6 +144,11 @@ export interface ICalendarSystemProps extends IUiComponent {
         * Группы событий
         */
         eventGroups: IEventGroup[],
+
+        /**
+        * Можно ли добавлять группы событий в календарь
+        */
+        canAddedEventGroups?: boolean,
     },
 
     /**
@@ -190,6 +195,7 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     onCalendarChangedMonth: (newDate: Date) => void,
     eventGroups: IEventGroup[],
     eventGroupsTitle: string,
+    canAddedEventGroups?: boolean,
     onChangeEventGroupsIds: (selectedIds: number[]) => void,
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
@@ -248,6 +254,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         additionalViewProps: props.additionalViewProps,
         users: calendarSystem.users,
         eventGroupsTitle: props.eventBlock.title,
+        canAddedEventGroups: props.eventBlock.canAddedEventGroups,
         asideCalendarProps: props.asideCalendarProps,
         asideCalendarCheckboxListProps: props.asideCalendarCheckboxListProps,
         children: props.children,
@@ -280,7 +287,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             dayGridCurrentDay: calendarSystem.dayGridCurrentDay,
             ...dayGridViews,
         },
-    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.asideCalendarProps, props.asideCalendarCheckboxListProps, props.children, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
+    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.eventBlock.canAddedEventGroups, props.asideCalendarProps, props.asideCalendarCheckboxListProps, props.children, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

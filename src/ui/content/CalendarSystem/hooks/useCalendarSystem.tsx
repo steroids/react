@@ -18,6 +18,10 @@ export const useCalendarSystem = (props: ICalendarSystemProps) => {
     const [selectedEventGroupsIds, setSelectedEventGroupsIds] = React.useState<number[]>([]);
     const [users, setUsers] = useState<ICalendarUser[]>(props.users);
 
+    React.useEffect(() => {
+        setInnerEventGroups(props.eventBlock.eventGroups);
+    }, [props.eventBlock.eventGroups]);
+
     //Главная дата, от которой происходят все вычисления
     const [generalCurrentDay, setGeneralCurrentDay] = React.useState(getFormattedDay());
     const isGeneralCurrentDayNeedsUpdate = useRef(true);

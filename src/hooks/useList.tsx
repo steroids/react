@@ -4,6 +4,10 @@ import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+import {
+    IInfiniteScrollProps,
+    normalizeInfiniteScrollProps,
+} from '@steroidsjs/core/ui/list/InfiniteScroll/InfiniteScroll';
 import useSelector from './useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
@@ -94,6 +98,15 @@ export interface IListConfig {
      * }
      */
     paginationSize?: boolean | IPaginationSizeProps,
+
+    /**
+     * Подключение бесконечного скролла
+     * @example
+     * {
+     *  enable: true
+     * }
+     */
+    infiniteScroll?: boolean | IInfiniteScrollProps,
 
     /**
      * Подключение сортировки
@@ -258,6 +271,7 @@ export interface IListOutput {
     renderPaginationSize: () => any,
     renderLayoutNames: () => any,
     renderSearchForm: () => any,
+    renderInfiniteScroll: () => any,
     onFetch: (params?: Record<string, unknown>) => void,
     onSort: (value: any) => void,
 }
@@ -328,6 +342,8 @@ export const createInitialValues = ({
     ...configQuery, // Query from props
 });
 
+const FIRST_PAGE = 1;
+
 /**
  * useList
  * Добавляет массу возможностей для взаимодействия с коллекциями. Коллекции можно получать как с бекенда,
@@ -382,6 +398,19 @@ export default function useList(config: IListConfig): IListOutput {
                 list={list}
                 {...paginationProps}
                 sizeAttribute={paginationSizeProps.attribute}
+            />
+        )
+        : null;
+
+    // InfiniteScroll
+    const InfiniteScroll = require('../ui/list/InfiniteScroll').default;
+    const infiniteScrollProps = normalizeInfiniteScrollProps(config.infiniteScroll);
+    const renderInfiniteScroll = () => infiniteScrollProps.enable && list?.isFetched && !list?.isLoading
+        ? (
+            <InfiniteScroll
+                list={list}
+                {...infiniteScrollProps}
+                sizeAttribute={infiniteScrollProps.attribute}
             />
         )
         : null;
@@ -492,6 +521,8 @@ export default function useList(config: IListConfig): IListOutput {
                     pageSizeAttribute: paginationSizeProps.attribute || null,
                     sortAttribute: sort.attribute || null,
                     layoutAttribute: layoutNamesProps.attribute || null,
+                    hasInfiniteScroll: infiniteScrollProps?.enable || null,
+                    defaultPageValue: paginationProps.defaultValue ?? FIRST_PAGE,
                 }),
             ];
 
@@ -586,6 +617,7 @@ export default function useList(config: IListConfig): IListOutput {
         renderPaginationSize,
         renderLayoutNames,
         renderSearchForm,
+        renderInfiniteScroll,
         onFetch,
         onSort,
     };

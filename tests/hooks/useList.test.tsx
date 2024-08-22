@@ -308,6 +308,8 @@ describe('useList hook', () => {
             pageSizeAttribute: 'pageSize',
             sortAttribute: 'sort',
             layoutAttribute: 'layout',
+            hasInfiniteScroll: null,
+            defaultPageValue: 1,
         };
         const expectedActions = [
             listInit(listId, expectedPayload),

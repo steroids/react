@@ -16,10 +16,10 @@ export interface IInfiniteScrollProps {
     enable?: boolean,
 
     /**
-     * Аттрибут (название) в форме для поля скролла
+     * Аттрибут (название) в форме для поля с номером текущей страницы
      * @example page
      */
-    attribute?: string,
+    pageAttribute?: string,
 
     /**
      * Аттрибут (название) в форме для поля с флагом, определяющим есть ли следующая страница
@@ -55,7 +55,7 @@ function InfiniteScroll(props: IInfiniteScrollProps): JSX.Element {
     }, []);
 
     const initialValues = {
-        page: props.list?.[props.attribute],
+        page: props.list?.[props.pageAttribute],
     };
 
     const {
@@ -67,14 +67,14 @@ function InfiniteScroll(props: IInfiniteScrollProps): JSX.Element {
     const {
         page,
     } = formSelector(({values}) => ({
-        page: _get(values, props.attribute),
+        page: _get(values, props.pageAttribute),
     })) || initialValues;
 
     const onScrollFetch = useCallback(() => {
         const nextPage = page + 1;
 
         if (formDispatch) {
-            formDispatch(formChange(formId, props.attribute, nextPage));
+            formDispatch(formChange(formId, props.pageAttribute, nextPage));
         }
         if (props.onChange) {
             props.onChange(nextPage);
@@ -85,7 +85,6 @@ function InfiniteScroll(props: IInfiniteScrollProps): JSX.Element {
         target: observerTarget,
         onIntersect: () => onScrollFetch(),
         enabled: Boolean(!props.list.isLoading && props.list?.[props.hasNextPageAttribute] && isScrollRefSet),
-        threshold: 0,
     });
 
     return <div ref={setScrollContainerRef} />;
@@ -93,7 +92,7 @@ function InfiniteScroll(props: IInfiniteScrollProps): JSX.Element {
 
 InfiniteScroll.defaultProps = {
     enable: false,
-    attribute: 'page',
+    pageAttribute: 'page',
     hasNextPageAttribute: 'hasNextPage',
 };
 

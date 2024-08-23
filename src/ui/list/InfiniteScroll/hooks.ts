@@ -3,13 +3,11 @@ import {RefObject, useEffect} from 'react';
 interface IIntersectionObserverConfig {
     target: RefObject<any>,
     onIntersect: (...args: any[]) => void,
-    threshold?: number,
-    rootMargin?: string,
     enabled: boolean,
 }
 
 export const defaultConfig = {
-    threshold: 0.4,
+    threshold: 0,
     rootMargin: '0px',
 };
 
@@ -20,25 +18,27 @@ export const useIntersectionObserver = (config: IIntersectionObserverConfig) => 
         }
 
         const observer = new IntersectionObserver(
-            (entries) => entries.forEach((entry) => entry.isIntersecting && config.onIntersect()),
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    config.onIntersect();
+                }
+            },
             {
                 ...defaultConfig,
-                threshold: config.threshold,
-                rootMargin: config.rootMargin,
             },
         );
 
-        const el = config.target?.current;
+        const ref = config.target;
 
-        if (!el) {
+        if (!ref.current) {
             return;
         }
 
-        observer.observe(el);
+        observer.observe(ref.current);
 
         // eslint-disable-next-line consistent-return
         return () => {
-            observer.unobserve(el);
+            observer.unobserve(ref.current);
         };
     }, [config.target.current, config.enabled]);
 };

@@ -231,6 +231,7 @@ export interface IGridViewProps extends Omit<IGridProps, 'onFetch'> {
     renderPaginationSize: () => any,
     renderLayoutNames: () => any,
     renderSearchForm: () => any,
+    renderInfiniteScroll: () => any,
     renderValue: (item: Record<string, unknown>, column: IGridColumn) => any,
     onFetch: (params?: Record<string, unknown>) => void,
     onSort: (value: any) => void,
@@ -252,6 +253,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         renderPaginationSize,
         renderLayoutNames,
         renderSearchForm,
+        renderInfiniteScroll,
         onFetch,
         onSort,
     } = useList({
@@ -261,6 +263,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         actionMethod: props.actionMethod,
         pagination: props.pagination,
         paginationSize: props.paginationSize,
+        infiniteScroll: props.infiniteScroll,
         sort: props.sort,
         layout: props.layout,
         empty: props.empty,
@@ -375,6 +378,7 @@ export default function Grid(props: IGridProps): JSX.Element {
         renderPaginationSize,
         renderLayoutNames,
         renderSearchForm,
+        renderInfiniteScroll,
         renderValue,
         columns,
         onFetch,
@@ -387,9 +391,9 @@ export default function Grid(props: IGridProps): JSX.Element {
         hasAlternatingColors: props.hasAlternatingColors,
         className: props.className,
         primaryKey: props.primaryKey,
-    }), [columns, layoutNamesPosition, list, onFetch, onSort, paginationPosition, paginationSizePosition, props.className,
-        props.hasAlternatingColors, props.isLoading, props.listId, props.primaryKey, props.searchForm, props.size, renderEmpty,
-        renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm, renderValue, renderLoading]);
+    }), [list, paginationPosition, paginationSizePosition, layoutNamesPosition, renderList, renderLoading, renderEmpty,
+        renderPagination, renderPaginationSize, renderLayoutNames, renderSearchForm, renderInfiniteScroll, renderValue, columns,
+        onFetch, onSort, props.searchForm, props.listId, props.isLoading, props.size, props.hasAlternatingColors, props.className, props.primaryKey]);
 
     return components.ui.renderView(props.view || 'list.GridView', viewProps);
 }

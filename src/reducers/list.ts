@@ -58,7 +58,7 @@ const reducerMap = {
     [LIST_AFTER_FETCH]: (state, action) => {
         let items;
         const list = state.lists[action.listId];
-        if (list.items === action.items) {
+        if (list.items === action.items && !list.hasInfiniteScroll) {
             // No changes
             items = list.items;
         } else if (list && list.items && list.loadMore && action.page > 1) {
@@ -67,6 +67,12 @@ const reducerMap = {
                 const index = (action.page - 1) * action.pageSize + i;
                 items[index] = entry;
             });
+        } else if (list && list.items && list.hasInfiniteScroll) {
+            if (action.page === list.defaultPageValue) {
+                items = [].concat(action.items);
+            } else {
+                items = [].concat(list.items, action.items);
+            }
         } else {
             items = [].concat(action.items);
         }

@@ -64,6 +64,16 @@ export interface IList {
     isRemote?: boolean,
 
     /**
+     * Логическое значение, указывающее, можно ли загрузить еще элементы для списка при скролле.
+     */
+    hasInfiniteScroll?: boolean,
+
+    /**
+     * Значение страницы по умолчанию.
+     */
+    defaultPageValue?: number,
+
+    /**
     * Логическое значение, указывающее, можно ли загрузить еще элементы для списка.
     */
     loadMore?: boolean,
@@ -342,16 +352,26 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
                 };
             }
 
+            const items = data.items || [];
+            const total = data.total || items.length || null;
+            const page = formValues[list.pageAttribute];
+            const pageSize = formValues[list.pageSizeAttribute];
+
+            const totalPages = Math.ceil((list?.total || 0) / (pageSize || 1));
+            const hasNextPage = data?.hasNextPage ?? (page !== totalPages || null);
+
             return [
                 // Check has errors
                 formSetErrors(list.formId, data.errors || null),
                 {
-                    items: data.items || [],
-                    total: data.total || null,
+                    items,
+                    total,
+                    hasNextPage,
                     meta: data.meta || null,
-                    page: formValues[list.pageAttribute],
-                    pageSize: formValues[list.pageSizeAttribute],
+                    page,
+                    pageSize,
                     listId,
+                    defaultPageValue: list.defaultPageValue,
                     type: LIST_AFTER_FETCH,
                 },
             ];

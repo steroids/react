@@ -188,6 +188,11 @@ export interface ICalendarSystemProps extends IUiComponent {
      */
     children?: React.ReactNode,
 
+    /**
+     * Дочерние элементы
+     */
+    onEventClick?: (event: Record<string, any>) => void,
+
     [key: string]: any,
 }
 
@@ -270,7 +275,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
         handleCalendarTypeChange: calendarSystem.handleCalendarTypeChange,
         onClickControl: calendarSystem.onClickControl,
         getEventsFromDate: calendarSystem.getEventsFromDate,
-        openEditModal: calendarSystem.openEditModal,
+        openEditModal: props.onEventClick || calendarSystem.openEditModal,
 
         monthGridProps: {
             monthGridWeekDays: calendarSystem.monthGridWeekDays,
@@ -287,7 +292,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
             dayGridCurrentDay: calendarSystem.dayGridCurrentDay,
             ...dayGridViews,
         },
-    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.eventBlock.canAddedEventGroups, props.asideCalendarProps, props.asideCalendarCheckboxListProps, props.children, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
+    }), [props.className, props.style, props.additionalViewProps, props.eventBlock.title, props.eventBlock.canAddedEventGroups, props.asideCalendarProps, props.asideCalendarCheckboxListProps, props.children, props.onEventClick, calendarSystem, monthGridViews, weekGridViews, dayGridViews]);
 
     return components.ui.renderView(props.view || 'content.CalendarSystemView', viewProps);
 }

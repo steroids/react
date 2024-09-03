@@ -189,9 +189,18 @@ export interface ICalendarSystemProps extends IUiComponent {
     children?: React.ReactNode,
 
     /**
-     * Дочерние элементы
+     * Функция, которая вызывается по клику на событие
      */
     onEventClick?: (event: Record<string, any>) => void,
+
+    /**
+     * Данные для формы с текущими датами календаря
+     */
+    calendarDatesFormData?: {
+        formId: string,
+        dateFromAttribute?: string,
+        dateToAttribute?: string,
+    },
 
     [key: string]: any,
 }

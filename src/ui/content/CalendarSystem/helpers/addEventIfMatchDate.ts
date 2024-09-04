@@ -8,7 +8,7 @@ export const addEventIfMatchDate = (
     calendarGroup: IEventGroup,
     originalEvent: IEvent,
     unit: 'hours' | 'day',
-    selectedEventGroupsIds: number[],
+    selectedEventGroupsIds: Array<number | string>,
     resultEventsOnDate: IEvent[],
 ) => {
     if (eventDateDayJs.isSame(sourceDateInDayJs, unit) && selectedEventGroupsIds.includes(calendarGroup.id)) {

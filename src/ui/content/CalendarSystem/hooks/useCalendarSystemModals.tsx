@@ -98,7 +98,7 @@ const useCalendarSystemModals = (
         setUsers(newUsers);
     }, [innerEventGroups, setInnerEventGroups, setUsers, users]);
 
-    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number, }>) => ({
+    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number | string, }>) => ({
         ...calendarModalProps,
         component: calendarModalView,
         eventGroups: innerEventGroups,

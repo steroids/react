@@ -291,6 +291,12 @@ const getCaptchaToken = (params: ICaptchaParams): Promise<string> => {
     });
 };
 
+const normalizeInitialQuery = (initialQuery: Record<string, any>) => Object.keys(initialQuery).reduce((acc, key) => {
+    const valueInNumberFormat = Number(initialQuery[key]);
+    acc[key] = Number.isNaN(valueInNumberFormat) ? initialQuery[key] : Number(initialQuery[key]);
+    return acc;
+}, {});
+
 function Form(props: IFormProps): JSX.Element {
     // Dev validation. You cannot change data provider (formId, useRedux)
     if (process.env.NODE_ENV !== 'production') {
@@ -325,7 +331,7 @@ function Form(props: IFormProps): JSX.Element {
         if (initialQuery) {
             initialValues = {
                 ...props.initialValues,
-                ...initialQuery,
+                ...normalizeInitialQuery(initialQuery),
             };
         }
 

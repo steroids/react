@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
+import _isEmpty from 'lodash-es/isEmpty';
 import _includes from 'lodash-es/includes';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
@@ -69,7 +70,7 @@ export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
  *
 **/
 export interface IDropDownFieldProps extends IFieldWrapperInputProps,
-    Omit<IDataProviderConfig, 'items'>,
+    Omit<IDataProviderConfig, 'items' | 'initialSelectedIds'>,
     Omit<IDataSelectConfig, 'items'>,
     IUiComponent {
 
@@ -186,6 +187,12 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     onClose?: (selectedIds: PrimaryKey[]) => void,
 
+    /**
+     * Нужно ли подгружать данные после закрытия DropDown
+     * @example true
+     */
+    isFetchOnClose?: boolean,
+
     [key: string]: any,
 }
 
@@ -265,12 +272,18 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     };
 
     const inputSelectedIds = useMemo(
-        () => props.selectedIds || [].concat(props.input.value || []),
+        () => _isEmpty(props.selectedIds) ? [].concat(props.input.value || []) : props.selectedIds,
         [props.input.value, props.selectedIds],
     );
 
     // Data provider
-    const {items, isLoading, isAutoComplete, sourceItems} = useDataProvider({
+    const {
+        fetchRemote,
+        items,
+        isLoading,
+        isAutoComplete,
+        sourceItems,
+    } = useDataProvider({
         items: props.items,
         dataProvider: props.dataProvider,
         autoComplete: props.autoComplete,
@@ -301,6 +314,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         sourceItems,
         inputValue: props.input.value,
     });
+
+    const prevSelectedIds = usePrevious(selectedIds);
 
     const onOpen = useCallback(() => {
         setQuery('');
@@ -343,11 +358,15 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
             setIsFocused(false);
             setIsOpened(false);
 
+            if (props.isFetchOnClose && fetchRemote) {
+                fetchRemote(false);
+            }
+
             if (props.onClose) {
                 props.onClose(selectedIds);
             }
         }
-    }, [isOpened, props, selectedIds, setIsFocused, setIsOpened]);
+    }, [fetchRemote, isOpened, props, selectedIds, setIsFocused, setIsOpened]);
 
     // Outside click -> close
     const forwardedRef = useRef(null);
@@ -365,7 +384,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     }), [props]);
 
     // Sync with form
-    const prevSelectedIds = usePrevious(selectedIds);
     useEffect(() => {
         if (!_isEqual(prevSelectedIds || [], selectedIds)) {
             const newValues = props.multiple ? selectedIds : (selectedIds[0] || null);
@@ -478,6 +496,7 @@ DropDownField.defaultProps = {
     multiple: false,
     isSearchAutoFocus: true,
     itemToSelectAll: false,
+    isFetchOnClose: false,
 };
 
 export default fieldWrapper<IDropDownFieldProps>('DropDownField', DropDownField);

@@ -315,8 +315,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         inputValue: props.input.value,
     });
 
-    const prevSelectedIds = usePrevious(selectedIds);
-
     const onOpen = useCallback(() => {
         setQuery('');
         setIsFocused(true);
@@ -384,6 +382,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     }), [props]);
 
     // Sync with form
+    const prevSelectedIds = usePrevious(selectedIds);
     useEffect(() => {
         if (!_isEqual(prevSelectedIds || [], selectedIds)) {
             const newValues = props.multiple ? selectedIds : (selectedIds[0] || null);

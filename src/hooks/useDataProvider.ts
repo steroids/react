@@ -52,6 +52,12 @@ export interface IDataProvider {
     action?: string,
 
     /**
+     * Тип HTTP запроса (GET | POST | PUT | DELETE)
+     * @example GET
+     */
+    actionMethod?: HttpMethod,
+
+    /**
      * Параметры запроса
      * @example {pageSize: 3}
      */
@@ -125,6 +131,7 @@ export interface IDataProviderConfig {
 }
 
 export interface IDataProviderResult {
+    fetchRemote: ((isAuto: boolean) => Promise<void>) | null,
     items?: {
         id: number | string | boolean,
         label?: string,
@@ -210,50 +217,54 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     const prevValues = usePrevious(config.initialSelectedIds);
     const prevAction = usePrevious(config?.dataProvider?.action);
 
+    const fetchRemote = useCallback(async (isAuto: boolean) => {
+        const searchHandler = dataProvider.onSearch || (
+            (method: any, params) => components.http
+                .send(dataProvider.actionMethod, method, params)
+                .then(response => response.data)
+        );
+        const result = searchHandler(dataProvider.action, {
+            query: config.query,
+            ...(isAuto ? {ids: config.initialSelectedIds} : null), // deprecated logic
+            ...(config.initialSelectedIds?.length > 0 ? {withIds: config.initialSelectedIds} : null),
+            ...config.dataProvider.params,
+        });
+
+        // Check is promise
+        let newItems;
+        if (result && _isFunction(result.then)) {
+            setIsLoading(true);
+            newItems = await result;
+            setIsLoading(false);
+        }
+
+        // Update items
+        newItems = normalizeItems(newItems);
+        if (!config.query) {
+            setSourceItems(newItems);
+        } else {
+            setSourceItems(_uniqBy([
+                ...sourceItems,
+                ...newItems,
+            ], 'id'));
+        }
+        setItems(newItems);
+    }, [components.http, config.dataProvider, config.initialSelectedIds, config.query, dataProvider.action,
+        dataProvider.actionMethod, dataProvider.onSearch, setSourceItems, sourceItems]);
+
     useEffect(() => {
-        const fetchRemote = async (isAuto) => {
-            const searchHandler = dataProvider.onSearch || (
-                (method: any, params) => components.http
-                    .send(dataProvider.actionMethod, method, params)
-                    .then(response => response.data)
-            );
-            const result = searchHandler(dataProvider.action, {
-                query: config.query,
-                ...(isAuto ? {ids: config.initialSelectedIds} : null), // deprecated logic
-                ...(config.initialSelectedIds?.length > 0 ? {withIds: config.initialSelectedIds} : null),
-                ...config.dataProvider.params,
-            });
-
-            // Check is promise
-            let newItems;
-            if (result && _isFunction(result.then)) {
-                setIsLoading(true);
-                newItems = await result;
-                setIsLoading(false);
-            }
-
-            // Update items
-            newItems = normalizeItems(newItems);
-            if (!config.query) {
-                setSourceItems(newItems);
-            } else {
-                setSourceItems(_uniqBy([
-                    ...sourceItems,
-                    ...newItems,
-                ], 'id'));
-            }
-            setItems(newItems);
-        };
-
         if (!config.dataProvider) {
             // Client-side search on static items
             setItems(config.query ? smartSearch(config.query, sourceItems) : sourceItems);
-        } else if (config.autoFetch && isAutoFetchedRef.current === false) {
+            return;
+        }
+
+        if (config.autoFetch && !isAutoFetchedRef.current) {
             isAutoFetchedRef.current = true;
             fetchRemote(true);
-        } else if (!_isEqual(prevValues, config.initialSelectedIds)) {
+        } else if (!prevValues && !_isEqual(prevValues, config.initialSelectedIds)) {
             fetchRemote(false);
-        } else if (autoComplete.enable || (config.autoFetch && isAutoFetchedRef.current === true)) {
+        } else if (autoComplete.enable || (config.autoFetch && isAutoFetchedRef.current)) {
             // Fetch data when action changes
             if (prevAction !== config?.dataProvider?.action) {
                 fetchRemote(false);
@@ -270,9 +281,10 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             }
         }
     }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider,
-        dataProvider.action, dataProvider.onSearch, prevAction, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
+        dataProvider.action, dataProvider.onSearch, fetchRemote, prevAction, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
 
     return {
+        fetchRemote: config.dataProvider && fetchRemote,
         sourceItems,
         items,
         isLoading,

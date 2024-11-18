@@ -96,6 +96,12 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     hasInitialFocus?: boolean,
 
     /**
+     * Перемещать ли фокус на пустое после заполнения
+     * @example true
+     */
+    useSmartFocus?: boolean,
+
+    /**
     * Опции маски для полей
     */
     maskOptions?: {
@@ -214,7 +220,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputPropsTo,
         inputFrom: props.inputFrom,
         inputTo: props.inputTo,
-        useSmartFocus: true,
+        useSmartFocus: props.useSmartFocus,
         hasInitialFocus: props.hasInitialFocus,
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
@@ -270,6 +276,7 @@ DateRangeField.defaultProps = {
     displayFormat: 'DD.MM.YYYY',
     valueFormat: 'YYYY-MM-DD',
     showRemove: true,
+    useSmartFocus: true,
     hasInitialFocus: false,
     icon: true,
     maskOptions: {

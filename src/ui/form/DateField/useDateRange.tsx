@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 import {convertDate} from '@steroidsjs/core/utils/calendar';
 import {IDateInputStateInput} from '@steroidsjs/core/ui/form/DateField/useDateInputState';
 
+const isOneRangeValueEmpty = (valueFrom, valueTo) => !valueFrom || !valueTo;
+
 interface IUseDateRangeProps extends Pick<IDateInputStateInput, 'displayFormat' | 'valueFormat' | 'useUTC' | 'dateInUTC'>{
     onCloseFrom: any,
     onCloseTo: any,
@@ -80,7 +82,7 @@ export default function useDateRange(props:IUseDateRangeProps) {
             return;
         }
 
-        if (props.useSmartFocus) {
+        if (props.useSmartFocus && isOneRangeValueEmpty(props.inputFrom.value, props.inputTo.value)) {
             if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
                 valueFromRef.current = props.inputFrom.value;
                 inputToRef.current.focus();

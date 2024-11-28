@@ -287,8 +287,8 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
 
     const itemViewProps = useMemo(() => ({
         ...commonProps,
-        ...props.itemViewProps,
         onRemove,
+        ...props.itemViewProps,
         removeIcon: props.removeIcon,
     }), [commonProps, onRemove, props.itemViewProps, props.removeIcon]);
 

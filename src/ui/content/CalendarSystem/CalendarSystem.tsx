@@ -215,7 +215,7 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
     onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
-    calendarType: string,
+    calendarType: CalendarEnum,
     children: React.ReactNode,
 
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],

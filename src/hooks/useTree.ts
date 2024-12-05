@@ -148,6 +148,12 @@ export interface ITreeConfig {
      * @example 'exampleTree'
      */
     clientStorageId?: string,
+
+    /**
+     * Меняет режим получения данных, если true, то необходимо передавать постраничные данные вместо всего массива.
+     * @example true
+     */
+    paginated?: boolean,
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
@@ -161,7 +167,12 @@ const defaultProps = {
     autoOpenLevels: 0,
 };
 
-const getTreeItemUniqueId = (item, index, parentId) => _join([parentId || FIRST_LEVEL_PARENT_ID, String(item.id || index)], DOT_SEPARATOR);
+const getTreeItemUniqueId = (item, globalIndexOrParentId, parentId?: string | number) => {
+    if (typeof globalIndexOrParentId === 'string' || typeof globalIndexOrParentId === 'number') {
+        return _join([globalIndexOrParentId || FIRST_LEVEL_PARENT_ID, String(item.id)], DOT_SEPARATOR);
+    }
+    return _join([parentId || FIRST_LEVEL_PARENT_ID, String(item.id || globalIndexOrParentId)], DOT_SEPARATOR);
+};
 
 const routeToItem = (route: IRouteItem, routerParams) => {
     const routeItems = (
@@ -341,7 +352,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
         const selectedItem = findChildById(items as ITreeItem[], selectedItemId, primaryKey);
         setSelectedUniqueId(selectedItem ? selectedItem.uniqueId : null);
-    }, [items]);
+    }, [items, config.autoOpenLevels, config.items, primaryKey, selectedItemId]);
 
     const localTree = useMemo(() => {
         const rawLocalTree = clientStorage.get(CLIENT_STORAGE_KEY);
@@ -349,12 +360,12 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         return rawLocalTree ? JSON.parse(rawLocalTree) : {};
     }, [clientStorage]);
 
-    const saveInClientStorage = () => {
+    const saveInClientStorage = useCallback(() => {
         if (config.saveInClientStorage) {
             localTree[config.clientStorageId] = expandedItems;
             clientStorage.set(CLIENT_STORAGE_KEY, JSON.stringify(localTree));
         }
-    };
+    }, [config.clientStorageId, clientStorage, config.saveInClientStorage, localTree, expandedItems]);
 
     useMount(() => {
         if (config.saveInClientStorage) {
@@ -412,18 +423,22 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
             sourceItems: ITreeItem[],
             parentId = EMPTY_PARENT_ID,
             currentLevel = INITIAL_CURRENT_LEVEL,
+            globalStartIndex?: number,
         ) => {
             if (config.level && currentLevel === config.level) {
                 return [];
             }
 
-            if (config.currentPage && config.itemsOnPage && currentLevel === INITIAL_CURRENT_LEVEL) {
-                const startIndex = (config.currentPage - 1) * config.itemsOnPage;
+            let startIndex = 0;
+            if (!config.paginated && config.currentPage && config.itemsOnPage && currentLevel === INITIAL_CURRENT_LEVEL) {
+                startIndex = (config.currentPage - 1) * config.itemsOnPage;
                 sourceItems = sourceItems.slice(startIndex, startIndex + config.itemsOnPage);
             }
 
             return (sourceItems || []).reduce((treeItems, item, index) => {
-                const uniqueId = getTreeItemUniqueId(item, index, parentId);
+                const uniqueId = config.paginated
+                    ? getTreeItemUniqueId(item, parentId)
+                    : getTreeItemUniqueId(item, globalStartIndex + index, parentId);
 
                 const treeItem = {
                     ...item,
@@ -443,9 +458,20 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
                 treeItems.push(treeItem);
 
-                if (treeItem.isOpened) {
-                    const nestedItem = getItems(item[primaryKey], uniqueId, currentLevel + 1);
-
+                if (treeItem.isOpened && !config.paginated) {
+                    const nestedItem = getItems(
+                        item[primaryKey],
+                        uniqueId,
+                        currentLevel + 1,
+                        globalStartIndex,
+                    );
+                    treeItems = treeItems.concat(nestedItem).filter(Boolean);
+                } else if (treeItem.isOpened) {
+                    const nestedItem = getItems(
+                        item[primaryKey],
+                        uniqueId,
+                        currentLevel + 1,
+                    );
                     treeItems = treeItems.concat(nestedItem).filter(Boolean);
                 }
 
@@ -453,9 +479,20 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
             }, [] as IPreparedTreeItem[]);
         };
 
-        return getItems(items);
-        // eslint-disable-next-line max-len
-    }, [activeRouteIds, config.alwaysOpened, config.currentPage, config.itemsOnPage, config.level, expandedItems, items, onExpand, primaryKey, routerParams, selectedUniqueId]);
+        return getItems(items, EMPTY_PARENT_ID, INITIAL_CURRENT_LEVEL, config.paginated ? undefined : 0);
+    }, [
+        config.alwaysOpened,
+        config.currentPage,
+        config.itemsOnPage,
+        config.level,
+        config.paginated,
+        activeRouteIds,
+        expandedItems,
+        items, onExpand,
+        primaryKey,
+        routerParams,
+        selectedUniqueId,
+    ]);
 
     return {
         treeItems: resultTreeItems,

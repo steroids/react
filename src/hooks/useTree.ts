@@ -148,6 +148,12 @@ export interface ITreeConfig {
      * @example 'exampleTree'
      */
     clientStorageId?: string,
+
+    /**
+     * Если флаг true, то данные в items переданы только для одной страницы, если false, то данные в items переданы сразу для всех страниц
+     * @example true
+     */
+    isSinglePageItems?: boolean,
 }
 
 const INITIAL_CURRENT_LEVEL = 0;
@@ -155,6 +161,7 @@ const DOT_SEPARATOR = '.';
 const EMPTY_PARENT_ID = '';
 const FIRST_LEVEL_PARENT_ID = '0';
 const CLIENT_STORAGE_KEY = '_tree';
+const DEFAULT_START_INDEX = 0;
 
 const defaultProps = {
     itemsKey: 'items',
@@ -418,7 +425,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
             }
 
             if (config.currentPage && config.itemsOnPage && currentLevel === INITIAL_CURRENT_LEVEL) {
-                const startIndex = (config.currentPage - 1) * config.itemsOnPage;
+                const startIndex = config.isSinglePageItems ? DEFAULT_START_INDEX : (config.currentPage - 1) * config.itemsOnPage;
                 sourceItems = sourceItems.slice(startIndex, startIndex + config.itemsOnPage);
             }
 
@@ -455,7 +462,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
         return getItems(items);
         // eslint-disable-next-line max-len
-    }, [activeRouteIds, config.alwaysOpened, config.currentPage, config.itemsOnPage, config.level, expandedItems, items, onExpand, primaryKey, routerParams, selectedUniqueId]);
+    }, [activeRouteIds, config.alwaysOpened, config.currentPage, config.itemsOnPage, config.level, expandedItems, items, onExpand, primaryKey, routerParams, selectedUniqueId, config.isSinglePageItems]);
 
     return {
         treeItems: resultTreeItems,

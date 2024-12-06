@@ -35,7 +35,7 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'>,
      * ]
      */
     items?: ITreeItem[],
-    paginated?: boolean,
+    isSinglePageItems?: boolean,
     customIcon?: string | React.ReactElement,
 }
 
@@ -74,7 +74,7 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
         collapseChildItems: props.collapseChildItems,
         saveInClientStorage: props.saveInClientStorage,
         clientStorageId: props.listId,
-        paginated: props.paginated,
+        isSinglePageItems: props.isSinglePageItems,
     });
 
     return (

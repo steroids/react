@@ -72,6 +72,7 @@ export interface IDataProvider {
      */
     onSearch?: (action: string, params: Record<string, unknown>) => Array<unknown> | Promise<Array<unknown>>,
 
+    [key: string]: any,
 }
 
 export interface IDataProviderConfig {

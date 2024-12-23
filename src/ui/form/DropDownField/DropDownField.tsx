@@ -5,7 +5,7 @@ import _isEmpty from 'lodash-es/isEmpty';
 import _includes from 'lodash-es/includes';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
-import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
+import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
@@ -277,12 +277,14 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     );
 
     // Data provider
+    const useDataProvider = useMemo(() => props.useDataProvider || useSteroidsDataProvider, [props.useDataProvider]);
     const {
         fetchRemote,
         items,
         isLoading,
         isAutoComplete,
         sourceItems,
+        ...dataProvider
     } = useDataProvider({
         items: props.items,
         dataProvider: props.dataProvider,
@@ -476,9 +478,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         showEllipses: props.showEllipses,
         errors: props.errors,
         disabled: props.disabled,
+        ...dataProvider,
     }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
         renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style, props.size,
-        props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll]);
+        props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled,
+        normalizedItemToSelectAll, dataProvider]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }

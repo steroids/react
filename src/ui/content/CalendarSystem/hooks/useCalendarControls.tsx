@@ -27,7 +27,7 @@ const ONE_MONTH_DIFF = 1;
 const ONE_YEAR_DIFF = 1;
 
 const useCalendarControls = (
-    calendarType: CalendarEnum,
+    calendarType: string,
     generalCurrentDay: IDay,
     setGeneralCurrentDay: React.Dispatch<React.SetStateAction<IDay>>,
     isGeneralCurrentDayNeedsUpdate: React.MutableRefObject<boolean>,

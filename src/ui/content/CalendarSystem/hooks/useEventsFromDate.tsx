@@ -31,7 +31,7 @@ const CALENDAR_TYPE_GETTING_EVENTS_PROPERTIES = {
 };
 
 export const useEventsFromDate = (innerEventGroups: IEventGroup[], selectedEventGroupsIds: number[]) => {
-    const getEventsFromDate = React.useCallback((dateFromDay: Date, currentCalendarType: CalendarEnum) => {
+    const getEventsFromDate = React.useCallback((dateFromDay: Date, currentCalendarType: string) => {
         const resultEventsOnDate: IEvent[] = [];
         const dayjsDateFromDay = dayjs(dateFromDay);
 

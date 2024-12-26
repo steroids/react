@@ -11,7 +11,6 @@ import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
 import {IModalProps} from '../../../ui/modal/Modal/Modal';
 import {useComponents} from '../../../hooks';
 import {useCalendarSystem} from './hooks/useCalendarSystem';
-import CalendarEnum from './enums/CalendarType';
 import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
 
 dayjs.extend(localeData);
@@ -215,10 +214,10 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
     onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
-    calendarType: CalendarEnum,
+    calendarType: string,
     children: React.ReactNode,
 
-    getEventsFromDate: (dateFromDay: Date, currentCalendarType: CalendarEnum) => IEvent[],
+    getEventsFromDate: (dateFromDay: Date, currentCalendarType: string) => IEvent[],
     openEditModal: (event: IEvent) => void,
     openCreateModal: (eventInitialDay?: IDay) => void,
 

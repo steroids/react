@@ -5,7 +5,7 @@ import _isNil from 'lodash-es/isNil';
 import _difference from 'lodash-es/difference';
 import _intersection from 'lodash-es/intersection';
 import _pullAll from 'lodash-es/pullAll';
-import {useCallback, useMemo, useState} from 'react';
+import {MutableRefObject, useCallback, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
 
 export interface IDataSelectItem {
@@ -69,6 +69,11 @@ export interface IDataSelectConfig {
      *  Список со всеми элементами
      */
     sourceItems?: IDataSelectItem[],
+
+    /**
+     *  Ref autocomplete поиска
+     */
+    autoCompleteInputRef?: MutableRefObject<HTMLInputElement>,
 }
 
 export interface IDataSelectResult {
@@ -88,6 +93,10 @@ export interface IDataSelectResult {
 const defaultProps = {
     primaryKey: 'id',
 };
+
+const isAutoCompleteInputFocused = (
+    autoCompleteInputRef: MutableRefObject<HTMLInputElement>,
+) => document.activeElement === autoCompleteInputRef.current;
 
 export const getFlattenedItems = (items, groupAttribute) => {
     let result = [];
@@ -306,8 +315,8 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             setIsOpened(false);
         }
 
-        // Keys: space (toggle select)
-        if (e.which === 32 && isOpened) {
+        // Keys: space (toggle select), disable in DropDownField with focused autocomplete
+        if (e.which === 32 && isOpened && !isAutoCompleteInputFocused(config.autoCompleteInputRef)) {
             if (hoveredId) {
                 e.preventDefault();
                 // Select hovered
@@ -345,7 +354,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setHoveredId(keys[newIndex]);
             }
         }
-    }, [isFocused, isOpened, hoveredId, selectedIds, flattenedItems, setSelectedIds]);
+    }, [isFocused, isOpened, config.autoCompleteInputRef, hoveredId, selectedIds, flattenedItems, setSelectedIds]);
     useEvent('keydown', onKeyDown);
 
     return {

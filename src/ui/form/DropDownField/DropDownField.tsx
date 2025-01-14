@@ -249,6 +249,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     // Query state
     const [query, setQuery] = useState('');
+    const forwardedInputRef = useRef<HTMLInputElement>(null);
 
     const hasGroup = !!props.groupAttribute;
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
@@ -315,6 +316,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         items,
         sourceItems,
         inputValue: props.input.value,
+        autoCompleteInputRef: forwardedInputRef,
     });
 
     const onOpen = useCallback(() => {
@@ -452,6 +454,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         hoveredId,
         selectedIds,
         forwardedRef,
+        forwardedInputRef,
         searchInputProps,
         isOpened,
         isLoading,

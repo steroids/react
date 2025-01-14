@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import _isEmpty from 'lodash-es/isEmpty';
@@ -202,6 +202,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
     forwardedRef: any,
+    forwardedInputRef: MutableRefObject<HTMLInputElement>,
     searchInputProps: {
         type: string,
         name: string,

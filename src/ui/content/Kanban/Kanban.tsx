@@ -93,7 +93,7 @@ export interface IKanbanTaskDetailsModalViewProps extends IModalProps {
  * компоненты `Droppable`, `Draggable` и `DragDropContext` соответственно.
  *
  * Для корректной работы функционала создания задач,
- * необходимо установить в проекте зависимости `@ckeditor/ckeditor5-react` и `@steroidsjs/ckeditor5`,
+ * необходимо установить в проекте зависимости `@ckeditor/ckeditor5-react v3.0.2` и `@steroidsjs/ckeditor5 v27.0.2-rc.2`,
  * затем импортировать `CKEditor` из `@ckeditor/ckeditor5-react` и `ClassicEditor` из `@steroidsjs/ckeditor5/packages/ckeditor5-build-classic`.
  * Импортированные компоненты нужно передать в проп `createTaskEditorConfig`,
  * в поле `htmlComponent` передать `CKEditor`, а в `editorConstructor` передать `ClassicEditor`.

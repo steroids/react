@@ -50,6 +50,7 @@ export interface ITooltipStylePosition {
  * Tooltip
  *
  * Компонент Tooltip предоставляет всплывающую подсказку для дочерних элементов.
+ * Внутри компонента, то есть между тегами Tooltip можно использовать только html теги, например div, span и тд
  **/
 export interface ITooltipProps {
     /**

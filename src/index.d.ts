@@ -15,7 +15,7 @@ declare module '*.png' {
 
 /**
  * Метод для локализации фраз и предложений
- * @example {__('{count} {count, plural, one{день} few{дня} many{дней}}', {count: 2})}
+ * @example {__('{count} {count, plural, one{день} few{дня} other{дней}}', {count: 2})}
  * @param {string} phrase
  * @param {object} params
  * @private

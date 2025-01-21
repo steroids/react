@@ -35,7 +35,17 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'>,
      * ]
      */
     items?: ITreeItem[],
+
+    /**
+     * Если флаг true, то данные в items переданы только для одной страницы, если false, то данные в items переданы сразу для всех страниц
+     * @example true
+     */
     isSinglePageItems?: boolean,
+
+    /**
+     * Кастомная иконка для сворачивания элементов
+     * @example 'arrow'
+     */
     customIcon?: string | React.ReactElement,
 }
 

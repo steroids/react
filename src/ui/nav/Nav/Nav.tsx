@@ -230,7 +230,7 @@ function Nav(props: INavProps): JSX.Element {
             toRouteParams: routerParams,
             visible: route.isNavVisible,
             isActive: (activeRouteIds || []).includes(route.id),
-            isActiveNested: (route.items?.filter(nestedItem => activeRouteIds.includes(nestedItem.id))),
+            isActiveNested: !__isEmpty(route.items?.filter(nestedItem => activeRouteIds.includes(nestedItem.id))),
             items: route.items ? formatItems(route.items) : null,
         }))
             .filter(item => item.visible !== false);

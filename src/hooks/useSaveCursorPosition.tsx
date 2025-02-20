@@ -23,7 +23,7 @@ export default function useSaveCursorPosition(
     }, [cursor, inputParams.value]);
 
     const onChangeInternal = useCallback((value: any) => inputParams.onChange(value), [inputParams.onChange]);
-    const onChangeInternalDebounced = useDebounce(onChangeInternal, inputParams.delay);
+    const onChangeInternalDebounced = useDebounce(onChangeInternal, inputParams?.delay);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
         if (onChangeCallback) {

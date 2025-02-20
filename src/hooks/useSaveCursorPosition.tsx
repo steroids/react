@@ -6,7 +6,7 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
-import useDebounce from './useDebounce';
+import useDebounceFnVoid from './useDebounceFnVoid';
 
 export default function useSaveCursorPosition(
     inputParams: IInputParams,
@@ -23,7 +23,7 @@ export default function useSaveCursorPosition(
     }, [cursor, inputParams.value]);
 
     const onChangeInternal = useCallback((value: any) => inputParams.onChange(value), [inputParams.onChange]);
-    const onChangeInternalDebounced = useDebounce(onChangeInternal, inputParams?.delay);
+    const onChangeInternalDebounced = useDebounceFnVoid(onChangeInternal, inputParams?.delay);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
         if (onChangeCallback) {

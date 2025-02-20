@@ -3,9 +3,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
+import useDebounce from './useDebounce';
 
 export default function useSaveCursorPosition(
     inputParams: IInputParams,
@@ -21,6 +22,9 @@ export default function useSaveCursorPosition(
         }
     }, [cursor, inputParams.value]);
 
+    const onChangeInternal = useCallback((value: any) => inputParams.onChange(value), [inputParams.onChange]);
+    const onChangeInternalDebounced = useDebounce(onChangeInternal, inputParams.delay);
+
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
         if (onChangeCallback) {
             onChangeCallback(value || event.target?.value);
@@ -28,8 +32,14 @@ export default function useSaveCursorPosition(
 
         setCursor(event?.target?.selectionStart);
 
-        inputParams.onChange(value || event.target?.value);
-    }, [inputParams, onChangeCallback]);
+        const onChangeValue = value || event.target?.value;
+
+        if (inputParams?.isDebounce) {
+            onChangeInternalDebounced(onChangeValue);
+        } else {
+            onChangeInternal(onChangeValue);
+        }
+    }, [inputParams?.isDebounce, onChangeCallback, onChangeInternal, onChangeInternalDebounced]);
 
     return {
         inputRef,

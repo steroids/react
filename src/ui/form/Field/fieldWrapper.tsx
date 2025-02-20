@@ -109,6 +109,8 @@ export interface IInputParams {
     name?: string,
     value?: any,
     onChange: (value: any) => void,
+    isDebounce?: boolean,
+    delay?: number,
 }
 
 export interface IFieldWrapperOutputProps {

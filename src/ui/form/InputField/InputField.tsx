@@ -80,7 +80,7 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
  * InputField
  * Поле ввода текста
  */
-export interface IInputFieldProps extends IBaseFieldProps {
+export interface IInputFieldProps extends IBaseFieldProps, IDebounceFieldProps {
     /**
      * HTML Тип
      * @example email
@@ -159,6 +159,10 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const {inputRef, onChange} = useSaveCursorPosition(
         props.input,
         props.onChange,
+        {
+            enabled: Boolean(props?.debounce),
+            ...(typeof props?.debounce === 'boolean' ? {enabled: props.debounce} : props.debounce),
+        },
     );
 
     React.useEffect(() => {

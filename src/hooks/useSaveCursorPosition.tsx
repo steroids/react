@@ -3,14 +3,21 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {ChangeEvent, useMemo} from 'react';
 import _isNull from 'lodash-es/isNull';
+import _debounce from 'lodash-es/debounce';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
-import useDebounceFnVoid from './useDebounceFnVoid';
+
+const DEFAULT_DEBOUNCE_DELAY_MS = 300;
+
+interface IUseSaveCursorDebounceParams extends Partial<IDebounceParams> {
+    enabled: boolean,
+}
 
 export default function useSaveCursorPosition(
     inputParams: IInputParams,
     onChangeCallback?: (value) => void,
+    debounceParams?: IUseSaveCursorDebounceParams,
 ) {
     const [cursor, setCursor] = React.useState(null);
     const inputRef = React.useRef(null);
@@ -22,9 +29,6 @@ export default function useSaveCursorPosition(
         }
     }, [cursor, inputParams.value]);
 
-    const onChangeInternal = useCallback((value: any) => inputParams.onChange(value), [inputParams.onChange]);
-    const onChangeInternalDebounced = useDebounceFnVoid(onChangeInternal, inputParams?.delay);
-
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
         if (onChangeCallback) {
             onChangeCallback(value || event.target?.value);
@@ -32,17 +36,14 @@ export default function useSaveCursorPosition(
 
         setCursor(event?.target?.selectionStart);
 
-        const onChangeValue = value || event.target?.value;
+        inputParams.onChange(value || event.target?.value);
+    }, [inputParams, onChangeCallback]);
 
-        if (inputParams?.isDebounce) {
-            onChangeInternalDebounced(onChangeValue);
-        } else {
-            onChangeInternal(onChangeValue);
-        }
-    }, [inputParams?.isDebounce, onChangeCallback, onChangeInternal, onChangeInternalDebounced]);
+    const onChangeWithDelay = useMemo(() => debounceParams?.enabled && _debounce(onChange, debounceParams?.delayMs ?? DEFAULT_DEBOUNCE_DELAY_MS),
+        [debounceParams?.enabled, debounceParams?.delayMs, onChange]);
 
     return {
         inputRef,
-        onChange,
+        onChange: debounceParams?.enabled ? onChangeWithDelay : onChange,
     };
 }

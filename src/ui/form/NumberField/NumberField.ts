@@ -12,7 +12,7 @@ const DEFAULT_STEP = 1;
  *
  * Числовое поле ввода. Этот компонент представляет собой поле ввода для числовых значений.
  **/
-export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldProps {
+export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldProps, IDebounceFieldProps {
     /**
      * Минимальное значение
      * @example 1
@@ -63,7 +63,14 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(props.input, props.onChange);
+    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(
+        props.input,
+        props.onChange,
+        {
+            enabled: Boolean(props?.debounce),
+            ...(typeof props?.debounce === 'boolean' ? {enabled: props.debounce} : props.debounce),
+        },
+    );
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 

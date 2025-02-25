@@ -76,6 +76,20 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
     },
 }
 
+export interface IDebounceParams {
+    /**
+     * Задержка в мс
+     */
+    delayMs: number,
+}
+
+export interface IDebounceFieldProps {
+    /**
+     * Задержка применения введённого значения
+     */
+    debounce?: boolean | IDebounceParams,
+}
+
 /**
  * InputField
  * Поле ввода текста

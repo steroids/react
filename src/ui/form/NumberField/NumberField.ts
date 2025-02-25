@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, {ChangeEvent, useMemo, useCallback} from 'react';
-import {IBaseFieldProps} from '../InputField/InputField';
+import {IBaseFieldProps, IDebounceFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import useInputTypeNumber from './hooks/useInputTypeNumber';

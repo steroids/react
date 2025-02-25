@@ -7,6 +7,7 @@ import React, {ChangeEvent, useMemo} from 'react';
 import _isNull from 'lodash-es/isNull';
 import _debounce from 'lodash-es/debounce';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
+import {IDebounceParams} from '../ui/form/InputField/InputField';
 
 const DEFAULT_DEBOUNCE_DELAY_MS = 300;
 

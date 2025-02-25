@@ -118,17 +118,3 @@ declare interface IUiComponent {
  * Тип данных для параметров маршрута.
  */
 declare type RouteParams = Record<string, any> | null;
-
-declare interface IDebounceParams {
-    /**
-     * Задержка в мс
-     */
-    delayMs: number,
-}
-
-declare interface IDebounceFieldProps {
-    /**
-     * Задержка применения введённого значения
-     */
-    debounce?: boolean | IDebounceParams,
-}

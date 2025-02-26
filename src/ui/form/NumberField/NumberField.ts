@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, {ChangeEvent, useMemo, useCallback} from 'react';
-import {IBaseFieldProps, IDebounceFieldProps} from '../InputField/InputField';
+import {IBaseFieldProps, IDebounceConfig} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import useInputTypeNumber from './hooks/useInputTypeNumber';
@@ -12,7 +12,7 @@ const DEFAULT_STEP = 1;
  *
  * Числовое поле ввода. Этот компонент представляет собой поле ввода для числовых значений.
  **/
-export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldProps, IDebounceFieldProps {
+export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldProps, IDebounceConfig {
     /**
      * Минимальное значение
      * @example 1
@@ -66,10 +66,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(
         props.input,
         props.onChange,
-        {
-            enabled: Boolean(props?.debounce),
-            ...(typeof props?.debounce === 'boolean' ? {enabled: props.debounce} : props.debounce),
-        },
+        props.debounce,
     );
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);

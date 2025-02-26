@@ -7,18 +7,14 @@ import React, {ChangeEvent, useMemo} from 'react';
 import _isNull from 'lodash-es/isNull';
 import _debounce from 'lodash-es/debounce';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
-import {IDebounceParams} from '../ui/form/InputField/InputField';
+import {IDebounceConfig} from '../ui/form/InputField/InputField';
 
 const DEFAULT_DEBOUNCE_DELAY_MS = 300;
-
-interface IUseSaveCursorDebounceParams extends Partial<IDebounceParams> {
-    enabled: boolean,
-}
 
 export default function useSaveCursorPosition(
     inputParams: IInputParams,
     onChangeCallback?: (value) => void,
-    debounceParams?: IUseSaveCursorDebounceParams,
+    debounce?: IDebounceConfig['debounce'],
 ) {
     const [cursor, setCursor] = React.useState(null);
     const inputRef = React.useRef(null);
@@ -40,11 +36,13 @@ export default function useSaveCursorPosition(
         inputParams.onChange(value || event.target?.value);
     }, [inputParams, onChangeCallback]);
 
-    const onChangeWithDelay = useMemo(() => debounceParams?.enabled && _debounce(onChange, debounceParams?.delayMs ?? DEFAULT_DEBOUNCE_DELAY_MS),
-        [debounceParams?.enabled, debounceParams?.delayMs, onChange]);
+    const onChangeWithDelay = useMemo(() => debounce === true
+        ? _debounce(onChange, DEFAULT_DEBOUNCE_DELAY_MS)
+        : debounce && _debounce(onChange, debounce.delayMs),
+    [debounce, onChange]);
 
     return {
         inputRef,
-        onChange: debounceParams?.enabled ? onChangeWithDelay : onChange,
+        onChange: debounce ? onChangeWithDelay : onChange,
     };
 }

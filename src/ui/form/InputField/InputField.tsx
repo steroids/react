@@ -83,7 +83,7 @@ export interface IDebounceParams {
     delayMs: number,
 }
 
-export interface IDebounceFieldProps {
+export interface IDebounceConfig {
     /**
      * Задержка применения введённого значения
      */
@@ -94,7 +94,7 @@ export interface IDebounceFieldProps {
  * InputField
  * Поле ввода текста
  */
-export interface IInputFieldProps extends IBaseFieldProps, IDebounceFieldProps {
+export interface IInputFieldProps extends IBaseFieldProps, IDebounceConfig {
     /**
      * HTML Тип
      * @example email
@@ -173,10 +173,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const {inputRef, onChange} = useSaveCursorPosition(
         props.input,
         props.onChange,
-        {
-            enabled: Boolean(props?.debounce),
-            ...(typeof props?.debounce === 'boolean' ? {enabled: props.debounce} : props.debounce),
-        },
+        props.debounce,
     );
 
     React.useEffect(() => {

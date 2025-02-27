@@ -4,18 +4,25 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
 import React, {ChangeEvent, useMemo} from 'react';
-import _isNull from 'lodash-es/isNull';
 import _debounce from 'lodash-es/debounce';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
-import {IDebounceConfig} from '../ui/form/InputField/InputField';
 
 const DEFAULT_DEBOUNCE_DELAY_MS = 300;
 
-export default function useSaveCursorPosition(
+export interface IDebounceConfig {
+    /**
+     * Задержка в мс
+     */
+    delayMs: number,
+}
+
+export interface ISaveCursorPositionConfig {
     inputParams: IInputParams,
     onChangeCallback?: (value) => void,
-    debounce?: IDebounceConfig['debounce'],
-) {
+    debounce?: boolean | IDebounceConfig,
+}
+
+export default function useSaveCursorPosition(config: ISaveCursorPositionConfig) {
     const [cursor, setCursor] = React.useState(null);
     const inputRef = React.useRef(null);
 
@@ -24,25 +31,25 @@ export default function useSaveCursorPosition(
         if (inputElement) {
             inputElement.setSelectionRange(cursor, cursor);
         }
-    }, [cursor, inputParams.value]);
+    }, [cursor, config.inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
-        if (onChangeCallback) {
-            onChangeCallback(value || event.target?.value);
+        if (config.onChangeCallback) {
+            config.onChangeCallback(value || event.target?.value);
         }
 
         setCursor(event?.target?.selectionStart);
 
-        inputParams.onChange(value || event.target?.value);
-    }, [inputParams, onChangeCallback]);
+        config.inputParams.onChange(value || event.target?.value);
+    }, [config.inputParams, config.onChangeCallback]);
 
-    const onChangeWithDelay = useMemo(() => debounce === true
+    const onChangeWithDelay = useMemo(() => config.debounce === true
         ? _debounce(onChange, DEFAULT_DEBOUNCE_DELAY_MS)
-        : debounce && _debounce(onChange, debounce.delayMs),
-    [debounce, onChange]);
+        : config.debounce && _debounce(onChange, config.debounce.delayMs),
+    [config.debounce, onChange]);
 
     return {
         inputRef,
-        onChange: debounce ? onChangeWithDelay : onChange,
+        onChange: config.debounce ? onChangeWithDelay : onChange,
     };
 }

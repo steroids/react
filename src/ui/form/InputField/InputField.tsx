@@ -8,6 +8,7 @@ import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
+import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -76,25 +77,11 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
     },
 }
 
-export interface IDebounceParams {
-    /**
-     * Задержка в мс
-     */
-    delayMs: number,
-}
-
-export interface IDebounceConfig {
-    /**
-     * Задержка применения введённого значения
-     */
-    debounce?: boolean | IDebounceParams,
-}
-
 /**
  * InputField
  * Поле ввода текста
  */
-export interface IInputFieldProps extends IBaseFieldProps, IDebounceConfig {
+export interface IInputFieldProps extends IBaseFieldProps {
     /**
      * HTML Тип
      * @example email
@@ -145,6 +132,11 @@ export interface IInputFieldProps extends IBaseFieldProps, IDebounceConfig {
      * Пользовательская иконка svg или название иконки
      */
     leadIcon?: React.ReactElement | string,
+
+    /**
+     * Задержка применения введённого значения
+     */
+    debounce?: boolean | IDebounceConfig,
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
@@ -170,11 +162,11 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         options: props.maskOptions,
     });
 
-    const {inputRef, onChange} = useSaveCursorPosition(
-        props.input,
-        props.onChange,
-        props.debounce,
-    );
+    const {inputRef, onChange} = useSaveCursorPosition({
+        inputParams: props.input,
+        onChangeCallback: props.onChange,
+        debounce: props.debounce,
+    });
 
     React.useEffect(() => {
         if (inputRef.current) {

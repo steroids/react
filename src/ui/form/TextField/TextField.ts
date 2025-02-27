@@ -30,7 +30,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
 function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
     // const dispatch = useDispatch();
     const components = useComponents();
-    const {inputRef, onChange} = useSaveCursorPosition(props.input);
+    const {inputRef, onChange} = useSaveCursorPosition({inputParams: props.input});
 
     const onKeyUp = useCallback(e => {
         if (

@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import React, {ChangeEvent, useMemo, useCallback} from 'react';
-import {IBaseFieldProps} from '../InputField/InputField';
+import React, {ChangeEvent, useCallback, useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 import useInputTypeNumber from './hooks/useInputTypeNumber';
 
 const DEFAULT_STEP = 1;
@@ -63,7 +63,11 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(props.input, props.onChange);
+    const {inputRef: currentInputRef, onChange: _onChange} = useSaveCursorPosition(props.input, props.onChange);
+
+    const onChange = useCallback((event:ChangeEvent<HTMLInputElement>, value?: any) => {
+        _onChange(event, Number(value ?? event.target.value));
+    }, [_onChange]);
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 
@@ -92,7 +96,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             newValue = fixToDecimal(currentValue - step);
         }
 
-        onChange(null, String(newValue));
+        onChange(null, newValue);
     }, [currentInputRef, onChange, props.decimal, step]);
 
     const onStepUp = useCallback(() => {

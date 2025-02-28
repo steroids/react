@@ -72,7 +72,10 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const {inputRef: currentInputRef, onChange} = useSaveCursorPosition({
         inputParams: props.input,
         onChangeCallback: props.onChange,
-        debounce: props.debounce,
+        debounce: {
+            enabled: !!props.debounce,
+            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+        },
     });
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);

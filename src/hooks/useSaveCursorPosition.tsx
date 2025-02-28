@@ -16,10 +16,14 @@ export interface IDebounceConfig {
     delayMs: number,
 }
 
+export interface ISaveCursorPositionDebounceConfig extends Partial<IDebounceConfig> {
+    enabled: boolean,
+}
+
 export interface ISaveCursorPositionConfig {
     inputParams: IInputParams,
     onChangeCallback?: (value) => void,
-    debounce?: boolean | IDebounceConfig,
+    debounce?: ISaveCursorPositionDebounceConfig,
 }
 
 export default function useSaveCursorPosition(config: ISaveCursorPositionConfig) {
@@ -43,13 +47,12 @@ export default function useSaveCursorPosition(config: ISaveCursorPositionConfig)
         config.inputParams.onChange(value || event.target?.value);
     }, [config.inputParams, config.onChangeCallback]);
 
-    const onChangeWithDelay = useMemo(() => config.debounce === true
-        ? _debounce(onChange, DEFAULT_DEBOUNCE_DELAY_MS)
-        : config.debounce && _debounce(onChange, config.debounce.delayMs),
+    const onChangeWithDelay = useMemo(() => config.debounce?.enabled
+            && _debounce(onChange, config.debounce?.delayMs ?? DEFAULT_DEBOUNCE_DELAY_MS),
     [config.debounce, onChange]);
 
     return {
         inputRef,
-        onChange: config.debounce ? onChangeWithDelay : onChange,
+        onChange: config.debounce?.enabled ? onChangeWithDelay : onChange,
     };
 }

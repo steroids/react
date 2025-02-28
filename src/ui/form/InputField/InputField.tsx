@@ -165,7 +165,10 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const {inputRef, onChange} = useSaveCursorPosition({
         inputParams: props.input,
         onChangeCallback: props.onChange,
-        debounce: props.debounce,
+        debounce: {
+            enabled: !!props.debounce,
+            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+        },
     });
 
     React.useEffect(() => {

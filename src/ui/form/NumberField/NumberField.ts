@@ -66,7 +66,8 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const {inputRef: currentInputRef, onChange: _onChange} = useSaveCursorPosition(props.input, props.onChange);
 
     const onChange = useCallback((event:ChangeEvent<HTMLInputElement>, value?: any) => {
-        _onChange(event, Number(value ?? event.target.value));
+        const newValue = value ?? event.target.value;
+        _onChange(event, newValue === '' ? '' : Number(newValue));
     }, [_onChange]);
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
@@ -100,16 +101,21 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     }, [currentInputRef, onChange, props.decimal, step]);
 
     const onStepUp = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) + step > props.max)) {
+        const newValue = Number(currentInputRef.current.value) + step;
+        const isLessThanMaximum = !(newValue > props.max);
+        if (isLessThanMaximum) {
             onStep(true);
         }
     }, [currentInputRef, onStep, props.max, step]);
 
     const onStepDown = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) - step < props.min)) {
+        const newValue = Number(currentInputRef.current.value) - step;
+        const isMoreThanMinimum = !(newValue < props.min);
+        const isNegative = !(!props.isCanBeNegative && newValue < 0);
+        if (isMoreThanMinimum && isNegative) {
             onStep(false);
         }
-    }, [currentInputRef, onStep, props.min, step]);
+    }, [currentInputRef, onStep, props.min, props.isCanBeNegative, step]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {

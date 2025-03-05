@@ -4,6 +4,7 @@ import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import useInputTypeNumber from './hooks/useInputTypeNumber';
+import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
 
 const DEFAULT_STEP = 1;
 
@@ -40,6 +41,11 @@ export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldPr
      * Может ли число быть отрицательным
      */
     isCanBeNegative?: boolean,
+
+    /**
+     * Задержка применения введённого значения
+     */
+    debounce?: boolean | IDebounceConfig,
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
@@ -63,7 +69,14 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(props.input, props.onChange);
+    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition({
+        inputParams: props.input,
+        onChangeCallback: props.onChange,
+        debounce: {
+            enabled: !!props.debounce,
+            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+        },
+    });
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 

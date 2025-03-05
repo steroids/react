@@ -1,10 +1,6 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable consistent-return */
-/* eslint-disable no-return-assign */
-/* eslint-disable no-unused-expressions */
-import React, {ChangeEvent, useMemo} from 'react';
 import _debounce from 'lodash-es/debounce';
+import _isNull from 'lodash/isNull';
+import React, {ChangeEvent, useMemo} from 'react';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
 const DEFAULT_DEBOUNCE_DELAY_MS = 300;
@@ -38,13 +34,14 @@ export default function useSaveCursorPosition(config: ISaveCursorPositionConfig)
     }, [cursor, config.inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
+        const newValue = _isNull(value) ? event.target?.value : value;
         if (config.onChangeCallback) {
-            config.onChangeCallback(value || event.target?.value);
+            config.onChangeCallback(newValue);
         }
 
         setCursor(event?.target?.selectionStart);
 
-        config.inputParams.onChange(value || event.target?.value);
+        config.inputParams.onChange(newValue);
     }, [config.inputParams, config.onChangeCallback]);
 
     const onChangeWithDelay = useMemo(() => config.debounce?.enabled

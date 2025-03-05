@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, {ChangeEvent, useCallback, useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
 import useInputTypeNumber from './hooks/useInputTypeNumber';
@@ -40,6 +41,11 @@ export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldPr
      * Может ли число быть отрицательным
      */
     isCanBeNegative?: boolean,
+
+    /**
+     * Задержка применения введённого значения
+     */
+    debounce?: boolean | IDebounceConfig,
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
@@ -63,12 +69,19 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange: _onChange} = useSaveCursorPosition(props.input, props.onChange);
+    const {inputRef: currentInputRef, onChange: onChangeSavingCursorPosition} = useSaveCursorPosition({
+        inputParams: props.input,
+        onChangeCallback: props.onChange,
+        debounce: {
+            enabled: !!props.debounce,
+            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+        },
+    });
 
     const onChange = useCallback((event:ChangeEvent<HTMLInputElement>, value?: any) => {
         const newValue = value ?? event.target.value;
-        _onChange(event, newValue === '' ? '' : Number(newValue));
-    }, [_onChange]);
+        onChangeSavingCursorPosition(event, newValue === '' ? '' : Number(newValue));
+    }, [onChangeSavingCursorPosition]);
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 

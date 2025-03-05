@@ -8,6 +8,7 @@ import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
+import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -131,6 +132,11 @@ export interface IInputFieldProps extends IBaseFieldProps {
      * Пользовательская иконка svg или название иконки
      */
     leadIcon?: React.ReactElement | string,
+
+    /**
+     * Задержка применения введённого значения
+     */
+    debounce?: boolean | IDebounceConfig,
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
@@ -156,10 +162,14 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         options: props.maskOptions,
     });
 
-    const {inputRef, onChange} = useSaveCursorPosition(
-        props.input,
-        props.onChange,
-    );
+    const {inputRef, onChange} = useSaveCursorPosition({
+        inputParams: props.input,
+        onChangeCallback: props.onChange,
+        debounce: {
+            enabled: !!props.debounce,
+            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+        },
+    });
 
     React.useEffect(() => {
         if (inputRef.current) {

@@ -36,7 +36,7 @@ export interface IAccordionProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
-    children?: React.ReactNode,
+    children?: React.ReactNode[],
 
     /**
      * Переводит Accordion в выключенное состояние
@@ -82,6 +82,11 @@ export interface IAccordionProps extends IUiComponent {
      */
     onChange?: () => void,
 
+    /**
+     * Флаг, отвечающий за автоматическое добавление position к AccordionItem
+     * @example false
+     */
+    isAutoPosition?: boolean,
     /**
      * Стилизация позиционирования.
      * При значении "top" верхняя часть шапки будет закруглена.
@@ -148,6 +153,20 @@ function Accordion(props: IAccordionProps) {
 
     const AccordionView = components.ui.getView(props.view || 'content.AccordionView');
 
+    const getAccordionItemPosition = (accordionItemIndex: number): string | null => {
+        // Если необходимо, автоматически скругляем первый и последний AccordionItem
+        if (props.isAutoPosition) {
+            if (accordionItemIndex === 0) {
+                return 'top';
+            }
+            if (accordionItemIndex === (props.children.length - 1)) {
+                return 'bottom';
+            }
+            return 'middle';
+        }
+        return null;
+    };
+
     return (
         <AccordionView {...viewProps}>
             {
@@ -161,11 +180,16 @@ function Accordion(props: IAccordionProps) {
                     isShowMore: (selectedAccordionItems || []).includes(index),
                     icon: props.icon,
                     showIcon: props.showIcon,
+                    position: getAccordionItemPosition(index),
                     ...child.props,
                 }))
             }
         </AccordionView>
     );
 }
+
+Accordion.defaultProps = {
+    isAutoPosition: true,
+};
 
 export default Accordion;

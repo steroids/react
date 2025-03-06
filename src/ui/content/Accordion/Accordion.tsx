@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useMemo} from 'react';
+import {useMemo, useCallback} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface IAccordionIcon {
@@ -36,7 +36,7 @@ export interface IAccordionProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
-    children?: React.ReactNode,
+    children?: React.ReactNode[],
 
     /**
      * Переводит Accordion в выключенное состояние
@@ -81,6 +81,13 @@ export interface IAccordionProps extends IUiComponent {
      * }
      */
     onChange?: () => void,
+
+    /**
+     * Флаг, отвечающий за автоматическое добавление position: "top" к первому AccordionItem и position: "bottom" к последнему
+     * По умолчанию true
+     * @example false
+     */
+    isAutoPosition?: boolean,
 
     /**
      * Стилизация позиционирования.
@@ -148,6 +155,17 @@ function Accordion(props: IAccordionProps) {
 
     const AccordionView = components.ui.getView(props.view || 'content.AccordionView');
 
+    const getAccordionItemPosition = useCallback((accordionItemIndex: number): string => {
+        // Если необходимо, автоматически скругляем первый и последний AccordionItem
+        if (accordionItemIndex === 0) {
+            return 'top';
+        }
+        if (accordionItemIndex === (props.children.length - 1)) {
+            return 'bottom';
+        }
+        return 'middle';
+    }, [props.children]);
+
     return (
         <AccordionView {...viewProps}>
             {
@@ -161,11 +179,16 @@ function Accordion(props: IAccordionProps) {
                     isShowMore: (selectedAccordionItems || []).includes(index),
                     icon: props.icon,
                     showIcon: props.showIcon,
+                    position: props.isAutoPosition && getAccordionItemPosition(index),
                     ...child.props,
                 }))
             }
         </AccordionView>
     );
 }
+
+Accordion.defaultProps = {
+    isAutoPosition: true,
+};
 
 export default Accordion;

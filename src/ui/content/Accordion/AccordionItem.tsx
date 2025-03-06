@@ -9,7 +9,6 @@ function AccordionItem(props: IAccordionItemProps) {
 
 AccordionItem.defaultProps = {
     title: 'Accordion',
-    positionStyle: 'top',
     theme: 'light',
     showIcon: true,
 } as IAccordionItemViewProps;

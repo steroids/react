@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useMemo} from 'react';
+import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useComponents} from '../../../hooks';
 
 export interface IAccordionIcon {
@@ -174,5 +175,9 @@ function Accordion(props: IAccordionProps) {
         </AccordionView>
     );
 }
+
+Accordion.defaultProps = {
+    isInitialOpenAll: false,
+};
 
 export default Accordion;

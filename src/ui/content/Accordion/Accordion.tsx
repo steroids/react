@@ -93,6 +93,11 @@ export interface IAccordionProps extends IUiComponent {
      * Отображать ли иконку у AccordionItem
      */
     showIcon?: boolean,
+
+    /**
+     * Изначально отображать все элементы раскрытыми
+     */
+    isInitialOpenAll?: boolean,
 }
 
 export interface IAccordionItemProps extends Omit<IAccordionProps, 'onChange'> {
@@ -107,7 +112,9 @@ export type IAccordionViewProps = Pick<IAccordionProps, 'children' | 'className'
 export type IAccordionItemViewProps = IAccordionItemProps & IUiComponent;
 
 function Accordion(props: IAccordionProps) {
-    const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
+    const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>(() => props.isInitialOpenAll
+        ? React.Children.map(props.children, (_, index) => index) || []
+        : []);
 
     React.useEffect(() => {
         if (props.onChange) {

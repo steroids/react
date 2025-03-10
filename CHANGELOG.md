@@ -1,6 +1,11 @@
 # Changelog
 
-## v3.0.50 (14.01.2025)
+## v3.0.51 (10.03.2025)
+
+### Added
+
+- Добавлен debounce в `InputField` и `NumberField`
+- Добавлена флаг для раскрытия всех элементов `Accordion`
 
 ### Fixed
 

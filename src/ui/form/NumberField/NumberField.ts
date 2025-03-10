@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
-import React, {ChangeEvent, useMemo, useCallback} from 'react';
-import {IBaseFieldProps} from '../InputField/InputField';
+import React, {ChangeEvent, useCallback, useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import useInputTypeNumber from './hooks/useInputTypeNumber';
 import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
+import useInputTypeNumber from './hooks/useInputTypeNumber';
 
 const DEFAULT_STEP = 1;
 
@@ -69,7 +69,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition({
+    const {inputRef: currentInputRef, onChange: onChangeSavingCursorPosition} = useSaveCursorPosition({
         inputParams: props.input,
         onChangeCallback: props.onChange,
         debounce: {
@@ -77,6 +77,11 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
         },
     });
+
+    const onChange = useCallback((event:ChangeEvent<HTMLInputElement>, value?: any) => {
+        const newValue = value ?? event.target.value;
+        onChangeSavingCursorPosition(event, newValue === '' ? '' : Number(newValue));
+    }, [onChangeSavingCursorPosition]);
 
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 
@@ -105,20 +110,25 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             newValue = fixToDecimal(currentValue - step);
         }
 
-        onChange(null, String(newValue));
+        onChange(null, newValue);
     }, [currentInputRef, onChange, props.decimal, step]);
 
     const onStepUp = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) + step > props.max)) {
+        const newValue = Number(currentInputRef.current.value) + step;
+        const isLessThanMaximum = !(newValue > props.max);
+        if (isLessThanMaximum) {
             onStep(true);
         }
     }, [currentInputRef, onStep, props.max, step]);
 
     const onStepDown = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) - step < props.min)) {
+        const newValue = Number(currentInputRef.current.value) - step;
+        const isMoreThanMinimum = !(newValue < props.min);
+        const isNegative = !(!props.isCanBeNegative && newValue < 0);
+        if (isMoreThanMinimum && isNegative) {
             onStep(false);
         }
-    }, [currentInputRef, onStep, props.min, step]);
+    }, [currentInputRef, onStep, props.min, props.isCanBeNegative, step]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {

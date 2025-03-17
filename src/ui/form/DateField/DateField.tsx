@@ -3,6 +3,7 @@ import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {IAbsolutePositioningInputProps} from '@steroidsjs/core/hooks/useAbsolutePositioning';
+import {DayPickerProps} from 'react-day-picker';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import {useComponents} from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
@@ -32,6 +33,15 @@ export interface IDateFieldProps extends IDateInputStateInput, IUiComponent, Pic
     calendarProps?: ICalendarProps,
 
     /**
+     * Свойства для компонента DayPickerInput
+     * @example
+     * {
+     *   showWeekNumbers: true
+     * }
+     */
+    pickerProps?: DayPickerProps | any,
+
+    /**
      * Опции маски для поля ввода
      */
     maskOptions?: MaskitoOptions,
@@ -40,7 +50,7 @@ export interface IDateFieldProps extends IDateInputStateInput, IUiComponent, Pic
 }
 
 export interface IDateFieldViewProps extends IDateInputStateOutput,
-    Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps' | 'autoPositioning'> {
+    Pick<IDateFieldProps, 'size' | 'icon' | 'errors' | 'showRemove' | 'className' | 'calendarProps' | 'autoPositioning' | 'pickerProps'> {
 
     /**
      * Ref для input элемента, который накладывает маску
@@ -90,6 +100,7 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         onClose,
         isOpened,
         inputProps,
+        pickerProps: props.pickerProps,
         size: props.size,
         icon: props.icon,
         errors: props.errors,
@@ -100,8 +111,8 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         style: props.style,
         autoPositioning: props.autoPositioning,
         maskInputRef,
-    }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className,
-        props.disabled, props.errors, props.icon, props.label, props.showRemove, props.size, props.style, props.viewProps]);
+    }), [props.viewProps, props.pickerProps, props.size, props.icon, props.errors, props.label, props.disabled, props.className,
+        props.showRemove, props.style, props.autoPositioning, calendarProps, onClear, onClose, isOpened, inputProps, maskInputRef]);
 
     return components.ui.renderView(props.view || 'form.DateFieldView', viewProps);
 }

@@ -2,6 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
+import {DayPickerProps} from 'react-day-picker';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import {useComponents} from '../../../hooks';
@@ -37,12 +38,10 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      * Свойства для компонента DayPickerInput
      * @example
      * {
-     *  dayPickerProps: {
      *   showWeekNumbers: true
-     *  }
      * }
      */
-    pickerProps?: any,
+    pickerProps?: DayPickerProps | any,
 
     /**
      * Формат даты показываемый пользователю
@@ -123,7 +122,7 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
-        | 'noBorder' | 'style'> {
+        | 'noBorder' | 'style' | 'pickerProps'> {
     inputPropsFrom?: any,
     inputPropsTo?: any,
     errorsFrom?: string[],
@@ -252,6 +251,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         onClear,
         onClose,
         calendarProps,
+        pickerProps: props.pickerProps,
         icon: props.icon,
         size: props.size,
         disabled: props.disabled,
@@ -263,7 +263,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         style: props.style,
-    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear,
+    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, props.pickerProps,
         onClose, props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size, props.style]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);

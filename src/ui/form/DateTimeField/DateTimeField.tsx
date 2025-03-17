@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
+import {DayPickerProps} from 'react-day-picker';
 import useDateTime from '../DateField/useDateTime';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateInputState, {
@@ -38,6 +39,15 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
     maskOptions?: MaskitoOptions,
 
     /**
+     * Свойства для компонента DayPickerInput
+     * @example
+     * {
+     *   showWeekNumbers: true
+     * }
+     */
+    pickerProps?: DayPickerProps | any,
+
+    /**
      * Разделитель для даты и времени, не влияет на отображение
      */
     dateTimeSeparator?: string,
@@ -46,7 +56,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
 }
 
 export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
-    Pick<IDateTimeFieldProps, 'size' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'timePanelViewProps'> {
+    Pick<IDateTimeFieldProps, 'size' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'timePanelViewProps' | 'pickerProps'> {
     /**
      * Ref для input элемента, который накладывает маску
      */
@@ -124,6 +134,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         inputProps,
         calendarProps,
         timePanelViewProps,
+        pickerProps: props.pickerProps,
         placeholder: props.placeholder,
         size: props.size,
         icon: props.icon,
@@ -133,7 +144,7 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         style: props.style,
     }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors, props.icon,
-        props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps]);
+        props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps, props.pickerProps]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', viewProps);
 }

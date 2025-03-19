@@ -100,8 +100,10 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         style: props.style,
         autoPositioning: props.autoPositioning,
         maskInputRef,
-    }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className,
-        props.disabled, props.errors, props.icon, props.label, props.showRemove, props.size, props.style, props.viewProps]);
+        id: props.id,
+    }), [props.viewProps, props.size, props.icon, props.errors, props.label, props.disabled,
+        props.className, props.showRemove, props.style, props.autoPositioning, props.id,
+        calendarProps, onClear, onClose, isOpened, inputProps, maskInputRef]);
 
     return components.ui.renderView(props.view || 'form.DateFieldView', viewProps);
 }

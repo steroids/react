@@ -207,9 +207,10 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         disabled: props.disabled,
         showRemove: props.showRemove,
         className: props.className,
+        id: props.id,
     }), [extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
-        props.disabled, props.errors, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size, props.style,
-        props.viewProps, timePanelFromViewProps, timePanelToViewProps]);
+        props.disabled, props.errors, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove, props.size,
+        props.style, props.viewProps, timePanelFromViewProps, timePanelToViewProps]);
 
     return components.ui.renderView(props.view || 'form.TimeRangeFieldView', viewProps);
 }

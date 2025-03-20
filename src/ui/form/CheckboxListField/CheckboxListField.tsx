@@ -118,10 +118,10 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         selectedIds,
         setSelectedIds,
     } = useDataSelect({
-        selectedIds: inputSelectedIds,
-        multiple: props.multiple,
-        primaryKey: props.primaryKey,
         selectFirst: props.selectFirst,
+        selectedIds: inputSelectedIds,
+        primaryKey: props.primaryKey,
+        multiple: props.multiple,
         items,
         inputValue: props.input.value,
     });
@@ -162,14 +162,19 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         }
     }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
-    const CheckboxFieldView = props.itemView || components.ui.getView('form.CheckboxFieldView');
+    const renderCheckbox = useCallback(
+        (checkboxProps) => {
+            const CheckboxFieldView = checkboxProps.view || props.itemView || components.ui.getView('form.CheckboxFieldView');
 
-    const renderCheckbox = useCallback((checkboxProps: ICheckboxFieldViewProps) => (
-        <CheckboxFieldView
-            {...checkboxProps}
-            {...props.itemViewProps}
-        />
-    ), [CheckboxFieldView, props.itemViewProps]);
+            return (
+                <CheckboxFieldView
+                    {...checkboxProps}
+                    {...props.itemViewProps}
+                />
+            );
+        },
+        [components.ui, props.itemView, props.itemViewProps],
+    );
 
     const viewProps = useMemo(() => ({
         items,

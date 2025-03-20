@@ -105,11 +105,13 @@ function RadioListField(props: IRadioListFieldProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.input.onChange, selectedIds]);
 
-    const RadioFieldView = components.ui.getView('form.RadioFieldView');
-
     const renderRadio = useCallback(
-        (radioProps: IRadioFieldViewProps) => <RadioFieldView {...radioProps} />,
-        [RadioFieldView],
+        (radioProps: IRadioFieldViewProps) => {
+            const RadioFieldView = radioProps.view || components.ui.getView('form.RadioFieldView');
+
+            return <RadioFieldView {...radioProps} />;
+        },
+        [components.ui],
     );
 
     const viewProps = useMemo(() => ({

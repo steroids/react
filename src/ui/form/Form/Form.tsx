@@ -2,6 +2,9 @@
 import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
+import _isNill from 'lodash-es/isNil';
+import _isString from 'lodash-es/isString';
+import _isEmpty from 'lodash-es/isEmpty';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
@@ -14,6 +17,8 @@ import {useComponents, useDispatch} from '../../../hooks';
 import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
 import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
+
+const _isEmptyString = (value) => _isString(value) && _isEmpty(value);
 
 /**
  * Form
@@ -397,10 +402,12 @@ function Form(props: IFormProps): JSX.Element {
         }
         let cleanedValues = _cloneDeep(values);
 
+        const registeredFields = components.ui.getRegisteredFields(props.formId) || {};
+
         // Append non touched fields to values object
         if (props.formId) {
-            Object.keys(components.ui.getRegisteredFields(props.formId) || {})
-                .forEach(key => {
+            Object.keys(registeredFields)
+                .forEach((key) => {
                     // Don't set null values for keys in empty array items
                     const keyParts = [];
                     let arrayKey;
@@ -422,6 +429,17 @@ function Form(props: IFormProps): JSX.Element {
                     }
                 });
         }
+
+        // Convert NumberField values to Number
+        Object.entries(registeredFields).forEach(([key, fieldType]) => {
+            if (fieldType === 'NumberField') {
+                const value = _get(cleanedValues, key);
+                if (_isNill(value) || _isEmptyString(value)) {
+                    return;
+                }
+                _set(cleanedValues, key, Number(value));
+            }
+        });
 
         // Clean
         cleanedValues = cleanEmptyObject(cleanedValues);

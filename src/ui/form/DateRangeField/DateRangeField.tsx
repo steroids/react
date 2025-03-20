@@ -137,6 +137,8 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
      * Ref для input элемента, который накладывает маску на поле to
      */
     maskInputFromTo?: React.RefCallback<HTMLElement>,
+
+    id: string,
 }
 
 interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldWrapperOutputProps, 'input' | 'errors'> {
@@ -263,8 +265,12 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         style: props.style,
-    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, props.pickerProps,
-        onClose, props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size, props.style]);
+        id: props.id,
+    }), [
+        calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose,
+        props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.pickerProps, props.showRemove,
+        props.size, props.style,
+    ]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);
 }

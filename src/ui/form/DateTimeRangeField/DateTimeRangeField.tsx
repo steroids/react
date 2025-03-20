@@ -101,6 +101,7 @@ export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
     inputPropsTo?: any,
     errorsFrom?: any,
     errorsTo?: any,
+    id: string,
 }
 
 interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
@@ -284,9 +285,12 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         disabled: props.disabled,
         style: props.style,
-    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose,
-        props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.showRemove, props.size,
-        props.style, timePanelViewProps, props.pickerProps]);
+        id: props.id,
+    }), [
+        calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
+        props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.pickerProps, props.showRemove, props.size, props.style,
+        timePanelViewProps,
+    ]);
 
     return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', viewProps);
 }

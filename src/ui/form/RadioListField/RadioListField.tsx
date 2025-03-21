@@ -1,7 +1,5 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
-import {usePrevious} from 'react-use';
-import _isEqual from 'lodash-es/isEqual';
-import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
+import React, {useMemo} from 'react';
+import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
@@ -9,6 +7,7 @@ import fieldWrapper, {
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {IRadioFieldViewProps} from '../RadioField/RadioField';
+import useListField from '../CheckboxListField/useListField';
 
 /**
  * RadioListField
@@ -50,81 +49,44 @@ export interface IRadioListFieldViewProps extends IFieldWrapperOutputProps {
     disabled?: boolean,
     size?: Size,
     onItemSelect: (id: PrimaryKey | any) => void,
-    renderRadio: (radioProps: IRadioFieldViewProps) => JSX.Element,
+    renderItem: (radioProps: IRadioFieldViewProps) => JSX.Element,
 }
 
 function RadioListField(props: IRadioListFieldProps): JSX.Element {
     const components = useComponents();
 
-    const inputSelectedIds = useMemo(
-        () => props.selectedIds || [].concat(props.input.value || []),
-        [props.input.value, props.selectedIds],
-    );
-
-    // Data provider
-    const {items} = useDataProvider({
-        items: props.items,
-        initialSelectedIds: inputSelectedIds,
-        dataProvider: props.dataProvider,
-    });
-
-    // Data select
     const {
         selectedIds,
-        setSelectedIds,
-    } = useDataSelect({
+        items,
+        inputProps,
+        onItemSelect,
+        renderItem,
+    } = useListField({
+        selectedIds: props.selectedIds,
+        input: props.input,
+        items: props.items,
+        dataProvider: props.dataProvider,
         multiple: props.multiple,
-        selectedIds: inputSelectedIds,
         selectFirst: props.selectFirst,
         primaryKey: props.primaryKey,
-        items,
-        inputValue: props.input.value,
-    });
-
-    const onItemSelect = useCallback((id) => {
-        setSelectedIds(id);
-    }, [setSelectedIds]);
-
-    const inputProps = useMemo(() => ({
-        ...props.inputProps,
-        type: 'radio',
-        name: props.input.name,
+        inputProps: props.inputProps,
         disabled: props.disabled,
-        onChange: (value) => props.input.onChange(value),
-    }), [props.disabled, props.input, props.inputProps]);
-
-    // Sync with form
-    const prevSelectedIds = usePrevious(selectedIds);
-    useEffect(() => {
-        if (!_isEqual(prevSelectedIds || [], selectedIds)) {
-            props.input.onChange.call(null, selectedIds[0]);
-            if (props.onChange) {
-                props.onChange.call(null, selectedIds[0]);
-            }
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.input.onChange, selectedIds]);
-
-    const renderRadio = useCallback(
-        (radioProps: IRadioFieldViewProps) => {
-            const RadioFieldView = radioProps.view || components.ui.getView('form.RadioFieldView');
-
-            return <RadioFieldView {...radioProps} />;
-        },
-        [components.ui],
-    );
+    });
 
     const viewProps = useMemo(() => ({
         items,
         inputProps,
         onItemSelect,
         selectedIds,
-        renderRadio,
+        renderItem,
         orientation: props.orientation,
-        className: props.className,
-        disabled: props.disabled,
         size: props.size,
-    }), [inputProps, items, onItemSelect, props.className, props.disabled, props.orientation, props.size, renderRadio, selectedIds]);
+        disabled: props.disabled,
+        className: props.className,
+        style: props.style,
+        viewProps: props.viewProps,
+    }), [inputProps, items, onItemSelect, props.className, props.disabled, props.orientation,
+        props.size, props.style, props.viewProps, renderItem, selectedIds]);
 
     return components.ui.renderView(props.view || 'form.RadioListFieldView', viewProps);
 }

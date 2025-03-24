@@ -2,7 +2,6 @@ import React, {useCallback, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
-import {DayPickerProps} from 'react-day-picker';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import {useComponents} from '../../../hooks';
@@ -33,15 +32,6 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
      * @example 'toTime'
      */
     attributeTo?: string,
-
-    /**
-     * Свойства для компонента DayPickerInput
-     * @example
-     * {
-     *   showWeekNumbers: true
-     * }
-     */
-    pickerProps?: DayPickerProps | any,
 
     /**
      * Формат даты показываемый пользователю
@@ -122,7 +112,7 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
-        | 'noBorder' | 'style' | 'pickerProps'> {
+        | 'noBorder' | 'style'> {
     inputPropsFrom?: any,
     inputPropsTo?: any,
     errorsFrom?: string[],
@@ -246,14 +236,15 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
         numberOfMonths: 2,
         showFooter: false,
-    }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange,
-        props.inputTo.value, props.valueFormat]);
+        ...props.calendarProps,
+    }), [
+        focus, props.calendarProps, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange, props.inputTo.value, props.valueFormat,
+    ]);
 
     const viewProps = useMemo(() => ({
         onClear,
         onClose,
         calendarProps,
-        pickerProps: props.pickerProps,
         icon: props.icon,
         size: props.size,
         disabled: props.disabled,
@@ -267,9 +258,8 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         style: props.style,
         id: props.id,
     }), [
-        calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose,
-        props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.pickerProps, props.showRemove,
-        props.size, props.style,
+        calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
+        props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove, props.size, props.style,
     ]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);

@@ -2,7 +2,6 @@ import React, {useCallback, useMemo} from 'react';
 import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
-import {DayPickerProps} from 'react-day-picker';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import useDateTime from '../../form/DateField/useDateTime';
@@ -36,15 +35,6 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
      * @example 'toTime'
      */
     attributeTo?: string,
-
-    /**
-     * Свойства для компонента DayPickerInput
-     * @example
-     * {
-     *   showWeekNumbers: true
-     * }
-     */
-    pickerProps?: DayPickerProps | any,
 
     /**
      * Свойства для поля 'from'
@@ -94,7 +84,7 @@ export interface IDateTimeRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
-        | 'noBorder' | 'style' | 'pickerProps'> {
+        | 'noBorder' | 'style'> {
     timePanelViewProps?: any,
     calendarProps?: ICalendarProps,
     inputPropsFrom?: any,
@@ -273,7 +263,6 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         onClose,
         calendarProps,
         timePanelViewProps,
-        pickerProps: props.pickerProps,
         icon: props.icon,
         size: props.size,
         errorsFrom: props.errorsFrom,
@@ -288,7 +277,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         id: props.id,
     }), [
         calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
-        props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.pickerProps, props.showRemove, props.size, props.style,
+        props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove, props.size, props.style,
         timePanelViewProps,
     ]);
 

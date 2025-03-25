@@ -206,7 +206,7 @@ const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppend
         }
 
         // Check already redirected
-        const toPath = buildUrl(redirectPath, routeProps?.match?.params);
+        const toPath = redirectPath + routeProps.location.search;
         if (activePath !== toPath) {
             return (
                 <Redirect

@@ -3,6 +3,7 @@ import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import {IBaseFieldProps} from '../InputField/InputField';
 import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
 import useInputTypeEmail from './hooks/useInputTypeEmail';
+import {FieldEnum} from '../../../enums';
 
 /**
  * EmailField
@@ -74,4 +75,4 @@ EmailField.defaultProps = {
     maskOptions: null,
 };
 
-export default fieldWrapper<IEmailFieldProps>('EmailField', EmailField);
+export default fieldWrapper<IEmailFieldProps>(FieldEnum.EMAIL, EmailField);

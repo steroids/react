@@ -8,6 +8,7 @@ import fieldWrapper, {
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
+import {FieldEnum} from '../../../enums';
 
 export interface ISwitcherItem {
     id: number | string | boolean,
@@ -118,4 +119,4 @@ SwitcherField.defaultProps = {
     errors: null,
 };
 
-export default fieldWrapper<ISwitcherFieldProps>('SwitcherField', SwitcherField);
+export default fieldWrapper<ISwitcherFieldProps>(FieldEnum.SWITCHER, SwitcherField);

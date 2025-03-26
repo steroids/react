@@ -7,6 +7,7 @@ import {useComponents} from '../../../hooks';
 import {FormContext} from '../Form/Form';
 import {IFieldWrapperInputProps} from './fieldWrapper';
 import {Model, ModelAttribute} from '../../../components/MetaComponent';
+import {FieldEnum} from '../../../enums';
 
 /**
  * Field
@@ -62,7 +63,7 @@ function Field(props: IFieldProps): JSX.Element {
     const component = props.component
         || fieldModel.searchField
         || fieldModel.field
-        || 'InputField';
+        || FieldEnum.INPUT;
 
     const ComponentField = _isString(component)
         ? components.ui.getField(`form.${component}`)

@@ -12,6 +12,7 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+import {FieldEnum} from '../../../enums';
 
 /**
  * DateTimeRangeField
@@ -318,5 +319,5 @@ DateTimeRangeField.defaultProps = {
     },
 };
 
-export default fieldWrapper<IDateTimeRangeFieldProps>('DateTimeRangeField', DateTimeRangeField,
+export default fieldWrapper<IDateTimeRangeFieldProps>(FieldEnum.DATE_TIME_RANGE, DateTimeRangeField,
     {attributeSuffixes: ['from', 'to']});

@@ -10,6 +10,7 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+import {FieldEnum} from '../../../enums';
 
 /**
  * DateTimeField
@@ -156,4 +157,4 @@ DateTimeField.defaultProps = {
     }),
 };
 
-export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);
+export default fieldWrapper<IDateTimeFieldProps>(FieldEnum.DATE_TIME, DateTimeField);

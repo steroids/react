@@ -7,6 +7,7 @@ import fieldWrapper, {
 import {useDataProvider} from '../../../hooks';
 
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {FieldEnum} from '../../../enums';
 
 /**
  * NavField
@@ -51,4 +52,4 @@ NavField.defaultProps = {
     },
 };
 
-export default fieldWrapper<INavFieldProps>('NavField', NavField);
+export default fieldWrapper<INavFieldProps>(FieldEnum.NAV, NavField);

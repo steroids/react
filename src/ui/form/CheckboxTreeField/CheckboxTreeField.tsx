@@ -13,6 +13,7 @@ import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProv
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 import {ITreeProps} from '../../nav/Tree/Tree';
+import {FieldEnum} from '../../../enums';
 
 type CheckboxTreeItems = string
     | ({new(): Enum,})
@@ -220,4 +221,4 @@ CheckboxTreeField.defaultProps = {
     collapseChildItems: false,
 };
 
-export default fieldWrapper<ICheckboxTreeFieldProps>('CheckboxTreeField', CheckboxTreeField);
+export default fieldWrapper<ICheckboxTreeFieldProps>(FieldEnum.CHECKBOX_TREE, CheckboxTreeField);

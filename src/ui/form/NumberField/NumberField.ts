@@ -105,20 +105,18 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             newValue = fixToDecimal(currentValue - step);
         }
 
-        onChange(null, String(newValue));
-    }, [currentInputRef, onChange, props.decimal, step]);
+        onInputChange(null, String(newValue));
+    }, [currentInputRef, onInputChange, props.decimal, step]);
 
-    const onStepUp = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) + step > props.max)) {
-            onStep(true);
-        }
-    }, [currentInputRef, onStep, props.max, step]);
+    const onStepUp = useCallback(
+        () => onStep(true),
+        [onStep],
+    );
 
-    const onStepDown = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) - step < props.min)) {
-            onStep(false);
-        }
-    }, [currentInputRef, onStep, props.min, step]);
+    const onStepDown = useCallback(
+        () => onStep(false),
+        [onStep],
+    );
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {

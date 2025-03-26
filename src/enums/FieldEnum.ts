@@ -29,6 +29,8 @@ export default class FieldEnum extends Enum {
 
     static readonly FIELD_LAYOUT = 'FieldLayout';
 
+    static readonly FIELD_LIST = 'FieldList';
+
     static readonly FIELD_SET = 'FieldSet';
 
     static readonly FILE = 'FileField';
@@ -85,6 +87,7 @@ export default class FieldEnum extends Enum {
             [FieldEnum.EMAIL]: 'EmailField',
             [FieldEnum.FIELD]: 'Field',
             [FieldEnum.FIELD_LAYOUT]: 'FieldLayout',
+            [FieldEnum.FIELD_LIST]: 'FieldList',
             [FieldEnum.FIELD_SET]: 'FieldSet',
             [FieldEnum.FILE]: 'FileField',
             [FieldEnum.FORM]: 'Form',

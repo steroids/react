@@ -210,7 +210,7 @@ const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppend
             alwaysAppendParentRoutePath
                 ? redirectPath
                 : buildUrl(redirectPath, routeProps?.match?.params)
-        ) + routeProps.location.search;
+        );
         if (activePath !== toPath) {
             return (
                 <Redirect

@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
+import {FieldEnum} from '../../../enums';
 import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -136,4 +137,4 @@ RadioListField.defaultProps = {
     orientation: 'vertical',
 };
 
-export default fieldWrapper<IRadioListFieldProps>('RadioListField', RadioListField);
+export default fieldWrapper<IRadioListFieldProps>(FieldEnum.RADIO_LIST, RadioListField);

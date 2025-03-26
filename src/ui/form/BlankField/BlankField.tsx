@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 /**
  * BlankField
@@ -30,4 +31,4 @@ function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps): JSX.Ele
     return <span>{props.text || props.children || props.input?.value}</span>;
 }
 
-export default fieldWrapper<IBlankFieldProps>('BlankField', BlankField);
+export default fieldWrapper<IBlankFieldProps>(FieldEnum.BLANK, BlankField);

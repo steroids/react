@@ -2,6 +2,7 @@ import {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
+import {FieldEnum} from '../../../enums';
 
 /**
  * TextField
@@ -85,4 +86,4 @@ TextField.defaultProps = {
     submitOnEnter: false,
 };
 
-export default fieldWrapper<ITextFieldProps>('TextField', TextField);
+export default fieldWrapper<ITextFieldProps>(FieldEnum.TEXT, TextField);

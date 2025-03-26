@@ -5,6 +5,7 @@ import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+import {FieldEnum} from '../../../enums';
 
 export interface IRateFieldItem {
     id: number,
@@ -103,4 +104,4 @@ RateField.defaultProps = {
     disabled: false,
 };
 
-export default fieldWrapper<IRateFieldProps>('RateField', RateField);
+export default fieldWrapper<IRateFieldProps>(FieldEnum.RATE, RateField);

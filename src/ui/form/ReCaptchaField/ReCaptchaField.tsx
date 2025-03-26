@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import {useCallback, useMemo} from 'react';
+import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -132,4 +133,4 @@ function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps):
     return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', viewProps);
 }
 
-export default fieldWrapper<IReCaptchaFieldProps>('ReCaptchaField', ReCaptchaField);
+export default fieldWrapper<IReCaptchaFieldProps>(FieldEnum.RE_CAPTCHA, ReCaptchaField);

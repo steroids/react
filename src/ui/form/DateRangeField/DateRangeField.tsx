@@ -10,6 +10,7 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 /**
  * DateRangeField
@@ -294,5 +295,5 @@ DateRangeField.defaultProps = {
     },
 };
 
-export default fieldWrapper<IDateRangeFieldProps>('DateRangeField', DateRangeField,
+export default fieldWrapper<IDateRangeFieldProps>(FieldEnum.DATE_RANGE, DateRangeField,
     {attributeSuffixes: ['from', 'to']});

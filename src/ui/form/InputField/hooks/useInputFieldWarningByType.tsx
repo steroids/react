@@ -3,25 +3,26 @@
 /* eslint-disable no-unused-expressions */
 import {useMount} from 'react-use';
 import {IElementInputType} from '../InputField';
+import {FieldEnum} from '../../../../enums';
 
 export const INPUT_TYPES_SUPPORTED_SELECTION = ['text', 'search', 'tel', 'url', 'password'];
 
 const INPUT_TYPES_REPLACEMENT_HASH = {
-    email: 'EmailField',
-    date: 'DateField',
-    month: 'DateField',
+    email: FieldEnum.EMAIL,
+    date: FieldEnum.DATE,
+    month: FieldEnum.DATE,
     week: 'CalendarSystem',
-    time: 'DateTimeField',
-    'datetime-local': 'DateField',
-    number: 'NumberField',
-    range: 'SliderField',
+    time: FieldEnum.DATE_TIME,
+    'datetime-local': FieldEnum.DATE,
+    number: FieldEnum.NUMBER,
+    range: FieldEnum.SLIDER,
     checkbox: 'CheckboxField',
-    radio: 'RadioField',
-    button: 'Button',
-    file: 'FileField',
-    submit: 'Button',
-    image: 'Button',
-    reset: 'Button',
+    radio: FieldEnum.PASSWORD,
+    button: FieldEnum.BUTTON,
+    file: FieldEnum.FILE,
+    submit: FieldEnum.BUTTON,
+    image: FieldEnum.BUTTON,
+    reset: FieldEnum.BUTTON,
 };
 
 export const useInputFieldWarningByType = (type: IElementInputType) => {

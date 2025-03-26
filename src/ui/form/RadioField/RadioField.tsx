@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 /**
  * RadioField
@@ -74,4 +75,4 @@ RadioField.defaultProps = {
     inputProps: {},
 };
 
-export default fieldWrapper<IRadioFieldProps>('RadioField', RadioField);
+export default fieldWrapper<IRadioFieldProps>(FieldEnum.RADIO, RadioField);

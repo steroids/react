@@ -9,6 +9,7 @@ import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '.
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
+import {FieldEnum} from '../../../enums';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -237,4 +238,4 @@ InputField.defaultProps = {
     maskOptions: null,
 };
 
-export default fieldWrapper<IInputFieldProps>('InputField', InputField);
+export default fieldWrapper<IInputFieldProps>(FieldEnum.INPUT, InputField);

@@ -1,3 +1,5 @@
+import {FieldEnum} from '../enums';
+
 /**
  * Мета информация о моделе
  */
@@ -172,48 +174,48 @@ export default class MetaComponent implements IMetaComponent {
         return {
             autoTime: {
                 jsType: 'string',
-                field: 'DateTimeField',
+                field: FieldEnum.DATE_TIME,
                 formatter: 'DateTimeFormatter',
             },
             boolean: {
                 jsType: 'boolean',
-                field: 'CheckboxField',
+                field: FieldEnum.CHECKBOX,
                 formatter: 'BooleanFormatter',
             },
             dateTime: {
                 jsType: 'string',
-                field: 'DateTimeField',
+                field: FieldEnum.DATE_TIME,
                 formatter: 'DateTimeFormatter',
             },
             date: {
                 jsType: 'string',
-                field: 'DateField',
+                field: FieldEnum.DATE,
                 formatter: 'DateFormatter',
             },
             double: {
                 jsType: 'number',
-                field: 'NumberField',
+                field: FieldEnum.NUMBER,
             },
             email: {
                 jsType: 'string',
-                field: 'InputField',
+                field: FieldEnum.INPUT,
                 fieldProps: {
                     type: 'email',
                 },
             },
             enum: {
                 jsType: 'string',
-                field: 'DropDownField',
+                field: FieldEnum.DROPDOWN,
                 formatter: 'EnumFormatter',
             },
             file: {
                 jsType: 'number',
-                field: 'FileField',
+                field: FieldEnum.FILE,
                 // TODO formatter: 'FileFormatter',
             },
             files: {
                 jsType: 'number[]',
-                field: 'FileField',
+                field: FieldEnum.FILE,
                 fieldProps: {
                     multiple: true,
                 },
@@ -221,27 +223,27 @@ export default class MetaComponent implements IMetaComponent {
             },
             html: {
                 jsType: 'string',
-                field: 'HtmlField',
+                field: FieldEnum.HTML,
                 // TODO formatter: 'HtmlFormatter',
             },
             integer: {
                 jsType: 'number',
-                field: 'NumberField',
+                field: FieldEnum.NUMBER,
             },
             password: {
                 jsType: 'string',
-                field: 'PasswordField',
+                field: FieldEnum.PASSWORD,
             },
             phone: {
                 jsType: 'string',
-                field: 'InputField',
+                field: FieldEnum.INPUT,
                 fieldProps: {
                     type: 'phone',
                 },
             },
             primaryKey: {
                 jsType: 'number',
-                field: 'InputField',
+                field: FieldEnum.INPUT,
                 fieldProps: {
                     type: 'hidden',
                 },
@@ -251,7 +253,7 @@ export default class MetaComponent implements IMetaComponent {
             },
             string: {
                 jsType: 'string',
-                field: 'InputField',
+                field: FieldEnum.INPUT,
             },
             text: {
                 jsType: 'string',
@@ -259,7 +261,7 @@ export default class MetaComponent implements IMetaComponent {
             },
             time: {
                 jsType: 'string',
-                field: 'TimeField',
+                field: FieldEnum.TIME,
                 formatter: 'TimeFormatter',
             },
         };

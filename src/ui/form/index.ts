@@ -32,6 +32,8 @@ import TextField from './TextField';
 import TimeField from './TimeField';
 import TimeRangeField from './TimeRangeField';
 import WizardForm from './WizardForm';
+import SwitcherField from './SwitcherField';
+import SwitcherListField from './SwitcherListField';
 
 export {
     AutoCompleteField,
@@ -68,6 +70,8 @@ export {
     EmailField,
     TimeRangeField,
     WizardForm,
+    SwitcherField,
+    SwitcherListField,
 };
 
 export default {
@@ -105,4 +109,6 @@ export default {
     EmailField,
     TimeRangeField,
     WizardForm,
+    SwitcherField,
+    SwitcherListField,
 };

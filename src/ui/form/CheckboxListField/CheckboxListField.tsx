@@ -95,6 +95,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, I
     disabled?: boolean,
     renderItem: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
     size?: Size,
+    className?: string,
 }
 
 function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {

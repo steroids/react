@@ -5,7 +5,7 @@ import {DataProviderItems, IDataProvider} from '@steroidsjs/core/hooks/useDataPr
 import {usePrevious, useUpdateEffect} from 'react-use';
 import {IInputParams} from '../Field/fieldWrapper';
 
-interface IProps {
+interface IUseListFieldProps {
     selectedIds: (PrimaryKey | any)[],
     input?: IInputParams,
     items?: DataProviderItems,
@@ -20,7 +20,7 @@ interface IProps {
     itemViewProps?: CustomViewProps,
 }
 
-export default function useListField(props: IProps) {
+export default function useListField(props: IUseListFieldProps) {
     const components = useComponents();
 
     const inputSelectedIds = useMemo(

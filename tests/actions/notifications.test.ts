@@ -80,6 +80,22 @@ describe('actions notifications', () => {
                 store.dispatch(showNotification(message, level));
                 expect(store.getActions()).toEqual(expectedActions);
             });
+
+            it('with empty params argument', () => {
+                const message = 'You are the best';
+                const level = 'error';
+
+                const expectedActions = [{
+                    type: NOTIFICATIONS_SHOW,
+                    id: '3',
+                    message,
+                    level,
+                    position: 'top-right',
+                }];
+
+                store.dispatch(showNotification(message, level, {}));
+                expect(store.getActions()).toEqual(expectedActions);
+            });
         });
 
         describe('setFlashes', () => {
@@ -93,7 +109,7 @@ describe('actions notifications', () => {
                 const expectedActions = [
                     {
                         type: NOTIFICATIONS_SHOW,
-                        id: '3',
+                        id: '4',
                         message: infoMessage,
                         level: 'info',
                         position: 'top-right',

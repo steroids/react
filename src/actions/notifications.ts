@@ -22,9 +22,12 @@ export const closeNotification = (id: string | null = null) => ({
 export const showNotification = (
     message: string,
     level: ColorName = null,
-    params: IShowNotificationParameters = showNotificationDefaults,
+    params?: IShowNotificationParameters,
 ) => dispatch => {
-    const {position, timeOut} = params as IShowNotificationParameters;
+    const {position, timeOut} = {
+        ...showNotificationDefaults,
+        ...params,
+    } as IShowNotificationParameters;
     const id = _uniqueId();
 
     dispatch({

@@ -108,23 +108,13 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         onInputChange(null, String(newValue));
     }, [currentInputRef, onInputChange, props.decimal, step]);
 
-    const onStepUp = useCallback(
-        () => onStep(true),
-        [onStep],
-    );
-
-    const onStepDown = useCallback(
-        () => onStep(false),
-        [onStep],
-    );
-
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {
-            onStepUp();
+            onStep(true);
         } else if (event.key === 'ArrowDown') {
-            onStepDown();
+            onStep(false);
         }
-    }, [onStepDown, onStepUp]);
+    }, [onStep]);
 
     const inputProps = useMemo(() => ({
         ...props.inputProps,
@@ -144,8 +134,8 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const viewProps = useMemo(() => ({
         viewProps: props.viewProps,
         inputProps,
-        onStepUp,
-        onStepDown,
+        onStepUp: () => onStep(true),
+        onStepDown: () => onStep(false),
         input: props.input,
         inputRef: currentInputRef,
         size: props.size,
@@ -153,7 +143,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         className: props.className,
         disabled: props.disabled,
         id: props.id,
-    }), [currentInputRef, inputProps, onStepDown, onStepUp, props]);
+    }), [currentInputRef, inputProps, onStep, props.className, props.disabled, props.errors, props.id, props.input, props.size, props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);
 }

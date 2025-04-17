@@ -405,30 +405,28 @@ function Form(props: IFormProps): JSX.Element {
         const registeredFields = components.ui.getRegisteredFields(props.formId) || {};
 
         // Append non touched fields to values object
-        if (props.formId) {
-            Object.keys(registeredFields)
-                .forEach((key) => {
-                    // Don't set null values for keys in empty array items
-                    const keyParts = [];
-                    let arrayKey;
-                    key.split('.').find(keyPart => {
-                        if (keyParts.length > 0 && Array.isArray(_get(cleanedValues, keyParts))) {
-                            keyParts.push(keyPart);
-                            arrayKey = keyParts.join('.');
-                            return true;
-                        }
+        Object.keys(registeredFields)
+            .forEach((key) => {
+                // Don't set null values for keys in empty array items
+                const keyParts = [];
+                let arrayKey;
+                key.split('.').find(keyPart => {
+                    if (keyParts.length > 0 && Array.isArray(_get(cleanedValues, keyParts))) {
                         keyParts.push(keyPart);
-                        return false;
-                    });
-                    if (arrayKey && !_get(cleanedValues, arrayKey)) {
-                        return;
+                        arrayKey = keyParts.join('.');
+                        return true;
                     }
-
-                    if (_isUndefined(_get(cleanedValues, key))) {
-                        _set(cleanedValues, key, null);
-                    }
+                    keyParts.push(keyPart);
+                    return false;
                 });
-        }
+                if (arrayKey && !_get(cleanedValues, arrayKey)) {
+                    return;
+                }
+
+                if (_isUndefined(_get(cleanedValues, key))) {
+                    _set(cleanedValues, key, null);
+                }
+            });
 
         // Convert NumberField values to Number
         Object.entries(registeredFields).forEach(([key, fieldType]) => {

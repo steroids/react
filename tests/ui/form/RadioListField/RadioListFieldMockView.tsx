@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {useBem} from '../../../../src/hooks';
-import {IRadioListFieldViewProps} from '../../../../src/ui/form/RadioListField/RadioListField';
-import useUniqueId from '../../../../src/hooks/useUniqueId';
 
-export default function RadioListFieldView(props: IRadioListFieldViewProps) {
+import {ICheckboxListFieldViewProps} from '../../../../src/ui/form/CheckboxListField/CheckboxListField';
+import useUniqueId from '../../../../src/hooks/useUniqueId';
+import {useBem} from '../../../../src/hooks';
+
+export default function RadioListFieldView(props: ICheckboxListFieldViewProps) {
     const bem = useBem('RadioListFieldView');
     const prefix = useUniqueId('radio');
 
@@ -15,21 +16,21 @@ export default function RadioListFieldView(props: IRadioListFieldViewProps) {
             props.className,
         )}
         >
-            {props.items.map((radio, radioIndex) => props.renderRadio({
+            {props.items.map((radio, radioIndex) => props.renderItem({
+                key: radioIndex,
+                id: `${prefix}_${radio.id}`,
+                label: radio.label,
                 inputProps: {
                     name: `${prefix}_${radio.id}`,
-                    checked: false,
                     type: 'radio',
-                    disabled: false,
+                    checked: props.selectedIds.includes(radio.id),
                     onChange: () => {
                         props.onItemSelect(radio.id);
                     },
+                    disabled: props.disabled || radio.disabled,
                 },
-                checked: props.selectedIds.includes(radio.id),
-                label: radio.label,
-                id: `${prefix}_${radio.id}`,
-                key: radioIndex,
-                size: props.size,
+                size: radio.size || props.size,
+                required: radio.required,
             }))}
         </div>
     );

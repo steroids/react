@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import SwitcherField, {ISwitcherFieldProps} from '../../../../src/ui/form/SwitcherField/SwitcherField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
+import SwitcherField from '../../../../src/ui/form/SwitcherField/SwitcherField';
 import SwitcherFieldMockView from './SwitcherFieldMockView';
 
 describe('SwitcherField tests', () => {
@@ -12,11 +12,6 @@ describe('SwitcherField tests', () => {
         width: '30px',
     };
 
-    const itemWithDefaultLabel = {
-        id: 1,
-        label: 'First',
-    };
-
     const itemWithObjectLabel = {
         id: 2,
         label: {
@@ -25,24 +20,11 @@ describe('SwitcherField tests', () => {
         },
     };
 
-    const items = [
-        itemWithDefaultLabel, itemWithObjectLabel,
-    ];
-
-    const props: ISwitcherFieldProps = {
+    const props = {
         view: SwitcherFieldMockView,
         className: externalClassName,
         style: externalStyles,
-        items,
         size: 'lg',
-
-        inputProps: {
-            name: 'switcher-test',
-            type: 'checkbox',
-            checked: false,
-            onChange: () => { },
-            disabled: false,
-        },
     };
 
     it('should be in the document', () => {
@@ -59,28 +41,19 @@ describe('SwitcherField tests', () => {
         expect(switcherField).toHaveStyle(externalStyles);
     });
 
-    it('should have items', () => {
-        const {container} = render(JSXWrapper(SwitcherField, props));
-        const switcherItems = container.querySelectorAll(`.${expectedSwitcherFieldClassName}__switcher`);
-        expect(switcherItems.length).toBe(items.length);
-    });
-
-    it('items should have correct size', () => {
-        const {container} = render(JSXWrapper(SwitcherField, props));
-        const switcherItems = container.querySelectorAll(`.${expectedSwitcherFieldClassName}__switcher_size_${props.size}`);
-        expect(switcherItems.length).toBe(items.length);
-    });
-
     it('should item with object label change label after click', () => {
         const {container, getByText} = render(JSXWrapper(SwitcherField, {
             ...props,
-            items: [itemWithObjectLabel],
+            label: {
+                checked: 'checkedLabel',
+                unchecked: 'uncheckedLabel',
+            },
         }));
 
         const switcherItemWithUncheckedLabel = getByText(itemWithObjectLabel.label.unchecked);
         expect(switcherItemWithUncheckedLabel).toBeInTheDocument();
 
-        const switcherItemInput = getElementByClassName(container, `${expectedSwitcherFieldClassName}__input`);
+        const switcherItemInput = getElementByTag(container, 'input');
         fireEvent.click(switcherItemInput);
 
         const switcherItemWithCheckedLabel = getByText(itemWithObjectLabel.label.checked);

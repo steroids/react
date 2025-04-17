@@ -444,7 +444,7 @@ function Form(props: IFormProps): JSX.Element {
         // Add captcha token
         let captchaAttribute = null;
         Object.entries(components.ui.getRegisteredFields(props.formId) || {}).forEach(([attribute, fieldType]) => {
-            if (fieldType === FieldEnum.RE_CAPTCHA) {
+            if (fieldType === FieldEnum.RE_CAPTCHA_FIELD) {
                 captchaAttribute = attribute;
             }
         });

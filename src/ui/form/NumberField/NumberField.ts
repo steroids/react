@@ -167,4 +167,4 @@ NumberField.defaultProps = {
     isCanBeNegative: true,
 };
 
-export default fieldWrapper<INumberFieldProps>(FieldEnum.NUMBER, NumberField);
+export default fieldWrapper<INumberFieldProps>(FieldEnum.NUMBER_FIELD, NumberField);

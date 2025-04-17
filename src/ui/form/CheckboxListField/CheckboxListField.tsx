@@ -209,4 +209,4 @@ CheckboxListField.defaultProps = {
     orientation: 'vertical',
 };
 
-export default fieldWrapper<ICheckboxListFieldProps>(FieldEnum.CHECKBOX_LIST, CheckboxListField);
+export default fieldWrapper<ICheckboxListFieldProps>(FieldEnum.CHECKBOX_LIST_FIELD, CheckboxListField);

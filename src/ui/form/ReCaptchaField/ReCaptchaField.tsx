@@ -133,4 +133,4 @@ function ReCaptchaField(props: IReCaptchaFieldProps & IFieldWrapperOutputProps):
     return components.ui.renderView(props.view || 'form.ReCaptchaFieldView', viewProps);
 }
 
-export default fieldWrapper<IReCaptchaFieldProps>(FieldEnum.RE_CAPTCHA, ReCaptchaField);
+export default fieldWrapper<IReCaptchaFieldProps>(FieldEnum.RE_CAPTCHA_FIELD, ReCaptchaField);

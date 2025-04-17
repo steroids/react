@@ -86,4 +86,4 @@ TextField.defaultProps = {
     submitOnEnter: false,
 };
 
-export default fieldWrapper<ITextFieldProps>(FieldEnum.TEXT, TextField);
+export default fieldWrapper<ITextFieldProps>(FieldEnum.TEXT_FIELD, TextField);

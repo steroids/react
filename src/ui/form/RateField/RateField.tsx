@@ -104,4 +104,4 @@ RateField.defaultProps = {
     disabled: false,
 };
 
-export default fieldWrapper<IRateFieldProps>(FieldEnum.RATE, RateField);
+export default fieldWrapper<IRateFieldProps>(FieldEnum.RATE_FIELD, RateField);

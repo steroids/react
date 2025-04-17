@@ -229,6 +229,6 @@ TimeRangeField.defaultProps = {
     icon: true,
 };
 
-export default fieldWrapper<ITimeRangeFieldProps>(FieldEnum.TIME_RANGE, TimeRangeField, {
+export default fieldWrapper<ITimeRangeFieldProps>(FieldEnum.TIME_RANGE_FIELD, TimeRangeField, {
     attributeSuffixes: ['from', 'to'],
 });

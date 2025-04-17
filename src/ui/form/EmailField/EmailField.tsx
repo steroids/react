@@ -75,4 +75,4 @@ EmailField.defaultProps = {
     maskOptions: null,
 };
 
-export default fieldWrapper<IEmailFieldProps>(FieldEnum.EMAIL, EmailField);
+export default fieldWrapper<IEmailFieldProps>(FieldEnum.EMAIL_FIELD, EmailField);

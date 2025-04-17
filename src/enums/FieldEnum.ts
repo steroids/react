@@ -1,113 +1,101 @@
 import Enum from '../base/Enum';
 
 export default class FieldEnum extends Enum {
-    static readonly AUTO_COMPLETE = 'AutoCompleteField';
+    static readonly AUTO_COMPLETE_FIELD = 'AutoCompleteField';
 
-    static readonly BLANK = 'BlankField';
+    static readonly BLANK_FIELD = 'BlankField';
 
-    static readonly BUTTON = 'Button';
+    static readonly CHECKBOX_FIELD = 'CheckboxField';
 
-    static readonly CHECKBOX = 'CheckboxField';
+    static readonly CHECKBOX_LIST_FIELD = 'CheckboxListField';
 
-    static readonly CHECKBOX_LIST = 'CheckboxListField';
+    static readonly CHECKBOX_TREE_FIELD = 'CheckboxTreeField';
 
-    static readonly CHECKBOX_TREE = 'CheckboxTreeField';
+    static readonly DATE_FIELD = 'DateField';
 
-    static readonly DATE = 'DateField';
+    static readonly DATE_RANGE_FIELD = 'DateRangeField';
 
-    static readonly DATE_RANGE = 'DateRangeField';
+    static readonly DATE_TIME_FIELD = 'DateTimeField';
 
-    static readonly DATE_TIME = 'DateTimeField';
+    static readonly DATE_TIME_RANGE_FIELD = 'DateTimeRangeField';
 
-    static readonly DATE_TIME_RANGE = 'DateTimeRangeField';
+    static readonly DROPDOWN_FIELD = 'DropDownField';
 
-    static readonly DROPDOWN = 'DropDownField';
-
-    static readonly EMAIL = 'EmailField';
+    static readonly EMAIL_FIELD = 'EmailField';
 
     static readonly FIELD = 'Field';
-
-    static readonly FIELD_LAYOUT = 'FieldLayout';
 
     static readonly FIELD_LIST = 'FieldList';
 
     static readonly FIELD_SET = 'FieldSet';
 
-    static readonly FILE = 'FileField';
+    static readonly FILE_FIELD = 'FileField';
 
-    static readonly FORM = 'Form';
+    static readonly HTML_FIELD = 'HtmlField';
 
-    static readonly HTML = 'HtmlField';
+    static readonly IMAGE_FIELD = 'ImageField';
 
-    static readonly IMAGE = 'ImageField';
+    static readonly INPUT_FIELD = 'InputField';
 
-    static readonly INPUT = 'InputField';
+    static readonly MASK_FIELD = 'MaskField';
 
-    static readonly MASK = 'MaskField';
+    static readonly NAV_FIELD = 'NavField';
 
-    static readonly NAV = 'NavField';
+    static readonly NUMBER_FIELD = 'NumberField';
 
-    static readonly NUMBER = 'NumberField';
+    static readonly PASSWORD_FIELD = 'PasswordField';
 
-    static readonly PASSWORD = 'PasswordField';
+    static readonly RADIO_FIELD = 'RadioField';
 
-    static readonly RADIO = 'RadioField';
+    static readonly RADIO_LIST_FIELD = 'RadioListField';
 
-    static readonly RADIO_LIST = 'RadioListField';
+    static readonly RATE_FIELD = 'RateField';
 
-    static readonly RATE = 'RateField';
+    static readonly RE_CAPTCHA_FIELD = 'ReCaptchaField';
 
-    static readonly RE_CAPTCHA = 'ReCaptchaField';
+    static readonly SLIDER_FIELD = 'SliderField';
 
-    static readonly SLIDER = 'SliderField';
+    static readonly SWITCHER_FIELD = 'SwitcherField';
 
-    static readonly SWITCHER = 'SwitcherField';
+    static readonly TEXT_FIELD = 'TextField';
 
-    static readonly TEXT = 'TextField';
+    static readonly TIME_FIELD = 'TimeField';
 
-    static readonly TIME = 'TimeField';
-
-    static readonly TIME_RANGE = 'TimeRangeField';
-
-    static readonly WIZARD_FORM = 'WizardForm';
+    static readonly TIME_RANGE_FIELD = 'TimeRangeField';
 
     static getLabels() {
         return {
-            [FieldEnum.AUTO_COMPLETE]: 'AutoCompleteField',
-            [FieldEnum.BLANK]: 'BlankField',
-            [FieldEnum.BUTTON]: 'Button',
-            [FieldEnum.CHECKBOX]: 'CheckboxField',
-            [FieldEnum.CHECKBOX_LIST]: 'CheckboxListField',
-            [FieldEnum.CHECKBOX_TREE]: 'CheckboxTreeField',
-            [FieldEnum.DATE]: 'DateField',
-            [FieldEnum.DATE_RANGE]: 'DateRangeField',
-            [FieldEnum.DATE_TIME]: 'DateTimeField',
-            [FieldEnum.DATE_TIME_RANGE]: 'DateTimeRangeField',
-            [FieldEnum.DROPDOWN]: 'DropDownField',
-            [FieldEnum.EMAIL]: 'EmailField',
+            [FieldEnum.AUTO_COMPLETE_FIELD]: 'AutoCompleteField',
+            [FieldEnum.BLANK_FIELD]: 'BlankField',
+            [FieldEnum.CHECKBOX_FIELD]: 'CheckboxField',
+            [FieldEnum.CHECKBOX_LIST_FIELD]: 'CheckboxListField',
+            [FieldEnum.CHECKBOX_TREE_FIELD]: 'CheckboxTreeField',
+            [FieldEnum.DATE_FIELD]: 'DateField',
+            [FieldEnum.DATE_RANGE_FIELD]: 'DateRangeField',
+            [FieldEnum.DATE_TIME_FIELD]: 'DateTimeField',
+            [FieldEnum.DATE_TIME_RANGE_FIELD]: 'DateTimeRangeField',
+            [FieldEnum.DROPDOWN_FIELD]: 'DropDownField',
+            [FieldEnum.EMAIL_FIELD]: 'EmailField',
             [FieldEnum.FIELD]: 'Field',
-            [FieldEnum.FIELD_LAYOUT]: 'FieldLayout',
             [FieldEnum.FIELD_LIST]: 'FieldList',
             [FieldEnum.FIELD_SET]: 'FieldSet',
-            [FieldEnum.FILE]: 'FileField',
-            [FieldEnum.FORM]: 'Form',
-            [FieldEnum.HTML]: 'HtmlField',
-            [FieldEnum.IMAGE]: 'ImageField',
-            [FieldEnum.INPUT]: 'InputField',
-            [FieldEnum.MASK]: 'MaskField',
-            [FieldEnum.NAV]: 'NavField',
-            [FieldEnum.NUMBER]: 'NumberField',
-            [FieldEnum.PASSWORD]: 'PasswordField',
-            [FieldEnum.RADIO]: 'RadioField',
-            [FieldEnum.RADIO_LIST]: 'RadioListField',
-            [FieldEnum.RATE]: 'RateField',
-            [FieldEnum.RE_CAPTCHA]: 'ReCaptchaField',
-            [FieldEnum.SLIDER]: 'SliderField',
-            [FieldEnum.SWITCHER]: 'SwitcherField',
-            [FieldEnum.TEXT]: 'TextField',
-            [FieldEnum.TIME]: 'TimeField',
-            [FieldEnum.TIME_RANGE]: 'TimeRangeField',
-            [FieldEnum.WIZARD_FORM]: 'WizardForm',
+            [FieldEnum.FILE_FIELD]: 'FileField',
+            [FieldEnum.HTML_FIELD]: 'HtmlField',
+            [FieldEnum.IMAGE_FIELD]: 'ImageField',
+            [FieldEnum.INPUT_FIELD]: 'InputField',
+            [FieldEnum.MASK_FIELD]: 'MaskField',
+            [FieldEnum.NAV_FIELD]: 'NavField',
+            [FieldEnum.NUMBER_FIELD]: 'NumberField',
+            [FieldEnum.PASSWORD_FIELD]: 'PasswordField',
+            [FieldEnum.RADIO_FIELD]: 'RadioField',
+            [FieldEnum.RADIO_LIST_FIELD]: 'RadioListField',
+            [FieldEnum.RATE_FIELD]: 'RateField',
+            [FieldEnum.RE_CAPTCHA_FIELD]: 'ReCaptchaField',
+            [FieldEnum.SLIDER_FIELD]: 'SliderField',
+            [FieldEnum.SWITCHER_FIELD]: 'SwitcherField',
+            [FieldEnum.TEXT_FIELD]: 'TextField',
+            [FieldEnum.TIME_FIELD]: 'TimeField',
+            [FieldEnum.TIME_RANGE_FIELD]: 'TimeRangeField',
         };
     }
 }

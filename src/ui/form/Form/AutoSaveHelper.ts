@@ -1,8 +1,7 @@
 import _isString from 'lodash-es/isString';
-import {FieldEnum} from '../../../enums';
 
 export default class AutoSaveHelper {
-    static STORAGE_KEY_PREFIX = FieldEnum.FORM;
+    static STORAGE_KEY_PREFIX = 'Form';
 
     static restore(clientStorage, formId, initialValues) {
         const values = clientStorage.get(`${AutoSaveHelper.STORAGE_KEY_PREFIX}_${formId}`) || '';

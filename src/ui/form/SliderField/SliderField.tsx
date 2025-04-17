@@ -160,4 +160,4 @@ SliderField.defaultProps = {
     rangeDefaultValue: [0, 10],
 };
 
-export default fieldWrapper<ISliderFieldProps>(FieldEnum.SLIDER, SliderField);
+export default fieldWrapper<ISliderFieldProps>(FieldEnum.SLIDER_FIELD, SliderField);

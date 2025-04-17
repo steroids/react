@@ -124,4 +124,4 @@ HtmlField.defaultProps = {
     className: '',
 };
 
-export default fieldWrapper<IHtmlFieldProps>(FieldEnum.HTML, HtmlField);
+export default fieldWrapper<IHtmlFieldProps>(FieldEnum.HTML_FIELD, HtmlField);

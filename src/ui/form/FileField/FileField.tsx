@@ -257,4 +257,4 @@ FileField.defaultProps = {
     multiple: false,
 };
 
-export default fieldWrapper<IFileFieldProps>(FieldEnum.FILE, FileField);
+export default fieldWrapper<IFileFieldProps>(FieldEnum.FILE_FIELD, FileField);

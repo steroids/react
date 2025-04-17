@@ -238,4 +238,4 @@ InputField.defaultProps = {
     maskOptions: null,
 };
 
-export default fieldWrapper<IInputFieldProps>(FieldEnum.INPUT, InputField);
+export default fieldWrapper<IInputFieldProps>(FieldEnum.INPUT_FIELD, InputField);

@@ -123,4 +123,4 @@ DateField.defaultProps = {
     }),
 };
 
-export default fieldWrapper<IDateFieldProps>(FieldEnum.DATE, DateField);
+export default fieldWrapper<IDateFieldProps>(FieldEnum.DATE_FIELD, DateField);

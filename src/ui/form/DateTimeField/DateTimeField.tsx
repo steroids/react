@@ -157,4 +157,4 @@ DateTimeField.defaultProps = {
     }),
 };
 
-export default fieldWrapper<IDateTimeFieldProps>(FieldEnum.DATE_TIME, DateTimeField);
+export default fieldWrapper<IDateTimeFieldProps>(FieldEnum.DATE_TIME_FIELD, DateTimeField);

@@ -220,4 +220,4 @@ AutoCompleteField.defaultProps = {
     showClear: false,
 };
 
-export default fieldWrapper<IAutoCompleteFieldProps>(FieldEnum.AUTO_COMPLETE, AutoCompleteField);
+export default fieldWrapper<IAutoCompleteFieldProps>(FieldEnum.AUTO_COMPLETE_FIELD, AutoCompleteField);

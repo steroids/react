@@ -63,7 +63,7 @@ function Field(props: IFieldProps): JSX.Element {
     const component = props.component
         || fieldModel.searchField
         || fieldModel.field
-        || FieldEnum.INPUT;
+        || FieldEnum.INPUT_FIELD;
 
     const ComponentField = _isString(component)
         ? components.ui.getField(`form.${component}`)

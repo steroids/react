@@ -31,4 +31,4 @@ function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps): JSX.Ele
     return <span>{props.text || props.children || props.input?.value}</span>;
 }
 
-export default fieldWrapper<IBlankFieldProps>(FieldEnum.BLANK, BlankField);
+export default fieldWrapper<IBlankFieldProps>(FieldEnum.BLANK_FIELD, BlankField);

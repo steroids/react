@@ -249,4 +249,4 @@ ImageField.defaultProps = {
     },
 };
 
-export default fieldWrapper<IImageFieldProps>(FieldEnum.IMAGE, ImageField);
+export default fieldWrapper<IImageFieldProps>(FieldEnum.IMAGE_FIELD, ImageField);

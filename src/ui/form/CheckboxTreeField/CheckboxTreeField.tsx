@@ -221,4 +221,4 @@ CheckboxTreeField.defaultProps = {
     collapseChildItems: false,
 };
 
-export default fieldWrapper<ICheckboxTreeFieldProps>(FieldEnum.CHECKBOX_TREE, CheckboxTreeField);
+export default fieldWrapper<ICheckboxTreeFieldProps>(FieldEnum.CHECKBOX_TREE_FIELD, CheckboxTreeField);

@@ -137,4 +137,4 @@ RadioListField.defaultProps = {
     orientation: 'vertical',
 };
 
-export default fieldWrapper<IRadioListFieldProps>(FieldEnum.RADIO_LIST, RadioListField);
+export default fieldWrapper<IRadioListFieldProps>(FieldEnum.RADIO_LIST_FIELD, RadioListField);

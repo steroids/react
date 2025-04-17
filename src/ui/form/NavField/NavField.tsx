@@ -52,4 +52,4 @@ NavField.defaultProps = {
     },
 };
 
-export default fieldWrapper<INavFieldProps>(FieldEnum.NAV, NavField);
+export default fieldWrapper<INavFieldProps>(FieldEnum.NAV_FIELD, NavField);

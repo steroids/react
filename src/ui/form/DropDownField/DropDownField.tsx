@@ -519,4 +519,4 @@ DropDownField.defaultProps = {
     isFetchOnClose: false,
 };
 
-export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN, DropDownField);
+export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN_FIELD, DropDownField);

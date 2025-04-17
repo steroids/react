@@ -119,4 +119,4 @@ SwitcherField.defaultProps = {
     errors: null,
 };
 
-export default fieldWrapper<ISwitcherFieldProps>(FieldEnum.SWITCHER, SwitcherField);
+export default fieldWrapper<ISwitcherFieldProps>(FieldEnum.SWITCHER_FIELD, SwitcherField);

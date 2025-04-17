@@ -127,4 +127,4 @@ PasswordField.defaultProps = {
     required: false,
 };
 
-export default fieldWrapper<IPasswordFieldProps>(FieldEnum.PASSWORD, PasswordField);
+export default fieldWrapper<IPasswordFieldProps>(FieldEnum.PASSWORD_FIELD, PasswordField);

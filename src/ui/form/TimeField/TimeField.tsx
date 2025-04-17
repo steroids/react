@@ -110,4 +110,4 @@ TimeField.defaultProps = {
     icon: true,
 };
 
-export default fieldWrapper<ITimeFieldProps>(FieldEnum.TIME, TimeField);
+export default fieldWrapper<ITimeFieldProps>(FieldEnum.TIME_FIELD, TimeField);

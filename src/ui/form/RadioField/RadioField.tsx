@@ -75,4 +75,4 @@ RadioField.defaultProps = {
     inputProps: {},
 };
 
-export default fieldWrapper<IRadioFieldProps>(FieldEnum.RADIO, RadioField);
+export default fieldWrapper<IRadioFieldProps>(FieldEnum.RADIO_FIELD, RadioField);

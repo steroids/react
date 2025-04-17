@@ -9,6 +9,7 @@ import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 export const GROUP_CONTENT_TYPE = 'group';
 export const CHECKBOX_CONTENT_TYPE = 'checkbox';
@@ -518,4 +519,4 @@ DropDownField.defaultProps = {
     isFetchOnClose: false,
 };
 
-export default fieldWrapper<IDropDownFieldProps>('DropDownField', DropDownField);
+export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN_FIELD, DropDownField);

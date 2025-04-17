@@ -3,10 +3,12 @@ import {useComponents, useDataProvider, useDataSelect} from '@steroidsjs/core/ho
 import _isEqual from 'lodash-es/isEqual';
 import {DataProviderItems, IDataProvider} from '@steroidsjs/core/hooks/useDataProvider';
 import {usePrevious, useUpdateEffect} from 'react-use';
-import {IInputParams} from '../Field/fieldWrapper';
+import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
 interface IUseListFieldProps {
+    defaultItemView: string,
     selectedIds: (PrimaryKey | any)[],
+    inputType: string,
     input?: IInputParams,
     items?: DataProviderItems,
     dataProvider?: IDataProvider,
@@ -54,11 +56,11 @@ export default function useListField(props: IUseListFieldProps) {
 
     const inputProps = useMemo(() => ({
         ...props.inputProps,
-        type: props.multiple ? 'checkbox' : 'radio',
+        type: props.inputType,
         name: props.input.name,
         disabled: props.disabled,
         onChange: (value) => props.input.onChange(value),
-    }), [props.disabled, props.input, props.inputProps, props.multiple]);
+    }), [props.disabled, props.input, props.inputProps, props.inputType]);
 
     // Sync with form
     const prevSelectedIds = usePrevious(selectedIds);
@@ -89,18 +91,18 @@ export default function useListField(props: IUseListFieldProps) {
 
     const renderItem = useCallback(
         (itemProps) => {
-            const defaultItemView = props.multiple ? 'form.CheckboxFieldView' : 'form.RadioFieldView';
+            const defaultItemView = props.defaultItemView;
             const ItemFieldView = itemProps.view || props.itemView || components.ui.getView(defaultItemView);
 
             return (
                 <ItemFieldView
                     {...itemProps}
                     {...props.itemViewProps}
-                    type={props.multiple ? 'checkbox' : 'radio'}
+                    type={props.inputType}
                 />
             );
         },
-        [components.ui, props.itemView, props.itemViewProps, props.multiple],
+        [components.ui, props.defaultItemView, props.inputType, props.itemView, props.itemViewProps],
     );
 
     return {

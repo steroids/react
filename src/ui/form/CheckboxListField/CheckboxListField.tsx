@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import Enum from '../../../base/Enum';
-import {useComponents} from '../../../hooks';
+import {useComponents, useListField} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
@@ -8,7 +8,6 @@ import fieldWrapper, {
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
-import useListField from './useListField';
 
 type CheckboxFieldListItems = string
     | ({new(): Enum,})
@@ -108,6 +107,8 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         onItemSelect,
         renderItem,
     } = useListField({
+        inputType: props.multiple ? 'checkbox' : 'radio',
+        defaultItemView: props.multiple ? 'form.CheckboxFieldView' : 'form.RadioFieldView',
         selectedIds: props.selectedIds,
         input: props.input,
         items: props.items,

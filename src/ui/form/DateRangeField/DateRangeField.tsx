@@ -10,6 +10,7 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
+import useOnDayClick from './useOnDayClick';
 
 /**
  * DateRangeField
@@ -247,34 +248,16 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         maskInputToRef,
     ]);
 
-    const onDayClick = useCallback((value) => {
-        // Если кликнули по дате начала диапазона, то устанавливаем focus на "from", кликнули на последнею дату - на "to"
-        // Если кликнули по дате начала или конца диапазона, а фокус уже стоит, то меняем значение диапазона на одну дату (например 12.04-12.04)
-        if (props.useFocusOnRangeEdgeClick) {
-            if (value === props.inputFrom.value) {
-                if (focus === 'to') {
-                    extendedInputPropsFrom.ref.current.focus();
-                    return;
-                }
-                props.inputTo.onChange(value);
-                return;
-            }
-            if (value === props.inputTo.value) {
-                if (focus === 'from') {
-                    extendedInputPropsTo.ref.current.focus();
-                    return;
-                }
-                props.inputFrom.onChange(value);
-                return;
-            }
-        }
-
-        if (focus === 'from') {
-            props.inputFrom.onChange(value);
-        } else {
-            props.inputTo.onChange(value);
-        }
-    }, [extendedInputPropsFrom.ref, extendedInputPropsTo.ref, focus, props.inputFrom, props.inputTo, props.useFocusOnRangeEdgeClick]);
+    const onDayClick = useOnDayClick({
+        focus,
+        useFocusOnRangeEdgeClick: props.useFocusOnRangeEdgeClick,
+        fromValue: props.inputFrom.value,
+        toValue: props.inputTo.value,
+        onFromChange: props.inputFrom.onChange,
+        onToChange: props.inputTo.onChange,
+        fromRef: extendedInputPropsFrom.ref,
+        toRef: extendedInputPropsTo.ref,
+    });
 
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({

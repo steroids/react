@@ -12,6 +12,7 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+import useOnDayClick from '../DateRangeField/useOnDayClick';
 
 /**
  * DateTimeRangeField
@@ -248,37 +249,16 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         maskInputToRef,
     ]);
 
-    const onDayClick = useCallback((value) => {
-        // Если кликнули по дате начала диапазона, то устанавливаем focus на "from", кликнули на последнею дату - на "to"
-        // Если кликнули по дате начала или конца диапазона, а фокус уже стоит, то меняем значение диапазона на одну дату (например 12.04-12.04)
-        if (props.useFocusOnRangeEdgeClick) {
-            if (value === props.inputFrom.value?.split(',')[0]) {
-                if (focus === 'to') {
-                    extendedInputPropsFrom.ref.current.focus();
-                    return;
-                }
-                props.inputTo.onChange(value);
-                return;
-            }
-            if (value === props.inputTo.value?.split(',')[0]) {
-                if (focus === 'from') {
-                    extendedInputPropsTo.ref.current.focus();
-                    return;
-                }
-                props.inputFrom.onChange(value);
-                return;
-            }
-        }
-
-        if (focus === 'from') {
-            onDateFromSelect(value);
-        } else {
-            onDateToSelect(value);
-        }
-    }, [
-        extendedInputPropsFrom.ref, extendedInputPropsTo.ref, focus,
-        onDateFromSelect, onDateToSelect, props.inputFrom, props.inputTo, props.useFocusOnRangeEdgeClick,
-    ]);
+    const onDayClick = useOnDayClick({
+        focus,
+        useFocusOnRangeEdgeClick: props.useFocusOnRangeEdgeClick,
+        fromValue: props.inputFrom.value?.split(',')[0],
+        toValue: props.inputTo.value?.split(',')[0],
+        onFromChange: onDateFromSelect,
+        onToChange: onDateToSelect,
+        fromRef: extendedInputPropsFrom.ref,
+        toRef: extendedInputPropsTo.ref,
+    });
 
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({

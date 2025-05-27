@@ -18,6 +18,7 @@ interface IUseDateRangeProps extends Pick<IDateInputStateInput, 'displayFormat' 
     inputFrom: any,
     useSmartFocus: boolean,
     hasInitialFocus: boolean,
+    useFocusOnRangeEdgeClick?: boolean,
 }
 
 export default function useDateRange(props:IUseDateRangeProps) {
@@ -45,6 +46,8 @@ export default function useDateRange(props:IUseDateRangeProps) {
     const onClear = useCallback(() => {
         props.onClearFrom();
         props.onClearTo();
+        valueFromRef.current = '';
+        valueToRef.current = '';
     }, [props]);
 
     // Custom onFocus for inputFrom
@@ -81,7 +84,6 @@ export default function useDateRange(props:IUseDateRangeProps) {
         if (_isNil(props.inputFrom.value) && _isNil(props.inputTo.value)) {
             return;
         }
-
         if (props.useSmartFocus && isOneRangeValueEmpty(props.inputFrom.value, props.inputTo.value)) {
             if (focus === 'from' && !valueToRef.current && prevValueFrom !== props.inputFrom.value) {
                 valueFromRef.current = props.inputFrom.value;

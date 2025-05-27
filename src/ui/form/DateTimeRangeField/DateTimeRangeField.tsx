@@ -12,7 +12,6 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
-import useOnDayClick from '../DateRangeField/useOnDayClick';
 
 /**
  * DateTimeRangeField
@@ -88,13 +87,6 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
         */
         to: MaskitoOptions,
     },
-
-    /**
-    * Перемещать ли фокус на "from" при клике на начало диапазона
-    * или на "to" при клике на конец диапазона
-    * @example true
-    */
-    useFocusOnRangeEdgeClick?: boolean,
 
     [key: string]: any,
 }
@@ -249,24 +241,13 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         maskInputToRef,
     ]);
 
-    const onDayClick = useOnDayClick({
-        focus,
-        useFocusOnRangeEdgeClick: props.useFocusOnRangeEdgeClick,
-        fromValue: props.inputFrom.value?.split(',')[0],
-        toValue: props.inputTo.value?.split(',')[0],
-        onFromChange: onDateFromSelect,
-        onToChange: onDateToSelect,
-        fromRef: extendedInputPropsFrom.ref,
-        toRef: extendedInputPropsTo.ref,
-    });
-
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
         value: [dateValueFrom, dateValueTo],
-        onChange: onDayClick,
+        onChange: focus === 'from' ? onDateFromSelect : onDateToSelect,
         valueFormat: dateValueFormat,
         ...props.calendarProps,
-    }), [dateValueFormat, dateValueFrom, dateValueTo, onDayClick, props.calendarProps]);
+    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect, props.calendarProps]);
 
     // TimePanel props
     const timePanelViewProps = useMemo(() => ({
@@ -323,7 +304,6 @@ DateTimeRangeField.defaultProps = {
     useUTC: false,
     dateInUTC: false,
     icon: true,
-    useFocusOnRangeEdgeClick: true,
     maskOptions: {
         from: maskitoDateTimeOptionsGenerator({
             dateMode: 'dd/mm/yyyy',

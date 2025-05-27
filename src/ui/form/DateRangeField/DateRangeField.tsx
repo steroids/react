@@ -234,6 +234,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         hasInitialFocus: props.hasInitialFocus,
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
+        useFocusOnRangeEdgeClick: props.useFocusOnRangeEdgeClick,
     });
 
     React.useEffect(() => {
@@ -255,8 +256,6 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         toValue: props.inputTo.value,
         onFromChange: props.inputFrom.onChange,
         onToChange: props.inputTo.onChange,
-        fromRef: extendedInputPropsFrom.ref,
-        toRef: extendedInputPropsTo.ref,
     });
 
     // Calendar props

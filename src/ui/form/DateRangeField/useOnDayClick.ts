@@ -7,30 +7,28 @@ interface IUseOnDayClickProps {
     toValue: string,
     onFromChange: (value: string) => void,
     onToChange: (value: string) => void,
-    fromRef: React.RefObject<HTMLInputElement>,
-    toRef: React.RefObject<HTMLInputElement>,
 }
 
 export default function useOnDayClick(props: IUseOnDayClickProps) {
-    const {useFocusOnRangeEdgeClick, focus, fromValue, toValue, onFromChange, onToChange, fromRef, toRef} = props;
+    const {useFocusOnRangeEdgeClick, focus, fromValue, toValue, onFromChange, onToChange} = props;
 
     const onDayClick = useCallback((value) => {
-        // Если кликнули по дате начала диапазона, то устанавливаем focus на "from", кликнули на последнею дату - на "to"
-        // Если кликнули по дате начала или конца диапазона, а фокус уже стоит, то меняем значение диапазона на одну дату (например 12.04-12.04)
+        // Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
+        // Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
         if (useFocusOnRangeEdgeClick) {
-            if (value === fromValue) {
-                if (focus === 'to') {
-                    fromRef.current.focus();
-                    return;
-                }
-                onToChange(value);
+            if (value === fromValue?.split(',')[0]) {
+                onFromChange(toValue);
+                onToChange(null);
                 return;
             }
-            if (value === toValue) {
-                if (focus === 'from') {
-                    toRef.current.focus();
-                    return;
-                }
+            if (value === toValue?.split(',')[0]) {
+                onFromChange(fromValue);
+                onToChange(null);
+                return;
+            }
+
+            if (fromValue && toValue) {
+                onToChange(null);
                 onFromChange(value);
                 return;
             }
@@ -41,6 +39,6 @@ export default function useOnDayClick(props: IUseOnDayClickProps) {
         } else {
             onToChange(value);
         }
-    }, [focus, fromRef, fromValue, onFromChange, onToChange, toRef, toValue, useFocusOnRangeEdgeClick]);
+    }, [focus, fromValue, onFromChange, onToChange, toValue, useFocusOnRangeEdgeClick]);
     return onDayClick;
 }

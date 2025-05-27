@@ -88,6 +88,13 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
         to: MaskitoOptions,
     },
 
+    /**
+    * Перемещать ли фокус на "from" при клике на начало диапазона
+    * или на "to" при клике на конец диапазона
+    * @example true
+    */
+    useFocusOnRangeEdgeClick?: boolean,
+
     [key: string]: any,
 }
 
@@ -241,13 +248,45 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         maskInputToRef,
     ]);
 
+    const onDayClick = useCallback((value) => {
+        // Если кликнули по дате начала диапазона, то устанавливаем focus на "from", кликнули на последнею дату - на "to"
+        // Если кликнули по дате начала или конца диапазона, а фокус уже стоит, то меняем значение диапазона на одну дату (например 12.04-12.04)
+        if (props.useFocusOnRangeEdgeClick) {
+            if (value === props.inputFrom.value?.split(',')[0]) {
+                if (focus === 'to') {
+                    extendedInputPropsFrom.ref.current.focus();
+                    return;
+                }
+                props.inputTo.onChange(value);
+                return;
+            }
+            if (value === props.inputTo.value?.split(',')[0]) {
+                if (focus === 'from') {
+                    extendedInputPropsTo.ref.current.focus();
+                    return;
+                }
+                props.inputFrom.onChange(value);
+                return;
+            }
+        }
+
+        if (focus === 'from') {
+            onDateFromSelect(value);
+        } else {
+            onDateToSelect(value);
+        }
+    }, [
+        extendedInputPropsFrom.ref, extendedInputPropsTo.ref, focus,
+        onDateFromSelect, onDateToSelect, props.inputFrom, props.inputTo, props.useFocusOnRangeEdgeClick,
+    ]);
+
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
         value: [dateValueFrom, dateValueTo],
-        onChange: focus === 'from' ? onDateFromSelect : onDateToSelect,
+        onChange: onDayClick,
         valueFormat: dateValueFormat,
         ...props.calendarProps,
-    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect, props.calendarProps]);
+    }), [dateValueFormat, dateValueFrom, dateValueTo, onDayClick, props.calendarProps]);
 
     // TimePanel props
     const timePanelViewProps = useMemo(() => ({
@@ -304,6 +343,7 @@ DateTimeRangeField.defaultProps = {
     useUTC: false,
     dateInUTC: false,
     icon: true,
+    useFocusOnRangeEdgeClick: true,
     maskOptions: {
         from: maskitoDateTimeOptionsGenerator({
             dateMode: 'dd/mm/yyyy',

@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 
 interface IUseOnDayClickProps {
-    useFocusOnRangeEdgeClick?: boolean,
+    useSmartRangeReset?: boolean,
     focus: 'from' | 'to',
     fromValue: string,
     toValue: string,
@@ -10,12 +10,12 @@ interface IUseOnDayClickProps {
 }
 
 export default function useOnDayClick(props: IUseOnDayClickProps) {
-    const {useFocusOnRangeEdgeClick, focus, fromValue, toValue, onFromChange, onToChange} = props;
+    const {useSmartRangeReset, focus, fromValue, toValue, onFromChange, onToChange} = props;
 
     const onDayClick = useCallback((value) => {
-        // Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
-        // Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
-        if (useFocusOnRangeEdgeClick) {
+        if (useSmartRangeReset) {
+            // Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
+            // Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
             if (value === fromValue?.split(',')[0]) {
                 onFromChange(toValue);
                 onToChange(null);
@@ -32,6 +32,13 @@ export default function useOnDayClick(props: IUseOnDayClickProps) {
                 onFromChange(value);
                 return;
             }
+
+            if (fromValue) {
+                onToChange(value);
+                return;
+            }
+            onFromChange(value);
+            return;
         }
 
         if (focus === 'from') {
@@ -39,6 +46,6 @@ export default function useOnDayClick(props: IUseOnDayClickProps) {
         } else {
             onToChange(value);
         }
-    }, [focus, fromValue, onFromChange, onToChange, toValue, useFocusOnRangeEdgeClick]);
+    }, [focus, fromValue, onFromChange, onToChange, toValue, useSmartRangeReset]);
     return onDayClick;
 }

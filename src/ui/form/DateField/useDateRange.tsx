@@ -18,7 +18,6 @@ interface IUseDateRangeProps extends Pick<IDateInputStateInput, 'displayFormat' 
     inputFrom: any,
     useSmartFocus: boolean,
     hasInitialFocus: boolean,
-    useFocusOnRangeEdgeClick?: boolean,
 }
 
 export default function useDateRange(props:IUseDateRangeProps) {

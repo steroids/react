@@ -118,11 +118,13 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     },
 
     /**
-     * Перемещать ли фокус на "from" при клике на начало диапазона
-     * или на "to" при клике на конец диапазона
+     * Активирует логику:
+     * - Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
+     * - Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
+     * - Если клик не на дату конца или начала диапазона, а диапазона нет, то устанавливаем кликнутую дату в поле from
      * @example true
      */
-    useFocusOnRangeEdgeClick?: boolean,
+    useSmartRangeReset?: boolean,
 
     [key: string]: any,
 }
@@ -234,7 +236,6 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         hasInitialFocus: props.hasInitialFocus,
         displayFormat: props.displayFormat,
         valueFormat: props.valueFormat,
-        useFocusOnRangeEdgeClick: props.useFocusOnRangeEdgeClick,
     });
 
     React.useEffect(() => {
@@ -251,7 +252,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
 
     const onDayClick = useOnDayClick({
         focus,
-        useFocusOnRangeEdgeClick: props.useFocusOnRangeEdgeClick,
+        useSmartRangeReset: props.useSmartRangeReset,
         fromValue: props.inputFrom.value,
         toValue: props.inputTo.value,
         onFromChange: props.inputFrom.onChange,
@@ -299,7 +300,7 @@ DateRangeField.defaultProps = {
     useSmartFocus: true,
     hasInitialFocus: false,
     icon: true,
-    useFocusOnRangeEdgeClick: true,
+    useSmartRangeReset: true,
     maskOptions: {
         from: maskitoDateOptionsGenerator({
             mode: 'dd/mm/yyyy',

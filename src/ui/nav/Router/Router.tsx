@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Route, Switch, Redirect, StaticRouter} from 'react-router';
-import {HashRouter} from 'react-router-dom';
+import {Route, Switch, Redirect, StaticRouter, HashRouter} from 'react-router';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';

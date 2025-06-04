@@ -1,11 +1,6 @@
 {
-  "extends": [
-    "@steroidsjs/eslint-config/frontend"
-],
-  "plugins": [
-  ],
+  "extends": "@steroidsjs/eslint-config",
   "rules": {
-    "prettier/prettier": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-undef": "off",
     "no-redeclare": "off",

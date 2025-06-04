@@ -20,12 +20,12 @@ export const initParams = params => ({
 const filterParamsForPath = (path: string, params: Record<string, string | number>) => {
     const parsedPath = parse(path);
 
-    return parsedPath.reduce((filteredParams, param) => {
+    return Array.isArray(parsedPath) ? parsedPath.reduce((filteredParams, param) => {
         if (typeof param === 'object' && params[param.name]) {
             filteredParams[param.name] = params[param.name];
         }
         return filteredParams;
-    }, {});
+    }, {}) : {};
 };
 
 export const goToRoute = (routeId, params: RouteParams = null, isReplace = false) => (dispatch, getState, {store}) => {

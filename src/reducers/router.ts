@@ -5,7 +5,6 @@ import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
 import _pick from 'lodash-es/pick';
-import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
 import {IRouteItem} from '../ui/nav/Router/Router';
@@ -64,11 +63,11 @@ export const buildUrl = (path, params: TUrlParams = null) => {
     let url = path;
     let pathKeys = [];
     try {
-        pathKeys = parse(path)
-            .map((p: any) => typeof p === 'object' && p.name)
+        pathKeys = (parse(path) as unknown as any[])
+            .map((p: any) => p.name)
             .filter(Boolean);
         url = compile(path)({
-            ...params,
+            ...(params as {}),
         });
     } catch (e) {
         // eslint-disable-line no-empty

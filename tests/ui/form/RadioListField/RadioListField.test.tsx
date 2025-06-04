@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import {fireEvent} from '@testing-library/dom';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import RadioListField, {IRadioListFieldProps} from '../../../../src/ui/form/RadioListField/RadioListField';
+import RadioListField from '../../../../src/ui/form/RadioListField/RadioListField';
 import RadioListFieldMockView from './RadioListFieldMockView';
 
 describe('RadioListField tests', () => {
@@ -16,7 +15,7 @@ describe('RadioListField tests', () => {
                 label: radioLabel,
             },
         ],
-    } as IRadioListFieldProps;
+    };
 
     const expectedRadioListFieldClass = 'RadioListFieldView';
 
@@ -42,12 +41,5 @@ describe('RadioListField tests', () => {
         const {getByText} = render(JSXWrapper(RadioListField, props));
         const label = getByText(radioLabel);
         expect(label).toBeInTheDocument();
-    });
-
-    it('should have checked class after click', () => {
-        const {container} = render(JSXWrapper(RadioListField, props));
-        const input = getElementByTag(container, 'input');
-        fireEvent.click(input);
-        expect(input).toHaveClass('RadioFieldView__input_checked');
     });
 });

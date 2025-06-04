@@ -28,11 +28,12 @@ import RadioListField from './RadioListField';
 import RateField from './RateField';
 import ReCaptchaField from './ReCaptchaField';
 import SliderField from './SliderField';
-import SwitcherField from './SwitcherField';
 import TextField from './TextField';
 import TimeField from './TimeField';
 import TimeRangeField from './TimeRangeField';
 import WizardForm from './WizardForm';
+import SwitcherField from './SwitcherField';
+import SwitcherListField from './SwitcherListField';
 
 export {
     AutoCompleteField,
@@ -62,7 +63,6 @@ export {
     RadioListField,
     ReCaptchaField,
     SliderField,
-    SwitcherField,
     TextField,
     TimeField,
     RateField,
@@ -70,6 +70,8 @@ export {
     EmailField,
     TimeRangeField,
     WizardForm,
+    SwitcherField,
+    SwitcherListField,
 };
 
 export default {
@@ -100,7 +102,6 @@ export default {
     RadioListField,
     ReCaptchaField,
     SliderField,
-    SwitcherField,
     TextField,
     TimeField,
     RateField,
@@ -108,4 +109,6 @@ export default {
     EmailField,
     TimeRangeField,
     WizardForm,
+    SwitcherField,
+    SwitcherListField,
 };

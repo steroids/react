@@ -1,13 +1,11 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
-import {usePrevious, useUpdateEffect} from 'react-use';
-import _isEqual from 'lodash-es/isEqual';
+import React, {useMemo} from 'react';
 import Enum from '../../../base/Enum';
-import {useComponents, useDataProvider, useDataSelect} from '../../../hooks';
+import {useComponents, useListField} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../../ui/form/Field/fieldWrapper';
-import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
@@ -94,108 +92,48 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, I
     onItemSelect: (id: PrimaryKey | any) => void,
     orientation?: Orientation,
     disabled?: boolean,
-    renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
+    renderItem: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
     size?: Size,
+    className?: string,
 }
 
 function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
     const components = useComponents();
 
-    const inputSelectedIds = useMemo(
-        () => props.selectedIds || [].concat(props.input.value || []),
-        [props.input.value, props.selectedIds],
-    );
-
-    // Data Provider
-    const {items} = useDataProvider({
-        items: props.items as DataProviderItems,
-        initialSelectedIds: inputSelectedIds,
-        dataProvider: props.dataProvider,
-    });
-
-    // Data select
     const {
         selectedIds,
-        setSelectedIds,
-    } = useDataSelect({
-        selectedIds: inputSelectedIds,
-        multiple: props.multiple,
-        primaryKey: props.primaryKey,
-        selectFirst: props.selectFirst,
         items,
-        inputValue: props.input.value,
-    });
-
-    const onItemSelect = useCallback((id) => {
-        setSelectedIds(id);
-    }, [setSelectedIds]);
-
-    const inputProps = useMemo(() => ({
-        ...props.inputProps,
-        type: 'checkbox',
-        name: props.input.name,
+        inputProps,
+        onItemSelect,
+        renderItem,
+    } = useListField({
+        inputType: props.multiple ? 'checkbox' : 'radio',
+        defaultItemView: props.multiple ? 'form.CheckboxFieldView' : 'form.RadioFieldView',
+        selectedIds: props.selectedIds,
+        input: props.input,
+        items: props.items,
+        dataProvider: props.dataProvider,
+        multiple: props.multiple,
+        selectFirst: props.selectFirst,
+        primaryKey: props.primaryKey,
+        inputProps: props.inputProps,
         disabled: props.disabled,
-    }), [props.disabled, props.input, props.inputProps]);
-
-    // Sync with form
-    const prevSelectedIds = usePrevious(selectedIds);
-    useEffect(() => {
-        if (!_isEqual(prevSelectedIds || [], selectedIds)) {
-            props.input.onChange.call(null, selectedIds);
-            if (props.onChange) {
-                props.onChange.call(null, selectedIds);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.input.onChange, selectedIds]);
-
-    const onReset = useCallback(() => {
-        setSelectedIds([]);
-    }, [setSelectedIds]);
-
-    // Reset selected ids on form reset
-    const prevInputValue = usePrevious(props.input.value);
-    useUpdateEffect(() => {
-        // if form reset
-        if (prevInputValue && props.input.value === undefined && selectedIds.length > 0) {
-            onReset();
-        }
-    }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
-
-    const CheckboxFieldView = props.itemView || components.ui.getView('form.CheckboxFieldView');
-
-    const renderCheckbox = useCallback((checkboxProps: ICheckboxFieldViewProps) => (
-        <CheckboxFieldView
-            {...checkboxProps}
-            {...props.itemViewProps}
-        />
-    ), [CheckboxFieldView, props.itemViewProps]);
+    });
 
     const viewProps = useMemo(() => ({
         items,
         inputProps,
         onItemSelect,
         selectedIds,
-        renderCheckbox,
+        renderItem,
         orientation: props.orientation,
         size: props.size,
         disabled: props.disabled,
         className: props.className,
         style: props.style,
         viewProps: props.viewProps,
-    }), [
-        inputProps,
-        items,
-        onItemSelect,
-        props.className,
-        props.disabled,
-        props.orientation,
-        props.size,
-        props.style,
-        props.viewProps,
-        renderCheckbox,
-        selectedIds,
-    ]);
+    }), [inputProps, items, onItemSelect, props.className, props.disabled,
+        props.orientation, props.size, props.style, props.viewProps, renderItem, selectedIds]);
 
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', viewProps);
 }

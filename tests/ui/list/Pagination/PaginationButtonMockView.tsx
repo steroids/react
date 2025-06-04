@@ -10,12 +10,13 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
     const renderArrowStep = React.useCallback((
         onClick: () => void,
         iconName: string,
+        // eslint-disable-next-line default-param-last
         rotate = false,
-        rounding = {
-            right: true,
-            left: false,
+        rounding?: {
+            left?: boolean,
+            right?: boolean,
         },
-        disabledStatement = false,
+        disabledStatement?: boolean,
     ) => (
         <li className={bem.element('page', {
             'rounding-left': !!rounding?.left,

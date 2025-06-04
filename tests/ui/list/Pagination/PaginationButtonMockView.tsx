@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {IPaginationViewProps} from '../../../../src/ui/list/Pagination/Pagination';
 import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
@@ -12,11 +11,11 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
         onClick: () => void,
         iconName: string,
         rotate = false,
-        rounding?: {
-            left?: boolean,
-            right?: boolean,
+        rounding = {
+            right: true,
+            left: false,
         },
-        disabledStatement?: boolean,
+        disabledStatement = false,
     ) => (
         <li className={bem.element('page', {
             'rounding-left': !!rounding?.left,
@@ -26,10 +25,12 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
         })}
         >
             <button
-                className={bem.element('page-button',
+                className={bem.element(
+                    'page-button',
                     {
                         hasIcon: true,
-                    })}
+                    },
+                )}
                 onClick={() => onClick()}
             >
                 <Icon

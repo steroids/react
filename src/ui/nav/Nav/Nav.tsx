@@ -236,8 +236,10 @@ function Nav(props: INavProps): JSX.Element {
             .filter(item => item.visible !== false);
     }, [activeRouteIds, activeTab, props.items, routerParams, routes]);
 
-    const items = useMemo(() => formatItems(),
-        [formatItems]);
+    const items = useMemo(
+() => formatItems(),
+        [formatItems],
+);
 
     const viewProps = useMemo(() => ({
         items,

@@ -2,12 +2,12 @@ import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 import {IGridProps} from '../../list/Grid/Grid';
 import {IFormProps} from '../../form/Form/Form';
-import {CRUD_ACTION_CREATE, CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE} from './utils';
 import {showNotification} from '../../../actions/notifications';
 import useDispatch from '../../../hooks/useDispatch';
-import {IApiRest, ICrudItem} from './Crud';
 import Grid from '../../../ui/list/Grid';
 import Form from '../../../ui/form/Form';
+import {IApiRest, ICrudItem} from './Crud';
+import {CRUD_ACTION_CREATE, CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE} from './utils';
 
 export interface ICrudContentProps {
     crudId?: string,
@@ -44,13 +44,15 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
             : [],
     ), [props.action, props.items, props.itemsToControls]);
 
-    const formInitialValues = useMemo(() => props.action === CRUD_ACTION_UPDATE
-        ? {
-            ...props.record,
-            [props.primaryKey]: props.record?.[props.primaryKey] || props.recordId,
-        }
-        : undefined,
-    [props.action, props.primaryKey, props.record, props.recordId]);
+    const formInitialValues = useMemo(
+        () => props.action === CRUD_ACTION_UPDATE
+            ? {
+                ...props.record,
+                [props.primaryKey]: props.record?.[props.primaryKey] || props.recordId,
+            }
+            : undefined,
+        [props.action, props.primaryKey, props.record, props.recordId],
+    );
 
     const onFormComplete = useCallback(() => {
         window.scrollTo(0, 0);
@@ -67,7 +69,8 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
                 ItemComponent = Grid;
             }
             return (
-                <ItemComponent // Grid
+                // Grid
+                <ItemComponent
                     key={props.crudId}
                     listId={props.crudId}
                     action={props.restApi ? props.restApi.index : props.restUrl}
@@ -93,7 +96,8 @@ export default function CrudContent(props: ICrudContentProps): JSX.Element {
                 return null;
             }
             return (
-                <ItemComponent // Form
+                // Form
+                <ItemComponent
                     key={formId}
                     formId={formId}
                     action={props.restApi

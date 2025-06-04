@@ -1,11 +1,13 @@
 import * as React from 'react';
 import '@testing-library/jest-dom';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import ChartMockView from './ChartMockView';
 import Chart from '../../../../src/ui/content/Chart';
 import {IButtonGroupProps} from '../../../../src/ui/nav/ButtonGroup/ButtonGroup';
+import ChartMockView from './ChartMockView';
 
-const ChartComponent = (props) => <div {...props}>ChartComponent</div>;
+function ChartComponent(props) {
+  return <div {...props}>ChartComponent</div>;
+}
 
 describe('Chart tests', () => {
     const expectedChartClassName = 'ChartView';

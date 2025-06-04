@@ -2,11 +2,10 @@ import * as React from 'react';
 import {useContext, useMemo} from 'react';
 import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
-
 import {useComponents} from '../../../hooks';
 import {FormContext} from '../Form/Form';
-import {IFieldWrapperInputProps} from './fieldWrapper';
 import {Model, ModelAttribute} from '../../../components/MetaComponent';
+import {IFieldWrapperInputProps} from './fieldWrapper';
 
 /**
  * Field

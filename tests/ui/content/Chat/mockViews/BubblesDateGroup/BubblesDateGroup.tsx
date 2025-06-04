@@ -3,7 +3,6 @@ import {useBem} from '../../../../../../src/hooks';
 import {calculateMessageTimeAgo} from '../../../../../../src/ui/content/Chat/utils';
 import {IGroupedMessage} from '../../../../../../src/ui/content/Chat/hooks/useChat';
 import {IChatUser} from '../../../../../../src/ui/content/Chat/Chat';
-
 import BubbleMessageView from '../BubbleMessage';
 
 interface IBubblesDateGroupProps {

@@ -15,6 +15,7 @@ const initialState = {
     opened: {} as Record<string, IModal[]>,
 };
 
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => {
     switch (action.type) {
         case MODAL_OPEN:

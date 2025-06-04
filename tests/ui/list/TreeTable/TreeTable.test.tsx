@@ -2,8 +2,8 @@ import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import GridMockView from '../Grid/GridMockView';
-import TreeColumnView from './TreeColumnMockView';
 import {addTreeColumnFieldsToFirstColumn, ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';
+import TreeColumnView from './TreeColumnMockView';
 import TreeTableMock from './TreeTableMock';
 
 describe('addTreeColumnFieldsToFirstColumn function', () => {

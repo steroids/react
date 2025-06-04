@@ -108,12 +108,10 @@ export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps
     return (
         <div
             ref={props.forwardedRef}
-            className={bem(
-                bem.block({
+            className={bem(bem.block({
                     size: props.size,
                     opened: props.isOpened,
-                }), props.className,
-            )}
+                }), props.className)}
             style={props.style}
         >
             <input

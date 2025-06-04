@@ -8,7 +8,7 @@ const customRenderHook = <T, >(
     config?: IMockApplicationConfig,
     options?: Omit<RenderHookOptions<any>, 'wrapper'>,
 ) => {
-    const Wrapper = ({children}: {children: React.ReactNode, }) => MockApplication({
+    const Wrapper = ({children}: {children: React.ReactNode }) => MockApplication({
         children,
         config,
     });

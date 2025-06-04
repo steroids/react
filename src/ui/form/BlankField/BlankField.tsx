@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**

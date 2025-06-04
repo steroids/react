@@ -71,38 +71,39 @@ export const checkCondition = (item, condition) => {
         const key = condition[1];
         const value = condition[2];
         switch (operator) {
-            case '=': // ['=', 'age', 18]
+            // ['=', 'age', 18]
+            case '=':
                 return item[key] === value;
-
-            case '>': // ['>', 'age', 18]
+            // ['>', 'age', 18]
+            case '>':
                 return item[key] > value;
-
-            case '>=': // ['>=', 'age', 18]
+            // ['>=', 'age', 18]
+            case '>=':
             case '=>':
                 return item[key] >= value;
-
-            case '<': // ['<', 'age', 18]
+            // ['<', 'age', 18]
+            case '<':
                 return item[key] < value;
-
-            case '<=': // ['<=', 'age', 18]
+            // ['<=', 'age', 18]
+            case '<=':
             case '=<':
                 return item[key] <= value;
-
-            case 'and': // ['and', {isActive: true}, ['=', 'name', 'Ivan']]
+            // ['and', {isActive: true}, ['=', 'name', 'Ivan']]
+            case 'and':
             case '&&':
                 return _every(condition.slice(1), subCondition => checkCondition(item, subCondition));
-
-            case 'or': // ['or', {isAdmin: true}, ['=', 'name', 'Ivan']]
+            // ['or', {isAdmin: true}, ['=', 'name', 'Ivan']]
+            case 'or':
             case '||':
                 return _some(condition.slice(1), subCondition => checkCondition(item, subCondition));
-
-            case 'like': // ['like', 'name', 'alex']
+            // ['like', 'name', 'alex']
+            case 'like':
                 return _isString(item[key]) && item[key].toLowerCase().indexOf(value.toLowerCase()) !== -1;
-
-            case 'between': // ['between', 'size', 5, 10]
+            // ['between', 'size', 5, 10]
+            case 'between':
                 return condition[2] <= value && value <= condition[3];
-
-            case 'in': // ['in', 'ids', [5, 6, 10]]
+            // ['in', 'ids', [5, 6, 10]]
+            case 'in':
                 return _isArray(item[key]) && item[key].includes(value);
 
             default:

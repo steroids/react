@@ -8,7 +8,6 @@ import {
     IInfiniteScrollProps,
     normalizeInfiniteScrollProps,
 } from '@steroidsjs/core/ui/list/InfiniteScroll/InfiniteScroll';
-import useSelector from './useSelector';
 import {getList} from '../reducers/list';
 import useModel from '../hooks/useModel';
 import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
@@ -31,6 +30,7 @@ import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Model} from '../components/MetaComponent';
 import {Loader} from '../ui/layout';
+import useSelector from './useSelector';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -300,7 +300,8 @@ export const getDefaultSearchModel = ({
     sort,
     layoutNamesProps,
 }) => ({
-    attributes: [ // default attributes
+    // default attributes
+    attributes: [
         paginationProps.enable && {
             type: 'number',
             attribute: paginationProps.attribute,
@@ -312,7 +313,8 @@ export const getDefaultSearchModel = ({
             defaultValue: paginationSizeProps.defaultValue,
         },
         sort.enable && {
-            type: 'string', // TODO Need list of strings
+            // TODO Need list of strings
+            type: 'string',
             jsType: 'string[]',
             attribute: sort.attribute,
             defaultValue: sort.defaultValue,
@@ -339,8 +341,10 @@ export const createInitialValues = ({
     [layoutNamesProps.attribute]: layoutNamesProps.defaultValue,
     // TODO [this.props._layout.attribute]:
     //  this.props.clientStorage.get(this.props._layout.attribute) || this.props._layout.defaultValue,
-    ...initialQuery, // Address bar
-    ...configQuery, // Query from props
+    // Address bar
+    ...initialQuery,
+    // Query from props
+    ...configQuery,
 });
 
 const FIRST_PAGE = 1;

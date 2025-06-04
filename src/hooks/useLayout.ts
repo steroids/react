@@ -7,16 +7,16 @@ import _merge from 'lodash-es/merge';
 import _intersection from 'lodash-es/intersection';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
 import {ROUTER_ROLE_LOGIN} from '../ui/nav/Router/Router';
-import useSsr from './useSsr';
 import {IComponents} from '../providers/ComponentsProvider';
-import useComponents from './useComponents';
 import {getRoute, getRoutesMap} from '../reducers/router';
 import {getData, getInitializeCounter, getUser, isInitialized as getIsInitialized} from '../reducers/auth';
-import useSelector from './useSelector';
 import {init, setData, setUser} from '../actions/auth';
-import useDispatch from './useDispatch';
 import {setMeta} from '../actions/fields';
 import {goToRoute} from '../actions/router';
+import useDispatch from './useDispatch';
+import useSelector from './useSelector';
+import useComponents from './useComponents';
+import useSsr from './useSsr';
 
 export interface ILayout {
     status?: string,
@@ -86,7 +86,8 @@ export const runInitAction = (
             dispatch(
                 [
                     // Meta models & enums
-                    Boolean(resultMeta) && setMeta(resultMeta), // TODO skip models
+                    // TODO skip models
+                    Boolean(resultMeta) && setMeta(resultMeta),
                     // User auth
                     setData(result),
                     // User auth
@@ -162,7 +163,8 @@ export default function useLayout(initAction: any = null): ILayout {
         const pageRoles = route?.roles || [];
         const userRoles = [].concat(user?.role || []).concat(user?.roles || []);
         if (userRoles.length === 0) {
-            userRoles.push(null); // Guest
+            // Guest
+            userRoles.push(null);
         }
         if (_intersection(pageRoles, userRoles).length === 0) {
             if (loginRouteId && route.id !== loginRouteId) {

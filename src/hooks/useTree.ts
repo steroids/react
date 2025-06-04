@@ -10,9 +10,9 @@ import _pickBy from 'lodash-es/pickBy';
 import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
 import {useMount, useUnmount} from 'react-use';
+import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
 import useComponents from './useComponents';
 import useSelector from './useSelector';
-import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
 
 export interface ITreeItem extends IButtonProps {
     /**
@@ -285,7 +285,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     const [selectedUniqueId, setSelectedUniqueId] = useState<string>(null);
 
-    const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean,}>({});
+    const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean}>({});
 
     const {clientStorage} = useComponents();
 
@@ -319,7 +319,8 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
     // Выполняет поиск текущего роута в дереве: раскрывает дерево до элемента, делает элемент активным
     const onItemFocus = useCallback(() => {
         const currentRouteAsTreeItem = findChildById(items as ITreeItem[], selectedItemId, primaryKey);
-        const currentRouteUniqueIdParts = currentRouteAsTreeItem.uniqueId.split(DOT_SEPARATOR); // Get all parent levels of item
+        // Get all parent levels of item
+        const currentRouteUniqueIdParts = currentRouteAsTreeItem.uniqueId.split(DOT_SEPARATOR);
 
         const itemsToExpand = {};
         let itemToExpandKey: string;

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import _isString from 'lodash-es/isString';
-
 import {useMount} from 'react-use';
 import {useRef} from 'react';
 import {IFormViewProps} from '../../../../src/ui/form/Form/Form';

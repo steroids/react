@@ -17,9 +17,11 @@ export const getWeekDaysFromDate = (date: Date) => {
     const weekDays: IDay[] = [];
     const firstDayOfWeek = new Date(date);
     const currentDay = date.getDay();
-    const diff = currentDay === 0 ? SIX_DAYS_DIFF : currentDay - 1; // Разница между текущим днем и понедельником
+    // Разница между текущим днем и понедельником
+    const diff = currentDay === 0 ? SIX_DAYS_DIFF : currentDay - 1;
 
-    firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diff); // Устанавливаем первый день недели (понедельник)
+    // Устанавливаем первый день недели (понедельник)
+    firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diff);
 
     for (let i = 0; i < MAX_DAYS_DIFF_IN_WEEK; i++) {
         const currentDate = new Date(firstDayOfWeek);

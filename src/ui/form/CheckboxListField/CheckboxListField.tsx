@@ -12,8 +12,8 @@ import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
 type CheckboxFieldListItems = string
-    | ({new(): Enum,})
-    | (string | number | {id: string | number | boolean, label: string | any, color?: string, [key: string]: any,})[];
+    | ({new(): Enum})
+    | (string | number | {id: string | number | boolean, label: string | any, color?: string, [key: string]: any})[];
 
 /**
  * CheckboxListField

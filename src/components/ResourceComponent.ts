@@ -172,7 +172,7 @@ export default class ResourceComponent implements IResourceComponent {
         if (window.ymaps) {
             return new Promise(resolve =>
                 // @ts-ignore
-                // eslint-disable-next-line implicit-arrow-linebreak
+                // eslint-disable-next-line implicit-arrow-linebreak, no-promise-executor-return
                 window.ymaps.ready(() => resolve(window.ymaps)));
         }
         return this.loadScript(
@@ -181,6 +181,7 @@ export default class ResourceComponent implements IResourceComponent {
                 lang: this.language || locale.language,
             },
             // @ts-ignore
+            // eslint-disable-next-line no-promise-executor-return
             () => new Promise(resolve => window.ymaps.ready(() => resolve(window.ymaps))),
         );
     }
@@ -195,6 +196,7 @@ export default class ResourceComponent implements IResourceComponent {
             this.RESOURCE_TWITTER_WIDGET,
             {},
             // @ts-ignore
+            // eslint-disable-next-line no-promise-executor-return
             () => new Promise(resolve => window.twttr.ready(() => resolve(window.twttr))),
         );
     }

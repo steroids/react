@@ -4,7 +4,6 @@ import _cloneDeep from 'lodash-es/cloneDeep';
 import _isObject from 'lodash-es/isObject';
 import _isEmpty from 'lodash-es/isEmpty';
 import {set as _set, delete as _delete} from 'dot-prop-immutable';
-
 import {
     FORM_INITIALIZE,
     FORM_CHANGE,
@@ -113,6 +112,7 @@ export function reducerItem(state, action) {
 }
 
 const initialState = {};
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => {
     if (action.formId) {
         return _set(state, action.formId, reducerItem(state[action.formId], action));

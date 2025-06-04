@@ -7,8 +7,8 @@ import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
+import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({

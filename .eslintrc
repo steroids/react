@@ -1,6 +1,11 @@
 {
-  "extends": "@steroidsjs/eslint-config",
+  "extends": "@steroidsjs/eslint-config/frontend",
   "rules": {
+    // "prettier/prettier": "off" disabled because 
+    // Definition for rule 'prettier/prettier' was not found
+    // in every file
+    // remove if fixed
+    "prettier/prettier": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-undef": "off",
     "no-redeclare": "off",

@@ -8,8 +8,8 @@ export default class AutoSaveHelper {
 
         if (_isString(values) && values.substr(0, 1) === '{') {
             return {
-                ...JSON.parse(values),
                 ...initialValues,
+                ...JSON.parse(values),
             };
         }
 

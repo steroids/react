@@ -318,5 +318,8 @@ DateTimeRangeField.defaultProps = {
     },
 };
 
-export default fieldWrapper<IDateTimeRangeFieldProps>('DateTimeRangeField', DateTimeRangeField,
-    {attributeSuffixes: ['from', 'to']});
+export default fieldWrapper<IDateTimeRangeFieldProps>(
+'DateTimeRangeField',
+DateTimeRangeField,
+{attributeSuffixes: ['from', 'to']},
+);

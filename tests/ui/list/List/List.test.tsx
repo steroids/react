@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 import * as React from 'react';
 import {fireEvent, waitFor} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import ListMockView from './ListMockView';
 import List from '../../../../src/ui/list/List/List';
 import InputField from '../../../../src/ui/form/InputField/InputField';
+import ListMockView from './ListMockView';
 
 const items = [
     {

@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import _last from 'lodash-es/last';
-
 import {IChatMessage} from '@steroidsjs/core/ui/content/Chat/Chat';
 import {isWithinTimeThreshold} from '../utils/getMessagesGroupedByDate';
 import {MONTH_AND_DAY_TEMPLATE} from '../constants/timeTemplatesAndUnits';

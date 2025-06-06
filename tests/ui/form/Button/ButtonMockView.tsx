@@ -1,6 +1,5 @@
 import * as React from 'react';
 import _isString from 'lodash-es/isString';
-
 import Icon from '../../../../src/ui/content/Icon';
 import {IButtonViewProps} from '../../../../src/ui/form/Button/Button';
 import {useBem} from '../../../../src/hooks';

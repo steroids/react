@@ -15,8 +15,8 @@ import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 import {ITreeProps} from '../../nav/Tree/Tree';
 
 type CheckboxTreeItems = string
-    | ({new(): Enum,})
-    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any,})[];
+    | ({new(): Enum})
+    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any})[];
 
 /**
  * CheckboxTreeField

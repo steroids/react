@@ -46,24 +46,26 @@ export default function CalendarView(props: ICalendarViewProps) {
         };
     }, [isRange, selectedDates]);
 
+    const captionElement = useCallback(({classNames, date, localeUtils, locale}: CaptionElementProps) => (
+        <CaptionElement
+            date={date}
+            locale={locale}
+            toYear={toYear}
+            fromYear={fromYear}
+            classNames={classNames}
+            onChange={onMonthSelect}
+            localeUtils={localeUtils}
+            showCalendarFooter={showFooter}
+            toggleCaptionPanel={toggleCaptionPanel}
+            isCaptionPanelVisible={isCaptionPanelVisible}
+        />
+    ), [fromYear, isCaptionPanelVisible, onMonthSelect, showFooter, toYear, toggleCaptionPanel]);
+
     return (
         <DayPicker
             {...props}
             className={bem(bem.block({ranged: isRange}), props.className)}
-            captionElement={useCallback(({classNames, date, localeUtils, locale}: CaptionElementProps) => (
-                <CaptionElement
-                    date={date}
-                    locale={locale}
-                    toYear={toYear}
-                    fromYear={fromYear}
-                    classNames={classNames}
-                    onChange={onMonthSelect}
-                    localeUtils={localeUtils}
-                    showCalendarFooter={showFooter}
-                    toggleCaptionPanel={toggleCaptionPanel}
-                    isCaptionPanelVisible={isCaptionPanelVisible}
-                />
-            ), [fromYear, isCaptionPanelVisible, onMonthSelect, showFooter, toYear, toggleCaptionPanel])}
+            captionElement={captionElement}
             renderDay={(day) => {
                 const date = day.getDate();
                 return (

@@ -150,7 +150,8 @@ function Notifications(props:INotificationsProps): JSX.Element {
 
     const closingIds = closing.map(item => item.id);
 
-    const items = useMemo(() => (
+    const items = useMemo(
+() => (
         _orderBy([].concat(innerNotifications).concat(closing), ['id'], 'asc')
             .map(item => ({
                 ...item,
@@ -158,7 +159,8 @@ function Notifications(props:INotificationsProps): JSX.Element {
                 onClose: () => onClose(item.id),
             }))
     ),
-    [innerNotifications, closing, closingIds, onClose]);
+    [innerNotifications, closing, closingIds, onClose],
+);
 
     const NotificationsItemView = props.itemView || components.ui.getView('layout.NotificationsItemView');
 

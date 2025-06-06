@@ -230,18 +230,20 @@ export default function WizardForm(props: IWizardFormProps) {
         useRedux: true,
     }), [activeStep?.fields, isLastStep, onAfterSubmit, onSubmit, props.formProps.onSubmit, props.formId]);
 
-    const renderStep = useCallback((header: React.ReactNode, buttons: React.ReactNode, viewProps: IUiComponent) => (
-        <Form
-            {...props.formProps}
-            {...viewProps}
-            {...commonFormProps}
-            buttons={buttons}
-        >
-            {header}
-            {activeStep?.component && props.steps[currentStep].component}
-        </Form>
+    const renderStep = useCallback(
+(header: React.ReactNode, buttons: React.ReactNode, viewProps: IUiComponent) => (
+    <Form
+        {...props.formProps}
+        {...viewProps}
+        {...commonFormProps}
+        buttons={buttons}
+    >
+        {header}
+        {activeStep?.component && props.steps[currentStep].component}
+    </Form>
     ),
-    [activeStep?.component, commonFormProps, currentStep, props.formProps, props.steps]);
+    [activeStep?.component, commonFormProps, currentStep, props.formProps, props.steps],
+);
 
     const viewProps = useMemo(() => ({
         renderStep,

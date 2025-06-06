@@ -91,7 +91,8 @@ export function generateBackendUrl(props) {
 
 export default function useFile(props: IFileInput): IFileOutput {
     const {http} = useComponents();
-    http.getAccessToken(); // TODO Run promise..
+    // TODO Run promise..
+    http.getAccessToken();
 
     const uploader = useInitial(() => new FileUp({
         dropArea: {},
@@ -100,7 +101,8 @@ export default function useFile(props: IFileInput): IFileOutput {
             ...props.uploaderConfig,
             headers: {
                 ...props.uploaderConfig?.headers,
-                Authorization: 'Bearer ' + http._accessToken, // TODO how to get access token wuthout promise?
+                // TODO how to get access token wuthout promise?
+                Authorization: 'Bearer ' + http._accessToken,
             },
         },
         ...props.uploader,

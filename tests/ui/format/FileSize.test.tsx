@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import FileSize, {IFileSizeProps} from '../../../src/ui/format/FileSize/FileSize';
-import DefaultFormatterMockView from './DefaultFormatterMockView';
-
 import {JSXWrapper, render} from '../../helpers';
+import DefaultFormatterMockView from './DefaultFormatterMockView';
 
 describe('FileSize tests', () => {
     const props = {

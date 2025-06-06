@@ -1,7 +1,5 @@
 import configureMockStore from 'redux-mock-store';
-
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
-
 import {
     closeNotification,
     NOTIFICATIONS_CLOSE,

@@ -2,10 +2,10 @@ import '@testing-library/jest-dom';
 import {waitFor} from '@testing-library/react';
 import Grid, {IGridProps} from '../../../../src/ui/list/Grid/Grid';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+import InputField from '../../../../src/ui/form/InputField/InputField';
 import GridMockView from './GridMockView';
 import CheckboxColumnMockView from './CheckboxColumnMockView';
 import ContentColumnMockView from './ContentColumnMockView';
-import InputField from '../../../../src/ui/form/InputField/InputField';
 import DiagramColumnMockView from './DiagramColumnMockView';
 
 describe('Grid tests', () => {

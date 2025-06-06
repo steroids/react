@@ -1,8 +1,8 @@
 import React, {memo, useCallback, useRef, useState} from 'react';
 import _get from 'lodash-es/get';
-import {useIntersectionObserver} from './hooks';
 import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
+import {useIntersectionObserver} from './hooks';
 
 /**
  * InfiniteScroll

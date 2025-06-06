@@ -32,12 +32,14 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
         }
     }, [props.isAutoComplete, props.isOpened, props.isSearchAutoFocus]);
 
-    const renderPlaceholder = React.useCallback(() => props.placeholder && !props.selectedIds?.length
+    const renderPlaceholder = React.useCallback(
+() => props.placeholder && !props.selectedIds?.length
         ? (
             <div className={bem.element('placeholder')}>{props.placeholder}</div>
         )
         : null,
-    [bem, props.placeholder, props.selectedIds]);
+    [bem, props.placeholder, props.selectedIds],
+);
 
     return (
         <div

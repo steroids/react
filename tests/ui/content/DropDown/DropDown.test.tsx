@@ -26,10 +26,12 @@ describe('DropDown tests', () => {
     } as IDropDownProps;
 
     const renderComponent = () => {
-        const {getByText, container} = render(JSXWrapper(DropDown, props, true),
+        const {getByText, container} = render(
+            JSXWrapper(DropDown, props, true),
             {
                 container: document.body,
-            });
+            },
+        );
 
         const dropDownDispatcher = getByText(buttonText);
 

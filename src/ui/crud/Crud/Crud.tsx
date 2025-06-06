@@ -3,13 +3,16 @@ import _get from 'lodash-es/get';
 import _omit from 'lodash-es/omit';
 import {ReactNode, useCallback, useEffect, useMemo} from 'react';
 import {useUpdateEffect} from 'react-use';
-import CrudModal from './CrudModal';
 import {listRefresh} from '../../../actions/list';
 import {closeModal, openModal} from '../../../actions/modal';
 import {goToRoute} from '../../../actions/router';
 import {IComponents} from '../../../providers/ComponentsProvider';
 import useFetch from '../../../hooks/useFetch';
-import CrudContent from './CrudContent';
+import {useComponents, useSelector} from '../../../hooks';
+import useDispatch from '../../../hooks/useDispatch';
+import {IFormProps} from '../../form/Form/Form';
+import {IGridProps} from '../../list/Grid/Grid';
+import {IControlItem} from '../../nav/Controls/Controls';
 import {
     CRUD_ACTION_INDEX,
     DEFAULT_PRIMARY_KEY,
@@ -18,11 +21,8 @@ import {
     pageControlsMap,
     routeInfoSelector,
 } from './utils';
-import {useComponents, useSelector} from '../../../hooks';
-import useDispatch from '../../../hooks/useDispatch';
-import {IFormProps} from '../../form/Form/Form';
-import {IGridProps} from '../../list/Grid/Grid';
-import {IControlItem} from '../../nav/Controls/Controls';
+import CrudContent from './CrudContent';
+import CrudModal from './CrudModal';
 
 export interface IApiRest {
     index?: any,
@@ -191,7 +191,7 @@ export interface ICrudProps {
     /**
     * Коллекция элементов
     */
-    items?: ICrudItem[] | { [key: string]: ICrudItem, },
+    items?: ICrudItem[] | { [key: string]: ICrudItem },
 
     /**
     * Параметры Grid
@@ -206,7 +206,8 @@ export interface ICrudProps {
     /**
     * Параметры для колонки detail
     */
-    detail?: any, //TODO IDetailProps,
+    //TODO IDetailProps,
+    detail?: any,
 
     /**
     * Представление для Crud
@@ -363,7 +364,7 @@ function Crud(props: ICrudProps): JSX.Element {
                     }
 
                     crudItem.onClick(e, {...clickProps,
-...localClickProps});
+                        ...localClickProps});
                 };
             } else {
                 button.toRoute = routeId;

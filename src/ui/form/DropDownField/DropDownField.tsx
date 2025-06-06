@@ -230,7 +230,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
 }
 
 const normalizeItemToSelectAll = (
-    itemToSelectAll: boolean | {label: string, id: string,},
+    itemToSelectAll: boolean | {label: string, id: string},
 ) => {
     if (!itemToSelectAll) {
         return null;

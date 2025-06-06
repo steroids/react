@@ -1,7 +1,5 @@
 import * as React from 'react';
-
 import Button from '../../../../src/ui/form/Button';
-
 import {INavViewProps} from '../../../../src/ui/nav/Nav/Nav';
 import {useBem} from '../../../../src/hooks';
 

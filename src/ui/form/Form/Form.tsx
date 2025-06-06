@@ -14,6 +14,7 @@ import {useComponents, useDispatch} from '../../../hooks';
 import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
 import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
+import {FieldEnum} from '../../../enums';
 
 /**
  * Form
@@ -443,7 +444,7 @@ function Form(props: IFormProps): JSX.Element {
         // Add captcha token
         let captchaAttribute = null;
         Object.entries(components.ui.getRegisteredFields(props.formId) || {}).forEach(([attribute, fieldType]) => {
-            if (fieldType === 'ReCaptchaField') {
+            if (fieldType === FieldEnum.RE_CAPTCHA_FIELD) {
                 captchaAttribute = attribute;
             }
         });

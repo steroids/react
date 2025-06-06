@@ -2,6 +2,7 @@ import _has from 'lodash-es/has';
 import _upperFirst from 'lodash-es/upperFirst';
 import {useContext, useMemo} from 'react';
 import * as React from 'react';
+import {FieldEnumType} from '@steroidsjs/core/enums';
 import {providers} from '../../../utils/form';
 import {FormContext} from '../Form/Form';
 import FieldLayout from '../FieldLayout/FieldLayout';
@@ -225,7 +226,7 @@ const createDynamicField = (componentId: string, Component, options: IFieldWrapp
 
 // Field Wrapper
 export default function fieldWrapper<T = any>(
-    componentId: string,
+    componentId: FieldEnumType,
     Component: any,
     optionsConfig: IFieldWrapperOptions = {
         attributeSuffixes: [''],

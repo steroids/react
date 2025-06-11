@@ -5,7 +5,6 @@ import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
 import _pick from 'lodash-es/pick';
-import _isArray from 'lodash-es/isArray';
 import _isObject from 'lodash-es/isObject';
 import _isFunction from 'lodash-es/isFunction';
 import {IRouteItem} from '../ui/nav/Router/Router';
@@ -24,7 +23,7 @@ export interface IRouterInitialState {
         query: Record<string, unknown> | null,
     } | null,
     routesTree: IRouteItem | null,
-    routesMap: {[key: string]: IRouteItem, } | null,
+    routesMap: {[key: string]: IRouteItem } | null,
     activeIds: string[] | null,
     match: {
         path: string,
@@ -52,7 +51,7 @@ const initialState: IRouterInitialState = {
     counters: {},
 };
 
-type TUrlParams = {[key: string]: unknown, } | null;
+type TUrlParams = {[key: string]: unknown } | null;
 
 /**
  * Generate url for route by path and params
@@ -131,7 +130,8 @@ export const normalizeRoutes = (state, item: IRouteItem, activeIds: string[], ro
         path: item.path || '',
         isVisible: item.isVisible !== false,
         isNavVisible: item.isNavVisible !== false,
-        component: null, // Do not store component class in redux
+        // Do not store component class in redux
+        component: null,
         componentProps: null,
         roles: item.roles || [],
         items,
@@ -219,6 +219,7 @@ const reducerMap = {
         },
     }),
 };
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => reducerMap[action.type]
     ? reducerMap[action.type](state, action)
     : state;
@@ -228,12 +229,9 @@ export const getRouterParams = state => _get(state.router, 'params');
 export const getActiveRouteIds = state => _get(state.router, 'activeIds') || null;
 export const getRoutesMap = state => _get(state.router, 'routesMap') || null;
 export const getRouteId = state => _get(state.router, 'activeIds.0') || null;
-export const getRoute = (state, routeId: TRouteIdArg = null): IRouteItem => _get(
-    state.router, ['routesMap', routeId || getRouteId(state)],
-) || null;
-export const getRouteProp = (state, routeId: TRouteIdArg = null, propName) => _get(
-    getRoute(state, routeId), propName,
-) || null;
+export const getRoute = (state, routeId: TRouteIdArg = null): IRouteItem => _get(state.router, ['routesMap', routeId || getRouteId(state)]) || null;
+// eslint-disable-next-line default-param-last
+export const getRouteProp = (state, routeId: TRouteIdArg = null, propName) => _get(getRoute(state, routeId), propName) || null;
 export const getRouteParams = state => _get(state.router, 'match.params') || null;
 export const getRouteParam = (state, paramName) => _get(getRouteParams(state), paramName) || null;
 export const getRouteBreadcrumbs = (state, routeId: TRouteIdArg = null): IRouteItem[] => {
@@ -253,5 +251,5 @@ export const getRouteParent = (state, routeId: TRouteIdArg = null, level = 1) =>
         ? breadcrumbs[breadcrumbs.length - (level + 1)]
         : null;
 };
-// TODO levels...
-export const getNavItems = (state, routeId/*, level = 1*/) => getRouteChildren(state, routeId);
+// TODO levels... (add to args ', level = 1)'
+export const getNavItems = (state, routeId) => getRouteChildren(state, routeId);

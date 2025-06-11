@@ -57,6 +57,7 @@ export const defaultFromStringConverter = (value, type, item) => {
         case 'boolean':
             return ['1', 't', 'y'].includes(String(value).substr(0, 1)) || null;
 
+        // eslint-disable-next-line default-case-last
         default:
         case 'string':
             return value ? String(value) : null;
@@ -78,6 +79,7 @@ export const defaultToStringConverter = (value, type, item) => {
         case 'boolean':
             return value ? '1' : null;
 
+        // eslint-disable-next-line default-case-last
         default:
         case 'string':
         case 'number':

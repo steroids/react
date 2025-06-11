@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {IEmptyViewProps} from '../../../../src/ui/list/Empty/Empty';
 import {useBem} from '../../../../src/hooks';
 

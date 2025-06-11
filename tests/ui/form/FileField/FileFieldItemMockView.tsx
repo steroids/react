@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
-
 import {FilesLayout, IFileFieldItemViewProps} from '../../../../src/ui/form/FileField/FileField';
 import Icon from '../../../../src/ui/content/Icon';
 

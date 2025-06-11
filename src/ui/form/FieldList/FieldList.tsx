@@ -10,8 +10,8 @@ import {ModelAttribute} from 'src/components/MetaComponent';
 import {useComponents, useSelector} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
 import {formArrayAdd, formArrayRemove, formChange} from '../../../actions/form';
-import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
@@ -60,7 +60,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
      *  amount: 5
      * }
      */
-    initialValues?: { [key: string]: any, },
+    initialValues?: { [key: string]: any },
 
     /**
      * Начальные элементы списка
@@ -76,7 +76,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
      *     }
      * ]
      */
-    initialItems?: { [key: string]: any, }[],
+    initialItems?: { [key: string]: any }[],
 
     /**
      * Список с полями формы

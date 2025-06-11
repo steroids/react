@@ -24,8 +24,8 @@ import ComponentsProvider, {IComponents} from '../providers/ComponentsProvider';
 import Router, {IRouteItem, IRouterProps} from '../ui/nav/Router/Router';
 import MetricsComponent from '../components/MetricsComponent';
 import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider';
-import useComponents from './useComponents';
 import {IFetchConfig} from '../hooks/useFetch';
+import useComponents from './useComponents';
 
 export interface IComponentConfig {
     className?: Record<string, any>,

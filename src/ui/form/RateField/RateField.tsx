@@ -59,12 +59,14 @@ export interface IRateFieldViewProps extends IRateFieldProps, IFieldWrapperOutpu
 function RateField(props: IRateFieldProps): JSX.Element {
     const components = useComponents();
 
-    const items = useMemo(() => [...Array(props.itemsCount || 5)]
+    const items = useMemo(
+() => [...Array(props.itemsCount || 5)]
         .map((item, index) => ({
             id: index,
             value: index + 1,
         })),
-    [props.itemsCount]);
+    [props.itemsCount],
+);
 
     useMount(() => props.input.onChange(props.defaultValue || 0));
 

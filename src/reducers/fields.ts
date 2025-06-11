@@ -18,6 +18,7 @@ const initialState: IFieldsState = {
 };
 
 export const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, '');
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => {
     switch (action.type) {
         case FIELDS_SET_META:

@@ -14,15 +14,19 @@ export default function CardView(props: ICardViewProps) {
 
     return (
         <div
-            className={bem(bem.block(),
-                props.className)}
+            className={bem(
+bem.block(),
+                props.className,
+)}
             style={props.style}
         >
             {props.header && (
-                <div className={bem.element('header',
+                <div className={bem.element(
+'header',
                     {
                         withoutCover: !props.cover && hasContent,
-                    })}
+                    },
+)}
                 >
                     <div className={bem.element('header-data')}>
                         {props.header.avatar && (

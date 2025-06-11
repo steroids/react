@@ -7,8 +7,12 @@ import mountWithApp from '../mocks/mountWithApp';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 
-const MockResultComponent = (props: any) => <div />;
-const MockComponent = (props: any) => <MockResultComponent bem={useBem(props.namespace)} />;
+function MockResultComponent(props: any) {
+  return <div />;
+}
+function MockComponent(props: any) {
+  return <MockResultComponent bem={useBem(props.namespace)} />;
+}
 
 jest.useFakeTimers();
 

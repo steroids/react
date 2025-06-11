@@ -70,7 +70,8 @@ export default function Steps(props: IStepsProps): JSX.Element {
 
     useEffect(() => setIsChangeable(props.isChangeable), [props.isChangeable]);
 
-    const toStep = useCallback((stepItem, index) => components.ui.renderView(props.stepItemView || 'list.StepItemView',
+    const toStep = useCallback((stepItem, index) => components.ui.renderView(
+props.stepItemView || 'list.StepItemView',
         {
             key: stepItem.id,
             stepItem,
@@ -84,7 +85,8 @@ export default function Steps(props: IStepsProps): JSX.Element {
                     props.onChange(index);
                 }
             },
-        }), [components.ui, isChangeable, props]);
+        },
+), [components.ui, isChangeable, props]);
 
     return components.ui.renderView(props.view || 'list.StepsView', {
         className: props.className,

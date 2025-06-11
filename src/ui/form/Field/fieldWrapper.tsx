@@ -151,7 +151,7 @@ const DEFAULT_SIZE = 'md';
 const getKey = (baseName, attribute) => baseName + _upperFirst(attribute || '');
 
 const createDynamicField = (componentId: string, Component, options: IFieldWrapperOptions) => {
-    const DynamicField = (props: IFieldWrapperInputProps) => {
+    function DynamicField(props: IFieldWrapperInputProps) {
         const components = useComponents();
 
         // Get context, formId
@@ -217,7 +217,7 @@ const createDynamicField = (componentId: string, Component, options: IFieldWrapp
             ...props,
             ...wrapperProps,
         });
-    };
+    }
     DynamicField.displayName = componentId;
     DynamicField.defaultProps = Component.defaultProps;
     return DynamicField;
@@ -236,7 +236,7 @@ export default function fieldWrapper<T = any>(
         attributeSuffixes: optionsConfig.attributeSuffixes || [''],
     };
 
-    const NewComponent = (props: IFieldWrapperInputProps): JSX.Element => {
+    function NewComponent(props: IFieldWrapperInputProps): JSX.Element {
         const components = useComponents();
 
         // Get context, formId
@@ -293,7 +293,7 @@ export default function fieldWrapper<T = any>(
                 />
             ),
         });
-    };
+    }
 
     NewComponent.WrappedComponent = Component;
     NewComponent.displayName = componentId;

@@ -1,9 +1,8 @@
 import * as React from 'react';
-// import {CKEditor} from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@steroidsjs/ckeditor5/packages/ckeditor5-build-classic';
-
 import {IHtmlFieldViewProps} from '../../../../src/ui/form/HtmlField/HtmlField';
 import {useBem} from '../../../../src/hooks';
+// import {CKEditor} from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@steroidsjs/ckeditor5/packages/ckeditor5-build-classic';
 
 export default function HtmlFieldView(props: IHtmlFieldViewProps) {
     const bem = useBem('HtmlFieldView');

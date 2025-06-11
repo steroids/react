@@ -3,15 +3,14 @@ import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
 import _isEqual from 'lodash-es/isEqual';
 import _uniqBy from 'lodash-es/uniqBy';
-
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {usePrevious} from 'react-use';
 import {fieldsDataProviderSetItems} from '../actions/fields';
 import {normalizeItems} from '../utils/data';
-import {useComponents, useDispatch} from './index';
 import Enum from '../base/Enum';
 import {getDataProviderItems, getEnumLabels} from '../reducers/fields';
 import {smartSearch} from '../utils/text';
+import {useComponents, useDispatch} from './index';
 
 export interface IAutoCompleteConfig {
     /**
@@ -34,8 +33,8 @@ export interface IAutoCompleteConfig {
 }
 
 export type DataProviderItems = string
-    | ({new(): Enum,})
-    | (string | number | {id: string | number | boolean, label: string | Record<string, any> | number, [key: string]: any, })[];
+    | ({new(): Enum})
+    | (string | number | {id: string | number | boolean, label: string | Record<string, any> | number, [key: string]: any })[];
 
 export interface IDataProvider {
     /**
@@ -226,7 +225,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         );
         const result = searchHandler(dataProvider.action, {
             query: config.query,
-            ...(isAuto ? {ids: config.initialSelectedIds} : null), // deprecated logic
+            // deprecated logic
+            ...(isAuto ? {ids: config.initialSelectedIds} : null),
             ...(config.initialSelectedIds?.length > 0 ? {withIds: config.initialSelectedIds} : null),
             ...config.dataProvider.params,
         });

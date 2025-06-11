@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import EnumFormatter, {IEnumFormatterProps} from '../../../src/ui/format/EnumFormatter/EnumFormatter';
-import DefaultFormatterMockView from './DefaultFormatterMockView';
-
 import {JSXWrapper, render} from '../../helpers';
+import DefaultFormatterMockView from './DefaultFormatterMockView';
 
 describe('EnumFormatter tests', () => {
     const itemId = 1;

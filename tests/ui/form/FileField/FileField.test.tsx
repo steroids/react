@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import FileFieldMockView from './FileFieldMockView';
 import FileField, {IFileFieldProps} from '../../../../src/ui/form/FileField/FileField';
+import FileFieldMockView from './FileFieldMockView';
 
 describe('FileField tests', () => {
     const props = {

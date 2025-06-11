@@ -5,7 +5,6 @@ import File from 'fileup-core/lib/models/File';
 import {useFile} from '../../src/hooks';
 import useComponents from '../../src/hooks/useComponents';
 import componentsMock from '../mocks/componentsMock';
-
 import {generateBackendUrl} from '../../src/hooks/useFile';
 
 describe('generateBackendUrl', () => {

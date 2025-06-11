@@ -1,5 +1,4 @@
 import {act, renderHook, waitFor} from '@testing-library/react';
-
 import {useAbsolutePositioning} from '../../src/hooks';
 import {IAbsolutePositioningInputProps, Position} from '../../src/hooks/useAbsolutePositioning';
 

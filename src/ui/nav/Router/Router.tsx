@@ -126,7 +126,7 @@ export interface IRouteItem {
     /**
      * Вложенные роуты
      */
-    items?: IRouteItem[] | {[key: string]: IRouteItem,},
+    items?: IRouteItem[] | {[key: string]: IRouteItem},
 
     /**
      * Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента
@@ -163,7 +163,7 @@ export interface IRouterProps {
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes: IRouteItem[] | IRouteItem | {[key: string]: IRouteItem,},
+    routes: IRouteItem[] | IRouteItem | {[key: string]: IRouteItem},
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент

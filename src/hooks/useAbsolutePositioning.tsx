@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-
 import calculateComponentAbsolutePosition from '../utils/calculateComponentAbsolutePosition';
 
 export interface IComponentStylePosition {

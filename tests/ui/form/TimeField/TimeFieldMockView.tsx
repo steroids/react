@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useCallback} from 'react';
 import {useBem} from '../../../../src/hooks';
-
 import {ITimeFieldViewProps} from '../../../../src/ui/form/TimeField/TimeField';
 import Icon from '../../../../src/ui/content/Icon';
 import DropDown from '../../../../src/ui/content/DropDown';

@@ -10,6 +10,7 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
+import useOnDayClick from './useOnDayClick';
 
 /**
  * DateRangeField
@@ -115,6 +116,15 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
         */
         to: MaskitoOptions,
     },
+
+    /**
+     * Активирует логику:
+     * - Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
+     * - Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
+     * - Если клик не на дату конца или начала диапазона, а диапазона нет, то устанавливаем кликнутую дату в поле from
+     * @example true
+     */
+    useSmartRangeReset?: boolean,
 
     [key: string]: any,
 }
@@ -240,15 +250,23 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         maskInputToRef,
     ]);
 
+    const onDayClick = useOnDayClick({
+        focus,
+        useSmartRangeReset: props.useSmartRangeReset,
+        fromValue: props.inputFrom.value,
+        toValue: props.inputTo.value,
+        onFromChange: props.inputFrom.onChange,
+        onToChange: props.inputTo.onChange,
+    });
+
     // Calendar props
     const calendarProps: ICalendarProps = useMemo(() => ({
         value: [props.inputFrom.value, props.inputTo.value],
-        onChange: focus === 'from' ? props.inputFrom.onChange : props.inputTo.onChange,
+        onChange: onDayClick,
         valueFormat: props.valueFormat,
         numberOfMonths: 2,
         showFooter: false,
-    }), [focus, props.inputFrom.onChange, props.inputFrom.value, props.inputTo.onChange,
-        props.inputTo.value, props.valueFormat]);
+    }), [onDayClick, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
 
     const viewProps = useMemo(() => ({
         onClear,
@@ -282,6 +300,7 @@ DateRangeField.defaultProps = {
     useSmartFocus: true,
     hasInitialFocus: false,
     icon: true,
+    useSmartRangeReset: true,
     maskOptions: {
         from: maskitoDateOptionsGenerator({
             mode: 'dd/mm/yyyy',

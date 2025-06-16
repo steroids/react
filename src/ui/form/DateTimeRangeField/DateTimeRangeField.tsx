@@ -37,17 +37,6 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
     attributeTo?: string,
 
     /**
-     * Свойства для компонента DayPickerInput
-     * @example
-     * {
-     *  dayPickerProps: {
-     *   showWeekNumbers: true
-     *  }
-     * }
-     */
-    pickerProps?: any,
-
-    /**
      * Свойства для поля 'from'
      */
     inputPropsFrom?: Record<string, unknown>,
@@ -286,9 +275,11 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         disabled: props.disabled,
         style: props.style,
         id: props.id,
-    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom,
-        isOpenedTo, onClear, onClose, props.className, props.disabled, props.errorsFrom,
-        props.errorsTo, props.icon, props.id, props.showRemove, props.size, props.style, timePanelViewProps]);
+    }), [
+        calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
+        props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove, props.size, props.style,
+        timePanelViewProps,
+    ]);
 
     return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', viewProps);
 }

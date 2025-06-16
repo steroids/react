@@ -37,9 +37,7 @@ export interface ICalendarProps extends IUiComponent {
      * Свойства для компонента DayPickerInput
      * @example
      * {
-     *  dayPickerProps: {
      *   showWeekNumbers: true
-     *  }
      * }
      */
     pickerProps?: DayPickerProps | any,

@@ -28,7 +28,7 @@ const filterParamsForPath = (path: string, params: Record<string, string | numbe
     }, {});
 };
 
-export const goToRoute = (routeId, params: RouteParams = null, isReplace = false) => (dispatch, getState, {store}) => {
+export const goToRoute = (routeId, params: RouteParams = null, isReplace = false, target?: string) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
         return [];
@@ -39,6 +39,10 @@ export const goToRoute = (routeId, params: RouteParams = null, isReplace = false
     const path = getRouteProp(getState(), routeId, 'path');
     const filteredParams = filterParamsForPath(path, params);
     const routeUrl = buildUrl(path, filteredParams);
+    if (target) {
+        window.open(routeUrl, target);
+        return [];
+    }
     const reduxAction = isReplace ? replace(routeUrl) : push(routeUrl);
     return dispatch(reduxAction);
 };

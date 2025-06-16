@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import {FieldEnum} from '../../../enums';
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -126,4 +127,4 @@ PasswordField.defaultProps = {
     required: false,
 };
 
-export default fieldWrapper<IPasswordFieldProps>('PasswordField', PasswordField);
+export default fieldWrapper<IPasswordFieldProps>(FieldEnum.PASSWORD_FIELD, PasswordField);

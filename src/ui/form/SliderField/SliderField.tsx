@@ -2,6 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import _toInteger from 'lodash-es/toInteger';
 import _head from 'lodash-es/head';
 import _last from 'lodash-es/last';
+import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
@@ -159,4 +160,4 @@ SliderField.defaultProps = {
     rangeDefaultValue: [0, 10],
 };
 
-export default fieldWrapper<ISliderFieldProps>('SliderField', SliderField);
+export default fieldWrapper<ISliderFieldProps>(FieldEnum.SLIDER_FIELD, SliderField);

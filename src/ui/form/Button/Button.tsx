@@ -259,7 +259,9 @@ function Button(props: IButtonProps): JSX.Element {
 
         if (props.toRoute) {
             if (props.target) {
-                const filteredParams = filterParamsForPath(routePath, props.toRouteParams || {});
+                //TODO remove @ts-ignore
+                // @ts-ignore
+                const filteredParams = filterParamsForPath(routePath, props.toRouteParams);
                 const routeUrl = buildUrl(routePath, filteredParams);
                 window.open(routeUrl, props.target);
             } else {
@@ -309,7 +311,7 @@ function Button(props: IButtonProps): JSX.Element {
                     });
             }
         }
-    }, [dispatch, props, tag]);
+    }, [dispatch, props, routePath, tag]);
 
     const viewProps = useMemo(() => ({
         badge,

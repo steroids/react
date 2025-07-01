@@ -263,6 +263,8 @@ function Button(props: IButtonProps): JSX.Element {
                 const routeUrl = buildUrl(routePath, filteredParams);
                 window.open(routeUrl, props.target);
             } else {
+                //TODO remove @ts-ignore
+                // @ts-ignore
                 dispatch(goToRoute(props.toRoute, props.toRouteParams));
             }
         }

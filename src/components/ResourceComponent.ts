@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-promise-executor-return */
 import * as queryString from 'qs';
 import _isArray from 'lodash-es/isArray';
 
@@ -9,8 +10,8 @@ declare global {
             execute: (...args: any[]) => Promise<string>,
         },
     }
-}
 
+}
 export interface IResourceComponentConfig {
     /**
      * API-ключ Google для использования Google Maps и других сервисов.
@@ -172,7 +173,7 @@ export default class ResourceComponent implements IResourceComponent {
         if (window.ymaps) {
             return new Promise(resolve =>
                 // @ts-ignore
-                // eslint-disable-next-line implicit-arrow-linebreak, no-promise-executor-return
+                // eslint-disable-next-line implicit-arrow-linebreak
                 window.ymaps.ready(() => resolve(window.ymaps)));
         }
         return this.loadScript(
@@ -181,7 +182,7 @@ export default class ResourceComponent implements IResourceComponent {
                 lang: this.language || locale.language,
             },
             // @ts-ignore
-            // eslint-disable-next-line no-promise-executor-return
+            // eslint-disable-next-line
             () => new Promise(resolve => window.ymaps.ready(() => resolve(window.ymaps))),
         );
     }
@@ -196,7 +197,7 @@ export default class ResourceComponent implements IResourceComponent {
             this.RESOURCE_TWITTER_WIDGET,
             {},
             // @ts-ignore
-            // eslint-disable-next-line no-promise-executor-return
+            // eslint-disable-next-line
             () => new Promise(resolve => window.twttr.ready(() => resolve(window.twttr))),
         );
     }

@@ -17,7 +17,7 @@ export const initParams = params => ({
 
 // Include in the result only those parameters that are present as route parameters in the path
 // For example, given the path '/users/:id' and the parameters { id: 1, page: 3, totalPages: 10 }, the function will return { id: 1 }.
-const filterParamsForPath = (path: string, params: Record<string, string | number>) => {
+export const filterParamsForPath = (path: string, params: Record<string, string | number>) => {
     const parsedPath = parse(path);
 
     return parsedPath.reduce((filteredParams, param) => {
@@ -28,7 +28,7 @@ const filterParamsForPath = (path: string, params: Record<string, string | numbe
     }, {});
 };
 
-export const goToRoute = (routeId, params: RouteParams = null, isReplace = false, target?: string) => (dispatch, getState, {store}) => {
+export const goToRoute = (routeId, params: RouteParams = null, isReplace = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
         return [];
@@ -39,10 +39,6 @@ export const goToRoute = (routeId, params: RouteParams = null, isReplace = false
     const path = getRouteProp(getState(), routeId, 'path');
     const filteredParams = filterParamsForPath(path, params);
     const routeUrl = buildUrl(path, filteredParams);
-    if (target) {
-        window.open(routeUrl, target);
-        return [];
-    }
     const reduxAction = isReplace ? replace(routeUrl) : push(routeUrl);
     return dispatch(reduxAction);
 };

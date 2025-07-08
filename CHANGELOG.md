@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.0.57 (08.07.2025)
+
+### Added
+
+- Добавлена область выбора периодов (день, месяц, год) для `DateRangeField` и `DateTimeRangeField`
+- Добавлена возможность сдвигать дату при повторном клике на нее в `DateRangeField`
+
+### Fixed
+
+- Исправлен баг с передачей `pickerProps` в `DateRangeField` и `DateTimeRangeField`
+
 ## v3.0.56 (30.06.2025)
 
 ### Fixed

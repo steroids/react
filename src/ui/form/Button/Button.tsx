@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {goToRoute} from '../../../actions/router';
+import {goToRoute, filterParamsForPath} from '../../../actions/router';
 import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {useComponents, useForm} from '../../../hooks';
 import {FormContext, IFormContext} from '../Form/Form';
@@ -258,9 +258,17 @@ function Button(props: IButtonProps): JSX.Element {
         }
 
         if (props.toRoute) {
-            //TODO remove @ts-ignore
-            //@ts-ignore
-            dispatch(goToRoute(props.toRoute, props.toRouteParams));
+            if (props.target) {
+                //TODO remove @ts-ignore
+                // @ts-ignore
+                const filteredParams = filterParamsForPath(routePath, props.toRouteParams);
+                const routeUrl = buildUrl(routePath, filteredParams);
+                window.open(routeUrl, props.target);
+            } else {
+                //TODO remove @ts-ignore
+                // @ts-ignore
+                dispatch(goToRoute(props.toRoute, props.toRouteParams));
+            }
         }
 
         if (props.onClick) {
@@ -303,7 +311,7 @@ function Button(props: IButtonProps): JSX.Element {
                     });
             }
         }
-    }, [dispatch, props, tag]);
+    }, [dispatch, props, routePath, tag]);
 
     const viewProps = useMemo(() => ({
         badge,

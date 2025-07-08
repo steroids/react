@@ -133,8 +133,10 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         style: props.style,
         id: props.id,
-    }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors, props.icon,
-        props.id, props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps]);
+    }), [
+        calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors,
+        props.icon, props.id, props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps,
+    ]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', viewProps);
 }

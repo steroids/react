@@ -170,7 +170,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      *  customHandler: () => {...}
      * }
      */
-    viewProps: {
+    viewProps?: {
         position: Position,
         autoPositioning: boolean,
         [key: string]: any,

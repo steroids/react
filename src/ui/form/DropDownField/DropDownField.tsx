@@ -197,6 +197,11 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     isFetchOnClose?: boolean,
 
+    /**
+     * Число в пикселях, больше которого не может быть выпадающее меню
+     */
+    maxHeight?: number,
+
     [key: string]: any,
 }
 
@@ -231,7 +236,6 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
         label: string,
         id: string,
     },
-    viewProps: IDropDownFieldProps['viewProps'],
 }
 
 const normalizeItemToSelectAll = (
@@ -498,12 +502,13 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         showEllipses: props.showEllipses,
         errors: props.errors,
         disabled: props.disabled,
+        maxHeight: props.maxHeight,
         ...dataProvider,
     }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps,
         isOpened, isLoading, onOpen, selectedItems, onReset, onClose, renderItem,
         onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className,
         props.style, props.size, props.color, props.outline, props.placeholder, props.showReset,
-        props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll, viewPropsToComponent, dataProvider]);
+        props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll, viewPropsToComponent, dataProvider, props.maxHeight]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }

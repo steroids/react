@@ -2,6 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
+import {ILocaleComponent} from '../../../components/LocaleComponent';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import {useComponents} from '../../../hooks';
@@ -10,6 +11,11 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
+
+export interface IDateRangeButton {
+    label: string,
+    onClick: (locale: ILocaleComponent, changeFrom: (value: string) => void, changeTo: (value: string) => void) => void,
+}
 
 /**
  * DateRangeField
@@ -105,6 +111,25 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
         to: MaskitoOptions,
     },
 
+    /**
+     * Добавляет дополнительные кнопки к календарю
+     * true - будут отображены кнопки по-умолчанию
+     * список:
+     *  string - одна из кнопок по-умолчанию
+     *  object - кастомная кнопка
+    */
+    withRangeButtons?: boolean | IDateRangeButton[],
+
+    /**
+     * Положение дополнительных кнопок (сегодня, вчера и прочие)
+     * Если указано в формате 'position1-position2', то 'position1' будет на устройствах > $tablet-width, а 'position2' на остальных.
+     */
+    rangeButtonsPosition?: 'top' | 'bottom' | 'left' | 'right' |
+                            'top-left' | 'top-right' | 'top-bottom' |
+                            'bottom-left' | 'bottom-right' | 'bottom-top' |
+                            'left-top' | 'left-bottom' | 'left-right' |
+                            'right-top' | 'right-bottom' | 'right-left',
+
     [key: string]: any,
 }
 
@@ -112,7 +137,7 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     Omit<IFieldWrapperOutputProps, 'input'>,
     Pick<IDateRangeFieldProps,
         'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'
-        | 'noBorder' | 'style'> {
+        | 'noBorder' | 'style' | 'withRangeButtons' | 'rangeButtonsPosition' | 'displayFormat'> {
     inputPropsFrom?: any,
     inputPropsTo?: any,
     errorsFrom?: string[],
@@ -257,10 +282,12 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
         style: props.style,
         id: props.id,
-    }), [
-        calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
-        props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove, props.size, props.style,
-    ]);
+        withRangeButtons: props.withRangeButtons,
+        rangeButtonsPosition: props.rangeButtonsPosition,
+        displayFormat: props.displayFormat,
+    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear,
+        onClose, props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove,
+        props.size, props.style, props.withRangeButtons, props.rangeButtonsPosition, props.displayFormat]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);
 }
@@ -285,6 +312,7 @@ DateRangeField.defaultProps = {
             separator: '.',
         }),
     },
+    rangeButtonsPosition: 'left-bottom',
 };
 
 export default fieldWrapper<IDateRangeFieldProps>('DateRangeField', DateRangeField,

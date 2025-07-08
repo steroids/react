@@ -82,11 +82,16 @@ export interface IPaginationProps {
     dark?: boolean,
 
     /**
-     * Список, для которого используется пагинация, пример {items: [...], total: number},
+     * Список, для которого используется пагинация
      * @example {{
  *                 total: 100,
  *                 page: 2,
  *                 pageSize: 10,
+ *                 items: [
+ *                    {id: 1, name: 'Item 1'},
+ *                    {id: 2, name: 'Item 2'},
+ *                    // ...
+ *                 ],
  *             }}
      */
     list?: any,

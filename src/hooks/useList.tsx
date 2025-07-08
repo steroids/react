@@ -274,6 +274,7 @@ export interface IListOutput {
     renderInfiniteScroll: () => any,
     onFetch: (params?: Record<string, unknown>) => void,
     onSort: (value: any) => void,
+    sort?: string,
 }
 
 export const defaultConfig = {
@@ -620,5 +621,6 @@ export default function useList(config: IListConfig): IListOutput {
         renderInfiniteScroll,
         onFetch,
         onSort,
+        sort: formValues?.sort,
     };
 }

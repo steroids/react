@@ -41,17 +41,6 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     attributeTo?: string,
 
     /**
-     * Свойства для компонента DayPickerInput
-     * @example
-     * {
-     *  dayPickerProps: {
-     *   showWeekNumbers: true
-     *  }
-     * }
-     */
-    pickerProps?: any,
-
-    /**
      * Формат даты показываемый пользователю
      * @example DD.MM.YYYY
      */
@@ -291,7 +280,8 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
         numberOfMonths: 2,
         showFooter: false,
-    }), [onDayClick, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
+        ...props.calendarProps,
+    }), [onDayClick, props.calendarProps, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
 
     const viewProps = useMemo(() => ({
         onClear,

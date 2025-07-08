@@ -1,9 +1,11 @@
 import React, {MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
+import {usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import _isEmpty from 'lodash-es/isEmpty';
 import _includes from 'lodash-es/includes';
 import _isPlainObject from 'lodash-es/isPlainObject';
+import _merge from 'lodash-es/merge';
+import {Position} from '@steroidsjs/core/hooks/useAbsolutePositioning';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
@@ -168,7 +170,9 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      *  customHandler: () => {...}
      * }
      */
-    viewProps?: {
+    viewProps: {
+        position: Position,
+        autoPositioning: boolean,
         [key: string]: any,
     },
 
@@ -201,7 +205,6 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     selectedItems: Record<string, unknown>[],
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
-    forwardedRef: any,
     autoCompleteInputForwardedRef: MutableRefObject<HTMLInputElement>,
     inputRef: MutableRefObject<HTMLInputElement>,
     searchInputProps: {
@@ -217,6 +220,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     isLoading?: boolean,
     onReset: () => void,
     onOpen: () => void,
+    onClose: () => void,
     renderItem: (item: IDropDownFieldItem) => JSX.Element,
     onItemRemove: (id: PrimaryKey | any) => void,
     isAutoComplete?: boolean,
@@ -227,6 +231,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
         label: string,
         id: string,
     },
+    viewProps: IDropDownFieldProps['viewProps'],
 }
 
 const normalizeItemToSelectAll = (
@@ -244,6 +249,11 @@ const normalizeItemToSelectAll = (
         id: 'all',
         label: __('Все'),
     };
+};
+
+const DEFAULT_VIEW_PROPS = {
+    position: 'bottom',
+    autoPositioning: true,
 };
 
 function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -373,13 +383,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         setIsOpened(false);
     }, [fetchRemote, isOpened, props, selectedIds, setIsFocused, setIsOpened]);
 
-    // Outside click -> close
-    const forwardedRef = useRef(null);
-    if (process.env.PLATFORM !== 'mobile') {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useClickAway(forwardedRef, onClose);
-    }
-
     // Search input props
     const searchInputProps = useMemo(() => ({
         type: 'search',
@@ -460,12 +463,13 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         return renderItemView(item, 'default', null);
     }, [hasGroup, props.groupAttribute, props.itemsContent, renderItemView]);
 
+    const viewPropsToComponent = useMemo(() => _merge(DEFAULT_VIEW_PROPS, props.viewProps), [props.viewProps]);
+
     const viewProps = useMemo(() => ({
         isAutoComplete,
         items,
         hoveredId,
         selectedIds,
-        forwardedRef,
         inputRef,
         autoCompleteInputForwardedRef,
         searchInputProps,
@@ -484,7 +488,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isSearchAutoFocus: props.isSearchAutoFocus,
         itemToSelectAll: normalizedItemToSelectAll,
         className: props.className,
-        viewProps: props.viewProps,
+        viewProps: viewPropsToComponent,
         style: props.style,
         size: props.size,
         color: props.color,
@@ -495,10 +499,11 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         errors: props.errors,
         disabled: props.disabled,
         ...dataProvider,
-    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
-        renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style, props.size,
-        props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled,
-        normalizedItemToSelectAll, dataProvider, inputRef, autoCompleteInputForwardedRef, forwardedRef]);
+    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps,
+        isOpened, isLoading, onOpen, selectedItems, onReset, onClose, renderItem,
+        onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className,
+        props.style, props.size, props.color, props.outline, props.placeholder, props.showReset,
+        props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll, viewPropsToComponent, dataProvider]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }

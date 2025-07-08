@@ -360,9 +360,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const onClose = useCallback(() => {
         if (isOpened) {
-            setIsFocused(false);
-            setIsOpened(false);
-
             if (props.isFetchOnClose && fetchRemote) {
                 fetchRemote(false);
             }
@@ -371,6 +368,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
                 props.onClose(selectedIds);
             }
         }
+
+        setIsFocused(false);
+        setIsOpened(false);
     }, [fetchRemote, isOpened, props, selectedIds, setIsFocused, setIsOpened]);
 
     // Outside click -> close

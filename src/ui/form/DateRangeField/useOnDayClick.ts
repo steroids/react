@@ -16,12 +16,12 @@ export default function useOnDayClick(props: IUseOnDayClickProps) {
         if (useSmartRangeReset) {
             // Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
             // Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
-            if (value === fromValue?.split(',')[0]) {
+            if (value === fromValue) {
                 onFromChange(toValue);
                 onToChange(null);
                 return;
             }
-            if (value === toValue?.split(',')[0]) {
+            if (value === toValue) {
                 onFromChange(fromValue);
                 onToChange(null);
                 return;

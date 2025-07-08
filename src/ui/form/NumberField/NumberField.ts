@@ -105,28 +105,16 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             newValue = fixToDecimal(currentValue - step);
         }
 
-        onChange(null, String(newValue));
-    }, [currentInputRef, onChange, props.decimal, step]);
-
-    const onStepUp = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) + step > props.max)) {
-            onStep(true);
-        }
-    }, [currentInputRef, onStep, props.max, step]);
-
-    const onStepDown = useCallback(() => {
-        if (!(Number(currentInputRef.current.value) - step < props.min)) {
-            onStep(false);
-        }
-    }, [currentInputRef, onStep, props.min, step]);
+        onInputChange(null, String(newValue));
+    }, [currentInputRef, onInputChange, props.decimal, step]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {
-            onStepUp();
+            onStep(true);
         } else if (event.key === 'ArrowDown') {
-            onStepDown();
+            onStep(false);
         }
-    }, [onStepDown, onStepUp]);
+    }, [onStep]);
 
     const inputProps = useMemo(() => ({
         ...props.inputProps,
@@ -146,8 +134,8 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const viewProps = useMemo(() => ({
         viewProps: props.viewProps,
         inputProps,
-        onStepUp,
-        onStepDown,
+        onStepUp: () => onStep(true),
+        onStepDown: () => onStep(false),
         input: props.input,
         inputRef: currentInputRef,
         size: props.size,
@@ -155,7 +143,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         className: props.className,
         disabled: props.disabled,
         id: props.id,
-    }), [currentInputRef, inputProps, onStepDown, onStepUp, props]);
+    }), [currentInputRef, inputProps, onStep, props.className, props.disabled, props.errors, props.id, props.input, props.size, props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);
 }

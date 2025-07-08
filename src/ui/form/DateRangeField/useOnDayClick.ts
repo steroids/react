@@ -52,6 +52,6 @@ export default function useOnDayClick(props: IUseOnDayClickProps) {
         } else {
             onToChange(value);
         }
-    }, [focus, fromValue, onFromChange, onToChange, toValue, useSmartRangeReset]);
+    }, [focus, fromValue, locale, onFromChange, onToChange, toValue, useSmartRangeReset]);
     return onDayClick;
 }

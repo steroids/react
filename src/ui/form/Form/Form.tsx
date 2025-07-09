@@ -431,7 +431,7 @@ function Form(props: IFormProps): JSX.Element {
 
         // Convert NumberField values to Number
         Object.entries(registeredFields).forEach(([key, fieldType]) => {
-            if (fieldType === 'NumberField') {
+            if (fieldType === FieldEnum.NUMBER_FIELD) {
                 const value = _get(cleanedValues, key);
                 if (_isNill(value) || _isEmptyString(value)) {
                     return;

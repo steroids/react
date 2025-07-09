@@ -63,11 +63,21 @@ const useInputTypeNumber = (
         return decimal ? numericFloatRegExp.test(value) : numericRegExp.test(value);
     };
 
-    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event?.target?.value;
+    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>, newValue?: string) => {
+        let value = newValue || event?.target?.value;
 
         if (isValueNumeric(value)) {
-            onChange(event);
+            if (value !== '') {
+                const numericValue = Number(value);
+
+                if (numericValue > inputTypeNumberProps.max) {
+                    value = inputTypeNumberProps.max;
+                } else if (numericValue < inputTypeNumberProps.min) {
+                    value = inputTypeNumberProps.min;
+                }
+            }
+
+            onChange(event, value);
         }
     };
 

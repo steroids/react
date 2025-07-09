@@ -3,9 +3,9 @@
 import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
 import useUniqueId from '../../../../src/hooks/useUniqueId';
-import {IRadioFieldViewProps} from '../../../../src/ui/form/RadioField/RadioField';
+import {ICheckboxFieldProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';
 
-export default function RadioFieldView(props: IRadioFieldViewProps) {
+export default function RadioFieldView(props: ICheckboxFieldProps) {
     const bem = useBem('RadioFieldView');
     const id = useUniqueId('radio');
 

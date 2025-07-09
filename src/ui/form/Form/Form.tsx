@@ -331,8 +331,8 @@ function Form(props: IFormProps): JSX.Element {
         // Query
         if (initialQuery) {
             initialValues = {
-                ...normalizeInitialQuery(initialQuery),
                 ...props.initialValues,
+                ...normalizeInitialQuery(initialQuery),
             };
         }
 

@@ -172,7 +172,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
             }
 
             // If all elements of selectedIds are equal to ids, remove all elements
-            if (_isEqual(selectedIds, ids)) {
+            if (_isEqual(new Set(selectedIds), new Set(ids))) {
                 setSelectedIdsInternal([]);
                 return;
             }

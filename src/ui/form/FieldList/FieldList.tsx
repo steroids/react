@@ -188,15 +188,31 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     const dispatch = context.provider.useDispatch();
 
     // Mapper for preserving the correct sequence of rows on the UI
-    const storeToRowIndexMap = useMemo(() => _range(props.input.value || 0), [props.input.value]);
+    const [storeToRowIndexMap, setStoreToRowIndexMap] = useState(_range(props.input.value) || []);
+
+    const addRowIndexes = useCallback((rowsCount) => {
+        setStoreToRowIndexMap((prevMap) => {
+            const lastIndex = !_isEmpty(prevMap) ? _last(prevMap) + 1 : 0;
+            return _concat(prevMap, _range(lastIndex, lastIndex + rowsCount));
+        });
+    }, []);
+
+    const removeRowIndex = useCallback((rowIndex) => {
+        setStoreToRowIndexMap((prevMap) => [
+            ...prevMap.slice(0, rowIndex),
+            ...prevMap.slice(rowIndex + 1),
+        ]);
+    }, []);
 
     // Add and Remove handlers
     const onAdd = useCallback((rowsCount = 1) => {
+        addRowIndexes(rowsCount);
         dispatch(formArrayAdd(context.formId, props.input.name, rowsCount, props.initialValues));
-    }, [context.formId, dispatch, props.initialValues, props.input.name]);
+    }, [addRowIndexes, context.formId, dispatch, props.initialValues, props.input.name]);
     const onRemove = useCallback((rowIndex) => {
+        removeRowIndex(rowIndex);
         dispatch(formArrayRemove(context.formId, props.input.name, rowIndex));
-    }, [context.formId, dispatch, props.input.name]);
+    }, [context.formId, dispatch, props.input.name, removeRowIndex]);
 
     useMount(() => {
         // Add initial rows

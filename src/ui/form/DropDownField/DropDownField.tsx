@@ -467,7 +467,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         return renderItemView(item, 'default', null);
     }, [hasGroup, props.groupAttribute, props.itemsContent, renderItemView]);
 
-    const viewPropsToComponent = useMemo(() => _merge(DEFAULT_VIEW_PROPS, props.viewProps), [props.viewProps]);
+    const componentViewProps = useMemo(() => _merge(DEFAULT_VIEW_PROPS, props.viewProps), [props.viewProps]);
 
     const viewProps = useMemo(() => ({
         isAutoComplete,
@@ -492,7 +492,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isSearchAutoFocus: props.isSearchAutoFocus,
         itemToSelectAll: normalizedItemToSelectAll,
         className: props.className,
-        viewProps: viewPropsToComponent,
+        viewProps: componentViewProps,
         style: props.style,
         size: props.size,
         color: props.color,
@@ -508,7 +508,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isOpened, isLoading, onOpen, selectedItems, onReset, onClose, renderItem,
         onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className,
         props.style, props.size, props.color, props.outline, props.placeholder, props.showReset,
-        props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll, viewPropsToComponent, dataProvider, props.maxHeight]);
+        props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll, componentViewProps, dataProvider, props.maxHeight]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }

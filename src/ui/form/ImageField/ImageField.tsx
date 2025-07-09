@@ -13,6 +13,7 @@ import useFile, {IFileInput} from '../../../hooks/useFile';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {openModal} from '../../../actions/modal';
 import {IButtonProps} from '../Button/Button';
+import {FieldEnum} from '../../../enums';
 
 export interface ICropConfig {
     /**
@@ -248,4 +249,4 @@ ImageField.defaultProps = {
     },
 };
 
-export default fieldWrapper<IImageFieldProps>('ImageField', ImageField);
+export default fieldWrapper<IImageFieldProps>(FieldEnum.IMAGE_FIELD, ImageField);

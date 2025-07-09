@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 import _merge from 'lodash-es/merge';
 import {useComponents} from '../../../hooks';
@@ -6,6 +5,7 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 /**
  * HtmlField
@@ -124,4 +124,4 @@ HtmlField.defaultProps = {
     className: '',
 };
 
-export default fieldWrapper<IHtmlFieldProps>('HtmlField', HtmlField);
+export default fieldWrapper<IHtmlFieldProps>(FieldEnum.HTML_FIELD, HtmlField);

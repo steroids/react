@@ -5,6 +5,7 @@ import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import useInputTypeNumber from './hooks/useInputTypeNumber';
 import {IDebounceConfig} from '../../../hooks/useSaveCursorPosition';
+import {FieldEnum} from '../../../enums';
 
 const DEFAULT_STEP = 1;
 
@@ -154,4 +155,4 @@ NumberField.defaultProps = {
     isCanBeNegative: true,
 };
 
-export default fieldWrapper<INumberFieldProps>('NumberField', NumberField);
+export default fieldWrapper<INumberFieldProps>(FieldEnum.NUMBER_FIELD, NumberField);

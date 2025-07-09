@@ -4,6 +4,7 @@ import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '..
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import useDateRange from '../DateField/useDateRange';
 import {ITimePanelViewProps} from '../TimeField/TimeField';
+import {FieldEnum} from '../../../enums';
 
 /**
  * TimeRangeField
@@ -228,6 +229,6 @@ TimeRangeField.defaultProps = {
     icon: true,
 };
 
-export default fieldWrapper<ITimeRangeFieldProps>('TimeRangeField', TimeRangeField, {
+export default fieldWrapper<ITimeRangeFieldProps>(FieldEnum.TIME_RANGE_FIELD, TimeRangeField, {
     attributeSuffixes: ['from', 'to'],
 });

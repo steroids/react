@@ -8,6 +8,7 @@ import fieldWrapper, {
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
+import {FieldEnum} from '../../../enums';
 
 type CheckboxFieldListItems = string
     | ({new(): Enum,})
@@ -146,4 +147,4 @@ CheckboxListField.defaultProps = {
     orientation: 'vertical',
 };
 
-export default fieldWrapper<ICheckboxListFieldProps>('CheckboxListField', CheckboxListField);
+export default fieldWrapper<ICheckboxListFieldProps>(FieldEnum.CHECKBOX_LIST_FIELD, CheckboxListField);

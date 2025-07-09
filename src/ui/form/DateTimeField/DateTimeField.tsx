@@ -10,6 +10,7 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {useComponents} from '../../../hooks';
+import {FieldEnum} from '../../../enums';
 
 /**
  * DateTimeField
@@ -132,8 +133,11 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         showRemove: props.showRemove,
         disabled: props.disabled,
         style: props.style,
-    }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors, props.icon,
-        props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps]);
+        id: props.id,
+    }), [
+        calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors,
+        props.icon, props.id, props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps,
+    ]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', viewProps);
 }
@@ -155,4 +159,4 @@ DateTimeField.defaultProps = {
     }),
 };
 
-export default fieldWrapper<IDateTimeFieldProps>('DateTimeField', DateTimeField);
+export default fieldWrapper<IDateTimeFieldProps>(FieldEnum.DATE_TIME_FIELD, DateTimeField);

@@ -5,6 +5,7 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 export interface ITimePanelViewProps extends Pick<ITimeFieldViewProps,
     'value' | 'onClose' | 'onNow' | 'onSelect' | 'className'>
@@ -89,7 +90,8 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         className: props.className,
         style: props.style,
         showRemove: props.showRemove,
-    }), [inputProps, isOpened, onClear, onClose, onNow, props.className, props.disabled, props.errors, props.icon, props.noBorder,
+        id: props.id,
+    }), [inputProps, isOpened, onClear, onClose, onNow, props.className, props.disabled, props.errors, props.icon, props.id, props.noBorder,
         props.showRemove, props.size, props.style, props.viewProps, timePanelViewProps]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', viewProps);
@@ -108,4 +110,4 @@ TimeField.defaultProps = {
     icon: true,
 };
 
-export default fieldWrapper<ITimeFieldProps>('TimeField', TimeField);
+export default fieldWrapper<ITimeFieldProps>(FieldEnum.TIME_FIELD, TimeField);

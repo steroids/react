@@ -37,9 +37,7 @@ export interface ICalendarProps extends IUiComponent {
      * Свойства для компонента DayPickerInput
      * @example
      * {
-     *  dayPickerProps: {
      *   showWeekNumbers: true
-     *  }
      * }
      */
     pickerProps?: DayPickerProps | any,
@@ -71,6 +69,12 @@ export interface ICalendarProps extends IUiComponent {
     * @param newDate - дата первого дня нового месяца
     */
     onMonthChange?: (newDate: Date) => void,
+
+    /**
+     * Нужно ли отображать кнопку "сегодня" под календарем.
+     * @default true
+     */
+    showTodayButton?: boolean,
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
@@ -173,6 +177,7 @@ function Calendar(props: ICalendarProps) {
         selectedDates,
         toggleCaptionPanel,
         isCaptionPanelVisible,
+        showTodayButton: props.showTodayButton,
         style: props.style,
         className: props.className,
         viewProps: props.viewProps,
@@ -180,8 +185,8 @@ function Calendar(props: ICalendarProps) {
         pickerProps: props.pickerProps,
         numberOfMonths: props.numberOfMonths,
     }), [fromYear, isCaptionPanelVisible, month, onDaySelect, onMonthSelect, props.className,
-        props.numberOfMonths, props.pickerProps, props.showFooter, props.style, props.viewProps,
-        selectedDates, toYear, toggleCaptionPanel]);
+        props.numberOfMonths, props.pickerProps, props.showFooter, props.showTodayButton, props.style,
+        props.viewProps, selectedDates, toYear, toggleCaptionPanel]);
 
     return components.ui.renderView(props.view || 'content.CalendarView', viewProps);
 }
@@ -190,6 +195,7 @@ Calendar.defaultProps = {
     numberOfMonths: 1,
     showFooter: true,
     valueFormat: 'YYYY-MM-DD',
+    showTodayButton: true,
 };
 
 export default Calendar;

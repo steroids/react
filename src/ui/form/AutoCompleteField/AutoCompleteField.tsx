@@ -6,6 +6,7 @@ import {useDataProvider, useDataSelect} from '../../../hooks';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {IBaseFieldProps} from '../InputField/InputField';
+import {FieldEnum} from '../../../enums';
 
 export interface IAutoCompleteItem {
     id: number | string | boolean,
@@ -219,4 +220,4 @@ AutoCompleteField.defaultProps = {
     showClear: false,
 };
 
-export default fieldWrapper<IAutoCompleteFieldProps>('AutoCompleteField', AutoCompleteField);
+export default fieldWrapper<IAutoCompleteFieldProps>(FieldEnum.AUTO_COMPLETE_FIELD, AutoCompleteField);

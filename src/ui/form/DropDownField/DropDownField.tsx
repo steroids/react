@@ -9,6 +9,7 @@ import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 export const GROUP_CONTENT_TYPE = 'group';
 export const CHECKBOX_CONTENT_TYPE = 'checkbox';
@@ -202,7 +203,8 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
     hoveredId: PrimaryKey | any,
     selectedIds: (PrimaryKey | any)[],
     forwardedRef: any,
-    forwardedInputRef: MutableRefObject<HTMLInputElement>,
+    autoCompleteInputForwardedRef: MutableRefObject<HTMLInputElement>,
+    inputRef: MutableRefObject<HTMLInputElement>,
     searchInputProps: {
         type: string,
         name: string,
@@ -250,7 +252,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     // Query state
     const [query, setQuery] = useState('');
-    const forwardedInputRef = useRef<HTMLInputElement>(null);
+    const autoCompleteInputForwardedRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const hasGroup = !!props.groupAttribute;
     const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
@@ -317,7 +320,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         items,
         sourceItems,
         inputValue: props.input.value,
-        autoCompleteInputRef: forwardedInputRef,
+        autoCompleteInputRef: autoCompleteInputForwardedRef,
     });
 
     const onOpen = useCallback(() => {
@@ -358,9 +361,6 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const onClose = useCallback(() => {
         if (isOpened) {
-            setIsFocused(false);
-            setIsOpened(false);
-
             if (props.isFetchOnClose && fetchRemote) {
                 fetchRemote(false);
             }
@@ -369,6 +369,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
                 props.onClose(selectedIds);
             }
         }
+
+        setIsFocused(false);
+        setIsOpened(false);
     }, [fetchRemote, isOpened, props, selectedIds, setIsFocused, setIsOpened]);
 
     // Outside click -> close
@@ -407,6 +410,15 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         }
     }, [onReset, prevInputValue, props.input.value, selectedIds.length]);
 
+    // Add required validation
+    useEffect(() => {
+        const defaultValidity = __('Required Field');
+
+        const errorMessage = props.required && !selectedIds.length ? defaultValidity : '';
+
+        inputRef.current?.setCustomValidity(errorMessage);
+    }, [props.required, selectedIds.length]);
+
     const renderItemView = (
         item: IDropDownFieldItem,
         type: ItemSwitchType,
@@ -433,7 +445,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         isSelectedAll,
     });
 
-    const renderItem = (item: IDropDownFieldItem) => {
+    const renderItem = useCallback((item: IDropDownFieldItem) => {
         if (hasGroup && Array.isArray(item[props.groupAttribute])) {
             return renderItemView(item, 'group', item[props.groupAttribute]);
         }
@@ -447,7 +459,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         }
 
         return renderItemView(item, 'default', null);
-    };
+    }, [hasGroup, props.groupAttribute, props.itemsContent, renderItemView]);
 
     const viewProps = useMemo(() => ({
         isAutoComplete,
@@ -455,7 +467,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         hoveredId,
         selectedIds,
         forwardedRef,
-        forwardedInputRef,
+        inputRef,
+        autoCompleteInputForwardedRef,
         searchInputProps,
         isOpened,
         isLoading,
@@ -486,7 +499,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
         renderItem, onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style, props.size,
         props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled,
-        normalizedItemToSelectAll, dataProvider]);
+        normalizedItemToSelectAll, dataProvider, inputRef, autoCompleteInputForwardedRef, forwardedRef]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }
@@ -506,4 +519,4 @@ DropDownField.defaultProps = {
     isFetchOnClose: false,
 };
 
-export default fieldWrapper<IDropDownFieldProps>('DropDownField', DropDownField);
+export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN_FIELD, DropDownField);

@@ -17,6 +17,7 @@ import {useComponents, useDispatch} from '../../../hooks';
 import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
 import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
+import {FieldEnum} from '../../../enums';
 
 const _isEmptyString = (value) => _isString(value) && _isEmpty(value);
 
@@ -335,8 +336,8 @@ function Form(props: IFormProps): JSX.Element {
         // Query
         if (initialQuery) {
             initialValues = {
-                ...normalizeInitialQuery(initialQuery),
                 ...props.initialValues,
+                ...normalizeInitialQuery(initialQuery),
             };
         }
 
@@ -459,7 +460,7 @@ function Form(props: IFormProps): JSX.Element {
         // Add captcha token
         let captchaAttribute = null;
         Object.entries(components.ui.getRegisteredFields(props.formId) || {}).forEach(([attribute, fieldType]) => {
-            if (fieldType === 'ReCaptchaField') {
+            if (fieldType === FieldEnum.RE_CAPTCHA_FIELD) {
                 captchaAttribute = attribute;
             }
         });

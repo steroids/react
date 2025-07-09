@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 import * as React from 'react';
-
 import {Link} from '../../../../src/ui/nav';
 import {IHeaderViewProps} from '../../../../src/ui/layout/Header/Header';
 import Nav from '../../../../src/ui/nav/Nav';
@@ -18,18 +17,16 @@ export default function HeaderView(props: IHeaderViewProps) {
     const dispatch = useDispatch();
 
     const renderAuthBlock = React.useCallback(() => (
-        <>
-            <Button
-                outline
-                color='basic'
-                toRoute={props.auth}
-                className={bem.element('auth-btn')}
-                size={props.size}
-                onClick={() => dispatch(openModal(props.authParams?.modal))}
-            >
-                {__('Войти')}
-            </Button>
-        </>
+        <Button
+            outline
+            color='basic'
+            toRoute={props.auth}
+            className={bem.element('auth-btn')}
+            size={props.size}
+            onClick={() => dispatch(openModal(props.authParams?.modal))}
+        >
+            {__('Войти')}
+        </Button>
 
     ), [bem, dispatch, props.auth, props.authParams?.modal, props.size]);
 

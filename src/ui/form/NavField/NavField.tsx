@@ -5,7 +5,6 @@ import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
 import {useDataProvider} from '../../../hooks';
-
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 
 /**

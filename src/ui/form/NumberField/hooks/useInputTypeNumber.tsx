@@ -53,12 +53,12 @@ const useInputTypeNumber = (
              * @example 1
              * @example -2
              */
-            ? new RegExp('^-?\\d*$')
+            ? /^-?\d*$/
             /**
              * Подходят положительные целые числа
              * @example 1
              */
-            : new RegExp('^\\d+$');
+            : /^\d+$/;
 
         return decimal ? numericFloatRegExp.test(value) : numericRegExp.test(value);
     };

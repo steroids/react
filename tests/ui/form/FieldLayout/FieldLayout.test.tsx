@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import FieldLayoutMockView from './FieldLayoutMockView';
 import FieldLayout from '../../../../src/ui/form/FieldLayout/FieldLayout';
+import FieldLayoutMockView from './FieldLayoutMockView';
 
 describe('FieldLayout tests', () => {
     const props = {

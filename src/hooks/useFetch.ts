@@ -2,8 +2,8 @@ import {useCallback, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
 import _trim from 'lodash-es/trim';
 import axios, {AxiosError} from 'axios';
-import {useComponents, useSsr} from './index';
 import {IComponents} from '../providers/ComponentsProvider';
+import {useComponents, useSsr} from './index';
 
 declare global {
     interface Window {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {useBem} from '../../src/hooks';
 import useLayout, {STATUS_LOADING, STATUS_OK} from '../../src/hooks/useLayout';
 import Portal from '../../src/ui/layout/Portal';

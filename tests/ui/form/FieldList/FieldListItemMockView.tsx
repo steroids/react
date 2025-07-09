@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {useBem} from '../../../../src/hooks';
 import {Field} from '../../../../src/ui/form';
 import {Icon} from '../../../../src/ui/content';

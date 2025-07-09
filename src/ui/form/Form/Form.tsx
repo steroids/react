@@ -8,12 +8,12 @@ import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'reac
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
 import {showNotification} from '../../../actions/notifications';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
-import AutoSaveHelper from './AutoSaveHelper';
 import {IFieldProps} from '../Field/Field';
 import {useComponents, useDispatch} from '../../../hooks';
 import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
 import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
+import AutoSaveHelper from './AutoSaveHelper';
 
 /**
  * Form
@@ -265,7 +265,7 @@ export interface IFormContext {
     /**
     * Редьюсер
     */
-    reducer?: { dispatch: React.Dispatch<any>, select: any, },
+    reducer?: { dispatch: React.Dispatch<any>, select: any },
 
     /**
     * Диспатч
@@ -374,12 +374,14 @@ function Form(props: IFormProps): JSX.Element {
 
     // Clear Errors
     const prevValues = usePrevious(values);
-    useUpdateEffect(() => {
+    useUpdateEffect(
+() => {
         if (props.useClearErrors) {
             clearErrors(values, prevValues, errors, setErrors);
         }
     },
-    [props.useClearErrors, errors, prevValues, setErrors, values]);
+    [props.useClearErrors, errors, prevValues, setErrors, values],
+);
 
     // OnChange handler
     useUpdateEffect(() => {

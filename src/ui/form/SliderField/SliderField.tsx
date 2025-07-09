@@ -62,7 +62,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
      *  max: 100
      * }
      */
-    marks?: Record<string, {style: {color,}, label,} | React.ReactNode | string>,
+    marks?: Record<string, {style: {color}, label} | React.ReactNode | string>,
 
     /**
      * Функция, вызываемая в момент перетаскивания tip'а у слайдера

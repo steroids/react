@@ -47,9 +47,11 @@ export default function useSaveCursorPosition(config: ISaveCursorPositionConfig)
         config.inputParams.onChange(value || event.target?.value);
     }, [config.inputParams, config.onChangeCallback]);
 
-    const onChangeWithDelay = useMemo(() => config.debounce?.enabled
+    const onChangeWithDelay = useMemo(
+() => config.debounce?.enabled
             && _debounce(onChange, config.debounce?.delayMs ?? DEFAULT_DEBOUNCE_DELAY_MS),
-    [config.debounce, onChange]);
+    [config.debounce, onChange],
+);
 
     return {
         inputRef,

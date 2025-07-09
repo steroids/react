@@ -1,5 +1,4 @@
 import configureMockStore from 'redux-mock-store';
-
 import {
     formInitialize,
     FORM_INITIALIZE,
@@ -22,7 +21,6 @@ import {
     FORM_ARRAY_REMOVE,
     formArrayRemove,
 } from '../../src/actions/form';
-
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);

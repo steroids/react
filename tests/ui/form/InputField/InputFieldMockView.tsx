@@ -3,7 +3,6 @@ import * as React from 'react';
 import {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputField';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
-
 import renderIcon from '../../../mocks/renderIconMock';
 
 export default function InputFieldView(props: IInputFieldViewProps) {
@@ -41,11 +40,13 @@ export default function InputFieldView(props: IInputFieldViewProps) {
                 </span>
             )}
             <div className={bem.element('input-wrapper')}>
-                {props.leadIcon && renderIcon(props.leadIcon,
+                {props.leadIcon && renderIcon(
+props.leadIcon,
                     {
                         className: bem.element('lead-icon'),
                         tabIndex: -1,
-                    })}
+                    },
+)}
                 {props.maskOptions
                     ? (
                         <input

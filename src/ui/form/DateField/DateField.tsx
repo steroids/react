@@ -5,10 +5,10 @@ import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {IAbsolutePositioningInputProps} from '@steroidsjs/core/hooks/useAbsolutePositioning';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import {useComponents} from '../../../hooks';
-import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
 import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
+import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
 
 /**
  * DateField

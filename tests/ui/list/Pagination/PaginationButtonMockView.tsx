@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {IPaginationViewProps} from '../../../../src/ui/list/Pagination/Pagination';
 import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
@@ -11,6 +10,7 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
     const renderArrowStep = React.useCallback((
         onClick: () => void,
         iconName: string,
+        // eslint-disable-next-line default-param-last
         rotate = false,
         rounding?: {
             left?: boolean,
@@ -26,10 +26,12 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
         })}
         >
             <button
-                className={bem.element('page-button',
+                className={bem.element(
+                    'page-button',
                     {
                         hasIcon: true,
-                    })}
+                    },
+                )}
                 onClick={() => onClick()}
             >
                 <Icon

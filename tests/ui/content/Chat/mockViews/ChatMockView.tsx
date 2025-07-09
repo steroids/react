@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useBem} from '../../../../../src/hooks';
 import {IChatViewProps} from '../../../../../src/ui/content/Chat/Chat';
-
 import BubblesDateGroup from './BubblesDateGroup';
 
 export default function ChatView(props: IChatViewProps) {

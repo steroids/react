@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import useDataProvider, {IDataProviderConfig} from '../../src/hooks/useDataProvider';

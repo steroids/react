@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback, useRef} from 'react';
 import _isNumber from 'lodash-es/isNumber';
 

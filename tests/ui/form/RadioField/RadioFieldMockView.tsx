@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
 import useUniqueId from '../../../../src/hooks/useUniqueId';
 import {ICheckboxFieldProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';

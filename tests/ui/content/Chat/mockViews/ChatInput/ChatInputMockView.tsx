@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { forwardRef, useRef, useCallback } from 'react';
 import {Button, FileField, Form, InputField} from '../../../../../../src/ui/form';
 import {useBem} from '../../../../../../src/hooks';
 import {IChatInputViewProps} from '../../../../../../src/ui/content/Chat/Chat';
 import ChatFileItemMockView from '../ChatFileItem';
 import InputFieldMockView from '../../../../form/InputField/InputFieldMockView';
 
-const HiddenUploadFileButton = React.forwardRef<HTMLButtonElement, any>((props, ref) => (
+const HiddenUploadFileButton = forwardRef<HTMLButtonElement, any>((props, ref) => (
     <button
         type='button'
         ref={ref}
@@ -16,14 +16,14 @@ const HiddenUploadFileButton = React.forwardRef<HTMLButtonElement, any>((props, 
 export default function ChatInputView(props: IChatInputViewProps) {
     const bem = useBem('ChatInputView');
 
-    const filePickerRef = React.useRef(null);
+    const filePickerRef = useRef(null);
 
-    const onBrowseFile = React.useCallback((e) => {
+    const onBrowseFile = useCallback((e) => {
         e.preventDefault();
         filePickerRef.current.click();
     }, [filePickerRef]);
 
-    const renderInputActions = React.useCallback(() => (
+    const renderInputActions = useCallback(() => (
         <div className={bem.element('actions')}>
             <Button
                 className={bem.element('action')}

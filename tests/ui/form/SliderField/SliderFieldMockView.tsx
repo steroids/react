@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import * as React from 'react';
-import Slider, {SliderTooltip, Handle, Range} from 'rc-slider';
+import Slider, { SliderTooltip, Handle, Range } from 'rc-slider';
 import {ISliderFieldViewProps} from '../../../../src/ui/form/SliderField/SliderField';
 import {useBem} from '../../../../src/hooks';
 

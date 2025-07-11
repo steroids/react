@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {IIconViewProps} from '../../../../src/ui/content/Icon/Icon';
 import {useBem} from '../../../../src/hooks';
 

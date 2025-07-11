@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
 import {IAccordionViewProps} from '../../../../src/ui/content/Accordion/Accordion';
 

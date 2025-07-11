@@ -5,12 +5,12 @@ import _isEmpty from 'lodash-es/isEmpty';
 import _includes from 'lodash-es/includes';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _merge from 'lodash-es/merge';
-import {Position} from '@steroidsjs/core/hooks/useAbsolutePositioning';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {IDropDownProps} from '../../content/DropDown/DropDown';
 
 export const GROUP_CONTENT_TYPE = 'group';
 export const CHECKBOX_CONTENT_TYPE = 'checkbox';
@@ -170,11 +170,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      *  customHandler: () => {...}
      * }
      */
-    viewProps?: {
-        position: Position,
-        autoPositioning: boolean,
-        [key: string]: any,
-    },
+    viewProps?: IDropDownProps,
 
     /**
      * Callback-функция, которая вызывается при выборе элемента DropDown

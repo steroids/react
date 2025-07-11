@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback, ReactNode} from 'react';
 import _range from 'lodash-es/range';
 import {useComponents} from '../../../hooks';
 
@@ -13,12 +13,12 @@ export interface IStepsProps extends IUiComponent {
     onChange?: (index: number) => void,
     showDivider?: boolean,
     stepTitleOrientation?: Orientation,
-    stepItemView?: React.ReactNode,
+    stepItemView?: ReactNode,
 }
 
 export interface IStepsViewProps {
     className?: CssClassName,
-    children?: React.ReactNode,
+    children?: ReactNode,
 }
 
 export interface IStepItemViewProps extends Pick<IStepsProps, 'showDivider' | 'stepTitleOrientation' | 'onChange'>, IUiComponent {
@@ -35,7 +35,7 @@ export interface IStepItem {
     subtitle?: string,
     description?: string,
     status?: string,
-    icon?: string | React.ReactNode,
+    icon?: string | ReactNode,
     isError?: boolean,
 }
 

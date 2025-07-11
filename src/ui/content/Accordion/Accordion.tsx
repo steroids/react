@@ -1,6 +1,4 @@
-import * as React from 'react';
-import {useMemo} from 'react';
-import {maskitoDateOptionsGenerator} from '@maskito/kit';
+import {Children, cloneElement, ReactElement, ReactNode, useEffect, useMemo, useState} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface IAccordionIcon {
@@ -8,12 +6,12 @@ export interface IAccordionIcon {
     * Пользовательская иконка открытия
     * @example 'user'
     */
-    open: React.ReactElement | string,
+    open: ReactElement | string,
     /**
     * Пользовательская иконка закрытия
     * @example 'user'
     */
-    close: React.ReactElement | string,
+    close: ReactElement | string,
 }
 
 /**
@@ -37,7 +35,7 @@ export interface IAccordionProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Переводит Accordion в выключенное состояние
@@ -49,7 +47,7 @@ export interface IAccordionProps extends IUiComponent {
      * Пользовательская иконка svg или название иконки или объект с иконками open и close
      * @example 'circle'
      */
-    icon?: IAccordionIcon | React.ReactElement | string,
+    icon?: IAccordionIcon | ReactElement | string,
 
     /**
    * Включает режим в котором можно открыть только один AccordionItem
@@ -113,11 +111,11 @@ export type IAccordionViewProps = Pick<IAccordionProps, 'children' | 'className'
 export type IAccordionItemViewProps = IAccordionItemProps & IUiComponent;
 
 function Accordion(props: IAccordionProps) {
-    const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>(() => props.isInitialOpenAll
-        ? React.Children.map(props.children, (_, index) => index) || []
+    const [selectedAccordionItems, setSelectedAccordionItems] = useState<number[]>(() => props.isInitialOpenAll
+        ? Children.map(props.children, (_, index) => index) || []
         : []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.onChange) {
             props.onChange();
         }
@@ -159,7 +157,7 @@ function Accordion(props: IAccordionProps) {
     return (
         <AccordionView {...viewProps}>
             {
-                React.Children.map(props.children, (child: any, index) => React.cloneElement(child, {
+                Children.map(props.children, (child: any, index) => cloneElement(child, {
                     style: props.style,
                     activeKey: props.activeKey,
                     childIndex: index,

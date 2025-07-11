@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
-import React, {ChangeEvent, useMemo, useCallback} from 'react';
+import {ChangeEvent, useMemo, useCallback, MutableRefObject} from 'react';
+
 import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -61,7 +62,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
         max: number,
         step: string | number,
     },
-    inputRef: React.MutableRefObject<any>,
+    inputRef: MutableRefObject<any>,
     onStepUp: VoidFunction,
     onStepDown: VoidFunction,
     onKeyDown: VoidFunction,
@@ -79,7 +80,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         },
     });
 
-    const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
+    const step = useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 
     const {onInputChange} = useInputTypeNumber(
         currentInputRef,

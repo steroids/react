@@ -3,7 +3,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
-import React, {ChangeEvent, useMemo} from 'react';
+import {useState, useRef, useEffect, useCallback, ChangeEvent, useMemo} from 'react';
 import _debounce from 'lodash-es/debounce';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
@@ -27,17 +27,17 @@ export interface ISaveCursorPositionConfig {
 }
 
 export default function useSaveCursorPosition(config: ISaveCursorPositionConfig) {
-    const [cursor, setCursor] = React.useState(null);
-    const inputRef = React.useRef(null);
+    const [cursor, setCursor] = useState(null);
+    const inputRef = useRef(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const inputElement: HTMLInputElement = inputRef.current;
         if (inputElement) {
             inputElement.setSelectionRange(cursor, cursor);
         }
     }, [cursor, config.inputParams.value]);
 
-    const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
+    const onChange = useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
         if (config.onChangeCallback) {
             config.onChangeCallback(value || event.target?.value);
         }

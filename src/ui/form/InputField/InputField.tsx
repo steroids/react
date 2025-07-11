@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable max-len */
-import * as React from 'react';
-import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
+import {FocusEvent, InputHTMLAttributes, MouseEvent, ReactElement, ReactNode, useCallback, useEffect, useMemo} from 'react';
 import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
@@ -132,7 +131,7 @@ export interface IInputFieldProps extends IBaseFieldProps {
     /**
      * Пользовательская иконка svg или название иконки
      */
-    leadIcon?: React.ReactElement | string,
+    leadIcon?: ReactElement | string,
 
     /**
      * Задержка применения введённого значения
@@ -150,9 +149,9 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
         disabled: boolean,
     },
     onClear?: () => void,
-    onFocus?: (e: Event | React.FocusEvent) => void,
-    onBlur?: (e: Event | React.FocusEvent) => void,
-    onMouseDown?: (e: Event | React.MouseEvent) => void,
+    onFocus?: (e: Event | FocusEvent) => void,
+    onBlur?: (e: Event | FocusEvent) => void,
+    onMouseDown?: (e: Event | MouseEvent) => void,
     defaultValue?: string,
 }
 
@@ -172,7 +171,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         },
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (inputRef.current) {
             maskedInputRef(inputRef.current);
         }
@@ -180,7 +179,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     useInputFieldWarningByType(props.type);
 
-    const onClear = React.useCallback(() => {
+    const onClear = useCallback(() => {
         if (props.onClear) {
             props.onClear('');
         }

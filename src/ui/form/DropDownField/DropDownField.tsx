@@ -1,4 +1,4 @@
-import React, {MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {MutableRefObject, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway, usePrevious, useUpdateEffect} from 'react-use';
 import _isEqual from 'lodash-es/isEqual';
 import _isEmpty from 'lodash-es/isEmpty';
@@ -41,7 +41,7 @@ export interface IDropDownFieldItem {
     * Источник контента
     * @example 'https://steroids.kozhindev.com/images/icon.png'
     */
-    contentSrc?: string | React.ReactElement,
+    contentSrc?: string | ReactElement,
 }
 
 export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
@@ -121,7 +121,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     itemsContent?: {
         type: ContentType | string,
-        src?: string | React.ReactElement,
+        src?: string | ReactElement,
     },
 
     /**
@@ -256,9 +256,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const inputRef = useRef<HTMLInputElement>(null);
 
     const hasGroup = !!props.groupAttribute;
-    const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
+    const [selectedAccordionItems, setSelectedAccordionItems] = useState<number[]>([]);
 
-    const normalizedItemToSelectAll = React.useMemo(
+    const normalizedItemToSelectAll = useMemo(
         () => normalizeItemToSelectAll(props.itemToSelectAll),
         [props.itemToSelectAll],
     );
@@ -422,7 +422,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const renderItemView = (
         item: IDropDownFieldItem,
         type: ItemSwitchType,
-        src: string | React.ReactElement,
+        src: string | ReactElement,
     ) => components.ui.renderView(props.itemView || 'form.DropDownFieldItemView', {
         item: {
             ...item,

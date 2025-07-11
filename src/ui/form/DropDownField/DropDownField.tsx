@@ -170,7 +170,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      *  customHandler: () => {...}
      * }
      */
-    viewProps?: IDropDownProps,
+    viewProps?: IDropDownProps & {[key: string]: any,},
 
     /**
      * Callback-функция, которая вызывается при выборе элемента DropDown

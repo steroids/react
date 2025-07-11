@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {MouseEvent, useMemo} from 'react';
 import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
 import {useComponents, useTree} from '../../../hooks';
 
@@ -45,7 +45,7 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      * Обработчик на клик по узлу
      * @param args
      */
-    onItemClick?: (event: React.MouseEvent, item: ITreeItem) => any,
+    onItemClick?: (event: MouseEvent, item: ITreeItem) => any,
 
     /**
      * Отображать раскрытыми узлы из LocalStorage

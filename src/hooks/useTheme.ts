@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {ITheme, ThemeContext} from '../providers/ThemeProvider';
 
 export default function useTheme(): ITheme {

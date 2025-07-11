@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {ReactNode, useCallback, useMemo} from 'react';
 import _toInteger from 'lodash-es/toInteger';
 import _head from 'lodash-es/head';
 import _last from 'lodash-es/last';
@@ -63,7 +63,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
      *  max: 100
      * }
      */
-    marks?: Record<string, {style: {color,}, label,} | React.ReactNode | string>,
+    marks?: Record<string, {style: {color,}, label,} | ReactNode | string>,
 
     /**
      * Функция, вызываемая в момент перетаскивания tip'а у слайдера

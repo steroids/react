@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {FocusEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
 import useComponents from '../../../hooks/useComponents';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../../ui/form/Field/fieldWrapper';
@@ -61,7 +61,7 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
         value: string | number,
         disabled: boolean,
         onChange: (value: string) => void,
-        onBlur: (e: Event | React.FocusEvent) => void,
+        onBlur: (e: Event | FocusEvent) => void,
         className?: CssClassName,
     },
     isOpened: boolean,

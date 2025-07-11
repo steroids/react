@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useMemo, useRef} from 'react';
+import {Children, cloneElement, ReactNode, useCallback, useMemo, useRef} from 'react';
 import {useClickAway, useEvent} from 'react-use';
 import {useComponents} from '../../../hooks';
 import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
@@ -19,7 +18,7 @@ export interface IDropDownProps extends IAbsolutePositioningInputProps {
      * Содержимое DropDown (компонент или jsx-код)
      * @example () => Component
      */
-    content?: () => React.ReactNode,
+    content?: () => ReactNode,
 
     /**
      * В каком случае закрывать DropDown. По-умолчанию - `click-away`
@@ -102,7 +101,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
 
     const DropDownView = components.ui.getView(props.view || 'content.DropDownView');
     const childrenElement: any = typeof props.children === 'object'
-        ? React.Children.only(props.children)
+        ? Children.only(props.children)
         : undefined;
     const resultProps: any = {
         ref: childRef,
@@ -130,7 +129,7 @@ function DropDown(props: IDropDownProps): JSX.Element {
     return (
         <>
             {childrenElement
-                ? React.cloneElement(childrenElement, resultProps)
+                ? cloneElement(childrenElement, resultProps)
                 : (
                     <span>
                         {props.children}

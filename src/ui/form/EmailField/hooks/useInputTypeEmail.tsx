@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-expressions */
-import React from 'react';
+
+import {ChangeEvent, MutableRefObject, useEffect} from 'react';
 
 const DEFAULT_VALIDITY = __('Неправильный формат адреса электронной почты.');
 
 const useInputTypeEmail = (
-    currentInputRef: React.MutableRefObject<HTMLInputElement>,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>, value?: any) => void,
+    currentInputRef: MutableRefObject<HTMLInputElement>,
+    onChange: (event: ChangeEvent<HTMLInputElement>, value?: any) => void,
     currentValue: string | null | undefined,
 ) => {
     const isValueEmail = (value: string) => {
@@ -21,11 +22,11 @@ const useInputTypeEmail = (
 
     const errorMessage = isValueEmail(currentValue) ? '' : DEFAULT_VALIDITY;
 
-    React.useEffect(() => {
+    useEffect(() => {
         currentInputRef.current?.setCustomValidity(errorMessage);
     }, [currentInputRef, currentValue, errorMessage]);
 
-    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         onChange(event);
     };
 

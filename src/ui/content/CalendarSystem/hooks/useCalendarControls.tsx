@@ -2,18 +2,17 @@
 /* eslint-disable no-useless-return */
 /* eslint-disable no-console */
 /* eslint-disable default-case */
-import React, {useCallback} from 'react';
-import _isFunction from 'lodash-es/isFunction';
+import {Dispatch, MouseEvent, MutableRefObject, SetStateAction, useCallback} from 'react';
+
 import _get from 'lodash-es/get';
-import _head from 'lodash-es/head';
 import CalendarEnum from '../enums/CalendarType';
-import {getFormattedDay, getFormattedWeekFromDate, getSourceCalendarControl} from '../utils/utils';
+import {getFormattedDay, getSourceCalendarControl} from '../utils/utils';
 import DateControlType from '../enums/DateControlType';
 import {IDay} from '../CalendarSystem';
 
 const DATASET_CONTROL_TYPE_PATH = 'dataset.control';
 
-const getControlTypeFromButton = (event: React.MouseEvent<HTMLElement>) => {
+const getControlTypeFromButton = (event: MouseEvent<HTMLElement>) => {
     const clickedButton = event.target as HTMLDivElement;
 
     const controlType: string = _get(clickedButton, DATASET_CONTROL_TYPE_PATH);
@@ -29,8 +28,8 @@ const ONE_YEAR_DIFF = 1;
 const useCalendarControls = (
     calendarType: string,
     generalCurrentDay: IDay,
-    setGeneralCurrentDay: React.Dispatch<React.SetStateAction<IDay>>,
-    isGeneralCurrentDayNeedsUpdate: React.MutableRefObject<boolean>,
+    setGeneralCurrentDay: Dispatch<SetStateAction<IDay>>,
+    isGeneralCurrentDayNeedsUpdate: MutableRefObject<boolean>,
 ) => {
     const changeMonth = useCallback((isNext = true) => {
         const sourceMonthControl = getSourceCalendarControl(isNext ? DateControlType.NEXT_ONE : DateControlType.PREV_ONE);
@@ -90,7 +89,7 @@ const useCalendarControls = (
         checkIsOutAndUpdateInnerCalendar(formattedDay, prevMonthNumber, prevYearNumber);
     }, [generalCurrentDay.date, setGeneralCurrentDay, checkIsOutAndUpdateInnerCalendar]);
 
-    const onClickControl = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
+    const onClickControl = useCallback((event: MouseEvent<HTMLElement>) => {
         const controlType = getControlTypeFromButton(event);
         const sourceCalendarControl = getSourceCalendarControl(controlType);
 

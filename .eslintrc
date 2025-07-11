@@ -6,6 +6,8 @@
     "no-redeclare": "off",
     "react/no-unused-prop-types": "off",
     "react/default-props-match-prop-types": "off",
-    "react/sort-comp": "off"
+    "react/sort-comp": "off",
+     // Временное правило. Удалить после перехода на @steroidsjs/eslint-config@3.0.3 и выше
+    "react/react-in-jsx-scope": "off"
   }
 }

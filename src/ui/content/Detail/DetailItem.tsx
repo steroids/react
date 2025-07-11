@@ -1,4 +1,4 @@
-import React from 'react';
+import {ReactNode} from 'react';
 
 /**
  * DetailItem
@@ -9,13 +9,13 @@ export interface IDetailItemProps {
      * Наименование
      * @example 'Product'
      */
-    label: string | number | React.ReactNode,
+    label: string | number | ReactNode,
 
     /**
      * Значение
      * @example 'Cloud Database'
      */
-    children: React.ReactNode,
+    children: ReactNode,
 
     /**
      * Количество колонок, которое занимает элемент

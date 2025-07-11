@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useRef, useState} from 'react';
+import {memo, useCallback, useRef, useState} from 'react';
 import _get from 'lodash-es/get';
 import {useIntersectionObserver} from './hooks';
 import useForm from '../../../hooks/useForm';

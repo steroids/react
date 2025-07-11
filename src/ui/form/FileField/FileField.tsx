@@ -1,7 +1,7 @@
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import React, {useEffect, useMemo} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -145,7 +145,7 @@ const FILE_STATUS_END = 'end';
 function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
     const {files, onBrowse, onRemove} = useFile(props);
-    const [isFilesLoaded, setIsFilesLoaded] = React.useState(false);
+    const [isFilesLoaded, setIsFilesLoaded] = useState(false);
 
     const FileFieldView = props.view || components.ui.getView('form.FileFieldView');
     const FileFieldItemView = props.itemView || components.ui.getView('form.FileFieldItemView');

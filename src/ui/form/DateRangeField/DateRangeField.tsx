@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {RefCallback, useCallback, useEffect, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
@@ -157,12 +157,12 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     /**
      * Ref для input элемента, который накладывает маску на поле from
      */
-    maskInputFromRef?: React.RefCallback<HTMLElement>,
+    maskInputFromRef?: RefCallback<HTMLElement>,
 
     /**
      * Ref для input элемента, который накладывает маску на поле to
      */
-    maskInputFromTo?: React.RefCallback<HTMLElement>,
+    maskInputFromTo?: RefCallback<HTMLElement>,
 
     id: string,
 }
@@ -253,7 +253,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (extendedInputPropsFrom.ref && extendedInputPropsTo.ref) {
             maskInputFromRef(extendedInputPropsFrom.ref.current);
             maskInputToRef(extendedInputPropsTo.ref.current);

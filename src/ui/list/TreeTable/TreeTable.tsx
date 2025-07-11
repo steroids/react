@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useMemo} from 'react';
+import {ReactElement, useMemo} from 'react';
 import _merge from 'lodash-es/merge';
 import {getList} from '@steroidsjs/core/reducers/list';
 import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
@@ -46,7 +45,7 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items'>,
      * Кастомная иконка для сворачивания элементов
      * @example 'arrow'
      */
-    customIcon?: string | React.ReactElement,
+    customIcon?: string | ReactElement,
 }
 
 const TREE_COLUMN_VIEW_FIELDS = {
@@ -54,7 +53,7 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
-export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon?: string | React.ReactElement) => {
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon?: string | ReactElement) => {
     const newColumns = [...columns];
 
     // Add tree view to the first column

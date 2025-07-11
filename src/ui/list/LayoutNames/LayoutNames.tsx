@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import {memo, useCallback} from 'react';
 import _get from 'lodash-es/get';
 import {useComponents} from '../../../hooks';
 import {INavItem} from '../../nav/Nav/Nav';
@@ -104,4 +104,4 @@ export const normalizeLayoutNamesProps = props => ({
     ...(typeof props === 'boolean' ? {enable: props} : props),
 });
 
-export default React.memo(LayoutNames);
+export default memo(LayoutNames);

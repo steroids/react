@@ -1,4 +1,3 @@
-import React from 'react';
 import useComponents from '../../../hooks/useComponents';
 import useFetch from '../../../hooks/useFetch';
 import Modal from '../Modal';

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useComponents, useDataProvider, useDataSelect} from '@steroidsjs/core/hooks';
 import _isEqual from 'lodash-es/isEqual';
 import {DataProviderItems, IDataProvider} from '@steroidsjs/core/hooks/useDataProvider';

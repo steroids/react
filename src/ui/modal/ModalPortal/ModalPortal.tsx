@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import {useCallback} from 'react';
 import _orderBy from 'lodash-es/orderBy';
 import {useSelector} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';

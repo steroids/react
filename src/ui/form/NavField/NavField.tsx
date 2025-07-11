@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import Nav, {INavProps, INavItem} from '../../nav/Nav/Nav';
 import fieldWrapper, {
     IFieldWrapperInputProps,

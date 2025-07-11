@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {PropsWithChildren, useCallback, useMemo, useState} from 'react';
+import {createContext, PropsWithChildren, useCallback, useMemo, useState} from 'react';
 import {useMount, useUnmount} from 'react-use';
 
 export interface IScreen {
@@ -12,7 +11,7 @@ export interface IScreen {
     getDeviceType: () => string,
 }
 
-export const ScreenContext = React.createContext({} as IScreen);
+export const ScreenContext = createContext({} as IScreen);
 
 export interface IScreenProviderProps extends PropsWithChildren<any> {
     media?: Record<string, any>,

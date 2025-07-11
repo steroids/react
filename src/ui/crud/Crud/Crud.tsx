@@ -1,7 +1,6 @@
-import * as React from 'react';
 import _get from 'lodash-es/get';
 import _omit from 'lodash-es/omit';
-import {ReactNode, useCallback, useEffect, useMemo} from 'react';
+import {MouseEvent, ReactNode, useCallback, useEffect, useMemo} from 'react';
 import {useUpdateEffect} from 'react-use';
 import CrudModal from './CrudModal';
 import {listRefresh} from '../../../actions/list';
@@ -92,7 +91,7 @@ export interface ICrudItem extends Omit<IControlItem, 'visible' | 'confirm' | 'o
     /**
     * Функция обратного вызова, срабатывает после нажатия
     */
-    onClick?: (e: Event | React.MouseEvent, props: ICrudClickProps) => any,
+    onClick?: (e: Event | MouseEvent, props: ICrudClickProps) => any,
 }
 
 export interface ICrudClickProps {
@@ -196,12 +195,12 @@ export interface ICrudProps {
     /**
     * Параметры Grid
     */
-    grid?: IGridProps | React.ReactNode,
+    grid?: IGridProps | ReactNode,
 
     /**
     * Параметры формы
     */
-    form?: IFormProps | React.ReactNode,
+    form?: IFormProps | ReactNode,
 
     /**
     * Параметры для колонки detail
@@ -363,7 +362,7 @@ function Crud(props: ICrudProps): JSX.Element {
                     }
 
                     crudItem.onClick(e, {...clickProps,
-...localClickProps});
+                        ...localClickProps});
                 };
             } else {
                 button.toRoute = routeId;

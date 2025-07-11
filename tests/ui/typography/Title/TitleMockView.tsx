@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import {createElement} from 'react';
 import {useBem} from '../../../../src/hooks';
 import {ITitleViewProps} from '../../../../src/ui/typography/Title/Title';
 

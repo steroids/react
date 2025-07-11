@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {ICalendarSystemViewProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import CalendarEnum from '../../../../src/ui/content/CalendarSystem/enums/CalendarType';

@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import {ReactElement} from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {render, RenderOptions} from '@testing-library/react';
 import MockApplication from '../mocks/mockApplication';

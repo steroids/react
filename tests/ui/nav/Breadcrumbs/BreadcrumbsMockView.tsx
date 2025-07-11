@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 import {IBreadcrumbsViewProps} from '../../../../src/ui/nav/Breadcrumbs/Breadcrumbs';
 import Link from '../../../../src/ui/nav/Link';
 import {useBem} from '../../../../src/hooks';

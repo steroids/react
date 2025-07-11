@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useCallback } from 'react';
+import {forwardRef, useRef, useCallback} from 'react';
 import {Button, FileField, Form, InputField} from '../../../../../../src/ui/form';
 import {useBem} from '../../../../../../src/hooks';
 import {IChatInputViewProps} from '../../../../../../src/ui/content/Chat/Chat';

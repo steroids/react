@@ -1,4 +1,4 @@
-import { memo, useRef } from 'react';
+import {memo, useRef} from 'react';
 import _isString from 'lodash-es/isString';
 
 import {useMount} from 'react-use';

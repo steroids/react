@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-undef */
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 import _omit from 'lodash-es/omit';
 import _isEmpty from 'lodash-es/isEmpty';
 import Modal from '../../../../src/ui/modal/Modal';

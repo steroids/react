@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 import Modal from '../../../../../../src/ui/modal/Modal/Modal';
 import {IKanbanModalViewProps} from '../../../../../../src/ui/content/Kanban/Kanban';
 import {KanbanModalTypeEnum} from '../../../../../../src/ui/content/Kanban/enums';

@@ -1,4 +1,4 @@
-import { useCallback, memo } from 'react';
+import {useCallback, memo} from 'react';
 import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
 import useBem from '../../../../../src/hooks/useBem';
 import Text from '../../../../../src/ui/typography/Text/Text';

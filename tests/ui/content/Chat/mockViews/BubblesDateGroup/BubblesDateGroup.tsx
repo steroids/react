@@ -1,4 +1,4 @@
-import { useCallback, memo } from 'react';
+import {useCallback, memo} from 'react';
 import {useBem} from '../../../../../../src/hooks';
 import {calculateMessageTimeAgo} from '../../../../../../src/ui/content/Chat/utils';
 import {IGroupedMessage} from '../../../../../../src/ui/content/Chat/hooks/useChat';

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import {memo} from 'react';
 import useBem from '../../../../../src/hooks/useBem';
 import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';

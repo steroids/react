@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 
 import {Link} from '../../../../src/ui/nav';
 import {IHeaderViewProps} from '../../../../src/ui/layout/Header/Header';

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {ICheckboxListFieldViewProps} from '../../../../src/ui/form/CheckboxListField/CheckboxListField';
 import useUniqueId from '../../../../src/hooks/useUniqueId';
 import {useBem} from '../../../../src/hooks';

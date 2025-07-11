@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import * as React from 'react';
-import {useEffect, useRef} from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+
 import _isArray from 'lodash-es/isArray';
 import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import {useBem} from '../../../../src/hooks';
@@ -32,7 +32,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
         }
     }, [props.isAutoComplete, props.isOpened, props.isSearchAutoFocus]);
 
-    const renderPlaceholder = React.useCallback(() => props.placeholder && !props.selectedIds?.length
+    const renderPlaceholder = useCallback(() => props.placeholder && !props.selectedIds?.length
         ? (
             <div className={bem.element('placeholder')}>{props.placeholder}</div>
         )

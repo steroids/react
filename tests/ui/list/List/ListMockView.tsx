@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {IListViewProps} from '../../../../src/ui/list/List/List';
 import {useBem} from '../../../../src/hooks';
 

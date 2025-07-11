@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import _uniqueId from 'lodash-es/uniqueId';
 import useUniqueId from '../../src/hooks/useUniqueId';
 import mountWithApp from '../mocks/mountWithApp';

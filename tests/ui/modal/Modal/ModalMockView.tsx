@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Icon from '../../../../src/ui/content/Icon';
 import {IModalViewProps} from '../../../../src/ui/modal/Modal/Modal';
 import {Button} from '../../../../src/ui/form';

@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import React from 'react';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import FlexGridMockView from './FlexGridMockView';
 import FlexGrid, {IFlexGridProps} from '../../../../src/ui/list/FlexGrid/FlexGrid';

@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import * as React from 'react';
 import {fireEvent} from '@testing-library/dom';
 import {waitFor} from '@testing-library/react';
 import {JSXWrapper, getElementByClassName, render} from '../../../helpers';

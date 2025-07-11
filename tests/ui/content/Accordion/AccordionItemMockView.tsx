@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import * as React from 'react';
+import { useEffect, useCallback } from 'react';
 import Icon from '../../../../src/ui/content/Icon/Icon';
 import {useBem} from '../../../../src/hooks';
 import {IAccordionItemViewProps, IAccordionIcon} from '../../../../src/ui/content/Accordion/Accordion';
@@ -9,7 +9,7 @@ import IconMockView from '../Icon/IconMockView';
 export default function AccordionItemView(props: IAccordionItemViewProps) {
     const bem = useBem('AccordionItemView');
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!props.toggleAccordion || !props.toggleCollapse || !props.activeKey) {
             return;
         }
@@ -23,7 +23,7 @@ export default function AccordionItemView(props: IAccordionItemViewProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.activeKey]);
 
-    const renderIcon = React.useCallback(() => {
+    const renderIcon = useCallback(() => {
         if (!props.icon) {
             return null;
         }
@@ -80,7 +80,7 @@ export default function AccordionItemView(props: IAccordionItemViewProps) {
             );
     }, [bem, props.icon]);
 
-    const handleHeaderClick = React.useCallback(() => {
+    const handleHeaderClick = useCallback(() => {
         if (props.disabled || !props.toggleAccordion || !props.toggleCollapse) {
             return;
         }

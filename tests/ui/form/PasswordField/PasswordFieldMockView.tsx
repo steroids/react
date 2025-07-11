@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import * as React from 'react';
-import {useBem} from '../../../../src/hooks';
+import { useBem } from '../../../../src/hooks';
 
 import Icon from '../../../../src/ui/content/Icon';
 import IconMockView from '../../content/Icon/IconMockView';

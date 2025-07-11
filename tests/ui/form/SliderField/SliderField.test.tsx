@@ -1,4 +1,3 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import SliderField, {ISliderFieldProps} from '../../../../src/ui/form/SliderField/SliderField';

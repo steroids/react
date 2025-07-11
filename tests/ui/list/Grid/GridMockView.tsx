@@ -1,4 +1,3 @@
-import * as React from 'react';
 import _get from 'lodash-es/get';
 import _keyBy from 'lodash-es/keyBy';
 import _isString from 'lodash-es/isString';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-undef */
-import React from 'react';
+import { useMemo } from 'react';
 import _omit from 'lodash-es/omit';
 import _isEmpty from 'lodash-es/isEmpty';
 import Modal from '../../../../src/ui/modal/Modal';
@@ -17,7 +17,7 @@ import useBem from '../../../../src/hooks/useBem';
 export default function CalendarSystemModalView(props: ICalendarSystemModalViewProps) {
     const bem = useBem('CalendarSystemModalView');
 
-    const eventInitialValues: IEventInitialValues = React.useMemo(() => props.eventInitialValues, [props.eventInitialValues]);
+    const eventInitialValues: IEventInitialValues = useMemo(() => props.eventInitialValues, [props.eventInitialValues]);
 
     const callOnEventSubmit = (fields: Record<CalendarSystemModalFields, string>) =>
         eventInitialValues && !props.isCreate ? props.onEventSubmit(fields, eventInitialValues) : props.onEventSubmit(fields);

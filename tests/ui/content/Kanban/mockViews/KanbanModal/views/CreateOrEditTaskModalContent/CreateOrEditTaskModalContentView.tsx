@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import {ICreateOrEditTaskModalContentViewProps} from '../../../../../../../../src/ui/content/Kanban/Kanban';
 import KanbanPrioritiesEnum from '../../../../../../../../src/ui/content/Kanban/enums/KanbanPrioritiesEnum';
 import {Button, DropDownField, Form, HtmlField, InputField, RadioListField} from '../../../../../../../../src/ui/form';
@@ -7,7 +7,7 @@ import TagsSelector from './views/TagsSelector';
 import Label from './views/Label';
 
 export default function CreateOrEditTaskModalContentView(props: ICreateOrEditTaskModalContentViewProps) {
-    const columns = React.useMemo(() => (
+    const columns = useMemo(() => (
         props.columns.map((column) => (
             {
                 id: column.id,
@@ -16,7 +16,7 @@ export default function CreateOrEditTaskModalContentView(props: ICreateOrEditTas
         ))
     ), [props.columns]);
 
-    const prioritiesFields = React.useMemo(
+    const prioritiesFields = useMemo(
         () => KanbanPrioritiesEnum.getPrioritiesArray()
             .map((priority) => ({
                 id: priority.id,

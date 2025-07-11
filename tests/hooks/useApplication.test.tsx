@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import React from 'react';
 import {render, renderHook} from '@testing-library/react';
 import * as reactRedux from 'react-redux';
+import {PropsWithChildren} from 'react';
 import {useApplication} from '../../src/hooks';
 import * as router from '../../src/ui/nav/Router/Router';
 import * as themeProvider from '../../src/providers/ThemeProvider';
@@ -39,7 +39,7 @@ const routerProviderSpy = jest.spyOn(router, 'default');
 const storeProviderSpy = jest.spyOn(reactRedux, 'Provider');
 
 describe('useApplication Hook', () => {
-    const mockedUiComponent = (props: React.PropsWithChildren<any>) => <div>{props.children}</div>;
+    const mockedUiComponent = (props: PropsWithChildren<any>) => <div>{props.children}</div>;
 
     const mockedRoutes = {
         id: 'route',

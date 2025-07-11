@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import * as React from 'react';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import useList, * as listHelpers from '../../src/hooks/useList';

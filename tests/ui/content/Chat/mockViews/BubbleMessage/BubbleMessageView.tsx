@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { memo } from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
 import {Avatar} from '../../../../../../src/ui/content/Avatar';
 import {Text, Title} from '../../../../../../src/ui/typography';
@@ -82,4 +82,4 @@ function BubbleMessageView(props: IBubbleMessageProps) {
     );
 }
 
-export default React.memo(BubbleMessageView);
+export default memo(BubbleMessageView);

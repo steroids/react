@@ -13,7 +13,7 @@ export default function CheckboxListFieldView(props: ICheckboxListFieldViewProps
             [`${props.orientation}`]: !!props.orientation,
         }))}
         >
-            {props.items.map((checkbox, checkboxIndex) => props.renderCheckbox({
+            {props.items.map((checkbox, checkboxIndex) => props.renderItem({
                 inputProps: {
                     name: `${prefix}_${checkbox.id}`,
                     checked: false,

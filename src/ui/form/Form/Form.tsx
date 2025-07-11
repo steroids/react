@@ -2,6 +2,9 @@
 import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _isUndefined from 'lodash-es/isUndefined';
+import _isNill from 'lodash-es/isNil';
+import _isString from 'lodash-es/isString';
+import _isEmpty from 'lodash-es/isEmpty';
 import _set from 'lodash-es/set';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
@@ -14,6 +17,9 @@ import {useComponents, useDispatch} from '../../../hooks';
 import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
 import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
+import {FieldEnum} from '../../../enums';
+
+const _isEmptyString = (value) => _isString(value) && _isEmpty(value);
 
 /**
  * Form
@@ -397,31 +403,42 @@ function Form(props: IFormProps): JSX.Element {
         }
         let cleanedValues = _cloneDeep(values);
 
-        // Append non touched fields to values object
-        if (props.formId) {
-            Object.keys(components.ui.getRegisteredFields(props.formId) || {})
-                .forEach(key => {
-                    // Don't set null values for keys in empty array items
-                    const keyParts = [];
-                    let arrayKey;
-                    key.split('.').find(keyPart => {
-                        if (keyParts.length > 0 && Array.isArray(_get(cleanedValues, keyParts))) {
-                            keyParts.push(keyPart);
-                            arrayKey = keyParts.join('.');
-                            return true;
-                        }
-                        keyParts.push(keyPart);
-                        return false;
-                    });
-                    if (arrayKey && !_get(cleanedValues, arrayKey)) {
-                        return;
-                    }
+        const registeredFields = components.ui.getRegisteredFields(props.formId) || {};
 
-                    if (_isUndefined(_get(cleanedValues, key))) {
-                        _set(cleanedValues, key, null);
+        // Append non touched fields to values object
+        Object.keys(registeredFields)
+            .forEach((key) => {
+                // Don't set null values for keys in empty array items
+                const keyParts = [];
+                let arrayKey;
+                key.split('.').find(keyPart => {
+                    if (keyParts.length > 0 && Array.isArray(_get(cleanedValues, keyParts))) {
+                        keyParts.push(keyPart);
+                        arrayKey = keyParts.join('.');
+                        return true;
                     }
+                    keyParts.push(keyPart);
+                    return false;
                 });
-        }
+                if (arrayKey && !_get(cleanedValues, arrayKey)) {
+                    return;
+                }
+
+                if (_isUndefined(_get(cleanedValues, key))) {
+                    _set(cleanedValues, key, null);
+                }
+            });
+
+        // Convert NumberField values to Number
+        Object.entries(registeredFields).forEach(([key, fieldType]) => {
+            if (fieldType === FieldEnum.NUMBER_FIELD) {
+                const value = _get(cleanedValues, key);
+                if (_isNill(value) || _isEmptyString(value)) {
+                    return;
+                }
+                _set(cleanedValues, key, Number(value));
+            }
+        });
 
         // Clean
         cleanedValues = cleanEmptyObject(cleanedValues);
@@ -443,7 +460,7 @@ function Form(props: IFormProps): JSX.Element {
         // Add captcha token
         let captchaAttribute = null;
         Object.entries(components.ui.getRegisteredFields(props.formId) || {}).forEach(([attribute, fieldType]) => {
-            if (fieldType === 'ReCaptchaField') {
+            if (fieldType === FieldEnum.RE_CAPTCHA_FIELD) {
                 captchaAttribute = attribute;
             }
         });

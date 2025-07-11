@@ -9,6 +9,7 @@ import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './
 import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 /**
  * DateField
@@ -124,4 +125,4 @@ DateField.defaultProps = {
     }),
 };
 
-export default fieldWrapper<IDateFieldProps>('DateField', DateField);
+export default fieldWrapper<IDateFieldProps>(FieldEnum.DATE_FIELD, DateField);

@@ -5,6 +5,7 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 export interface ITimePanelViewProps extends Pick<ITimeFieldViewProps,
     'value' | 'onClose' | 'onNow' | 'onSelect' | 'className'>
@@ -109,4 +110,4 @@ TimeField.defaultProps = {
     icon: true,
 };
 
-export default fieldWrapper<ITimeFieldProps>('TimeField', TimeField);
+export default fieldWrapper<ITimeFieldProps>(FieldEnum.TIME_FIELD, TimeField);

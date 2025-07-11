@@ -6,6 +6,7 @@ import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IButtonProps} from '../Button/Button';
+import {FieldEnum} from '../../../enums';
 
 export enum FilesLayout {
     list = 'list',
@@ -256,4 +257,4 @@ FileField.defaultProps = {
     multiple: false,
 };
 
-export default fieldWrapper<IFileFieldProps>('FileField', FileField);
+export default fieldWrapper<IFileFieldProps>(FieldEnum.FILE_FIELD, FileField);

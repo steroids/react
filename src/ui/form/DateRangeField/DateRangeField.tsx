@@ -11,6 +11,7 @@ import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 import useOnDayClick from './useOnDayClick';
 
 export interface IDateRangeButton {
@@ -333,5 +334,5 @@ DateRangeField.defaultProps = {
     rangeButtonsPosition: 'left-bottom',
 };
 
-export default fieldWrapper<IDateRangeFieldProps>('DateRangeField', DateRangeField,
+export default fieldWrapper<IDateRangeFieldProps>(FieldEnum.DATE_RANGE_FIELD, DateRangeField,
     {attributeSuffixes: ['from', 'to']});

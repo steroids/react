@@ -1,9 +1,9 @@
 import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import _isBoolean from 'lodash-es/isBoolean';
-import _range from 'lodash-es/range';
-import _concat from 'lodash-es/concat';
 import _last from 'lodash-es/last';
+import _range from 'lodash-es/range';
 import _isEmpty from 'lodash-es/isEmpty';
+import _concat from 'lodash-es/concat';
 import _get from 'lodash-es/get';
 import {useEvent, useMount} from 'react-use';
 import {ModelAttribute} from 'src/components/MetaComponent';
@@ -12,6 +12,7 @@ import {FormContext} from '../../form/Form/Form';
 import {formArrayAdd, formArrayRemove, formChange} from '../../../actions/form';
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {FieldEnum} from '../../../enums';
 
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
@@ -324,4 +325,4 @@ FieldList.defaultProps = {
     enableKeyboardNavigation: true,
 };
 
-export default fieldWrapper<IFieldListProps>('FieldList', FieldList, {list: true});
+export default fieldWrapper<IFieldListProps>(FieldEnum.FIELD_LIST, FieldList, {list: true});

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 import {useBem} from '../../../../../../src/hooks';
 import {IFileFieldItemViewProps} from '../../../../../../src/ui/form/FileField/FileField';
 import Icon from '../../../../../../src/ui/content/Icon';

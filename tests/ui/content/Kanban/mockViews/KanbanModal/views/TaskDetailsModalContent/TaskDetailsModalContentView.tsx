@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import {useCallback, useMemo} from 'react';
 import {Avatar, Badge} from '../../../../../../../../src/ui/content';
 import {Text} from '../../../../../../../../src/ui/typography';
 import {IKanbanTaskDetailsModalViewProps, ITaskTag} from '../../../../../../../../src/ui/content/Kanban/Kanban';

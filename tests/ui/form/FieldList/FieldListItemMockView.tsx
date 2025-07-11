@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import {memo} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {Field} from '../../../../src/ui/form';

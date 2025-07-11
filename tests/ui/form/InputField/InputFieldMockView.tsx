@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { IInputFieldViewProps } from '../../../../src/ui/form/InputField/InputField';
+import {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputField';
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 

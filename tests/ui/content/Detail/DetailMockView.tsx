@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import Controls from '../../../../src/ui/nav/Controls/Controls';
 import {useBem} from '../../../../src/hooks';
 import {constants, DetailLayoutEnum, IDetailViewProps} from '../../../../src/ui/content/Detail/Detail';

@@ -1,4 +1,4 @@
-import { IHtmlFieldViewProps } from '../../../../src/ui/form/HtmlField/HtmlField';
+import {IHtmlFieldViewProps} from '../../../../src/ui/form/HtmlField/HtmlField';
 import {useBem} from '../../../../src/hooks';
 
 export default function HtmlFieldView(props: IHtmlFieldViewProps) {

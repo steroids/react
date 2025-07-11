@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 import {ICreateOrEditTaskModalContentViewProps} from '../../../../../../../../src/ui/content/Kanban/Kanban';
 import KanbanPrioritiesEnum from '../../../../../../../../src/ui/content/Kanban/enums/KanbanPrioritiesEnum';
 import {Button, DropDownField, Form, HtmlField, InputField, RadioListField} from '../../../../../../../../src/ui/form';

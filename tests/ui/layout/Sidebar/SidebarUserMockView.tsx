@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import {memo} from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import Menu, {IMenuProps} from '../../../../src/ui/content/Menu/Menu';
 import {Avatar} from '../../../../src/ui/content';

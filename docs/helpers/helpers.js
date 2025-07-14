@@ -16,6 +16,7 @@ const typeToString = (type) => {
         case 'reference':
         case 'typeParameter':
         case 'typeOperator':
+        case 'indexedAccess':
         case 'unknown':
             return type.name;
 

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import _uniqueId from 'lodash-es/uniqueId';
 import _isEqual from 'lodash-es/isEqual';

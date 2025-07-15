@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {useEffect, useCallback, useMemo} from 'react';
 import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
@@ -238,7 +238,7 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         valueFormat: props.valueFormat,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (extendedInputPropsFrom.ref && extendedInputPropsTo.ref) {
             maskInputFromRef(extendedInputPropsFrom.ref.current);
             maskInputToRef(extendedInputPropsTo.ref.current);

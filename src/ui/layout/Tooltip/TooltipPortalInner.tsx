@@ -1,15 +1,15 @@
-import * as React from 'react';
 import {createPortal} from 'react-dom';
+import {ReactNode, ReactPortal, useEffect} from 'react';
 import {useComponents} from '../../../hooks';
 
 interface ITooltipPortalProps {
-    children: React.ReactNode,
+    children: ReactNode,
 }
 
-export default function TooltipPortal(props: ITooltipPortalProps): React.ReactPortal {
+export default function TooltipPortal(props: ITooltipPortalProps): ReactPortal {
     const components = useComponents();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!components.ui.getPortalElement()) {
             throw new Error('Not found UI Portal container. Please set <Portal/> in layout.');
         }

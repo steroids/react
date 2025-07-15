@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
@@ -121,4 +121,4 @@ export const normalizePaginationSizeProps = props => ({
     ...(typeof props === 'boolean' ? {enable: props} : props),
 });
 
-export default React.memo(PaginationSize);
+export default memo(PaginationSize);

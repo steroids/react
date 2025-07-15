@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {ICrudChildrenProps} from './Crud';
 //import Detail from '../../list/Detail'; TODO
 

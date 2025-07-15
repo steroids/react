@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React from 'react';
-import _take from 'lodash-es/take';
 import _slice from 'lodash-es/slice';
 import _get from 'lodash-es/get';
-import _isEmpty from 'lodash-es/isEmpty';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import {MouseEvent, useCallback, useMemo} from 'react';
 import useBem from '../../../../../../../src/hooks/useBem';
 import CalendarEnum from '../../../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
 import {IDay, IEvent} from '../../../../../../../src/ui/content/CalendarSystem/CalendarSystem';
@@ -35,7 +33,7 @@ export default function MonthDay(props: IMonthDayProps) {
     const {
         events,
         hasSixEvents,
-    } = React.useMemo(() => {
+    } = useMemo(() => {
         const callingDate = new Date(props.day.date);
 
         const events = getEventsFromDate(callingDate, CalendarEnum.MONTH);
@@ -48,11 +46,11 @@ export default function MonthDay(props: IMonthDayProps) {
         };
     }, [getEventsFromDate, props.day.date]);
 
-    const formattedExpandLabel = React.useMemo(() => getFormattedExpandRestLabel(
+    const formattedExpandLabel = useMemo(() => getFormattedExpandRestLabel(
         _slice([...events], SIXTH_ELEMENT_INDEX),
     ), [events]);
 
-    const renderEvent = React.useCallback((event: IEvent, eventIndex: number) => (
+    const renderEvent = useCallback((event: IEvent, eventIndex: number) => (
         <Tooltip
             key={event.id}
             position='rightBottom'
@@ -72,7 +70,7 @@ export default function MonthDay(props: IMonthDayProps) {
         </Tooltip>
     ), [bem]);
 
-    const handleEventClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
+    const handleEventClick = useCallback((event: MouseEvent<HTMLElement>) => {
         const eventFromHour = event.target as HTMLDivElement;
         const eventId: number = _get(eventFromHour, 'dataset.eventid');
 
@@ -85,7 +83,7 @@ export default function MonthDay(props: IMonthDayProps) {
         props.openEditModal(requiredEvent);
     }, [events, props]);
 
-    const handleOnContextMenuCreateClick = React.useCallback((e: React.MouseEvent) => {
+    const handleOnContextMenuCreateClick = useCallback((e: MouseEvent) => {
         e.preventDefault();
 
         const day: IDay = _cloneDeep(props.day);

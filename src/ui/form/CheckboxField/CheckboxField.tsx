@@ -85,6 +85,7 @@ CheckboxField.defaultProps = {
     required: false,
     className: '',
     inputProps: {},
+    multiply: true,
 };
 
 export default fieldWrapper<ICheckboxFieldProps>(FieldEnum.CHECKBOX_FIELD, CheckboxField, {label: false});

@@ -302,7 +302,9 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
         if (e.which === 13 && isOpened) {
             e.preventDefault();
 
-            if (hoveredId) {
+            const flattenedItemsIds = flattenedItems.map(item => item.id);
+
+            if (hoveredId && flattenedItemsIds.includes(hoveredId)) {
                 // Select hovered
                 setSelectedIds(hoveredId, true);
             } else if (selectedIds.length > 0) {
@@ -310,7 +312,7 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 setSelectedIds(selectedIds[0], true);
             } else if (flattenedItems.length > 0) {
                 // Select first result
-                setSelectedIds(flattenedItems[0], true);
+                setSelectedIds(flattenedItems[0][primaryKey], true);
             }
 
             setIsOpened(false);

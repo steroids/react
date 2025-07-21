@@ -119,6 +119,8 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         primaryKey: props.primaryKey,
         inputProps: props.inputProps,
         disabled: props.disabled,
+        itemView: props.itemView,
+        itemViewProps: props.itemViewProps,
     });
 
     const viewProps = useMemo(() => ({

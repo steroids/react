@@ -1,4 +1,3 @@
-import React from 'react';
 import {useBem} from '../../../../src/hooks';
 import Modal from '../../../../src/ui/modal/Modal';
 import {CalendarSystemEventGroupModalViewProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';

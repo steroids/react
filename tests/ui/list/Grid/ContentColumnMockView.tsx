@@ -1,4 +1,3 @@
-import React from 'react';
 import _get from 'lodash-es/get';
 import useBem from '../../../../src/hooks/useBem';
 import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';

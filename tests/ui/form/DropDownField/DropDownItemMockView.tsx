@@ -1,4 +1,3 @@
-import React from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {
     CHECKBOX_CONTENT_TYPE,

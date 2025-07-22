@@ -158,6 +158,12 @@ export interface IButtonProps extends IUiComponent {
     toRouteParams?: Record<string, unknown>,
 
     /**
+     * Флаг определяет необходимо ли передавать query параметры в URL
+     * @example {userId: 52}
+     */
+    showQueryParams?: boolean,
+
+    /**
      * ID формы, для которой кнопка выполняет submit. При указании ID формы кнопка будет показывать состояние загрузки
      * при отправке формы.
      */
@@ -262,12 +268,13 @@ function Button(props: IButtonProps): JSX.Element {
                 //TODO remove @ts-ignore
                 // @ts-ignore
                 const filteredParams = filterParamsForPath(routePath, props.toRouteParams);
-                const routeUrl = buildUrl(routePath, filteredParams);
+                const currentParams = props.showQueryParams ? props.toRouteParams : filteredParams;
+                const routeUrl = buildUrl(routePath, currentParams);
                 window.open(routeUrl, props.target);
             } else {
                 //TODO remove @ts-ignore
                 // @ts-ignore
-                dispatch(goToRoute(props.toRoute, props.toRouteParams));
+                dispatch(goToRoute(props.toRoute, props.toRouteParams, false, props.showQueryParams));
             }
         }
 

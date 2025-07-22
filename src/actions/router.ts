@@ -28,7 +28,8 @@ export const filterParamsForPath = (path: string, params: Record<string, string 
     }, {});
 };
 
-export const goToRoute = (routeId, params: RouteParams = null, isReplace = false) => (dispatch, getState, {store}) => {
+// showQueryParams используется для передачи query параметров в URL
+export const goToRoute = (routeId, params: RouteParams = null, isReplace = false, showQueryParams = false) => (dispatch, getState, {store}) => {
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
         return [];
@@ -38,7 +39,8 @@ export const goToRoute = (routeId, params: RouteParams = null, isReplace = false
     const buildUrl = require('../reducers/router').buildUrl;
     const path = getRouteProp(getState(), routeId, 'path');
     const filteredParams = filterParamsForPath(path, params);
-    const routeUrl = buildUrl(path, filteredParams);
+    const currentParams = showQueryParams ? params : filteredParams;
+    const routeUrl = buildUrl(path, currentParams);
     const reduxAction = isReplace ? replace(routeUrl) : push(routeUrl);
     return dispatch(reduxAction);
 };

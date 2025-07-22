@@ -28,8 +28,8 @@ export const filterParamsForPath = (path: string, params: Record<string, string 
     }, {});
 };
 
+// showQueryParams используется для передачи query параметров в URL
 export const goToRoute = (routeId, params: RouteParams = null, isReplace = false, showQueryParams = false) => (dispatch, getState, {store}) => {
-    // showQueryParams используется для передачи query переметров в URL
     if (process.env.PLATFORM === 'mobile') {
         store.navigationNative.navigate(routeId, params);
         return [];

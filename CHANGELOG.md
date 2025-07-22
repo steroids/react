@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.62 (22.07.1998)
+### Added
+
+- Добавлена возможность передать флаг "showQueryParams" в экшен "goToRoute". При "showQueryParams" равном true, в URL будут переданы query параметры
+- Флаг "showQueryParams" так же добавлен в компоненты "Button" и "Link"
+
 ## v3.0.61 (21.07.2025)
 
 ### Fixed

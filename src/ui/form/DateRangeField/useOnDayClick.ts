@@ -14,6 +14,12 @@ export default function useOnDayClick(props: IUseOnDayClickProps) {
 
     const onDayClick = useCallback((value) => {
         if (useSmartRangeReset) {
+            // Если кликнули по одной дате два раза
+            if (value === fromValue && !toValue) {
+                onToChange(value);
+                return;
+            }
+
             // Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
             // Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
             if (value === fromValue) {

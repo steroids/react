@@ -121,6 +121,7 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
         disabled: props.disabled,
         itemView: props.itemView,
         itemViewProps: props.itemViewProps,
+        onChange: props.onChange,
     });
 
     const viewProps = useMemo(() => ({

@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.64 (28.07.2025)
+
+### Fixed
+
+- Исправлены вызовы в onChange для компонентов `CheckboxListField` и `RadioListField`
+
 ## v3.0.63 (23.07.2025)
 
 ### Added

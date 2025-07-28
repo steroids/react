@@ -491,6 +491,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         onClose,
         renderItem,
         onItemRemove,
+        onItemSelect,
         hasGroup,
         multiple: props.multiple,
         isSearchAutoFocus: props.isSearchAutoFocus,

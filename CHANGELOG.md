@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.65 (28.07.2025)
+
+### Fixed
+
+- Добавлена передача `onItemSelect` во view-часть компонента `DropDownField` 
+
 ## v3.0.64 (28.07.2025)
 
 ### Fixed

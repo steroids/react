@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
 import {IDashboardItemViewProps} from '../../../../src/ui/content/Dashboard/Dashboard';
 import {Title} from '../../../../src/ui/typography';

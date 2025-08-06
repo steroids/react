@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import * as React from 'react';
 import IntlMessageFormat from 'intl-messageformat';
 import dayjs from 'dayjs';
 import _isObject from 'lodash-es/isObject';

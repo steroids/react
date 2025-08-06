@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {IFieldSetViewProps} from '../../../../src/ui/form/FieldSet/FieldSet';
 import {useBem} from '../../../../src/hooks';
 

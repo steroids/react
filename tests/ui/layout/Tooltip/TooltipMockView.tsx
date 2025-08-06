@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useEffect, useRef} from 'react';
 import {ITooltipViewProps} from '../../../../src/ui/layout/Tooltip/Tooltip';
 import {useBem} from '../../../../src/hooks';

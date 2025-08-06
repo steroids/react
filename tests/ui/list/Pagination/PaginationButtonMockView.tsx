@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback} from 'react';
 
 import {IPaginationViewProps} from '../../../../src/ui/list/Pagination/Pagination';
 import {useBem} from '../../../../src/hooks';
@@ -8,7 +8,7 @@ import IconMockView from '../../content/Icon/IconMockView';
 export default function PaginationButtonView(props: IPaginationViewProps) {
     const bem = useBem('PaginationButtonView');
 
-    const renderArrowStep = React.useCallback((
+    const renderArrowStep = useCallback((
         onClick: () => void,
         iconName: string,
         rotate = false,

@@ -145,6 +145,7 @@ export const LIST_DESTROY = '@list/destroy';
 export const LIST_TOGGLE_ITEM = '@list/toggle_item';
 export const LIST_TOGGLE_ALL = '@list/toggle_all';
 export const LIST_SET_LAYOUT = '@list/set_layout';
+export const LIST_CHANGE_ACTION = '@list/change_action';
 
 //const STORAGE_LAYOUT_KEY_PREFIX = 'listLayout_';
 
@@ -271,6 +272,12 @@ export const listSetLayout = (listId, layoutName) => ({
     type: LIST_SET_LAYOUT,
     listId,
     layoutName,
+});
+
+export const listChangeAction = (listId, action) => ({
+    type: LIST_CHANGE_ACTION,
+    listId,
+    action,
 });
 
 /*export const initSSR = (listId, props) => (dispatch, getState, {http, clientStorage}) => {

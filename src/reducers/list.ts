@@ -14,6 +14,7 @@ import {
     LIST_TOGGLE_ALL,
     LIST_SET_LAYOUT,
     LIST_ITEM_DELETE,
+    LIST_CHANGE_ACTION,
 } from '../actions/list';
 
 const initialState = {
@@ -190,6 +191,16 @@ const reducerMap = {
             [action.listId]: {
                 ...state.lists[action.listId],
                 layoutName: action.layoutName,
+            },
+        },
+    }),
+    [LIST_CHANGE_ACTION]: (state, action) => ({
+        ...state,
+        lists: {
+            ...state.lists,
+            [action.listId]: {
+                ...state.lists[action.listId],
+                action: action.action,
             },
         },
     }),

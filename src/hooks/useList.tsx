@@ -19,6 +19,7 @@ import {
     listInit,
     listLazyFetch,
     listSetItems,
+    listChangeAction,
 } from '../actions/list';
 import useDispatch from '../hooks/useDispatch';
 import {formChange, formDestroy} from '../actions/form';
@@ -581,6 +582,17 @@ export default function useList(config: IListConfig): IListOutput {
             listSetItems(config.listId, config.items),
         ]);
     }, [dispatch, config.items, config.listId]);
+
+    // Check change action
+    const prevAction = usePrevious(config.action);
+    useUpdateEffect(() => {
+        if (prevAction && !_isEqual(config.action, prevAction)) {
+            dispatch([
+                listChangeAction(config.listId, config.action),
+                listLazyFetch(config.listId),
+            ]);
+        }
+    }, [dispatch, config.listId, config.action, prevAction]);
 
     // Destroy
     useUnmount(() => {

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import Button from '../../../../src/ui/form/Button';
 import {IPaginationViewProps} from '../../../../src/ui/list/Pagination/Pagination';
 import {useBem} from '../../../../src/hooks';

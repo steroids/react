@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {ChangeEvent, useMemo} from 'react';
 import Enum from '../../../base/Enum';
 import {useComponents, useListField} from '../../../hooks';
 import fieldWrapper, {
@@ -77,7 +77,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, I
         name: string,
         type: string,
         disabled?: boolean,
-        onChange: (value: string | React.ChangeEvent) => void,
+        onChange: (value: string | ChangeEvent) => void,
     },
     items: {
         id: number | string | boolean,

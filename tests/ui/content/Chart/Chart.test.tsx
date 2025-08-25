@@ -1,4 +1,3 @@
-import * as React from 'react';
 import '@testing-library/jest-dom';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import ChartMockView from './ChartMockView';

@@ -3,56 +3,43 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
-import React, {ChangeEvent, useMemo} from 'react';
-import _debounce from 'lodash-es/debounce';
+import React, {ChangeEvent} from 'react';
+import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
-const DEFAULT_DEBOUNCE_DELAY_MS = 300;
-
-export interface IDebounceConfig {
-    /**
-     * Задержка в мс
-     */
-    delayMs: number,
-}
-
-export interface ISaveCursorPositionDebounceConfig extends Partial<IDebounceConfig> {
-    enabled: boolean,
-}
-
-export interface ISaveCursorPositionConfig {
+export default function useSaveCursorPosition(
     inputParams: IInputParams,
     onChangeCallback?: (value) => void,
-    debounce?: ISaveCursorPositionDebounceConfig,
-}
-
-export default function useSaveCursorPosition(config: ISaveCursorPositionConfig) {
+) {
     const [cursor, setCursor] = React.useState(null);
     const inputRef = React.useRef(null);
 
     React.useEffect(() => {
-        const inputElement: HTMLInputElement = inputRef.current;
-        if (inputElement) {
-            inputElement.setSelectionRange(cursor, cursor);
+        const el = inputRef.current as HTMLInputElement | null;
+        if (!el || _isNull(cursor)) {
+            return;
         }
-    }, [cursor, config.inputParams.value]);
+
+        const pos = Math.max(0, Math.min(cursor, el.value.length));
+        try {
+            el.setSelectionRange(pos, pos);
+        } catch (e) {
+            console.error(e);
+        }
+    }, [cursor, inputParams.value]);
 
     const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
-        if (config.onChangeCallback) {
-            config.onChangeCallback(value || event.target?.value);
+        if (onChangeCallback) {
+            onChangeCallback(value || event.target?.value);
         }
 
         setCursor(event?.target?.selectionStart);
 
-        config.inputParams.onChange(value || event.target?.value);
-    }, [config.inputParams, config.onChangeCallback]);
-
-    const onChangeWithDelay = useMemo(() => config.debounce?.enabled
-            && _debounce(onChange, config.debounce?.delayMs ?? DEFAULT_DEBOUNCE_DELAY_MS),
-    [config.debounce, onChange]);
+        inputParams.onChange(value || event.target?.value);
+    }, [inputParams, onChangeCallback]);
 
     return {
         inputRef,
-        onChange: config.debounce?.enabled ? onChangeWithDelay : onChange,
+        onChange,
     };
 }

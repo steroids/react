@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {memo} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {Field} from '../../../../src/ui/form';
@@ -6,7 +6,7 @@ import {Icon} from '../../../../src/ui/content';
 import IconMockView from '../../content/Icon/IconMockView';
 import {IFieldListItemViewProps} from '../../../../src/ui/form/FieldList/FieldList';
 
-export default React.memo((props: IFieldListItemViewProps) => {
+export default memo((props: IFieldListItemViewProps) => {
     const bem = useBem('FieldListItemView');
     return (
         <tr className={bem.block()}>

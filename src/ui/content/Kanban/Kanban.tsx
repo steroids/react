@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
 import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
 import {KanbanModalTypeEnum} from '@steroidsjs/core/ui/content/Kanban/enums';

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, {useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
 import _union from 'lodash-es/union';
 import _isEqual from 'lodash-es/isEqual';

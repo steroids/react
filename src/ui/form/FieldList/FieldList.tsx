@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import {ReactNode, useCallback, useContext, useMemo, useRef, useState} from 'react';
 import _isBoolean from 'lodash-es/isBoolean';
 import _last from 'lodash-es/last';
 import _range from 'lodash-es/range';
@@ -152,7 +152,7 @@ export interface IFieldListViewProps {
     onAdd?: () => void,
     showRemove?: boolean,
     showAdd?: boolean,
-    children?: React.ReactNode,
+    children?: ReactNode,
     className?: CssClassName,
     tableClassName?: string,
     style?: CustomStyle,

@@ -1,4 +1,3 @@
-import React from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
 

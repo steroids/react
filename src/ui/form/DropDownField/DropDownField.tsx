@@ -338,6 +338,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         sourceItems,
         inputValue: props.input.value,
         autoCompleteInputRef: autoCompleteInputForwardedRef,
+        hasCloseOnSelect: props.hasCloseOnSelect,
     });
 
     const onOpen = useCallback(() => {
@@ -532,6 +533,7 @@ DropDownField.defaultProps = {
     isSearchAutoFocus: true,
     itemToSelectAll: false,
     isFetchOnClose: false,
+    hasCloseOnSelect: true,
 };
 
 export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN_FIELD, DropDownField);

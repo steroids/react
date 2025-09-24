@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
 import _has from 'lodash-es/has';
 import _isEmpty from 'lodash-es/isEmpty';
 import _indexOf from 'lodash-es/indexOf';
@@ -11,7 +11,7 @@ import {generateFieldStepMap, getModifiedSteps, normalizeSteps} from './utils';
 
 export interface IWizardStepItem extends Partial<IStepItem> {
     fields?: IFieldProps[],
-    component?: React.ReactNode,
+    component?: ReactNode,
     stepLabel?: string,
 }
 
@@ -116,7 +116,7 @@ export interface IWizardFormViewProps extends Pick<IWizardFormProps,
     currentStep: number,
     stepTitle: string,
     stepItems: IStepItem[],
-    renderStep: (header: React.ReactNode, buttons: React.ReactNode, viewProps?: IUiComponent) => JSX.Element,
+    renderStep: (header: ReactNode, buttons: ReactNode, viewProps?: IUiComponent) => JSX.Element,
     isLastStep?: boolean,
     onPrevStep?: () => void,
     totalSteps?: number,
@@ -230,7 +230,7 @@ export default function WizardForm(props: IWizardFormProps) {
         useRedux: true,
     }), [activeStep?.fields, isLastStep, onAfterSubmit, onSubmit, props.formProps.onSubmit, props.formId]);
 
-    const renderStep = useCallback((header: React.ReactNode, buttons: React.ReactNode, viewProps: IUiComponent) => (
+    const renderStep = useCallback((header: ReactNode, buttons: ReactNode, viewProps: IUiComponent) => (
         <Form
             {...props.formProps}
             {...viewProps}

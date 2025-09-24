@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback} from 'react';
 import {CRUD_ACTION_INDEX} from '../../../ui/crud/Crud/utils';
 import Modal from '../../modal/Modal';

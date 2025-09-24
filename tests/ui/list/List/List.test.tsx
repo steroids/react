@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import * as React from 'react';
 import {fireEvent, waitFor} from '@testing-library/react';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import ListMockView from './ListMockView';

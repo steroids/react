@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {CSSProperties} from 'react';
 import {useBem, useUniqueId} from '../../../../src/hooks';
 import {ICheckboxFieldViewProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';
 
@@ -6,7 +6,7 @@ export default function CheckboxFieldView(props: ICheckboxFieldViewProps) {
     const bem = useBem('CheckboxFieldView');
     const id = useUniqueId('checkbox');
 
-    const customVariableColorStyle = {'--checkbox-custom-color': props.color} as React.CSSProperties;
+    const customVariableColorStyle = {'--checkbox-custom-color': props.color} as CSSProperties;
 
     return (
         <div

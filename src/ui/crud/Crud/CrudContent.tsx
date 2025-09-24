@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 import {IGridProps} from '../../list/Grid/Grid';
 import {IFormProps} from '../../form/Form/Form';

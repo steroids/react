@@ -1,4 +1,4 @@
-import React from 'react';
+import {ReactNode} from 'react';
 import {useComponents} from '../../../hooks';
 
 /**
@@ -10,7 +10,7 @@ export interface ITitleProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Тип заголовка

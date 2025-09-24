@@ -1,4 +1,3 @@
-import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
 import {IFieldLayoutViewProps} from '../../../../src/ui/form/FieldLayout/FieldLayout';
 import {useBem} from '../../../../src/hooks';

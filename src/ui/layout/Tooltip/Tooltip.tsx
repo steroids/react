@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useRef} from 'react';
+import {Children, cloneElement, useCallback, useRef} from 'react';
 import {useMount} from 'react-use';
 
 import {useComponents} from '../../../hooks';
@@ -171,13 +170,13 @@ function Tooltip(props: ITooltipProps): JSX.Element {
 
     const TooltipView = components.ui.getView('layout.TooltipView');
     const childrenElement: any = typeof props.children === 'object'
-        ? React.Children.only(props.children)
+        ? Children.only(props.children)
         : undefined;
 
     return (
         <>
             {childrenElement
-                ? React.cloneElement(childrenElement, {
+                ? cloneElement(childrenElement, {
                     ref: childRef,
                     onMouseOver: onShow,
                     onMouseOut: onHide,

@@ -1,11 +1,8 @@
-import * as React from 'react';
-
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
-import {ReactNode} from 'react';
+import {ComponentType, createElement, ReactElement, ReactNode} from 'react';
 import {IComponents} from '../providers/ComponentsProvider';
-import {Model} from './MetaComponent';
 
 /**
  * Ui Component
@@ -45,9 +42,9 @@ export interface IUiApplicationComponent {
      * @param {any} Component - Компонент или путь к компоненту представления.
      * @param {any} props - Свойства компонента.
      * @param {boolean} [forceNode=false] - Флаг, указывающий на принудительное отображение компонента как узла.
-     * @returns {React.ReactElement<any>|null} Возвращает элемент React или null.
+     * @returns {ReactElement<any>|null} Возвращает элемент React или null.
      */
-    renderView(Component: any, props: any, forceNode?: boolean): React.ReactElement<any> | null,
+    renderView(Component: any, props: any, forceNode?: boolean): ReactElement<any> | null,
 
     /**
      * Возвращает компонент представления по указанному пути.
@@ -65,9 +62,9 @@ export interface IUiApplicationComponent {
     /**
      * Возвращает компонент поля формы по указанному пути.
      * @param {string} path - Путь к компоненту поля формы.
-     * @returns {React.ComponentType<any>|undefined} Компонент поля формы или undefined, если не найден.
+     * @returns {ComponentType<any>|undefined} Компонент поля формы или undefined, если не найден.
      */
-    getField(path: string): React.ComponentType<any> | undefined,
+    getField(path: string): ComponentType<any> | undefined,
 
     /**
      * Возвращает свойства конфигурации компонента поля формы по указанному пути.
@@ -87,9 +84,9 @@ export interface IUiApplicationComponent {
     /**
      * Возвращает компонент форматтера по указанному пути.
      * @param {string} path - Путь к компоненту форматтера.
-     * @returns {React.ComponentType<any>|undefined} Компонент форматтера или undefined, если не найден.
+     * @returns {ComponentType<any>|undefined} Компонент форматтера или undefined, если не найден.
      */
-    getFormatter(path: string): React.ComponentType<any> | undefined,
+    getFormatter(path: string): ComponentType<any> | undefined,
 
     /**
      * Возвращает свойства конфигурации компонента форматтера по указанному пути.
@@ -194,7 +191,7 @@ export default class UiComponent implements IUiApplicationComponent {
             }
             return Component(props);
         }
-        return React.createElement(Component, props);
+        return createElement(Component, props);
     }
 
     getView(path) {

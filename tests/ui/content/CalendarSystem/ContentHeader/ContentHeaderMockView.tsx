@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import {memo, MouseEvent} from 'react';
 import useBem from '../../../../../src/hooks/useBem';
 import Text from '../../../../../src/ui/typography/Text/Text';
 import {ButtonGroup} from '../../../../../src/ui/nav';
@@ -12,7 +12,7 @@ import ButtonGroupMockView from '../../../nav/ButtonGroup/ButtonGroupMockView';
 interface IContentHeaderProps {
     dateToDisplay: string,
     onChangeCalendarType: (newType: string) => void,
-    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void,
+    handleControlClick: (event: MouseEvent<HTMLElement>) => void,
 }
 
 function ContentHeader(props: IContentHeaderProps) {
@@ -52,4 +52,4 @@ function ContentHeader(props: IContentHeaderProps) {
     );
 }
 
-export default React.memo(ContentHeader);
+export default memo(ContentHeader);

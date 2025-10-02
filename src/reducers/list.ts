@@ -15,6 +15,7 @@ import {
     LIST_SET_LAYOUT,
     LIST_ITEM_DELETE,
     LIST_CHANGE_ACTION,
+    LIST_SELECT_ITEM,
 } from '../actions/list';
 
 const initialState = {
@@ -184,6 +185,13 @@ const reducerMap = {
         }
         return [];
     },
+    [LIST_SELECT_ITEM]: (state, action) => ({
+        ...state,
+        selectedIds: {
+            ...state.selectedIds,
+            [action.listId]: action.itemId ? [action.itemId] : [],
+        },
+    }),
     [LIST_SET_LAYOUT]: (state, action) => ({
         ...state,
         lists: {

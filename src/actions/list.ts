@@ -6,6 +6,7 @@ import _trimStart from 'lodash-es/trimStart';
 import _isFunction from 'lodash-es/isFunction';
 import _isEqual from 'lodash-es/isEqual';
 import _isNil from 'lodash-es/isNil';
+import axios from 'axios';
 import {formSelector} from '../reducers/form';
 import {formChange, formSetErrors} from '../actions/form';
 import {filterItems} from '../utils/data';
@@ -146,6 +147,7 @@ export const LIST_TOGGLE_ITEM = '@list/toggle_item';
 export const LIST_TOGGLE_ALL = '@list/toggle_all';
 export const LIST_SET_LAYOUT = '@list/set_layout';
 export const LIST_CHANGE_ACTION = '@list/change_action';
+export const LIST_SELECT_ITEM = '@list/select_item';
 
 //const STORAGE_LAYOUT_KEY_PREFIX = 'listLayout_';
 
@@ -172,19 +174,27 @@ const createList = (listId: string, props: any) => ({
     layoutAttribute: _get(props, '_layout.attribute') || null,
 });
 
-export const httpFetchHandler = (list: IList, query, {http}) => {
+export const httpFetchHandler = (list: IList, query, {http, httpCancelToken}) => {
     let url = list.action;
     if (list.scope) {
         url
             += (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
     }
     return http
-        .send(list.actionMethod, url || window.location.pathname, query)
+        .send(
+            list.actionMethod,
+            url || window.location.pathname,
+            query, {
+                cancelToken: httpCancelToken,
+            },
+        )
         .then(response => response.data)
         .catch(error => {
             if (typeof list.onError === 'function') {
                 list.onError(error);
             }
+            // rethrow чтобы внешняя логика могла отловить отмену/ошибку
+            throw error;
         });
 };
 
@@ -280,31 +290,7 @@ export const listChangeAction = (listId, action) => ({
     action,
 });
 
-/*export const initSSR = (listId, props) => (dispatch, getState, {http, clientStorage}) => {
-    const state = getState()
-    const stateList = _get(state, ['list', 'lists', listId]);
-    const list = {
-        ...createList(listId, props, clientStorage),
-        ...stateList
-    };
-    if ((!list.action && list.action !== '') || list.items) {
-        if (!stateList) {
-            return dispatch({
-                ...list,
-                type: LIST_INIT
-            });
-        }
-        return;
-    }
-    const onFetch = list.onFetch || httpFetchHandler;
-    return dispatch(
-        onFetch(list, VALUES, http).then(data => ({
-            ...list,
-            ...data,
-            type: LIST_INIT
-        }))
-    );
-};*/
+const _cancelSourceByList = new Map();
 
 /**
  * Update query values and send request
@@ -338,9 +324,28 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
         });
     }
 
+    // Axios cancel logic: cancel previous request for this listId
+    const prevSource = _cancelSourceByList.get(listId);
+    if (prevSource) {
+        // отменяем предыдущий активный запрос (если он ещё выполняется)
+        try {
+            prevSource.cancel('Cancelled by new request');
+        } catch (e) {
+            /* ignore */
+        }
+    }
+    const cancelSource = axios.CancelToken.source();
+    _cancelSourceByList.set(listId, cancelSource);
+
     // Send request
     toDispatch.push(
-        Promise.resolve(onFetch(list, formValues, components)).then(data => {
+        Promise.resolve(onFetch(list, formValues, {
+            ...components,
+            httpCancelToken: cancelSource.token,
+        })).then(data => {
+            // cleanup: текущий источник уже отработал
+            _cancelSourceByList.delete(listId);
+
             // Skip on empty
             if (!data) {
                 return [];
@@ -368,7 +373,6 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
             const hasNextPage = data?.hasNextPage ?? (page !== totalPages || null);
 
             return [
-                // Check has errors
                 formSetErrors(list.formId, data.errors || null),
                 {
                     items,
@@ -382,7 +386,20 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
                     type: LIST_AFTER_FETCH,
                 },
             ];
-        }),
+        })
+            .catch(err => {
+                // Если это отмена через axios, просто игнорируем
+                _cancelSourceByList.delete(listId);
+
+                // Если нужно — можно выставить ошибку формы или диспатчить событие
+                if (!axios.isCancel(err)) {
+                    // передаём ошибку дальше — если нужна стандартная обработка
+                    throw err;
+                }
+
+                // при отмене просто возвращаем пустой массив действий
+                return [];
+            }),
     );
 
     return dispatch(toDispatch);
@@ -445,6 +462,11 @@ export const toggleItem = (listId, itemId) => ({
 export const toggleAll = listId => ({
     listId,
     type: LIST_TOGGLE_ALL,
+});
+export const selectItem = (listId, itemId) => ({
+    listId,
+    itemId,
+    type: LIST_SELECT_ITEM,
 });
 
 // TODO local storage save?

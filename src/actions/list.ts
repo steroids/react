@@ -174,25 +174,21 @@ const createList = (listId: string, props: any) => ({
     layoutAttribute: _get(props, '_layout.attribute') || null,
 });
 
-export const httpFetchHandler = (list: IList, query, {http, httpCancelToken}) => {
+export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) => {
     let url = list.action;
     if (list.scope) {
-        url
-            += (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
+        url += (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
     }
+
+    // options поддерживает { cancelToken } или { signal } (если использовать AbortController)
     return http
-        .send(
-            list.actionMethod,
-            url || window.location.pathname,
-            query, {
-                cancelToken: httpCancelToken,
-            },
-        )
+        .send(list.actionMethod, url || window.location.pathname, query, options)
         .then(response => response.data)
         .catch(error => {
             if (typeof list.onError === 'function') {
                 list.onError(error);
             }
+
             // rethrow чтобы внешняя логика могла отловить отмену/ошибку
             throw error;
         });
@@ -290,8 +286,6 @@ export const listChangeAction = (listId, action) => ({
     action,
 });
 
-const _cancelSourceByList = new Map();
-
 /**
  * Update query values and send request
  * @param listId
@@ -316,95 +310,107 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
         toDispatch.push(formChange(list.formId, key, query[key]));
     });
 
+    // Отменяем предыдущий запрос для этого listId (если есть)
+    components.http._promises = components.http._promises || {};
+    const prev = components.http._promises[listId];
+
+    if (prev && typeof prev.cancel === 'function') {
+        // для axios.CancelToken.source()
+        prev.cancel('Cancelled by new request for list ' + listId);
+    } else if (prev && typeof prev.abort === 'function') {
+        // для AbortController
+        prev.abort();
+    }
+
+    // Создаем новый источник отмены
+    const source = axios.CancelToken.source();
+    components.http._promises[listId] = source;
+
+    const options = {cancelToken: source.token};
+
+    // Set `Loading...`
     if (list.isRemote) {
-        // Set `Loading...`
         toDispatch.push({
             listId,
             type: LIST_BEFORE_FETCH,
         });
     }
 
-    // Axios cancel logic: cancel previous request for this listId
-    const prevSource = _cancelSourceByList.get(listId);
-    if (prevSource) {
-        // отменяем предыдущий активный запрос (если он ещё выполняется)
-        try {
-            prevSource.cancel('Cancelled by new request');
-        } catch (e) {
-            /* ignore */
-        }
-    }
-    const cancelSource = axios.CancelToken.source();
-    _cancelSourceByList.set(listId, cancelSource);
-
-    // Send request
-    toDispatch.push(
-        Promise.resolve(onFetch(list, formValues, {
-            ...components,
-            httpCancelToken: cancelSource.token,
-        })).then(data => {
-            // cleanup: текущий источник уже отработал
-            _cancelSourceByList.delete(listId);
-
-            // Skip on empty
-            if (!data) {
-                return [];
-            }
-
-            // Check list is not destroy
-            if (!getState().list.lists[listId]) {
-                return [];
-            }
-
-            if (_isArray(data)) {
-                data = {
-                    items: data,
-                    total: data.length,
-                    meta: null,
-                };
-            }
-
-            const items = data.items || [];
-            const total = data.total || items.length || null;
-            const page = formValues[list.pageAttribute];
-            const pageSize = formValues[list.pageSizeAttribute];
-
-            const totalPages = Math.ceil((list?.total || 0) / (pageSize || 1));
-            const hasNextPage = data?.hasNextPage ?? (page !== totalPages || null);
-
-            return [
-                formSetErrors(list.formId, data.errors || null),
-                {
-                    items,
-                    total,
-                    hasNextPage,
-                    meta: data.meta || null,
-                    page,
-                    pageSize,
-                    listId,
-                    defaultPageValue: list.defaultPageValue,
-                    type: LIST_AFTER_FETCH,
-                },
-            ];
-        })
-            .catch(err => {
-                // Если это отмена через axios, просто игнорируем
-                _cancelSourceByList.delete(listId);
-
-                // Если нужно — можно выставить ошибку формы или диспатчить событие
-                if (!axios.isCancel(err)) {
-                    // передаём ошибку дальше — если нужна стандартная обработка
-                    throw err;
+    toDispatch.push([
+        Promise.resolve(onFetch(list, formValues, components, options))
+            .then(data => {
+                // Skip on empty
+                if (!data) {
+                    return [];
                 }
 
-                // при отмене просто возвращаем пустой массив действий
+                // Check list is not destroy
+                if (!getState().list.lists[listId]) {
+                    return [];
+                }
+
+                if (_isArray(data)) {
+                    data = {
+                        items: data,
+                        total: data.length,
+                        meta: null,
+                    };
+                }
+
+                const items = data.items || [];
+                const total = data.total || items.length || null;
+                const page = formValues[list.pageAttribute];
+                const pageSize = formValues[list.pageSizeAttribute];
+                const totalPages = Math.ceil((list?.total || 0) / (pageSize || 1));
+                const hasNextPage = data?.hasNextPage ?? (page !== totalPages || null);
+
+                return [
+                    formSetErrors(list.formId, data.errors || null),
+                    {
+                        items,
+                        total,
+                        hasNextPage,
+                        meta: data.meta || null,
+                        page,
+                        pageSize,
+                        listId,
+                        defaultPageValue: list.defaultPageValue,
+                        type: LIST_AFTER_FETCH,
+                    },
+                ];
+            })
+            .catch(error => {
+                // Если это отмена — просто игнорируем ошибку
+                if (axios.isCancel && axios.isCancel(error)) {
+                    return [];
+                }
+
+                // Handle cancellation quietly
+                // axios v0.x: axios.isCancel(error)
+                const isAxiosCancel = typeof axios.isCancel === 'function' && axios.isCancel(error);
+
+                if (isAxiosCancel) {
+                    // игнорируем, это отмена запроса
+                    return [];
+                }
+
+                // прочие ошибки — можно пробросить или обработать
+                if (typeof list.onError === 'function') {
+                    list.onError(error);
+                }
+
                 return [];
+            })
+            .finally(() => {
+                // убрать сохранённый источник если он тот же
+                if (components.http._promises[listId] === source) {
+                    delete components.http._promises[listId];
+                }
             }),
-    );
+    ]);
 
     return dispatch(toDispatch);
 };
-
 /**
  * Lazy update query values and send request
  * @param listId

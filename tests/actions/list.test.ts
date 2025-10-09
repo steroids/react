@@ -42,7 +42,6 @@ describe('httpFetchHandler function', () => {
     const mockCancelSource = axios.CancelToken.source();
     const mockComponents = {
         http: mockHttp,
-        httpCancelToken: mockCancelSource.token,
     };
 
     beforeEach(() => {
@@ -52,7 +51,8 @@ describe('httpFetchHandler function', () => {
     it('should call http.send with correct parameters including cancelToken option', async () => {
         const expectedUrl = `${mockList.action}?scope=${mockList.scope.join(',')}`;
 
-        await httpFetchHandler(mockList, mockQuery, mockComponents);
+        // Передаём options с cancelToken как 4-й аргумент
+        await httpFetchHandler(mockList, mockQuery, mockComponents, {cancelToken: mockCancelSource.token});
 
         expect(mockHttp.send).toHaveBeenCalledWith(
             mockList.actionMethod,

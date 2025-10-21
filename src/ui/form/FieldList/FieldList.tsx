@@ -5,11 +5,14 @@ import _range from 'lodash-es/range';
 import _isEmpty from 'lodash-es/isEmpty';
 import _concat from 'lodash-es/concat';
 import _get from 'lodash-es/get';
+import _omit from 'lodash-es/omit';
+import _values from 'lodash-es/values';
+import _zipObject from 'lodash-es/zipObject';
 import {useEvent, useMount} from 'react-use';
 import {ModelAttribute} from 'src/components/MetaComponent';
 import {useComponents, useSelector} from '../../../hooks';
 import {FormContext} from '../../form/Form/Form';
-import {formArrayAdd, formArrayRemove, formChange} from '../../../actions/form';
+import {formArrayAdd, formArrayRemove, formChange, formSetErrors} from '../../../actions/form';
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {FieldEnum} from '../../../enums';
@@ -185,7 +188,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
     // Resolve model
     const modelAttributes = components.meta.getModel(props.model)?.attributes as ModelAttribute[];
 
-    const isWithReduxForm = useSelector(state => _get(state, ['form', context.formId]) || null);
+    const reduxFormValues = useSelector(state => _get(state, ['form', context.formId]) || null);
 
     const dispatch = context.provider.useDispatch();
 
@@ -211,10 +214,28 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         addRowIndexes(rowsCount);
         dispatch(formArrayAdd(context.formId, props.input.name, rowsCount, props.initialValues));
     }, [addRowIndexes, context.formId, dispatch, props.initialValues, props.input.name]);
-    const onRemove = useCallback((rowIndex) => {
+
+    const onRemove = useCallback((rowIndex: number) => {
         removeRowIndex(rowIndex);
-        dispatch(formArrayRemove(context.formId, props.input.name, rowIndex));
-    }, [context.formId, dispatch, props.input.name, removeRowIndex]);
+        const actions = [
+            formArrayRemove(context.formId, props.input.name, rowIndex),
+        ];
+
+        const listErrors = _get(reduxFormValues.errors, props.input.name);
+        if (!_isEmpty(listErrors)) {
+            const errorsWithoutRemoved = _omit(listErrors, String(rowIndex));
+            const errorsArray = _values(errorsWithoutRemoved);
+            const errorsForList = _zipObject(_range(errorsArray.length), errorsArray);
+            const newTotalErrors = {
+                ...reduxFormValues.errors,
+                [props.input.name]: errorsForList,
+            };
+            // @ts-ignore
+            actions.push(formSetErrors(context.formId, newTotalErrors));
+        }
+
+        dispatch(actions);
+    }, [context.formId, dispatch, reduxFormValues.errors, props.input.name, removeRowIndex]);
 
     useMount(() => {
         // Add initial rows
@@ -303,7 +324,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
                 {!_isEmpty(storeToRowIndexMap) && _range(props.input.value || 0).map((index) => (
                     <FieldListItemView
                         {...itemViewProps}
-                        key={isWithReduxForm ? storeToRowIndexMap[index] : index}
+                        key={reduxFormValues ? storeToRowIndexMap[index] : index}
                         prefix={props.input.name + '.' + index}
                         rowIndex={index}
                     />

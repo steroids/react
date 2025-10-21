@@ -221,7 +221,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
             formArrayRemove(context.formId, props.input.name, rowIndex),
         ];
 
-        const listErrors = _get(reduxFormValues.errors, props.input.name);
+        const listErrors = _get(reduxFormValues?.errors, props.input.name);
         if (!_isEmpty(listErrors)) {
             const errorsWithoutRemoved = _omit(listErrors, String(rowIndex));
             const errorsArray = _values(errorsWithoutRemoved);
@@ -235,7 +235,7 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         }
 
         dispatch(actions);
-    }, [context.formId, dispatch, reduxFormValues.errors, props.input.name, removeRowIndex]);
+    }, [context.formId, dispatch, reduxFormValues?.errors, props.input.name, removeRowIndex]);
 
     useMount(() => {
         // Add initial rows

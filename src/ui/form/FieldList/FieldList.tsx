@@ -223,6 +223,10 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
 
         const listErrors = _get(reduxFormValues?.errors, props.input.name);
         if (!_isEmpty(listErrors)) {
+            /**
+             * После удаления строки, удаляет соответствующую этой строке ошибку
+             * и обновляет индексы для последующих элементов
+             */
             const errorsWithoutRemoved = _omit(listErrors, String(rowIndex));
             const errorsArray = _values(errorsWithoutRemoved);
             const errorsForList = _zipObject(_range(errorsArray.length), errorsArray);

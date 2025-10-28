@@ -38,16 +38,20 @@ export const useCalendarSystem = (props: ICalendarSystemProps) => {
     }, [props.users]);
 
     //Главная дата, от которой происходят все вычисления
-    const [generalCurrentDay, setGeneralCurrentDay] = React.useState(getFormattedDay());
+    const [generalCurrentDay, setGeneralCurrentDay] = React.useState(getFormattedDay(null, props.timeZone));
+    console.log(props.timeZone);
     const isGeneralCurrentDayNeedsUpdate = useRef(true);
 
-    const updateGeneralCurrentDay = useCallback((newDate: Date) => {
-        if (!isGeneralCurrentDayNeedsUpdate.current) {
-            isGeneralCurrentDayNeedsUpdate.current = true;
-            return;
-        }
-        setGeneralCurrentDay(getFormattedDay(newDate));
-    }, [isGeneralCurrentDayNeedsUpdate]);
+    const updateGeneralCurrentDay = useCallback(
+        (newDate: Date) => {
+            if (!isGeneralCurrentDayNeedsUpdate.current) {
+                isGeneralCurrentDayNeedsUpdate.current = true;
+                return;
+            }
+            setGeneralCurrentDay(getFormattedDay(newDate, props.timeZone));
+        },
+        [isGeneralCurrentDayNeedsUpdate, props.timeZone],
+    );
 
     const onCalendarChangedMonth = React.useCallback((newDate: Date) => {
         updateGeneralCurrentDay(newDate);
@@ -63,6 +67,7 @@ export const useCalendarSystem = (props: ICalendarSystemProps) => {
         monthGridCalendarDays,
     } = useMonthGrid(
         generalCurrentDay,
+        props.timeZone,
     );
 
     const {
@@ -70,6 +75,7 @@ export const useCalendarSystem = (props: ICalendarSystemProps) => {
         weekGridCurrentWeekDays,
     } = useWeekGrid(
         generalCurrentDay,
+        props.timeZone,
     );
 
     const {

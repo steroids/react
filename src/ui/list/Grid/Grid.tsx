@@ -374,6 +374,7 @@ export default function Grid(props: IGridProps): JSX.Element {
     );
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         list,
         paginationPosition,
         paginationSizePosition,
@@ -399,7 +400,6 @@ export default function Grid(props: IGridProps): JSX.Element {
         hasAlternatingColors: props.hasAlternatingColors,
         className: props.className,
         primaryKey: props.primaryKey,
-        ...props.viewProps,
     }), [list, paginationPosition, paginationSizePosition, layoutNamesPosition, renderList, renderLoading, renderEmpty,
         renderPagination, renderPaginationSize, renderLayoutNames, renderSearchForm, renderInfiniteScroll, renderValue,
         columns, onFetch, onSort, sort, props.searchForm, props.listId, props.isLoading, props.size, props.hasAlternatingColors,

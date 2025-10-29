@@ -2,7 +2,7 @@
 /* eslint-disable import/order */
 import {useMemo} from 'react';
 import {IDay} from '../CalendarSystem';
-import {getDateInTimeZone, getWeekDays, getWeekDaysFromDate, isDateIsToday, isTodayInTimeZone} from '../utils/utils';
+import {getDateInTimeZone, getWeekDays, getWeekDaysFromDate, isTodayInTimeZone} from '../utils/utils';
 import _upperFirst from 'lodash-es/upperFirst';
 
 const FIRST_DAY = 1;

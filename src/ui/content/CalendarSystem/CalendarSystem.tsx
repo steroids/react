@@ -202,7 +202,8 @@ export interface ICalendarSystemProps extends IUiComponent {
     },
 
     /**
-     * Тайм-зона
+     * Часовой пояс в формате IANA
+     * @example 'Europe/Moscow'
      */
     timeZone?: string,
 

@@ -9,7 +9,6 @@ const useWeekGrid = (generalCurrentDay: IDay, timeZone?: string) => {
 
         return formattedWeek;
     }, [generalCurrentDay.date, timeZone]);
-
     return {
         weekGridTwentyFourHoursArray: getTwentyFourHoursArray(),
         weekGridCurrentWeekDays: currentWeek,

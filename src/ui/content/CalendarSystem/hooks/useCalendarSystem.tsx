@@ -39,7 +39,6 @@ export const useCalendarSystem = (props: ICalendarSystemProps) => {
 
     //Главная дата, от которой происходят все вычисления
     const [generalCurrentDay, setGeneralCurrentDay] = React.useState(getFormattedDay(null, props.timeZone));
-    console.log(props.timeZone);
     const isGeneralCurrentDayNeedsUpdate = useRef(true);
 
     const updateGeneralCurrentDay = useCallback(

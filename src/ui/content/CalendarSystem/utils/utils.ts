@@ -14,31 +14,21 @@ import {convertDate} from '../../../../utils/calendar';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const SIX_DAYS_DIFF = 6;
-const MAX_DAYS_DIFF_IN_WEEK = 7;
 const WEEK_DAY_FORMAT = 'dd, D MMM';
 
-/**
- * Возвращает дату, смещённую относительно указанной временной зоны.
- */
+// Возвращает дату, смещённую относительно указанного часового пояса.
 export const getDateInTimeZone = (date: Date, timeZone?: string): Date => {
     if (!timeZone) { return date; }
     const zoned = dayjs.utc(date).tz(timeZone, true); // true => сохраняет локальное время
     return zoned.toDate();
 };
 
-/**
- * Проверяет, является ли данная дата сегодняшним днём в указанной временной зоне.
- */
+// Проверяет, является ли данная дата сегодняшним днём в указанном часовом поясе.
 export const isTodayInTimeZone = (date: Date, timeZone?: string): boolean => {
     if (!timeZone) { return dayjs(date).isToday(); }
 
-    // Берём "сейчас" и "цель" обе в одной таймзоне
     const now = dayjs().tz(timeZone);
     const target = dayjs.utc(date).tz(timeZone);
-    console.log(now.date());
-    console.log(target.date());
-    console.log(now.isSame(target, 'day')); // <-- ключевой момент: utc()
 
     return now.isSame(target, 'day');
 };
@@ -66,8 +56,6 @@ export const getWeekDaysFromDate = (date: Date, timeZone?: string) => {
     return weekDays;
 };
 
-export const isDateIsToday = (date: Date): boolean => dayjs(date).isToday();
-
 export const getOmittedEvent = (event: IEvent | Omit<IEvent, 'color'>) => _omit(event, ['color', 'eventGroupId']);
 
 export const sortEventsInGroup = (group: IEventGroup) => group.events
@@ -82,23 +70,30 @@ export const sortEventsInGroup = (group: IEventGroup) => group.events
 export const getSourceCalendarControl = (control: string) => document.querySelector(`[data-icon="control-${control}"]`) as HTMLElement;
 
 export const getFormattedDay = (date: Date = null, timeZone?: string) => {
-    const baseDate = date || new Date();
-    const zonedDate = getDateInTimeZone(baseDate, timeZone);
+    const base = date ? dayjs(date) : dayjs();
+
+    // Сбрасываем время до начала дня в часовом поясе
+    const zoned = timeZone
+        ? base.tz(timeZone).startOf('day')
+        : base.startOf('day');
+
+    const dayNumber = zoned.date();
+    const formattedDisplay = convertDate(zoned.toDate(), null, WEEK_DAY_FORMAT);
 
     return {
-        dayNumber: zonedDate.getDate(),
-        date: zonedDate,
-        formattedDisplay: convertDate(zonedDate, null, WEEK_DAY_FORMAT),
-        isToday: isTodayInTimeZone(zonedDate, timeZone),
-    } as IDay;
+        dayNumber,
+        date: zoned.toDate(),
+        formattedDisplay,
+        isToday: true, // для текущего дня всегда true
+    };
 };
 
-//TODO использовать существующие функции а не дублировать функционал
 export const getFormattedWeekFromDate = (fromDate: Date = null, timeZone?: string) => {
     const currentWeek = getWeekDaysFromDate(fromDate || new Date());
 
     return currentWeek.map(dayOfWeek => {
-        const zonedDate = getDateInTimeZone(dayOfWeek.date, timeZone);
+        const zonedDate = dayOfWeek.date;
+
         return {
             ...dayOfWeek,
             date: zonedDate,

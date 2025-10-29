@@ -129,7 +129,8 @@ export interface ICalendarViewProps extends ICalendarProps {
     toggleCaptionPanel: () => void,
 
     /**
-     * Текущая дата в формате Date
+     * Текущая дата в формате Date, используется для выделения текущего дня в календаре.
+     * Не влияет на изменение даты в Calendar.
      */
     todayDate: Date,
 }

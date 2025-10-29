@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.73 (29.10.2025)
+
+### Added
+
+- Добавлена возможность передать timeZone в компонентах `CalendarSystem` и `Calendar`
+
 ## v3.0.72 (29.10.2025)
 
 ### Added

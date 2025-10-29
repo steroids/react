@@ -2,14 +2,14 @@
 /* eslint-disable import/order */
 import {useMemo} from 'react';
 import {IDay} from '../CalendarSystem';
-import {getWeekDays, getWeekDaysFromDate, isDateIsToday} from '../utils/utils';
+import {getDateInTimeZone, getWeekDays, getWeekDaysFromDate, isTodayInTimeZone} from '../utils/utils';
 import _upperFirst from 'lodash-es/upperFirst';
 
 const FIRST_DAY = 1;
 const ONE_MONTH = 1;
 const TOTAL_DAYS_IN_CALENDAR = 42;
 
-const useMonthGrid = (generalCurrentDay: IDay) => {
+const useMonthGrid = (generalCurrentDay: IDay, timeZone?: string) => {
     const currentMonthData = useMemo(() => {
         const currentYear = generalCurrentDay.date?.getFullYear();
 
@@ -73,11 +73,16 @@ const useMonthGrid = (generalCurrentDay: IDay) => {
             });
         }
 
-        return innerCalendarArray.map((day) => isDateIsToday(day.date) ? ({
-            ...day,
-            isToday: true,
-        }) : day);
-    }, [generalCurrentDay.date, currentMonthData]);
+        return innerCalendarArray.map((day) => {
+            const zoned = getDateInTimeZone(day.date, timeZone);
+            return isTodayInTimeZone(zoned, timeZone)
+                ? {...day,
+                    date: zoned,
+                    isToday: true}
+                : {...day,
+                    date: zoned};
+        });
+    }, [generalCurrentDay.date, currentMonthData, timeZone]);
 
     return {
         monthGridWeekDays: getWeekDays(),

@@ -201,6 +201,12 @@ export interface ICalendarSystemProps extends IUiComponent {
         dateToAttribute?: string,
     },
 
+    /**
+     * Часовой пояс в формате IANA
+     * @example 'Europe/Moscow'
+     */
+    timeZone?: string,
+
     [key: string]: any,
 }
 

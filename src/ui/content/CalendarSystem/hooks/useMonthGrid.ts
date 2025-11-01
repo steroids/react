@@ -2,7 +2,7 @@
 /* eslint-disable import/order */
 import {useMemo} from 'react';
 import {IDay} from '../CalendarSystem';
-import {getWeekDays, getWeekDaysFromDate, isTodayInMonthGrid} from '../utils/utils';
+import {getWeekDays, getWeekDaysFromDate, isTodayInMonthGrid, isTodayInTimeZone} from '../utils/utils';
 import _upperFirst from 'lodash-es/upperFirst';
 
 const FIRST_DAY = 1;
@@ -74,7 +74,7 @@ const useMonthGrid = (generalCurrentDay: IDay, timeZone?: string) => {
         }
 
         return innerCalendarArray.map((day) => {
-            const isToday = isTodayInMonthGrid(day.dayNumber, currentMonth, timeZone);
+            const isToday = timeZone ? isTodayInMonthGrid(day.dayNumber, currentMonth, timeZone) : isTodayInTimeZone(day.date);
 
             return {
                 ...day,

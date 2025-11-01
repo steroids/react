@@ -29,7 +29,6 @@ export const isTodayInTimeZone = (date: Date, timeZone?: string): boolean => {
 
 // Костыль для показа текущего дня в виде месяц
 export const isTodayInMonthGrid = (date: number, currentMonth: number, timeZone?: string): boolean => {
-    if (!timeZone) { return dayjs(date).isToday(); }
     const now = timeZone
         ? dayjs().tz(timeZone)
         : dayjs();

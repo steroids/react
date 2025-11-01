@@ -152,11 +152,20 @@ function Calendar(props: ICalendarProps) {
         [props.value, props.valueFormat],
     );
 
-    const [month, setMonth] = useState<Date>(
-        selectedDates.length > 0
-            ? selectedDates.filter(date => !!date)[0]
-            : new Date(),
-    );
+    const getTodayByTimezone = useCallback((timeZone?: string): Date => {
+        const now = dayjs();
+        const zoned = timeZone ? now.tz(timeZone) : now;
+
+        // создаём Date, у которого локальные Y/M/D совпадают с zoned-денью
+        return new Date(zoned.year(), zoned.month(), zoned.date(), 12, 0, 0, 0);
+    }, []);
+
+    /* текущий день в тайм-зоне */
+    const todayDate = useMemo(() => getTodayByTimezone(props.timeZone), [props.timeZone, getTodayByTimezone]);
+
+    /* стартовый месяц – всегда месяц todayDate */
+    const startMonth = useMemo(() => new Date(todayDate.getFullYear(), todayDate.getMonth(), 1), [todayDate]);
+    const [month, setMonth] = useState<Date>(startMonth);
     const [isCaptionPanelVisible, setIsCaptionPanelVisible] = useState<boolean>(false);
 
     useEffect(() => {
@@ -187,17 +196,10 @@ function Calendar(props: ICalendarProps) {
         }
     }, [props]);
 
-    const getTodayByTimezone = useCallback((timeZone?: string): Date => {
-        const now = dayjs();
-        const zoned = timeZone ? now.tz(timeZone) : now;
-        const y = zoned.year();
-        const m = zoned.month();
-        const d = zoned.date();
-
-        return new Date(y, m, d, 12, 0, 0, 0);
-    }, []);
-
-    const todayDate = useMemo(() => getTodayByTimezone(props.timeZone), [props.timeZone, getTodayByTimezone]);
+    /* если тайм-зона изменилась – пересчитываем месяц */
+    useEffect(() => {
+        setMonth(startMonth);
+    }, [startMonth]);
 
     const viewProps = useMemo(() => ({
         month,

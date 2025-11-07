@@ -119,6 +119,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         items,
         inputValue: props.input.value,
         sourceItems,
+        hasCloseOnSelect: props.hasCloseOnSelect,
     });
 
     const onOpen = useCallback(() => {
@@ -218,6 +219,7 @@ AutoCompleteField.defaultProps = {
     disabled: false,
     required: false,
     showClear: false,
+    hasCloseOnSelect: true,
 };
 
 export default fieldWrapper<IAutoCompleteFieldProps>(FieldEnum.AUTO_COMPLETE_FIELD, AutoCompleteField);

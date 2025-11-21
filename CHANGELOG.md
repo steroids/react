@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.75 (21.11.2025)
+
+### Added
+
+- Добавлены `viewProps` для `DateRangeField`
+
 ## v3.0.74 (07.11.2025)
 
 ### Fixed

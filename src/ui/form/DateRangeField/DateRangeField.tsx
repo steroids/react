@@ -87,6 +87,11 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     calendarProps?: ICalendarProps,
 
     /**
+     * Свойства для view компонента
+     */
+    viewProps?: CustomViewProps,
+
+    /**
      * Устанавливать ли фокус и показывать календарь сразу после рендера страницы
      * @example true
      */
@@ -285,6 +290,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     }), [onDayClick, props.calendarProps, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         onClear,
         onClose,
         calendarProps,
@@ -295,6 +301,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         showRemove: props.showRemove,
         errorsFrom: props.errorsFrom,
         errorsTo: props.errorsTo,
+        errors: props.errors,
         inputPropsTo: extendedInputPropsTo,
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
@@ -303,9 +310,9 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         withRangeButtons: props.withRangeButtons,
         rangeButtonsPosition: props.rangeButtonsPosition,
         displayFormat: props.displayFormat,
-    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear,
-        onClose, props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove,
-        props.size, props.style, props.withRangeButtons, props.rangeButtonsPosition, props.displayFormat]);
+    }), [props.viewProps, props.icon, props.size, props.disabled, props.className, props.showRemove, props.errorsFrom,
+        props.errorsTo, props.errors, props.style, props.id, props.withRangeButtons, props.rangeButtonsPosition,
+        props.displayFormat, onClear, onClose, calendarProps, extendedInputPropsTo, extendedInputPropsFrom, focus, isOpenedFrom, isOpenedTo]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);
 }

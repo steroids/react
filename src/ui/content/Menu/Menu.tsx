@@ -61,6 +61,11 @@ export interface IMenuProps extends IUiComponent {
      * Переопределение view React элемента меню для кастомизации отображения
      */
     itemView?: CustomView | any,
+
+    /**
+     * Свойства для view компонента
+     */
+    viewProps?: CustomViewProps,
 }
 
 export type IMenuViewProps = IMenuProps;
@@ -70,13 +75,14 @@ function Menu(props: IMenuProps): JSX.Element {
     const MenuItemView = props.itemView || components.ui.getView('content.MenuItemView');
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         items: props.items,
         dropDownProps: props.dropDownProps,
         icon: props.icon,
         className: props.className,
         style: props.style,
         itemView: MenuItemView,
-    }), [MenuItemView, props.className, props.dropDownProps, props.icon, props.items, props.style]);
+    }), [MenuItemView, props.className, props.dropDownProps, props.icon, props.items, props.style, props.viewProps]);
 
     return components.ui.renderView(props.view || 'content.MenuView', viewProps);
 }

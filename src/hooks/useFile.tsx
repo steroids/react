@@ -70,7 +70,7 @@ export interface IFileOutput {
     onAdd?: any,
 }
 
-const imagesMimeTypes = [
+export const imagesMimeTypes = [
     'image/gif',
     'image/jpeg',
     'image/pjpeg',
@@ -87,6 +87,17 @@ export function generateBackendUrl(props) {
         imagesProcessor: props.imagesProcessor,
         imagesExactSize: props.imagesExactSize,
     });
+}
+
+function generateAcceptString(props) {
+    if (props.imagesOnly) {
+        return imagesMimeTypes.join(', ');
+    }
+    if (props.mimeTypes) {
+        return props.mimeTypes.join(', ');
+    }
+
+    return '';
 }
 
 export default function useFile(props: IFileInput): IFileOutput {
@@ -107,7 +118,7 @@ export default function useFile(props: IFileInput): IFileOutput {
         form: {
             ...(props.uploader && props.uploader.form),
             multiple: props.multiple,
-            accept: props.imagesOnly ? imagesMimeTypes.join(', ') : '',
+            accept: generateAcceptString(props),
         },
     }));
 

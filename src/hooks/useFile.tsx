@@ -89,6 +89,17 @@ export function generateBackendUrl(props) {
     });
 }
 
+function generateAcceptString(props) {
+    if (props.imagesOnly) {
+        return imagesMimeTypes.join(', ');
+    }
+    if (props.mimeTypes) {
+        return props.mimeTypes.join(', ');
+    }
+
+    return '';
+}
+
 export default function useFile(props: IFileInput): IFileOutput {
     const {http} = useComponents();
     http.getAccessToken(); // TODO Run promise..
@@ -107,11 +118,7 @@ export default function useFile(props: IFileInput): IFileOutput {
         form: {
             ...(props.uploader && props.uploader.form),
             multiple: props.multiple,
-            accept: props.imagesOnly
-                ? imagesMimeTypes.join(', ')
-                : props.mimeTypes
-                    ? props.mimeTypes.join(', ')
-                    : '',
+            accept: generateAcceptString(props),
         },
     }));
 

@@ -115,6 +115,8 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const components = useComponents();
     const dispatch = useDispatch();
 
+    const dropRef = React.useRef<HTMLDivElement>(null);
+
     // Add cropping option
     const [croppedImage, setCroppedImage] = useState(null);
     const modalId = useMemo(() => props.modalProps?.modalId || _uniqueId('cropModal'), [props.modalProps.modalId]);
@@ -140,7 +142,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         return data;
     }, [ImageFieldModalVIew, modalId, dispatch, props.crop, props.modalProps]);
 
-    const {files, onBrowse, onRemove, onAdd} = useFile({
+    const {files, onBrowse, onRemove, onAdd, uploader} = useFile({
         ...props,
         multiple: false,
         imagesOnly: true,
@@ -152,6 +154,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
             },
             ...props.uploader,
         },
+        dropRef: props.hasDropArea ? dropRef : null,
     });
 
     const oldCroppedImage = usePrevious(croppedImage);
@@ -228,7 +231,10 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         onClick: onBrowse,
         buttonProps: props.buttonProps,
         label: props.label,
-    }), [item, onBrowse, props.buttonProps, props.label]);
+        dropRef,
+        uploader,
+        hasDropArea: props.hasDropArea,
+    }), [item, onBrowse, props.buttonProps, props.hasDropArea, props.label, uploader]);
 
     return (
         <ImageFieldView

@@ -12,18 +12,18 @@ import {useComponents, useForm} from './index';
 
 export interface IFileInput {
     /**
-    * Параметры для input элемента
-    */
+     * Параметры для input элемента
+     */
     input?: FormInputType,
 
     /**
-    * Множественный выбор файлов
-    */
+     * Множественный выбор файлов
+     */
     multiple?: boolean,
 
     /**
-    * Позволяет указать uploader
-    */
+     * Позволяет указать uploader
+     */
     uploader?: any,
 
     /**
@@ -33,33 +33,43 @@ export interface IFileInput {
     backendUrl?: string,
 
     /**
-    * Список mime-типов
-    */
+     * Список mime-типов
+     */
     mimeTypes?: string[],
 
     /**
-    * Использовать только изображения
-    */
+     * Использовать только изображения
+     */
     imagesOnly?: boolean,
     imagesProcessor?: string,
 
     /**
-    * Точные размеры изображений
-    */
+     * Точные размеры изображений
+     */
     imagesExactSize?: string,
 
     /**
-    * Начальные файлы
-    */
+     * Начальные файлы
+     */
     initialFiles?: any,
 
     /**
-    * Параметры для uploader
-    */
+     * Параметры для uploader
+     */
     uploaderConfig?: {
         useFormData?: boolean,
         fileFieldName?: string,
     } | any,
+
+    /**
+     * Ref для drop area
+     */
+    dropRef?: any,
+
+    /**
+     * Использовать drop area
+     */
+    hasDropArea?: boolean,
 }
 
 export interface IFileOutput {
@@ -105,7 +115,6 @@ export default function useFile(props: IFileInput): IFileOutput {
     http.getAccessToken(); // TODO Run promise..
 
     const uploader = useInitial(() => new FileUp({
-        dropArea: {},
         backendUrl: generateBackendUrl(props),
         uploaderConfig: {
             ...props.uploaderConfig,
@@ -115,6 +124,13 @@ export default function useFile(props: IFileInput): IFileOutput {
             },
         },
         ...props.uploader,
+        dropArea: props?.hasDropArea
+            ? {
+                className: props.uploader.dropArea.className,
+                container: props.dropRef.current,
+                enable: true,
+            }
+            : {},
         form: {
             ...(props.uploader && props.uploader.form),
             multiple: props.multiple,

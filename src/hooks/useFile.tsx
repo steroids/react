@@ -70,7 +70,7 @@ export interface IFileOutput {
     onAdd?: any,
 }
 
-const imagesMimeTypes = [
+export const imagesMimeTypes = [
     'image/gif',
     'image/jpeg',
     'image/pjpeg',
@@ -107,7 +107,11 @@ export default function useFile(props: IFileInput): IFileOutput {
         form: {
             ...(props.uploader && props.uploader.form),
             multiple: props.multiple,
-            accept: props.imagesOnly ? imagesMimeTypes.join(', ') : '',
+            accept: props.imagesOnly
+                ? imagesMimeTypes.join(', ')
+                : props.mimeTypes
+                    ? props.mimeTypes.join(', ')
+                    : '',
         },
     }));
 

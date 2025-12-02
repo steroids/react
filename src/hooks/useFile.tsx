@@ -1,4 +1,4 @@
-import {useCallback, useEffect} from 'react';
+import {RefObject, useCallback, useEffect} from 'react';
 import {useMount, useUnmount, useUpdate, usePrevious} from 'react-use';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
@@ -64,7 +64,7 @@ export interface IFileInput {
     /**
      * Ref для drop area
      */
-    dropRef?: any,
+    dropRef?: RefObject<HTMLDivElement>,
 
     /**
      * Использовать drop area

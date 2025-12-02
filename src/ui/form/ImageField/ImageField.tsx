@@ -2,7 +2,7 @@ import * as React from 'react';
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import {useMemo, useCallback, useState, useEffect} from 'react';
+import {useMemo, useCallback, useState, useEffect, useRef} from 'react';
 import _uniqueId from 'lodash-es/uniqueId';
 import ReactCropProps, {Crop} from 'react-image-crop';
 import {usePrevious} from 'react-use';
@@ -115,7 +115,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const components = useComponents();
     const dispatch = useDispatch();
 
-    const dropRef = React.useRef<HTMLDivElement>(null);
+    const dropRef = useRef<HTMLDivElement>(null);
 
     // Add cropping option
     const [croppedImage, setCroppedImage] = useState(null);

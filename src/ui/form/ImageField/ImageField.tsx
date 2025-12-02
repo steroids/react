@@ -2,7 +2,7 @@ import * as React from 'react';
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import {useMemo, useCallback, useState, useEffect} from 'react';
+import {useMemo, useCallback, useState, useEffect, useRef} from 'react';
 import _uniqueId from 'lodash-es/uniqueId';
 import ReactCropProps, {Crop} from 'react-image-crop';
 import {usePrevious} from 'react-use';
@@ -115,6 +115,8 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
     const components = useComponents();
     const dispatch = useDispatch();
 
+    const dropRef = useRef<HTMLDivElement>(null);
+
     // Add cropping option
     const [croppedImage, setCroppedImage] = useState(null);
     const modalId = useMemo(() => props.modalProps?.modalId || _uniqueId('cropModal'), [props.modalProps.modalId]);
@@ -140,7 +142,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         return data;
     }, [ImageFieldModalVIew, modalId, dispatch, props.crop, props.modalProps]);
 
-    const {files, onBrowse, onRemove, onAdd} = useFile({
+    const {files, onBrowse, onRemove, onAdd, uploader} = useFile({
         ...props,
         multiple: false,
         imagesOnly: true,
@@ -152,6 +154,7 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
             },
             ...props.uploader,
         },
+        dropRef: props.hasDropArea ? dropRef : null,
     });
 
     const oldCroppedImage = usePrevious(croppedImage);
@@ -228,7 +231,10 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         onClick: onBrowse,
         buttonProps: props.buttonProps,
         label: props.label,
-    }), [item, onBrowse, props.buttonProps, props.label]);
+        dropRef,
+        uploader,
+        hasDropArea: props.hasDropArea,
+    }), [item, onBrowse, props.buttonProps, props.hasDropArea, props.label, uploader]);
 
     return (
         <ImageFieldView

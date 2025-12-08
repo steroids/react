@@ -1,3 +1,4 @@
+import _isArray from 'lodash-es/isArray';
 import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
 import {useBem} from '../../../../src/hooks';
@@ -118,6 +119,11 @@ export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps
         >
             <input
                 {...props.inputProps}
+                value={
+                    _isArray(props.inputProps?.value)
+                        ? (props.inputProps.value as (string | number)[])?.join(props.multipleSeparator ?? ',')
+                        : props.inputProps.value as string
+                }
                 className={bem(
                     bem.element('input'),
                     props.inputProps.className,

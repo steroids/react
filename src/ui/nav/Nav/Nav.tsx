@@ -127,6 +127,11 @@ export interface INavProps {
     view?: CustomView,
 
     /**
+     * Свойства для view компонента
+     */
+    viewProps?: CustomViewProps,
+
+    /**
      * Обработчик, который вызывается при смене активного элемента навигации
      * @param args
      */
@@ -240,6 +245,7 @@ function Nav(props: INavProps): JSX.Element {
         [formatItems]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         items,
         onClick,
         disabled: props.disabled,
@@ -248,7 +254,7 @@ function Nav(props: INavProps): JSX.Element {
         className: props.className,
         navClassName: props.navClassName,
         children: renderContent(),
-    }), [items, onClick, props.className, props.disabled, props.icon, props.navClassName, props.size, renderContent]);
+    }), [items, onClick, props.className, props.disabled, props.icon, props.navClassName, props.size, props.viewProps, renderContent]);
 
     return components.ui.renderView(props.view || defaultViewMap[props.layout], viewProps);
 }

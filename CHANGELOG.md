@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.0.80 (10.12.2025)
+
+### Added
+
+- Добавлена возможность указать multipleSeparator в AutoCompleteField
+
+### Fixed
+
+- Исправлено поведение AutoCompleteField с установленным multiple = true
+
 ## v3.0.79 (09.12.2025)
 
 ### Added

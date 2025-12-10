@@ -121,7 +121,7 @@ export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps
                 {...props.inputProps}
                 value={
                     _isArray(props.inputProps?.value)
-                        ? (props.inputProps.value as (string | number)[])?.join(props.multipleSeparator ?? ',')
+                        ? (props.inputProps.value as (string | number)[])?.join(props.multipleSeparator)
                         : props.inputProps.value as string
                 }
                 className={bem(

@@ -54,6 +54,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
         min: number,
         max: number,
         step: string | number,
+        required: boolean,
     },
     inputRef: React.MutableRefObject<any>,
     onStepUp: VoidFunction,

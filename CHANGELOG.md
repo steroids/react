@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.82 (19.12.2025)
+
+### Added
+
+- Добавлен required для `TextField`
+
 ## v3.0.81 (16.12.2025)
 
 ### Added

@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
-import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
+import {createDateTimeMask} from './utils';
 import useDateTime from '../DateField/useDateTime';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateInputState, {
@@ -43,6 +43,28 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
      */
     dateTimeSeparator?: string,
 
+    /**
+     *  Ограничение доступных дат.
+     */
+    disabledDays?: {
+        after?: Date,
+        before?: Date,
+    },
+
+    /**
+     * Ограничение доступного времени.
+     */
+    availableTime?: {
+        from: string,
+        to: string,
+    },
+
+    /**
+     * Шаг минут
+     * @example 15
+     */
+    minuteStep?: number,
+
     [key: string]: any,
 }
 
@@ -65,7 +87,15 @@ const DATE_TIME_SEPARATOR = ', ';
 function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const maskInputRef = useMaskito({options: props.maskOptions});
+    const maskInputRef = useMaskito({
+        options: createDateTimeMask({
+            from: props.availableTime?.from,
+            to: props.availableTime?.to,
+            minuteStep: props.minuteStep,
+            min: props.disabledDays?.before ?? null,
+            dateTimeSeparator: props.dateTimeSeparator ?? DATE_TIME_SEPARATOR,
+        }),
+    });
 
     const {
         onClear,
@@ -105,8 +135,18 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         value: dateValue,
         onChange: onDateSelect,
         valueFormat: dateValueFormat,
-        ...props.calendarProps,
-    }), [dateValue, dateValueFormat, onDateSelect, props.calendarProps]);
+        ...(
+            props?.disabledDays
+                ? {
+                    ...props.calendarProps,
+                    pickerProps: {
+                        ...props.calendarProps?.pickerProps,
+                        disabledDays: props.disabledDays,
+                    },
+                }
+                : props.calendarProps
+        ),
+    }), [dateValue, dateValueFormat, onDateSelect, props.calendarProps, props.disabledDays]);
 
     // TimePanel props
     const timePanelViewProps = useMemo(() => ({
@@ -115,7 +155,9 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         showNow: false,
         value: timeValue,
         onSelect: onTimeSelect,
-    }), [onClose, onTimeSelect, timeValue]);
+        availableTime: props.availableTime,
+        minuteStep: props.minuteStep,
+    }), [onClose, onTimeSelect, props.availableTime, props.minuteStep, timeValue]);
 
     const viewProps = useMemo(() => ({
         isOpened,
@@ -134,10 +176,8 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         style: props.style,
         id: props.id,
-    }), [
-        calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors,
-        props.icon, props.id, props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps,
-    ]);
+        // eslint-disable-next-line max-len
+    }), [calendarProps, inputProps, isOpened, maskInputRef, onClear, onClose, props.className, props.disabled, props.errors, props.icon, props.id, props.placeholder, props.showRemove, props.size, props.style, timePanelViewProps]);
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', viewProps);
 }
@@ -151,12 +191,7 @@ DateTimeField.defaultProps = {
     useUTC: false,
     dateInUTC: false,
     icon: true,
-    maskOptions: maskitoDateTimeOptionsGenerator({
-        dateMode: 'dd/mm/yyyy',
-        timeMode: 'HH:MM',
-        dateSeparator: '.',
-        dateTimeSeparator: DATE_TIME_SEPARATOR,
-    }),
+    minuteStep: 1,
 };
 
 export default fieldWrapper<IDateTimeFieldProps>(FieldEnum.DATE_TIME_FIELD, DateTimeField);

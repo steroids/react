@@ -1,4 +1,7 @@
 import {useCallback, useMemo} from 'react';
+import {useMaskito} from '@maskito/react';
+import {MaskitoOptions} from '@maskito/core';
+import {createTimeMask} from '../TimeField/utils';
 import {useComponents} from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -69,6 +72,35 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
      */
     hasInitialFocus?: boolean,
 
+    /**
+     * Опции маски для полей
+     */
+    maskOptions?: {
+        /**
+         * Опции маски для поля from
+         */
+        from: MaskitoOptions,
+
+        /**
+         * Опции маски для поля to
+         */
+        to: MaskitoOptions,
+    },
+
+    /**
+     *  Ограничение доступного времени.
+     */
+    availableTime?: {
+        from: string,
+        to: string,
+    },
+
+    /**
+     * Шаг минут
+     * @example 15
+     */
+    minuteStep?: number,
+
     [key: string]: any,
 }
 
@@ -104,6 +136,22 @@ interface ITimeRangeFieldPrivateProps extends ITimeRangeFieldProps, Omit<IFieldW
 
 function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
     const components = useComponents();
+
+    const maskFromRef = useMaskito({
+        options: props.maskOptions?.from ?? createTimeMask({
+            from: props.availableTime?.from,
+            to: props.availableTime?.to,
+            minuteStep: props.minuteStep,
+        }),
+    });
+
+    const maskToRef = useMaskito({
+        options: props.maskOptions?.to ?? createTimeMask({
+            from: props.availableTime?.from,
+            to: props.availableTime?.to,
+            minuteStep: props.minuteStep,
+        }),
+    });
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
@@ -179,16 +227,20 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         onClose: onCloseFrom,
         value: inputPropsFrom.value,
         onSelect: inputPropsFrom.onChange,
+        availableTime: props.availableTime,
+        minuteStep: props.minuteStep,
         ...props.timePanelViewProps,
-    }), [inputPropsFrom.onChange, inputPropsFrom.value, onCloseFrom, onNowFrom, props.timePanelViewProps]);
+    }), [inputPropsFrom.onChange, inputPropsFrom.value, onCloseFrom, onNowFrom, props.availableTime, props.minuteStep, props.timePanelViewProps]);
 
     const timePanelToViewProps = useMemo(() => ({
         onNow: onNowTo,
         onClose: onCloseTo,
         value: inputPropsTo.value,
         onSelect: inputPropsTo.onChange,
+        availableTime: props.availableTime,
+        minuteStep: props.minuteStep,
         ...props.timePanelViewProps,
-    }), [inputPropsTo.onChange, inputPropsTo.value, onCloseTo, onNowTo, props.timePanelViewProps]);
+    }), [inputPropsTo.onChange, inputPropsTo.value, onCloseTo, onNowTo, props.availableTime, props.minuteStep, props.timePanelViewProps]);
 
     const viewProps = useMemo(() => ({
         ...props.viewProps,
@@ -209,9 +261,10 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
         showRemove: props.showRemove,
         className: props.className,
         id: props.id,
-    }), [extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear, onClose, props.className,
-        props.disabled, props.errors, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove, props.size,
-        props.style, props.viewProps, timePanelFromViewProps, timePanelToViewProps]);
+        maskFromRef,
+        maskToRef,
+        // eslint-disable-next-line max-len
+    }), [extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, maskFromRef, maskToRef, onClear, onClose, props.className, props.disabled, props.errors, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove, props.size, props.style, props.viewProps, timePanelFromViewProps, timePanelToViewProps]);
 
     return components.ui.renderView(props.view || 'form.TimeRangeFieldView', viewProps);
 }
@@ -227,6 +280,7 @@ TimeRangeField.defaultProps = {
     useUTC: false,
     dateInUTC: false,
     icon: true,
+    minuteStep: 1,
 };
 
 export default fieldWrapper<ITimeRangeFieldProps>(FieldEnum.TIME_RANGE_FIELD, TimeRangeField, {

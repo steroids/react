@@ -131,6 +131,10 @@ export default function useDateInputState(props: IDateInputStateInput): IDateInp
 
     // Display input change handler
     const onDisplayValueChange = useCallback((value: any) => {
+        if (typeof value !== 'string') {
+            return;
+        }
+
         value = value.replace(/[^0-9:., ]/g, '');
 
         setDisplayValue(value);

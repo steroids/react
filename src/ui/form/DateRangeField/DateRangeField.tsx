@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
@@ -119,6 +119,14 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     },
 
     /**
+     *  Ограничение доступных дат.
+     */
+    disabledDays?: {
+        after?: Date,
+        before?: Date,
+    },
+
+    /**
      * Активирует логику:
      * - Если кликнули по дате начала или конца диапазона, то позволяем её изменить следующим кликом
      * - Если клик не на дату конца или начала диапазона, а диапазон есть, то сбрасываем его
@@ -190,8 +198,21 @@ interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldW
 function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
 
-    const maskInputFromRef = useMaskito({options: props.maskOptions?.from});
-    const maskInputToRef = useMaskito({options: props.maskOptions?.to});
+    const maskInputFromRef = useMaskito({
+        options: props.maskOptions?.from ?? maskitoDateOptionsGenerator({
+            mode: 'dd/mm/yyyy',
+            separator: '.',
+            min: props.disabledDays?.before ?? null,
+        }),
+    });
+
+    const maskInputToRef = useMaskito({
+        options: props.maskOptions?.to ?? maskitoDateOptionsGenerator({
+            mode: 'dd/mm/yyyy',
+            separator: '.',
+            min: props.disabledDays?.before ?? null,
+        }),
+    });
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
@@ -258,7 +279,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (extendedInputPropsFrom.ref && extendedInputPropsTo.ref) {
             maskInputFromRef(extendedInputPropsFrom.ref.current);
             maskInputToRef(extendedInputPropsTo.ref.current);
@@ -286,8 +307,18 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
         numberOfMonths: 2,
         showFooter: false,
-        ...props.calendarProps,
-    }), [onDayClick, props.calendarProps, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
+        ...(
+            props?.disabledDays
+                ? {
+                    ...props.calendarProps,
+                    pickerProps: {
+                        ...props.calendarProps?.pickerProps,
+                        disabledDays: props.disabledDays,
+                    },
+                }
+                : props.calendarProps
+        ),
+    }), [onDayClick, props.calendarProps, props.disabledDays, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
 
     const viewProps = useMemo(() => ({
         ...props.viewProps,
@@ -328,16 +359,6 @@ DateRangeField.defaultProps = {
     hasInitialFocus: false,
     icon: true,
     useSmartRangeReset: true,
-    maskOptions: {
-        from: maskitoDateOptionsGenerator({
-            mode: 'dd/mm/yyyy',
-            separator: '.',
-        }),
-        to: maskitoDateOptionsGenerator({
-            mode: 'dd/mm/yyyy',
-            separator: '.',
-        }),
-    },
     rangeButtonsPosition: 'left-bottom',
 };
 

@@ -37,6 +37,14 @@ export interface IDateFieldProps extends IDateInputStateInput, IUiComponent, Pic
      */
     maskOptions?: MaskitoOptions,
 
+    /**
+     *  Ограничение доступных дат.
+     */
+    disabledDays?: {
+        after?: Date,
+        before?: Date,
+    },
+
     [key: string]: any,
 }
 
@@ -58,7 +66,13 @@ export interface IDateFieldViewProps extends IDateInputStateOutput,
 function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const maskInputRef = useMaskito({options: props.maskOptions});
+    const maskInputRef = useMaskito({
+        options: props.maskOptions ?? maskitoDateOptionsGenerator({
+            mode: 'dd/mm/yyyy',
+            separator: '.',
+            min: props.disabledDays?.before ?? null,
+        }),
+    });
 
     const {
         onClear,
@@ -81,8 +95,18 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         value: props.input.value,
         onChange: props.input.onChange,
         valueFormat: props.valueFormat,
-        ...props.calendarProps,
-    }), [props.calendarProps, props.input.onChange, props.input.value, props.valueFormat]);
+        ...(
+            props?.disabledDays
+                ? {
+                    ...props.calendarProps,
+                    pickerProps: {
+                        ...props.calendarProps?.pickerProps,
+                        disabledDays: props.disabledDays,
+                    },
+                }
+                : props.calendarProps
+        ),
+    }), [props.calendarProps, props.disabledDays, props.input.onChange, props.input.value, props.valueFormat]);
 
     const viewProps = useMemo(() => ({
         ...props.viewProps,
@@ -119,10 +143,6 @@ DateField.defaultProps = {
     showRemove: true,
     autoPositioning: true,
     valueFormat: 'YYYY-MM-DD',
-    maskOptions: maskitoDateOptionsGenerator({
-        mode: 'dd/mm/yyyy',
-        separator: '.',
-    }),
 };
 
 export default fieldWrapper<IDateFieldProps>(FieldEnum.DATE_FIELD, DateField);

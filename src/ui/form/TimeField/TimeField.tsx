@@ -1,4 +1,6 @@
 import {useMemo} from 'react';
+import {useMaskito} from '@maskito/react';
+import {MaskitoOptions} from '@maskito/core';
 import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
@@ -6,9 +8,10 @@ import useDateInputState, {
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {FieldEnum} from '../../../enums';
+import {createTimeMask} from './utils';
 
 export interface ITimePanelViewProps extends Pick<ITimeFieldViewProps,
-    'value' | 'onClose' | 'onNow' | 'onSelect' | 'className'>
+    'value' | 'onClose' | 'onNow' | 'onSelect' | 'className' | 'availableTime' | 'minuteStep'>
 {
     showHeader?: boolean,
     showNow?: boolean,
@@ -35,17 +38,47 @@ export interface ITimeFieldProps extends IDateInputStateInput, IUiComponent {
      */
     timePanelViewProps?: any,
 
+    /**
+     * Опции маски для поля ввода
+     */
+    maskOptions?: MaskitoOptions,
+
+    /**
+     *  Ограничение доступного времени.
+     */
+    availableTime?: {
+        from: string,
+        to: string,
+    },
+
+    /**
+     * Шаг минут
+     * @example 15
+     */
+    minuteStep?: number,
+
     [key: string]: any,
 }
 
 export interface ITimeFieldViewProps extends IDateInputStateOutput,
-    Pick<ITimeFieldProps, 'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps' | 'style'>
+    Pick<
+        ITimeFieldProps,
+        'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps' | 'style' | 'availableTime' | 'minuteStep'
+    >
 {
     [key: string]: any,
 }
 
 function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
+
+    const maskRef = useMaskito({
+        options: props.maskOptions ?? createTimeMask({
+            from: props.availableTime.from,
+            to: props.availableTime.to,
+            minuteStep: props.minuteStep,
+        }),
+    });
 
     const {
         onNow,
@@ -71,8 +104,10 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         onClose,
         value: inputProps.value,
         onSelect: inputProps.onChange,
+        availableTime: props.availableTime,
+        minuteStep: props.minuteStep,
         ...props.timePanelViewProps,
-    }), [inputProps.onChange, inputProps.value, onClose, onNow, props.timePanelViewProps]);
+    }), [inputProps.onChange, inputProps.value, onClose, onNow, props.availableTime, props.minuteStep, props.timePanelViewProps]);
 
     const viewProps = useMemo(() => ({
         ...props.viewProps,
@@ -91,8 +126,9 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         style: props.style,
         showRemove: props.showRemove,
         id: props.id,
-    }), [inputProps, isOpened, onClear, onClose, onNow, props.className, props.disabled, props.errors, props.icon, props.id, props.noBorder,
-        props.showRemove, props.size, props.style, props.viewProps, timePanelViewProps]);
+        maskRef,
+        // eslint-disable-next-line max-len
+    }), [inputProps, isOpened, maskRef, onClear, onClose, onNow, props.className, props.disabled, props.errors, props.icon, props.id, props.noBorder, props.showRemove, props.size, props.style, props.viewProps, timePanelViewProps]);
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', viewProps);
 }
@@ -108,6 +144,7 @@ TimeField.defaultProps = {
     useUTC: false,
     dateInUTC: false,
     icon: true,
+    minuteStep: 1,
 };
 
 export default fieldWrapper<ITimeFieldProps>(FieldEnum.TIME_FIELD, TimeField);

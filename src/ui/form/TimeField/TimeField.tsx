@@ -74,8 +74,8 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     const maskRef = useMaskito({
         options: props.maskOptions ?? createTimeMask({
-            from: props.availableTime.from,
-            to: props.availableTime.to,
+            from: props.availableTime?.from,
+            to: props.availableTime?.to,
             minuteStep: props.minuteStep,
         }),
     });

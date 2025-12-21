@@ -10,6 +10,7 @@ describe('TextField tests', () => {
     const props: ITextFieldViewProps = {
         inputProps: {
             disabled: true,
+            required: false,
             name: 'name',
             onChange: jest.fn(),
             placeholder: 'placeholder',
@@ -71,6 +72,7 @@ describe('TextField tests', () => {
         const actionProps: ITextFieldViewProps = {
             inputProps: {
                 disabled: true,
+                required: false,
                 name: 'name',
                 onChange: mockedOnChange,
                 placeholder: 'placeholder',

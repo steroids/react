@@ -206,6 +206,13 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     maxHeight?: number,
 
+    /**
+     * Активирует режим "ленивой" загрузки (Lazy Loading).
+     * Если true, запрос данных (autoFetch) будет заблокирован до тех пор,
+     * пока не будет получен сигнал о необходимости загрузки (через флаг isLazyLoadEnabled).
+     * @example true
+     */
+    isFetchOnOpen?: boolean,
     [key: string]: any,
 }
 
@@ -269,6 +276,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     // Query state
     const [query, setQuery] = useState('');
+    const [isLazyLoadEnabled, setIsLazyLoadEnabled] = useState(false);
     const autoCompleteInputForwardedRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -314,6 +322,8 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         autoFetch: props.autoFetch,
         query,
         initialSelectedIds: inputSelectedIds,
+        isFetchOnOpen: props.isFetchOnOpen,
+        isLazyLoadEnabled,
     });
 
     // Data select
@@ -342,11 +352,12 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     });
 
     const onOpen = useCallback(() => {
+        setIsLazyLoadEnabled(true);
         setQuery('');
         setIsFocused(true);
         setIsOpened(true);
         setHoveredId(null);
-    }, [setHoveredId, setIsFocused, setIsOpened]);
+    }, [setHoveredId, setIsFocused, setIsOpened, setIsLazyLoadEnabled]);
 
     const onItemHover = useCallback((id) => {
         setHoveredId(id);

@@ -129,6 +129,24 @@ export interface IDataProviderConfig {
      * @example [1, 22]
      */
     initialSelectedIds?: number[],
+
+    /**
+     * Активирует режим "ленивой" загрузки (Lazy Loading).
+     * Если true, запрос данных (autoFetch) будет заблокирован до тех пор,
+     * пока не будет получен сигнал о необходимости загрузки (через флаг isLazyLoadEnabled).
+     *
+     * Используется для оптимизации производительности, чтобы не грузить данные
+     * для закрытых дропдаунов при рендере больших списков.
+     * @example true
+     */
+    isFetchOnOpen?: boolean,
+
+    /**
+     * Сигнал, разрешающий загрузку данных при включенном isFetchOnOpen.
+     * Работает в связке с isFetchOnOpen: если isFetchOnOpen=true, но isLazyLoadEnabled=false,
+     * загрузка данных не произойдет.
+     */
+    isLazyLoadEnabled?: boolean,
 }
 
 export interface IDataProviderResult {
@@ -260,6 +278,10 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             return;
         }
 
+        if (config.isFetchOnOpen && !config.isLazyLoadEnabled) {
+            return;
+        }
+
         if (config.autoFetch && !isAutoFetchedRef.current) {
             isAutoFetchedRef.current = true;
             fetchRemote(true);
@@ -282,7 +304,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             }
         }
     }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider,
-        dataProvider.action, dataProvider.onSearch, fetchRemote, prevAction, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
+        dataProvider.action, dataProvider.onSearch, fetchRemote, prevAction, prevParams, prevQuery, prevValues, setSourceItems, sourceItems,
+        config.isFetchOnOpen, config.isLazyLoadEnabled]);
 
     return {
         fetchRemote: config.dataProvider && fetchRemote,

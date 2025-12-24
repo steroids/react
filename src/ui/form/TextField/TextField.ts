@@ -1,4 +1,4 @@
-import {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
+import React, {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
@@ -14,6 +14,11 @@ export interface ITextFieldProps extends IBaseFieldProps {
      * @example true
      */
     submitOnEnter?: boolean,
+    /**
+     * Флаг, который указывает, что высота поля должна быть равна высоте контента
+     * @example false
+     */
+    autoHeight?: boolean,
 }
 
 export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {
@@ -25,6 +30,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: boolean,
         required: boolean,
+        ref: React.MutableRefObject<any>,
     },
     onClear: VoidFunction,
 }
@@ -77,7 +83,8 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         size: props.size,
         className: props.className,
         showClear: props.showClear,
-    }), [inputProps, onClear, props.className, props.errors, props.showClear, props.size, props.viewProps]);
+        autoHeight: props.autoHeight,
+    }), [inputProps, onClear, props.className, props.errors, props.showClear, props.size, props.viewProps, props.autoHeight]);
 
     return components.ui.renderView(props.view || 'form.TextFieldView', viewProps);
 }
@@ -86,6 +93,7 @@ TextField.defaultProps = {
     disabled: false,
     required: false,
     submitOnEnter: false,
+    autoHeight: false,
 };
 
 export default fieldWrapper<ITextFieldProps>(FieldEnum.TEXT_FIELD, TextField);

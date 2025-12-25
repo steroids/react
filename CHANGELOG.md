@@ -1,5 +1,13 @@
 # Changelog
 
+
+## v3.0.84 (25.12.2025)
+
+### Added
+
+- Добавлена возможность передавать флаг isFetchDisabled в компоненты "DropDownField" и "AutoCompleteField", запрещающий отправку запроса на получение данных в useDataProvider
+- Добавлен коллбек onOpen в компонент DropDownField
+
 ## v3.0.83 (21.12.2025)
 
 ### Added

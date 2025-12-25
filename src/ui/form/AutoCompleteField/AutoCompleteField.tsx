@@ -53,6 +53,11 @@ export interface IAutoCompleteFieldProps extends IBaseFieldProps, IDataProviderC
      * @example '; '
      */
     multipleSeparator?: string,
+
+    /**
+     * Сигнал, запрещающий отправку запроса на получение данных
+     */
+    isFetchDisabled?: boolean,
 }
 
 export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProps, 'items'> {
@@ -109,6 +114,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         autoFetch: props.autoFetch,
         initialSelectedIds: props.selectedIds,
         query,
+        isFetchDisabled: props.isFetchDisabled,
     });
 
     // Data select

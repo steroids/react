@@ -3,12 +3,13 @@ import _head from 'lodash-es/head';
 import {IDay} from '../CalendarSystem';
 import {getFormattedWeekFromDate, getTwentyFourHoursArray} from '../utils/utils';
 
-const useWeekGrid = (generalCurrentDay: IDay, timeZone?: string) => {
+const useWeekGrid = (generalCurrentDay: IDay) => {
     const currentWeek = useMemo(() => {
-        const formattedWeek = getFormattedWeekFromDate(generalCurrentDay.date, timeZone);
+        const formattedWeek = getFormattedWeekFromDate(generalCurrentDay.date);
 
         return formattedWeek;
-    }, [generalCurrentDay.date, timeZone]);
+    }, [generalCurrentDay.date]);
+
     return {
         weekGridTwentyFourHoursArray: getTwentyFourHoursArray(),
         weekGridCurrentWeekDays: currentWeek,

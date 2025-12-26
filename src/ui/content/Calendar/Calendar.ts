@@ -80,8 +80,7 @@ export interface ICalendarProps extends IUiComponent {
     showTodayButton?: boolean,
 
     /**
-     * Часовой пояс в формате IANA, для выделения текущего дня, если дата изменена в CalendarSystem.
-     * Не влияет на изменение даты в Calendar.
+     * Часовой пояс в формате IANA
      * @example 'Europe/Moscow'
      */
     timeZone?: string,
@@ -130,7 +129,6 @@ export interface ICalendarViewProps extends ICalendarProps {
 
     /**
      * Текущая дата в формате Date, используется для выделения текущего дня в календаре.
-     * Не влияет на изменение даты в Calendar.
      */
     todayDate: Date,
 }

@@ -11,14 +11,8 @@ const useInputTypeEmail = (
     required: boolean,
 ) => {
     const isValueEmail = (value: string) => {
-        // If field is not required, always return true (valid)
-        if (!required) {
-            return true;
-        }
-
-        // If field is required and value is empty - invalid
         if (!value) {
-            return false;
+            return !required;
         }
 
         const emailRegexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

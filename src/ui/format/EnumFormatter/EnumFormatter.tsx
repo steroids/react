@@ -13,9 +13,16 @@ import {DataProviderItems} from '../../../hooks/useDataProvider';
 export interface IEnumFormatterProps {
 
     /**
-     * Перечисление элементов.
-     * 1) Может быть строкой вида: `app.geo.enums.Cities`
-     * 2) Массивом: ['{'id: 1, label: "London"'}']
+     * Перечисление элементов
+     * @example
+     * // Строковый путь к перечислению
+     * const enumPath = 'app.geo.enums.Cities';
+     *
+     * // Массив объектов
+     * const items = [
+     *   { id: 1, label: 'London' },
+     *   { id: 2, label: 'Paris' }
+     * ];
      */
     items?: DataProviderItems,
 

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import {useMemo} from 'react';
 import _merge from 'lodash-es/merge';
-import {getList} from '@steroidsjs/core/reducers/list';
 import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
+import {useComponents} from '@steroidsjs/core/hooks';
+import useGridBase from '@steroidsjs/core/ui/list/hooks/useGridBase';
 import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
 import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
-import Grid from '../Grid';
-import useSelector from '../../../hooks/useSelector';
 
 export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon' > {
     item: IPreparedTreeItem,
@@ -68,32 +67,44 @@ export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPa
 };
 
 export default function TreeTable(props: ITreeTableProps): JSX.Element {
-    const columns = useMemo(
+    const mergedColumns = useMemo(
         () => addTreeColumnFieldsToFirstColumn(props.columns, props.levelPadding, props.customIcon),
         [props.columns, props.customIcon, props.levelPadding],
     );
 
-    const list = useSelector(state => getList(state, props.listId));
+    const components = useComponents();
+
+    const grid = useGridBase({
+        ...props,
+        columns: mergedColumns,
+    });
 
     const {treeItems} = useTree({
-        items: props.items,
-        autoOpenLevels: 0,
+        items: grid.list?.items || [],
         alwaysOpened: props.alwaysOpened,
-        currentPage: list?.page,
-        itemsOnPage: list?.pageSize,
         collapseChildItems: props.collapseChildItems,
         saveInClientStorage: props.saveInClientStorage,
         clientStorageId: props.listId,
         isSinglePageItems: props.isSinglePageItems,
     });
 
-    return (
-        <Grid
-            {...props}
-            columns={columns}
-            items={treeItems}
-            itemsIndexing={false}
-        />
+    const viewProps = {
+        ...props.viewProps,
+        ...grid,
+        items: treeItems,
+        listId: props.listId,
+        primaryKey: props.primaryKey,
+        isLoading: props.isLoading,
+        size: props.size,
+        className: props.className,
+        hasAlternatingColors: props.hasAlternatingColors,
+        searchForm: props.searchForm,
+        itemsIndexing: false,
+    };
+
+    return components.ui.renderView(
+        props.view || 'list.GridView',
+        viewProps,
     );
 }
 
@@ -102,4 +113,6 @@ TreeTable.defaultProps = {
     alwaysOpened: false,
     saveInClientStorage: false,
     collapseChildItems: false,
+    size: 'md',
+    hasAlternatingColors: true,
 };

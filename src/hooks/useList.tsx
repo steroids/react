@@ -532,7 +532,7 @@ export default function useList(config: IListConfig): IListOutput {
                 toDispatch.push(listSetItems(config.listId, config.initialItems || config.items));
             }
 
-            if (!config.initialItems) {
+            if (!config.initialItems && !config.items) {
                 toDispatch.push(listLazyFetch(config.listId));
             }
 
@@ -543,7 +543,6 @@ export default function useList(config: IListConfig): IListOutput {
     // Check form values change
     const formValues = useSelector(state => formSelector(state, formId, ({values}) => values));
     const prevFormValues = usePrevious(formValues);
-
     useUpdateEffect(() => {
         if (prevFormValues && !_isEqual(formValues, prevFormValues)) {
             // Has changes (but not page) -> reset page

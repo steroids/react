@@ -15,7 +15,7 @@ export interface ILoaderProps {
     /**
      * Название цвета
      */
-    color?: ColorName,
+    color?: 'basic' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'gradient' | string,
     [key: string]: any,
 }
 

@@ -23,18 +23,52 @@ declare module '*.png' {
 declare function __(phrase: string, params?: any): string;
 
 /**
- * Название цвета, соответствующее ему состоянию
+ * Название цвета для Alert и Notification
  */
-declare type ColorName =
-    | 'primary'
-    | 'secondary'
+declare type AlertColorName =
     | 'success'
     | 'info'
     | 'warning'
-    | 'danger'
-    | 'light'
-    | 'dark'
+    | 'error'
+    | 'default'
+    | string;
+
+/**
+ * Название цвета для Button
+ */
+declare type ButtonColorName =
     | 'basic'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | string;
+
+/**
+ * Название цвета для Badge
+ */
+declare type BadgeColorName =
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | string;
+
+/**
+ * Название цвета для Text, Title
+ */
+declare type TypographyColorName =
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'text-color'
     | string;
 
 /**

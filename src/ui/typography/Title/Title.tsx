@@ -32,7 +32,7 @@ export interface ITitleProps extends IUiComponent {
      * Цвет заголовка
      * @example 'primary'
      */
-    color?: ColorName,
+    color?: TypographyColorName,
 }
 
 export type ITitleViewProps = ITitleProps

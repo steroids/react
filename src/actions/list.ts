@@ -336,7 +336,7 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
         });
     }
 
-    toDispatch.push([
+    toDispatch.push(
         Promise.resolve(onFetch(list, formValues, components, options))
             .then(data => {
                 // Skip on empty
@@ -407,7 +407,7 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
                     delete components.http._promises[listId];
                 }
             }),
-    ]);
+    );
 
     return dispatch(toDispatch);
 };

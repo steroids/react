@@ -1,4 +1,4 @@
-import {useCallback, useEffect} from 'react';
+import {RefObject, useCallback, useEffect} from 'react';
 import {useMount, useUnmount, useUpdate, usePrevious} from 'react-use';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
@@ -12,18 +12,18 @@ import {useComponents, useForm} from './index';
 
 export interface IFileInput {
     /**
-    * Параметры для input элемента
-    */
+     * Параметры для input элемента
+     */
     input?: FormInputType,
 
     /**
-    * Множественный выбор файлов
-    */
+     * Множественный выбор файлов
+     */
     multiple?: boolean,
 
     /**
-    * Позволяет указать uploader
-    */
+     * Позволяет указать uploader
+     */
     uploader?: any,
 
     /**
@@ -33,33 +33,43 @@ export interface IFileInput {
     backendUrl?: string,
 
     /**
-    * Список mime-типов
-    */
+     * Список mime-типов
+     */
     mimeTypes?: string[],
 
     /**
-    * Использовать только изображения
-    */
+     * Использовать только изображения
+     */
     imagesOnly?: boolean,
     imagesProcessor?: string,
 
     /**
-    * Точные размеры изображений
-    */
+     * Точные размеры изображений
+     */
     imagesExactSize?: string,
 
     /**
-    * Начальные файлы
-    */
+     * Начальные файлы
+     */
     initialFiles?: any,
 
     /**
-    * Параметры для uploader
-    */
+     * Параметры для uploader
+     */
     uploaderConfig?: {
         useFormData?: boolean,
         fileFieldName?: string,
     } | any,
+
+    /**
+     * Ref для drop area
+     */
+    dropRef?: RefObject<HTMLDivElement>,
+
+    /**
+     * Использовать drop area
+     */
+    hasDropArea?: boolean,
 }
 
 export interface IFileOutput {
@@ -70,7 +80,7 @@ export interface IFileOutput {
     onAdd?: any,
 }
 
-const imagesMimeTypes = [
+export const imagesMimeTypes = [
     'image/gif',
     'image/jpeg',
     'image/pjpeg',
@@ -89,12 +99,22 @@ export function generateBackendUrl(props) {
     });
 }
 
+function generateAcceptString(props) {
+    if (props.imagesOnly) {
+        return imagesMimeTypes.join(', ');
+    }
+    if (props.mimeTypes) {
+        return props.mimeTypes.join(', ');
+    }
+
+    return '';
+}
+
 export default function useFile(props: IFileInput): IFileOutput {
     const {http} = useComponents();
     http.getAccessToken(); // TODO Run promise..
 
     const uploader = useInitial(() => new FileUp({
-        dropArea: {},
         backendUrl: generateBackendUrl(props),
         uploaderConfig: {
             ...props.uploaderConfig,
@@ -104,10 +124,17 @@ export default function useFile(props: IFileInput): IFileOutput {
             },
         },
         ...props.uploader,
+        dropArea: props?.hasDropArea
+            ? {
+                className: props.uploader.dropArea.className,
+                container: props.dropRef.current,
+                enable: true,
+            }
+            : {},
         form: {
             ...(props.uploader && props.uploader.form),
             multiple: props.multiple,
-            accept: props.imagesOnly ? imagesMimeTypes.join(', ') : '',
+            accept: generateAcceptString(props),
         },
     }));
 

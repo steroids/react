@@ -24,6 +24,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         value: string | number,
         placeholder: string,
         disabled: boolean,
+        required: boolean,
     },
     onClear: VoidFunction,
 }

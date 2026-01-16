@@ -166,6 +166,11 @@ export interface IGridProps extends IListConfig {
     view?: CustomView,
 
     /**
+     * Пропсы для отображения элемента
+     */
+    viewProps?: CustomViewProps,
+
+    /**
      * Коллекция с наименованиями и свойствами колонок в таблице
      * @example
      * [
@@ -369,6 +374,7 @@ export default function Grid(props: IGridProps): JSX.Element {
     );
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         list,
         paginationPosition,
         paginationSizePosition,
@@ -395,9 +401,9 @@ export default function Grid(props: IGridProps): JSX.Element {
         className: props.className,
         primaryKey: props.primaryKey,
     }), [list, paginationPosition, paginationSizePosition, layoutNamesPosition, renderList, renderLoading, renderEmpty,
-        renderPagination, renderPaginationSize, renderLayoutNames, renderSearchForm, renderInfiniteScroll, renderValue, columns,
-        onFetch, onSort, sort, props.searchForm, props.listId, props.isLoading, props.size, props.hasAlternatingColors, props.className,
-        props.primaryKey]);
+        renderPagination, renderPaginationSize, renderLayoutNames, renderSearchForm, renderInfiniteScroll, renderValue,
+        columns, onFetch, onSort, sort, props.searchForm, props.listId, props.isLoading, props.size, props.hasAlternatingColors,
+        props.className, props.primaryKey, props.viewProps]);
 
     return components.ui.renderView(props.view || 'list.GridView', viewProps);
 }

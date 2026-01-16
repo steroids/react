@@ -6,6 +6,7 @@ import _trimStart from 'lodash-es/trimStart';
 import _isFunction from 'lodash-es/isFunction';
 import _isEqual from 'lodash-es/isEqual';
 import _isNil from 'lodash-es/isNil';
+import axios from 'axios';
 import {formSelector} from '../reducers/form';
 import {formChange, formSetErrors} from '../actions/form';
 import {filterItems} from '../utils/data';
@@ -146,6 +147,7 @@ export const LIST_TOGGLE_ITEM = '@list/toggle_item';
 export const LIST_TOGGLE_ALL = '@list/toggle_all';
 export const LIST_SET_LAYOUT = '@list/set_layout';
 export const LIST_CHANGE_ACTION = '@list/change_action';
+export const LIST_SELECT_ITEM = '@list/select_item';
 
 //const STORAGE_LAYOUT_KEY_PREFIX = 'listLayout_';
 
@@ -172,19 +174,23 @@ const createList = (listId: string, props: any) => ({
     layoutAttribute: _get(props, '_layout.attribute') || null,
 });
 
-export const httpFetchHandler = (list: IList, query, {http}) => {
+export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) => {
     let url = list.action;
     if (list.scope) {
-        url
-            += (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
+        url += (url.indexOf('?') !== -1 ? '&' : '?') + 'scope=' + list.scope.join(',');
     }
+
+    // options поддерживает { cancelToken } или { signal } (если использовать AbortController)
     return http
-        .send(list.actionMethod, url || window.location.pathname, query)
+        .send(list.actionMethod, url || window.location.pathname, query, options)
         .then(response => response.data)
         .catch(error => {
             if (typeof list.onError === 'function') {
                 list.onError(error);
             }
+
+            // rethrow чтобы внешняя логика могла отловить отмену/ошибку
+            throw error;
         });
 };
 
@@ -280,32 +286,6 @@ export const listChangeAction = (listId, action) => ({
     action,
 });
 
-/*export const initSSR = (listId, props) => (dispatch, getState, {http, clientStorage}) => {
-    const state = getState()
-    const stateList = _get(state, ['list', 'lists', listId]);
-    const list = {
-        ...createList(listId, props, clientStorage),
-        ...stateList
-    };
-    if ((!list.action && list.action !== '') || list.items) {
-        if (!stateList) {
-            return dispatch({
-                ...list,
-                type: LIST_INIT
-            });
-        }
-        return;
-    }
-    const onFetch = list.onFetch || httpFetchHandler;
-    return dispatch(
-        onFetch(list, VALUES, http).then(data => ({
-            ...list,
-            ...data,
-            type: LIST_INIT
-        }))
-    );
-};*/
-
 /**
  * Update query values and send request
  * @param listId
@@ -330,64 +310,107 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
         toDispatch.push(formChange(list.formId, key, query[key]));
     });
 
+    // Отменяем предыдущий запрос для этого listId (если есть)
+    components.http._promises = components.http._promises || {};
+    const prev = components.http._promises[listId];
+
+    if (prev && typeof prev.cancel === 'function') {
+        // для axios.CancelToken.source()
+        prev.cancel('Cancelled by new request for list ' + listId);
+    } else if (prev && typeof prev.abort === 'function') {
+        // для AbortController
+        prev.abort();
+    }
+
+    // Создаем новый источник отмены
+    const source = axios.CancelToken.source();
+    components.http._promises[listId] = source;
+
+    const options = {cancelToken: source.token};
+
+    // Set `Loading...`
     if (list.isRemote) {
-        // Set `Loading...`
         toDispatch.push({
             listId,
             type: LIST_BEFORE_FETCH,
         });
     }
 
-    // Send request
     toDispatch.push(
-        Promise.resolve(onFetch(list, formValues, components)).then(data => {
-            // Skip on empty
-            if (!data) {
+        Promise.resolve(onFetch(list, formValues, components, options))
+            .then(data => {
+                // Skip on empty
+                if (!data) {
+                    return [];
+                }
+
+                // Check list is not destroy
+                if (!getState().list.lists[listId]) {
+                    return [];
+                }
+
+                if (_isArray(data)) {
+                    data = {
+                        items: data,
+                        total: data.length,
+                        meta: null,
+                    };
+                }
+
+                const items = data.items || [];
+                const total = data.total || items.length || null;
+                const page = formValues[list.pageAttribute];
+                const pageSize = formValues[list.pageSizeAttribute];
+                const totalPages = Math.ceil((list?.total || 0) / (pageSize || 1));
+                const hasNextPage = data?.hasNextPage ?? (page !== totalPages || null);
+
+                return [
+                    formSetErrors(list.formId, data.errors || null),
+                    {
+                        items,
+                        total,
+                        hasNextPage,
+                        meta: data.meta || null,
+                        page,
+                        pageSize,
+                        listId,
+                        defaultPageValue: list.defaultPageValue,
+                        type: LIST_AFTER_FETCH,
+                    },
+                ];
+            })
+            .catch(error => {
+                // Если это отмена — просто игнорируем ошибку
+                if (axios.isCancel && axios.isCancel(error)) {
+                    return [];
+                }
+
+                // Handle cancellation quietly
+                // axios v0.x: axios.isCancel(error)
+                const isAxiosCancel = typeof axios.isCancel === 'function' && axios.isCancel(error);
+
+                if (isAxiosCancel) {
+                    // игнорируем, это отмена запроса
+                    return [];
+                }
+
+                // прочие ошибки — можно пробросить или обработать
+                if (typeof list.onError === 'function') {
+                    list.onError(error);
+                }
+
                 return [];
-            }
-
-            // Check list is not destroy
-            if (!getState().list.lists[listId]) {
-                return [];
-            }
-
-            if (_isArray(data)) {
-                data = {
-                    items: data,
-                    total: data.length,
-                    meta: null,
-                };
-            }
-
-            const items = data.items || [];
-            const total = data.total || items.length || null;
-            const page = formValues[list.pageAttribute];
-            const pageSize = formValues[list.pageSizeAttribute];
-
-            const totalPages = Math.ceil((list?.total || 0) / (pageSize || 1));
-            const hasNextPage = data?.hasNextPage ?? (page !== totalPages || null);
-
-            return [
-                // Check has errors
-                formSetErrors(list.formId, data.errors || null),
-                {
-                    items,
-                    total,
-                    hasNextPage,
-                    meta: data.meta || null,
-                    page,
-                    pageSize,
-                    listId,
-                    defaultPageValue: list.defaultPageValue,
-                    type: LIST_AFTER_FETCH,
-                },
-            ];
-        }),
+            })
+            .finally(() => {
+                // убрать сохранённый источник если он тот же
+                if (components.http._promises[listId] === source) {
+                    delete components.http._promises[listId];
+                }
+            }),
     );
 
     return dispatch(toDispatch);
 };
-
 /**
  * Lazy update query values and send request
  * @param listId
@@ -445,6 +468,11 @@ export const toggleItem = (listId, itemId) => ({
 export const toggleAll = listId => ({
     listId,
     type: LIST_TOGGLE_ALL,
+});
+export const selectItem = (listId, itemId) => ({
+    listId,
+    itemId,
+    type: LIST_SELECT_ITEM,
 });
 
 // TODO local storage save?

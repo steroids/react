@@ -54,6 +54,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
         min: number,
         max: number,
         step: string | number,
+        required: boolean,
     },
     inputRef: React.MutableRefObject<any>,
     onStepUp: VoidFunction,
@@ -116,9 +117,10 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         step: props.step,
         placeholder: props.placeholder,
         disabled: props.disabled,
+        required: props.required,
         autoComplete: 'off',
         onKeyDown,
-    }), [props.inputProps, props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, onInputChange, onKeyDown]);
+    }), [props.inputProps, props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, props.required, onInputChange, onKeyDown]);
 
     const viewProps = useMemo(() => ({
         viewProps: props.viewProps,

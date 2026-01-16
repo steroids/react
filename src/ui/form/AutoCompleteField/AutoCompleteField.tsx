@@ -46,6 +46,18 @@ export interface IAutoCompleteFieldProps extends IBaseFieldProps, IDataProviderC
      * @example 'Ничего не найдено'
      */
     empty?: string,
+
+    /**
+     * Разделитель между элементами, в случае, если выбрано несколько значений
+     * @default ','
+     * @example '; '
+     */
+    multipleSeparator?: string,
+
+    /**
+     * Сигнал, запрещающий отправку запроса на получение данных
+     */
+    isFetchDisabled?: boolean,
 }
 
 export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProps, 'items'> {
@@ -58,7 +70,7 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
         type: string,
         name: string,
         placeholder?: string,
-        value: string | number,
+        value: (string | number) | (string | number)[],
         disabled: boolean,
         onChange: (value: string) => void,
         onBlur: (e: Event | FocusEvent) => void,
@@ -102,6 +114,7 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         autoFetch: props.autoFetch,
         initialSelectedIds: props.selectedIds,
         query,
+        isFetchDisabled: props.isFetchDisabled,
     });
 
     // Data select
@@ -114,11 +127,13 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         selectedIds,
         setSelectedIds,
     } = useDataSelect({
+        multiple: props.multiple,
         selectedIds: props.selectedIds,
         primaryKey: props.primaryKey,
         items,
         inputValue: props.input.value,
         sourceItems,
+        hasCloseOnSelect: props.hasCloseOnSelect,
     });
 
     const onOpen = useCallback(() => {
@@ -178,8 +193,9 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
 
     //Sync with form
     useEffect(() => {
-        props.input.onChange.call(null, selectedIds[0] || null);
-    }, [props.input.onChange, selectedIds]);
+        const newValues = props.multiple ? selectedIds : (selectedIds[0] || null);
+        props.input.onChange.call(null, newValues);
+    }, [props.input.onChange, props.multiple, selectedIds]);
 
     const viewProps = useMemo(() => ({
         inputProps,
@@ -204,9 +220,11 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
         style: props.style,
         showClear: props.showClear,
         empty: props.empty,
-    }), [inputProps, items, isLoading, hoveredId, selectedIds, onOpen, isOpened, onClose, onClear, onItemHover, onItemSelect,
-        props.primaryKey, props.size, props.placeholder, props.disabled, props.required, props.items, props.className,
-        props.style, props.showClear, props.empty]);
+        multipleSeparator: props.multipleSeparator,
+    }), [
+        inputProps, items, isLoading, hoveredId, selectedIds, onOpen, isOpened, onClose,
+        onClear, onItemHover, onItemSelect, props.primaryKey, props.size, props.placeholder,
+        props.disabled, props.required, props.items, props.className, props.style, props.showClear, props.empty, props.multipleSeparator]);
 
     return components.ui.renderView(props.view || 'form.AutoCompleteFieldView', viewProps);
 }
@@ -218,6 +236,8 @@ AutoCompleteField.defaultProps = {
     disabled: false,
     required: false,
     showClear: false,
+    hasCloseOnSelect: true,
+    multipleSeparator: ',',
 };
 
 export default fieldWrapper<IAutoCompleteFieldProps>(FieldEnum.AUTO_COMPLETE_FIELD, AutoCompleteField);

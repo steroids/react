@@ -9,11 +9,11 @@ const useInputTypeEmail = (
     currentInputRef: MutableRefObject<HTMLInputElement>,
     onChange: (event: ChangeEvent<HTMLInputElement>, value?: any) => void,
     currentValue: string | null | undefined,
+    required: boolean,
 ) => {
     const isValueEmail = (value: string) => {
-        //In that case it's testing if value is empty string or not defined
         if (!value) {
-            return false;
+            return !required;
         }
 
         const emailRegexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

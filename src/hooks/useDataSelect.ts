@@ -74,6 +74,12 @@ export interface IDataSelectConfig {
      *  Ref autocomplete поиска
      */
     autoCompleteInputRef?: MutableRefObject<HTMLInputElement>,
+
+    /**
+     * Нужно ли закрывать выпадающий список после выбора элемента
+     * @example true
+     */
+    hasCloseOnSelect?: boolean,
 }
 
 export interface IDataSelectResult {
@@ -213,11 +219,14 @@ export default function useDataSelect(config: IDataSelectConfig): IDataSelectRes
                 } else if (selectedIds.length === 1 && selectedIds[0] === id) {
                     setSelectedIdsInternal([]);
                 }
-                setIsFocused(false);
-                setIsOpened(false);
+
+                if (config.hasCloseOnSelect) {
+                    setIsFocused(false);
+                    setIsOpened(false);
+                }
             }
         }
-    }, [config.multiple, selectedIds]);
+    }, [config.hasCloseOnSelect, config.multiple, selectedIds]);
 
     const setSelectedAll = useCallback(() => {
         const itemsIds = flattenedItems.map(item => item.id);

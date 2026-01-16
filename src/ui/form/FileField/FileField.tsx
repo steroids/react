@@ -1,7 +1,7 @@
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import {useState, useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -75,6 +75,8 @@ export interface IFileFieldProps extends IFieldWrapperInputProps, IFileFieldComm
      */
     itemProps?: Record<string, any>,
 
+    hasDropArea?: boolean,
+
     [key: string]: any,
 }
 
@@ -144,7 +146,13 @@ const FILE_STATUS_END = 'end';
 
 function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
-    const {files, onBrowse, onRemove} = useFile(props);
+    const dropRef = useRef<HTMLDivElement>(null);
+
+    const {files, onBrowse, onRemove, uploader} = useFile({
+        ...props,
+        dropRef: props.hasDropArea ? dropRef : null,
+    });
+
     const [isFilesLoaded, setIsFilesLoaded] = useState(false);
 
     const FileFieldView = props.view || components.ui.getView('form.FileFieldView');
@@ -185,6 +193,9 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
         className: props.className,
         itemProps: props.itemProps,
         loadingText: props.loadingText,
+        dropRef,
+        uploader,
+        hasDropArea: props.hasDropArea,
         items: files.map(file => {
             const data = file.getResultHttpMessage() || {};
             const item = {
@@ -228,7 +239,7 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
             return item;
         }),
         // eslint-disable-next-line max-len
-    }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled, props.filesLayout, props.imagesOnly, props.imagesProcessor, props.input, props.itemProps, props.loadingText, props.multiple, props.showRemove, props.size]);
+    }), [FileFieldItemView, files, onBrowse, onRemove, props.buttonProps, props.buttonView, props.className, props.disabled, props.filesLayout, props.hasDropArea, props.imagesOnly, props.imagesProcessor, props.input, props.itemProps, props.loadingText, props.multiple, props.showRemove, props.size, uploader]);
 
     return (
         <FileFieldView {...viewProps} />
@@ -255,6 +266,7 @@ FileField.defaultProps = {
         outline: true,
     },
     multiple: false,
+    hasDropArea: false,
 };
 
 export default fieldWrapper<IFileFieldProps>(FieldEnum.FILE_FIELD, FileField);

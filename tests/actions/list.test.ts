@@ -1,4 +1,5 @@
 import configureMockStore from 'redux-mock-store';
+import axios from 'axios';
 import {
     IList,
     add,
@@ -36,16 +37,29 @@ describe('httpFetchHandler function', () => {
         page: 1,
         pageSize: 50,
     };
+
+    // Добавляем заглушку токена — тестируем, что он пробрасывается в options
+    const mockCancelSource = axios.CancelToken.source();
     const mockComponents = {
         http: mockHttp,
     };
 
-    it('should call http.send with correct parameters', async () => {
+    beforeEach(() => {
+        mockHttp.send.mockClear();
+    });
+
+    it('should call http.send with correct parameters including cancelToken option', async () => {
         const expectedUrl = `${mockList.action}?scope=${mockList.scope.join(',')}`;
 
-        await httpFetchHandler(mockList, mockQuery, mockComponents);
+        // Передаём options с cancelToken как 4-й аргумент
+        await httpFetchHandler(mockList, mockQuery, mockComponents, {cancelToken: mockCancelSource.token});
 
-        expect(mockHttp.send).toHaveBeenCalledWith(mockList.actionMethod, expectedUrl, mockQuery);
+        expect(mockHttp.send).toHaveBeenCalledWith(
+            mockList.actionMethod,
+            expectedUrl,
+            mockQuery,
+            {cancelToken: mockCancelSource.token},
+        );
     });
 
     it('should return correct data', async () => {
@@ -54,16 +68,13 @@ describe('httpFetchHandler function', () => {
         expect(result).toEqual(expectedData);
     });
 
-    it('should call onError when http.send throws an error', async () => {
+    it('should call onError when http.send throws an error and rethrow', async () => {
         const mockError = new Error('mockError');
-        mockHttp.send.mockRejectedValue(mockError);
+        mockHttp.send.mockRejectedValueOnce(mockError);
         mockList.onError = jest.fn();
 
-        try {
-            await httpFetchHandler(mockList, mockQuery, mockComponents);
-        } catch (e) {
-            expect(mockList.onError).toHaveBeenCalledWith(mockError);
-        }
+        await expect(httpFetchHandler(mockList, mockQuery, mockComponents)).rejects.toBe(mockError);
+        expect(mockList.onError).toHaveBeenCalledWith(mockError);
     });
 });
 
@@ -117,7 +128,7 @@ describe('localFetchHandler', () => {
     });
 
     it('should correctly sort items', () => {
-        const expectedSortedItems = items.sort((item1, item2) => item1.distance - item2.distance);
+        const expectedSortedItems = [...items].sort((item1, item2) => item1.distance - item2.distance);
 
         const result = localFetchHandler(mockList, {
             distance: 'distance',

@@ -129,6 +129,11 @@ export interface IDataProviderConfig {
      * @example [1, 22]
      */
     initialSelectedIds?: number[],
+
+    /**
+     * Сигнал, запрещающий отправку запроса на получение данных
+     */
+    isFetchDisabled?: boolean,
 }
 
 export interface IDataProviderResult {
@@ -260,6 +265,10 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             return;
         }
 
+        if (config.isFetchDisabled) {
+            return;
+        }
+
         if (config.autoFetch && !isAutoFetchedRef.current) {
             isAutoFetchedRef.current = true;
             fetchRemote(true);
@@ -282,7 +291,8 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
             }
         }
     }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider,
-        dataProvider.action, dataProvider.onSearch, fetchRemote, prevAction, prevParams, prevQuery, prevValues, setSourceItems, sourceItems]);
+        dataProvider.action, dataProvider.onSearch, fetchRemote, prevAction, prevParams, prevQuery, prevValues, setSourceItems, sourceItems,
+        config.isFetchDisabled]);
 
     return {
         fetchRemote: config.dataProvider && fetchRemote,

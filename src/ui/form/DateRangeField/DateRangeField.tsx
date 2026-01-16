@@ -1,4 +1,4 @@
-import {RefCallback, useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
@@ -87,6 +87,11 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     calendarProps?: ICalendarProps,
 
     /**
+     * Свойства для view компонента
+     */
+    viewProps?: CustomViewProps,
+
+    /**
      * Устанавливать ли фокус и показывать календарь сразу после рендера страницы
      * @example true
      */
@@ -111,6 +116,14 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
         * Опции маски для поля to
         */
         to: MaskitoOptions,
+    },
+
+    /**
+     *  Ограничение доступных дат.
+     */
+    disabledDays?: {
+        after?: Date,
+        before?: Date,
     },
 
     /**
@@ -157,12 +170,12 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     /**
      * Ref для input элемента, который накладывает маску на поле from
      */
-    maskInputFromRef?: RefCallback<HTMLElement>,
+    maskInputFromRef?: React.RefCallback<HTMLElement>,
 
     /**
      * Ref для input элемента, который накладывает маску на поле to
      */
-    maskInputFromTo?: RefCallback<HTMLElement>,
+    maskInputFromTo?: React.RefCallback<HTMLElement>,
 
     id: string,
 }
@@ -185,8 +198,21 @@ interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldW
 function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
 
-    const maskInputFromRef = useMaskito({options: props.maskOptions?.from});
-    const maskInputToRef = useMaskito({options: props.maskOptions?.to});
+    const maskInputFromRef = useMaskito({
+        options: props.maskOptions?.from ?? maskitoDateOptionsGenerator({
+            mode: 'dd/mm/yyyy',
+            separator: '.',
+            min: props.disabledDays?.before ?? null,
+        }),
+    });
+
+    const maskInputToRef = useMaskito({
+        options: props.maskOptions?.to ?? maskitoDateOptionsGenerator({
+            mode: 'dd/mm/yyyy',
+            separator: '.',
+            min: props.disabledDays?.before ?? null,
+        }),
+    });
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
@@ -281,10 +307,21 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         valueFormat: props.valueFormat,
         numberOfMonths: 2,
         showFooter: false,
-        ...props.calendarProps,
-    }), [onDayClick, props.calendarProps, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
+        ...(
+            props?.disabledDays
+                ? {
+                    ...props.calendarProps,
+                    pickerProps: {
+                        ...props.calendarProps?.pickerProps,
+                        disabledDays: props.disabledDays,
+                    },
+                }
+                : props.calendarProps
+        ),
+    }), [onDayClick, props.calendarProps, props.disabledDays, props.inputFrom.value, props.inputTo.value, props.valueFormat]);
 
     const viewProps = useMemo(() => ({
+        ...props.viewProps,
         onClear,
         onClose,
         calendarProps,
@@ -295,6 +332,7 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         showRemove: props.showRemove,
         errorsFrom: props.errorsFrom,
         errorsTo: props.errorsTo,
+        errors: props.errors,
         inputPropsTo: extendedInputPropsTo,
         inputPropsFrom: extendedInputPropsFrom,
         isOpened: focus === 'from' ? isOpenedFrom : isOpenedTo,
@@ -303,9 +341,9 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
         withRangeButtons: props.withRangeButtons,
         rangeButtonsPosition: props.rangeButtonsPosition,
         displayFormat: props.displayFormat,
-    }), [calendarProps, extendedInputPropsFrom, extendedInputPropsTo, focus, isOpenedFrom, isOpenedTo, onClear,
-        onClose, props.className, props.disabled, props.errorsFrom, props.errorsTo, props.icon, props.id, props.showRemove,
-        props.size, props.style, props.withRangeButtons, props.rangeButtonsPosition, props.displayFormat]);
+    }), [props.viewProps, props.icon, props.size, props.disabled, props.className, props.showRemove, props.errorsFrom,
+        props.errorsTo, props.errors, props.style, props.id, props.withRangeButtons, props.rangeButtonsPosition,
+        props.displayFormat, onClear, onClose, calendarProps, extendedInputPropsTo, extendedInputPropsFrom, focus, isOpenedFrom, isOpenedTo]);
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);
 }
@@ -321,16 +359,6 @@ DateRangeField.defaultProps = {
     hasInitialFocus: false,
     icon: true,
     useSmartRangeReset: true,
-    maskOptions: {
-        from: maskitoDateOptionsGenerator({
-            mode: 'dd/mm/yyyy',
-            separator: '.',
-        }),
-        to: maskitoDateOptionsGenerator({
-            mode: 'dd/mm/yyyy',
-            separator: '.',
-        }),
-    },
     rangeButtonsPosition: 'left-bottom',
 };
 

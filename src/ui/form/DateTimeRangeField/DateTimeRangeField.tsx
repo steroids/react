@@ -1,7 +1,7 @@
-import {useEffect, useCallback, useMemo} from 'react';
-import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
+import {useCallback, useEffect, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
+import {createDateTimeMask} from '@steroidsjs/core/ui/form/DateTimeField/utils';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
 import useDateTime from '../../form/DateField/useDateTime';
@@ -79,6 +79,33 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
     },
 
     /**
+     *  Ограничение доступных дат.
+     */
+    disabledDays?: {
+        after?: Date,
+        before?: Date,
+    },
+
+    /**
+     * Разделитель для даты и времени, не влияет на отображение
+     */
+    dateTimeSeparator?: string,
+
+    /**
+     * Ограничение доступного времени.
+     */
+    availableTime?: {
+        from: string,
+        to: string,
+    },
+
+    /**
+     * Шаг минут
+     * @example 15
+     */
+    minuteStep?: number,
+
+    /**
      * Добавляет дополнительные кнопки к календарю
      * true - будут отображены кнопки по-умолчанию
      * список:
@@ -136,8 +163,25 @@ const DATE_TIME_SEPARATOR = ', ';
 function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element {
     const components = useComponents();
 
-    const maskInputFromRef = useMaskito({options: props.maskOptions?.from});
-    const maskInputToRef = useMaskito({options: props.maskOptions?.to});
+    const maskInputFromRef = useMaskito({
+        options: props.maskOptions?.from ?? createDateTimeMask({
+            from: props.availableTime?.from,
+            to: props.availableTime?.to,
+            minuteStep: props.minuteStep,
+            min: props.disabledDays?.before ?? null,
+            dateTimeSeparator: props.dateTimeSeparator ?? DATE_TIME_SEPARATOR,
+        }),
+    });
+
+    const maskInputToRef = useMaskito({
+        options: props.maskOptions?.to ?? createDateTimeMask({
+            from: props.availableTime?.from,
+            to: props.availableTime?.to,
+            minuteStep: props.minuteStep,
+            min: props.disabledDays?.before ?? null,
+            dateTimeSeparator: props.dateTimeSeparator ?? DATE_TIME_SEPARATOR,
+        }),
+    });
 
     // Global onChange (from props)
     const onChange = useCallback(() => {
@@ -255,8 +299,18 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         value: [dateValueFrom, dateValueTo],
         onChange: focus === 'from' ? onDateFromSelect : onDateToSelect,
         valueFormat: dateValueFormat,
-        ...props.calendarProps,
-    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect, props.calendarProps]);
+        ...(
+            props?.disabledDays
+                ? {
+                    ...props.calendarProps,
+                    pickerProps: {
+                        ...props.calendarProps?.pickerProps,
+                        disabledDays: props.disabledDays,
+                    },
+                }
+                : props.calendarProps
+        ),
+    }), [dateValueFormat, dateValueFrom, dateValueTo, focus, onDateFromSelect, onDateToSelect, props.calendarProps, props.disabledDays]);
 
     // TimePanel props
     const timePanelViewProps = useMemo(() => ({
@@ -266,17 +320,11 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
         onClose,
         showNow: false,
         showHeader: true,
+        availableTime: props.availableTime,
+        minuteStep: props.minuteStep,
         ...props.timePanelViewProps,
-    }), [
-        focus,
-        onClose,
-        onNow,
-        onTimeFromSelect,
-        onTimeToSelect,
-        props.timePanelViewProps,
-        timeValueFrom,
-        timeValueTo,
-    ]);
+        // eslint-disable-next-line max-len
+    }), [focus, onClose, onNow, onTimeFromSelect, onTimeToSelect, props.availableTime, props.minuteStep, props.timePanelViewProps, timeValueFrom, timeValueTo]);
 
     const viewProps = useMemo(() => ({
         onClear,
@@ -316,19 +364,8 @@ DateTimeRangeField.defaultProps = {
     useUTC: false,
     dateInUTC: false,
     icon: true,
-    maskOptions: {
-        from: maskitoDateTimeOptionsGenerator({
-            dateMode: 'dd/mm/yyyy',
-            timeMode: 'HH:MM',
-            dateSeparator: '.',
-        }),
-        to: maskitoDateTimeOptionsGenerator({
-            dateMode: 'dd/mm/yyyy',
-            timeMode: 'HH:MM',
-            dateSeparator: '.',
-        }),
-    },
     rangeButtonsPosition: 'left-bottom',
+    minuteStep: 1,
 };
 
 export default fieldWrapper<IDateTimeRangeFieldProps>(FieldEnum.DATE_TIME_RANGE_FIELD, DateTimeRangeField,

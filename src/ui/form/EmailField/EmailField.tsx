@@ -20,7 +20,7 @@ function EmailField(props: IEmailFieldProps) {
         props.input,
     );
 
-    const {onInputChange} = useInputTypeEmail(currentInputRef, onChange, props.input.value);
+    const {onInputChange} = useInputTypeEmail(currentInputRef, onChange, props.input.value, props.required);
 
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 

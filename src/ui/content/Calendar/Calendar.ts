@@ -1,5 +1,8 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {DayPickerProps} from 'react-day-picker';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import {useComponents} from '../../../hooks';
 import {convertDate} from '../../../utils/calendar';
 
@@ -75,6 +78,12 @@ export interface ICalendarProps extends IUiComponent {
      * @default true
      */
     showTodayButton?: boolean,
+
+    /**
+     * Часовой пояс в формате IANA
+     * @example 'Europe/Moscow'
+     */
+    timeZone?: string,
 }
 
 export interface ICalendarViewProps extends ICalendarProps {
@@ -117,7 +126,15 @@ export interface ICalendarViewProps extends ICalendarProps {
      * Функция изменения состояние отображения панели для выбора месяца/года
      */
     toggleCaptionPanel: () => void,
+
+    /**
+     * Текущая дата в формате Date, используется для выделения текущего дня в календаре.
+     */
+    todayDate: Date,
 }
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 function Calendar(props: ICalendarProps) {
     const components = useComponents();
@@ -168,6 +185,18 @@ function Calendar(props: ICalendarProps) {
         }
     }, [props]);
 
+    const getTodayByTimezone = useCallback((timeZone?: string): Date => {
+        const now = dayjs();
+        const zoned = timeZone ? now.tz(timeZone) : now;
+        const y = zoned.year();
+        const m = zoned.month();
+        const d = zoned.date();
+
+        return new Date(y, m, d, 12, 0, 0, 0);
+    }, []);
+
+    const todayDate = useMemo(() => getTodayByTimezone(props.timeZone), [props.timeZone, getTodayByTimezone]);
+
     const viewProps = useMemo(() => ({
         month,
         toYear,
@@ -177,6 +206,7 @@ function Calendar(props: ICalendarProps) {
         selectedDates,
         toggleCaptionPanel,
         isCaptionPanelVisible,
+        todayDate,
         showTodayButton: props.showTodayButton,
         style: props.style,
         className: props.className,
@@ -186,7 +216,7 @@ function Calendar(props: ICalendarProps) {
         numberOfMonths: props.numberOfMonths,
     }), [fromYear, isCaptionPanelVisible, month, onDaySelect, onMonthSelect, props.className,
         props.numberOfMonths, props.pickerProps, props.showFooter, props.showTodayButton, props.style,
-        props.viewProps, selectedDates, toYear, toggleCaptionPanel]);
+        props.viewProps, selectedDates, toYear, toggleCaptionPanel, todayDate]);
 
     return components.ui.renderView(props.view || 'content.CalendarView', viewProps);
 }

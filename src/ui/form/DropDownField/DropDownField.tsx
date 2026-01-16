@@ -206,6 +206,15 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     maxHeight?: number,
 
+    /**
+     * Callback-функция, которая вызывается при открытии DropDown
+     */
+    onOpen?: () => void,
+
+    /**
+     * Сигнал, запрещающий отправку запроса на получение данных
+     */
+    isFetchDisabled?: boolean,
     [key: string]: any,
 }
 
@@ -314,6 +323,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         autoFetch: props.autoFetch,
         query,
         initialSelectedIds: inputSelectedIds,
+        isFetchDisabled: props.isFetchDisabled,
     });
 
     // Data select
@@ -338,14 +348,19 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         sourceItems,
         inputValue: props.input.value,
         autoCompleteInputRef: autoCompleteInputForwardedRef,
+        hasCloseOnSelect: props.hasCloseOnSelect,
     });
 
     const onOpen = useCallback(() => {
+        // setIsLazyLoadEnabled(true);
         setQuery('');
         setIsFocused(true);
         setIsOpened(true);
         setHoveredId(null);
-    }, [setHoveredId, setIsFocused, setIsOpened]);
+        if (props.onOpen) {
+            props.onOpen();
+        }
+    }, [setHoveredId, setIsFocused, setIsOpened, props.onOpen]);
 
     const onItemHover = useCallback((id) => {
         setHoveredId(id);
@@ -508,13 +523,13 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         showEllipses: props.showEllipses,
         errors: props.errors,
         disabled: props.disabled,
+        required: props.required,
         maxHeight: props.maxHeight,
         ...dataProvider,
-    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps,
-        isOpened, isLoading, onOpen, selectedItems, onReset, onClose, renderItem, dropDownProps,
-        onItemRemove, hasGroup, props.multiple, props.isSearchAutoFocus, props.className,
-        props.style, props.size, props.color, props.outline, props.placeholder, props.showReset,
-        props.showEllipses, props.errors, props.disabled, normalizedItemToSelectAll, props.viewProps, dataProvider, props.maxHeight]);
+    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
+        renderItem, onItemRemove, onItemSelect, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style,
+        props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled,
+        props.required, props.maxHeight, normalizedItemToSelectAll, dropDownProps, dataProvider]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }
@@ -532,6 +547,7 @@ DropDownField.defaultProps = {
     isSearchAutoFocus: true,
     itemToSelectAll: false,
     isFetchOnClose: false,
+    hasCloseOnSelect: true,
 };
 
 export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN_FIELD, DropDownField);

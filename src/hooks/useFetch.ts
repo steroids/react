@@ -21,10 +21,10 @@ export interface IFetchConfig {
 
 export interface IFetchResult<T> {
     data?: T | undefined | null | {
-        statusCode: number;
-        error?: string;
-        message?: string;
-        errors?: Record<string, unknown>;
+        statusCode: number,
+        error?: string,
+        message?: string,
+        errors?: Record<string, unknown>,
     },
     isLoading: boolean,
     fetch: (newParams?: Record<string, unknown>) => void,

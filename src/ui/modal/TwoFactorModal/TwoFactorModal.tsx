@@ -34,15 +34,28 @@ export interface ITwoFactorModalViewProps extends ITwoFactorModalPrivateProps {
     [key: string]: any,
 }
 
+interface ITwoFactorResponse {
+    providerData?: {
+        type: string,
+        value: string,
+    },
+    type?: string,
+    [key: string]: unknown,
+}
+
 export default function TwoFactorModal(props: ITwoFactorModalProps): JSX.Element {
     const components = useComponents();
 
-    // TODO set types
-    const {data} = useFetch({
+    const {data} = useFetch<ITwoFactorResponse>({
         method: 'post',
         url: `/api/v1/auth/2fa/${props.providerName}/send`,
     });
-    const providerData: any = data.providerData;
+
+    if(!data || 'statusCode' in data ){
+        return null;
+    }
+
+    const providerData = data.providerData;
 
     const getDescription = () => {
         switch (props.providerName) {
@@ -67,6 +80,7 @@ export default function TwoFactorModal(props: ITwoFactorModalProps): JSX.Element
     };
 
     const TwoFactorModalView = props.view || components.ui.getView('modal.TwoFactorModalView');
+
     return (
         <Modal
             {...props}

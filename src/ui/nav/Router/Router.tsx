@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import {ReactElement, ReactNode, useEffect, useMemo, useState} from 'react';
 import {Route, Switch, Redirect, StaticRouter} from 'react-router';
 import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
@@ -144,7 +144,7 @@ export interface IRouteItem {
      * Пользовательская иконка svg или название иконки
      * @example 'circle'
      */
-    icon?: React.ReactElement | string,
+    icon?: ReactElement | string,
 }
 
 export interface IRouterProps {
@@ -182,7 +182,7 @@ export interface IRouterProps {
      * Контент, который отобразится под каждой страницей приложения
      * @example SomeComponent
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Флаг, который позволяет использовать вложенные роуты c указанием вложенного пути

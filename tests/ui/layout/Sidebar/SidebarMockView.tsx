@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {ISidebarViewProps} from '../../../../src/ui/layout/Sidebar/Sidebar';
 import {Nav} from '../../../../src/ui/nav';

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {RefCallback, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
 import {createDateTimeMask} from './utils';
@@ -73,7 +73,7 @@ export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
     /**
      * Ref для input элемента, который накладывает маску
      */
-    maskInputRef?: React.RefCallback<HTMLElement>,
+    maskInputRef?: RefCallback<HTMLElement>,
 
     [key: string]: any,
 }

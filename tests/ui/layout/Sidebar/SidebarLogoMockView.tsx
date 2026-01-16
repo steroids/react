@@ -1,10 +1,10 @@
-import React, {memo} from 'react';
+import {memo, ReactElement} from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {Icon} from '../../../../src/ui/content';
 import renderIcon from '../../../mocks/renderIconMock';
 
 interface ISidebarLogoProps {
-    icon: string | React.ReactElement,
+    icon: string | ReactElement,
     label: string,
     toggleSidebar: () => void,
 }

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback} from 'react';
 import {IDateFieldViewProps} from '../../../../src/ui/form/DateField/DateField';
 import Icon from '../../../../src/ui/content/Icon';

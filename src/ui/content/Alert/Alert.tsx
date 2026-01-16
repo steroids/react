@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo} from 'react';
+import {useState, useCallback, useMemo, ReactNode} from 'react';
 import {useComponents} from '../../../hooks';
 
 /**
@@ -22,7 +22,7 @@ export interface IAlertProps extends IUiComponent {
     * Дочерние элементы
     * @example { <span>children</span> }
     */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Типы Оповещений

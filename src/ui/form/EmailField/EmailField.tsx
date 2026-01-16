@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import {IBaseFieldProps} from '../InputField/InputField';
 import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
@@ -22,9 +22,9 @@ function EmailField(props: IEmailFieldProps) {
 
     const {onInputChange} = useInputTypeEmail(currentInputRef, onChange, props.input.value, props.required);
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
-    const inputProps = React.useMemo(() => ({
+    const inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value ?? '',
         onChange: onInputChange,

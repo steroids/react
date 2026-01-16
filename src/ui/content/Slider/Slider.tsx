@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import {forwardRef} from 'react';
 import {Options, SplideProps} from '@splidejs/react-splide';
 import {useComponents} from '../../../hooks';
 
@@ -42,4 +42,4 @@ function Slider(props: ISliderProps, ref) {
     });
 }
 
-export default React.forwardRef(Slider);
+export default forwardRef(Slider);

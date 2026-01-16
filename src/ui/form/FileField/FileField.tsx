@@ -1,7 +1,7 @@
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
-import React, {useEffect, useMemo, useRef} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import useFile, {IFileInput} from '../../../hooks/useFile';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -153,7 +153,7 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
         dropRef: props.hasDropArea ? dropRef : null,
     });
 
-    const [isFilesLoaded, setIsFilesLoaded] = React.useState(false);
+    const [isFilesLoaded, setIsFilesLoaded] = useState(false);
 
     const FileFieldView = props.view || components.ui.getView('form.FileFieldView');
     const FileFieldItemView = props.itemView || components.ui.getView('form.FileFieldItemView');

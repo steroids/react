@@ -1,13 +1,14 @@
-import {useCallback, useMemo} from 'react';
-import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
-import {createTimeMask} from '../TimeField/utils';
+import {useMaskito} from '@maskito/react';
+import {useCallback, useMemo} from 'react';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import useDateRange from '../DateField/useDateRange';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {ITimePanelViewProps} from '../TimeField/TimeField';
-import {FieldEnum} from '../../../enums';
+import {createTimeMask} from '../TimeField/utils';
 
 /**
  * TimeRangeField

@@ -1,5 +1,6 @@
-import configureMockStore from 'redux-mock-store';
 import axios from 'axios';
+import configureMockStore from 'redux-mock-store';
+
 import {
     IList,
     add,

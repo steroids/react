@@ -1,12 +1,12 @@
-import _uniqBy from 'lodash-es/uniqBy';
-import _isString from 'lodash-es/isString';
-import _isArray from 'lodash-es/isArray';
-import _some from 'lodash-es/some';
-import _has from 'lodash-es/has';
-import _isObject from 'lodash-es/isObject';
-import _isInteger from 'lodash-es/isInteger';
-import _isFunction from 'lodash-es/isFunction';
 import _every from 'lodash-es/every';
+import _has from 'lodash-es/has';
+import _isArray from 'lodash-es/isArray';
+import _isFunction from 'lodash-es/isFunction';
+import _isInteger from 'lodash-es/isInteger';
+import _isObject from 'lodash-es/isObject';
+import _isString from 'lodash-es/isString';
+import _some from 'lodash-es/some';
+import _uniqBy from 'lodash-es/uniqBy';
 
 /**
  * Normalize items for save to state. Support enum class or normal items list.
@@ -71,38 +71,48 @@ export const checkCondition = (item, condition) => {
         const key = condition[1];
         const value = condition[2];
         switch (operator) {
-            case '=': // ['=', 'age', 18]
+            case '=':
+                // ['=', 'age', 18]
                 return item[key] === value;
 
-            case '>': // ['>', 'age', 18]
+                // ['>', 'age', 18]
+            case '>':
                 return item[key] > value;
 
-            case '>=': // ['>=', 'age', 18]
+            case '>=':
             case '=>':
+                // ['>=', 'age', 18]
                 return item[key] >= value;
 
-            case '<': // ['<', 'age', 18]
+            case '<':
+                // ['<', 'age', 18]
                 return item[key] < value;
 
-            case '<=': // ['<=', 'age', 18]
+            case '<=':
             case '=<':
+                // ['<=', 'age', 18]
                 return item[key] <= value;
 
-            case 'and': // ['and', {isActive: true}, ['=', 'name', 'Ivan']]
+            case 'and':
             case '&&':
+                // ['and', {isActive: true}, ['=', 'name', 'Ivan']]
                 return _every(condition.slice(1), subCondition => checkCondition(item, subCondition));
 
-            case 'or': // ['or', {isAdmin: true}, ['=', 'name', 'Ivan']]
+            case 'or':
             case '||':
+                // ['or', {isAdmin: true}, ['=', 'name', 'Ivan']]
                 return _some(condition.slice(1), subCondition => checkCondition(item, subCondition));
 
-            case 'like': // ['like', 'name', 'alex']
+            case 'like':
+                // ['like', 'name', 'alex']
                 return _isString(item[key]) && item[key].toLowerCase().indexOf(value.toLowerCase()) !== -1;
 
-            case 'between': // ['between', 'size', 5, 10]
+            case 'between':
+                // ['between', 'size', 5, 10]
                 return condition[2] <= value && value <= condition[3];
 
-            case 'in': // ['in', 'ids', [5, 6, 10]]
+            case 'in':
+                // ['in', 'ids', [5, 6, 10]]
                 return _isArray(item[key]) && item[key].includes(value);
 
             default:

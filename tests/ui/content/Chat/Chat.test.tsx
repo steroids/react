@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {waitFor} from '@testing-library/react';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
+
 import {Chat} from '../../../../src/ui/content';
 import {calculateMessageTimeAgo} from '../../../../src/ui/content/Chat/utils';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Chat tests', () => {
     const expectedChatClass = 'ChatView';

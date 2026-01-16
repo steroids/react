@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {IIconViewProps} from '../../../../src/ui/content/Icon/Icon';
 import {useBem} from '../../../../src/hooks';
+import {IIconViewProps} from '../../../../src/ui/content/Icon/Icon';
 
 export default function IconView(props: IIconViewProps) {
     const bem = useBem('IconView');

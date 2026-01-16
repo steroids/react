@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
 import {Options, SplideProps} from '@splidejs/react-splide';
+import React from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**

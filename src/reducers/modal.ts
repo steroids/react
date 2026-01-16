@@ -1,5 +1,6 @@
-import _get from 'lodash-es/get';
 import {set as _set, delete as _delete} from 'dot-prop-immutable';
+import _get from 'lodash-es/get';
+
 import {MODAL_OPEN, MODAL_CLOSE, MODAL_MARK_CLOSING} from '../actions/modal';
 
 export const MODAL_DEFAULT_GROUP = 'modal';
@@ -15,6 +16,7 @@ const initialState = {
     opened: {} as Record<string, IModal[]>,
 };
 
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => {
     switch (action.type) {
         case MODAL_OPEN:

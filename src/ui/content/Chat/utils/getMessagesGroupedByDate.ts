@@ -1,9 +1,10 @@
+import dayjs from 'dayjs';
 import _first from 'lodash-es/first';
 import _last from 'lodash-es/last';
-import dayjs from 'dayjs';
-import {IGroupedMessagesByDates} from '../hooks/useChat';
-import {MONTH_AND_DAY_TEMPLATE, SECONDS_IN_MINUTE_VALUE} from '../constants/timeTemplatesAndUnits';
+
 import {IChatMessage} from '../Chat';
+import {MONTH_AND_DAY_TEMPLATE, SECONDS_IN_MINUTE_VALUE} from '../constants/timeTemplatesAndUnits';
+import {IGroupedMessagesByDates} from '../hooks/useChat';
 
 export const isWithinTimeThreshold = (firstMessage: IChatMessage, secondMessage: IChatMessage) => {
     const firstMessageTime = new Date(firstMessage.timestamp).getTime();

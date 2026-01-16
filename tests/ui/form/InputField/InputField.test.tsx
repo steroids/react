@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {waitFor} from '@testing-library/react';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import InputField, {IInputFieldProps} from '../../../../src/ui/form/InputField/InputField';
+
 import InputFieldMockView from './InputFieldMockView';
+import InputField, {IInputFieldProps} from '../../../../src/ui/form/InputField/InputField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('InputField tests', () => {
     const props = {

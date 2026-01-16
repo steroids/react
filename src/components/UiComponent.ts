@@ -1,11 +1,11 @@
-import * as React from 'react';
-
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
+import * as React from 'react';
 import {ReactNode} from 'react';
-import {IComponents} from '../providers/ComponentsProvider';
+
 import {Model} from './MetaComponent';
+import {IComponents} from '../providers/ComponentsProvider';
 
 /**
  * Ui Component
@@ -102,7 +102,7 @@ export interface IUiApplicationComponent {
      * Добавляет иконки.
      * @param {{ [name: string]: string | ReactNode }} icons - Иконки.
      */
-    addIcons(icons: {[name: string]: string | ReactNode, }): void,
+    addIcons(icons: {[name: string]: string | ReactNode }): void,
 
     /**
      * Возвращает иконку по указанному имени.
@@ -156,7 +156,7 @@ export default class UiComponent implements IUiApplicationComponent {
 
     protected _models: any;
 
-    icons: {[name: string]: string | number | ReactNode, } | any;
+    icons: {[name: string]: string | number | ReactNode } | any;
 
     fields: any;
 

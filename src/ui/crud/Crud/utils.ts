@@ -1,9 +1,10 @@
 import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
+
+import {getOpened} from '../../../reducers/modal';
+import {getRouteId, getRouteParams, getRouteProp} from '../../../reducers/router';
 import {ICrudItem} from '../../../ui/crud/Crud/Crud';
 import CrudDetail from '../../../ui/crud/Crud/CrudDetail';
-import {getRouteId, getRouteParams, getRouteProp} from '../../../reducers/router';
-import {getOpened} from '../../../reducers/modal';
 
 export const DEFAULT_PRIMARY_KEY = 'id';
 export const DEFAULT_QUERY_KEY = 'id';
@@ -21,9 +22,9 @@ export const pageControlsMap: Record<string, string[]> = {
     [CRUD_ACTION_VIEW]: [CRUD_ACTION_INDEX, CRUD_ACTION_UPDATE, CRUD_ACTION_DELETE],
 };
 
-export const normalizeItems = (sourceItems: ICrudItem[] | {[key: string]: ICrudItem, }, fromProps): ICrudItem[] => {
+export const normalizeItems = (sourceItems: ICrudItem[] | {[key: string]: ICrudItem }, fromProps): ICrudItem[] => {
     // Defaults
-    const defaultItems: ({[key: string]: ICrudItem, }) = {
+    const defaultItems: ({[key: string]: ICrudItem }) = {
         index: {
             pkRequired: false,
         },

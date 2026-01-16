@@ -1,4 +1,5 @@
 import configureMockStore from 'redux-mock-store';
+
 import {
     KANBAN_MOVE_COLUMN,
     KANBAN_INIT,

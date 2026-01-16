@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {useBem} from '../../../../src/hooks';
 import DropDown from '../../../../src/ui/content/DropDown';
 import {IMenuViewProps} from '../../../../src/ui/content/Menu/Menu';

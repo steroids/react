@@ -1,18 +1,19 @@
-import _isPlainObject from 'lodash-es/isPlainObject';
-import _isArray from 'lodash-es/isArray';
-import _isEqual from 'lodash-es/isEqual';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
-import _isObject from 'lodash-es/isObject';
+import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
+import _isObject from 'lodash-es/isObject';
+import _isPlainObject from 'lodash-es/isPlainObject';
 import _unset from 'lodash-es/unset';
 import {useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {useEffectOnce, useLifecycles, useUpdate} from 'react-use';
-import useDispatch from '../hooks/useDispatch';
-import {useSelector} from '../hooks';
-import {FormContext} from '../ui/form/Form/Form';
+
 import {formChange, formInitialize, formSetErrors} from '../actions/form';
+import {useSelector} from '../hooks';
+import useDispatch from '../hooks/useDispatch';
 import {reducerItem} from '../reducers/form';
+import {FormContext} from '../ui/form/Form/Form';
 
 export const setInWithPath = (state: any, value: any, path: string[], pathIndex = 0) => {
     if (pathIndex >= path.length) {

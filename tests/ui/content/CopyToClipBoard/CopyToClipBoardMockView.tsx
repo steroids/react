@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
-import {ICopyToClipboardViewProps} from '../../../../src/ui/content/CopyToClipboard/CopyToClipboard';
 import {Icon} from '../../../../src/ui/content';
+import {ICopyToClipboardViewProps} from '../../../../src/ui/content/CopyToClipboard/CopyToClipboard';
 
 function CopyToClipBoardView(props: ICopyToClipboardViewProps) {
     const bem = useBem('CopyToClipBoardView');

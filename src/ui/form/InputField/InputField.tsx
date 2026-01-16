@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable max-len */
-import * as React from 'react';
-import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
-import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import {useMaskito} from '@maskito/react';
+import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
+import * as React from 'react';
+
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({

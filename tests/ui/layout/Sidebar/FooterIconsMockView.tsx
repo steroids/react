@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
-import Icon, {IIconProps} from '../../../../src/ui/content/Icon/Icon';
+
 import useBem from '../../../../src/hooks/useBem';
+import Icon, {IIconProps} from '../../../../src/ui/content/Icon/Icon';
 import renderIcon from '../../../mocks/renderIconMock';
 
 interface IFooterIconsProps {

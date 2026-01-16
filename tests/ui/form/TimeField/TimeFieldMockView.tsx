@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useCallback} from 'react';
-import {useBem} from '../../../../src/hooks';
 
-import {ITimeFieldViewProps} from '../../../../src/ui/form/TimeField/TimeField';
-import Icon from '../../../../src/ui/content/Icon';
-import DropDown from '../../../../src/ui/content/DropDown';
 import TimePanelView from './TimePanelMockView';
+import {useBem} from '../../../../src/hooks';
+import DropDown from '../../../../src/ui/content/DropDown';
+import Icon from '../../../../src/ui/content/Icon';
+import {ITimeFieldViewProps} from '../../../../src/ui/form/TimeField/TimeField';
 
 export default function TimeFieldView(props: ITimeFieldViewProps) {
     const bem = useBem('TimeFieldView');

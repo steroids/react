@@ -1,12 +1,13 @@
+import _merge from 'lodash-es/merge';
 import {useMemo} from 'react';
 import * as React from 'react';
-import _merge from 'lodash-es/merge';
+
+import TreeColumnView from './TreeColumnMockView';
+import useSelector from '../../../../src/hooks/useSelector';
+import useTree from '../../../../src/hooks/useTree';
+import {getList} from '../../../../src/reducers/list';
 import Grid from '../../../../src/ui/list/Grid';
 import {ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';
-import TreeColumnView from './TreeColumnMockView';
-import useTree from '../../../../src/hooks/useTree';
-import useSelector from '../../../../src/hooks/useSelector';
-import {getList} from '../../../../src/reducers/list';
 
 export default function TreeTableMock(props: ITreeTableProps): JSX.Element {
     // Add tree view to the first column

@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
-import FlexGrid, {IFlexGridItem, IFlexGridProps} from '../../../ui/list/FlexGrid/FlexGrid';
+
 import {useComponents} from '../../../hooks';
+import FlexGrid, {IFlexGridItem, IFlexGridProps} from '../../../ui/list/FlexGrid/FlexGrid';
 
 export interface IDashboardItem extends IFlexGridItem {
     /**

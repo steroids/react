@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import RadioListField from '../../../../src/ui/form/RadioListField/RadioListField';
 import RadioListFieldMockView from './RadioListFieldMockView';
+import RadioListField from '../../../../src/ui/form/RadioListField/RadioListField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('RadioListField tests', () => {
     const radioLabel = 'radioLabel';

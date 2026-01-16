@@ -1,23 +1,24 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
-import {usePrevious, useUpdateEffect} from 'react-use';
 import _isArray from 'lodash-es/isArray';
 import _isEqual from 'lodash-es/isEqual';
-import {IPreparedTreeItem} from '../../../hooks/useTree';
+import React, {useCallback, useEffect, useMemo} from 'react';
+import {usePrevious, useUpdateEffect} from 'react-use';
+
 import Enum from '../../../base/Enum';
+import {FieldEnum} from '../../../enums';
 import {useComponents, useDataProvider, useDataSelect, useTree} from '../../../hooks';
+import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {IDataSelectConfig} from '../../../hooks/useDataSelect';
+import {IPreparedTreeItem} from '../../../hooks/useTree';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../../ui/form/Field/fieldWrapper';
-import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
-import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 import {ITreeProps} from '../../nav/Tree/Tree';
-import {FieldEnum} from '../../../enums';
+import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
 
 type CheckboxTreeItems = string
-    | ({new(): Enum,})
-    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any,})[];
+    | ({new(): Enum})
+    | (string | number | {id: string | number | boolean, label: string, color?: string, [key: string]: any})[];
 
 /**
  * CheckboxTreeField

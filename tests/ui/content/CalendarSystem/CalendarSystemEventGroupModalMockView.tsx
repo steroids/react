@@ -1,8 +1,9 @@
 import React from 'react';
+
 import {useBem} from '../../../../src/hooks';
-import Modal from '../../../../src/ui/modal/Modal';
 import {CalendarSystemEventGroupModalViewProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import {InputField, Form} from '../../../../src/ui/form';
+import Modal from '../../../../src/ui/modal/Modal';
 import {Text} from '../../../../src/ui/typography';
 
 export default function CalendarSystemEventGroupModalView(props: CalendarSystemEventGroupModalViewProps) {

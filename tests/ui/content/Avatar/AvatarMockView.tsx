@@ -1,6 +1,7 @@
 import React from 'react';
-import {IAvatarViewProps} from '../../../../src/ui/content/Avatar/Avatar';
+
 import {useBem} from '../../../../src/hooks';
+import {IAvatarViewProps} from '../../../../src/ui/content/Avatar/Avatar';
 
 interface IAvatarProps extends IAvatarViewProps {
     formattedTitle: any,

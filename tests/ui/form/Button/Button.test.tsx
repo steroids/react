@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import Button, {IButtonProps} from '../../../../src/ui/form/Button/Button';
+
 import ButtonMockView from './ButtonMockView';
+import Button, {IButtonProps} from '../../../../src/ui/form/Button/Button';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Button tests', () => {

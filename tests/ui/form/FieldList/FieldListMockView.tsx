@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {IFieldListViewProps} from '../../../../src/ui/form/FieldList/FieldList';
 import {useBem} from '../../../../src/hooks';
 import {Button} from '../../../../src/ui/form';
+import {IFieldListViewProps} from '../../../../src/ui/form/FieldList/FieldList';
 
 export default function FieldListView(props: IFieldListViewProps) {
     const bem = useBem('FieldListView');

@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import PasswordField, {IPasswordFieldProps} from '../../../../src/ui/form/PasswordField/PasswordField';
+
 import PasswordFieldMockView from './PasswordFieldMockView';
+import PasswordField, {IPasswordFieldProps} from '../../../../src/ui/form/PasswordField/PasswordField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('PasswordField tests', () => {
     const props = {

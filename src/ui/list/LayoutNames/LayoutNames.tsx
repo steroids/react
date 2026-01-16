@@ -1,10 +1,11 @@
-import React, {useCallback} from 'react';
 import _get from 'lodash-es/get';
-import {useComponents} from '../../../hooks';
-import {INavItem} from '../../nav/Nav/Nav';
-import {ListControlPosition} from '../../../hooks/useList';
+import React, {useCallback} from 'react';
+
 import {IList, listSetLayout} from '../../../actions/list';
+import {useComponents} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
+import {ListControlPosition} from '../../../hooks/useList';
+import {INavItem} from '../../nav/Nav/Nav';
 
 /**
  * LayoutNames

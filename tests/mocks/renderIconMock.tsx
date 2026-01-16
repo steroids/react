@@ -1,5 +1,6 @@
 /* eslint-disable valid-typeof */
 import React from 'react';
+
 import Icon, {IIconProps} from '../../src/ui/content/Icon/Icon';
 import IconMockView from '../ui/content/Icon/IconMockView';
 

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import AutoCompleteField, {IAutoCompleteFieldProps} from '../../../../src/ui/form/AutoCompleteField/AutoCompleteField';
 import AutoCompleteFieldMockView from './AutoCompleteFieldMockView';
+import AutoCompleteField, {IAutoCompleteFieldProps} from '../../../../src/ui/form/AutoCompleteField/AutoCompleteField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('AutoCompleteField tests', () => {
     const expectedAutoCompleteClassName = 'AutoCompleteFieldView';

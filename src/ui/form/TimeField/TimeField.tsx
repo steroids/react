@@ -1,14 +1,15 @@
-import {useMemo} from 'react';
-import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
+import {useMaskito} from '@maskito/react';
+import {useMemo} from 'react';
+
+import {createTimeMask} from './utils';
+import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
 import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
 } from '../../form/DateField/useDateInputState';
-import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {FieldEnum} from '../../../enums';
-import {createTimeMask} from './utils';
 
 export interface ITimePanelViewProps extends Pick<ITimeFieldViewProps,
     'value' | 'onClose' | 'onNow' | 'onSelect' | 'className' | 'availableTime' | 'minuteStep'>

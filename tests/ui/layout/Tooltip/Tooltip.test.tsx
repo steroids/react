@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import {waitFor} from '@testing-library/react';
+
 import Tooltip from '../../../../src/ui/layout/Tooltip/Tooltip';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 

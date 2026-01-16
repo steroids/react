@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import {CalendarSystem} from '../../../../src/ui/content';
+import CalendarSystemEventGroupModalMockView from './CalendarSystemEventGroupModalMockView';
 import CalendarSystemMockView from './CalendarSystemMockView';
 import CalendarSystemModalMockView from './CalendarSystemModalMockView';
-import CalendarSystemEventGroupModalMockView from './CalendarSystemEventGroupModalMockView';
+import {CalendarSystem} from '../../../../src/ui/content';
 import {ICalendarSystemProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('CalendarSystem', () => {
     const props: ICalendarSystemProps = {

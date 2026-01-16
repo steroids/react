@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {IFieldSetViewProps} from '../../../../src/ui/form/FieldSet/FieldSet';
+
 import {useBem} from '../../../../src/hooks';
+import {IFieldSetViewProps} from '../../../../src/ui/form/FieldSet/FieldSet';
 
 export default function FieldSetView(props: IFieldSetViewProps) {
     const bem = useBem('FieldSetView');

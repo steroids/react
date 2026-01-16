@@ -1,4 +1,5 @@
 import _omit from 'lodash/omit';
+
 import {cleanEmptyObject, clearErrors} from '../../src/utils/form';
 
 describe('form utils', () => {

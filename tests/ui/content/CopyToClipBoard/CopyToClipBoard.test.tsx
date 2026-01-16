@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {act} from '@testing-library/react';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import CopyToClipboard, {ICopyToClipboardProps} from '../../../../src/ui/content/CopyToClipboard/CopyToClipboard';
+
 import CopyToClipBoardMockView from './CopyToClipBoardMockView';
+import CopyToClipboard, {ICopyToClipboardProps} from '../../../../src/ui/content/CopyToClipboard/CopyToClipboard';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('CopyToClipBoard', () => {
     const expectedCopyToClipBoardClassName = 'CopyToClipBoardView';

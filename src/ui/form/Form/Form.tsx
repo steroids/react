@@ -448,13 +448,13 @@ function Form(props: IFormProps): JSX.Element {
         // Clean
         cleanedValues = cleanEmptyObject(cleanedValues);
 
-        // Event onBeforeSubmit
-        if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {
+        if (props.validator && props.validator.call(null, cleanedValues) === false) {
             dispatch(formSetSubmitting(props.formId, false));
             return null;
         }
 
-        if (props.validator && props.validator.call(null, cleanedValues) === false) {
+        // Event onBeforeSubmit
+        if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {
             dispatch(formSetSubmitting(props.formId, false));
             return null;
         }

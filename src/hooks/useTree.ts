@@ -1,15 +1,16 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import _isString from 'lodash-es/isString';
-import _omit from 'lodash-es/omit';
-import _join from 'lodash-es/join';
-import _isEqual from 'lodash-es/isEqual';
-import _isEmpty from 'lodash-es/isEmpty';
-import _isNil from 'lodash-es/isNil';
-import _keys from 'lodash-es/keys';
-import _pickBy from 'lodash-es/pickBy';
-import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
+import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
+import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
+import _isNil from 'lodash-es/isNil';
+import _isString from 'lodash-es/isString';
+import _join from 'lodash-es/join';
+import _keys from 'lodash-es/keys';
+import _omit from 'lodash-es/omit';
+import _pickBy from 'lodash-es/pickBy';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useMount, useUnmount} from 'react-use';
+
 import useComponents from './useComponents';
 import useSelector from './useSelector';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
@@ -285,7 +286,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
 
     const [selectedUniqueId, setSelectedUniqueId] = useState<string>(null);
 
-    const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean,}>({});
+    const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean}>({});
 
     const {clientStorage} = useComponents();
 
@@ -319,7 +320,8 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
     // Выполняет поиск текущего роута в дереве: раскрывает дерево до элемента, делает элемент активным
     const onItemFocus = useCallback(() => {
         const currentRouteAsTreeItem = findChildById(items as ITreeItem[], selectedItemId, primaryKey);
-        const currentRouteUniqueIdParts = currentRouteAsTreeItem.uniqueId.split(DOT_SEPARATOR); // Get all parent levels of item
+        // Get all parent levels of item
+        const currentRouteUniqueIdParts = currentRouteAsTreeItem.uniqueId.split(DOT_SEPARATOR);
 
         const itemsToExpand = {};
         let itemToExpandKey: string;

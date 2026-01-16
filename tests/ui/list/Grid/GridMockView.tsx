@@ -1,12 +1,12 @@
-import * as React from 'react';
 import _get from 'lodash-es/get';
-import _keyBy from 'lodash-es/keyBy';
 import _isString from 'lodash-es/isString';
-
+import _keyBy from 'lodash-es/keyBy';
+import * as React from 'react';
 import {useCallback, useMemo} from 'react';
+
+import {useBem} from '../../../../src/hooks';
 import Button from '../../../../src/ui/form/Button';
 import Field from '../../../../src/ui/form/Field';
-import {useBem} from '../../../../src/hooks';
 import {IGridViewProps} from '../../../../src/ui/list/Grid/Grid';
 
 export const getFormId = props => _get(props, 'searchForm.formId', props.listId);
@@ -63,15 +63,13 @@ export default function GridView(props: IGridViewProps) {
     const emptyContent = useMemo(() => props.renderEmpty(), [props]);
 
     return props.renderList(
-        <div className={bem(
-            bem.block(
+        <div className={bem(bem.block(
                 {
                     loading: props.isLoading || props.list?.isLoading,
                     size: props.size,
                     alternatingColors: props.hasAlternatingColors,
                 },
-            ), props.className,
-        )}
+            ), props.className)}
         >
             {props.renderSearchForm()}
             {props.renderPaginationSize()}

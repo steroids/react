@@ -1,10 +1,10 @@
-import notifications, {
-    TNotificationsState,
-} from '../../src/reducers/notifications';
 import {
     NOTIFICATIONS_CLOSE,
     NOTIFICATIONS_SHOW,
 } from '../../src/actions/notifications';
+import notifications, {
+    TNotificationsState,
+} from '../../src/reducers/notifications';
 
 describe('notifications reducers', () => {
     const defaultInitialState: TNotificationsState = {

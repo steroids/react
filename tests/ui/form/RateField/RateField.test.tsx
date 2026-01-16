@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+
 import RateField, {IRateFieldProps} from '../../../../src/ui/form/RateField/RateField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('RateField', () => {
     const expectedRateFieldClassName = 'RateFieldView';

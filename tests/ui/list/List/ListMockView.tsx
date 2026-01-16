@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {IListViewProps} from '../../../../src/ui/list/List/List';
 import {useBem} from '../../../../src/hooks';
+import {IListViewProps} from '../../../../src/ui/list/List/List';
 
 export default function ListView(props: IListViewProps) {
     const bem = useBem('ListView');

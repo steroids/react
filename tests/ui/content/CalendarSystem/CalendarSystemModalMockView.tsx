@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-undef */
-import React from 'react';
-import _omit from 'lodash-es/omit';
 import _isEmpty from 'lodash-es/isEmpty';
-import Modal from '../../../../src/ui/modal/Modal';
+import _omit from 'lodash-es/omit';
+import React from 'react';
+
+import useBem from '../../../../src/hooks/useBem';
 import {
     CalendarSystemModalFields,
     IEventInitialValues,
     ICalendarSystemModalViewProps,
 } from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import {InputField, Form, DropDownField, DateTimeField, TextField} from '../../../../src/ui/form';
+import Modal from '../../../../src/ui/modal/Modal';
 import Text from '../../../../src/ui/typography/Text/Text';
-import useBem from '../../../../src/hooks/useBem';
 
 export default function CalendarSystemModalView(props: ICalendarSystemModalViewProps) {
     const bem = useBem('CalendarSystemModalView');

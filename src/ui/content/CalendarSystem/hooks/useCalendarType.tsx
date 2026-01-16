@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CalendarEnum from '../enums/CalendarType';
 
 export const useCalendarType = (onChangeCalendarType?: (newType: string) => void) => {

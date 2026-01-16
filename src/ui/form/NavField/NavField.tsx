@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
-import Nav, {INavProps, INavItem} from '../../nav/Nav/Nav';
+
+import {FieldEnum} from '../../../enums';
+import {useDataProvider} from '../../../hooks';
+import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
-import {useDataProvider} from '../../../hooks';
-
-import {IDataProviderConfig} from '../../../hooks/useDataProvider';
-import {FieldEnum} from '../../../enums';
+import Nav, {INavProps, INavItem} from '../../nav/Nav/Nav';
 
 /**
  * NavField

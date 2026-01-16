@@ -1,12 +1,12 @@
+import {
+    FIELDS_DATA_PROVIDER_SET_ITEMS,
+    FIELDS_SET_META,
+} from '../../../src/actions/fields';
 import fields, {
     isMetaFetched,
     IFieldsState,
     normalizeName,
 } from '../../../src/reducers/fields';
-import {
-    FIELDS_DATA_PROVIDER_SET_ITEMS,
-    FIELDS_SET_META,
-} from '../../../src/actions/fields';
 
 describe('fields reducers', () => {
     const defaultInitialState: IFieldsState = {

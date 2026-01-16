@@ -1,10 +1,11 @@
+import _upperFirst from 'lodash-es/upperFirst';
 import * as React from 'react';
 import {useMemo} from 'react';
 import {CaptionElementProps} from 'react-day-picker/types/Props';
-import _upperFirst from 'lodash-es/upperFirst';
+
 import {useBem} from '../../../../src/hooks';
-import Icon from '../../../../src/ui/content/Icon';
 import {ICalendarViewProps} from '../../../../src/ui/content/Calendar/Calendar';
+import Icon from '../../../../src/ui/content/Icon';
 
 interface ICaptionElementProps extends CaptionElementProps,
     Pick<ICalendarViewProps, 'fromYear' | 'toYear' | 'isCaptionPanelVisible' | 'toggleCaptionPanel'> {

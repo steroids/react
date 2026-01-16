@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {useBem} from '../../../../src/hooks';
 import {IMenuItem} from '../../../../src/ui/content/Menu/Menu';
 import renderIcon from '../../../mocks/renderIconMock';

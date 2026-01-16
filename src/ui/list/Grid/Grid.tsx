@@ -1,12 +1,13 @@
-import React, {useCallback, useMemo} from 'react';
-import _upperFirst from 'lodash-es/upperFirst';
 import _isString from 'lodash-es/isString';
-import {ILinkProps} from '../../nav/Link/Link';
+import _upperFirst from 'lodash-es/upperFirst';
+import React, {useCallback, useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, ListControlPosition} from '../../../hooks/useList';
-import ControlsColumn from '../ControlsColumn';
 import Format from '../../format/Format';
 import {IControlItem} from '../../nav/Controls/Controls';
+import {ILinkProps} from '../../nav/Link/Link';
+import ControlsColumn from '../ControlsColumn';
 
 export interface IColumnViewProps extends IGridColumn {
     item: Record<string, any>,

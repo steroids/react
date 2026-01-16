@@ -1,12 +1,13 @@
-import React from 'react';
-import _has from 'lodash-es/has';
-import _get from 'lodash-es/get';
+import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
+import {IWizardStepItem} from '@steroidsjs/core/ui/form/WizardForm/WizardForm';
 import _assign from 'lodash-es/assign';
+import _get from 'lodash-es/get';
+import _has from 'lodash-es/has';
+import _indexOf from 'lodash-es/indexOf';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
-import _indexOf from 'lodash-es/indexOf';
-import {IWizardStepItem} from '@steroidsjs/core/ui/form/WizardForm/WizardForm';
-import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
+import React from 'react';
+
 import {ACTIVE_STATUS, ERROR_STATUS, FINISH_STATUS, WAIT_STATUS} from '../../list/Steps/Steps';
 
 const getComponentAttributes = (component: React.ReactElement[] | React.ReactElement, index: number) => {

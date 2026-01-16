@@ -1,8 +1,9 @@
 import {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
-import {FieldEnum} from '../../../enums';
 
 /**
  * TextField

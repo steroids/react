@@ -1,13 +1,14 @@
 /* eslint-disable no-plusplus */
 import dayjs from 'dayjs';
-import _omit from 'lodash-es/omit';
+import _ceil from 'lodash-es/ceil';
 import _concat from 'lodash-es/concat';
+import _omit from 'lodash-es/omit';
 import _slice from 'lodash-es/slice';
 import _upperFirst from 'lodash-es/upperFirst';
-import _ceil from 'lodash-es/ceil';
 import {CSSProperties} from 'react';
-import {IDay, IEvent, IEventGroup} from '../CalendarSystem';
+
 import {convertDate} from '../../../../utils/calendar';
+import {IDay, IEvent, IEventGroup} from '../CalendarSystem';
 
 const SIX_DAYS_DIFF = 6;
 const MAX_DAYS_DIFF_IN_WEEK = 7;
@@ -17,9 +18,10 @@ export const getWeekDaysFromDate = (date: Date) => {
     const weekDays: IDay[] = [];
     const firstDayOfWeek = new Date(date);
     const currentDay = date.getDay();
-    const diff = currentDay === 0 ? SIX_DAYS_DIFF : currentDay - 1; // Разница между текущим днем и понедельником
-
-    firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diff); // Устанавливаем первый день недели (понедельник)
+    // Разница между текущим днем и понедельником
+    const diff = currentDay === 0 ? SIX_DAYS_DIFF : currentDay - 1;
+    // Устанавливаем первый день недели (понедельник)
+    firstDayOfWeek.setDate(firstDayOfWeek.getDate() - diff);
 
     for (let i = 0; i < MAX_DAYS_DIFF_IN_WEEK; i++) {
         const currentDate = new Date(firstDayOfWeek);

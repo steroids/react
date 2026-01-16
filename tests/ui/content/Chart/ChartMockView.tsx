@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {IChartViewProps} from '../../../../src/ui/content/Chart/Chart';
+
 import {useBem} from '../../../../src/hooks';
-import {Title} from '../../../../src/ui/typography';
+import {IChartViewProps} from '../../../../src/ui/content/Chart/Chart';
 import {CheckboxListField} from '../../../../src/ui/form';
 import {ButtonGroup} from '../../../../src/ui/nav';
+import {Title} from '../../../../src/ui/typography';
 
 const DEFAULT_AXIS_PARAMS = {
     tickSize: 5,

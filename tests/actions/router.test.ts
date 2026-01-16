@@ -1,5 +1,5 @@
 import configureMockStore from 'redux-mock-store';
-import prepareMiddleware from '../mocks/storeMiddlewareMock';
+
 import {
     ROUTER_INIT_ROUTES,
     ROUTER_SET_PARAMS,
@@ -8,6 +8,7 @@ import {
     initParams,
     initRoutes,
 } from '../../src/actions/router';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});

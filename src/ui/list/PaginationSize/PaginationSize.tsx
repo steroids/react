@@ -1,10 +1,11 @@
-import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
-import {IButtonProps} from '../../form/Button/Button';
+import React, {useCallback, useMemo} from 'react';
+
+import {formChange} from '../../../actions/form';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
-import {formChange} from '../../../actions/form';
 import {ListControlPosition} from '../../../hooks/useList';
+import {IButtonProps} from '../../form/Button/Button';
 
 /**
  * PaginationSize

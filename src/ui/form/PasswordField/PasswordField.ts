@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-expressions */
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
+
 import {FieldEnum} from '../../../enums';
-import {IBaseFieldProps} from '../InputField/InputField';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 export enum InputType {
     TEXT = 'text',

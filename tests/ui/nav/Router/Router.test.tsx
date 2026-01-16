@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import React from 'react';
+
 import Router from '../../../../src/ui/nav/Router';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import LoaderMockView from '../../layout/Loader/LoaderMockView';

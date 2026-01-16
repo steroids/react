@@ -1,14 +1,15 @@
+import axios from 'axios';
 import _get from 'lodash-es/get';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
+import _isFunction from 'lodash-es/isFunction';
+import _isNil from 'lodash-es/isNil';
 import _orderBy from 'lodash-es/orderBy';
 import _trimStart from 'lodash-es/trimStart';
-import _isFunction from 'lodash-es/isFunction';
-import _isEqual from 'lodash-es/isEqual';
-import _isNil from 'lodash-es/isNil';
-import axios from 'axios';
-import {formSelector} from '../reducers/form';
+
 import {formChange, formSetErrors} from '../actions/form';
+import {formSelector} from '../reducers/form';
 import {filterItems} from '../utils/data';
 
 export interface IList {

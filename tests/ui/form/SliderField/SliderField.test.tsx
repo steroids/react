@@ -1,7 +1,8 @@
 import React from 'react';
+
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import SliderField, {ISliderFieldProps} from '../../../../src/ui/form/SliderField/SliderField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('SliderField tests', () => {
     const expectedSliderFieldClassName = 'SliderFieldView';

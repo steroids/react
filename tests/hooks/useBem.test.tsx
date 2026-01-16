@@ -1,14 +1,19 @@
 import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
-import prepareMiddleware from '../mocks/storeMiddlewareMock';
+
 import useBem, {IBem} from '../../src/hooks/useBem';
 import mountWithApp from '../mocks/mountWithApp';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 
-const MockResultComponent = (props: any) => <div />;
-const MockComponent = (props: any) => <MockResultComponent bem={useBem(props.namespace)} />;
+function MockResultComponent(props: any) {
+  return <div />;
+}
+function MockComponent(props: any) {
+  return <MockResultComponent bem={useBem(props.namespace)} />;
+}
 
 jest.useFakeTimers();
 

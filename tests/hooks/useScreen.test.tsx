@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {renderHook} from '../helpers';
 import {useScreen} from '../../src/hooks';
+import {renderHook} from '../helpers';
 
 describe('useScreen hook', () => {
     const renderUseScreen = () => {

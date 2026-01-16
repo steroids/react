@@ -110,7 +110,8 @@ export const createTimeMask = (
 
             return {
                 value: nextValue,
-                selection, // курсор оставляем как есть
+                // курсор оставляем как есть
+                selection,
             };
         },
     ],

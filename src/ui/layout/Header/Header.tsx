@@ -1,10 +1,11 @@
 import {useCallback, useState} from 'react';
-import {IButtonProps} from '../../form/Button/Button';
-import {IAvatarProps} from '../../content/Avatar/Avatar';
-import {ILinkProps} from '../../nav/Link/Link';
-import {IModalProps} from '../../modal/Modal/Modal';
-import {IMenuProps} from '../../content/Menu/Menu';
+
 import {useComponents} from '../../../hooks';
+import {IAvatarProps} from '../../content/Avatar/Avatar';
+import {IMenuProps} from '../../content/Menu/Menu';
+import {IButtonProps} from '../../form/Button/Button';
+import {IModalProps} from '../../modal/Modal/Modal';
+import {ILinkProps} from '../../nav/Link/Link';
 import {INavProps} from '../../nav/Nav/Nav';
 
 /**

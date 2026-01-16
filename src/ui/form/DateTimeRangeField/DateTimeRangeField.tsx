@@ -1,18 +1,19 @@
-import {useCallback, useEffect, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
 import {createDateTimeMask} from '@steroidsjs/core/ui/form/DateTimeField/utils';
+import {useCallback, useEffect, useMemo} from 'react';
+
+import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
-import useDateRange from '../../form/DateField/useDateRange';
-import useDateTime from '../../form/DateField/useDateTime';
-import {IDateRangeButton, IDateRangeFieldProps} from '../../form/DateRangeField/DateRangeField';
 import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
 } from '../../form/DateField/useDateInputState';
+import useDateRange from '../../form/DateField/useDateRange';
+import useDateTime from '../../form/DateField/useDateTime';
+import {IDateRangeButton, IDateRangeFieldProps} from '../../form/DateRangeField/DateRangeField';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
-import {useComponents} from '../../../hooks';
-import {FieldEnum} from '../../../enums';
 
 /**
  * DateTimeRangeField
@@ -368,5 +369,8 @@ DateTimeRangeField.defaultProps = {
     minuteStep: 1,
 };
 
-export default fieldWrapper<IDateTimeRangeFieldProps>(FieldEnum.DATE_TIME_RANGE_FIELD, DateTimeRangeField,
-    {attributeSuffixes: ['from', 'to']});
+export default fieldWrapper<IDateTimeRangeFieldProps>(
+FieldEnum.DATE_TIME_RANGE_FIELD,
+DateTimeRangeField,
+{attributeSuffixes: ['from', 'to']},
+);

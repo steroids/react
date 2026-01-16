@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {useBem} from '../../../../src/hooks';
 import {IBadgeViewProps} from '../../../../src/ui/content/Badge/Badge';
 import Icon from '../../../../src/ui/content/Icon/Icon';

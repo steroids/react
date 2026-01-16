@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import Badge from '../../../../src/ui/content/Badge/Badge';
+
 import BadgeMockView from './BadgeMockView';
+import Badge from '../../../../src/ui/content/Badge/Badge';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Badge tests', () => {
     const props = {

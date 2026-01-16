@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
-import axios, {AxiosError} from 'axios';
 import {act, renderHook, waitFor} from '@testing-library/react';
+import axios, {AxiosError} from 'axios';
+
+import useComponents from '../../src/hooks/useComponents';
 import useFetch, {
     normalizeConfig,
     getConfigId,
@@ -9,7 +11,6 @@ import useFetch, {
     IFetchConfig,
 } from '../../src/hooks/useFetch';
 import * as fetchHelpers from '../../src/hooks/useFetch';
-import useComponents from '../../src/hooks/useComponents';
 import useSsr from '../../src/hooks/useSsr';
 
 jest.mock('axios');

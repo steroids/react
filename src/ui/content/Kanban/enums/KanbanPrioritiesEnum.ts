@@ -1,6 +1,7 @@
 import _find from 'lodash-es/find';
-import {ITaskPriority} from '../Kanban';
+
 import Enum from '../../../../base/Enum';
+import {ITaskPriority} from '../Kanban';
 
 export default class KanbanPrioritiesEnum extends Enum {
     static HIGH = 'high';

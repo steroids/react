@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
+
 import ButtonGroupMockView from './ButtonGroupMockView';
-import {JSXWrapper, getElementByClassName, getElementByTag, render} from '../../../helpers';
 import ButtonGroup from '../../../../src/ui/nav/ButtonGroup/ButtonGroup';
+import {JSXWrapper, getElementByClassName, getElementByTag, render} from '../../../helpers';
 
 describe('ButtonGroup tests', () => {
     const items = [

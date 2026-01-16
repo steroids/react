@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {Title} from '../../../../src/ui/typography';
 import TitleMockView from './TitleMockView';
+import {Title} from '../../../../src/ui/typography';
 import {getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Title tests', () => {

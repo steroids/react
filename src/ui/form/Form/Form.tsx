@@ -1,23 +1,24 @@
 /* eslint-disable react/prop-types */
-import React, {useCallback, useMemo} from 'react';
+import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
+import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
-import _isUndefined from 'lodash-es/isUndefined';
+import _isEmpty from 'lodash-es/isEmpty';
 import _isNill from 'lodash-es/isNil';
 import _isString from 'lodash-es/isString';
-import _isEmpty from 'lodash-es/isEmpty';
+import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
-import _cloneDeep from 'lodash-es/cloneDeep';
+import React, {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
-import {showNotification} from '../../../actions/notifications';
-import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
+
 import AutoSaveHelper from './AutoSaveHelper';
-import {IFieldProps} from '../Field/Field';
-import {useComponents, useDispatch} from '../../../hooks';
-import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
-import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
+import {showNotification} from '../../../actions/notifications';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useDispatch} from '../../../hooks';
+import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
+import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
+import {IFieldProps} from '../Field/Field';
+import validate from '../validate';
 
 const _isEmptyString = (value) => _isString(value) && _isEmpty(value);
 
@@ -276,7 +277,7 @@ export interface IFormContext {
     /**
     * Редьюсер
     */
-    reducer?: { dispatch: React.Dispatch<any>, select: any, },
+    reducer?: { dispatch: React.Dispatch<any>, select: any },
 
     /**
     * Диспатч
@@ -385,12 +386,14 @@ function Form(props: IFormProps): JSX.Element {
 
     // Clear Errors
     const prevValues = usePrevious(values);
-    useUpdateEffect(() => {
+    useUpdateEffect(
+() => {
         if (props.useClearErrors) {
             clearErrors(values, prevValues, errors, setErrors);
         }
     },
-    [props.useClearErrors, errors, prevValues, setErrors, values]);
+    [props.useClearErrors, errors, prevValues, setErrors, values],
+);
 
     // OnChange handler
     useUpdateEffect(() => {

@@ -38,7 +38,7 @@ export interface IDateFieldProps extends IDateInputStateInput, IUiComponent, Pic
     maskOptions?: MaskitoOptions,
 
     /**
-     *  Ограничение доступных дат.
+     * Ограничение доступных дат.
      */
     disabledDays?: {
         after?: Date,

@@ -24,6 +24,11 @@ export interface IList {
     actionMethod?: string,
 
     /**
+     * Логическое значение, указывающее, есть ли еще элементы в списке с бесконечным скроллом
+     */
+    hasMoreInfiniteScroll?: boolean,
+
+    /**
     * Функция обратного вызова, вызываемая при получении списка.
     */
     onFetch?: (list: IList, query: Record<string, unknown>, components: any) => Promise<any>,

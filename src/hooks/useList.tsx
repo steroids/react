@@ -407,15 +407,23 @@ export default function useList(config: IListConfig): IListOutput {
     // InfiniteScroll
     const InfiniteScroll = require('../ui/list/InfiniteScroll').default;
     const infiniteScrollProps = normalizeInfiniteScrollProps(config.infiniteScroll);
-    const renderInfiniteScroll = () => infiniteScrollProps.enable && list?.isFetched && !list?.isLoading
-        ? (
+    const renderInfiniteScroll = () => {
+        if (!infiniteScrollProps.enable || list?.isLoading || !list?.isFetched) {
+            return null;
+        }
+
+        if (!list.hasMoreInfiniteScroll) {
+            return null;
+        }
+
+        return (
             <InfiniteScroll
                 list={list}
                 {...infiniteScrollProps}
                 sizeAttribute={infiniteScrollProps.attribute}
             />
-        )
-        : null;
+        );
+    };
 
     // Layout switcher
     const LayoutNames = require('../ui/list/LayoutNames').default;

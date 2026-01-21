@@ -33,9 +33,9 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     // const dispatch = useDispatch();
     const components = useComponents();
 
-    const {inputRef, onChange} = useSaveCursorPosition(
-        props.input,
-    );
+    const {inputRef, onChange} = useSaveCursorPosition({
+        inputParams: props.input,
+    });
 
     const onKeyUp = useCallback(e => {
         if (

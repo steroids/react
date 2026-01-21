@@ -1,20 +1,33 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unneeded-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useEffect, useMemo, useRef, useState} from 'react';
+import _debounce from 'lodash-es/debounce';
 import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
-export default function useSaveCursorPosition(
+const DEFAULT_DEBOUNCE_DELAY_MS = 300;
+
+export interface ISaveCursorPositionDebounceConfig {
+    /**
+     * Задержка в мс
+     */
+    delayMs?: number,
+    enabled: boolean,
+}
+
+export interface ISaveCursorPositionConfig {
     inputParams: IInputParams,
     onChangeCallback?: (value) => void,
-) {
-    const [cursor, setCursor] = React.useState(null);
-    const inputRef = React.useRef(null);
+    debounce?: ISaveCursorPositionDebounceConfig,
+}
 
-    React.useEffect(() => {
+export default function useSaveCursorPosition(config: ISaveCursorPositionConfig) {
+    const [cursor, setCursor] = useState(null);
+    const inputRef = useRef(null);
+    const [localValue, setLocalValue] = React.useState(config.inputParams.value ?? '');
+
+    useEffect(() => {
         const el = inputRef.current as HTMLInputElement | null;
         if (!el || _isNull(cursor)) {
             return;
@@ -26,20 +39,53 @@ export default function useSaveCursorPosition(
         } catch (e) {
             console.error(e);
         }
-    }, [cursor, inputParams.value]);
+    }, [cursor, localValue]);
 
-    const onChange = React.useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
-        if (onChangeCallback) {
-            onChangeCallback(value || event.target?.value);
+    /**
+     * Синхронизация ТОЛЬКО при внешнем reset (например, очистка формы)
+     */
+    React.useEffect(() => {
+        if (config.inputParams.value !== localValue) {
+            setLocalValue(config.inputParams.value ?? '');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [config.inputParams.value]);
+
+    /**
+     * Создаём debounce только при смене delay или enabled.
+     * onChange и onChangeCallback не добавляем в зависимости,
+     * чтобы debounce не пересоздавался каждый рендер.
+     */
+    const debouncedCommit = useMemo(() => {
+        if (!config.debounce?.enabled) {
+            return null;
         }
 
-        setCursor(event?.target?.selectionStart);
+        return _debounce(
+            (value: string) => {
+                config.inputParams.onChange(value);
+                config.onChangeCallback?.(value);
+            },
+            config.debounce.delayMs ?? DEFAULT_DEBOUNCE_DELAY_MS,
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [config.debounce?.enabled, config.debounce?.delayMs]);
 
-        inputParams.onChange(value || event.target?.value);
-    }, [inputParams, onChangeCallback]);
+    const onChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>, value = null) => {
+        const val = value ?? event.target.value;
+        setCursor(event?.target?.selectionStart);
+        setLocalValue(val);
+        if (config.debounce?.enabled) {
+            debouncedCommit(val);
+        } else {
+            config.inputParams.onChange(val);
+            config.onChangeCallback?.(val);
+        }
+    }, [config, debouncedCommit]);
 
     return {
         inputRef,
         onChange,
+        value: localValue,
     };
 }

@@ -1,6 +1,5 @@
-import * as React from 'react';
 import _get from 'lodash-es/get';
-import {useMemo} from 'react';
+import {memo, ReactNode, useMemo} from 'react';
 import {useComponents, useForm} from '../../../hooks';
 
 /**
@@ -52,7 +51,7 @@ export interface IFieldLayoutViewProps {
     successful: boolean,
     id: string,
     size: Size,
-    children?: React.ReactNode,
+    children?: ReactNode,
     className?: string,
 }
 
@@ -76,4 +75,4 @@ function FieldLayout(props: IFieldLayoutProps): JSX.Element {
     return components.ui.renderView(props.view || 'form.FieldLayoutView', viewProps);
 }
 
-export default React.memo(FieldLayout);
+export default memo(FieldLayout);

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 import FlexGrid, {IFlexGridItem, IFlexGridProps} from '../../../ui/list/FlexGrid/FlexGrid';
 import {useComponents} from '../../../hooks';
 
@@ -32,7 +32,7 @@ export interface IDashboardProps extends IUiComponent, IFlexGridProps {
 }
 
 export interface IDashboardItemViewProps extends Pick<IDashboardItem, 'title' | 'iconName'> {
-    children: React.ReactNode,
+    children: ReactNode,
 }
 
 function Dashboard(props: IDashboardProps): JSX.Element {
@@ -40,7 +40,7 @@ function Dashboard(props: IDashboardProps): JSX.Element {
 
     const DashboardItemView = props.itemView || components.ui.getView('content.DashboardItemView');
 
-    const flexGridItems = React.useMemo(() => props.items.map(item => ({
+    const flexGridItems = useMemo(() => props.items.map(item => ({
         ...item,
         content: (
             <DashboardItemView

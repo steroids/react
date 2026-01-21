@@ -1,4 +1,4 @@
-import React from 'react';
+import {ChangeEvent, MutableRefObject, useEffect} from 'react';
 
 interface IInputTypeNumberProps {
     max: any,
@@ -8,13 +8,13 @@ interface IInputTypeNumberProps {
 }
 
 const useInputTypeNumber = (
-    currentInputRef: React.MutableRefObject<HTMLInputElement>,
+    currentInputRef: MutableRefObject<HTMLInputElement>,
     inputTypeNumberProps: IInputTypeNumberProps,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>, value?: any) => void,
+    onChange: (event: ChangeEvent<HTMLInputElement>, value?: any) => void,
     decimal: number,
     isCanBeNegative?: boolean,
 ) => {
-    React.useEffect(() => {
+    useEffect(() => {
         const defaultValidity = __('The number is not valid.');
 
         const errorMessage = inputTypeNumberProps.required
@@ -63,7 +63,7 @@ const useInputTypeNumber = (
         return decimal ? numericFloatRegExp.test(value) : numericRegExp.test(value);
     };
 
-    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>, newValue?: string) => {
+    const onInputChange = (event: ChangeEvent<HTMLInputElement>, newValue?: string) => {
         let value = newValue || event?.target?.value;
 
         if (isValueNumeric(value)) {

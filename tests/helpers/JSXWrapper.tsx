@@ -1,4 +1,3 @@
-import React from 'react';
 import Portal from '../../src/ui/layout/Portal';
 import ModalPortal from '../../src/ui/modal/ModalPortal';
 

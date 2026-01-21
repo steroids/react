@@ -1,4 +1,3 @@
-import React from 'react';
 import {useBem} from '../../../../src/hooks';
 import {ICardViewProps} from '../../../../src/ui/content/Card/Card';
 import {Button} from '../../../../src/ui/form';

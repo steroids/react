@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import * as React from 'react';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import Dashboard from '../../../../src/ui/content/Dashboard';
 import Grid from '../../../../src/ui/list/Grid';

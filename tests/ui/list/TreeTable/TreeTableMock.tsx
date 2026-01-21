@@ -1,5 +1,4 @@
 import {useMemo} from 'react';
-import * as React from 'react';
 import _merge from 'lodash-es/merge';
 import Grid from '../../../../src/ui/list/Grid';
 import {ITreeTableProps} from '../../../../src/ui/list/TreeTable/TreeTable';

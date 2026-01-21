@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, memo} from 'react';
 import {useBem} from '../../../../../../src/hooks';
 import {calculateMessageTimeAgo} from '../../../../../../src/ui/content/Chat/utils';
 import {IGroupedMessage} from '../../../../../../src/ui/content/Chat/hooks/useChat';
@@ -15,7 +15,7 @@ interface IBubblesDateGroupProps {
 function BubblesDateGroup(props: IBubblesDateGroupProps) {
     const bem = useBem('BubblesDateGroup');
 
-    const toBubbles = React.useCallback((groupedMessages, index) => (
+    const toBubbles = useCallback((groupedMessages, index) => (
         <div
             className={bem.element('bubbles')}
             key={index}
@@ -34,7 +34,7 @@ function BubblesDateGroup(props: IBubblesDateGroupProps) {
         </div>
     ), [bem, props.currentUser.id]);
 
-    const renderDate = React.useCallback(() => (
+    const renderDate = useCallback(() => (
         <>
             <div className={bem.element('date')}>
                 <div className={bem.element('date-wrapper')}>
@@ -59,4 +59,4 @@ function BubblesDateGroup(props: IBubblesDateGroupProps) {
     );
 }
 
-export default React.memo(BubblesDateGroup);
+export default memo(BubblesDateGroup);

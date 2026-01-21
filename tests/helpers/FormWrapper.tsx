@@ -1,4 +1,3 @@
-import React from 'react';
 import Form from '../../src/ui/form/Form';
 
 export function FormWrapper<PropsType>(

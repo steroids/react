@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {ReactNode, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import calculateComponentAbsolutePosition from '../utils/calculateComponentAbsolutePosition';
 
@@ -73,7 +72,7 @@ export interface IAbsolutePositioningInputProps {
     /**
      * Дочерние элементы
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Задержка перед размонтированием компонента, когда он должен быть скрыт.

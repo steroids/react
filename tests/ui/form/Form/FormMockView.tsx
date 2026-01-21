@@ -1,8 +1,7 @@
-import * as React from 'react';
+import {memo, useRef} from 'react';
 import _isString from 'lodash-es/isString';
 
 import {useMount} from 'react-use';
-import {useRef} from 'react';
 import {IFormViewProps} from '../../../../src/ui/form/Form/Form';
 import {useBem} from '../../../../src/hooks';
 import Field from '../../../../src/ui/form/Field';
@@ -51,4 +50,4 @@ function FormView(props: IFormViewProps) {
     );
 }
 
-export default React.memo(FormView);
+export default memo(FormView);

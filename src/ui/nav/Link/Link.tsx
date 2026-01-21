@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '../../form/Button';
 import {IButtonProps, IButtonViewProps} from '../../form/Button/Button';
 

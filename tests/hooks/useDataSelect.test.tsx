@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import useDataSelect, {IDataSelectConfig} from '../../src/hooks/useDataSelect';
 import mountWithApp from '../mocks/mountWithApp';

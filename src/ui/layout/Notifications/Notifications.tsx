@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import {ReactNode, useCallback, useMemo, useState} from 'react';
 import _orderBy from 'lodash-es/orderBy';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
 import useDispatch from '../../../hooks/useDispatch';
@@ -93,7 +93,7 @@ export interface INotificationsViewProps {
     notifications?: INotificationItem[],
     className?: CssClassName,
     position: string,
-    children?: React.ReactNode,
+    children?: ReactNode,
 }
 
 export interface INotificationsItemViewProps extends INotificationItem {

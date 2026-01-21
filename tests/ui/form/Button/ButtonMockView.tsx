@@ -1,4 +1,3 @@
-import * as React from 'react';
 import _isString from 'lodash-es/isString';
 
 import Icon from '../../../../src/ui/content/Icon';

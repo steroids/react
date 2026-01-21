@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import {ReactElement, useCallback, useMemo, useState} from 'react';
 import {IMenuProps} from '../../content/Menu/Menu';
 import {INavItem} from '../../nav/Nav/Nav';
 import {IIconProps} from '../../content/Icon/Icon';
@@ -27,7 +27,7 @@ export interface ISidebarProps extends IUiComponent {
         /**
          * Путь к иконке или React-элемент для отображения иконки логотипа.
          */
-        icon: string | React.ReactElement,
+        icon: string | ReactElement,
     },
 
     /**
@@ -94,7 +94,7 @@ export default function Sidebar(props: ISidebarProps) {
         setIsOpened(newState);
     }, [isOpened]);
 
-    const onClickNav = React.useCallback((itemId: number) => {
+    const onClickNav = useCallback((itemId: number) => {
         if (props?.onClickItem) {
             props.onClickItem(itemId);
         }

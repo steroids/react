@@ -1,10 +1,9 @@
-import * as React from 'react';
-
+import {PropsWithChildren} from 'react';
 import {useBem} from '../../src/hooks';
 import useLayout, {STATUS_LOADING, STATUS_OK} from '../../src/hooks/useLayout';
 import Portal from '../../src/ui/layout/Portal';
 
-export default function Layout(props: React.PropsWithChildren<any>) {
+export default function Layout(props: PropsWithChildren<any>) {
     const bem = useBem('Layout');
 
     const {status} = useLayout();

@@ -1,4 +1,4 @@
-import React from 'react';
+import {CSSProperties} from 'react';
 import {IAvatarViewProps} from '../../../../src/ui/content/Avatar/Avatar';
 import {useBem} from '../../../../src/hooks';
 
@@ -9,7 +9,7 @@ interface IAvatarProps extends IAvatarViewProps {
 export default function Avatar(props: IAvatarProps) {
     const bem = useBem('AvatarView');
 
-    const customSize: React.CSSProperties = typeof props.size === 'number'
+    const customSize: CSSProperties = typeof props.size === 'number'
         ? {
             width: props.size,
             height: props.size,

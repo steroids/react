@@ -1,5 +1,5 @@
+import {useCallback} from 'react';
 import _isArray from 'lodash-es/isArray';
-import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
 import {useBem} from '../../../../src/hooks';
 import {IAutoCompleteFieldViewProps, IAutoCompleteItem} from '../../../../src/ui/form/AutoCompleteField/AutoCompleteField';
@@ -75,7 +75,7 @@ const renderItem = (item: IAutoCompleteItem, props: IAutoCompleteFieldViewProps,
 export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps) {
     const bem = useBem('AutoCompleteFieldView');
 
-    const renderItems = React.useCallback(() => {
+    const renderItems = useCallback(() => {
         if (!_isEmpty(props.categories)) {
             const {categories, itemsWithoutCategory} = normalizeItems(props.items);
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useBem} from '../../../../src/hooks';
 import Format from '../../../../src/ui/format/Format';
 import {ITreeColumnViewProps} from '../../../../src/ui/list/TreeTable/TreeTable';

@@ -1,5 +1,5 @@
 /* eslint-disable valid-typeof */
-import React from 'react';
+import {ReactElement} from 'react';
 import Icon, {IIconProps} from '../../src/ui/content/Icon/Icon';
 import IconMockView from '../ui/content/Icon/IconMockView';
 
@@ -9,7 +9,7 @@ import IconMockView from '../ui/content/Icon/IconMockView';
 * @example renderIcon(props.leadIcon, {className, tabIndex: -1})
 */
 const renderIcon = (
-    icon: string | React.ReactElement,
+    icon: string | ReactElement,
     iconProps: IIconProps,
 ) => typeof icon === 'string'
     ? (

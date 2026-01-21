@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {PropsWithChildren} from 'react';
+import {createContext, PropsWithChildren} from 'react';
 import {IHttpComponent} from '../components/HttpComponent';
 import {IHtmlComponent} from '../components/HtmlComponent';
 import {IWebSocketComponent} from '../components/WebSocketComponent';
@@ -34,7 +33,7 @@ export interface IComponentsProviderProps extends PropsWithChildren<any> {
     components: IComponents,
 }
 
-export const ComponentsContext = React.createContext({} as IComponents);
+export const ComponentsContext = createContext({} as IComponents);
 
 export default function ComponentsProvider(props: IComponentsProviderProps): JSX.Element {
     return (

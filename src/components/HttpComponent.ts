@@ -1,4 +1,3 @@
-import * as React from 'react';
 import _trimStart from 'lodash-es/trimStart';
 import _trimEnd from 'lodash-es/trimEnd';
 import _isEmpty from 'lodash-es/isEmpty';
@@ -256,10 +255,10 @@ export default class HttpComponent implements IHttpComponent {
 
     async getAccessToken() {
         if (this._accessToken === false) {
-            this._accessToken = await this._components.clientStorage.get(
+            this._accessToken = (await this._components.clientStorage.get(
                 this.accessTokenKey,
                 this.clientStorageName,
-            ) || null;
+            )) || null;
         }
         return this._accessToken;
     }

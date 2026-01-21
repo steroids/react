@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {useBem} from '../../../../src/hooks';
 import {ILoaderProps} from '../../../../src/ui/layout/Loader/Loader';
 import IconMockView from '../../content/Icon/IconMockView';

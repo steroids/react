@@ -1,23 +1,24 @@
 /* eslint-disable default-case */
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useMount} from 'react-use';
-import {useDispatch} from 'react-redux';
-import _last from 'lodash-es/last';
 import _head from 'lodash-es/head';
-import {ICalendarSystemProps, ICalendarUser, IEventGroup} from '../CalendarSystem';
-import useDisplayDate from './useDisplayDate';
-import {useDayGrid} from './useDayGrid';
+import _last from 'lodash-es/last';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useMount} from 'react-use';
+
+import useCalendarControls from './useCalendarControls';
+import {useCalendarSystemEventGroupModals} from './useCalendarSystemEventGroupModals';
+import useCalendarSystemModals from './useCalendarSystemModals';
 import {useCalendarType} from './useCalendarType';
+import {useDayGrid} from './useDayGrid';
+import useDisplayDate from './useDisplayDate';
+import {useEventsFromDate} from './useEventsFromDate';
 import useMonthGrid from './useMonthGrid';
 import useWeekGrid from './useWeekGrid';
-import useCalendarControls from './useCalendarControls';
-import useCalendarSystemModals from './useCalendarSystemModals';
-import {useCalendarSystemEventGroupModals} from './useCalendarSystemEventGroupModals';
-import {useEventsFromDate} from './useEventsFromDate';
+import {formChange, formInitialize} from '../../../../actions/form';
+import {ICalendarSystemProps, ICalendarUser, IEventGroup} from '../CalendarSystem';
+import CalendarType from '../enums/CalendarType';
 import DisplayDateFormatType from '../enums/DisplayDateFormatType';
 import {getFormattedDay} from '../utils/utils';
-import {formChange, formInitialize} from '../../../../actions/form';
-import CalendarType from '../enums/CalendarType';
 
 const DEFAULT_DATE_FROM_ATTRIBUTE = 'dateFrom';
 const DEFAULT_DATE_TO_ATTRIBUTE = 'dateTo';

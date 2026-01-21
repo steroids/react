@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
+
 import Nav, {INavProps} from '../../../../src/ui/nav/Nav/Nav';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 
 describe('Nav tests', () => {
     const expectedButtonViewClass = 'ButtonView';

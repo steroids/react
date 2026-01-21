@@ -1,12 +1,12 @@
-import * as React from 'react';
 import _isString from 'lodash-es/isString';
-
-import {useMount} from 'react-use';
+import * as React from 'react';
 import {useRef} from 'react';
-import {IFormViewProps} from '../../../../src/ui/form/Form/Form';
+import {useMount} from 'react-use';
+
 import {useBem} from '../../../../src/hooks';
-import Field from '../../../../src/ui/form/Field';
 import Button from '../../../../src/ui/form/Button';
+import Field from '../../../../src/ui/form/Field';
+import {IFormViewProps} from '../../../../src/ui/form/Form/Form';
 
 function FormView(props: IFormViewProps) {
     const bem = useBem('FormView');

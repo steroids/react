@@ -1,18 +1,19 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
+import React, {useCallback, useEffect, useMemo} from 'react';
+
+import useOnDayClick from './useOnDayClick';
 import {ILocaleComponent} from '../../../components/LocaleComponent';
+import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateRange from '../../form/DateField/useDateRange';
-import {useComponents} from '../../../hooks';
-import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
-import {FieldEnum} from '../../../enums';
-import useOnDayClick from './useOnDayClick';
+import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from '../DateField/useDateInputState';
 
 export interface IDateRangeButton {
     label: string,
@@ -362,5 +363,8 @@ DateRangeField.defaultProps = {
     rangeButtonsPosition: 'left-bottom',
 };
 
-export default fieldWrapper<IDateRangeFieldProps>(FieldEnum.DATE_RANGE_FIELD, DateRangeField,
-    {attributeSuffixes: ['from', 'to']});
+export default fieldWrapper<IDateRangeFieldProps>(
+FieldEnum.DATE_RANGE_FIELD,
+DateRangeField,
+{attributeSuffixes: ['from', 'to']},
+);

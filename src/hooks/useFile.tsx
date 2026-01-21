@@ -1,13 +1,15 @@
-import {RefObject, useCallback, useEffect} from 'react';
-import {useMount, useUnmount, useUpdate, usePrevious} from 'react-use';
+import buildURL from 'axios/lib/helpers/buildURL';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
 import QueueCollection from 'fileup-core/lib/models/QueueCollection';
+import _difference from 'lodash-es/difference';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
-import _difference from 'lodash-es/difference';
-import buildURL from 'axios/lib/helpers/buildURL';
+import {RefObject, useCallback, useEffect} from 'react';
+import {useMount, useUnmount, useUpdate, usePrevious} from 'react-use';
+
 import useInitial from './useInitial';
+
 import {useComponents, useForm} from './index';
 
 export interface IFileInput {
@@ -112,7 +114,8 @@ function generateAcceptString(props) {
 
 export default function useFile(props: IFileInput): IFileOutput {
     const {http} = useComponents();
-    http.getAccessToken(); // TODO Run promise..
+    // TODO Run promise..
+    http.getAccessToken();
 
     const uploader = useInitial(() => new FileUp({
         backendUrl: generateBackendUrl(props),
@@ -120,7 +123,8 @@ export default function useFile(props: IFileInput): IFileOutput {
             ...props.uploaderConfig,
             headers: {
                 ...props.uploaderConfig?.headers,
-                Authorization: 'Bearer ' + http._accessToken, // TODO how to get access token wuthout promise?
+                // TODO how to get access token wuthout promise?
+                Authorization: 'Bearer ' + http._accessToken,
             },
         },
         ...props.uploader,

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {useEffect, useRef} from 'react';
-import {ITooltipViewProps} from '../../../../src/ui/layout/Tooltip/Tooltip';
+
 import {useBem} from '../../../../src/hooks';
+import {ITooltipViewProps} from '../../../../src/ui/layout/Tooltip/Tooltip';
 
 interface ITooltipMockViewProps extends ITooltipViewProps {
     testId: string,

@@ -1,10 +1,11 @@
-import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
-import {Avatar} from '../../../../../../src/ui/content/Avatar';
-import {Text, Title} from '../../../../../../src/ui/typography';
-import Icon from '../../../../../../src/ui/content/Icon';
-import {IChatUser, IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
+import * as React from 'react';
+
 import {useBem} from '../../../../../../src/hooks';
+import {Avatar} from '../../../../../../src/ui/content/Avatar';
+import {IChatUser, IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
+import Icon from '../../../../../../src/ui/content/Icon';
+import {Text, Title} from '../../../../../../src/ui/typography';
 import ChatFileItemView from '../ChatFileItem';
 
 interface IBubbleMessageProps {

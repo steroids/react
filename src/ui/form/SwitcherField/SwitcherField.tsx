@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CheckboxField, {ICheckboxFieldProps} from '../CheckboxField/CheckboxField';
 
 export default function SwitcherField(props: ICheckboxFieldProps) {

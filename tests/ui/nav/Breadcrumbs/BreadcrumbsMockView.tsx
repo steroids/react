@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {IBreadcrumbsViewProps} from '../../../../src/ui/nav/Breadcrumbs/Breadcrumbs';
-import Link from '../../../../src/ui/nav/Link';
+
 import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
-import IconMockView from '../../content/Icon/IconMockView';
+import {IBreadcrumbsViewProps} from '../../../../src/ui/nav/Breadcrumbs/Breadcrumbs';
+import Link from '../../../../src/ui/nav/Link';
 import renderIconMock from '../../../mocks/renderIconMock';
+import IconMockView from '../../content/Icon/IconMockView';
 
 export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
     const bem = useBem('BreadcrumbsView');

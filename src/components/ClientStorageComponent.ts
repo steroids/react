@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-expressions */
-import * as cookie from 'js-cookie';
 import dayjs from 'dayjs';
+import * as cookie from 'js-cookie';
 
 export interface IClientStorageComponentConfig {
     /**

@@ -1,11 +1,12 @@
-import React, {useCallback, useMemo} from 'react';
-import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
-import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
-import {KanbanModalTypeEnum} from '@steroidsjs/core/ui/content/Kanban/enums';
 import {IBem} from '@steroidsjs/core/hooks/useBem';
-import {IModalProps} from '../../modal/Modal/Modal';
-import {useComponents} from '../../../hooks';
+import {KanbanModalTypeEnum} from '@steroidsjs/core/ui/content/Kanban/enums';
+import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
+import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
+import React, {useCallback, useMemo} from 'react';
+
 import {useKanban} from './hooks';
+import {useComponents} from '../../../hooks';
+import {IModalProps} from '../../modal/Modal/Modal';
 
 export interface ITaskTag {
     id: number,

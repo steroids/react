@@ -1,7 +1,8 @@
 import React, {memo} from 'react';
+
 import useBem from '../../../../../src/hooks/useBem';
-import Title from '../../../../../src/ui/typography/Title/Title';
 import {Button} from '../../../../../src/ui/form';
+import Title from '../../../../../src/ui/typography/Title/Title';
 
 interface IAsideHeaderProps {
     onClick?: () => void,

@@ -1,4 +1,5 @@
 import _get from 'lodash-es/get';
+
 import {
     KANBAN_INIT,
     KANBAN_MOVE_TASK,
@@ -148,6 +149,7 @@ const reducerMap = {
     }),
 };
 
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => reducerMap[action.type]
     ? reducerMap[action.type](state, action)
     : state;

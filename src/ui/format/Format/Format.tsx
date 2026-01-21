@@ -2,8 +2,9 @@ import _get from 'lodash-es/get';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
 import {useContext} from 'react';
-import useModel from '../../../hooks/useModel';
+
 import {useComponents} from '../../../hooks';
+import useModel from '../../../hooks/useModel';
 import {FormContext} from '../../form/Form/Form';
 
 /**

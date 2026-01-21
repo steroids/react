@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import SwitcherField from '../../../../src/ui/form/SwitcherField/SwitcherField';
+
 import SwitcherFieldMockView from './SwitcherFieldMockView';
+import SwitcherField from '../../../../src/ui/form/SwitcherField/SwitcherField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('SwitcherField tests', () => {
     const expectedSwitcherFieldClassName = 'SwitcherFieldView';

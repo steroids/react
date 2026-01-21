@@ -1,12 +1,13 @@
-import * as React from 'react';
-import {useMemo} from 'react';
-import _merge from 'lodash-es/merge';
 import {getList} from '@steroidsjs/core/reducers/list';
 import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
-import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
-import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
-import Grid from '../Grid';
+import _merge from 'lodash-es/merge';
+import * as React from 'react';
+import {useMemo} from 'react';
+
 import useSelector from '../../../hooks/useSelector';
+import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
+import Grid from '../Grid';
+import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
 
 export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon' > {
     item: IPreparedTreeItem,

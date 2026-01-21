@@ -1,8 +1,9 @@
-import React, {useRef, useMemo, useState, useEffect} from 'react';
 import _isArray from 'lodash/isArray';
 import _orderBy from 'lodash/orderBy';
-import {useComponents} from '../../../hooks';
+import React, {useRef, useMemo, useState, useEffect} from 'react';
+
 import DetailItem, {IDetailItemProps} from './DetailItem';
+import {useComponents} from '../../../hooks';
 import {IControlItem} from '../../nav/Controls/Controls';
 
 /**

@@ -2,14 +2,15 @@
 /* eslint-disable no-useless-return */
 /* eslint-disable no-console */
 /* eslint-disable default-case */
-import React, {useCallback} from 'react';
-import _isFunction from 'lodash-es/isFunction';
 import _get from 'lodash-es/get';
 import _head from 'lodash-es/head';
-import CalendarEnum from '../enums/CalendarType';
-import {getFormattedDay, getFormattedWeekFromDate, getSourceCalendarControl} from '../utils/utils';
-import DateControlType from '../enums/DateControlType';
+import _isFunction from 'lodash-es/isFunction';
+import React, {useCallback} from 'react';
+
 import {IDay} from '../CalendarSystem';
+import CalendarEnum from '../enums/CalendarType';
+import DateControlType from '../enums/DateControlType';
+import {getFormattedDay, getFormattedWeekFromDate, getSourceCalendarControl} from '../utils/utils';
 
 const DATASET_CONTROL_TYPE_PATH = 'dataset.control';
 

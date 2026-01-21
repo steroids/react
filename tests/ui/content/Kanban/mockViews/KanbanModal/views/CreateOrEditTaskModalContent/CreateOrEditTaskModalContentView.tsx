@@ -1,10 +1,11 @@
 import * as React from 'react';
+
+import Label from './views/Label';
+import TagsSelector from './views/TagsSelector';
+import {Badge} from '../../../../../../../../src/ui/content';
 import {ICreateOrEditTaskModalContentViewProps} from '../../../../../../../../src/ui/content/Kanban/Kanban';
 import KanbanPrioritiesEnum from '../../../../../../../../src/ui/content/Kanban/enums/KanbanPrioritiesEnum';
 import {Button, DropDownField, Form, HtmlField, InputField, RadioListField} from '../../../../../../../../src/ui/form';
-import {Badge} from '../../../../../../../../src/ui/content';
-import TagsSelector from './views/TagsSelector';
-import Label from './views/Label';
 
 export default function CreateOrEditTaskModalContentView(props: ICreateOrEditTaskModalContentViewProps) {
     const columns = React.useMemo(() => (

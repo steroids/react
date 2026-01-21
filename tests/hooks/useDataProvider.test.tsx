@@ -1,14 +1,19 @@
 import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
+
 import useDataProvider, {IDataProviderConfig} from '../../src/hooks/useDataProvider';
 import mountWithApp from '../mocks/mountWithApp';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 
-const MockResultComponent = (props: any) => <div />;
-const MockComponent = (config: IDataProviderConfig) => <MockResultComponent {...useDataProvider(config)} />;
+function MockResultComponent(props: any) {
+  return <div />;
+}
+function MockComponent(config: IDataProviderConfig) {
+  return <MockResultComponent {...useDataProvider(config)} />;
+}
 
 jest.useFakeTimers();
 

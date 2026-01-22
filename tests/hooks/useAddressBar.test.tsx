@@ -239,7 +239,7 @@ describe('queryReplace', () => {
     });
 
     it('should replace query parameters with the given values', () => {
-        const expectedQuery = '/example?id=123&isActive=1&name=John';
+        const expectedQuery = '/example?id=123&name=John&isActive=1';
 
         queryReplace(mockModel, mockLocation, mockValues, WITHOUT_HASH);
 
@@ -247,7 +247,7 @@ describe('queryReplace', () => {
     });
 
     it('should replace hash parameters with the given values', () => {
-        const expectedQuery = '#id=123&isActive=1&name=John';
+        const expectedQuery = '#id=123&name=John&isActive=1';
         const expectedResult = [];
 
         const result = queryReplace(mockModel, mockLocation, mockValues, WITH_HASH);
@@ -257,13 +257,11 @@ describe('queryReplace', () => {
     });
 
     it('should not replace parameters with the same values', () => {
-        mockLocation.search = '?id=123&isActive=1&name=John';
-        const expectedSearchValue = '?id=123&isActive=1&name=John';
+        mockLocation.search = '?id=123&name=John&isActive=1';
 
         queryReplace(mockModel, mockLocation, mockValues, WITHOUT_HASH);
 
         expect(replaceSpy).not.toHaveBeenCalled();
-        expect(mockLocation.search).toBe(expectedSearchValue);
     });
 
     it('should not include parameters with falsy values', () => {

@@ -43,7 +43,7 @@ export interface IIconProps extends Omit<IUiComponent, 'className' | 'style'>, P
     title?: string,
 
     /**
-    *  Должен ли данный элемент участвовать в последовательной навигации
+    * Должен ли данный элемент участвовать в последовательной навигации
     */
     tabIndex?: number,
 

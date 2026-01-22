@@ -41,7 +41,7 @@ export interface IAlertProps extends IUiComponent {
     description?: string,
 
     /**
-     *  Нужно ли отображать кнопку, чтобы закрыть Оповещение
+     * Нужно ли отображать кнопку, чтобы закрыть Оповещение
      */
     showClose?: boolean,
 

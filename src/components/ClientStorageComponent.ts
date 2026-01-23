@@ -5,9 +5,15 @@ import dayjs from 'dayjs';
 
 export interface IClientStorageComponentConfig {
     /**
-     * Кастомный домен
+     * Кастомный домен для куки
      */
     domain?: string,
+
+    /**
+     *  Автоматически устанавливает куку для всех поддоменов текущего домена,
+     *  но только если параметр domain не указан явно
+     */
+    shareBetweenSubdomains?: boolean,
 
     /**
      * Куки для режима ssr
@@ -61,6 +67,8 @@ export default class ClientStorageComponent implements IClientStorageComponent {
 
     domain?: string;
 
+    shareBetweenSubdomains?: boolean;
+
     private _ssrCookie: Record<string, any>;
 
     constructor(components, config) {
@@ -89,6 +97,7 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         }
 
         this.domain = config?.domain || null;
+        this.shareBetweenSubdomains = config?.shareBetweenSubdomains ?? false;
         this._ssrCookie = config?.ssrCookie;
     }
 
@@ -115,7 +124,7 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         ) {
             window.sessionStorage.setItem(name, value);
         } else {
-            const options = {
+            const options: Record<string, any> = {
                 expires,
                 domain: this._getDomain(),
             };
@@ -150,14 +159,19 @@ export default class ClientStorageComponent implements IClientStorageComponent {
             return this.domain;
         }
 
-        const host = (typeof window.location !== 'undefined' && window.location.hostname) || '';
-        return (
-            (!/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(host)
-                && host
+        const host = typeof window !== 'undefined' ? window.location.hostname : '';
+
+        if (this.shareBetweenSubdomains) {
+            const isIp = /^\d{1,3}(\.\d{1,3}){3}$/.test(host);
+
+            if (!isIp) {
+                return host
                     .split('.')
                     .slice(-2)
-                    .join('.'))
-            || host
-        );
+                    .join('.');
+            }
+        }
+
+        return host;
     }
 }

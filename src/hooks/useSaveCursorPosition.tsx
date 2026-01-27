@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
-import React, {ChangeEvent, useEffect, useMemo, useRef, useState} from 'react';
+import {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import _debounce from 'lodash-es/debounce';
 import _isNull from 'lodash-es/isNull';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
@@ -25,7 +25,7 @@ export interface ISaveCursorPositionConfig {
 export default function useSaveCursorPosition(config: ISaveCursorPositionConfig) {
     const [cursor, setCursor] = useState(null);
     const inputRef = useRef(null);
-    const [localValue, setLocalValue] = React.useState(config.inputParams.value ?? '');
+    const [localValue, setLocalValue] = useState(config.inputParams.value ?? '');
 
     useEffect(() => {
         const el = inputRef.current as HTMLInputElement | null;
@@ -44,7 +44,7 @@ export default function useSaveCursorPosition(config: ISaveCursorPositionConfig)
     /**
      * Синхронизация ТОЛЬКО при внешнем reset (например, очистка формы)
      */
-    React.useEffect(() => {
+    useEffect(() => {
         if (config.inputParams.value !== localValue) {
             setLocalValue(config.inputParams.value ?? '');
         }
@@ -71,7 +71,7 @@ export default function useSaveCursorPosition(config: ISaveCursorPositionConfig)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [config.debounce?.enabled, config.debounce?.delayMs]);
 
-    const onChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>, value = null) => {
+    const onChange = useCallback((event: ChangeEvent<HTMLInputElement>, value = null) => {
         const val = value ?? event.target.value;
         setCursor(event?.target?.selectionStart);
         setLocalValue(val);

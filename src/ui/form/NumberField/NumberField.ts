@@ -71,7 +71,11 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange, value} = useSaveCursorPosition(
+    const {
+        inputRef: currentInputRef,
+        onChange,
+        value,
+    } = useSaveCursorPosition(
         {
             inputParams: props.input,
             onChangeCallback: props.onChange,
@@ -100,7 +104,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         const currentValue = Number(currentInputRef?.current?.value);
         let newValue;
 
-        const fixToDecimal = (val) => props.decimal ? val.toFixed(props.decimal) : val;
+        const fixToDecimal = (rawValue) => props.decimal ? rawValue.toFixed(props.decimal) : rawValue;
 
         if (isIncrement) {
             newValue = fixToDecimal(currentValue + step);

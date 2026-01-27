@@ -30,7 +30,7 @@ export default function NumberFieldView(props: INumberFieldViewProps) {
                     disabled: props.inputProps.disabled,
                     size: props.size,
                     hasErrors: !!props.errors,
-                    filled: !!inputRef.current?.value,
+                    filled: !!props.inputProps.value,
                 }),
                 props.className,
             )}

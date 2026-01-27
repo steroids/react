@@ -10,8 +10,8 @@ export interface IClientStorageComponentConfig {
     domain?: string,
 
     /**
-     *  Автоматически устанавливает куку для всех поддоменов текущего домена,
-     *  но только если параметр domain не указан явно
+     * Автоматически устанавливает куку для всех поддоменов текущего домена,
+     * но только если параметр domain не указан явно
      */
     shareBetweenSubdomains?: boolean,
 

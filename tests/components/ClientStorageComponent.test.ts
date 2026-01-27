@@ -71,7 +71,6 @@ describe('ClientStorageComponent', () => {
 
     describe('methods', () => {
         const clientStorage = getInstanceClientStorage();
-        clientStorage.domain = 'kozhinDev';
 
         describe('localStorage', () => {
             const localStorageKey = 'isMonday';
@@ -110,26 +109,6 @@ describe('ClientStorageComponent', () => {
                 clientStorage.remove(sessionStorageKey, clientStorage.STORAGE_SESSION);
                 expect(sessionStorage.removeItem).toHaveBeenCalledWith(sessionStorageKey);
             });
-        });
-    });
-
-    describe('_getDomain', () => {
-        const clientStorage = getInstanceClientStorage();
-        jest.spyOn(clientStorage, '_getDomain');
-        const domain = 'kozhinDev';
-        clientStorage.domain = domain;
-
-        it('with domain', () => {
-            const getDomainCallCount = 1;
-            expect(clientStorage._getDomain()).toBe(domain);
-            expect(clientStorage._getDomain).toHaveBeenCalledTimes(getDomainCallCount);
-        });
-
-        it('without domain and with localhost', () => {
-            clientStorage.domain = '';
-
-            const expectedDomain = 'localhost';
-            expect(clientStorage._getDomain()).toBe(expectedDomain);
         });
     });
 

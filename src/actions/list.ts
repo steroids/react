@@ -158,27 +158,6 @@ export const LIST_SELECT_ITEM = '@list/select_item';
 
 const lazyTimers = {};
 
-const createList = (listId: string, props: any) => ({
-    action: props.action || props.action === '' ? props.action : null,
-    actionMethod: props.actionMethod || 'get',
-    onFetch: props.onFetch,
-    onError: props.onError,
-    condition: props.condition,
-    scope: props.scope,
-    total: props.total || null,
-    items: null,
-    sourceItems: props.items || null,
-    isRemote: !props.items,
-    loadMore: props._pagination.loadMore,
-    primaryKey: props.primaryKey,
-    listId,
-    formId: _get(props, 'searchForm.formId') || listId,
-    pageAttribute: _get(props, '_pagination.attribute') || null,
-    pageSizeAttribute: _get(props, '_paginationSize.attribute') || null,
-    sortAttribute: _get(props, '_sort.attribute') || null,
-    layoutAttribute: _get(props, '_layout.attribute') || null,
-});
-
 export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) => {
     let url = list.action;
     if (list.scope) {

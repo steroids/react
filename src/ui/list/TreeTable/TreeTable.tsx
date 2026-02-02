@@ -268,5 +268,5 @@ TreeTable.defaultProps = {
     saveInClientStorage: false,
     collapseChildItems: false,
     size: 'md',
-    hasAlternatingColors: true,
+    hasAlternatingColors: false,
 };

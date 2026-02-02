@@ -578,11 +578,9 @@ export default function useList(config: IListConfig): IListOutput {
 
     // Check change items
     useUpdateEffect(() => {
-        if (config.items) {
-            dispatch([
-                listSetItems(config.listId, config.items),
-            ]);
-        }
+        dispatch([
+            listSetItems(config.listId, config.items),
+        ]);
     }, [dispatch, config.items, config.listId, list?.isFetched]);
 
     // Check change action

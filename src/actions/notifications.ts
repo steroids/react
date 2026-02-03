@@ -21,7 +21,7 @@ export const closeNotification = (id: string | null = null) => ({
 
 export const showNotification = (
     message: string,
-    level: ColorName = null,
+    level: AlertColorName = null,
     params?: IShowNotificationParameters,
 ) => dispatch => {
     const {position, timeOut} = {

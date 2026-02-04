@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.91 (04.02.2026)
+
+### Added
+
+- Добавлены `viewProps` для `Tooltip` и `DropDownItem`
+
 ## v3.0.90 (02.02.2026)
 
 ### Added

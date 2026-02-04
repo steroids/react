@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 export interface IClientStorageComponentConfig {
     /**
-     * Позволяет использовать cookie на всех поддоменах
+     * Позволяет использовать cookie на всех поддоменах (по умолчанию, false)
      */
     shareBetweenSubdomains?: boolean,
 
@@ -159,8 +159,9 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         if (this.shareBetweenSubdomains) {
             const host = typeof window !== 'undefined' ? window.location.hostname : '';
             const isIp = /^\d{1,3}(\.\d{1,3}){3}$/.test(host);
+            const isLocalhost = host === 'localhost';
 
-            if (!isIp) {
+            if (!isIp && !isLocalhost) {
                 return host
                     .split('.')
                     .slice(-2)

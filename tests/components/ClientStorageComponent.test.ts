@@ -112,6 +112,59 @@ describe('ClientStorageComponent', () => {
         });
     });
 
+    describe('_getDomain', () => {
+        let clientStorage: ClientStorageComponent;
+
+        beforeEach(() => {
+            clientStorage = getInstanceClientStorage();
+            jest.spyOn(clientStorage, '_getDomain');
+        });
+
+        afterEach(() => {
+            jest.restoreAllMocks();
+        });
+
+        it('should return null if shareBetweenSubdomains is false', () => {
+            clientStorage.shareBetweenSubdomains = false;
+            expect(clientStorage._getDomain()).toBeNull();
+            expect(clientStorage._getDomain).toHaveBeenCalled();
+        });
+
+        it('should return host domain for subdomains when shareBetweenSubdomains is true', () => {
+            clientStorage.shareBetweenSubdomains = true;
+
+            Object.defineProperty(window, 'location', {
+                value: {hostname: 'app.kozhin.dev'},
+                writable: true,
+            });
+
+            expect(clientStorage._getDomain()).toBe('kozhin.dev');
+            expect(clientStorage._getDomain).toHaveBeenCalled();
+        });
+
+        it('should return null if hostname is localhost', () => {
+            clientStorage.shareBetweenSubdomains = true;
+
+            Object.defineProperty(window, 'location', {
+                value: {hostname: 'localhost'},
+                writable: true,
+            });
+
+            expect(clientStorage._getDomain()).toBeNull();
+        });
+
+        it('should return null if hostname is an IP address', () => {
+            clientStorage.shareBetweenSubdomains = true;
+
+            Object.defineProperty(window, 'location', {
+                value: {hostname: '127.0.0.1'},
+                writable: true,
+            });
+
+            expect(clientStorage._getDomain()).toBeNull();
+        });
+    });
+
     afterAll(() => {
         global.Storage.prototype.mockReset(storageGetItem);
         global.Storage.prototype.mockReset(storageSetItem);

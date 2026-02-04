@@ -92,8 +92,8 @@ export default class LocaleComponent implements ILocaleComponent {
     constructor(components, config) {
         this.sourceLanguage = config.sourceLanguage || 'ru';
         const pathname = components?.store?.history?.location?.pathname ?? '/';
-        this.allowedLanguages = config.allowedLanguages || ['ru', 'en'];
-        this.language = this._detectLanguage(pathname);
+        this.allowedLanguages = config.allowedLanguages || ['en', 'ru'];
+        this.language = config.language || this._detectLanguage(pathname);
         this.backendTimeZone = null;
         this.backendTimeDiff = null; // in microseconds
         this.translations = {};

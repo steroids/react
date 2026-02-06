@@ -102,10 +102,12 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
     const preloadedData = process.env.IS_SSR ? ssrValueContext.preloadedData : window.APP_PRELOADED_DATA;
     const preloadedDataByConfigId = (preloadedData && configId) ? preloadedData[configId] : null;
 
+    const hasInitialError = preloadedDataByConfigId?.error;
+
     // State for data and loading flag
-    const [data, setData] = useState(preloadedDataByConfigId || null);
-    const [axiosError, setAxiosError] = useState(null);
-    const [isLoading, setIsLoading] = useState(!!config && !data);
+    const [data, setData] = useState(!hasInitialError ? preloadedDataByConfigId : null);
+    const [axiosError, setAxiosError] = useState(hasInitialError ? preloadedDataByConfigId.error : null);
+    const [isLoading, setIsLoading] = useState(!!config && !preloadedDataByConfigId);
 
     // Cancel tokens
     const cancelTokens = useRef([]);
@@ -144,7 +146,7 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
     }, [components, config]);
 
     useEffectOnce(() => {
-        if (!data) {
+        if (!data && !axiosError) {
             fetch();
         }
     });

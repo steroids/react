@@ -5,13 +5,7 @@ import dayjs from 'dayjs';
 
 export interface IClientStorageComponentConfig {
     /**
-     * Кастомный домен для куки
-     */
-    domain?: string,
-
-    /**
-     * Автоматически устанавливает куку для всех поддоменов текущего домена,
-     * но только если параметр domain не указан явно
+     * Позволяет использовать cookie на всех поддоменах (по умолчанию, false)
      */
     shareBetweenSubdomains?: boolean,
 
@@ -65,8 +59,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
 
     sessionStorageAvailable: boolean;
 
-    domain?: string;
-
     shareBetweenSubdomains?: boolean;
 
     private _ssrCookie: Record<string, any>;
@@ -96,7 +88,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
             }
         }
 
-        this.domain = config?.domain || null;
         this.shareBetweenSubdomains = config?.shareBetweenSubdomains ?? false;
         this._ssrCookie = config?.ssrCookie;
     }
@@ -124,10 +115,15 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         ) {
             window.sessionStorage.setItem(name, value);
         } else {
+            const domain = this._getDomain();
+
             const options: Record<string, any> = {
                 expires,
-                domain: this._getDomain(),
             };
+
+            if (domain) {
+                options.domain = domain;
+            }
 
             if (expires && process.env.IS_SSR) {
                 options.expires = dayjs().add(options.expires, 'days').utc().toDate();
@@ -147,24 +143,25 @@ export default class ClientStorageComponent implements IClientStorageComponent {
         ) {
             window.sessionStorage.removeItem(name);
         } else {
-            const options = {
-                domain: this._getDomain(),
+            const domain = this._getDomain();
+
+            const options: Record<string, any> = {
             };
+
+            if (domain) {
+                options.domain = domain;
+            }
             process.env.IS_SSR ? this._ssrCookie.remove(name, options) : cookie.remove(name, options);
         }
     }
 
     _getDomain() {
-        if (this.domain) {
-            return this.domain;
-        }
-
-        const host = typeof window !== 'undefined' ? window.location.hostname : '';
-
         if (this.shareBetweenSubdomains) {
+            const host = typeof window !== 'undefined' ? window.location.hostname : '';
             const isIp = /^\d{1,3}(\.\d{1,3}){3}$/.test(host);
+            const isLocalhost = host === 'localhost';
 
-            if (!isIp) {
+            if (!isIp && !isLocalhost) {
                 return host
                     .split('.')
                     .slice(-2)
@@ -172,6 +169,6 @@ export default class ClientStorageComponent implements IClientStorageComponent {
             }
         }
 
-        return host;
+        return null;
     }
 }

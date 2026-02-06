@@ -1049,5 +1049,9 @@
     "Логическое значение, указывающее, есть ли еще элементы в списке с бесконечным скроллом": "Boolean value indicating whether there are more items in the infinite scroll list",
     "Кастомный домен для куки": "Custom cookie domain",
     "Флаг, который указывает, что высота поля должна быть равна высоте контента": "Flag indicating that the field height should be equal to the content height",
-    "Автоматически устанавливает куку для всех поддоменов текущего домена, но только если параметр domain не указан явно": "Automatically sets the cookie for all subdomains of the current domain, but only if the domain parameter is not explicitly specified"
+    "Автоматически устанавливает куку для всех поддоменов текущего домена, но только если параметр domain не указан явно": "Automatically sets the cookie for all subdomains of the current domain, but only if the domain parameter is not explicitly specified",
+    "Позволяет использовать cookie на всех поддоменах (по умолчанию, false)": "Allows cookies to be used on all subdomains (by default, false)",
+    "Задержка в мс": "Delay in ms",
+    "Дополнительное содержание сообщения": "Additional message content",
+    "Задержка применения введённого значения": "Delay in applying the entered value"
 }

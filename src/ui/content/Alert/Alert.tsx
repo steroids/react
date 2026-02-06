@@ -35,7 +35,7 @@ export interface IAlertProps extends IUiComponent {
      */
     message?: string,
 
-    /** Дополнительное содрежание сообщения.
+    /** Дополнительное содержание сообщения.
      * @example 'Please, check your email.'
      */
     description?: string,

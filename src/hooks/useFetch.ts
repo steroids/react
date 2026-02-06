@@ -8,6 +8,7 @@ import {IComponents} from '../providers/ComponentsProvider';
 declare global {
     interface Window {
         APP_PRELOADED_DATA: any,
+        APP_PRELOADED_ERRORS: any,
     }
 }
 
@@ -100,14 +101,14 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
     const configId = getConfigId(config);
     const ssrValueContext = useSsr();
     const preloadedData = process.env.IS_SSR ? ssrValueContext.preloadedData : window.APP_PRELOADED_DATA;
+    const preloadedErrors = process.env.IS_SSR ? ssrValueContext.preloadedErrors : window.APP_PRELOADED_ERRORS;
     const preloadedDataByConfigId = (preloadedData && configId) ? preloadedData[configId] : null;
-
-    const hasInitialError = preloadedDataByConfigId?.error;
+    const preloadedErrorByConfigId = (preloadedErrors && configId) ? preloadedErrors[configId] : null;
 
     // State for data and loading flag
-    const [data, setData] = useState(!hasInitialError ? preloadedDataByConfigId : null);
-    const [axiosError, setAxiosError] = useState(hasInitialError ? preloadedDataByConfigId.error : null);
-    const [isLoading, setIsLoading] = useState(!!config && !preloadedDataByConfigId);
+    const [data, setData] = useState(preloadedDataByConfigId || null);
+    const [axiosError, setAxiosError] = useState(preloadedErrorByConfigId || null);
+    const [isLoading, setIsLoading] = useState(!!config && !data && !axiosError);
 
     // Cancel tokens
     const cancelTokens = useRef([]);

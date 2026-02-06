@@ -12,6 +12,7 @@ export interface ISsr {
     },
     staticContext?: StaticRouterContext,
     preloadedData?: IPreloadedData,
+    preloadedErrors: any,
 }
 
 export const SsrProviderContext = React.createContext<ISsr>(null);
@@ -24,6 +25,7 @@ export default function SsrProvider(props: ISsrProviderProps): JSX.Element {
             history: props.history,
             staticContext: props.staticContext,
             preloadedData: props.preloadedData,
+            preloadedErrors: props.preloadedErrors,
         }}
         >
             {props.children}

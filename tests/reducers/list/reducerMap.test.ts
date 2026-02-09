@@ -125,6 +125,7 @@ describe('list reducers', () => {
                     [listId]: {
                         ...state.lists[listId],
                         items: action.items,
+                        sourceItems: action.items,
                     },
                 },
             };

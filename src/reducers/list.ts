@@ -44,6 +44,7 @@ const reducerMap = {
             [action.listId]: {
                 ...state.lists[action.listId],
                 items: action.items,
+                sourceItems: action.items,
             },
         },
     }),

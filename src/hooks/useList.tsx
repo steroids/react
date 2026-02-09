@@ -581,7 +581,7 @@ export default function useList(config: IListConfig): IListOutput {
         dispatch([
             listSetItems(config.listId, config.items),
         ]);
-    }, [dispatch, config.items, config.listId, list?.isFetched]);
+    }, [dispatch, config.items, config.listId]);
 
     // Check change action
     const prevAction = usePrevious(config.action);

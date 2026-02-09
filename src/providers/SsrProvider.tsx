@@ -16,7 +16,7 @@ export interface ISsr {
     },
     staticContext?: StaticRouterContext,
     preloadedData?: IPreloadedData,
-    preloadedErrors: IPreloadedErrors,
+    preloadedErrors?: IPreloadedErrors,
 }
 
 export const SsrProviderContext = React.createContext<ISsr>(null);

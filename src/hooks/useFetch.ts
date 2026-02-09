@@ -19,7 +19,7 @@ export interface IFetchConfig {
     params?: Record<string, unknown>,
     /**
      * Применяется для ssr. Если fetch критический — ssr вернет страницу со статус кодом ошибки.
-     * @default true
+     * @default false
      */
     isCritical?: boolean,
     onFetch?: (config: IFetchConfig, components: IComponents, addCancelToken: (token: any) => any) => any,

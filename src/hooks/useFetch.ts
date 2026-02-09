@@ -26,13 +26,12 @@ export interface IFetchConfig {
 }
 
 export interface IFetchResult<T> {
-    data?: {
-        providerData?: {
-            type: string,
-            value: string,
-        },
-        [key: string]: unknown,
-    } | T,
+    data?: T | undefined | null | {
+        statusCode: number,
+        error?: string,
+        message?: string,
+        errors?: Record<string, unknown>,
+    },
     isLoading: boolean,
     fetch: (newParams?: Record<string, unknown>) => void,
     axiosError: AxiosError | null,

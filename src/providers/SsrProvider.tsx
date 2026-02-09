@@ -6,13 +6,17 @@ export interface IPreloadedData {
     [configId: string]: any,
 }
 
+export interface IPreloadedErrors {
+    [configId: string]: any,
+}
+
 export interface ISsr {
     history?: {
         initialEntries: string[],
     },
     staticContext?: StaticRouterContext,
     preloadedData?: IPreloadedData,
-    preloadedErrors: any,
+    preloadedErrors: IPreloadedErrors,
 }
 
 export const SsrProviderContext = React.createContext<ISsr>(null);

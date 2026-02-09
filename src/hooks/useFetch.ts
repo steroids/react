@@ -17,6 +17,11 @@ export interface IFetchConfig {
     url?: string,
     method?: 'get' | 'post' | string,
     params?: Record<string, unknown>,
+    /**
+     * Применяется для ssr. Если fetch критический — ssr вернет страницу со статус кодом ошибки.
+     * @default true
+     */
+    isCritical?: boolean,
     onFetch?: (config: IFetchConfig, components: IComponents, addCancelToken: (token: any) => any) => any,
 }
 

@@ -25,6 +25,7 @@ import useDisplayDate from '../ui/content/CalendarSystem/hooks/useDisplayDate';
 import useCalendarControls from '../ui/content/CalendarSystem/hooks/useCalendarControls';
 import useSaveCursorPosition from './useSaveCursorPosition';
 import useListField from './useListField';
+import useAppLanguage from './useAppLanguage';
 
 export {
     useAbsolutePositioning,
@@ -54,4 +55,5 @@ export {
     useCalendarControls,
     useSaveCursorPosition,
     useListField,
+    useAppLanguage,
 };

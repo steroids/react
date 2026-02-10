@@ -87,7 +87,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Цвет состояния
      * @example success
      */
-    color?: ColorName,
+    color?: 'basic' | 'primary' | 'secondary' | 'warning' | 'danger' | 'info' | 'success' | string,
 
     /**
     * Включает стиль `outline`, когда у DropDownField остается только `border`, а задний фон становится прозрачным

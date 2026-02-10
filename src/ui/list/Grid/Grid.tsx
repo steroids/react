@@ -126,7 +126,7 @@ export interface IGridColumn {
     },
 
     /**
-    *  Параметры для картинки в колонке
+    * Параметры для картинки в колонке
     * @example
      * {
      *  attribute: 'icon',

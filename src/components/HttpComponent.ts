@@ -105,27 +105,30 @@ export interface IHttpComponent extends IHttpComponentConfig {
     /**
      * Вызов метода post
      * @param url URL для HTTP-запроса.
-     * @param params Параметры для запроса.
+     * @param data Тело запроса.
      * @param options Опции для HTTP-запроса, заголовки и т.д.
+     * @param params Параметры для запроса.
      */
-    post(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
+    post(url: string, data?: Record<string, any>, options?: IHttpRequestOptions, params?: Record<string, any>): any,
 
     /**
      * Вызов метода delete
      * @param url URL для HTTP-запроса.
-     * @param params Параметры для запроса.
+     * @param data Тело для запроса.
      * @param options Опции для HTTP-запроса, заголовки и т.д.
+     * @param params Параметры для запроса.
      */
-    delete(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
+    delete(url: string, data?: Record<string, any>, options?: IHttpRequestOptions, params?: Record<string, any>): any,
 
     /**
      * Вызов http-метода
      * @param method Метод запроса (GET, POST и т.д.).
      * @param url URL для HTTP-запроса.
-     * @param params Параметры для запроса.
+     * @param data Тело запроса.
      * @param options Опции для HTTP-запроса, заголовки и т.д.
+     * @param params Параметры для запроса.
      */
-    send(method: string, url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
+    send(method: string, url: string, data?: Record<string, any>, options?: IHttpRequestOptions, params?: Record<string, any>): any,
 
     /**
      * Метод, который вызывается после запроса
@@ -306,35 +309,49 @@ export default class HttpComponent implements IHttpComponent {
         ).then((response: any) => response.data);
     }
 
-    post(url, params = {}, options: IHttpRequestOptions = {}) {
+    post(url, data = {}, options: IHttpRequestOptions = {}, params = {}) {
         return this._send(
             url,
             {
                 method: 'post',
-                data: params,
+                data,
+                params,
             },
             options,
         ).then((response: any) => response.data);
     }
 
-    delete(url, params = {}, options: IHttpRequestOptions = {}) {
+    delete(url, data = {}, options: IHttpRequestOptions = {}, params = {}) {
         return this._send(
             url,
             {
                 method: 'delete',
-                data: params,
+                data,
+                params,
             },
             options,
         ).then((response: any) => response.data);
     }
 
-    send(method, url, params = {}, options: IHttpRequestOptions = {}) {
+    send(method, url, data = {}, options: IHttpRequestOptions = {}, params = {}) {
         method = method.toLowerCase();
+
         return this._send(
             url,
             {
                 method,
-                [method === 'get' ? 'params' : 'data']: params,
+                ...(method === 'get'
+                    ? {
+                        params: {
+                            ...data,
+                            ...params,
+                        },
+                    } // Объединяем для GET
+                    : {
+                        data,
+                        params,
+                    } // Разделяем для других методов
+                ),
             },
             options,
         );

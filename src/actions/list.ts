@@ -24,6 +24,11 @@ export interface IList {
     actionMethod?: string,
 
     /**
+     * Логическое значение, указывающее, есть ли еще элементы в списке с бесконечным скроллом
+     */
+    hasMoreInfiniteScroll?: boolean,
+
+    /**
     * Функция обратного вызова, вызываемая при получении списка.
     */
     onFetch?: (list: IList, query: Record<string, unknown>, components: any) => Promise<any>,
@@ -152,27 +157,6 @@ export const LIST_SELECT_ITEM = '@list/select_item';
 //const STORAGE_LAYOUT_KEY_PREFIX = 'listLayout_';
 
 const lazyTimers = {};
-
-const createList = (listId: string, props: any) => ({
-    action: props.action || props.action === '' ? props.action : null,
-    actionMethod: props.actionMethod || 'get',
-    onFetch: props.onFetch,
-    onError: props.onError,
-    condition: props.condition,
-    scope: props.scope,
-    total: props.total || null,
-    items: null,
-    sourceItems: props.items || null,
-    isRemote: !props.items,
-    loadMore: props._pagination.loadMore,
-    primaryKey: props.primaryKey,
-    listId,
-    formId: _get(props, 'searchForm.formId') || listId,
-    pageAttribute: _get(props, '_pagination.attribute') || null,
-    pageSizeAttribute: _get(props, '_paginationSize.attribute') || null,
-    sortAttribute: _get(props, '_sort.attribute') || null,
-    layoutAttribute: _get(props, '_layout.attribute') || null,
-});
 
 export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) => {
     let url = list.action;
@@ -336,7 +320,7 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
         });
     }
 
-    toDispatch.push([
+    toDispatch.push(
         Promise.resolve(onFetch(list, formValues, components, options))
             .then(data => {
                 // Skip on empty
@@ -407,7 +391,7 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
                     delete components.http._promises[listId];
                 }
             }),
-    ]);
+    );
 
     return dispatch(toDispatch);
 };

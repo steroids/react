@@ -23,6 +23,21 @@ declare module '*.png' {
 declare function __(phrase: string, params?: any): string;
 
 /**
+ * Название цвета, соответствующее ему состоянию
+ */
+declare type ColorName =
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'danger'
+    | 'light'
+    | 'dark'
+    | 'basic'
+    | string;
+
+/**
  * Название цвета для Alert и Notification
  */
 declare type AlertColorName =

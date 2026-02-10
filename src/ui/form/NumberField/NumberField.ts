@@ -90,7 +90,11 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     );
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 
-    const {onInputChange} = useInputTypeNumber(
+    const {
+        onInputChange,
+        onInputBlur,
+        applyMinMaxConstraints,
+    } = useInputTypeNumber(
         currentInputRef,
         {
             max: props.max,
@@ -105,6 +109,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     const onStep = useCallback((isIncrement: boolean) => {
         const currentValue = Number(currentInputRef?.current?.value);
+
         let newValue;
 
         const fixToDecimal = (rawValue) => props.decimal ? rawValue.toFixed(props.decimal) : rawValue;
@@ -115,8 +120,10 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             newValue = fixToDecimal(currentValue - step);
         }
 
+        newValue = applyMinMaxConstraints(newValue);
+
         onInputChange(null, String(newValue));
-    }, [currentInputRef, onInputChange, props.decimal, step]);
+    }, [currentInputRef, onInputChange, props.decimal, step, applyMinMaxConstraints]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {
@@ -147,6 +154,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         inputProps,
         onStepUp: () => onStep(true),
         onStepDown: () => onStep(false),
+        onBlur: onInputBlur,
         input: props.input,
         inputRef: currentInputRef,
         size: props.size,

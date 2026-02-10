@@ -120,7 +120,7 @@ export interface IDateRangeFieldProps extends IDateInputStateInput,
     },
 
     /**
-     *  Ограничение доступных дат.
+     * Ограничение доступных дат.
      */
     disabledDays?: {
         after?: Date,

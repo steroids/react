@@ -45,6 +45,7 @@ const reducerMap = {
             [action.listId]: {
                 ...state.lists[action.listId],
                 items: action.items,
+                sourceItems: action.items,
             },
         },
     }),
@@ -79,6 +80,11 @@ const reducerMap = {
         } else {
             items = [].concat(action.items);
         }
+
+        const hasMoreInfiniteScroll = list.hasInfiniteScroll
+            ? action.items.length === action.pageSize
+            : false;
+
         return {
             ...state,
             lists: {
@@ -87,6 +93,7 @@ const reducerMap = {
                     ...list,
                     ...action,
                     items,
+                    hasMoreInfiniteScroll,
                     isFetched: true,
                     isLoading: false,
                 },

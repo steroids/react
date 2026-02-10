@@ -282,14 +282,16 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
                 fetchRemote(false);
             }
 
-            if (delayTimerRef.current) {
-                clearTimeout(delayTimerRef.current);
-            }
-
             // Changed query logic
             if (prevQuery !== config.query || !_isEqual(prevParams, dataProvider.params)) {
+                if (delayTimerRef.current) {
+                    clearTimeout(delayTimerRef.current);
+                }
+
                 // Search with delay
-                delayTimerRef.current = setTimeout(fetchRemote, autoComplete.delay);
+                delayTimerRef.current = setTimeout(() => {
+                    fetchRemote(false);
+                }, autoComplete.delay);
             }
         }
     }, [autoComplete, components.http, config.autoFetch, config.dataProvider, config.initialSelectedIds, config.query, dataProvider,

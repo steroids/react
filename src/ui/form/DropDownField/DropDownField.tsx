@@ -216,6 +216,12 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Сигнал, запрещающий отправку запроса на получение данных
      */
     isFetchDisabled?: boolean,
+
+    /**
+     * Пропсы для отображения элемента
+     */
+    itemViewProps?: CustomViewProps,
+
     [key: string]: any,
 }
 
@@ -469,6 +475,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         toggleCollapse,
         isItemToSelectAll: item.id === normalizedItemToSelectAll?.id,
         isSelectedAll,
+        itemViewProps: props.itemViewProps,
     });
 
     const renderItem = useCallback((item: IDropDownFieldItem) => {

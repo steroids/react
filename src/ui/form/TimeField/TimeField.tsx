@@ -45,7 +45,7 @@ export interface ITimeFieldProps extends IDateInputStateInput, IUiComponent {
     maskOptions?: MaskitoOptions,
 
     /**
-     *  Ограничение доступного времени.
+     * Ограничение доступного времени.
      */
     availableTime?: {
         from: string,

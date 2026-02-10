@@ -80,7 +80,7 @@ export interface IDateTimeRangeFieldProps extends Omit<IDateInputStateInput, 'in
     },
 
     /**
-     *  Ограничение доступных дат.
+     * Ограничение доступных дат.
      */
     disabledDays?: {
         after?: Date,

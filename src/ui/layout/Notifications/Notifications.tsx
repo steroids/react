@@ -39,6 +39,12 @@ interface INotificationItem {
      * @example Сохранено!
      */
     message?: string,
+
+    /** Дополнительное содержание сообщения.
+     * @example 'Успешно сохранено'
+     */
+    description?: string,
+
     isClosing?: boolean,
 }
 

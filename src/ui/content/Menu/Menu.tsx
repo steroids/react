@@ -44,7 +44,7 @@ export interface IMenuItem {
  */
 export interface IMenuProps extends IUiComponent {
     /**
-    *   Элементы меню
+    * Элементы меню
     */
     items: IMenuItem[],
 

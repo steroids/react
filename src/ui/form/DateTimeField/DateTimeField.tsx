@@ -45,7 +45,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
     dateTimeSeparator?: string,
 
     /**
-     *  Ограничение доступных дат.
+     * Ограничение доступных дат.
      */
     disabledDays?: {
         after?: Date,

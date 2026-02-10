@@ -17,9 +17,9 @@ export interface IEmailFieldProps extends IBaseFieldProps, IFieldWrapperInputPro
 function EmailField(props: IEmailFieldProps) {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(
-        props.input,
-    );
+    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition({
+        inputParams: props.input,
+    });
 
     const {onInputChange} = useInputTypeEmail(currentInputRef, onChange, props.input.value, props.required);
 

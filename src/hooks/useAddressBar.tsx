@@ -4,7 +4,7 @@ import _has from 'lodash-es/has';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
 import _toInteger from 'lodash-es/toInteger';
-import queryString from 'query-string';
+import * as queryString from 'qs';
 import {useCallback, useRef} from 'react';
 
 import {Model} from '../components/MetaComponent';
@@ -87,7 +87,9 @@ export const defaultToStringConverter = (value, type, item) => {
 };
 
 export const queryRestore = (model: Model, location, useHash) => {
-    const values = queryString.parse(useHash ? location.hash : location.search);
+    const search = useHash ? location.hash : location.search;
+    const values = queryString.parse(search.replace(/^[?#]/, ''));
+
     const result = {};
 
     const attributes = model?.attributes || Object.keys(values);
@@ -104,15 +106,10 @@ export const queryRestore = (model: Model, location, useHash) => {
             result[item.attribute] = value !== null ? value : defaultValue;
         }
     });
+
     return result;
 };
 
-/**
- * WARNING
- * Method incorrectly saves nested objects (e.g. {foo: [{bar: 1}]}
- * // @todo use 'qs' library instead of 'query-string'
- *
- */
 export const queryReplace = (model: Model, location, values, useHash) => {
     const result = {};
 
@@ -132,18 +129,21 @@ export const queryReplace = (model: Model, location, values, useHash) => {
         }
     });
 
-    let query = queryString.stringify(result);
+    const query = queryString.stringify(result);
+
     if (useHash) {
-        query = '#' + query;
-        if (location.hash !== query) {
-            location.hash = query;
+        const hash = '#' + query;
+        if (location.hash !== hash) {
+            location.hash = hash;
         }
         return [];
     }
-    query = '?' + query;
-    if (location.search !== query) {
-        return replace(location.pathname + query);
+
+    const search = '?' + query;
+    if (location.search !== search) {
+        return replace(location.pathname + search);
     }
+
     return [];
 };
 

@@ -20,7 +20,10 @@ export const closeNotification = (id: string | null = null) => ({
 });
 
 export const showNotification = (
-    message: string,
+    message: string | {
+        message: string,
+        description?: string,
+    },
     // eslint-disable-next-line default-param-last
     level: ColorName = null,
     params?: IShowNotificationParameters,

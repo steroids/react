@@ -89,7 +89,7 @@ export interface ITimeRangeFieldProps extends IDateInputStateInput,
     },
 
     /**
-     *  Ограничение доступного времени.
+     * Ограничение доступного времени.
      */
     availableTime?: {
         from: string,

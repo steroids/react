@@ -7,7 +7,12 @@ import CheckboxField, {ICheckboxFieldProps} from '../CheckboxField/CheckboxField
  *
  * Компонент RadioField представляет собой элемент выбора типа "radio". Он позволяет пользователю выбрать один вариант из нескольких предложенных.
  **/
-export default function RadioField(props: ICheckboxFieldProps): JSX.Element {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IRadioFieldProps extends ICheckboxFieldProps {
+    // Этот интерфейс оставлен для будущего расширения и генерации документации
+}
+
+function RadioField(props: IRadioFieldProps): JSX.Element {
     return (
         <CheckboxField
             multiply={false}
@@ -16,3 +21,5 @@ export default function RadioField(props: ICheckboxFieldProps): JSX.Element {
         />
     );
 }
+
+export default RadioField;

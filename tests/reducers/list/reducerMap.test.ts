@@ -125,6 +125,7 @@ describe('list reducers', () => {
                     [listId]: {
                         ...state.lists[listId],
                         items: action.items,
+                        sourceItems: action.items,
                     },
                 },
             };
@@ -182,6 +183,7 @@ describe('list reducers', () => {
             const listProperties: IList = {
                 isLoading: true,
                 isRemote: false,
+                hasMoreInfiniteScroll: false,
                 items,
             };
 
@@ -220,6 +222,7 @@ describe('list reducers', () => {
             const listProperties: IList = {
                 isLoading: true,
                 isRemote: false,
+                hasMoreInfiniteScroll: false,
                 items: [
                     {
                         id: 'item1',
@@ -274,6 +277,7 @@ describe('list reducers', () => {
             const listProperties: IList = {
                 isLoading: true,
                 isRemote: false,
+                hasMoreInfiniteScroll: false,
             };
 
             const state = getStateWithLists({[listId]: listProperties});

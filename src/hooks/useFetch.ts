@@ -10,6 +10,7 @@ import {useComponents, useSsr} from './index';
 declare global {
     interface Window {
         APP_PRELOADED_DATA: any,
+        APP_PRELOADED_ERRORS: any,
     }
 }
 
@@ -18,17 +19,21 @@ export interface IFetchConfig {
     url?: string,
     method?: 'get' | 'post' | string,
     params?: Record<string, unknown>,
+    /**
+     * Применяется для ssr. Если fetch критический — ssr вернет страницу со статус кодом ошибки.
+     * @default false
+     */
+    isCritical?: boolean,
     onFetch?: (config: IFetchConfig, components: IComponents, addCancelToken: (token: any) => any) => any,
 }
 
 export interface IFetchResult<T> {
-    data?: {
-        providerData?: {
-            type: string,
-            value: string,
-        },
-        [key: string]: unknown,
-    } | T,
+    data?: T | undefined | null | {
+        statusCode: number,
+        error?: string,
+        message?: string,
+        errors?: Record<string, unknown>,
+    },
     isLoading: boolean,
     fetch: (newParams?: Record<string, unknown>) => void,
     axiosError: AxiosError | null,
@@ -102,12 +107,14 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
     const configId = getConfigId(config);
     const ssrValueContext = useSsr();
     const preloadedData = process.env.IS_SSR ? ssrValueContext.preloadedData : window.APP_PRELOADED_DATA;
+    const preloadedErrors = process.env.IS_SSR ? ssrValueContext.preloadedErrors : window.APP_PRELOADED_ERRORS;
     const preloadedDataByConfigId = (preloadedData && configId) ? preloadedData[configId] : null;
+    const preloadedErrorByConfigId = (preloadedErrors && configId) ? preloadedErrors[configId] : null;
 
     // State for data and loading flag
     const [data, setData] = useState(preloadedDataByConfigId || null);
-    const [axiosError, setAxiosError] = useState(null);
-    const [isLoading, setIsLoading] = useState(!!config && !data);
+    const [axiosError, setAxiosError] = useState(preloadedErrorByConfigId || null);
+    const [isLoading, setIsLoading] = useState(!!config && !data && !axiosError);
 
     // Cancel tokens
     const cancelTokens = useRef([]);
@@ -146,7 +153,7 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
     }, [components, config]);
 
     useEffectOnce(() => {
-        if (!data) {
+        if (!data && !axiosError) {
             fetch();
         }
     });

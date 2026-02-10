@@ -3,6 +3,7 @@
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
+import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
 import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
 import * as React from 'react';
 
@@ -133,6 +134,12 @@ export interface IInputFieldProps extends IBaseFieldProps {
      * Пользовательская иконка svg или название иконки
      */
     leadIcon?: React.ReactElement | string,
+
+    /**
+     * Задержка применения введённого значения
+     */
+    debounce?: boolean | ISaveCursorPositionDebounceConfig,
+
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
@@ -158,9 +165,14 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         options: props.maskOptions,
     });
 
-    const {inputRef, onChange} = useSaveCursorPosition(
-        props.input,
-    );
+    const {inputRef, onChange, value} = useSaveCursorPosition({
+        inputParams: props.input,
+        onChangeCallback: props.onChange,
+        debounce: {
+            enabled: !!props.debounce,
+            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+        },
+    });
 
     React.useEffect(() => {
         if (inputRef.current) {
@@ -176,16 +188,16 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         }
 
         props.input.onChange('');
-    }, [props.input, props.onClear]);
+    }, [props]);
 
     const inputProps = useMemo(() => ({
         type: props.type,
         name: props.input.name,
-        value: props.input.value ?? '',
+        value,
         onInput: onChange,
         placeholder: props.placeholder,
         ...props.inputProps,
-    }), [onChange, props.input.name, props.input.value, props.inputProps, props.placeholder, props.type]);
+    }), [value, onChange, props.input.name, props.inputProps, props.placeholder, props.type]);
 
     const viewProps = useMemo(() => ({
         inputRef: INPUT_TYPES_SUPPORTED_SELECTION.includes(props.type) ? inputRef : null,

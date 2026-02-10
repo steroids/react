@@ -110,6 +110,11 @@ export interface ITooltipProps {
      */
     className?: CssClassName,
 
+    /**
+     * Пропсы для отображения элемента
+     */
+    viewProps?: CustomViewProps,
+
     [key: string]: any,
 }
 
@@ -202,6 +207,7 @@ function Tooltip(props: ITooltipProps): JSX.Element {
                         arrowPosition={arrowPosition}
                         calculatePosition={calculatePosition}
                         className={props.className}
+                        viewProps={props.viewProps}
                     />
                 </TooltipInnerPortal>
             )}

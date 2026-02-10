@@ -66,12 +66,12 @@ export interface IDataSelectConfig {
     inputValue?: any,
 
     /**
-     *  Список со всеми элементами
+     * Список со всеми элементами
      */
     sourceItems?: IDataSelectItem[],
 
     /**
-     *  Ref autocomplete поиска
+     * Ref autocomplete поиска
      */
     autoCompleteInputRef?: MutableRefObject<HTMLInputElement>,
 

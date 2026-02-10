@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 
 import NumberFieldMockView from './NumberFieldMockView';
-import NumberField, {INumberFieldViewProps} from '../../../../src/ui/form/NumberField/NumberField';
+import NumberField, {INumberFieldProps} from '../../../../src/ui/form/NumberField/NumberField';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('NumberField tests', () => {
@@ -14,7 +14,7 @@ describe('NumberField tests', () => {
         max: 3,
         min: 1,
         hint,
-    } as INumberFieldViewProps;
+    } as INumberFieldProps;
 
     const expectedNumberFieldClassName = 'NumberFieldView';
 

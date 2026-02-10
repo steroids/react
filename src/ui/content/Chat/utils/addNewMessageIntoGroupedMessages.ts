@@ -1,10 +1,10 @@
+import {IChatMessage} from '@steroidsjs/core/ui/content/Chat/Chat';
 import dayjs from 'dayjs';
 import _last from 'lodash-es/last';
 
-import {IChatMessage} from '@steroidsjs/core/ui/content/Chat/Chat';
-import {isWithinTimeThreshold} from '../utils/getMessagesGroupedByDate';
 import {MONTH_AND_DAY_TEMPLATE} from '../constants/timeTemplatesAndUnits';
 import {IGroupedMessage, IGroupedMessagesByDates} from '../hooks/useChat';
+import {isWithinTimeThreshold} from '../utils/getMessagesGroupedByDate';
 
 const addMessageToExistingGroup = (newMessage: IGroupedMessage, groupedMessagesByDates: IGroupedMessagesByDates, dateKey: string) => {
     const currentGroupedMessagesByDates = [...groupedMessagesByDates[dateKey]];

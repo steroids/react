@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {FieldEnum} from '../../../enums';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * BlankField

@@ -1,5 +1,6 @@
-import {useMemo} from 'react';
 import _head from 'lodash-es/head';
+import {useMemo} from 'react';
+
 import {IDay} from '../CalendarSystem';
 import {getFormattedWeekFromDate, getTwentyFourHoursArray} from '../utils/utils';
 

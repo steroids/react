@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {useCallback} from 'react';
-import {IDateFieldViewProps} from '../../../../src/ui/form/DateField/DateField';
-import Icon from '../../../../src/ui/content/Icon';
+
 import {useBem} from '../../../../src/hooks';
-import DropDown from '../../../../src/ui/content/DropDown';
 import Calendar from '../../../../src/ui/content/Calendar';
+import DropDown from '../../../../src/ui/content/DropDown';
+import Icon from '../../../../src/ui/content/Icon';
+import {IDateFieldViewProps} from '../../../../src/ui/form/DateField/DateField';
 
 export default function DateFieldView(props: IDateFieldViewProps) {
     const bem = useBem('DateFieldView');

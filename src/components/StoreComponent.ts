@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-import {createStore, applyMiddleware, compose} from 'redux';
 import {routerMiddleware, connectRouter} from 'connected-react-router';
 import {
     createBrowserHistory,
@@ -7,8 +6,9 @@ import {
     createHashHistory,
 } from 'history';
 import _get from 'lodash-es/get';
-import _merge from 'lodash-es/merge';
 import _isPlainObject from 'lodash-es/isPlainObject';
+import _merge from 'lodash-es/merge';
+import {createStore, applyMiddleware, compose} from 'redux';
 
 declare global {
     interface Window {

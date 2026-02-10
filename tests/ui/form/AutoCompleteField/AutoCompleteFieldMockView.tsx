@@ -1,11 +1,12 @@
 import _isArray from 'lodash-es/isArray';
-import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
+import * as React from 'react';
+
 import {useBem} from '../../../../src/hooks';
+import {IBem} from '../../../../src/hooks/useBem';
+import {Icon} from '../../../../src/ui/content';
 import {IAutoCompleteFieldViewProps, IAutoCompleteItem} from '../../../../src/ui/form/AutoCompleteField/AutoCompleteField';
 import Text from '../../../../src/ui/typography/Text/Text';
-import {Icon} from '../../../../src/ui/content';
-import {IBem} from '../../../../src/hooks/useBem';
 
 const normalizeItems = (items: IAutoCompleteItem[]) => {
     const categories: {
@@ -109,12 +110,10 @@ export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps
     return (
         <div
             ref={props.forwardedRef}
-            className={bem(
-                bem.block({
+            className={bem(bem.block({
                     size: props.size,
                     opened: props.isOpened,
-                }), props.className,
-            )}
+                }), props.className)}
             style={props.style}
         >
             <input

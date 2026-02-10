@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
+
 import BlankField from '../../../../src/ui/form/BlankField';
 import InputField from '../../../../src/ui/form/InputField';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 
 describe('BlankField tests', () => {
     it('should have correct text', () => {

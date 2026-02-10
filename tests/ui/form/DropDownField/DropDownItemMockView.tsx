@@ -1,4 +1,5 @@
 import React from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
 import {
     CHECKBOX_CONTENT_TYPE,
@@ -8,10 +9,10 @@ import {
     IMG_CONTENT_TYPE,
     RADIO_CONTENT_TYPE,
 } from '../../../../src/ui/form/DropDownField/DropDownField';
+import renderIcon from '../../../mocks/renderIconMock';
 import AccordionItemView from '../../content/Accordion/AccordionItemMockView';
 import CheckboxFieldView from '../CheckboxField/CheckboxFieldMockView';
 import RadioFieldView from '../RadioField/RadioFieldMockView';
-import renderIcon from '../../../mocks/renderIconMock';
 
 export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
     const bem = useBem('DropDownItemView');

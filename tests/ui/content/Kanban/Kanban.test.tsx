@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import Kanban from '../../../../src/ui/content/Kanban/Kanban';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 const Droppable = ({children}) => children({
     draggableProps: {

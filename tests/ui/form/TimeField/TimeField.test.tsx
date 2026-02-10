@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import TimeField, {ITimeFieldProps} from '../../../../src/ui/form/TimeField/TimeField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('TimeField', () => {
     const expectedTimeFieldClassName = 'TimeFieldView';

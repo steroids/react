@@ -1,5 +1,6 @@
-import _isString from 'lodash-es/isString';
 import _get from 'lodash-es/get';
+import _isString from 'lodash-es/isString';
+
 import {
     FIELDS_SET_META,
     FIELDS_DATA_PROVIDER_SET_ITEMS,
@@ -18,6 +19,7 @@ const initialState: IFieldsState = {
 };
 
 export const normalizeName = name => name.replace(/\\/g, '.').replace(/^\./, '');
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => {
     switch (action.type) {
         case FIELDS_SET_META:

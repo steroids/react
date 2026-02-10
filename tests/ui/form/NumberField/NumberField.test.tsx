@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import NumberField, {INumberFieldProps} from '../../../../src/ui/form/NumberField/NumberField';
+
 import NumberFieldMockView from './NumberFieldMockView';
+import NumberField, {INumberFieldProps} from '../../../../src/ui/form/NumberField/NumberField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('NumberField tests', () => {
     const externalClassName = 'external-class-name';

@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import {renderHook} from '@testing-library/react';
-import useComponents from '../../src/hooks/useComponents';
+
 import {useModel} from '../../src/hooks';
+import useComponents from '../../src/hooks/useComponents';
 
 jest.mock('../../src/hooks/useComponents');
 

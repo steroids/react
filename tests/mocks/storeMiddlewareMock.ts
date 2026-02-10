@@ -1,4 +1,5 @@
 import _isPlainObject from 'lodash-es/isPlainObject';
+
 import componentsMock from './componentsMock';
 
 //TODO import this middleware from StoreComponent

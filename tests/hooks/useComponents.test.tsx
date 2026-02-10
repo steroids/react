@@ -4,10 +4,12 @@ import {useComponents} from '../../src/hooks';
 import {IComponents} from '../../src/providers/ComponentsProvider';
 import mountWithApp from '../mocks/mountWithApp';
 
-const MockResultComponent = (props: any) => <div />;
-const MockComponent = (props: any) => (
-    <MockResultComponent components={useComponents()} />
-);
+function MockResultComponent(props: any) {
+  return <div />;
+}
+function MockComponent(props: any) {
+  return <MockResultComponent components={useComponents()} />;
+}
 
 describe('useComponents hook', () => {
     it('usage', () => {

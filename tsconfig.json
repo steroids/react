@@ -19,7 +19,8 @@
 	  }
 	},
 	"include": [
-	  "src/**/*"
+	    "src/**/*",
+		"tests/**/*"
 	],
 	"exclude": [
 	  "node_modules",
@@ -27,4 +28,3 @@
 	  "src/**/*.test.tsx"
 	]
  }
- 

@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import DateFormatter, {IDateFormatterProps} from '../../../src/ui/format/DateFormatter/DateFormatter';
 import DefaultFormatterMockView from './DefaultFormatterMockView';
-
+import DateFormatter, {IDateFormatterProps} from '../../../src/ui/format/DateFormatter/DateFormatter';
 import {JSXWrapper, render} from '../../helpers';
 
 describe('DateFormatter tests', () => {

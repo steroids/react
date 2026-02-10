@@ -1,8 +1,9 @@
 import _get from 'lodash-es/get';
 import React, {useCallback, useMemo} from 'react';
+
+import {formChange} from '../../../actions/form';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
-import {formChange} from '../../../actions/form';
 import {IButtonProps} from '../../form/Button/Button';
 
 const FIRST_PAGE = 1;

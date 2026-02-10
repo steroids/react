@@ -1,19 +1,20 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React from 'react';
-import _take from 'lodash-es/take';
-import _slice from 'lodash-es/slice';
-import _isEmpty from 'lodash-es/isEmpty';
-import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
+import _get from 'lodash-es/get';
+import _isEmpty from 'lodash-es/isEmpty';
+import _slice from 'lodash-es/slice';
+import _take from 'lodash-es/take';
+import React from 'react';
+
 import useBem from '../../../../../../../src/hooks/useBem';
-import {convertDate} from '../../../../../../../src/utils/calendar';
 import {IDay, IEvent} from '../../../../../../../src/ui/content/CalendarSystem/CalendarSystem';
-import {Button} from '../../../../../../../src/ui/form';
 import CalendarEnum from '../../../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
-import Tooltip from '../../../../../../../src/ui/layout/Tooltip/Tooltip';
 import useExpandClickAway from '../../../../../../../src/ui/content/CalendarSystem/hooks/useExpandClickAway';
+import {Button} from '../../../../../../../src/ui/form';
+import Tooltip from '../../../../../../../src/ui/layout/Tooltip/Tooltip';
+import {convertDate} from '../../../../../../../src/utils/calendar';
 
 export const getFormattedExpandRestLabel = (rest: any[]) => `Показать ещё +${rest.length}`;
 

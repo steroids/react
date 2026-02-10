@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import RadioFieldView from './RadioFieldMockView';
 import RadioField from '../../../../src/ui/form/RadioField/RadioField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('RadioField tests', () => {
     const expectedRadioFieldClassName = 'RadioFieldView';

@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import {useBem, useUniqueId} from '../../../../src/hooks';
 
+import {useBem, useUniqueId} from '../../../../src/hooks';
 import {ICheckboxFieldViewProps} from '../../../../src/ui/form/CheckboxField/CheckboxField';
 
 export default function SwitcherFieldMockView(props: ICheckboxFieldViewProps) {

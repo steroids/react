@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CheckboxListField, {ICheckboxListFieldProps} from '../CheckboxListField/CheckboxListField';
 
 /**

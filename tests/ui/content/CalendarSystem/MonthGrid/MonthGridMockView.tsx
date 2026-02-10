@@ -1,8 +1,9 @@
 import React, {memo} from 'react';
+
+import MonthDay from './views/MonthDay/MonthDayMockView';
 import useBem from '../../../../../src/hooks/useBem';
 import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
-import MonthDay from './views/MonthDay/MonthDayMockView';
 
 interface IMonthGridProps {
     monthGridWeekDays: string[],

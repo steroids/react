@@ -2,11 +2,11 @@ import '@testing-library/jest-dom';
 import {renderHook, act} from '@testing-library/react';
 import FileUp from 'fileup-core';
 import File from 'fileup-core/lib/models/File';
+
 import {useFile} from '../../src/hooks';
 import useComponents from '../../src/hooks/useComponents';
-import componentsMock from '../mocks/componentsMock';
-
 import {generateBackendUrl} from '../../src/hooks/useFile';
+import componentsMock from '../mocks/componentsMock';
 
 describe('generateBackendUrl', () => {
     const backendUrl = 'https://example.com/api';

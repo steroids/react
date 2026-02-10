@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 import {useMemo} from 'react';
-import {ICalendarSystemProps} from '../CalendarSystem';
+
 import {useComponents} from '../../../../hooks';
+import {ICalendarSystemProps} from '../CalendarSystem';
 
 export interface ICustomViews {
     renderEventView: (componentProps: any) => JSX.Element,

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import * as React from 'react';
+
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import {IRateFieldViewProps} from '../../../../src/ui/form/RateField/RateField';

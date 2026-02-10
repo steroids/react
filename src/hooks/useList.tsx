@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, {useCallback, useMemo} from 'react';
-import _get from 'lodash-es/get';
-import _union from 'lodash-es/union';
-import _isEqual from 'lodash-es/isEqual';
-import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 import {
     IInfiniteScrollProps,
     normalizeInfiniteScrollProps,
 } from '@steroidsjs/core/ui/list/InfiniteScroll/InfiniteScroll';
+import _get from 'lodash-es/get';
+import _isEqual from 'lodash-es/isEqual';
+import _union from 'lodash-es/union';
+import React, {useCallback, useMemo} from 'react';
+import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
+
 import useSelector from './useSelector';
-import {getList} from '../reducers/list';
-import useModel from '../hooks/useModel';
-import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
+import {formChange, formDestroy} from '../actions/form';
 import {
     IList,
     listDestroy,
@@ -21,17 +20,19 @@ import {
     listSetItems,
     listChangeAction,
 } from '../actions/list';
+import {Model} from '../components/MetaComponent';
+import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
 import useDispatch from '../hooks/useDispatch';
-import {formChange, formDestroy} from '../actions/form';
-import {formSelector} from '../reducers/form';
-import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
 import useInitial from '../hooks/useInitial';
+import useModel from '../hooks/useModel';
+import {formSelector} from '../reducers/form';
+import {getList} from '../reducers/list';
+import {IFormProps} from '../ui/form/Form/Form';
+import {Loader} from '../ui/layout';
+import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
+import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
 import {IPaginationProps, normalizePaginationProps} from '../ui/list/Pagination/Pagination';
 import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';
-import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
-import {IFormProps} from '../ui/form/Form/Form';
-import {Model} from '../components/MetaComponent';
-import {Loader} from '../ui/layout';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -301,7 +302,8 @@ export const getDefaultSearchModel = ({
     sort,
     layoutNamesProps,
 }) => ({
-    attributes: [ // default attributes
+    attributes: [
+        // default attributes
         paginationProps.enable && {
             type: 'number',
             attribute: paginationProps.attribute,
@@ -313,7 +315,8 @@ export const getDefaultSearchModel = ({
             defaultValue: paginationSizeProps.defaultValue,
         },
         sort.enable && {
-            type: 'string', // TODO Need list of strings
+            // TODO Need list of strings
+            type: 'string',
             jsType: 'string[]',
             attribute: sort.attribute,
             defaultValue: sort.defaultValue,
@@ -340,8 +343,10 @@ export const createInitialValues = ({
     [layoutNamesProps.attribute]: layoutNamesProps.defaultValue,
     // TODO [this.props._layout.attribute]:
     //  this.props.clientStorage.get(this.props._layout.attribute) || this.props._layout.defaultValue,
-    ...initialQuery, // Address bar
-    ...configQuery, // Query from props
+    // Address bar
+    ...initialQuery,
+    // Query from props
+    ...configQuery,
 });
 
 const FIRST_PAGE = 1;

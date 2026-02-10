@@ -1,9 +1,9 @@
 import _trimEnd from 'lodash-es/trimEnd';
 
 import Crud from './Crud';
-import {IRouteItem} from '../nav/Router/Router';
 import {ICrudProps} from './Crud/Crud';
 import {DEFAULT_QUERY_KEY} from './Crud/utils';
+import {IRouteItem} from '../nav/Router/Router';
 
 export interface ICrudGeneratorProps extends ICrudProps {
     path?: string,

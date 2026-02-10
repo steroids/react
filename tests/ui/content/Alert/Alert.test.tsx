@@ -1,9 +1,10 @@
+import {fireEvent} from '@testing-library/dom';
 import React from 'react';
 import '@testing-library/jest-dom';
-import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import Alert from '../../../../src/ui/content/Alert';
+
 import AlertView from './AlertMockView';
+import Alert from '../../../../src/ui/content/Alert';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Alert', () => {
     const props = {

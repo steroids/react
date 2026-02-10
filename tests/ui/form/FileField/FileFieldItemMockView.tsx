@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useBem} from '../../../../src/hooks';
 
-import {FilesLayout, IFileFieldItemViewProps} from '../../../../src/ui/form/FileField/FileField';
+import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
+import {FilesLayout, IFileFieldItemViewProps} from '../../../../src/ui/form/FileField/FileField';
 
 export default function FileFieldItemView(props: IFileFieldItemViewProps) {
     const bem = useBem('FileFieldItemView');

@@ -1,17 +1,18 @@
-import React, {MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {usePrevious, useUpdateEffect} from 'react-use';
-import _isEqual from 'lodash-es/isEqual';
-import _isEmpty from 'lodash-es/isEmpty';
 import _includes from 'lodash-es/includes';
+import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _merge from 'lodash-es/merge';
-import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
+import React, {MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {usePrevious, useUpdateEffect} from 'react-use';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {IDropDownProps} from '../../content/DropDown/DropDown';
-import {FieldEnum} from '../../../enums';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
 export const GROUP_CONTENT_TYPE = 'group';
 export const CHECKBOX_CONTENT_TYPE = 'checkbox';
@@ -258,7 +259,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
 }
 
 const normalizeItemToSelectAll = (
-    itemToSelectAll: boolean | {label: string, id: string,},
+    itemToSelectAll: boolean | {label: string, id: string},
 ) => {
     if (!itemToSelectAll) {
         return null;

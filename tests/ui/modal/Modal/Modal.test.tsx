@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom';
-import * as React from 'react';
 import {fireEvent} from '@testing-library/dom';
 import {waitFor} from '@testing-library/react';
-import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
-import Modal, {IModalProps} from '../../../../src/ui/modal/Modal/Modal';
+import * as React from 'react';
+
+import {openModal} from '../../../../src/actions/modal';
 import {useDispatch} from '../../../../src/hooks';
 import {Button} from '../../../../src/ui/form';
-import {openModal} from '../../../../src/actions/modal';
+import Modal, {IModalProps} from '../../../../src/ui/modal/Modal/Modal';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 
 const componentText = 'Modal Component Text';
 const buttonText = 'Open modal';
@@ -52,10 +53,12 @@ describe('Modal tests', () => {
             container,
             getByText,
             queryByText,
-        } = render(JSXWrapper(ModalButton, modalProps, true, true),
+        } = render(
+JSXWrapper(ModalButton, modalProps, true, true),
             {
                 container: document.body,
-            });
+            },
+);
 
         const openModalButton = getByText(buttonText);
         fireEvent.click(openModalButton);
@@ -107,11 +110,13 @@ describe('Modal tests', () => {
     it('should render children prop correctly when component prop is not passed', () => {
         const modalChildrenText = 'Test Children';
 
-        const ModalChildren = (modalChildrenProps) => (
-            <Modal {...modalChildrenProps}>
-                <div>{modalChildrenText}</div>
-            </Modal>
-        );
+        function ModalChildren(modalChildrenProps) {
+  return (
+      <Modal {...modalChildrenProps}>
+          <div>{modalChildrenText}</div>
+      </Modal>
+  );
+}
 
         const localProps = {
             component: null,
@@ -152,9 +157,11 @@ describe('Modal tests', () => {
         const closeModalButton = getElementByClassName(container, expectedModalCloseClassName);
         fireEvent.click(closeModalButton);
 
-        await waitFor(() => expect(localProps.onClose)
+        await waitFor(
+() => expect(localProps.onClose)
             .toHaveBeenCalledTimes(expectedOnCloseClickCount),
-        {timeout: localProps.closeTimeoutMs});
+        {timeout: localProps.closeTimeoutMs},
+);
     });
 
     it('should close modal automatically', async () => {
@@ -168,15 +175,19 @@ describe('Modal tests', () => {
 
         const {queryByText} = renderComponent(localProps);
 
-        await waitFor(() => {
+        await waitFor(
+() => {
             expect(localProps.onClose).toHaveBeenCalledTimes(expectedOnCloseClickCount);
         },
-        {timeout: props.closeAfterMs});
+        {timeout: props.closeAfterMs},
+);
 
-        await waitFor(() => {
+        await waitFor(
+() => {
             expect(queryByText(componentText)).not.toBeInTheDocument();
         },
-        {timeout: props.closeAfterMs + props.closeTimeoutMs});
+        {timeout: props.closeAfterMs + props.closeTimeoutMs},
+);
     });
 
     it('should render title from props', async () => {

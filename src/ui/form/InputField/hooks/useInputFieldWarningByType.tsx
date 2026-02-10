@@ -2,8 +2,9 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-expressions */
 import {useMount} from 'react-use';
-import {IElementInputType} from '../InputField';
+
 import {FieldEnum} from '../../../../enums';
+import {IElementInputType} from '../InputField';
 
 export const INPUT_TYPES_SUPPORTED_SELECTION = ['text', 'search', 'tel', 'url', 'password'];
 

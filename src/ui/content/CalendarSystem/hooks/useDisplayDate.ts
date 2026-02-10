@@ -1,8 +1,9 @@
-import {useMemo, useState} from 'react';
 import _upperFirst from 'lodash-es/upperFirst';
+import {useMemo, useState} from 'react';
+
 import {convertDate} from '../../../../utils/calendar';
-import DisplayDateFormatType from '../enums/DisplayDateFormatType';
 import {IDay} from '../CalendarSystem';
+import DisplayDateFormatType from '../enums/DisplayDateFormatType';
 
 const convertDateToRequiredFormat = (
     date: Date | string,

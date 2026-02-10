@@ -1,15 +1,16 @@
-import * as React from 'react';
-import {useCallback, useMemo} from 'react';
-import _merge from 'lodash-es/merge';
-import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
+import {useComponents} from '@steroidsjs/core/hooks';
 import Format from '@steroidsjs/core/ui/format/Format';
 import ControlsColumn from '@steroidsjs/core/ui/list/ControlsColumn';
-import _upperFirst from 'lodash-es/upperFirst';
+import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
 import _isString from 'lodash-es/isString';
-import {useComponents} from '@steroidsjs/core/hooks';
+import _merge from 'lodash-es/merge';
+import _upperFirst from 'lodash-es/upperFirst';
+import * as React from 'react';
+import {useCallback, useMemo} from 'react';
+
+import useList from '../../../hooks/useList';
 import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
 import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
-import useList from '../../../hooks/useList';
 
 export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon' > {
     item: IPreparedTreeItem,

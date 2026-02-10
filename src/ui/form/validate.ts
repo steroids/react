@@ -1,12 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import _isString from 'lodash-es/isString';
-import _isInteger from 'lodash-es/isInteger';
-import _set from 'lodash-es/set';
+import dayjs from 'dayjs';
 import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
-import _size from 'lodash-es/size';
 import _isFunction from 'lodash-es/isFunction';
-import dayjs from 'dayjs';
+import _isInteger from 'lodash-es/isInteger';
+import _isString from 'lodash-es/isString';
+import _set from 'lodash-es/set';
+import _size from 'lodash-es/size';
 
 const validate = (data, rules) => {
     const errors = {};

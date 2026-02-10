@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+
 import Empty from '../../../../src/ui/list/Empty/Empty';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Empty tests', () => {
     const expectedEmptyClass = 'EmptyView';

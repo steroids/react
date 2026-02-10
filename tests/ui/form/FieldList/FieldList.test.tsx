@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {FormWrapper, getElementByClassName, render} from '../../../helpers';
-import FieldListMockView from './FieldListMockView';
+
 import FieldListItemMockView from './FieldListItemMockView';
-import FieldList from '../../../../src/ui/form/FieldList/FieldList';
+import FieldListMockView from './FieldListMockView';
 import {InputField} from '../../../../src/ui/form';
+import FieldList from '../../../../src/ui/form/FieldList/FieldList';
+import {FormWrapper, getElementByClassName, render} from '../../../helpers';
 
 describe('FieldList tests', () => {
     const titleColum = 'Test title';

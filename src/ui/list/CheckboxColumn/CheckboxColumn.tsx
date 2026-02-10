@@ -1,7 +1,8 @@
 import {useCallback, useMemo} from 'react';
+
+import {toggleAll, toggleItem} from '../../../actions/list';
 import {useComponents, useSelector} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
-import {toggleAll, toggleItem} from '../../../actions/list';
 import {isSelected, isSelectedAll} from '../../../reducers/list';
 import {IColumnViewProps} from '../Grid/Grid';
 

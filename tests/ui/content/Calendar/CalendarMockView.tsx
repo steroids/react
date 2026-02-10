@@ -1,11 +1,12 @@
 import * as React from 'react';
-import MomentLocaleUtils from 'react-day-picker/moment';
 import {useCallback, useMemo} from 'react';
 import DayPicker, {DateUtils} from 'react-day-picker';
+import MomentLocaleUtils from 'react-day-picker/moment';
 import {CaptionElementProps} from 'react-day-picker/types/Props';
+
+import CaptionElement from './CaptionElementMockView';
 import {useBem} from '../../../../src/hooks';
 import {ICalendarViewProps} from '../../../../src/ui/content/Calendar/Calendar';
-import CaptionElement from './CaptionElementMockView';
 
 export default function CalendarView(props: ICalendarViewProps) {
     const bem = useBem('CalendarView');
@@ -46,24 +47,26 @@ export default function CalendarView(props: ICalendarViewProps) {
         };
     }, [isRange, selectedDates]);
 
+    const renderCaptionElement = useCallback(({classNames, date, localeUtils, locale}: CaptionElementProps) => (
+        <CaptionElement
+            date={date}
+            locale={locale}
+            toYear={toYear}
+            fromYear={fromYear}
+            classNames={classNames}
+            onChange={onMonthSelect}
+            localeUtils={localeUtils}
+            showCalendarFooter={showFooter}
+            toggleCaptionPanel={toggleCaptionPanel}
+            isCaptionPanelVisible={isCaptionPanelVisible}
+        />
+    ), [fromYear, isCaptionPanelVisible, onMonthSelect, showFooter, toYear, toggleCaptionPanel]);
+
     return (
         <DayPicker
             {...props}
             className={bem(bem.block({ranged: isRange}), props.className)}
-            captionElement={useCallback(({classNames, date, localeUtils, locale}: CaptionElementProps) => (
-                <CaptionElement
-                    date={date}
-                    locale={locale}
-                    toYear={toYear}
-                    fromYear={fromYear}
-                    classNames={classNames}
-                    onChange={onMonthSelect}
-                    localeUtils={localeUtils}
-                    showCalendarFooter={showFooter}
-                    toggleCaptionPanel={toggleCaptionPanel}
-                    isCaptionPanelVisible={isCaptionPanelVisible}
-                />
-            ), [fromYear, isCaptionPanelVisible, onMonthSelect, showFooter, toYear, toggleCaptionPanel])}
+            captionElement={renderCaptionElement}
             renderDay={(day) => {
                 const date = day.getDate();
                 return (

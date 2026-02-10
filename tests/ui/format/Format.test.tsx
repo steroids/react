@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {JSXWrapper, render} from '../../helpers';
 import Format, {IFormatProps} from '../../../src/ui/format/Format/Format';
+import {JSXWrapper, render} from '../../helpers';
 
 describe('Format tests', () => {
     const emptyText = 'test';

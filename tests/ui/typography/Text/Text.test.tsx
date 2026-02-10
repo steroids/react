@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {Text} from '../../../../src/ui/typography';
 import TextMockView from './TextMockView';
+import {Text} from '../../../../src/ui/typography';
 import {getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Text tests', () => {

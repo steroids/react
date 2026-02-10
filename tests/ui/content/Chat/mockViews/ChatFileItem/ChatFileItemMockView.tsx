@@ -1,10 +1,11 @@
 import * as React from 'react';
+
 import {useBem} from '../../../../../../src/hooks';
-import {IFileFieldItemViewProps} from '../../../../../../src/ui/form/FileField/FileField';
-import Icon from '../../../../../../src/ui/content/Icon';
-import {Text} from '../../../../../../src/ui/typography';
-import {FileSize} from '../../../../../../src/ui/format';
 import {IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
+import Icon from '../../../../../../src/ui/content/Icon';
+import {IFileFieldItemViewProps} from '../../../../../../src/ui/form/FileField/FileField';
+import {FileSize} from '../../../../../../src/ui/format';
+import {Text} from '../../../../../../src/ui/typography';
 
 interface IChatFileItemViewProps extends IFileFieldItemViewProps, IMessageFile {
     isFileFromMessage?: boolean,

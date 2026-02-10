@@ -1,11 +1,12 @@
 import React from 'react';
+
 import {useBem} from '../../../../src/hooks';
-import {ICardViewProps} from '../../../../src/ui/content/Card/Card';
-import {Button} from '../../../../src/ui/form';
 import Avatar from '../../../../src/ui/content/Avatar/Avatar';
+import {ICardViewProps} from '../../../../src/ui/content/Card/Card';
 import Icon from '../../../../src/ui/content/Icon';
-import IconMockView from '../Icon/IconMockView';
+import {Button} from '../../../../src/ui/form';
 import {Link} from '../../../../src/ui/nav';
+import IconMockView from '../Icon/IconMockView';
 
 export default function CardView(props: ICardViewProps) {
     const bem = useBem('CardView');
@@ -14,15 +15,19 @@ export default function CardView(props: ICardViewProps) {
 
     return (
         <div
-            className={bem(bem.block(),
-                props.className)}
+            className={bem(
+bem.block(),
+                props.className,
+)}
             style={props.style}
         >
             {props.header && (
-                <div className={bem.element('header',
+                <div className={bem.element(
+'header',
                     {
                         withoutCover: !props.cover && hasContent,
-                    })}
+                    },
+)}
                 >
                     <div className={bem.element('header-data')}>
                         {props.header.avatar && (

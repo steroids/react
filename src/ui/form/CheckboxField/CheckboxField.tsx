@@ -1,7 +1,8 @@
 import React, {useMemo} from 'react';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {useComponents} from '../../../hooks';
+
 import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * CheckboxField

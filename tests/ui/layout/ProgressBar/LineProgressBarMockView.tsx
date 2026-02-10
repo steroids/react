@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {IProgressBarViewProps} from '../../../../src/ui/layout/ProgressBar/ProgressBar';
+
 import {useBem} from '../../../../src/hooks';
+import {IProgressBarViewProps} from '../../../../src/ui/layout/ProgressBar/ProgressBar';
 
 export default function LineProgressBarView(props: IProgressBarViewProps) {
     const bem = useBem('LineProgressBarView');

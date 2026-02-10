@@ -1,6 +1,6 @@
-import axios from 'axios';
-import BaseHttpComponent from '@steroidsjs/core/components/HttpComponent';
 import {logout} from '@steroidsjs/core/actions/auth';
+import BaseHttpComponent from '@steroidsjs/core/components/HttpComponent';
+import axios from 'axios';
 
 export interface IRefreshTokenRequest {
     url: string,

@@ -1,20 +1,21 @@
 import '@testing-library/jest-dom';
-import React from 'react';
 import {render, renderHook} from '@testing-library/react';
+import React from 'react';
 import * as reactRedux from 'react-redux';
-import {useApplication} from '../../src/hooks';
-import * as router from '../../src/ui/nav/Router/Router';
-import * as themeProvider from '../../src/providers/ThemeProvider';
-import * as screenProvider from '../../src/providers/ScreenProvider';
-import * as componentsProvider from '../../src/providers/ComponentsProvider';
+
 import ClientStorageComponent from '../../src/components/ClientStorageComponent';
 import HtmlComponent from '../../src/components/HtmlComponent';
 import JwtHttpComponent from '../../src/components/JwtHttpComponent';
 import LocaleComponent from '../../src/components/LocaleComponent';
 import MetaComponent from '../../src/components/MetaComponent';
-import UiComponent from '../../src/components/UiComponent';
-import StoreComponent from '../../src/components/StoreComponent';
 import MetricsComponent from '../../src/components/MetricsComponent';
+import StoreComponent from '../../src/components/StoreComponent';
+import UiComponent from '../../src/components/UiComponent';
+import {useApplication} from '../../src/hooks';
+import * as componentsProvider from '../../src/providers/ComponentsProvider';
+import * as screenProvider from '../../src/providers/ScreenProvider';
+import * as themeProvider from '../../src/providers/ThemeProvider';
+import * as router from '../../src/ui/nav/Router/Router';
 import {IRouteItem} from '../../src/ui/nav/Router/Router';
 
 jest.mock('../../src/components/ClientStorageComponent');

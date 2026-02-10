@@ -1,4 +1,5 @@
 import _uniqueId from 'lodash-es/uniqueId';
+
 import {IModalProps} from '../ui/modal/Modal/Modal';
 
 export const MODAL_OPEN = '@modal/open';

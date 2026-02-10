@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
-import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
+
 import {useComponents, useTree} from '../../../hooks';
+import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
 
 export interface ITreeViewProps extends ITreeProps {
     items: IPreparedTreeItem[],

@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import * as React from 'react';
-import Icon from '../../../../src/ui/content/Icon/Icon';
+
 import {useBem} from '../../../../src/hooks';
 import {IAccordionItemViewProps, IAccordionIcon} from '../../../../src/ui/content/Accordion/Accordion';
+import Icon from '../../../../src/ui/content/Icon/Icon';
 import IconMockView from '../Icon/IconMockView';
 
 export default function AccordionItemView(props: IAccordionItemViewProps) {

@@ -24,6 +24,7 @@ export const showNotification = (
         message: string,
         description?: string,
     },
+    // eslint-disable-next-line default-param-last
     level: ColorName = null,
     params?: IShowNotificationParameters,
 ) => dispatch => {

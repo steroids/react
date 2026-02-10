@@ -1,5 +1,6 @@
-import _upperFirst from 'lodash-es/upperFirst';
 import _isEmpty from 'lodash-es/isEmpty';
+import _upperFirst from 'lodash-es/upperFirst';
+
 import {isInitialized} from '../reducers/auth';
 
 declare global {

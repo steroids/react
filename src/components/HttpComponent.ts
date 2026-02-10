@@ -1,9 +1,10 @@
-import * as React from 'react';
-import _trimStart from 'lodash-es/trimStart';
-import _trimEnd from 'lodash-es/trimEnd';
-import _isEmpty from 'lodash-es/isEmpty';
-import setCookie from 'set-cookie-parser';
 import axios from 'axios';
+import _isEmpty from 'lodash-es/isEmpty';
+import _trimEnd from 'lodash-es/trimEnd';
+import _trimStart from 'lodash-es/trimStart';
+import * as React from 'react';
+import setCookie from 'set-cookie-parser';
+
 import {setFlashes} from '../actions/notifications';
 
 interface IHttpRequestOptions {
@@ -79,7 +80,7 @@ export interface IHttpComponent extends IHttpComponentConfig {
      * Метод, который можно вызвать при login
      * @param {{accessToken: string}} params Параметры для авторизации (accessToken).
      */
-    onLogin(params: {accessToken: string,}): void,
+    onLogin(params: {accessToken: string}): void,
 
     /**
      * Получение url по методу

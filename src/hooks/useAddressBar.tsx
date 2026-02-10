@@ -1,14 +1,15 @@
-import _get from 'lodash-es/get';
-import _isEmpty from 'lodash-es/isEmpty';
-import * as queryString from 'qs';
 import {replace} from 'connected-react-router';
-import _toInteger from 'lodash-es/toInteger';
+import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
+import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
+import _toInteger from 'lodash-es/toInteger';
+import * as queryString from 'qs';
 import {useCallback, useRef} from 'react';
-import useSelector from '../hooks/useSelector';
-import useDispatch from '../hooks/useDispatch';
+
 import {Model} from '../components/MetaComponent';
+import useDispatch from '../hooks/useDispatch';
+import useSelector from '../hooks/useSelector';
 
 export type ListControlPosition = 'top' | 'bottom' | 'both' | string;
 
@@ -57,8 +58,8 @@ export const defaultFromStringConverter = (value, type, item) => {
         case 'boolean':
             return ['1', 't', 'y'].includes(String(value).substr(0, 1)) || null;
 
-        default:
         case 'string':
+        default:
             return value ? String(value) : null;
     }
 };
@@ -78,9 +79,9 @@ export const defaultToStringConverter = (value, type, item) => {
         case 'boolean':
             return value ? '1' : null;
 
-        default:
         case 'string':
         case 'number':
+        default:
             return value ? String(value) : null;
     }
 };

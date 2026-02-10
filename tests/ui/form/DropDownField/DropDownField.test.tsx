@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import DropDownField, {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+
 import DropDownFieldMockView from './DropDownFieldMockView';
+import DropDownField, {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('DropDownField tests', () => {
     const defaultItemToSelectAllLabel = 'Все';

@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
+import SwitcherListFieldMockView from './SwitcherListFieldMockView';
 import {ICheckboxListFieldProps} from '../../../../src/ui/form/CheckboxListField/CheckboxListField';
+import SwitcherListField from '../../../../src/ui/form/SwitcherListField/SwitcherListField';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import SwitcherFieldMockView from '../SwitcherField/SwitcherFieldMockView';
-import SwitcherListField from '../../../../src/ui/form/SwitcherListField/SwitcherListField';
-import SwitcherListFieldMockView from './SwitcherListFieldMockView';
 
 describe('SwitcherListField tests', () => {
     const expectedSwitcherListFieldClass = 'SwitcherListFieldView';

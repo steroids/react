@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import ControlsMockView from './ControlsMockView';
-import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 import Controls from '../../../../src/ui/nav/Controls/Controls';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 
 describe('Controls tests', () => {
     const items = [

@@ -64,25 +64,41 @@ const useInputTypeNumber = (
     };
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>, newValue?: string) => {
-        let value = newValue || event?.target?.value;
+        const value = newValue || event?.target?.value;
 
         if (isValueNumeric(value)) {
-            if (value !== '') {
-                const numericValue = Number(value);
-
-                if (numericValue > inputTypeNumberProps.max) {
-                    value = inputTypeNumberProps.max;
-                } else if (numericValue < inputTypeNumberProps.min) {
-                    value = inputTypeNumberProps.min;
-                }
-            }
-
             onChange(event, value);
         }
     };
 
+    const applyMinMaxConstraints = (rawValue) => {
+        let value = rawValue;
+
+        if (value !== '') {
+            const numericValue = Number(value);
+
+            if (numericValue > inputTypeNumberProps.max) {
+                value = inputTypeNumberProps.max;
+            } else if (numericValue < inputTypeNumberProps.min) {
+                value = inputTypeNumberProps.min;
+            }
+        }
+
+        return value;
+    };
+
+    const onInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        const value = event?.target?.value;
+
+        const validValue = applyMinMaxConstraints(value);
+
+        onChange(event, validValue);
+    };
+
     return {
         onInputChange,
+        onInputBlur,
+        applyMinMaxConstraints,
     };
 };
 

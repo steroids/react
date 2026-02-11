@@ -24,6 +24,7 @@ import useWeekGrid from '../ui/content/CalendarSystem/hooks/useWeekGrid';
 import useDisplayDate from '../ui/content/CalendarSystem/hooks/useDisplayDate';
 import useCalendarControls from '../ui/content/CalendarSystem/hooks/useCalendarControls';
 import useSaveCursorPosition from './useSaveCursorPosition';
+import useTrimmedInput from './useTrimmedInput';
 import useListField from './useListField';
 
 export {
@@ -53,5 +54,6 @@ export {
     useDisplayDate,
     useCalendarControls,
     useSaveCursorPosition,
+    useTrimmedInput,
     useListField,
 };

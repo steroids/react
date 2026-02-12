@@ -14,7 +14,7 @@ function FormView(props: IFormViewProps) {
 
     // Auto focus
     useMount(() => {
-        if (props.autoFocus) {
+        if (props.autoFocus && formRef.current) {
             const inputEl = formRef.current.querySelector('input:not([type=hidden])');
             setTimeout(() => {
                 if (inputEl && inputEl.focus) {
@@ -41,6 +41,7 @@ function FormView(props: IFormViewProps) {
                     {...(_isString(field) ? {attribute: field} : field)}
                 />
             ))}
+            {props.buttons}
             {props.submitLabel && (
                 <Button
                     type='submit'

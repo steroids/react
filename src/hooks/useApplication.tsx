@@ -38,27 +38,26 @@ export interface IComponentConfig {
  * компоненты приложения и конфигурирует их.
  */
 export interface IApplicationHookConfig {
-    components?: {
+    components: {
         clientStorage?: IClientStorageComponentConfig & IComponentConfig,
         html?: IComponentConfig,
-        http?: IHttpComponentConfig & IJwtHttpComponentConfig & IComponentConfig,
-        locale?: ILocaleComponentConfig & IComponentConfig,
+        http: IHttpComponentConfig & IJwtHttpComponentConfig & IComponentConfig,
+        locale: ILocaleComponentConfig & IComponentConfig,
         store?: IComponentConfig,
         ui?: IComponentConfig,
         resource?: IResourceComponentConfig & IComponentConfig,
         ws?: IWebSocketComponentConfig & IComponentConfig,
         pushNotification?: IComponentConfig,
         meta?: IComponentConfig,
-
         [key: string]: IComponentConfig,
     },
-    onInit?: (components: IComponents) => void,
+    onInit: (components: IComponents) => void,
     useGlobal?: boolean,
-    reducers?: any,
-    routes?: () => IRouteItem,
-    layoutView?: () => CustomView,
+    reducers: any,
+    routes: () => IRouteItem,
+    layoutView: () => CustomView,
     layoutProps?: Record<string, unknown>,
-    screen?: Omit<IScreenProviderProps, 'children'>,
+    screen: Omit<IScreenProviderProps, 'children'>,
     theme?: Omit<IThemeProviderProps, 'children'>,
     routerProps?: Omit<IRouterProps, 'routes'>,
     /**
@@ -79,12 +78,6 @@ export const defaultComponents = {
     html: {
         className: HtmlComponent,
     },
-    //http: {
-    //    className: HttpComponent,
-    //},
-    //locale: {
-    //    className: LocaleComponent,
-    //},
     meta: {
         className: MetaComponent,
     },
@@ -99,7 +92,7 @@ export const defaultComponents = {
     },
 };
 
-export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {
+export default function useApplication(config: IApplicationHookConfig): IApplicationHookResult {
     const useGlobal = config.useGlobal !== false;
 
     //Extending dayjs / day.js with modules that used in steroids
@@ -118,7 +111,8 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
 
     // Create components
     if (!components) {
-        components = {};
+        components = {} as IComponents;
+
         const componentsConfig = _merge({}, defaultComponents, config.components);
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
@@ -140,10 +134,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
 
         window.SteroidsComponents = components;
 
-        // Init callback
-        if (config.onInit) {
-            config.onInit(components);
-        }
+        config.onInit(components);
 
         if (components?.locale?.language) {
             dayjs.locale(components.locale.language);
@@ -154,25 +145,20 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     const renderApplication = useCallback((children = null) => {
         let content = children;
 
-        // Wrap in routes
-        if (config.routes) {
-            content = (
-                <Router
-                    routes={config.routes()}
-                    wrapperView={config.layoutView()}
-                    wrapperProps={config.layoutProps}
-                    {...config.routerProps}
-                />
-            );
-        }
+        content = (
+            <Router
+                routes={config.routes()}
+                wrapperView={config.layoutView()}
+                wrapperProps={config.layoutProps}
+                {...config.routerProps}
+            />
+        );
 
-        if (config.screen) {
-            content = (
-                <ScreenProvider {...config.screen}>
-                    {content}
-                </ScreenProvider>
-            );
-        }
+        content = (
+            <ScreenProvider {...config.screen}>
+                {content}
+            </ScreenProvider>
+        );
 
         if (config.theme) {
             content = (

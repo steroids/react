@@ -53,11 +53,11 @@ export interface IApplicationHookConfig {
     },
     onInit: (components: IComponents) => void,
     useGlobal?: boolean,
-    reducers: any,
-    routes: () => IRouteItem,
+    reducers?: any,
+    routes?: () => IRouteItem,
     layoutView: () => CustomView,
     layoutProps?: Record<string, unknown>,
-    screen: Omit<IScreenProviderProps, 'children'>,
+    screen?: Omit<IScreenProviderProps, 'children'>,
     theme?: Omit<IThemeProviderProps, 'children'>,
     routerProps?: Omit<IRouterProps, 'routes'>,
     /**
@@ -134,7 +134,10 @@ export default function useApplication(config: IApplicationHookConfig): IApplica
 
         window.SteroidsComponents = components;
 
-        config.onInit(components);
+        // Init callback
+        if (config.onInit) {
+            config.onInit(components);
+        }
 
         if (components?.locale?.language) {
             dayjs.locale(components.locale.language);
@@ -145,20 +148,25 @@ export default function useApplication(config: IApplicationHookConfig): IApplica
     const renderApplication = useCallback((children = null) => {
         let content = children;
 
-        content = (
-            <Router
-                routes={config.routes()}
-                wrapperView={config.layoutView()}
-                wrapperProps={config.layoutProps}
-                {...config.routerProps}
-            />
-        );
+        // Wrap in routes
+        if (config.routes) {
+            content = (
+                <Router
+                    routes={config.routes()}
+                    wrapperView={config.layoutView()}
+                    wrapperProps={config.layoutProps}
+                    {...config.routerProps}
+                />
+            );
+        }
 
-        content = (
-            <ScreenProvider {...config.screen}>
-                {content}
-            </ScreenProvider>
-        );
+        if (config.screen) {
+            content = (
+                <ScreenProvider {...config.screen}>
+                    {content}
+                </ScreenProvider>
+            );
+        }
 
         if (config.theme) {
             content = (

@@ -9,7 +9,7 @@ export interface IMockApplicationConfig extends IApplicationHookConfig {
 
 interface IMockApplicationProps {
     children: React.ReactNode,
-    config?: IMockApplicationConfig,
+    config?: Partial<IMockApplicationConfig>,
 }
 
 export default function MockApplication(props: IMockApplicationProps) {

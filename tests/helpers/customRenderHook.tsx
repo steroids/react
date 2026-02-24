@@ -5,7 +5,7 @@ import MockApplication, {IMockApplicationConfig} from '../mocks/mockApplication'
 
 const customRenderHook = <T, >(
     hook: (args?: any) => T,
-    config?: IMockApplicationConfig,
+    config?: Partial<IMockApplicationConfig>,
     options?: Omit<RenderHookOptions<any>, 'wrapper'>,
 ) => {
     const Wrapper = ({children}: {children: React.ReactNode, }) => MockApplication({

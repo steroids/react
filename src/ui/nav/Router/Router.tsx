@@ -163,7 +163,7 @@ export interface IRouterProps {
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes: IRouteItem[] | IRouteItem | {[key: string]: IRouteItem,},
+    routes: IRouteItem,
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент
@@ -281,8 +281,8 @@ function Router(props: IRouterProps): JSX.Element {
     // Routes state
     const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     useUpdateEffect(() => {
-        setRoutes(props.routes);
-    }, [props.routes]);
+        setRoutes(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
+    }, [props.routes, props.alwaysAppendParentRoutePath]);
 
     // Fix end slash on switch to base route
     useUpdateEffect(() => {

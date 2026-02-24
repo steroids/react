@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
                     .concat([
                         {
                             id: action.id,
-                            level: action.level || 'info',
+                            type: action.notificationType || 'info',
                             message: action.message,
                             isClosing: false,
                             position: action.position,

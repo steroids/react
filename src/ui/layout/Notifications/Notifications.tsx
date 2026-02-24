@@ -31,7 +31,7 @@ interface INotificationItem {
      * Цвет всплывающего уведомления
      * @example warning
      */
-    level?: ColorName,
+    type?: AlertColorName,
 
     /**
      * Сообщение во всплывающем уведомлении

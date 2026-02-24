@@ -54,7 +54,7 @@ describe('actions notifications', () => {
                         type: NOTIFICATIONS_SHOW,
                         id: '1',
                         message,
-                        level: 'success',
+                        notificationType: 'success',
                         position: 'top-right',
                     },
                 ];
@@ -63,37 +63,37 @@ describe('actions notifications', () => {
                 expect(store.getActions()).toEqual(expectedActions);
             });
 
-            it('with level argument', () => {
+            it('with notificationType argument', () => {
                 const message = 'This button will blow up you computer ^_^';
-                const level = 'primary';
+                const notificationType = 'primary';
 
                 const expectedActions = [
                     {
                         type: NOTIFICATIONS_SHOW,
                         id: '2',
                         message,
-                        level,
+                        notificationType,
                         position: 'top-right',
                     },
                 ];
 
-                store.dispatch(showNotification(message, level));
+                store.dispatch(showNotification(message, notificationType));
                 expect(store.getActions()).toEqual(expectedActions);
             });
 
             it('with empty params argument', () => {
                 const message = 'You are the best';
-                const level = 'error';
+                const notificationType = 'error';
 
                 const expectedActions = [{
                     type: NOTIFICATIONS_SHOW,
                     id: '3',
                     message,
-                    level,
+                    notificationType,
                     position: 'top-right',
                 }];
 
-                store.dispatch(showNotification(message, level, {}));
+                store.dispatch(showNotification(message, notificationType, {}));
                 expect(store.getActions()).toEqual(expectedActions);
             });
         });
@@ -111,7 +111,7 @@ describe('actions notifications', () => {
                         type: NOTIFICATIONS_SHOW,
                         id: '4',
                         message: infoMessage,
-                        level: 'info',
+                        notificationType: 'info',
                         position: 'top-right',
                     },
                 ];

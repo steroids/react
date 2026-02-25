@@ -14,7 +14,7 @@ function FormView(props: IFormViewProps) {
 
     // Auto focus
     useMount(() => {
-        if (props.autoFocus && formRef.current) {
+        if (props.autoFocus) {
             const inputEl = formRef.current.querySelector('input:not([type=hidden])');
             setTimeout(() => {
                 if (inputEl && inputEl.focus) {

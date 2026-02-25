@@ -54,7 +54,7 @@ export const walkRoutesRecursive = (
     parentItem: Partial<IRouteItem> = {},
     alwaysAppendParentRoutePath = true,
 ): IRouteItem => {
-    const normalizedItem:IRouteItem = {
+    const normalizedItem: IRouteItem = {
         ...defaultItem,
         ...item,
         id: item.id,

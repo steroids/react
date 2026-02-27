@@ -26,7 +26,7 @@ export const useCalendarSystemEventGroupModals = (
 
     const onSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
         const newEventGroup: IEventGroup = {
-            id: (_maxBy(innerEventGroups, eventsGroup => eventsGroup.id)?.id || DEFAULT_ID) + 1,
+            id: (+_maxBy(innerEventGroups, eventsGroup => eventsGroup.id)?.id || DEFAULT_ID) + 1,
             label: fields.label,
             color: fields.color,
             events: [],

@@ -1,6 +1,6 @@
 const path = require('path');
 const typedocModule = require('typedoc');
-const _ = require('lodash');
+const _ = require('lodash-es');
 const fs = require('fs');
 const {getInfo, getProperty, isComponent, changeDeclarationOnType} = require('./helpers/helpers');
 const {addKeysToLocalesFiles} = require('./helpers/addKeysToLocalesFiles');

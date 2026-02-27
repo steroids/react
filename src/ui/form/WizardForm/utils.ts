@@ -64,7 +64,7 @@ const getFieldsAttributes = (fields: IFieldProps[] | IFieldProps, index: number)
     return fieldAttributesStepMap;
 };
 
-export const generateFieldStepMap = (arr = []) => arr.reduce((fieldStepMap, step, index) => {
+export const generateFieldStepMap = (arr = []) => arr.reduce((fieldStepMap, step: Record<string, any>, index) => {
     if (_has(step, 'fields')) {
         return {
             ...fieldStepMap,

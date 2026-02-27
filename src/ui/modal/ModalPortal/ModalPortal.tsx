@@ -46,24 +46,28 @@ function ModalPortal(props: IModalPortalProps): JSX.Element {
         }
     }, [closeInternal, dispatch, props.animationDelayMc, props.group]);
 
-    return _orderBy(opened, 'id').map((item, index) => {
-        const ModalComponent = item.modal;
-        const modalProps = {
-            ...item.props,
-            index,
-            group,
-            isClosing: item.isClosing,
-            onClose: () => onClose(item),
-            closeTimeoutMs: item.props.closeTimeoutMs || props.animationDelayMc,
-        } as IModalProps;
+    return (
+        <>
+            {_orderBy(opened, 'id').map((item, index) => {
+                const ModalComponent = item.modal;
+                const modalProps = {
+                    ...item.props,
+                    index,
+                    group,
+                    isClosing: item.isClosing,
+                    onClose: () => onClose(item),
+                    closeTimeoutMs: item.props.closeTimeoutMs || props.animationDelayMc,
+                } as IModalProps;
 
-        return (
-            <ModalComponent
-                key={item.id}
-                {...modalProps}
-            />
-        );
-    });
+                return (
+                    <ModalComponent
+                        key={item.id}
+                        {...modalProps}
+                    />
+                );
+            })}
+        </>
+    );
 }
 
 ModalPortal.defaultProps = {

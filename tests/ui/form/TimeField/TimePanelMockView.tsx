@@ -6,7 +6,7 @@ import {useBem} from '../../../../src/hooks';
 const getHours = () => {
     const result = [];
     for (let i = 0; i < 24; i += 1) {
-        const hour = _padStart(i, 2, '0');
+        const hour = _padStart(i.toString(), 2, '0');
         result.push(hour);
     }
     return result;
@@ -15,7 +15,7 @@ const getHours = () => {
 const getMinutes = () => {
     const result = [];
     for (let i = 0; i < 60; i += 1) {
-        const minute = _padStart(i, 2, '0');
+        const minute = _padStart(i.toString(), 2, '0');
         result.push(minute);
     }
     return result;

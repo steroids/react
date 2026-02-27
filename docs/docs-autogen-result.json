@@ -3556,6 +3556,14 @@
                     "example": null
                 },
                 {
+                    "name": "isCritical",
+                    "decorators": [],
+                    "description": "Применяется для ssr. Если fetch критический — ssr вернет страницу со статус кодом ошибки.",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
                     "name": "method",
                     "decorators": [],
                     "description": "",
@@ -3639,7 +3647,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "T | {providerData: {type: string, value: string}}",
+                    "type": "T | {error: string, errors: Record, message: string, statusCode: number}",
                     "example": null
                 },
                 {
@@ -5499,6 +5507,17 @@
             "properties": [],
             "methods": []
         },
+        "IPreloadedErrors": {
+            "name": "IPreloadedErrors",
+            "moduleName": "providers/SsrProvider",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [],
+            "methods": []
+        },
         "ISsr": {
             "name": "ISsr",
             "moduleName": "providers/SsrProvider",
@@ -5522,6 +5541,14 @@
                     "description": "",
                     "required": false,
                     "type": "IPreloadedData",
+                    "example": null
+                },
+                {
+                    "name": "preloadedErrors",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IPreloadedErrors",
                     "example": null
                 },
                 {
@@ -5562,6 +5589,15 @@
                     "description": "",
                     "required": false,
                     "type": "IPreloadedData",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "preloadedErrors",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "IPreloadedErrors",
                     "example": null,
                     "defaultValue": null
                 },
@@ -29866,7 +29902,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте {key: 'value'} key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{\n min: 20,\n 40: 40,\n max: 100\n}",
@@ -30164,7 +30200,7 @@
                 {
                     "name": "marks",
                     "decorators": [],
-                    "description": "Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
+                    "description": "Метки на ползунке. В объекте {key: 'value'} key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.",
                     "required": false,
                     "type": "Record",
                     "example": "{\n min: 20,\n 40: 40,\n max: 100\n}"
@@ -43440,7 +43476,9 @@
             "moduleName": "components/ResourceComponent",
             "title": "Resource Component",
             "description": "Компонент для подгрузки внешних API: Google Maps, Yandex Maps, Twitter, ...",
-            "tags": {},
+            "tags": {
+                "deprecated": ""
+            },
             "properties": [
                 {
                     "name": "RESOURCE_GEETEST_API",

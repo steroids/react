@@ -46,7 +46,7 @@ describe('notifications reducers', () => {
         const action = {
             type: NOTIFICATIONS_SHOW,
             id: 'notification3',
-            level: 'danger',
+            notificationType: 'danger',
             message: 'This button starts snowing!',
             position: 'offsetLeft: 300px, offsetTop: 50%',
         };
@@ -65,7 +65,7 @@ describe('notifications reducers', () => {
                 ...items,
                 {
                     id: action.id,
-                    level: action.level,
+                    type: action.notificationType,
                     message: action.message,
                     isClosing: false,
                     position: action.position,

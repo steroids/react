@@ -23,7 +23,7 @@ export interface IButtonBadge {
     * Цвет
     * @example 'secondary'
     */
-    color?: ColorName,
+    color?: BadgeColorName,
 
     /**
     * Дополнительный CSS-класс для элемента отображения
@@ -60,7 +60,7 @@ export interface IButtonProps extends IUiComponent {
      * Цвет состояния
      * @example success
      */
-    color?: ColorName,
+    color?: ButtonColorName,
 
     /**
      * Отображать как ссылку?

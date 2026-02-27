@@ -32,7 +32,7 @@ export interface IBadgeProps extends IUiComponent {
      * Тип badge
      * @example 'primary'
      */
-    type: ColorName,
+    type: BadgeColorName,
 
     /**
      * Стиль скругления

@@ -27,8 +27,10 @@ import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider'
 import useComponents from './useComponents';
 import {IFetchConfig} from '../hooks/useFetch';
 
+export type ComponentConstructor = new (components: IComponents, config?: Record<string, any>) => any;
+
 export interface IComponentConfig {
-    className?: Record<string, any>,
+    className?: ComponentConstructor,
     [key: string]: any,
 }
 
@@ -119,10 +121,14 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     // Create components
     if (!components) {
         components = {};
-        const componentsConfig = _merge({}, defaultComponents, config.components);
+        const componentsConfig = _merge(
+            {},
+            defaultComponents,
+            config.components,
+        );
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
-                componentsConfig[name] = {className: componentsConfig[name]};
+                componentsConfig[name] = {className: componentsConfig[name] as ComponentConstructor};
             }
 
             const {className, ...componentConfig} = componentsConfig[name];
@@ -133,9 +139,8 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                     componentConfig.reducers = config.reducers;
                 }
             }
-
             // eslint-disable-next-line new-cap
-            components[name] = new className(components, componentConfig);
+            components[name] = new (className as ComponentConstructor)(components, componentConfig);
         });
 
         window.SteroidsComponents = components;

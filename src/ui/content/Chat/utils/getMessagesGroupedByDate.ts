@@ -12,7 +12,7 @@ export const isWithinTimeThreshold = (firstMessage: IChatMessage, secondMessage:
     return firstMessage.user.id === secondMessage.user.id && Math.abs(firstMessageTime - secondMessageTime) <= SECONDS_IN_MINUTE_VALUE;
 };
 
-const addFirstAndLastKeyForMessageGroup = (messageGroup: any) => {
+const addFirstAndLastKeyForMessageGroup = (messageGroup: Record<string, any>[]) => {
     _first(messageGroup).isFirstMessage = true;
     _last(messageGroup).isLastMessage = true;
 };

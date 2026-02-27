@@ -41,7 +41,7 @@ export const normalizeItems = (items) => {
         return items;
     }
     // Enum
-    if (_isObject(items) && _isFunction(items.getLabels)) {
+    if (_isObject(items) && 'getLabels' in items && _isFunction(items.getLabels)) {
         const labels = items.getLabels();
         return Object.keys(labels).map(id => ({
             id,

@@ -7,7 +7,7 @@ import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import {useComponents, useSaveCursorPosition, useTrimmedInput} from '../../../hooks';
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 import {FieldEnum} from '../../../enums';
 
@@ -139,6 +139,11 @@ export interface IInputFieldProps extends IBaseFieldProps {
      */
     debounce?: boolean | ISaveCursorPositionDebounceConfig,
 
+    /**
+     * Флаг, который указывает, что нужно обрезать пробелы в начале и в конце строки
+     * @example false
+     */
+    autoTrim?: boolean,
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
@@ -171,6 +176,15 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
             enabled: !!props.debounce,
             ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
         },
+    });
+
+    const {
+        onKeyDown,
+        onBlur,
+    } = useTrimmedInput({
+        onChange: props.input.onChange,
+        autoTrim: props.autoTrim,
+        onBlurCallback: props.onBlur,
     });
 
     React.useEffect(() => {
@@ -213,7 +227,8 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         textBefore: props.textBefore,
         className: props.className,
         style: props.style,
-        onBlur: props.onBlur,
+        onBlur,
+        onKeyDown,
         onFocus: props.onFocus,
         onMouseDown: props.onMouseDown,
         placeholder: props.placeholder,
@@ -221,7 +236,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         id: props.id,
         viewProps: props.viewProps,
         disabled: props.disabled,
-    }), [inputProps, inputRef, onClear, props]);
+    }), [inputProps, inputRef, onClear, props, onBlur, onKeyDown]);
 
     // No render for hidden input
     if (props.type === 'hidden') {
@@ -237,6 +252,7 @@ InputField.defaultProps = {
     required: false,
     showClear: false,
     maskOptions: null,
+    autoTrim: false,
 };
 
 export default fieldWrapper<IInputFieldProps>(FieldEnum.INPUT_FIELD, InputField);

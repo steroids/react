@@ -49,12 +49,12 @@ export const findRedirectPathRecursive = (route: IRouteItem, parentPath = '') =>
 };
 
 export const walkRoutesRecursive = (
-    item: IRouteItem | Record<string, any>,
-    defaultItem: any = {},
-    parentItem: any = {},
+    item: IRouteItem,
+    defaultItem: Partial<IRouteItem> = {},
+    parentItem: Partial<IRouteItem> = {},
     alwaysAppendParentRoutePath = true,
-) => {
-    const normalizedItem = {
+): IRouteItem => {
+    const normalizedItem: IRouteItem = {
         ...defaultItem,
         ...item,
         id: item.id,
@@ -66,13 +66,13 @@ export const walkRoutesRecursive = (
         title: item.title,
         isVisible: typeof item.isVisible !== 'undefined'
             ? item.isVisible
-            : (typeof parentItem.isVisible !== 'undefined'
+            : (typeof parentItem?.isVisible !== 'undefined'
                 ? parentItem.isVisible
                 : defaultItem.isVisible
             ),
         isNavVisible: typeof item.isNavVisible !== 'undefined'
             ? item.isNavVisible
-            : (typeof parentItem.isNavVisible !== 'undefined'
+            : (typeof parentItem?.isNavVisible !== 'undefined'
                 ? parentItem.isNavVisible
                 : defaultItem.isNavVisible
             ),
@@ -82,7 +82,7 @@ export const walkRoutesRecursive = (
         componentProps: null,
     };
     let items = null;
-    if (_isArray(item.items)) {
+    if (Array.isArray(item.items)) {
         items = item.items.map(subItem => walkRoutesRecursive(subItem, defaultItem, normalizedItem, alwaysAppendParentRoutePath));
     } else if (_isObject(item.items)) {
         items = Object.keys(item.items)
@@ -98,15 +98,11 @@ export const walkRoutesRecursive = (
 };
 
 export const treeToList = (
-    item: IRouteItem | Record<string, any>,
+    item: IRouteItem,
     isRoot = true,
-    parentItem: any = {},
+    parentItem: Partial<IRouteItem> | null,
     alwaysAppendParentRoutePath = true,
-) => {
-    if (_isArray(item)) {
-        return item;
-    }
-
+): IRouteItem[] => {
     item.path = alwaysAppendParentRoutePath
         ? joinChildAndParentPaths(item.path, parentItem?.path)
         : appendChildIfNoSlash(item.path, parentItem?.path);
@@ -117,7 +113,7 @@ export const treeToList = (
 
     let items = item.path ? [item] : [];
 
-    if (_isArray(item.items)) {
+    if (Array.isArray(item.items)) {
         item.items.forEach(subItem => {
             items = items.concat(treeToList(subItem, false, item, alwaysAppendParentRoutePath));
         });

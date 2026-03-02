@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import * as React from 'react';
 import {walkRoutesRecursive, findRedirectPathRecursive, treeToList} from '../../../../src/ui/nav/Router/helpers';
+import type {IRouteItem} from '../../../../src/ui/nav/Router/Router';
 
 describe('Function walkRoutesRecursive', () => {
     const mockRoutes = {
@@ -33,6 +34,7 @@ describe('Function walkRoutesRecursive', () => {
 
     it('if the isVisible and isNavVisible fields are not set for the child element, then they are set as for the parent props', () => {
         const route = {
+            path: '/',
             isVisible: undefined,
             isNavVisible: undefined,
         };
@@ -77,7 +79,8 @@ describe('Function walkRoutesRecursive', () => {
 
     it('should normalize the object and items recursively without defaultItem/parentItem', () => {
         const normalizedRoute = walkRoutesRecursive(mockRoutes);
-        const normalizedRouteItem = normalizedRoute.items[0];
+        expect(normalizedRoute.items).toHaveLength(1);
+        const normalizedRouteItem: IRouteItem = normalizedRoute.items?.[0];
         const mockRoutesItem = mockRoutes.items[0];
         const itemsCount = 1;
 
@@ -90,7 +93,7 @@ describe('Function walkRoutesRecursive', () => {
         expect(normalizedRoute.isNavVisible).toBe(mockRoutes.isNavVisible);
         expect(normalizedRoute.layout).toBe(mockRoutes.layout);
         expect(normalizedRoute.roles).toEqual(mockRoutes.roles);
-        expect(normalizedRoute.component).toBeDefined();
+        expect(normalizedRoute.component).toBeNull();
         expect(normalizedRoute.componentProps).toBeNull();
         expect(normalizedRoute.items).toHaveLength(itemsCount);
         expect(normalizedRouteItem.id).toBe(mockRoutesItem.id);
@@ -101,12 +104,12 @@ describe('Function walkRoutesRecursive', () => {
         expect(normalizedRouteItem.isNavVisible).toBe(mockRoutesItem.isNavVisible);
         expect(normalizedRouteItem.layout).toBe(mockRoutesItem.layout);
         expect(normalizedRouteItem.roles).toEqual(mockRoutesItem.roles);
-        expect(normalizedRouteItem.component).toBeDefined();
+        expect(normalizedRouteItem.component).toBeNull();
         expect(normalizedRouteItem.componentProps).toBeNull();
     });
 
     it('should normalize object recursively with defaultItem/parentItem', () => {
-        const route = {};
+        const route = {path: '/'};
         const defaultItem = {
             roles: ['admin'],
             layout: 'test-second',
@@ -288,11 +291,14 @@ describe('Function treeToList', () => {
     });
 
     describe('with nested paths ', () => {
-        it('should return an empty array for an empty tree', () => {
-            const tree = [];
-            const list = treeToList(tree);
-            const expectedList = [];
-            expect(list).toEqual(expectedList);
+        it('should return single root item for tree with no nested routes', () => {
+            const tree = {
+                path: '',
+                items: [],
+            };
+            const list = treeToList(tree, true, null);
+            expect(list).toHaveLength(1);
+            expect(list[0].path).toBe('/');
         });
 
         it('should convert a single item to an array if he have path', () => {
@@ -300,7 +306,7 @@ describe('Function treeToList', () => {
                 id: '1',
                 path: '/path',
             };
-            const list = treeToList(tree);
+            const list = treeToList(tree, true, null);
             const expectedList = [tree];
             expect(list).toEqual(expectedList);
         });
@@ -342,13 +348,13 @@ describe('Function treeToList', () => {
                 },
             ];
 
-            const list = treeToList(tree);
+            const list = treeToList(tree, true, null);
             expect(list).toEqual(expectedList);
         });
 
         it('should add root item with id "root" when isRoot is true and item.id is falsy', () => {
             const tree = {path: '/path'};
-            const list = treeToList(tree);
+            const list = treeToList(tree, true, null);
             expect(list[0].id).toBe('root');
         });
 
@@ -421,7 +427,7 @@ describe('Function treeToList', () => {
                 },
             ];
 
-            const list = treeToList(tree);
+            const list = treeToList(tree, true, null);
             expect(list).toEqual(expectedList);
         });
     });

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
+import {IMetricsComponent} from '../components/MetricsComponent';
 import {IHttpComponent} from '../components/HttpComponent';
 import {IHtmlComponent} from '../components/HtmlComponent';
 import {IWebSocketComponent} from '../components/WebSocketComponent';
@@ -17,16 +18,17 @@ declare global {
 }
 
 export interface IComponents {
-    clientStorage?: IClientStorageComponent,
-    html?: IHtmlComponent,
-    http?: IHttpComponent,
-    locale?: ILocaleComponent,
-    store?: IStoreComponent,
-    ui?: IUiApplicationComponent,
+    clientStorage: IClientStorageComponent,
+    html: IHtmlComponent,
+    http: IHttpComponent,
+    locale: ILocaleComponent,
+    store: IStoreComponent,
+    ui: IUiApplicationComponent,
     resource?: IResourceComponent,
     ws?: IWebSocketComponent,
     pushNotification?: any,
     meta?: IMetaComponent,
+    metrics: IMetricsComponent,
     [key: string]: any,
 }
 

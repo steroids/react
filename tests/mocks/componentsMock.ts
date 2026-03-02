@@ -1,4 +1,18 @@
-export default {
+import {IComponents} from '../../src/providers/ComponentsProvider';
+
+const componentsMock: IComponents = {
+    clientStorage: {
+        get: jest.fn(),
+        set: jest.fn(),
+        remove: jest.fn(),
+    },
+    html: {
+        bem: jest.fn(),
+        classNames: jest.fn(),
+        addClass: jest.fn(),
+        removeClass: jest.fn(),
+        closest: jest.fn(),
+    },
     http: {
         setAccessToken: jest.fn(),
         removeAccessToken: jest.fn(),
@@ -16,14 +30,59 @@ export default {
         delete: jest.fn(),
         afterRequest: jest.fn(),
     },
+    locale: {
+        language: 'ru',
+        t: jest.fn(),
+        dayjs: jest.fn(),
+        translate: jest.fn(),
+    },
+    store: {
+        store: {},
+        reducers: {},
+        init: jest.fn(),
+        initStore: jest.fn(),
+        configurate: jest.fn(),
+        dispatch: jest.fn(),
+        getState: jest.fn(),
+        subscribe: jest.fn(),
+        addReducers: jest.fn(),
+        errorHandler: jest.fn(),
+    },
+    ui: {
+        components: {} as IComponents,
+        icons: {},
+        fields: {},
+        formatters: {},
+        addViews: jest.fn(),
+        renderView: jest.fn(),
+        getView: jest.fn(),
+        addFields: jest.fn(),
+        addFormatters: jest.fn(),
+        getField: jest.fn(),
+        getFormatter: jest.fn(),
+        getFormatterProps: jest.fn(),
+        addIcons: jest.fn(),
+        getIcon: jest.fn(),
+        addModels: jest.fn(),
+        registerField: jest.fn(),
+        getRegisteredFields: jest.fn(),
+        setPortalElement: jest.fn(),
+        getPortalElement: jest.fn(),
+        getFieldProps: jest.fn(),
+    },
     meta: {
         setModel: jest.fn(),
-        defaultTypes: {},
-        defaultKey: 'key',
         getModel: jest.fn(),
         setType: jest.fn(),
         getType: jest.fn(),
         normalizeName: jest.fn(),
         normalizeModel: jest.fn(),
     },
+    metrics: {
+        unsubscribe: jest.fn(),
+        unlisten: jest.fn(),
+        setCounters: jest.fn(),
+    },
 };
+
+export default componentsMock;

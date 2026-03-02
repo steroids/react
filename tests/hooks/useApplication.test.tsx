@@ -50,6 +50,7 @@ describe('useApplication Hook', () => {
     } as IRouteItem;
 
     const config = {
+        reducers: require('../../src/reducers/index').default,
         screen: {
             media: {},
         },

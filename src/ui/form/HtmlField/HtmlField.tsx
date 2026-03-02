@@ -1,5 +1,6 @@
-import {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import _merge from 'lodash-es/merge';
+import {useMount} from 'react-use';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
@@ -73,6 +74,23 @@ export interface IHtmlFieldViewProps extends IHtmlFieldProps {
 function HtmlField(props: IHtmlFieldProps): JSX.Element {
     const components = useComponents();
 
+    const [accessToken, setAccessToken] = useState(null);
+
+    const [accessLoaded, setAccessLoaded] = useState(false);
+
+    useMount(async () => {
+        try {
+            const token = await components.http.getAccessToken();
+            if (token) {
+                setAccessToken(token);
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setAccessLoaded(true);
+        }
+    });
+
     const onFocus = useCallback((event) => {
         if (props.onFocus) {
             props.onFocus(event);
@@ -100,10 +118,13 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
                 uploadUrl: uploadUrl + (uploadImagesProcessor
                     ? '?imagesProcessor=' + uploadImagesProcessor
                     : ''),
+                headers: {
+                    ...(accessToken && {Authorization: 'Bearer ' + accessToken}),
+                },
             },
         },
         props.editorProps,
-    ), [props.editorProps, uploadUrl, uploadImagesProcessor]);
+    ), [props.editorProps, uploadUrl, uploadImagesProcessor, accessToken]);
 
     const viewProps = useMemo(() => ({
         onFocus,
@@ -115,6 +136,10 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
         disabled: props.disabled,
         input: props.input,
     }), [editorProps, onBlur, onChange, onFocus, props.disabled, props.editorConstructor, props.htmlComponent, props.input]);
+
+    if (!accessLoaded) {
+        return <div>{__('Загрузка...')}</div>;
+    }
 
     return components.ui.renderView(props.view || 'form.HtmlFieldView', viewProps);
 }

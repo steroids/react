@@ -5,6 +5,7 @@ import _isEmpty from 'lodash-es/isEmpty';
 import _includes from 'lodash-es/includes';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _merge from 'lodash-es/merge';
+import _debounce from 'lodash-es/debounce';
 import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
@@ -18,6 +19,8 @@ export const CHECKBOX_CONTENT_TYPE = 'checkbox';
 export const RADIO_CONTENT_TYPE = 'radio';
 export const ICON_CONTENT_TYPE = 'icon';
 export const IMG_CONTENT_TYPE = 'img';
+
+const DEFAULT_DEBOUNCE_DELAY_MS = 300;
 
 export type ContentType = 'checkbox' | 'radio' | 'icon' | 'img';
 export type ItemSwitchType = ContentType | 'group' | string;
@@ -413,12 +416,19 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     }, [fetchRemote, isOpened, props, selectedIds, setIsFocused, setIsOpened]);
 
     // Search input props
+    const debouncedSetQuery = useMemo(
+        () => _debounce(setQuery, DEFAULT_DEBOUNCE_DELAY_MS),
+        [setQuery],
+    );
+
     const searchInputProps = useMemo(() => ({
         type: 'search',
         placeholder: props.searchPlaceholder || __('Начните вводить символы для поиска...'),
-        onChange: value => setQuery(value),
+        onChange: value => {
+            debouncedSetQuery(value);
+        },
         tabIndex: -1,
-    }), [props]);
+    }), [debouncedSetQuery, props.searchPlaceholder]);
 
     // Sync with form
     const prevSelectedIds = usePrevious(selectedIds);

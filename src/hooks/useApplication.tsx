@@ -129,7 +129,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
                 componentsConfig[name] = {
-                    className: componentsConfig[name] as ComponentConstructor
+                    className: componentsConfig[name] as ComponentConstructor,
                 };
             }
 

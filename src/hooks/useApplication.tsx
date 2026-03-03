@@ -128,10 +128,15 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         );
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
-                componentsConfig[name] = {className: componentsConfig[name] as ComponentConstructor};
+                componentsConfig[name] = {
+                    className: componentsConfig[name] as ComponentConstructor
+                };
             }
 
-            const {className, ...componentConfig} = componentsConfig[name];
+            const {
+                className,
+                ...componentConfig
+            } = componentsConfig[name];
 
             // Append reducers to store
             if (name === 'store') {

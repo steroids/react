@@ -281,8 +281,8 @@ function Router(props: IRouterProps): JSX.Element {
     // Routes state
     const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     useUpdateEffect(() => {
-        setRoutes(treeToList(props.routes));
-    }, [props.routes]);
+        setRoutes(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
+    }, [props.alwaysAppendParentRoutePath, props.routes]);
 
     // Fix end slash on switch to base route
     useUpdateEffect(() => {

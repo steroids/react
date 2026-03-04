@@ -365,7 +365,9 @@ export default function Grid(props: IGridProps): JSX.Element {
                 },
                 visible: !!props.controls,
             })
-            .map(column => (_isString(column) ? {attribute: column} : column))
+            .map(column => (_isString(column) ? {
+                attribute: column,
+            } : column))
             .filter((column: IGridColumn) => column.visible !== false)
             .map(column => ({
                 ...column,

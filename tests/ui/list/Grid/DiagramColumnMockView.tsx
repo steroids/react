@@ -49,7 +49,9 @@ export default function DiagramColumnView(props: IColumnViewProps) {
                                     className={bem.element('diagram-filling', {
                                         color: itemColor,
                                     })}
-                                    style={{[fillingProperty]: `${itemPercentage}%`}}
+                                    style={{
+                                        [fillingProperty]: `${itemPercentage}%`,
+                                    }}
                                 />
                             </div>
                         );

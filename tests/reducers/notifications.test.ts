@@ -12,10 +12,14 @@ describe('notifications reducers', () => {
         position: '',
     };
 
-    let initialState: TNotificationsState = {...defaultInitialState};
+    let initialState: TNotificationsState = {
+        ...defaultInitialState,
+    };
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     it('NOTIFICATIONS_CLOSE', () => {

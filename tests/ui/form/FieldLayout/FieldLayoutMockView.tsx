@@ -33,16 +33,16 @@ export default function FieldLayoutView(props: IFieldLayoutViewProps) {
                             >
                                 <Icon
                                     view={IconMockView}
-                                    name="mockIcon"
+                                    name='mockIcon'
                                     className={bem.element('icon_error')}
                                     tabIndex={-1}
                                 />
                                 <span className={bem.element(
-'error-text',
+                                    'error-text',
                                     {
                                         size: props.size || 'md',
                                     },
-)}
+                                )}
                                 >
                                     {error}
 
@@ -53,7 +53,10 @@ export default function FieldLayoutView(props: IFieldLayoutViewProps) {
                 )}
 
                 {_isEmpty(props.errors) && props.hint && (
-                    <div className={bem.element('hint', {size: props.size})}>
+                    <div className={bem.element('hint', {
+                        size: props.size,
+                    })}
+                    >
                         {props.hint}
                     </div>
                 )}

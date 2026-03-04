@@ -17,7 +17,9 @@ export default function SwitcherFieldMockView(props: ICheckboxFieldViewProps) {
         return props.label;
     }, [props.inputProps.checked, props.label]);
 
-    const customVariableColorStyle = {'--checkbox-custom-color': props.color} as React.CSSProperties;
+    const customVariableColorStyle = {
+        '--checkbox-custom-color': props.color,
+    } as React.CSSProperties;
 
     return (
         <div

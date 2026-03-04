@@ -269,7 +269,9 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
             .filter(field => field.visible !== false)
             .map(field => {
                 if (typeof field === 'string') {
-                    field = {attribute: field};
+                    field = {
+                        attribute: field,
+                    };
                 }
 
                 return {
@@ -351,4 +353,6 @@ FieldList.defaultProps = {
     enableKeyboardNavigation: true,
 };
 
-export default fieldWrapper<IFieldListProps>(FieldEnum.FIELD_LIST, FieldList, {list: true});
+export default fieldWrapper<IFieldListProps>(FieldEnum.FIELD_LIST, FieldList, {
+    list: true,
+});

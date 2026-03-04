@@ -37,7 +37,10 @@ export default function ListView(props: IListViewProps) {
     };
 
     return props.renderList(
-        <div className={bem(bem.block({loading: props.isLoading || props.list.isLoading}), props.className)}>
+        <div className={bem(bem.block({
+            loading: props.isLoading || props.list.isLoading,
+        }), props.className)}
+        >
             {props.renderSearchForm()}
             {renderPagination(
                 ['top', 'both'].includes(props.paginationPosition) && props.renderPagination(),

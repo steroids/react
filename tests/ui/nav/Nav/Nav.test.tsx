@@ -152,7 +152,9 @@ describe('Nav tests', () => {
         ];
 
         it('button', () => {
-            const {container, debug} = render(JSXWrapper<INavProps>(Nav, {items: itemsWithDisabledOne}));
+            const {container, debug} = render(JSXWrapper<INavProps>(Nav, {
+                items: itemsWithDisabledOne,
+            }));
 
             const firstNavElement = getElementByClassName(container, expectedButtonViewClass);
 

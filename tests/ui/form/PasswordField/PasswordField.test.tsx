@@ -66,7 +66,11 @@ describe('PasswordField tests', () => {
 
         const input = getElementByTag(container, 'input');
 
-        fireEvent.change(input, {target: {value: 'test'}});
+        fireEvent.change(input, {
+            target: {
+                value: 'test',
+            },
+        });
 
         const passwordFieldWithFilledClass = getElementByClassName(container, `${expectedPasswordFieldClass}_filled`);
 

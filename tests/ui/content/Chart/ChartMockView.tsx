@@ -22,7 +22,9 @@ const DEFAULT_LINE_CHART_CONFIG = {
         stacked: true,
         reverse: false,
     },
-    xScale: {type: 'point'},
+    xScale: {
+        type: 'point',
+    },
     axisBottom: {
         ...DEFAULT_AXIS_PARAMS,
         legendOffset: 36,
@@ -40,7 +42,9 @@ export default function ChartMockView(props: IChartViewProps) {
     const ChartComponent = props.chartComponent;
     const defaultChartConfig = (props.useDefaultLineChartConfig && DEFAULT_LINE_CHART_CONFIG) || {};
 
-    const customChartHeightVariable = {'--chart-custom-height': `${props.chartHeight}px`} as React.CSSProperties;
+    const customChartHeightVariable = {
+        '--chart-custom-height': `${props.chartHeight}px`,
+    } as React.CSSProperties;
 
     return (
         <div
@@ -56,7 +60,7 @@ export default function ChartMockView(props: IChartViewProps) {
         >
             {props.title && (
                 <Title
-                    type="h3"
+                    type='h3'
                     content={props.title}
                     className={bem.element('title')}
                 />

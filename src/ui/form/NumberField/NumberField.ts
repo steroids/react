@@ -82,7 +82,9 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             onChangeCallback: props.onChange,
             debounce: {
                 enabled: !!props.debounce,
-                ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+                ...(typeof props.debounce === 'boolean' ? {
+                    enabled: props.debounce,
+                } : (props.debounce ?? {})),
             },
         },
     );

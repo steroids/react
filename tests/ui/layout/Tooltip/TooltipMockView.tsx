@@ -37,7 +37,9 @@ export default function TooltipView(props: ITooltipMockViewProps) {
                 ref={arrowRef}
                 className={bem.element(
                     'arrow',
-                    {position: props.position},
+                    {
+                        position: props.position,
+                    },
                 )}
                 style={props.arrowPosition}
             />

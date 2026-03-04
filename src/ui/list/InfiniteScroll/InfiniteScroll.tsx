@@ -99,7 +99,9 @@ InfiniteScroll.defaultProps = {
 
 export const normalizeInfiniteScrollProps = props => ({
     ...InfiniteScroll.defaultProps,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
 export default memo(InfiniteScroll);

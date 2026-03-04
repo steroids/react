@@ -48,7 +48,9 @@ export default class GitlabProvider {
                 // ?provider=gitlab_kozhindev#access_token=7b87e3de0...5518198d885d&token_type=Bearer
                 const token = (/access_token=(\w+)/.exec(link) || [])[1];
                 if (token) {
-                    resolve({token});
+                    resolve({
+                        token,
+                    });
                 } else {
                     reject();
                 }

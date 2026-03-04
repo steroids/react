@@ -54,11 +54,11 @@ describe('Modal tests', () => {
             getByText,
             queryByText,
         } = render(
-JSXWrapper(ModalButton, modalProps, true, true),
+            JSXWrapper(ModalButton, modalProps, true, true),
             {
                 container: document.body,
             },
-);
+        );
 
         const openModalButton = getByText(buttonText);
         fireEvent.click(openModalButton);
@@ -111,12 +111,12 @@ JSXWrapper(ModalButton, modalProps, true, true),
         const modalChildrenText = 'Test Children';
 
         function ModalChildren(modalChildrenProps) {
-  return (
-      <Modal {...modalChildrenProps}>
-          <div>{modalChildrenText}</div>
-      </Modal>
-  );
-}
+            return (
+                <Modal {...modalChildrenProps}>
+                    <div>{modalChildrenText}</div>
+                </Modal>
+            );
+        }
 
         const localProps = {
             component: null,
@@ -158,10 +158,12 @@ JSXWrapper(ModalButton, modalProps, true, true),
         fireEvent.click(closeModalButton);
 
         await waitFor(
-() => expect(localProps.onClose)
-            .toHaveBeenCalledTimes(expectedOnCloseClickCount),
-        {timeout: localProps.closeTimeoutMs},
-);
+            () => expect(localProps.onClose)
+                .toHaveBeenCalledTimes(expectedOnCloseClickCount),
+            {
+                timeout: localProps.closeTimeoutMs,
+            },
+        );
     });
 
     it('should close modal automatically', async () => {
@@ -176,18 +178,22 @@ JSXWrapper(ModalButton, modalProps, true, true),
         const {queryByText} = renderComponent(localProps);
 
         await waitFor(
-() => {
-            expect(localProps.onClose).toHaveBeenCalledTimes(expectedOnCloseClickCount);
-        },
-        {timeout: props.closeAfterMs},
-);
+            () => {
+                expect(localProps.onClose).toHaveBeenCalledTimes(expectedOnCloseClickCount);
+            },
+            {
+                timeout: props.closeAfterMs,
+            },
+        );
 
         await waitFor(
-() => {
-            expect(queryByText(componentText)).not.toBeInTheDocument();
-        },
-        {timeout: props.closeAfterMs + props.closeTimeoutMs},
-);
+            () => {
+                expect(queryByText(componentText)).not.toBeInTheDocument();
+            },
+            {
+                timeout: props.closeAfterMs + props.closeTimeoutMs,
+            },
+        );
     });
 
     it('should render title from props', async () => {

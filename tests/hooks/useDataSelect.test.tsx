@@ -84,7 +84,9 @@ describe('hook useDataSelect', () => {
     });
 
     it('single select, open, hover', async () => {
-        const wrapper = mountWithApp(MockComponent, {items});
+        const wrapper = mountWithApp(MockComponent, {
+            items,
+        });
 
         const {
             setIsOpened,
@@ -180,7 +182,9 @@ describe('hook useDataSelect', () => {
 
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([items[0].id]);
 
-        wrapper.setProps({selectedIds: [33]} as any);
+        wrapper.setProps({
+            selectedIds: [33],
+        } as any);
         await (() => new Promise(setImmediate))();
         wrapper.update();
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([33]);
@@ -188,7 +192,9 @@ describe('hook useDataSelect', () => {
 
     it('custom primary key', () => {
         const wrapper = mountWithApp(MockComponent, {
-            items: [{foo: 'Bar'}],
+            items: [{
+                foo: 'Bar',
+            }],
             primaryKey: 'foo',
             selectFirst: true,
         });
@@ -203,7 +209,9 @@ describe('hook useDataSelect', () => {
         });
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([28]);
 
-        wrapper.setProps({selectFirst: true} as any);
+        wrapper.setProps({
+            selectFirst: true,
+        } as any);
         await (() => new Promise(setImmediate))();
         wrapper.update();
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([28]);

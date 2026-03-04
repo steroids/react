@@ -89,4 +89,6 @@ CheckboxField.defaultProps = {
     multiply: true,
 };
 
-export default fieldWrapper<ICheckboxFieldProps>(FieldEnum.CHECKBOX_FIELD, CheckboxField, {label: false});
+export default fieldWrapper<ICheckboxFieldProps>(FieldEnum.CHECKBOX_FIELD, CheckboxField, {
+    label: false,
+});

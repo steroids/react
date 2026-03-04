@@ -29,7 +29,9 @@ describe('Menu tests', () => {
     const expectedMenuItemClass = 'MenuItemView';
 
     it('should be in the document', () => {
-        const {container} = render(JSXWrapper(Menu, props, true), {container: document.body});
+        const {container} = render(JSXWrapper(Menu, props, true), {
+            container: document.body,
+        });
         const menuButton = getElementByClassName(container, `${expectedMenuClass}__button`);
         fireEvent.click(menuButton);
 
@@ -49,7 +51,9 @@ describe('Menu tests', () => {
     });
 
     it('should have correct props item', () => {
-        const {container} = render(JSXWrapper(Menu, props, true), {container: document.body});
+        const {container} = render(JSXWrapper(Menu, props, true), {
+            container: document.body,
+        });
         const menuButton = getElementByClassName(container, `${expectedMenuClass}__button`);
         fireEvent.click(menuButton);
 

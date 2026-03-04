@@ -261,7 +261,9 @@ function Router(props: IRouterProps): JSX.Element {
                             id: 'root',
                             ...props.routes,
                         },
-                        props.defaultRoles ? {roles: props.defaultRoles} : undefined,
+                        props.defaultRoles ? {
+                            roles: props.defaultRoles,
+                        } : undefined,
                         {},
                         props.alwaysAppendParentRoutePath,
                     ),

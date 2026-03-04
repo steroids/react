@@ -205,7 +205,9 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
     // Normalize autoComplete
     const autoComplete: IAutoCompleteConfig = useMemo(() => ({
         ...defaultProps.autoComplete,
-        ...(typeof config.autoComplete === 'boolean') ? {enable: config.autoComplete} : config.autoComplete,
+        ...(typeof config.autoComplete === 'boolean') ? {
+            enable: config.autoComplete,
+        } : config.autoComplete,
     }), [config.autoComplete]);
 
     const dataProvider = useMemo(() => ({
@@ -233,8 +235,12 @@ export default function useDataProvider(config: IDataProviderConfig): IDataProvi
         const result = searchHandler(dataProvider.action, {
             query: config.query,
             // deprecated logic
-            ...(isAuto ? {ids: config.initialSelectedIds} : null),
-            ...(config.initialSelectedIds?.length > 0 ? {withIds: config.initialSelectedIds} : null),
+            ...(isAuto ? {
+                ids: config.initialSelectedIds,
+            } : null),
+            ...(config.initialSelectedIds?.length > 0 ? {
+                withIds: config.initialSelectedIds,
+            } : null),
             ...config.dataProvider.params,
         });
 

@@ -176,7 +176,9 @@ export default function useFile(props: IFileInput): IFileOutput {
                             ...item,
                             id: item.id || item.uid,
                             images: item.thumbnailUrl
-                                ? [{url: item.thumbnailUrl}]
+                                ? [{
+                                    url: item.thumbnailUrl,
+                                }]
                                 : null,
                         };
 

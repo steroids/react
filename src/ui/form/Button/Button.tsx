@@ -216,7 +216,9 @@ function Button(props: IButtonProps): JSX.Element {
     const badge = useMemo(() => ({
         ...Button.defaultProps.badge,
         enable: !!props.badge || props.badge === 0,
-        ...(typeof props.badge === 'object' ? props.badge : {value: props.badge}),
+        ...(typeof props.badge === 'object' ? props.badge : {
+            value: props.badge,
+        }),
     }), [props.badge]);
 
     // Route -> url

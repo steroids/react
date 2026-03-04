@@ -15,10 +15,14 @@ describe('fields reducers', () => {
         meta: null,
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     it('normalizeName', () => {

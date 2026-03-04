@@ -370,7 +370,9 @@ DateTimeRangeField.defaultProps = {
 };
 
 export default fieldWrapper<IDateTimeRangeFieldProps>(
-FieldEnum.DATE_TIME_RANGE_FIELD,
-DateTimeRangeField,
-{attributeSuffixes: ['from', 'to']},
+    FieldEnum.DATE_TIME_RANGE_FIELD,
+    DateTimeRangeField,
+    {
+        attributeSuffixes: ['from', 'to'],
+    },
 );

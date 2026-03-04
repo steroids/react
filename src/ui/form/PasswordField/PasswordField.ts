@@ -78,7 +78,9 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     const components = useComponents();
     const {inputRef, onChange} = useSaveCursorPosition(
-        {inputParams: props.input},
+        {
+            inputParams: props.input,
+        },
     );
 
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);

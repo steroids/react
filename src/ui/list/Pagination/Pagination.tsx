@@ -255,7 +255,9 @@ Pagination.defaultProps = {
 
 export const normalizePaginationProps = props => ({
     ...Pagination.defaultProps,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
 export default React.memo(Pagination);

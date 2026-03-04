@@ -23,8 +23,9 @@ export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
 
     const renderHomeIcon = React.useCallback(() => (
         props.customIcon
-            ? renderIconMock(props.customIcon, {className: bem.element('custom-icon')})
-            : (
+            ? renderIconMock(props.customIcon, {
+                className: bem.element('custom-icon'),
+            }) : (
                 <Icon
                     view={IconMockView}
                     name='mockIcon'

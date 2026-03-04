@@ -12,12 +12,16 @@ export default function FileFieldView(props: IFileFieldViewProps) {
     return (
         <div
             className={bem(
-                bem.block({isWall}),
+                bem.block({
+                    isWall,
+                }),
                 props.className,
             )}
         >
             <ButtonView
-                className={bem.element('button', {isWall})}
+                className={bem.element('button', {
+                    isWall,
+                })}
                 icon='mockIcon'
                 {...props.buttonProps}
             />

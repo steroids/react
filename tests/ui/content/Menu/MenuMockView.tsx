@@ -29,7 +29,9 @@ export default function MenuView(props: IMenuViewProps) {
         >
             <span className={bem.element('button')}>
                 {props.icon
-                    ? renderIcon(props.icon, {className: bem.element('icon')})
+                    ? renderIcon(props.icon, {
+                        className: bem.element('icon'),
+                    })
                     : (
                         <Icon
                             icon='mockIcon'

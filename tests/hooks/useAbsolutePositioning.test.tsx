@@ -34,8 +34,10 @@ describe('useAbsolutePositioning hook', () => {
     });
 
     it('should toggle visibility correctly when `onShow` handler is called', () => {
-        const {result} = renderHook(() => useAbsolutePositioning({...defaultProps,
-visible: false}));
+        const {result} = renderHook(() => useAbsolutePositioning({
+            ...defaultProps,
+            visible: false,
+        }));
         expect(result.current.isComponentVisible).toBe(expectedComponentNotVisible);
         expect(result.current.onShow).toBeInstanceOf(Function);
 

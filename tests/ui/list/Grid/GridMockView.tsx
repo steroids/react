@@ -20,7 +20,9 @@ export default function GridView(props: IGridViewProps) {
         }
 
         const fields = _keyBy(
-            props.searchForm.fields.map(column => _isString(column) ? {attribute: column} : column),
+            props.searchForm.fields.map(column => _isString(column) ? {
+                attribute: column,
+            } : column),
             'attribute',
         );
         return (
@@ -64,12 +66,12 @@ export default function GridView(props: IGridViewProps) {
 
     return props.renderList(
         <div className={bem(bem.block(
-                {
-                    loading: props.isLoading || props.list?.isLoading,
-                    size: props.size,
-                    alternatingColors: props.hasAlternatingColors,
-                },
-            ), props.className)}
+            {
+                loading: props.isLoading || props.list?.isLoading,
+                size: props.size,
+                alternatingColors: props.hasAlternatingColors,
+            },
+        ), props.className)}
         >
             {props.renderSearchForm()}
             {props.renderPaginationSize()}

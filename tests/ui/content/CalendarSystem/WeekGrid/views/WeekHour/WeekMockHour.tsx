@@ -71,7 +71,9 @@ export default function WeekHour(props: IWeekHourProps) {
         >
             <div
                 className={bem.element('hour-event')}
-                style={{backgroundColor: event.color}}
+                style={{
+                    backgroundColor: event.color,
+                }}
                 title={event.title}
                 data-eventid={event.id}
             >

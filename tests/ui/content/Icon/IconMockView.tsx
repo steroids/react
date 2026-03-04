@@ -8,7 +8,9 @@ export default function IconView(props: IIconViewProps) {
     if (typeof props.icon === 'string' && props.icon.indexOf('<svg') === 0) {
         return (
             <span
-                dangerouslySetInnerHTML={{__html: props.icon} /* eslint-disable-line react/no-danger */}
+                dangerouslySetInnerHTML={{
+                    __html: props.icon,
+                } /* eslint-disable-line react/no-danger */}
                 aria-label={props.title}
                 title={props.title}
                 className={bem(bem.block(), props.className)}

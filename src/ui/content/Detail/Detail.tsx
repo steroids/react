@@ -255,7 +255,9 @@ export default function Detail(props: IDetailProps): JSX.Element {
         controls: props.controls,
         layout: props.layout,
         rows,
-        resizedNodeRef: responsiveProps.enable ? {resizedNodeRef} : {},
+        resizedNodeRef: responsiveProps.enable ? {
+            resizedNodeRef,
+        } : {},
         size: props.size,
         className: props.className,
         style: props.style,

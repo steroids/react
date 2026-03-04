@@ -15,7 +15,9 @@ describe('Text tests', () => {
         content: 'Text test',
         color: 'primary',
         className: 'testClass',
-        style: {marginBottom: '70px'},
+        style: {
+            marginBottom: '70px',
+        },
     };
 
     const expectedTextClass = 'TextView';

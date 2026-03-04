@@ -95,7 +95,9 @@ export const queryRestore = (model: Model, location, useHash) => {
     const attributes = model?.attributes || Object.keys(values);
     attributes.forEach(item => {
         if (typeof item === 'string') {
-            item = {attribute: item};
+            item = {
+                attribute: item,
+            };
         }
 
         const defaultValue = _has(item, 'defaultValue') ? item.defaultValue : null;
@@ -116,7 +118,9 @@ export const queryReplace = (model: Model, location, values, useHash) => {
     const attributes = model?.attributes || Object.keys(values);
     attributes.forEach(item => {
         if (typeof item === 'string') {
-            item = {attribute: item};
+            item = {
+                attribute: item,
+            };
         }
 
         const defaultValue = _has(item, 'defaultValue') ? item.defaultValue : null;

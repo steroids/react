@@ -119,7 +119,9 @@ export const normalizePaginationSizeProps = props => ({
     ...PaginationSize.defaultProps,
     enable: !!props,
     defaultValue: _get(props, 'sizes.0') || PaginationSize.defaultProps.defaultValue,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
 export default React.memo(PaginationSize);

@@ -42,7 +42,7 @@ export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
                     toggleAccordion={() => { }}
                     showIcon
                     title={props.item.label}
-                    position="middle"
+                    position='middle'
                     key={props.item[props.primaryKey]}
                     className={
                         bem.element('group', {
@@ -69,7 +69,9 @@ export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
                     {...commonProps}
                     key={props.item[props.primaryKey]}
                 >
-                    {renderIcon(props.item.contentSrc, {className: bem.element('icon')})}
+                    {renderIcon(props.item.contentSrc, {
+                        className: bem.element('icon'),
+                    })}
                     <span>
                         {props.item.label}
                     </span>
@@ -131,7 +133,7 @@ export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
                     <span className={bem.element('img')}>
                         <img
                             src={props.item.contentSrc as string}
-                            alt="custom source for item"
+                            alt='custom source for item'
                         />
                     </span>
                     <span>

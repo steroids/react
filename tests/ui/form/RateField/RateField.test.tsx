@@ -7,7 +7,9 @@ import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 describe('RateField', () => {
     const expectedRateFieldClassName = 'RateFieldView';
     const externalClass = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
 
     const props: IRateFieldProps = {
         className: externalClass,

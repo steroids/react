@@ -148,7 +148,9 @@ const useCalendarControls = (
         }
     }, [calendarType, changeDay, changeMonth, changeWeek, isGeneralCurrentDayNeedsUpdate]);
 
-    return {onClickControl};
+    return {
+        onClickControl,
+    };
 };
 
 export default useCalendarControls;

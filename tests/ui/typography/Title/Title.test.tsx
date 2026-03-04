@@ -15,7 +15,9 @@ describe('Title tests', () => {
         content: 'Title test',
         color: 'primary',
         className: 'testClass',
-        style: {marginBottom: '70px'},
+        style: {
+            marginBottom: '70px',
+        },
     };
 
     const expectedTitleClass = 'TitleView';

@@ -5,7 +5,9 @@ import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 describe('TimeRangeField', () => {
     const expectedTimeRangeFieldClassName = 'TimeRangeFieldView';
     const externalClass = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
 
     const props: ITimeRangeFieldProps = {
         size: 'lg',

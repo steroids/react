@@ -287,7 +287,9 @@ describe('queryReplace', () => {
                 jsType: 'boolean',
             }],
         };
-        const localValues = {isActive: true};
+        const localValues = {
+            isActive: true,
+        };
         const expectedQuery = '/example?isActive=active';
 
         queryReplace(customModel, mockLocation, localValues, WITHOUT_HASH);
@@ -339,8 +341,12 @@ describe('useAddressBar Hook', () => {
         },
     };
 
-    const configWithDisabledProp = {enable: false};
-    const configWithEnabledProp = {enable: true};
+    const configWithDisabledProp = {
+        enable: false,
+    };
+    const configWithEnabledProp = {
+        enable: true,
+    };
 
     beforeEach(() => jest.clearAllMocks());
     afterAll(() => jest.restoreAllMocks());

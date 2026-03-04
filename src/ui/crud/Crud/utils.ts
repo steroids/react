@@ -43,7 +43,9 @@ export const normalizeItems = (sourceItems: ICrudItem[] | {[key: string]: ICrudI
         },
         delete: {
             position: 'right',
-            confirm: (e, props) => __('Удалить запись {id}?', {id: props.recordId}),
+            confirm: (e, props) => __('Удалить запись {id}?', {
+                id: props.recordId,
+            }),
             onClick: async (e, props) => {
                 if (props.restApi) {
                     props.goToAction(CRUD_ACTION_INDEX);

@@ -5,7 +5,9 @@ import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 
 describe('Header test', () => {
     const expectedHeaderClassName = 'HeaderView';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
     const externalClass = 'external-class';
     const expectedAuthButtonLabel = 'Войти';
 

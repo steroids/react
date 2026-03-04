@@ -7,7 +7,9 @@ import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 describe('SliderField tests', () => {
     const expectedSliderFieldClassName = 'SliderFieldView';
     const externalClassName = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
     const expectedSliderClass = 'rc-slider';
 
     const marks = {

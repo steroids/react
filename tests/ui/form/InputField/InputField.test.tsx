@@ -68,7 +68,11 @@ describe('InputField tests', () => {
 
         const input = getElementByClassName(container, 'InputFieldView__input');
 
-        fireEvent.change(input, {target: {value: 'test'}});
+        fireEvent.change(input, {
+            target: {
+                value: 'test',
+            },
+        });
 
         waitFor(() => {
             const inputField = getElementByClassName(container, expectedInputFieldClass);
@@ -89,7 +93,11 @@ describe('InputField tests', () => {
 
         expect(input).toHaveAttribute('disabled');
 
-        fireEvent.change(input, {target: {value: 'test'}});
+        fireEvent.change(input, {
+            target: {
+                value: 'test',
+            },
+        });
 
         waitFor(() => {
             const inputField = getElementByClassName(container, expectedInputFieldClass);

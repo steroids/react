@@ -131,7 +131,10 @@ export default function AccordionItemView(props: IAccordionItemViewProps) {
                         )}
                 </div>
             </div>
-            <div className={bem.element('content', {visible: !props.disabled && props.isShowMore})}>
+            <div className={bem.element('content', {
+                    visible: !props.disabled && props.isShowMore,
+                })}
+            >
                 {props.children}
             </div>
         </div>

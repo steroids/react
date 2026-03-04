@@ -17,7 +17,9 @@ describe('fields actions', () => {
     });
 
     it('setMeta', () => {
-        const meta = {meta: 'meta'};
+        const meta = {
+            meta: 'meta',
+        };
 
         const expectedActions = [
             {

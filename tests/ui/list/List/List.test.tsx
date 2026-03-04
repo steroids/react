@@ -20,7 +20,9 @@ const items = [
 
 const searchForm = {
     className: 'class-test',
-    style: {fontSize: '4rem'},
+    style: {
+        fontSize: '4rem',
+    },
     fields: [
         {
             attribute: 'name',
@@ -35,7 +37,9 @@ describe('searchForm tests', () => {
         listId: 'ListDemoSearch',
         items,
         searchForm,
-        pagination: {position: 'mockPosition'},
+        pagination: {
+            position: 'mockPosition',
+        },
         className: 'list-group',
         itemView: (props: any) => (
             <div className='list-group-item'>
@@ -79,7 +83,11 @@ describe('searchForm tests', () => {
 
         expect(itemToRemove).toBeInTheDocument();
 
-        fireEvent.change(input, {target: {value: nameToFilter}});
+        fireEvent.change(input, {
+            target: {
+                value: nameToFilter,
+            },
+        });
         fireEvent.click(button);
 
         waitFor(() => {

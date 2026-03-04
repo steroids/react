@@ -47,7 +47,9 @@ export default function DropDownView(props: IDropDownViewProps) {
             {props.hasArrow && (
                 <div
                     ref={arrowRef}
-                    className={bem.element('arrow', {position: props.position})}
+                    className={bem.element('arrow', {
+                        position: props.position,
+                    })}
                     style={props.arrowPosition}
                 />
             )}

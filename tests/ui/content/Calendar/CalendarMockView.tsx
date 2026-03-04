@@ -65,7 +65,9 @@ export default function CalendarView(props: ICalendarViewProps) {
     return (
         <DayPicker
             {...props}
-            className={bem(bem.block({ranged: isRange}), props.className)}
+            className={bem(bem.block({
+                ranged: isRange,
+            }), props.className)}
             captionElement={renderCaptionElement}
             renderDay={(day) => {
                 const date = day.getDate();

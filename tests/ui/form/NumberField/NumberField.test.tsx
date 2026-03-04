@@ -61,7 +61,11 @@ describe('NumberField tests', () => {
 
         const input = getElementByTag(container, 'input');
 
-        fireEvent.change(input, {target: {value: '1'}});
+        fireEvent.change(input, {
+            target: {
+                value: '1',
+            },
+        });
 
         const component = getElementByClassName(container, `${expectedNumberFieldClassName}_filled`);
 

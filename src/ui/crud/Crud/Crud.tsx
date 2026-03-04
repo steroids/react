@@ -364,8 +364,10 @@ function Crud(props: ICrudProps): JSX.Element {
                         }
                     }
 
-                    crudItem.onClick(e, {...clickProps,
-                        ...localClickProps});
+                    crudItem.onClick(e, {
+                        ...clickProps,
+                        ...localClickProps,
+                    });
                 };
             } else {
                 button.toRoute = routeId;

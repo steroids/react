@@ -124,7 +124,9 @@ describe('useFile Hook', () => {
 
     it('should handle if initial files does not have correct format', () => {
         const initialFiles = [
-            {title: 'File 1'},
+            {
+                title: 'File 1',
+            },
             {
                 uid: '2',
                 title: 'File 2',

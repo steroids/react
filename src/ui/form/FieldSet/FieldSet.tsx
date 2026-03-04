@@ -75,7 +75,9 @@ function FieldSet(props: IFieldSetProps): JSX.Element {
                 {(props.fields || []).map((field: any, index) => (
                     <Field
                         key={index}
-                        {...(_isString(field) ? {attribute: field} : field)}
+                        {...(_isString(field) ? {
+                            attribute: field,
+                        } : field)}
                         prefix={contextValue.prefix}
                     />
                 ))}

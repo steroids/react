@@ -17,7 +17,9 @@ describe('Router tests', () => {
             exact: true,
             redirectTo: false,
             component: LoaderMockView,
-            componentProps: {color: 'gray'},
+            componentProps: {
+                color: 'gray',
+            },
             items: [
                 {
                     id: 'contacts',

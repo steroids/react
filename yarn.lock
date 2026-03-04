@@ -1574,10 +1574,10 @@
   resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.1.4.tgz#02d029360569e7d75d28357a9727fc48322015a3"
   integrity sha512-5I30evTJcAJQXt6vJ26g2xEkG+l1nXcpEw4xpKh0/FWQ8ozmAeTbtniVtVmz2sH1Es3vgfC4SS8B2X4o5JMptA==
 
-"@steroidsjs/eslint-config@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@steroidsjs/eslint-config/-/eslint-config-3.0.4.tgz#601459227da12ca480cb2c14a480123396838eaa"
-  integrity sha512-A685mKvAh9kBfogKEESGDrxZMJFmyNc/PBCzaqCgUTiFFsfT1FrrPGOltLKzNb48euHV1P9kMoCEPJF/OqdISQ==
+"@steroidsjs/eslint-config@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@steroidsjs/eslint-config/-/eslint-config-3.0.5.tgz#d347ceba67d814fd49a370e44486dbf4af99d272"
+  integrity sha512-qOzoRM5AnTMgddQvGZFRYUiOSS2wiysZyAB93uacYZj5b3eIia/4XkV+u+7sCFWTnHhiDkNAPQWFC9plSJGWog==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.49.0"
     "@typescript-eslint/parser" "^5.49.0"

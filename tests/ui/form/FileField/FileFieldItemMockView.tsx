@@ -26,7 +26,9 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
         <div className={bem.element('progress-track')}>
             <div
                 className={bem.element('progress-bar')}
-                style={{width: `${props.progress.percent}%`}}
+                style={{
+                    width: `${props.progress.percent}%`,
+                }}
             />
         </div>
     ), [bem, props.progress]);
@@ -57,7 +59,9 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
                 ? (
                     <div
                         className={bem.element('image')}
-                        style={{backgroundImage: `url(${props.image.url})`}}
+                        style={{
+                            backgroundImage: `url(${props.image.url})`,
+                        }}
                     />
                 )
                 : (
@@ -89,7 +93,9 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
             {props.showRemove && (
                 <Icon
                     name={props.customRemoveIcon || 'trash'}
-                    className={bem.element('remove', {isLoading})}
+                    className={bem.element('remove', {
+                        isLoading,
+                    })}
                     onClick={props.onRemove}
                 />
             )}

@@ -66,7 +66,9 @@ export const getFormattedWeekFromDate = (fromDate: Date = null) => {
     const currentWeek = getWeekDaysFromDate(fromDate || new Date());
 
     return currentWeek.map(dayOfWeek => {
-        const copyOfDayWeek = {...dayOfWeek};
+        const copyOfDayWeek = {
+            ...dayOfWeek,
+        };
 
         copyOfDayWeek.formattedDisplay = convertDate(dayOfWeek.date, null, WEEK_DAY_FORMAT);
         copyOfDayWeek.isToday = isDateIsToday(copyOfDayWeek.date);

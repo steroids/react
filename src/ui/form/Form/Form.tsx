@@ -298,7 +298,9 @@ const getCaptchaToken = (params: ICaptchaParams): Promise<string> => {
 
     return new Promise(resolve => {
         googleCaptcha.ready(() => {
-            googleCaptcha.execute(siteKey, {action: actionName}).then(token => resolve(token));
+            googleCaptcha.execute(siteKey, {
+                action: actionName,
+            }).then(token => resolve(token));
         });
     });
 };
@@ -330,7 +332,9 @@ function Form(props: IFormProps): JSX.Element {
     } = useAddressBar({
         enable: !!props.addressBar,
         model: props.model,
-        ...(typeof props.addressBar === 'boolean' ? {enable: props.addressBar} : props.addressBar),
+        ...(typeof props.addressBar === 'boolean' ? {
+            enable: props.addressBar,
+        } : props.addressBar),
     });
 
     // Resolve initial values
@@ -387,13 +391,13 @@ function Form(props: IFormProps): JSX.Element {
     // Clear Errors
     const prevValues = usePrevious(values);
     useUpdateEffect(
-() => {
-        if (props.useClearErrors) {
-            clearErrors(values, prevValues, errors, setErrors);
-        }
-    },
-    [props.useClearErrors, errors, prevValues, setErrors, values],
-);
+        () => {
+            if (props.useClearErrors) {
+                clearErrors(values, prevValues, errors, setErrors);
+            }
+        },
+        [props.useClearErrors, errors, prevValues, setErrors, values],
+    );
 
     // OnChange handler
     useUpdateEffect(() => {

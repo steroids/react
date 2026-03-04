@@ -66,7 +66,9 @@ export default function MonthDay(props: IMonthDayProps) {
             >
                 <span
                     className={bem.element('event-dot')}
-                    style={{backgroundColor: event.color}}
+                    style={{
+                        backgroundColor: event.color,
+                    }}
                 />
                 {event.title}
             </span>

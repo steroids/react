@@ -123,7 +123,9 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         const componentsConfig = _merge({}, defaultComponents, config.components);
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
-                componentsConfig[name] = {className: componentsConfig[name]};
+                componentsConfig[name] = {
+                    className: componentsConfig[name],
+                };
             }
 
             const {className, ...componentConfig} = componentsConfig[name];

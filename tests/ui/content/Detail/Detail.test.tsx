@@ -23,7 +23,9 @@ describe('Detail tests', () => {
     const props = {
         title,
         layout: DetailLayoutEnum.Vertical,
-        controls: [{label: 'Edit'}],
+        controls: [{
+            label: 'Edit',
+        }],
         view: DetailMockView,
         responsive: true,
         children: (

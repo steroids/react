@@ -8,7 +8,9 @@ export default function FieldListView(props: IFieldListViewProps) {
     const bem = useBem('FieldListView');
     return (
         <div
-            className={bem(bem.block({hasAlternatingColors: props.hasAlternatingColors}), props.className)}
+            className={bem(bem.block({
+                hasAlternatingColors: props.hasAlternatingColors,
+            }), props.className)}
             style={props.style}
             ref={props.forwardedRef}
         >

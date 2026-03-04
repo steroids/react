@@ -6,7 +6,9 @@ import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 describe('DateField tests', () => {
     const expectedDateFieldClassName = 'DateFieldView';
     const externalClass = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
 
     const props: IDateFieldProps = {
         view: DateFieldMockView,

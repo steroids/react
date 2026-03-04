@@ -62,7 +62,9 @@ export const getLabel = (items, id) => {
 
 export default function EnumFormatter(props: IEnumFormatterProps): JSX.Element {
     const components = useComponents();
-    const {items} = useDataProvider({items: props.items});
+    const {items} = useDataProvider({
+        items: props.items,
+    });
 
     return components.ui.renderView(props.view || 'format.DefaultFormatterView', {
         value: getLabel(items, props.value),

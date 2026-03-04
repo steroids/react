@@ -144,7 +144,9 @@ export default class ResourceComponent implements IResourceComponent {
 
         return this.loadScript(
             this.RESOURCE_GOOGLE_CAPTCHA,
-            {render: this.googleCaptchaSiteKey},
+            {
+                render: this.googleCaptchaSiteKey,
+            },
             () => window.grecaptcha,
         );
     }

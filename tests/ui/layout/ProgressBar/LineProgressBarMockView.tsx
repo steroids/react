@@ -15,7 +15,9 @@ export default function LineProgressBarView(props: IProgressBarViewProps) {
             <div className={bem.element('emptyLine')}>
                 <div
                     className={bem.element('progressLine')}
-                    style={{width: `${props.percent}%`}}
+                    style={{
+                        width: `${props.percent}%`,
+                    }}
                 />
             </div>
             <div className={bem.element('text')}>{props.label}</div>

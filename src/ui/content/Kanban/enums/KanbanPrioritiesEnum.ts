@@ -52,11 +52,15 @@ export default class KanbanPrioritiesEnum extends Enum {
     }
 
     static getPriorityById(id) {
-        return _find(this.getPrioritiesArray(), {id}) || null;
+        return _find(this.getPrioritiesArray(), {
+            id,
+        }) || null;
     }
 
     static getDefaultSelectedPriorityId() {
-        const defaultPriority = _find(this.getPrioritiesArray(), {type: this.DEFAULT});
+        const defaultPriority = _find(this.getPrioritiesArray(), {
+            type: this.DEFAULT,
+        });
         return defaultPriority ? defaultPriority.id : null;
     }
 }

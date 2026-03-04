@@ -12,7 +12,9 @@ describe('Avatar tests', () => {
         size: 'x-large',
         shape: 'circle',
         status: true,
-        style: {width: '30px'},
+        style: {
+            width: '30px',
+        },
         view: AvatarView,
     };
 

@@ -98,7 +98,11 @@ describe('Chat tests', () => {
         const chatInput = getByRole('textbox');
         const sendMessageButton = getElementByTag(chatInputElement, 'button', expectedSendMessageButtonIndex);
 
-        fireEvent.change(chatInput, {target: {value: expectedMessageText}});
+        fireEvent.change(chatInput, {
+            target: {
+                value: expectedMessageText,
+            },
+        });
 
         waitFor(() => {
             expect(getByDisplayValue(expectedMessageText)).toBeInTheDocument();

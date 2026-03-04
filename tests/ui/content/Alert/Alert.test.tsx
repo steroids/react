@@ -12,7 +12,9 @@ describe('Alert', () => {
         type: 'mockIcon',
         message: 'Are you sure?',
         description: 'It is maybe dangerous',
-        style: {width: '45%'},
+        style: {
+            width: '45%',
+        },
         showClose: true,
         showIcon: true,
         view: AlertView,
@@ -23,9 +25,7 @@ describe('Alert', () => {
     const testId = 'alert-test';
 
     it('should render something without props', () => {
-        const {container} = render(<Alert view={AlertView} />);
-
-        expect(container).not.toBeEmptyDOMElement();
+        const {container} = render(<Alert view={AlertView} />); expect(container).not.toBeEmptyDOMElement();
     });
 
     it('should be in the document', () => {

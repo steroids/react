@@ -38,7 +38,9 @@ function FormView(props: IFormViewProps) {
             {(props.fields || []).map((field: any, index) => (
                 <Field
                     key={index}
-                    {...(_isString(field) ? {attribute: field} : field)}
+                    {...(_isString(field) ? {
+                        attribute: field,
+                    } : field)}
                 />
             ))}
             {props.submitLabel && (

@@ -11,7 +11,9 @@ describe('Badge tests', () => {
         view: BadgeMockView,
         showClose: true,
         className: 'testClass',
-        style: {width: '30px'},
+        style: {
+            width: '30px',
+        },
     };
 
     const testId = 'badge-test';

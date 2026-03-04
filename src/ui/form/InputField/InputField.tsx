@@ -170,7 +170,9 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         onChangeCallback: props.onChange,
         debounce: {
             enabled: !!props.debounce,
-            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+            ...(typeof props.debounce === 'boolean' ? {
+                enabled: props.debounce,
+            } : (props.debounce ?? {})),
         },
     });
 

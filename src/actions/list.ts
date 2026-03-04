@@ -180,7 +180,9 @@ export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) 
 };
 
 export const localFetchHandler = (list: IList, query: Record<string, unknown>) => {
-    query = {...query};
+    query = {
+        ...query,
+    };
 
     // Get page
     const page = parseInt(query[list.pageAttribute] as string, 10) || null;
@@ -311,7 +313,9 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
     const source = axios.CancelToken.source();
     components.http._promises[listId] = source;
 
-    const options = {cancelToken: source.token};
+    const options = {
+        cancelToken: source.token,
+    };
 
     // Set `Loading...`
     if (list.isRemote) {

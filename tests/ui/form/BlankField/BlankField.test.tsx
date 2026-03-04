@@ -8,7 +8,9 @@ import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 describe('BlankField tests', () => {
     it('should have correct text', () => {
         const text = 'test-text';
-        const {getByText} = render(JSXWrapper(BlankField, {text}));
+        const {getByText} = render(JSXWrapper(BlankField, {
+            text,
+        }));
         const testText = getByText('test-text');
 
         expect(testText).toBeInTheDocument();
@@ -17,7 +19,9 @@ describe('BlankField tests', () => {
     it('should have correct children', () => {
         const expectedChildrenClass = 'InputFieldView';
         const children = <InputField />;
-        const {container} = render(JSXWrapper(BlankField, {children}));
+        const {container} = render(JSXWrapper(BlankField, {
+            children,
+        }));
         const testChildren = getElementByClassName(container, expectedChildrenClass);
 
         expect(testChildren).toBeInTheDocument();
@@ -25,7 +29,9 @@ describe('BlankField tests', () => {
 
     it('should have correct value', () => {
         const value = 'test-value';
-        const {getByText} = render(JSXWrapper(BlankField, {value}));
+        const {getByText} = render(JSXWrapper(BlankField, {
+            value,
+        }));
         const testValue = getByText('test-value');
 
         expect(testValue).toBeInTheDocument();

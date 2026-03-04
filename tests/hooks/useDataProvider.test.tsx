@@ -9,10 +9,10 @@ import prepareMiddleware from '../mocks/storeMiddlewareMock';
 const mockStore = configureMockStore([prepareMiddleware]);
 
 function MockResultComponent(props: any) {
-  return <div />;
+    return <div />;
 }
 function MockComponent(config: IDataProviderConfig) {
-  return <MockResultComponent {...useDataProvider(config)} />;
+    return <MockResultComponent {...useDataProvider(config)} />;
 }
 
 jest.useFakeTimers();
@@ -112,7 +112,9 @@ describe('hook useDataProvider', () => {
         }));
 
         const wrapper = mountWithApp(MockComponent, {
-            dataProvider: {onSearch},
+            dataProvider: {
+                onSearch,
+            },
             autoFetch: true,
         });
 

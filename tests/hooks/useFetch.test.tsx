@@ -114,7 +114,9 @@ describe('getConfigId', () => {
 });
 
 describe('defaultFetchHandler', () => {
-    const mockedFetchedData = {data: 'data'};
+    const mockedFetchedData = {
+        data: 'data',
+    };
 
     const mockedComponents = {
         http: {
@@ -173,7 +175,9 @@ describe('defaultFetchHandler', () => {
 });
 
 describe('fetchData', () => {
-    const mockedFetchedData = {data: 'data'};
+    const mockedFetchedData = {
+        data: 'data',
+    };
 
     const mockedComponents = {
         http: {
@@ -353,7 +357,9 @@ describe('useFetch Hook', () => {
         expect(mockedNormalizeConfig).toHaveBeenCalledWith(mockedRawConfig);
         expect(mockedFetchData).toHaveBeenCalledWith(mockedNormalizedConfig, mockedConfig, expectedAddCancelToken);
 
-        rerender({rawConfig: mockedNewRawConfig});
+        rerender({
+            rawConfig: mockedNewRawConfig,
+        });
 
         expect(mockedNormalizeConfig).toHaveBeenCalledWith(mockedNewRawConfig);
         expect(mockedFetchData).toHaveBeenCalledWith(expectedNewNormalizedConfig, mockedConfig, expectedAddCancelToken);

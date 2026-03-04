@@ -6,7 +6,9 @@ import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 describe('DateTimeField tests', () => {
     const expectedDateTimeFieldClassName = 'DateTimeFieldView';
     const externalClass = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
 
     const props: IDateTimeFieldProps = {
         view: DateTimeFieldMockView,

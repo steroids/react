@@ -102,7 +102,9 @@ export const normalizeLayoutNamesProps = props => ({
     ...LayoutNames.defaultProps,
     enable: !!props,
     defaultValue: _get(props, 'items.0.id') || LayoutNames.defaultProps.defaultValue,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
 export default React.memo(LayoutNames);

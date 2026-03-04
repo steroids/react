@@ -5,7 +5,9 @@ import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 describe('TimeField', () => {
     const expectedTimeFieldClassName = 'TimeFieldView';
     const externalClass = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
 
     const props: ITimeFieldProps = {
         size: 'lg',

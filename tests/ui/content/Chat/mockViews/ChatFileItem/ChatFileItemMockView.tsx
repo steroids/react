@@ -32,7 +32,9 @@ export default function ChatFileItemView(props: IChatFileItemViewProps) {
         <div className={bem.element('progress-track')}>
             <div
                 className={bem.element('progress-bar')}
-                style={{width: `${props.progress.percent}%`}}
+                style={{
+                    width: `${props.progress.percent}%`,
+                }}
             />
         </div>
     ), [bem, props.progress]);
@@ -102,7 +104,9 @@ export default function ChatFileItemView(props: IChatFileItemViewProps) {
             ) : (
                 <Icon
                     name={props.customRemoveIcon || 'cross_8x8'}
-                    className={bem.element('remove', {isLoading})}
+                    className={bem.element('remove', {
+                        isLoading,
+                    })}
                     onClick={props.onRemove}
                 />
             )}

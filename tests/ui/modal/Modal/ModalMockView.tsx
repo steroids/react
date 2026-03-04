@@ -26,7 +26,9 @@ export default function ModalMockView(props: IModalViewProps) {
             {...props}
             ariaHideApp={false}
             bodyOpenClassName='ModalView_body-hide-scroll'
-            className={bem(bem.element('body', {size: props.size}), props.className)}
+            className={bem(bem.element('body', {
+                size: props.size,
+            }), props.className)}
             closeTimeoutMS={props.closeTimeoutMs}
             isOpen={!props.isClosing}
             onRequestClose={props.onClose}

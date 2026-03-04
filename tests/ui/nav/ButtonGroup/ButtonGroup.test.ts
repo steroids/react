@@ -20,7 +20,9 @@ describe('ButtonGroup tests', () => {
     const props = {
         view: ButtonGroupMockView,
         className: 'testClass',
-        style: {marginBottom: '70px'},
+        style: {
+            marginBottom: '70px',
+        },
         buttonProps: {
             size: 'sm',
             outline: true,

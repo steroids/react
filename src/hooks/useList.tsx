@@ -293,7 +293,9 @@ export const defaultConfig = {
 export const normalizeSortProps = (props: IListConfig['sort']) => ({
     ...defaultConfig.sort,
     enable: !!props,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
 export const getDefaultSearchModel = ({
@@ -457,7 +459,9 @@ export default function useList(config: IListConfig): IListOutput {
     } = useAddressBar({
         enable: !!config.addressBar,
         model: searchModel,
-        ...(typeof config.addressBar === 'boolean' ? {enable: config.addressBar} : config.addressBar),
+        ...(typeof config.addressBar === 'boolean' ? {
+            enable: config.addressBar,
+        } : config.addressBar),
     });
 
     // Outside search form

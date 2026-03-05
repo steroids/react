@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback, useMemo, useRef, useState} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useComponents, useDataProvider, useDataSelect, useSaveCursorPosition} from '@steroidsjs/core/hooks';
 import {IBaseFieldProps, IInputFieldProps} from '@steroidsjs/core/ui/form/InputField/InputField';
 import fieldWrapper, {
@@ -7,7 +7,6 @@ import fieldWrapper, {
 } from '@steroidsjs/core/ui/form/Field/fieldWrapper';
 import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
 import {useMaskito} from '@maskito/react';
-import {countriesPhonesData} from '../../../mock/countriesPhonesData';
 
 export interface ICountryPhoneMask extends IDropDownFieldItem{
     phoneCode: string,
@@ -26,11 +25,11 @@ interface IPhoneFieldProps extends IFieldWrapperInputProps, IBaseFieldProps {
      * Список доступных масок для телефонных номеров разных стран.
      * Каждая маска определяет формат отображения номера.
      */
-    phoneMasks?: ICountryPhoneMask[],
+    phoneMasks: ICountryPhoneMask[],
     /**
      * Выбранная страна по умолчанию
      */
-    initialCountryCode?: string,
+    initialCountryCode: string,
 }
 
 export interface IPhoneFieldDropdownProps {
@@ -55,7 +54,7 @@ function PhoneField(props: IPhoneFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     // Data provider
     const {items, sourceItems} = useDataProvider({
-        items: props.phoneMasks || countriesPhonesData,
+        items: props.phoneMasks,
         initialSelectedIds: [],
     });
 
@@ -185,7 +184,6 @@ function PhoneField(props: IPhoneFieldProps & IFieldWrapperOutputProps): JSX.Ele
 PhoneField.defaultProps = {
     disabled: false,
     required: false,
-    initialCountryCode: 'RU',
 };
 
 export default fieldWrapper<IInputFieldProps>('PhoneField', PhoneField);

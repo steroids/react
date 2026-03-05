@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/prefer-default-export */
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 dayjs.extend(customParseFormat);
@@ -112,7 +112,8 @@ const MONTHS = {
 
 const FIRST_DAY = {
     en: 0,
-    ru: 1, // Use Monday as first day of the week
+    // Use Monday as first day of the week
+    ru: 1,
 };
 
 const formatDay = (day: Date, locale?: string) => `${WEEKDAYS_LONG[locale][day.getDay()]}, ${day.getDate()} ${

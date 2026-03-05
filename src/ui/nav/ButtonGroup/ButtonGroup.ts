@@ -1,7 +1,8 @@
 import {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState} from 'react';
-import {IButtonProps} from '../../form/Button/Button';
+
 import {useComponents} from '../../../hooks';
 import useDataProvider, {DataProviderItems} from '../../../hooks/useDataProvider';
+import {IButtonProps} from '../../form/Button/Button';
 
 /**
  * ButtonGroup

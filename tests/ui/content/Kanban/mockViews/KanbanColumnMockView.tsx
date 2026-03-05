@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import {useBem} from '../../../../../src/hooks';
 import {IKanbanColumnViewProps} from '../../../../../src/ui/content/Kanban/Kanban';
-import {Title} from '../../../../../src/ui/typography';
 import {Button} from '../../../../../src/ui/form';
+import {Title} from '../../../../../src/ui/typography';
 
 export default function KanbanColumnView(props: IKanbanColumnViewProps) {
     const bem = useBem('KanbanColumnView');

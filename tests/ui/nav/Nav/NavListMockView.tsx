@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-import Link from '../../../../src/ui/nav/Link';
-
-import {INavViewProps} from '../../../../src/ui/nav/Nav/Nav';
 import {useBem} from '../../../../src/hooks';
+import Link from '../../../../src/ui/nav/Link';
+import {INavViewProps} from '../../../../src/ui/nav/Nav/Nav';
 
 export default function NavListView(props: INavViewProps) {
     const bem = useBem('NavListView');

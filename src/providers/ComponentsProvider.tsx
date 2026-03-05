@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
-import {IHttpComponent} from '../components/HttpComponent';
-import {IHtmlComponent} from '../components/HtmlComponent';
-import {IWebSocketComponent} from '../components/WebSocketComponent';
-import {IMetaComponent} from '../components/MetaComponent';
-import {IStoreComponent} from '../components/StoreComponent';
+
 import {IClientStorageComponent} from '../components/ClientStorageComponent';
+import {IHtmlComponent} from '../components/HtmlComponent';
+import {IHttpComponent} from '../components/HttpComponent';
 import {ILocaleComponent} from '../components/LocaleComponent';
-import {IUiApplicationComponent} from '../components/UiComponent';
+import {IMetaComponent} from '../components/MetaComponent';
 import {IResourceComponent} from '../components/ResourceComponent';
+import {IStoreComponent} from '../components/StoreComponent';
+import {IUiApplicationComponent} from '../components/UiComponent';
+import {IWebSocketComponent} from '../components/WebSocketComponent';
 
 declare global {
     interface Window {

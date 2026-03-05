@@ -29,7 +29,9 @@ describe('ClientStorageComponent', () => {
         mockStorage = {};
         //Isolate the work of the describe block with environment variables from other tests
         jest.resetModules();
-        process.env = {...env};
+        process.env = {
+            ...env,
+        };
     });
 
     describe('class fields', () => {
@@ -134,7 +136,9 @@ describe('ClientStorageComponent', () => {
             clientStorage.shareBetweenSubdomains = true;
 
             Object.defineProperty(window, 'location', {
-                value: {hostname: 'app.kozhin.dev'},
+                value: {
+                    hostname: 'app.kozhin.dev',
+                },
                 writable: true,
             });
 
@@ -146,7 +150,9 @@ describe('ClientStorageComponent', () => {
             clientStorage.shareBetweenSubdomains = true;
 
             Object.defineProperty(window, 'location', {
-                value: {hostname: 'localhost'},
+                value: {
+                    hostname: 'localhost',
+                },
                 writable: true,
             });
 
@@ -157,7 +163,9 @@ describe('ClientStorageComponent', () => {
             clientStorage.shareBetweenSubdomains = true;
 
             Object.defineProperty(window, 'location', {
-                value: {hostname: '127.0.0.1'},
+                value: {
+                    hostname: '127.0.0.1',
+                },
                 writable: true,
             });
 

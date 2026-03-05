@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
-import React, {ChangeEvent, useMemo, useCallback} from 'react';
 import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
-import {IBaseFieldProps} from '../InputField/InputField';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import React, {ChangeEvent, useMemo, useCallback} from 'react';
+
 import useInputTypeNumber from './hooks/useInputTypeNumber';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 const DEFAULT_STEP = 1;
 
@@ -81,7 +82,9 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             onChangeCallback: props.onChange,
             debounce: {
                 enabled: !!props.debounce,
-                ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+                ...(typeof props.debounce === 'boolean' ? {
+                    enabled: props.debounce,
+                } : (props.debounce ?? {})),
             },
         },
     );

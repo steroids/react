@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {Title} from '../../../../src/ui/typography';
 import TitleMockView from './TitleMockView';
+import {Title} from '../../../../src/ui/typography';
 import {getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Title tests', () => {
@@ -15,7 +15,9 @@ describe('Title tests', () => {
         content: 'Title test',
         color: 'primary',
         className: 'testClass',
-        style: {marginBottom: '70px'},
+        style: {
+            marginBottom: '70px',
+        },
     };
 
     const expectedTitleClass = 'TitleView';

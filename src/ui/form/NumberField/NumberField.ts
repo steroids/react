@@ -1,14 +1,19 @@
 /* eslint-disable max-len */
+import {maskitoTransform} from '@maskito/core';
+import {maskitoNumberOptionsGenerator} from '@maskito/kit';
+import {useMaskito} from '@maskito/react';
 import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
-import React, {ChangeEvent, useMemo, useCallback} from 'react';
+import _isNil from 'lodash-es/isNil';
+import {ChangeEvent, useEffect, useMemo, useCallback, MutableRefObject, FocusEvent} from 'react';
 
-import useInputTypeNumber from './hooks/useInputTypeNumber';
 import {FieldEnum} from '../../../enums';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
 
 const DEFAULT_STEP = 1;
+const DECIMAL_SEPARATOR = '.';
+const MINUS_SIGN = '-';
 
 /**
  * NumberField
@@ -48,14 +53,22 @@ export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldPr
      * Задержка применения введённого значения
      */
     debounce?: boolean | ISaveCursorPositionDebounceConfig,
+
+    /**
+     * Разделитель тысяч (по умолчанию пустая строка — без разделителя, например 1000).
+     * Для отображения "1 000" передать пробел: thousandSeparator=" "
+     * @example ' '
+     * @example ','
+     */
+    thousandSeparator?: string,
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
     inputProps: {
         type: string,
         name: string,
-        onChange: (value: ChangeEvent<HTMLInputElement> | string) => void,
-        value: number,
+        onInput: (event: ChangeEvent<HTMLInputElement>, value?: string) => void,
+        value: number | string,
         placeholder: string,
         disabled: boolean,
         min: number,
@@ -63,7 +76,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
         step: string | number,
         required: boolean,
     },
-    inputRef: React.MutableRefObject<any>,
+    inputRef: MutableRefObject<HTMLInputElement | null>,
     onStepUp: VoidFunction,
     onStepDown: VoidFunction,
     onKeyDown: VoidFunction,
@@ -88,42 +101,87 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             },
         },
     );
-    const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 
-    const {
-        onInputChange,
-        onInputBlur,
-        applyMinMaxConstraints,
-    } = useInputTypeNumber(
-        currentInputRef,
-        {
-            max: props.max,
-            min: props.min,
-            value: props.input.value,
-            required: props.required,
+    const step = useMemo(
+        () => props.step ?? DEFAULT_STEP,
+        [props.step],
+    );
+
+    const isNotEmptyValue = (rawValue: string) => !_isNil(rawValue) && rawValue !== '';
+
+    const numberMaskOptions = useMemo(() => {
+        const min = props.min ?? (props.isCanBeNegative ? -Infinity : 0);
+        const max = props.max ?? Infinity;
+
+        return maskitoNumberOptionsGenerator({
+            min,
+            max,
+            precision: props.decimal ?? 0,
+            decimalSeparator: DECIMAL_SEPARATOR,
+            minusSign: MINUS_SIGN,
+            thousandSeparator: props.thousandSeparator ?? '',
+        });
+    }, [props.min, props.max, props.isCanBeNegative, props.decimal, props.thousandSeparator]);
+
+    const maskedInputRef = useMaskito({
+        options: numberMaskOptions,
+    });
+
+    useEffect(() => {
+        if (currentInputRef.current) {
+            maskedInputRef(currentInputRef.current);
+        }
+    }, [currentInputRef, maskedInputRef]);
+
+    useEffect(() => {
+        const input = currentInputRef.current;
+
+        const currentValue = props.input.value;
+
+        const hasValue = isNotEmptyValue(currentValue);
+        const numberValue = Number(currentValue);
+
+        const isValid = !props.required
+            || (hasValue && numberValue >= props.min && numberValue <= props.max);
+
+        input.setCustomValidity(
+            isValid ? '' : __('The number is not valid.'),
+        );
+    }, [currentInputRef, props.required, props.min, props.max, props.input.value, props]);
+
+    const clampToMinMax = useCallback(
+        (rawValue: number) => {
+            let val = rawValue;
+
+            if (val < props.min) {
+                val = props.min;
+            }
+
+            if (val > props.max) {
+                val = props.max;
+            }
+
+            return val;
         },
-        onChange,
-        props.decimal,
-        props.isCanBeNegative,
+        [props.min, props.max],
     );
 
     const onStep = useCallback((isIncrement: boolean) => {
-        const currentValue = Number(currentInputRef?.current?.value);
+        const currentValue = Number(currentInputRef?.current?.value) || 0;
 
-        let newValue;
+        const fixToDecimal = (raw: number) => props.decimal
+            ? raw.toFixed(props.decimal)
+            : String(raw);
 
-        const fixToDecimal = (rawValue) => props.decimal ? rawValue.toFixed(props.decimal) : rawValue;
+        const newValue = isIncrement
+            ? currentValue + step
+            : currentValue - step;
 
-        if (isIncrement) {
-            newValue = fixToDecimal(currentValue + step);
-        } else {
-            newValue = fixToDecimal(currentValue - step);
-        }
-
-        newValue = applyMinMaxConstraints(newValue);
-
-        onInputChange(null, String(newValue));
-    }, [currentInputRef, onInputChange, props.decimal, step, applyMinMaxConstraints]);
+        onChange(
+            null,
+            fixToDecimal(clampToMinMax(newValue)),
+        );
+    }, [currentInputRef, onChange, props.decimal, step, clampToMinMax]);
 
     const onKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === 'ArrowUp') {
@@ -133,36 +191,54 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         }
     }, [onStep]);
 
+    const onBlurWithoutMinMax = useCallback(
+        (event: FocusEvent<HTMLInputElement>) => {
+            onChange(event, event.target.value);
+            props.onBlur?.(event);
+        },
+        [onChange, props],
+    );
+
+    const displayValue = useMemo(
+        () => isNotEmptyValue(value)
+            ? maskitoTransform(String(value), numberMaskOptions)
+            : value,
+        [value, numberMaskOptions],
+    );
+
     const inputProps = useMemo(() => ({
-        ...props.inputProps,
-        name: props.input.name,
-        value,
-        onChange: onInputChange,
         type: 'text',
+        name: props.input.name,
+        value: displayValue,
+        onInput: onChange,
+        placeholder: props.placeholder,
         min: props.min,
         max: props.max,
         step: props.step,
-        placeholder: props.placeholder,
         disabled: props.disabled,
         required: props.required,
         autoComplete: 'off',
         onKeyDown,
-    }), [props.inputProps, props.input.name, props.min, props.max, props.step, props.placeholder, props.disabled, props.required, value, onInputChange, onKeyDown]);
+        ...props.inputProps,
+    }), [props.inputProps, props.input.name, props.min, props.max, props.step, props.placeholder, props.disabled, props.required, displayValue, onChange, onKeyDown]);
 
-    const viewProps = useMemo(() => ({
-        viewProps: props.viewProps,
-        inputProps,
-        onStepUp: () => onStep(true),
-        onStepDown: () => onStep(false),
-        onBlur: onInputBlur,
-        input: props.input,
-        inputRef: currentInputRef,
-        size: props.size,
-        errors: props.errors,
-        className: props.className,
-        disabled: props.disabled,
-        id: props.id,
-    }), [currentInputRef, inputProps, onStep, props.className, props.disabled, props.errors, props.id, props.input, props.size, props.viewProps]);
+    const viewProps = useMemo(
+        () => ({
+            viewProps: props.viewProps,
+            inputProps,
+            onStepUp: () => onStep(true),
+            onStepDown: () => onStep(false),
+            onBlur: onBlurWithoutMinMax,
+            input: props.input,
+            inputRef: currentInputRef,
+            size: props.size,
+            errors: props.errors,
+            className: props.className,
+            disabled: props.disabled,
+            id: props.id,
+        }),
+        [currentInputRef, inputProps, onBlurWithoutMinMax, onStep, props.className, props.disabled, props.errors, props.id, props.input, props.size, props.viewProps],
+    );
 
     return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);
 }

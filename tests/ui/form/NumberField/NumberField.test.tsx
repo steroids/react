@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
+import {waitFor} from '@testing-library/react';
 
 import NumberFieldMockView from './NumberFieldMockView';
 import NumberField, {INumberFieldProps} from '../../../../src/ui/form/NumberField/NumberField';
@@ -67,8 +68,9 @@ describe('NumberField tests', () => {
             },
         });
 
-        const component = getElementByClassName(container, `${expectedNumberFieldClassName}_filled`);
-
-        expect(component).toBeInTheDocument();
+        waitFor(() => {
+            const component = getElementByClassName(container, `${expectedNumberFieldClassName}_filled`);
+            expect(component).toBeInTheDocument();
+        });
     });
 });

@@ -222,6 +222,12 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     itemViewProps?: CustomViewProps,
 
+    /**
+     * Текст при отсутствии элементов
+     * @example 'Ничего не найдено'
+     */
+    empty?: string,
+
     [key: string]: any,
 }
 
@@ -533,11 +539,12 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         required: props.required,
         maxHeight: props.maxHeight,
+        empty: props.empty,
         ...dataProvider,
     }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
         renderItem, onItemRemove, onItemSelect, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style,
         props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled,
-        props.required, props.maxHeight, normalizedItemToSelectAll, dropDownProps, dataProvider]);
+        props.required, props.maxHeight, normalizedItemToSelectAll, dropDownProps, dataProvider, props.empty]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }

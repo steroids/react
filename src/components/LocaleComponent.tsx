@@ -6,6 +6,8 @@ import _isObject from 'lodash-es/isObject';
 import 'dayjs/locale/it';
 import 'dayjs/locale/ru';
 
+const LANGUAGE_CODE_FROM_PATH_REGEX = /^\/([a-z]{2})(\/|$)/i;
+
 export interface ILocaleComponentConfig {
     /**
      * Разница времени с бекендом (в микросекундах)
@@ -216,7 +218,7 @@ export default class LocaleComponent implements ILocaleComponent {
      * Инфраструктурная функция для получения языка из URL
      */
     protected _detectLanguage(pathname: string): string {
-        const match = pathname.match(/^\/([a-z]{2})(\/|$)/i);
+        const match = pathname.match(LANGUAGE_CODE_FROM_PATH_REGEX);
         const lang = match ? match[1].toLowerCase() : null;
 
         if (lang && this.allowedLanguages.includes(lang)) {

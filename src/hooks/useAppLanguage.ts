@@ -2,8 +2,8 @@ import useSelector from './useSelector';
 import {getRoute, getRouteParams, buildUrl} from '../reducers/router';
 
 export default function useAppLanguage() {
-    const route = useSelector(state => getRoute(state));
-    const routeParams = useSelector(state => getRouteParams(state));
+    const route = useSelector(getRoute);
+    const routeParams = useSelector(getRouteParams);
 
     // Build URL for the new language and load this page
     const setLanguage = (newLanguage) => {

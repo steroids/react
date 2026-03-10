@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useBem} from '../../../../src/hooks';
 
-import {FilesLayout, IFileFieldItemViewProps} from '../../../../src/ui/form/FileField/FileField';
+import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
+import {FilesLayout, IFileFieldItemViewProps} from '../../../../src/ui/form/FileField/FileField';
 
 export default function FileFieldItemView(props: IFileFieldItemViewProps) {
     const bem = useBem('FileFieldItemView');
@@ -26,7 +26,9 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
         <div className={bem.element('progress-track')}>
             <div
                 className={bem.element('progress-bar')}
-                style={{width: `${props.progress.percent}%`}}
+                style={{
+                    width: `${props.progress.percent}%`,
+                }}
             />
         </div>
     ), [bem, props.progress]);
@@ -57,7 +59,9 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
                 ? (
                     <div
                         className={bem.element('image')}
-                        style={{backgroundImage: `url(${props.image.url})`}}
+                        style={{
+                            backgroundImage: `url(${props.image.url})`,
+                        }}
                     />
                 )
                 : (
@@ -89,7 +93,9 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
             {props.showRemove && (
                 <Icon
                     name={props.customRemoveIcon || 'trash'}
-                    className={bem.element('remove', {isLoading})}
+                    className={bem.element('remove', {
+                        isLoading,
+                    })}
                     onClick={props.onRemove}
                 />
             )}

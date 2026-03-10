@@ -1,12 +1,13 @@
+import {FieldEnumType} from '@steroidsjs/core/enums';
 import _has from 'lodash-es/has';
 import _upperFirst from 'lodash-es/upperFirst';
 import {useContext, useMemo} from 'react';
 import * as React from 'react';
-import {FieldEnumType} from '@steroidsjs/core/enums';
-import {providers} from '../../../utils/form';
-import {FormContext} from '../Form/Form';
-import FieldLayout from '../FieldLayout/FieldLayout';
+
 import {useComponents, useUniqueId} from '../../../hooks';
+import {providers} from '../../../utils/form';
+import FieldLayout from '../FieldLayout/FieldLayout';
+import {FormContext} from '../Form/Form';
 
 export interface IFieldWrapperInputProps {
     /**
@@ -152,7 +153,7 @@ const DEFAULT_SIZE = 'md';
 const getKey = (baseName, attribute) => baseName + _upperFirst(attribute || '');
 
 const createDynamicField = (componentId: string, Component, options: IFieldWrapperOptions) => {
-    const DynamicField = (props: IFieldWrapperInputProps) => {
+    function DynamicField(props: IFieldWrapperInputProps) {
         const components = useComponents();
 
         // Get context, formId
@@ -218,7 +219,7 @@ const createDynamicField = (componentId: string, Component, options: IFieldWrapp
             ...props,
             ...wrapperProps,
         });
-    };
+    }
     DynamicField.displayName = componentId;
     DynamicField.defaultProps = Component.defaultProps;
     return DynamicField;
@@ -237,7 +238,7 @@ export default function fieldWrapper<T = any>(
         attributeSuffixes: optionsConfig.attributeSuffixes || [''],
     };
 
-    const NewComponent = (props: IFieldWrapperInputProps): JSX.Element => {
+    function NewComponent(props: IFieldWrapperInputProps): JSX.Element {
         const components = useComponents();
 
         // Get context, formId
@@ -294,7 +295,7 @@ export default function fieldWrapper<T = any>(
                 />
             ),
         });
-    };
+    }
 
     NewComponent.WrappedComponent = Component;
     NewComponent.displayName = componentId;

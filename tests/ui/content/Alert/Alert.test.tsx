@@ -1,9 +1,10 @@
+import {fireEvent} from '@testing-library/dom';
 import React from 'react';
 import '@testing-library/jest-dom';
-import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import Alert from '../../../../src/ui/content/Alert';
+
 import AlertView from './AlertMockView';
+import Alert from '../../../../src/ui/content/Alert';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Alert', () => {
     const props = {
@@ -11,7 +12,9 @@ describe('Alert', () => {
         type: 'mockIcon',
         message: 'Are you sure?',
         description: 'It is maybe dangerous',
-        style: {width: '45%'},
+        style: {
+            width: '45%',
+        },
         showClose: true,
         showIcon: true,
         view: AlertView,
@@ -22,9 +25,7 @@ describe('Alert', () => {
     const testId = 'alert-test';
 
     it('should render something without props', () => {
-        const {container} = render(<Alert view={AlertView} />);
-
-        expect(container).not.toBeEmptyDOMElement();
+        const {container} = render(<Alert view={AlertView} />); expect(container).not.toBeEmptyDOMElement();
     });
 
     it('should be in the document', () => {

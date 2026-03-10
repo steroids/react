@@ -1,11 +1,12 @@
-import {useDispatch} from 'react-redux';
 import _maxBy from 'lodash-es/maxBy';
 import React from 'react';
-import {useTheme} from '../../../../hooks';
+import {useDispatch} from 'react-redux';
+
 import {openModal} from '../../../../actions/modal';
+import {useTheme} from '../../../../hooks';
 import useComponents from '../../../../hooks/useComponents';
-import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewProps, IEventGroup} from '../CalendarSystem';
 import {IModalProps} from '../../../modal/Modal/Modal';
+import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewProps, IEventGroup} from '../CalendarSystem';
 
 const DEFAULT_ID = 1;
 const PRIMARY_LIGHT = '#651fff';

@@ -1,4 +1,5 @@
 import React, {useState, useCallback, useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -28,14 +29,14 @@ export interface IAlertProps extends IUiComponent {
      * Типы Оповещений
      * @example 'info'
      */
-    type?: 'success' | 'info' | 'warning' | 'error' | 'default' | string,
+    type?: AlertColorName,
 
     /** Основное сообщения Оповещения
      * @example 'Sending is confirmed!'
      */
     message?: string,
 
-    /** Дополнительное содрежание сообщения.
+    /** Дополнительное содержание сообщения.
      * @example 'Please, check your email.'
      */
     description?: string,

@@ -1,11 +1,12 @@
-import {useCallback, useMemo} from 'react';
 import _merge from 'lodash-es/merge';
+import {useCallback, useMemo} from 'react';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../Field/fieldWrapper';
-import {FieldEnum} from '../../../enums';
 
 /**
  * HtmlField

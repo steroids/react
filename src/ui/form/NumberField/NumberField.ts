@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
+import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
 import React, {ChangeEvent, useMemo, useCallback} from 'react';
-import {IBaseFieldProps} from '../InputField/InputField';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+
 import useInputTypeNumber from './hooks/useInputTypeNumber';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 const DEFAULT_STEP = 1;
 
@@ -41,6 +43,11 @@ export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldPr
      * Может ли число быть отрицательным
      */
     isCanBeNegative?: boolean,
+
+    /**
+     * Задержка применения введённого значения
+     */
+    debounce?: boolean | ISaveCursorPositionDebounceConfig,
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {
@@ -65,8 +72,21 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(
-        props.input,
+    const {
+        inputRef: currentInputRef,
+        onChange,
+        value,
+    } = useSaveCursorPosition(
+        {
+            inputParams: props.input,
+            onChangeCallback: props.onChange,
+            debounce: {
+                enabled: !!props.debounce,
+                ...(typeof props.debounce === 'boolean' ? {
+                    enabled: props.debounce,
+                } : (props.debounce ?? {})),
+            },
+        },
     );
     const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 
@@ -87,7 +107,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         const currentValue = Number(currentInputRef?.current?.value);
         let newValue;
 
-        const fixToDecimal = (value) => props.decimal ? value.toFixed(props.decimal) : value;
+        const fixToDecimal = (rawValue) => props.decimal ? rawValue.toFixed(props.decimal) : rawValue;
 
         if (isIncrement) {
             newValue = fixToDecimal(currentValue + step);
@@ -109,7 +129,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const inputProps = useMemo(() => ({
         ...props.inputProps,
         name: props.input.name,
-        value: props.input.value ?? '',
+        value,
         onChange: onInputChange,
         type: 'text',
         min: props.min,
@@ -120,7 +140,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         required: props.required,
         autoComplete: 'off',
         onKeyDown,
-    }), [props.inputProps, props.input.name, props.input.value, props.min, props.max, props.step, props.placeholder, props.disabled, props.required, onInputChange, onKeyDown]);
+    }), [props.inputProps, props.input.name, props.min, props.max, props.step, props.placeholder, props.disabled, props.required, value, onInputChange, onKeyDown]);
 
     const viewProps = useMemo(() => ({
         viewProps: props.viewProps,

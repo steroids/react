@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom';
-import TimeFormatter from '../../../src/ui/format/TimeFormatter';
 import DefaultFormatterMockView from './DefaultFormatterMockView';
-
-import {JSXWrapper, render} from '../../helpers';
+import TimeFormatter from '../../../src/ui/format/TimeFormatter';
 import {ITimeFormatterProps} from '../../../src/ui/format/TimeFormatter/TimeFormatter';
+import {JSXWrapper, render} from '../../helpers';
 
 describe('TimeFormatter tests', () => {
     const props = {

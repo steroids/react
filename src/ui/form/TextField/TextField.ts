@@ -1,8 +1,9 @@
 import React, {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
-import {FieldEnum} from '../../../enums';
 
 /**
  * TextField
@@ -39,9 +40,9 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
     // const dispatch = useDispatch();
     const components = useComponents();
 
-    const {inputRef, onChange} = useSaveCursorPosition(
-        props.input,
-    );
+    const {inputRef, onChange} = useSaveCursorPosition({
+        inputParams: props.input,
+    });
 
     const onKeyUp = useCallback(e => {
         if (

@@ -1,8 +1,9 @@
-import React, {memo, useCallback, useRef, useState} from 'react';
 import _get from 'lodash-es/get';
+import React, {memo, useCallback, useRef, useState} from 'react';
+
 import {useIntersectionObserver} from './hooks';
-import useForm from '../../../hooks/useForm';
 import {formChange} from '../../../actions/form';
+import useForm from '../../../hooks/useForm';
 
 /**
  * InfiniteScroll
@@ -98,7 +99,9 @@ InfiniteScroll.defaultProps = {
 
 export const normalizeInfiniteScrollProps = props => ({
     ...InfiniteScroll.defaultProps,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
 export default memo(InfiniteScroll);

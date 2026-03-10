@@ -1,6 +1,7 @@
 import _find from 'lodash-es/find';
-import {ITaskPriority} from '../Kanban';
+
 import Enum from '../../../../base/Enum';
+import {ITaskPriority} from '../Kanban';
 
 export default class KanbanPrioritiesEnum extends Enum {
     static HIGH = 'high';
@@ -51,11 +52,15 @@ export default class KanbanPrioritiesEnum extends Enum {
     }
 
     static getPriorityById(id) {
-        return _find(this.getPrioritiesArray(), {id}) || null;
+        return _find(this.getPrioritiesArray(), {
+            id,
+        }) || null;
     }
 
     static getDefaultSelectedPriorityId() {
-        const defaultPriority = _find(this.getPrioritiesArray(), {type: this.DEFAULT});
+        const defaultPriority = _find(this.getPrioritiesArray(), {
+            type: this.DEFAULT,
+        });
         return defaultPriority ? defaultPriority.id : null;
     }
 }

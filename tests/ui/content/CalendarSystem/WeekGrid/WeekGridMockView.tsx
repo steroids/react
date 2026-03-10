@@ -1,9 +1,10 @@
 import React from 'react';
-import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
-import useBem from '../../../../../src/hooks/useBem';
-import Text from '../../../../../src/ui/typography/Text/Text';
-import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
+
 import WeekHour from './views/WeekHour/WeekMockHour';
+import useBem from '../../../../../src/hooks/useBem';
+import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
+import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
+import Text from '../../../../../src/ui/typography/Text/Text';
 
 interface IWeekGridProps {
     weekGridTwentyFourHoursArray: string[],

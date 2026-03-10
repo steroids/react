@@ -1,7 +1,8 @@
-import React, {useCallback, useMemo} from 'react';
-import _toInteger from 'lodash-es/toInteger';
 import _head from 'lodash-es/head';
 import _last from 'lodash-es/last';
+import _toInteger from 'lodash-es/toInteger';
+import React, {useCallback, useMemo} from 'react';
+
 import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -53,7 +54,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
     valuePostfix?: string,
 
     /**
-     * Метки на ползунке. В объекте '{'key: value'}' key определяет положение, а value определяет, что будет отображаться.
+     * Метки на ползунке. В объекте {key: 'value'} key определяет положение, а value определяет, что будет отображаться.
      * Если вы хотите задать стиль определенной точки метки, значением должен быть объект,
      * содержащий свойства style и label.
      * @example
@@ -63,7 +64,7 @@ export interface ISliderFieldProps extends IFieldWrapperInputProps, IUiComponent
      *  max: 100
      * }
      */
-    marks?: Record<string, {style: {color,}, label,} | React.ReactNode | string>,
+    marks?: Record<string, {style: {color}, label} | React.ReactNode | string>,
 
     /**
      * Функция, вызываемая в момент перетаскивания tip'а у слайдера

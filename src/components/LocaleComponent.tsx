@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import * as React from 'react';
-import IntlMessageFormat from 'intl-messageformat';
 import dayjs from 'dayjs';
+import IntlMessageFormat from 'intl-messageformat';
 import _isObject from 'lodash-es/isObject';
+import * as React from 'react';
 import 'dayjs/locale/it';
 import 'dayjs/locale/ru';
 
@@ -97,7 +97,8 @@ export default class LocaleComponent implements ILocaleComponent {
         this.allowedLanguages = config.allowedLanguages || ['en', 'ru'];
         this.language = config.language || this._detectLanguage(pathname);
         this.backendTimeZone = null;
-        this.backendTimeDiff = null; // in microseconds
+        // in microseconds
+        this.backendTimeDiff = null;
         this.translations = {};
 
         // Устанавливаем dayjs

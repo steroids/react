@@ -1,5 +1,5 @@
-import KanbanPrioritiesEnum from './KanbanPrioritiesEnum';
 import KanbanModalTypeEnum from './KanbanModalTypeEnum';
+import KanbanPrioritiesEnum from './KanbanPrioritiesEnum';
 
 export {
     KanbanPrioritiesEnum,

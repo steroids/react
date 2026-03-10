@@ -1,8 +1,9 @@
 import * as React from 'react';
+
+import TreeItemView from './TreeItemMockView';
 import {useBem} from '../../../../src/hooks';
 import Format from '../../../../src/ui/format/Format';
 import {ITreeColumnViewProps} from '../../../../src/ui/list/TreeTable/TreeTable';
-import TreeItemView from './TreeItemMockView';
 
 export default function TreeColumnView(props: ITreeColumnViewProps) {
     const bem = useBem('TreeColumnView');

@@ -8,12 +8,18 @@ import modal, {IModal} from '../../src/reducers/modal';
 type TOpened = Record<string, IModal[]>;
 
 describe('modal reducer', () => {
-    const defaultInitialState = {opened: {} as TOpened};
+    const defaultInitialState = {
+        opened: {} as TOpened,
+    };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     describe('MODAL_OPEN', () => {
@@ -48,7 +54,9 @@ describe('modal reducer', () => {
                 },
             };
 
-            const expectedState = {...initialState};
+            const expectedState = {
+                ...initialState,
+            };
 
             expectedState.opened[modalGroupName][0].props = {
                 ...modalGroup[0].props,
@@ -134,7 +142,9 @@ describe('modal reducer', () => {
                 group: modalGroupName,
             };
 
-            const expectedState = {...initialState};
+            const expectedState = {
+                ...initialState,
+            };
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });
@@ -166,7 +176,9 @@ describe('modal reducer', () => {
                 group: modalGroupName,
             };
 
-            const expectedState = {...initialState};
+            const expectedState = {
+                ...initialState,
+            };
 
             expectedState.opened[modalGroupName][0].isClosing = true;
 
@@ -202,7 +214,9 @@ describe('modal reducer', () => {
                 },
             };
 
-            const expectedState = {...initialState};
+            const expectedState = {
+                ...initialState,
+            };
 
             expect(modal(initialState, action)).toEqual(expectedState);
         });
@@ -235,7 +249,9 @@ describe('modal reducer', () => {
                 },
             };
 
-            const expectedState = {...initialState};
+            const expectedState = {
+                ...initialState,
+            };
 
             expectedState.opened[modalGroupName] = [];
 

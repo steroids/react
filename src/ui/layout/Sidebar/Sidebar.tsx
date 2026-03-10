@@ -1,8 +1,9 @@
 import React, {useCallback, useMemo, useState} from 'react';
+
+import {useComponents} from '../../../hooks';
+import {IIconProps} from '../../content/Icon/Icon';
 import {IMenuProps} from '../../content/Menu/Menu';
 import {INavItem} from '../../nav/Nav/Nav';
-import {IIconProps} from '../../content/Icon/Icon';
-import {useComponents} from '../../../hooks';
 
 export interface ISidebarItem extends INavItem {
     /**

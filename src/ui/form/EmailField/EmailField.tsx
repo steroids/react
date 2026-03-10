@@ -1,9 +1,10 @@
 import React, {useMemo} from 'react';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import {IBaseFieldProps} from '../InputField/InputField';
-import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
+
 import useInputTypeEmail from './hooks/useInputTypeEmail';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 /**
  * EmailField
@@ -16,9 +17,9 @@ export interface IEmailFieldProps extends IBaseFieldProps, IFieldWrapperInputPro
 function EmailField(props: IEmailFieldProps) {
     const components = useComponents();
 
-    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition(
-        props.input,
-    );
+    const {inputRef: currentInputRef, onChange} = useSaveCursorPosition({
+        inputParams: props.input,
+    });
 
     const {onInputChange} = useInputTypeEmail(currentInputRef, onChange, props.input.value, props.required);
 

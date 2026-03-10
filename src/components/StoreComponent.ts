@@ -1,14 +1,17 @@
 /* eslint-disable no-restricted-globals */
-import {createStore, applyMiddleware, compose} from 'redux';
-import {routerMiddleware, connectRouter} from 'connected-react-router';
+import {IComponents} from '@steroidsjs/core/providers/ComponentsProvider';
+import {routerMiddleware, connectRouter, RouterState} from 'connected-react-router';
 import {
+    History,
     createBrowserHistory,
     createMemoryHistory,
     createHashHistory,
+    LocationState,
 } from 'history';
 import _get from 'lodash-es/get';
-import _merge from 'lodash-es/merge';
 import _isPlainObject from 'lodash-es/isPlainObject';
+import _merge from 'lodash-es/merge';
+import {createStore, applyMiddleware, compose, Store, Dispatch, Unsubscribe, Reducer, AnyAction} from 'redux';
 
 declare global {
     interface Window {
@@ -18,30 +21,43 @@ declare global {
 }
 
 interface IStoreComponentConfig {
-    initialState: any,
-    history: any,
+    initialState: Record<string, any>,
+    history: History,
 }
+
+type AsyncReducersMap = {
+    router?: Reducer<RouterState<LocationState>, AnyAction>,
+    [key: string]: Reducer<any, AnyAction> | undefined,
+};
+
+type RootState<R extends AsyncReducersMap> = {
+    [K in keyof R]: R[K] extends Reducer<infer S, AnyAction> ? S : never;
+};
+
+type CreateRootReducer = <R extends AsyncReducersMap>(
+    reducers: R,
+) => Reducer<RootState<R>, AnyAction>;
 
 export interface IStoreComponent {
     /**
      * Редьюсеры
      */
-    reducers: any,
+    reducers: CreateRootReducer,
 
     /**
      * Хранилище
      */
-    store: any,
+    store: Store,
 
     /**
      * Инициализация
      */
-    init(): void,
+    init(config: IStoreComponentConfig): void,
 
     /**
      * Инициализация хранилища
      */
-    initStore(): void,
+    initStore(config: IStoreComponentConfig): void,
 
     /**
      * Конфигурация
@@ -52,18 +68,18 @@ export interface IStoreComponent {
      * Метод для dispatch
      * @param action Экшен для изменения состояния.
      */
-    dispatch(action): void,
+    dispatch: Dispatch<any>,
 
     /**
      * Получение состояния
      */
-    getState(): void,
+    getState(): Record<string, any>,
 
     /**
      * Подписка
      * @param handler Обработчик изменения состояния.
      */
-    subscribe(handler): void,
+    subscribe(handler: () => void): Unsubscribe,
 
     /**
      * Добавление редьюсеров
@@ -86,29 +102,29 @@ export interface IStoreComponent {
  * Обертка над Redux Store со встроенными middleware (thunk, multi, promise..) и react-router.
  */
 export default class StoreComponent implements IStoreComponent {
-    _asyncReducers: any;
+    _asyncReducers: AsyncReducersMap;
 
-    _components: any;
+    _components: IComponents;
 
-    reducers: any;
+    reducers: CreateRootReducer;
 
-    _routerReducer: any;
+    _routerReducer: Reducer<RouterState<LocationState>>;
 
-    history: any;
+    history: History | null;
 
     navigationNative: any;
 
-    store: any;
+    store: Store | null;
 
     lastAction: string;
 
-    constructor(components, config, lazyInit = false) {
+    constructor(components: IComponents, config, lazyInit = false) {
         this._components = components;
 
         this.reducers = config.reducers;
 
         this.history = null;
-        this.store = config.store || null;
+        this.store = config.store ?? null;
         this.lastAction = null;
         this._asyncReducers = {};
 
@@ -121,12 +137,12 @@ export default class StoreComponent implements IStoreComponent {
         }
     }
 
-    init(config = {} as IStoreComponentConfig) {
+    init(config: IStoreComponentConfig) {
         this.initStore(config);
         this.configurate();
     }
 
-    initStore(config = {} as IStoreComponentConfig) {
+    initStore(config: IStoreComponentConfig) {
         const initialState = {
             ...(process.env.IS_WEB
                 ? _merge(...(window.APP_REDUX_PRELOAD_STATES || [{}]))
@@ -158,8 +174,6 @@ export default class StoreComponent implements IStoreComponent {
 
         if (!this.store) {
             this.store = createStore(
-                //TODO TYPES
-                //@ts-ignore
                 this.reducers(
                     this._routerReducer ? {
                         router: this._routerReducer,
@@ -203,7 +217,7 @@ export default class StoreComponent implements IStoreComponent {
         return this.store.subscribe(handler);
     }
 
-    addReducers(asyncReducers) {
+    addReducers(asyncReducers: AsyncReducersMap) {
         this._asyncReducers = {
             router: this._routerReducer,
             ...this._asyncReducers,
@@ -216,7 +230,7 @@ export default class StoreComponent implements IStoreComponent {
         throw error;
     }
 
-    _prepare(action, dispatch, getState) {
+    _prepare(action: any, dispatch: Dispatch<any>, getState: Record<string, any>) {
         // Multiple dispatch (redux-multi)
         if (Array.isArray(action)) {
             return action

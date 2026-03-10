@@ -14,5 +14,7 @@ export default function useAppLanguage() {
             });
         }
     };
-    return {setLanguage};
+    return {
+setLanguage,
+};
 }

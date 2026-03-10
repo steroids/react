@@ -1,9 +1,10 @@
-import React, {ComponentType, useCallback, useEffect, useMemo, useState} from 'react';
 import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
+import __isEmpty from 'lodash-es/isEmpty';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import __isEmpty from 'lodash-es/isEmpty';
+import React, {ComponentType, useCallback, useEffect, useMemo, useState} from 'react';
+
 import {useComponents, useSelector} from '../../../hooks';
 import {
     getActiveRouteIds, getNavItems, getRouteParams,
@@ -241,8 +242,10 @@ function Nav(props: INavProps): JSX.Element {
             .filter(item => item.visible !== false);
     }, [activeRouteIds, activeTab, props.items, routerParams, routes]);
 
-    const items = useMemo(() => formatItems(),
-        [formatItems]);
+    const items = useMemo(
+() => formatItems(),
+        [formatItems],
+);
 
     const viewProps = useMemo(() => ({
         ...props.viewProps,

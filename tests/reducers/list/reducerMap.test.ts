@@ -22,7 +22,9 @@ describe('list reducers', () => {
         selectedIds: {},
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     const getStateWithLists = (
         listsData: TListCommonArg = null,
@@ -37,7 +39,9 @@ describe('list reducers', () => {
     });
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     describe('default action', () => {
@@ -46,7 +50,9 @@ describe('list reducers', () => {
                 type: 'default',
             };
 
-            const expectedState = {...initialState};
+            const expectedState = {
+                ...initialState,
+            };
             expect(list(initialState, action)).toEqual(expectedState);
         });
     });
@@ -125,6 +131,7 @@ describe('list reducers', () => {
                     [listId]: {
                         ...state.lists[listId],
                         items: action.items,
+                        sourceItems: action.items,
                     },
                 },
             };
@@ -147,7 +154,9 @@ describe('list reducers', () => {
                 isRemote: false,
             };
 
-            const state = getStateWithLists({[listId]: listProperties});
+            const state = getStateWithLists({
+                [listId]: listProperties,
+            });
 
             const expectedState = {
                 ...initialState,
@@ -186,7 +195,9 @@ describe('list reducers', () => {
                 items,
             };
 
-            const state = getStateWithLists({[listId]: listProperties});
+            const state = getStateWithLists({
+                [listId]: listProperties,
+            });
 
             const expectedState = {
                 ...state,
@@ -233,7 +244,9 @@ describe('list reducers', () => {
                 loadMore: true,
             };
 
-            const state = getStateWithLists({[listId]: listProperties});
+            const state = getStateWithLists({
+                [listId]: listProperties,
+            });
 
             const expectedState = {
                 ...state,
@@ -279,7 +292,9 @@ describe('list reducers', () => {
                 hasMoreInfiniteScroll: false,
             };
 
-            const state = getStateWithLists({[listId]: listProperties});
+            const state = getStateWithLists({
+                [listId]: listProperties,
+            });
 
             const expectedState = {
                 ...state,
@@ -299,8 +314,12 @@ describe('list reducers', () => {
 
     describe('LIST_ITEM_ADD', () => {
         const listId = 'listId';
-        const existingItem = {id: 'existingItem'};
-        const payloadItem = {id: 'payloadItem'};
+        const existingItem = {
+            id: 'existingItem',
+        };
+        const payloadItem = {
+            id: 'payloadItem',
+        };
 
         const action = {
             type: LIST_ITEM_ADD,
@@ -315,7 +334,9 @@ describe('list reducers', () => {
             items: [existingItem],
         };
 
-        const state = getStateWithLists({[listId]: listProperties});
+        const state = getStateWithLists({
+            [listId]: listProperties,
+        });
 
         const expectedState = {
             ...state,
@@ -366,7 +387,9 @@ describe('list reducers', () => {
         });
 
         it('condition match', () => {
-            const action = getAction({primaryKey: 'key'});
+            const action = getAction({
+                primaryKey: 'key',
+            });
 
             const expectedState = {
                 ...state,
@@ -387,8 +410,12 @@ describe('list reducers', () => {
         });
 
         it('condition not match', () => {
-            const action = getAction({someProp: 'someProp'});
-            const expectedResult = {...state};
+            const action = getAction({
+                someProp: 'someProp',
+            });
+            const expectedResult = {
+                ...state,
+            };
             expect(list(state, action)).toEqual(expectedResult);
         });
     });
@@ -611,7 +638,9 @@ describe('list reducers', () => {
                 listId,
             } as IList;
 
-            const state = getStateWithLists({[listId]: listProperties});
+            const state = getStateWithLists({
+                [listId]: listProperties,
+            });
 
             const expectedState = {
                 ...state,

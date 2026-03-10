@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+
 import {useBem, useSelector} from '../../../../../../../../../../src/hooks';
 import {getFormValues} from '../../../../../../../../../../src/reducers/form';
 import {ITaskTag} from '../../../../../../../../../../src/ui/content/Kanban/Kanban';
@@ -38,7 +39,7 @@ export default function TagsSelector(props: ITagsSelectorProps) {
                 />
             )}
             <DropDownField
-                attribute="tags"
+                attribute='tags'
                 placeholder='Выберите теги'
                 multiple
                 items={tagsList}

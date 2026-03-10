@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
-import NumberField, {INumberFieldViewProps} from '../../../../src/ui/form/NumberField/NumberField';
+
 import NumberFieldMockView from './NumberFieldMockView';
+import NumberField, {INumberFieldProps} from '../../../../src/ui/form/NumberField/NumberField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('NumberField tests', () => {
     const externalClassName = 'external-class-name';
@@ -13,7 +14,7 @@ describe('NumberField tests', () => {
         max: 3,
         min: 1,
         hint,
-    } as INumberFieldViewProps;
+    } as INumberFieldProps;
 
     const expectedNumberFieldClassName = 'NumberFieldView';
 
@@ -60,7 +61,11 @@ describe('NumberField tests', () => {
 
         const input = getElementByTag(container, 'input');
 
-        fireEvent.change(input, {target: {value: '1'}});
+        fireEvent.change(input, {
+            target: {
+                value: '1',
+            },
+        });
 
         const component = getElementByClassName(container, `${expectedNumberFieldClassName}_filled`);
 

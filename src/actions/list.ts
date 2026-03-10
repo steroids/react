@@ -1,14 +1,15 @@
+import axios from 'axios';
 import _get from 'lodash-es/get';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
+import _isFunction from 'lodash-es/isFunction';
+import _isNil from 'lodash-es/isNil';
 import _orderBy from 'lodash-es/orderBy';
 import _trimStart from 'lodash-es/trimStart';
-import _isFunction from 'lodash-es/isFunction';
-import _isEqual from 'lodash-es/isEqual';
-import _isNil from 'lodash-es/isNil';
-import axios from 'axios';
-import {formSelector} from '../reducers/form';
+
 import {formChange, formSetErrors} from '../actions/form';
+import {formSelector} from '../reducers/form';
 import {filterItems} from '../utils/data';
 
 export interface IList {
@@ -22,6 +23,11 @@ export interface IList {
     * Тип HTTP запроса (GET | POST | PUT | DELETE)
     */
     actionMethod?: string,
+
+    /**
+     * Логическое значение, указывающее, есть ли еще элементы в списке с бесконечным скроллом
+     */
+    hasMoreInfiniteScroll?: boolean,
 
     /**
     * Функция обратного вызова, вызываемая при получении списка.
@@ -153,27 +159,6 @@ export const LIST_SELECT_ITEM = '@list/select_item';
 
 const lazyTimers = {};
 
-const createList = (listId: string, props: any) => ({
-    action: props.action || props.action === '' ? props.action : null,
-    actionMethod: props.actionMethod || 'get',
-    onFetch: props.onFetch,
-    onError: props.onError,
-    condition: props.condition,
-    scope: props.scope,
-    total: props.total || null,
-    items: null,
-    sourceItems: props.items || null,
-    isRemote: !props.items,
-    loadMore: props._pagination.loadMore,
-    primaryKey: props.primaryKey,
-    listId,
-    formId: _get(props, 'searchForm.formId') || listId,
-    pageAttribute: _get(props, '_pagination.attribute') || null,
-    pageSizeAttribute: _get(props, '_paginationSize.attribute') || null,
-    sortAttribute: _get(props, '_sort.attribute') || null,
-    layoutAttribute: _get(props, '_layout.attribute') || null,
-});
-
 export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) => {
     let url = list.action;
     if (list.scope) {
@@ -195,7 +180,9 @@ export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) 
 };
 
 export const localFetchHandler = (list: IList, query: Record<string, unknown>) => {
-    query = {...query};
+    query = {
+        ...query,
+    };
 
     // Get page
     const page = parseInt(query[list.pageAttribute] as string, 10) || null;
@@ -326,7 +313,9 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
     const source = axios.CancelToken.source();
     components.http._promises[listId] = source;
 
-    const options = {cancelToken: source.token};
+    const options = {
+        cancelToken: source.token,
+    };
 
     // Set `Loading...`
     if (list.isRemote) {

@@ -1,7 +1,8 @@
-import {memo} from 'react';
+import React, {memo} from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
-import Menu, {IMenuProps} from '../../../../src/ui/content/Menu/Menu';
 import {Avatar} from '../../../../src/ui/content';
+import Menu, {IMenuProps} from '../../../../src/ui/content/Menu/Menu';
 
 interface ISidebarUserProps {
     menu: IMenuProps,

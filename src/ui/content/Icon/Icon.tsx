@@ -1,6 +1,7 @@
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
 import {useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -41,7 +42,7 @@ export interface IIconProps extends Omit<IUiComponent, 'className' | 'style'>, P
     title?: string,
 
     /**
-    *  Должен ли данный элемент участвовать в последовательной навигации
+    * Должен ли данный элемент участвовать в последовательной навигации
     */
     tabIndex?: number,
 

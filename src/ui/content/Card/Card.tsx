@@ -1,7 +1,6 @@
-import {ReactNode} from 'react';
-import {ILinkProps} from '../../nav/Link/Link';
-import {IButtonProps} from '../../form/Button/Button';
 import {useComponents} from '../../../hooks';
+import {IButtonProps} from '../../form/Button/Button';
+import {ILinkProps} from '../../nav/Link/Link';
 import {IAvatarProps} from '../Avatar/Avatar';
 import {IMenuProps} from '../Menu/Menu';
 
@@ -52,7 +51,7 @@ export interface ICardProps extends IUiComponent {
     /**
      * Дочерние элементы
      */
-    children?: ReactNode,
+    children?: React.ReactNode,
 
     /**
      * Обложка для карточки, нужно передать ссылку на изображение

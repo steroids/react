@@ -1,8 +1,8 @@
 import _isString from 'lodash-es/isString';
 
+import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import {IButtonViewProps} from '../../../../src/ui/form/Button/Button';
-import {useBem} from '../../../../src/hooks';
 import IconMockView from '../../content/Icon/IconMockView';
 
 export default function ButtonView(props: IButtonViewProps) {

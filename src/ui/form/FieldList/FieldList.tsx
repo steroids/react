@@ -1,21 +1,22 @@
-import {ReactNode, useCallback, useContext, useMemo, useRef, useState} from 'react';
-import _isBoolean from 'lodash-es/isBoolean';
-import _last from 'lodash-es/last';
-import _range from 'lodash-es/range';
-import _isEmpty from 'lodash-es/isEmpty';
 import _concat from 'lodash-es/concat';
 import _get from 'lodash-es/get';
+import _isBoolean from 'lodash-es/isBoolean';
+import _isEmpty from 'lodash-es/isEmpty';
+import _last from 'lodash-es/last';
 import _omit from 'lodash-es/omit';
+import _range from 'lodash-es/range';
 import _values from 'lodash-es/values';
 import _zipObject from 'lodash-es/zipObject';
+import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {useEvent, useMount} from 'react-use';
 import {ModelAttribute} from 'src/components/MetaComponent';
-import {useComponents, useSelector} from '../../../hooks';
-import {FormContext} from '../../form/Form/Form';
-import {formArrayAdd, formArrayRemove, formChange, formSetErrors} from '../../../actions/form';
+
 import tableNavigationHandler, {isDescendant} from './tableNavigationHandler';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {formArrayAdd, formArrayRemove, formChange, formSetErrors} from '../../../actions/form';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useSelector} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {FormContext} from '../../form/Form/Form';
 
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
@@ -64,7 +65,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
      *  amount: 5
      * }
      */
-    initialValues?: { [key: string]: any, },
+    initialValues?: { [key: string]: any },
 
     /**
      * Начальные элементы списка
@@ -80,7 +81,7 @@ export interface IFieldListProps extends IFieldWrapperInputProps, IUiComponent {
      *     }
      * ]
      */
-    initialItems?: { [key: string]: any, }[],
+    initialItems?: { [key: string]: any }[],
 
     /**
      * Список с полями формы
@@ -155,7 +156,7 @@ export interface IFieldListViewProps {
     onAdd?: () => void,
     showRemove?: boolean,
     showAdd?: boolean,
-    children?: ReactNode,
+    children?: React.ReactNode,
     className?: CssClassName,
     tableClassName?: string,
     style?: CustomStyle,
@@ -268,7 +269,9 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
             .filter(field => field.visible !== false)
             .map(field => {
                 if (typeof field === 'string') {
-                    field = {attribute: field};
+                    field = {
+                        attribute: field,
+                    };
                 }
 
                 return {
@@ -350,4 +353,6 @@ FieldList.defaultProps = {
     enableKeyboardNavigation: true,
 };
 
-export default fieldWrapper<IFieldListProps>(FieldEnum.FIELD_LIST, FieldList, {list: true});
+export default fieldWrapper<IFieldListProps>(FieldEnum.FIELD_LIST, FieldList, {
+    list: true,
+});

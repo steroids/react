@@ -1,9 +1,11 @@
 import '@testing-library/jest-dom';
 import {fireEvent, waitFor} from '@testing-library/react';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
+import * as React from 'react';
+
 import ListMockView from './ListMockView';
-import List from '../../../../src/ui/list/List/List';
 import InputField from '../../../../src/ui/form/InputField/InputField';
+import List from '../../../../src/ui/list/List/List';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 const items = [
     {
@@ -18,7 +20,9 @@ const items = [
 
 const searchForm = {
     className: 'class-test',
-    style: {fontSize: '4rem'},
+    style: {
+        fontSize: '4rem',
+    },
     fields: [
         {
             attribute: 'name',
@@ -33,7 +37,9 @@ describe('searchForm tests', () => {
         listId: 'ListDemoSearch',
         items,
         searchForm,
-        pagination: {position: 'mockPosition'},
+        pagination: {
+            position: 'mockPosition',
+        },
         className: 'list-group',
         itemView: (props: any) => (
             <div className='list-group-item'>
@@ -77,7 +83,11 @@ describe('searchForm tests', () => {
 
         expect(itemToRemove).toBeInTheDocument();
 
-        fireEvent.change(input, {target: {value: nameToFilter}});
+        fireEvent.change(input, {
+            target: {
+                value: nameToFilter,
+            },
+        });
         fireEvent.click(button);
 
         waitFor(() => {

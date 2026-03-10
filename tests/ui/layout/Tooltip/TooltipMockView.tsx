@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react';
-import {ITooltipViewProps} from '../../../../src/ui/layout/Tooltip/Tooltip';
+
 import {useBem} from '../../../../src/hooks';
+import {ITooltipViewProps} from '../../../../src/ui/layout/Tooltip/Tooltip';
 
 interface ITooltipMockViewProps extends ITooltipViewProps {
     testId: string,
@@ -35,7 +36,9 @@ export default function TooltipView(props: ITooltipMockViewProps) {
                 ref={arrowRef}
                 className={bem.element(
                     'arrow',
-                    {position: props.position},
+                    {
+                        position: props.position,
+                    },
                 )}
                 style={props.arrowPosition}
             />

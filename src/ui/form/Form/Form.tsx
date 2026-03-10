@@ -1,24 +1,24 @@
 /* eslint-disable react/prop-types */
-import {createContext, Dispatch, ReactNode, useCallback, useMemo} from 'react';
-
+import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
+import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
-import _isUndefined from 'lodash-es/isUndefined';
+import _isEmpty from 'lodash-es/isEmpty';
 import _isNill from 'lodash-es/isNil';
 import _isString from 'lodash-es/isString';
-import _isEmpty from 'lodash-es/isEmpty';
+import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
-import _cloneDeep from 'lodash-es/cloneDeep';
+import React, {useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
-import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
-import {showNotification} from '../../../actions/notifications';
-import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
+
 import AutoSaveHelper from './AutoSaveHelper';
-import {IFieldProps} from '../Field/Field';
-import {useComponents, useDispatch} from '../../../hooks';
-import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
-import validate from '../validate';
 import {formDestroy, formSetSubmitting} from '../../../actions/form';
+import {showNotification} from '../../../actions/notifications';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useDispatch} from '../../../hooks';
+import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
+import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
+import {IFieldProps} from '../Field/Field';
+import validate from '../validate';
 
 const _isEmptyString = (value) => _isString(value) && _isEmpty(value);
 
@@ -211,7 +211,7 @@ export interface IFormProps extends IUiComponent {
     /**
      * Дополнительные кнопки
      */
-    buttons?: ReactNode,
+    buttons?: React.ReactNode,
 
     /**
      * Размер компонента и вложенных полей
@@ -233,8 +233,8 @@ export interface IFormViewProps {
     className?: CssClassName,
     autoFocus?: boolean,
     style?: CustomStyle,
-    children?: ReactNode,
-    buttons?: ReactNode,
+    children?: React.ReactNode,
+    buttons?: React.ReactNode,
     submitButtonProps?: IButtonProps,
     size?: Size,
 }
@@ -277,15 +277,15 @@ export interface IFormContext {
     /**
     * Редьюсер
     */
-    reducer?: { dispatch: Dispatch<any>, select: any, },
+    reducer?: { dispatch: React.Dispatch<any>, select: any },
 
     /**
     * Диспатч
     */
-    dispatch?: Dispatch<any>,
+    dispatch?: React.Dispatch<any>,
 }
 
-export const FormContext = createContext<IFormContext>({});
+export const FormContext = React.createContext<IFormContext>({});
 
 interface ICaptchaParams {
     googleCaptcha: Record<string, any>,
@@ -298,7 +298,9 @@ const getCaptchaToken = (params: ICaptchaParams): Promise<string> => {
 
     return new Promise(resolve => {
         googleCaptcha.ready(() => {
-            googleCaptcha.execute(siteKey, {action: actionName}).then(token => resolve(token));
+            googleCaptcha.execute(siteKey, {
+                action: actionName,
+            }).then(token => resolve(token));
         });
     });
 };
@@ -330,7 +332,9 @@ function Form(props: IFormProps): JSX.Element {
     } = useAddressBar({
         enable: !!props.addressBar,
         model: props.model,
-        ...(typeof props.addressBar === 'boolean' ? {enable: props.addressBar} : props.addressBar),
+        ...(typeof props.addressBar === 'boolean' ? {
+            enable: props.addressBar,
+        } : props.addressBar),
     });
 
     // Resolve initial values
@@ -386,12 +390,14 @@ function Form(props: IFormProps): JSX.Element {
 
     // Clear Errors
     const prevValues = usePrevious(values);
-    useUpdateEffect(() => {
-        if (props.useClearErrors) {
-            clearErrors(values, prevValues, errors, setErrors);
-        }
-    },
-    [props.useClearErrors, errors, prevValues, setErrors, values]);
+    useUpdateEffect(
+        () => {
+            if (props.useClearErrors) {
+                clearErrors(values, prevValues, errors, setErrors);
+            }
+        },
+        [props.useClearErrors, errors, prevValues, setErrors, values],
+    );
 
     // OnChange handler
     useUpdateEffect(() => {

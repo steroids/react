@@ -1,18 +1,19 @@
-import {ChangeEvent, useMemo} from 'react';
+import React, {useMemo} from 'react';
+
 import Enum from '../../../base/Enum';
+import {FieldEnum} from '../../../enums';
 import {useComponents, useListField} from '../../../hooks';
+import {IDataProviderConfig} from '../../../hooks/useDataProvider';
+import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../../../ui/form/Field/fieldWrapper';
-import {IDataProviderConfig} from '../../../hooks/useDataProvider';
-import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import {ICheckboxFieldViewProps} from '../CheckboxField/CheckboxField';
-import {FieldEnum} from '../../../enums';
 
 type CheckboxFieldListItems = string
-    | ({new(): Enum,})
-    | (string | number | {id: string | number | boolean, label: string | any, color?: string, [key: string]: any,})[];
+    | ({new(): Enum})
+    | (string | number | {id: string | number | boolean, label: string | any, color?: string, [key: string]: any})[];
 
 /**
  * CheckboxListField
@@ -77,7 +78,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, I
         name: string,
         type: string,
         disabled?: boolean,
-        onChange: (value: string | ChangeEvent) => void,
+        onChange: (value: string | React.ChangeEvent) => void,
     },
     items: {
         id: number | string | boolean,

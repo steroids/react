@@ -1,5 +1,7 @@
-import {IProgressBarViewProps} from '../../../../src/ui/layout/ProgressBar/ProgressBar';
+import * as React from 'react';
+
 import {useBem} from '../../../../src/hooks';
+import {IProgressBarViewProps} from '../../../../src/ui/layout/ProgressBar/ProgressBar';
 
 export default function LineProgressBarView(props: IProgressBarViewProps) {
     const bem = useBem('LineProgressBarView');
@@ -13,7 +15,9 @@ export default function LineProgressBarView(props: IProgressBarViewProps) {
             <div className={bem.element('emptyLine')}>
                 <div
                     className={bem.element('progressLine')}
-                    style={{width: `${props.percent}%`}}
+                    style={{
+                        width: `${props.percent}%`,
+                    }}
                 />
             </div>
             <div className={bem.element('text')}>{props.label}</div>

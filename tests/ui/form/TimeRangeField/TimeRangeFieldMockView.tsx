@@ -1,7 +1,8 @@
-import {useCallback} from 'react';
+import React, {useCallback} from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
-import {ITimeRangeFieldViewProps} from '../../../../src/ui/form/TimeRangeField/TimeRangeField';
 import {DropDown, Icon} from '../../../../src/ui/content';
+import {ITimeRangeFieldViewProps} from '../../../../src/ui/form/TimeRangeField/TimeRangeField';
 import TimePanelView from '../TimeField/TimePanelMockView';
 
 export default function TimeRangeFieldView(props: ITimeRangeFieldViewProps) {

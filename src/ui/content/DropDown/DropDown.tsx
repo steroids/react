@@ -1,11 +1,12 @@
 import {Children, cloneElement, ReactNode, useCallback, useMemo, useRef} from 'react';
 import {useClickAway, useEvent} from 'react-use';
+
 import {useComponents} from '../../../hooks';
-import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
 import useAbsolutePositioning, {
     IAbsolutePositioningInputProps,
     IAbsolutePositioningOutputProps,
 } from '../../../hooks/useAbsolutePositioning';
+import TooltipInnerPortal from '../../layout/Tooltip/TooltipPortalInner';
 
 /**
  * Menu

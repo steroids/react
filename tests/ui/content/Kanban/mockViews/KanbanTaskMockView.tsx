@@ -1,8 +1,10 @@
-import {useBem} from '../../../../../src/hooks';
-import {IKanbanTaskViewProps} from '../../../../../src/ui/content/Kanban/Kanban';
-import Avatar from '../../../../../src/ui/content/Avatar/Avatar';
-import {Text} from '../../../../../src/ui/typography';
+import * as React from 'react';
+
 import TaskTags from './TaskTags/TaskTags';
+import {useBem} from '../../../../../src/hooks';
+import Avatar from '../../../../../src/ui/content/Avatar/Avatar';
+import {IKanbanTaskViewProps} from '../../../../../src/ui/content/Kanban/Kanban';
+import {Text} from '../../../../../src/ui/typography';
 
 export default function KanbanTaskView(props: IKanbanTaskViewProps) {
     const bem = useBem('KanbanTaskView');

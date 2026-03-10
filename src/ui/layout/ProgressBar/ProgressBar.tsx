@@ -1,12 +1,13 @@
-import {ReactNode, useMemo} from 'react';
-import Icon from '../../content/Icon/Icon';
+import React, {useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
+import Icon from '../../content/Icon/Icon';
 
 export interface IProgressBarViewProps {
     percent: number,
     status?: 'normal' | 'success' | 'exception',
     size?: 'small' | 'medium' | 'large',
-    label?: string | ReactNode,
+    label?: string | React.ReactNode,
 }
 
 /**
@@ -44,7 +45,7 @@ export interface IProgressBarProps {
      * @param status Статус компонента
      * @param percent Прогресс в процентах
      */
-    icon?: (status: string, percent: number) => ReactNode,
+    icon?: (status: string, percent: number) => React.ReactNode,
 }
 
 function ProgressBar(props: IProgressBarProps): JSX.Element {

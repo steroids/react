@@ -1,8 +1,9 @@
 import {memo} from 'react';
+
 import useBem from '../../../../../src/hooks/useBem';
 import {Accordion, AccordionItem, Icon} from '../../../../../src/ui/content';
-import {CheckboxListField, Button} from '../../../../../src/ui/form';
 import {IEventGroup} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
+import {CheckboxListField, Button} from '../../../../../src/ui/form';
 
 interface IAsideCalendarsProps {
     eventGroups: IEventGroup[],
@@ -28,7 +29,7 @@ function AsideCalendars(props: IAsideCalendarsProps) {
                         onClick={props.openCreateEventGroupModal}
                         size='sm'
                     >
-                        <Icon name="mockIcon" />
+                        <Icon name='mockIcon' />
                     </Button>
                 </AccordionItem>
             </Accordion>

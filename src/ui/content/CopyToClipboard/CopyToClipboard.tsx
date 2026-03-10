@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-expressions */
-import {ReactElement, ReactNode, useCallback, useMemo, useState} from 'react';
-
-import {useComponents, useDispatch} from '../../../hooks';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';
+import {useComponents, useDispatch} from '../../../hooks';
 
 /**
  * CopyToClipboard
@@ -62,13 +61,13 @@ export interface ICopyToClipboardProps extends IUiComponent {
     * Иконка
     * @example calendar-day
     */
-    icon?: string | ReactElement,
+    icon?: string | React.ReactElement,
 
     /**
     * Дочерний элемент
     * @example <h1>This message will be copied!</h1>
     */
-    children?: ReactNode,
+    children?: React.ReactNode,
 
     /**
     * Callback который вызывается при копировании

@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
-import {useMemo} from 'react';
+import * as React from 'react';
+
+import AsideCalendars from './AsideCalendars/AsideCalendarsMockView';
+import AsideHeader from './AsideHeader/AsideHeaderMockView';
+import ContentHeader from './ContentHeader/ContentHeaderMockView';
 import useBem from '../../../../src/hooks/useBem';
 import {ICalendarSystemViewProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import CalendarEnum from '../../../../src/ui/content/CalendarSystem/enums/CalendarType';
-import AsideHeader from './AsideHeader/AsideHeaderMockView';
-import AsideCalendars from './AsideCalendars/AsideCalendarsMockView';
-import ContentHeader from './ContentHeader/ContentHeaderMockView';
 
 export default function CalendarSystemView(props: ICalendarSystemViewProps) {
     const bem = useBem('CalendarSystemView');
@@ -23,7 +24,7 @@ export default function CalendarSystemView(props: ICalendarSystemViewProps) {
         monthGridProps: {renderGridView: renderMonthGrid},
     } = props;
 
-    const calendarTypeGrids = useMemo(() => ({
+    const calendarTypeGrids = React.useMemo(() => ({
         [CalendarEnum.MONTH]: (
             <>
                 {renderMonthGrid({

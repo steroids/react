@@ -1,7 +1,9 @@
-import Icon from '../../../../src/ui/content/Icon';
-import {IModalViewProps} from '../../../../src/ui/modal/Modal/Modal';
-import {Button} from '../../../../src/ui/form';
+import * as React from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
+import Icon from '../../../../src/ui/content/Icon';
+import {Button} from '../../../../src/ui/form';
+import {IModalViewProps} from '../../../../src/ui/modal/Modal/Modal';
 
 function ModalMock(props: IModalViewProps) {
     return (
@@ -24,7 +26,9 @@ export default function ModalMockView(props: IModalViewProps) {
             {...props}
             ariaHideApp={false}
             bodyOpenClassName='ModalView_body-hide-scroll'
-            className={bem(bem.element('body', {size: props.size}), props.className)}
+            className={bem(bem.element('body', {
+                size: props.size,
+            }), props.className)}
             closeTimeoutMS={props.closeTimeoutMs}
             isOpen={!props.isClosing}
             onRequestClose={props.onClose}

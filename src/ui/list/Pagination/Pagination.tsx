@@ -1,8 +1,9 @@
 import _get from 'lodash-es/get';
-import {memo, useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
+
+import {formChange} from '../../../actions/form';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
-import {formChange} from '../../../actions/form';
 import {IButtonProps} from '../../form/Button/Button';
 
 const FIRST_PAGE = 1;
@@ -168,8 +169,8 @@ function Pagination(props: IPaginationProps): JSX.Element {
 
     const totalPages = Math.ceil((props.list?.total || 0) / (pageSize || 1));
 
-    const isFirstPage = useMemo(() => page === FIRST_PAGE, [page]);
-    const isLastPage = useMemo(() => page === totalPages, [page, totalPages]);
+    const isFirstPage = React.useMemo(() => page === FIRST_PAGE, [page]);
+    const isLastPage = React.useMemo(() => page === totalPages, [page, totalPages]);
 
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)
@@ -254,7 +255,9 @@ Pagination.defaultProps = {
 
 export const normalizePaginationProps = props => ({
     ...Pagination.defaultProps,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
-export default memo(Pagination);
+export default React.memo(Pagination);

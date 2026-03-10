@@ -1,8 +1,10 @@
+import React from 'react';
+
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+import DetailMockView from './DetailMockView';
 import {Detail, DetailItem} from '../../../../src/ui/content/Detail';
 import {DetailLayoutEnum, IDetailViewProps} from '../../../../src/ui/content/Detail/Detail';
-import DetailMockView from './DetailMockView';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
     observe: jest.fn(),
@@ -21,7 +23,9 @@ describe('Detail tests', () => {
     const props = {
         title,
         layout: DetailLayoutEnum.Vertical,
-        controls: [{label: 'Edit'}],
+        controls: [{
+            label: 'Edit',
+        }],
         view: DetailMockView,
         responsive: true,
         children: (

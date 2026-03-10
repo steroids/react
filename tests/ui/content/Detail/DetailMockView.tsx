@@ -1,7 +1,8 @@
-import {Fragment} from 'react';
-import Controls from '../../../../src/ui/nav/Controls/Controls';
+import React from 'react';
+
 import {useBem} from '../../../../src/hooks';
 import {constants, DetailLayoutEnum, IDetailViewProps} from '../../../../src/ui/content/Detail/Detail';
+import Controls from '../../../../src/ui/nav/Controls/Controls';
 import ControlsMockView from '../../nav/Controls/ControlsMockView';
 
 export default function DetailView(props: IDetailViewProps) {
@@ -32,7 +33,7 @@ export default function DetailView(props: IDetailViewProps) {
                         {props.rows.map((row, rowIndex) => {
                             if (props.layout === DetailLayoutEnum.Vertical) {
                                 return (
-                                    <Fragment key={rowIndex}>
+                                    <React.Fragment key={rowIndex}>
                                         <tr className={bem.element('row')}>
                                             {row.map((cell, cellIndex) => (
                                                 <th
@@ -59,7 +60,7 @@ export default function DetailView(props: IDetailViewProps) {
                                                 </td>
                                             ))}
                                         </tr>
-                                    </Fragment>
+                                    </React.Fragment>
                                 );
                             }
 
@@ -69,7 +70,7 @@ export default function DetailView(props: IDetailViewProps) {
                                     className={bem.element('row')}
                                 >
                                     {row.map((cell, cellIndex) => (
-                                        <Fragment key={cellIndex}>
+                                        <React.Fragment key={cellIndex}>
                                             <th
                                                 colSpan={constants.TABLE_HEAD_COLSPAN}
                                                 className={bem(bem.element('label', {
@@ -87,7 +88,7 @@ export default function DetailView(props: IDetailViewProps) {
                                             >
                                                 {cell.value}
                                             </td>
-                                        </Fragment>
+                                        </React.Fragment>
                                     ))}
                                 </tr>
                             );

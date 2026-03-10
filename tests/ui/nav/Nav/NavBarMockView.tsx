@@ -1,7 +1,6 @@
-import Button from '../../../../src/ui/form/Button';
-
-import {INavViewProps} from '../../../../src/ui/nav/Nav/Nav';
 import {useBem} from '../../../../src/hooks';
+import Button from '../../../../src/ui/form/Button';
+import {INavViewProps} from '../../../../src/ui/nav/Nav/Nav';
 
 export default function NavBarView(props: INavViewProps) {
     const bem = useBem('NavBarView');

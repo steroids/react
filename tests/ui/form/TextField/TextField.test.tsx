@@ -1,11 +1,15 @@
-import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
+import React from 'react';
+
+import '@testing-library/jest-dom';
+
 import TextFieldMockView from './TextFieldMockView';
 import TextField, {ITextFieldViewProps} from '../../../../src/ui/form/TextField/TextField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('TextField tests', () => {
     const externalClassName = 'TextFieldExternalClass';
+    const inputRef = React.createRef<HTMLTextAreaElement>();
 
     const props: ITextFieldViewProps = {
         inputProps: {
@@ -16,6 +20,7 @@ describe('TextField tests', () => {
             placeholder: 'placeholder',
             value: 'value',
             onKeyUp: jest.fn(),
+            ref: inputRef,
         },
         required: true,
         onClear: jest.fn(),
@@ -68,6 +73,7 @@ describe('TextField tests', () => {
         const mockedOnChange = jest.fn();
         const mockedOnKeyUp = jest.fn();
         const mockedOnClear = jest.fn();
+        const actionInputRef = React.createRef<HTMLTextAreaElement>();
 
         const actionProps: ITextFieldViewProps = {
             inputProps: {
@@ -78,6 +84,7 @@ describe('TextField tests', () => {
                 placeholder: 'placeholder',
                 value: 'value',
                 onKeyUp: mockedOnKeyUp,
+                ref: actionInputRef,
             },
             view: TextFieldMockView,
             showClose: true,
@@ -89,7 +96,11 @@ describe('TextField tests', () => {
             const textArea = getElementByTag(container, 'textarea');
             const expectedChangeCallCount = 1;
 
-            fireEvent.change(textArea, {target: {value: '1'}});
+            fireEvent.change(textArea, {
+                target: {
+                    value: '1',
+                },
+            });
 
             expect(mockedOnChange.mock.calls.length).toBe(expectedChangeCallCount);
         });
@@ -99,7 +110,9 @@ describe('TextField tests', () => {
             const textArea = getElementByTag(container, 'textarea');
             const expectedKeyUpCallCount = 1;
 
-            fireEvent.keyUp(textArea, {key: 'Enter'});
+            fireEvent.keyUp(textArea, {
+                key: 'Enter',
+            });
 
             expect(mockedOnKeyUp.mock.calls.length).toBe(expectedKeyUpCallCount);
         });

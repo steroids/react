@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+import React from 'react';
+
 import FlexGridMockView from './FlexGridMockView';
 import FlexGrid, {IFlexGridProps} from '../../../../src/ui/list/FlexGrid/FlexGrid';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('FlexGrid tests', () => {
     const expectedFlexGridClass = 'FlexGridView';

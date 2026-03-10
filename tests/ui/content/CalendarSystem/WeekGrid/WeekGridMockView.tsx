@@ -1,9 +1,10 @@
-import {useCallback, memo} from 'react';
-import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
-import useBem from '../../../../../src/hooks/useBem';
-import Text from '../../../../../src/ui/typography/Text/Text';
-import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
+import React from 'react';
+
 import WeekHour from './views/WeekHour/WeekMockHour';
+import useBem from '../../../../../src/hooks/useBem';
+import {IDay, IEvent} from '../../../../../src/ui/content/CalendarSystem/CalendarSystem';
+import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
+import Text from '../../../../../src/ui/typography/Text/Text';
 
 interface IWeekGridProps {
     weekGridTwentyFourHoursArray: string[],
@@ -18,7 +19,7 @@ function WeekGrid(props: IWeekGridProps) {
 
     const {weekGridCurrentWeekDays, getEventsFromDate} = props;
 
-    const renderWeekHours = useCallback(
+    const renderWeekHours = React.useCallback(
         (hour) => weekGridCurrentWeekDays.map((dayOfWeek, dayOfWeekIndex) => (
             <WeekHour
                 hour={hour}
@@ -77,4 +78,4 @@ function WeekGrid(props: IWeekGridProps) {
     );
 }
 
-export default memo(WeekGrid);
+export default React.memo(WeekGrid);

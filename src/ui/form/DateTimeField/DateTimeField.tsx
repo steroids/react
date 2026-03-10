@@ -1,16 +1,17 @@
-import {RefCallback, useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
+import React, {useMemo} from 'react';
+
 import {createDateTimeMask} from './utils';
-import useDateTime from '../DateField/useDateTime';
+import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import useDateInputState, {
     IDateInputStateInput,
     IDateInputStateOutput,
 } from '../../form/DateField/useDateInputState';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
-import {useComponents} from '../../../hooks';
-import {FieldEnum} from '../../../enums';
+import useDateTime from '../DateField/useDateTime';
 
 /**
  * DateTimeField
@@ -44,7 +45,7 @@ export interface IDateTimeFieldProps extends IDateInputStateInput, IUiComponent 
     dateTimeSeparator?: string,
 
     /**
-     *  Ограничение доступных дат.
+     * Ограничение доступных дат.
      */
     disabledDays?: {
         after?: Date,
@@ -73,7 +74,7 @@ export interface IDateTimeFieldViewProps extends IDateInputStateOutput,
     /**
      * Ref для input элемента, который накладывает маску
      */
-    maskInputRef?: RefCallback<HTMLElement>,
+    maskInputRef?: React.RefCallback<HTMLElement>,
 
     [key: string]: any,
 }

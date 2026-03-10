@@ -1,4 +1,5 @@
 import {memo, ReactNode} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -37,9 +38,13 @@ export const normalizeEmptyProps = props => ({
     enable: !!props,
     text: __('Ничего не найдено'),
     ...(typeof props === 'boolean'
-        ? {enable: props}
+        ? {
+            enable: props,
+        }
         : (typeof props === 'string'
-            ? {text: props}
+            ? {
+                text: props,
+            }
             : props
         )
     ),

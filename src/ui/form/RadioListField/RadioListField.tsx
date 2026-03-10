@@ -2,10 +2,15 @@ import CheckboxListField, {ICheckboxListFieldProps} from '../CheckboxListField/C
 
 /**
  * RadioListField
+ *
  * Список с радиокнопками. Используется в формах для выбора одного значения.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IRadioListFieldProps extends ICheckboxListFieldProps {
+    // Этот интерфейс оставлен для будущего расширения и генерации документации
+}
 
-export default function RadioListField(props: ICheckboxListFieldProps): JSX.Element {
+function RadioListField(props: IRadioListFieldProps): JSX.Element {
     return (
         <CheckboxListField
             multiple={false}
@@ -14,3 +19,5 @@ export default function RadioListField(props: ICheckboxListFieldProps): JSX.Elem
         />
     );
 }
+
+export default RadioListField;

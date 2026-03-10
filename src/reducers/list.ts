@@ -1,7 +1,8 @@
-import _get from 'lodash-es/get';
-import _isMatch from 'lodash-es/isMatch';
 import _every from 'lodash-es/every';
 import _extend from 'lodash-es/extend';
+import _get from 'lodash-es/get';
+import _isMatch from 'lodash-es/isMatch';
+
 import {
     LIST_INIT,
     LIST_SET_ITEMS,
@@ -44,6 +45,7 @@ const reducerMap = {
             [action.listId]: {
                 ...state.lists[action.listId],
                 items: action.items,
+                sourceItems: action.items,
             },
         },
     }),
@@ -78,6 +80,11 @@ const reducerMap = {
         } else {
             items = [].concat(action.items);
         }
+
+        const hasMoreInfiniteScroll = list.hasInfiniteScroll
+            ? action.items.length === action.pageSize
+            : false;
+
         return {
             ...state,
             lists: {
@@ -86,6 +93,7 @@ const reducerMap = {
                     ...list,
                     ...action,
                     items,
+                    hasMoreInfiniteScroll,
                     isFetched: true,
                     isLoading: false,
                 },
@@ -214,6 +222,7 @@ const reducerMap = {
     }),
 };
 
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => reducerMap[action.type]
     ? reducerMap[action.type](state, action)
     : state;

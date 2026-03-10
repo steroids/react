@@ -1,4 +1,5 @@
-import {createElement} from 'react';
+import * as React from 'react';
+
 import {useBem} from '../../../../src/hooks';
 import {ITitleViewProps} from '../../../../src/ui/typography/Title/Title';
 
@@ -20,22 +21,24 @@ export default function TitleView(props: ITitleMockViewProps) {
     const bem = useBem('TitleView');
     const tag = props.tag || TYPE_MAPPING[props.type!] || 'h2';
 
-    return createElement(
-        tag,
-        {
-            className: bem(
-                bem.block({
-                    type: props.type,
-                    color: props.color,
-                }),
-                props.className,
-            ),
-            style: props.style,
-            'data-testid': props.testId,
-        },
-        <>
-            {props.content}
-            {props.children}
-        </>,
+    return (
+        React.createElement(
+            tag,
+            {
+                className: bem(
+                    bem.block({
+                        type: props.type,
+                        color: props.color,
+                    }),
+                    props.className,
+                ),
+                style: props.style,
+                'data-testid': props.testId,
+            },
+            <>
+                {props.content}
+                {props.children}
+            </>,
+        )
     );
 }

@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+
 import Router from '../../../../src/ui/nav/Router';
 import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 import LoaderMockView from '../../layout/Loader/LoaderMockView';
@@ -15,7 +16,9 @@ describe('Router tests', () => {
             exact: true,
             redirectTo: false,
             component: LoaderMockView,
-            componentProps: {color: 'gray'},
+            componentProps: {
+                color: 'gray',
+            },
             items: [
                 {
                     id: 'contacts',

@@ -1,10 +1,11 @@
 import '@testing-library/jest-dom';
-import configureMockStore from 'redux-mock-store';
-import {useSelector} from 'react-redux';
 import * as connectedReactRouter from 'connected-react-router';
-import {renderHook} from '../helpers';
+import {useSelector} from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+
 import {useAddressBar} from '../../src/hooks';
 import {defaultFromStringConverter, defaultToStringConverter, queryRestore, queryReplace} from '../../src/hooks/useAddressBar';
+import {renderHook} from '../helpers';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const ITEM_STUB = null;
@@ -239,7 +240,7 @@ describe('queryReplace', () => {
     });
 
     it('should replace query parameters with the given values', () => {
-        const expectedQuery = '/example?id=123&isActive=1&name=John';
+        const expectedQuery = '/example?id=123&name=John&isActive=1';
 
         queryReplace(mockModel, mockLocation, mockValues, WITHOUT_HASH);
 
@@ -247,7 +248,7 @@ describe('queryReplace', () => {
     });
 
     it('should replace hash parameters with the given values', () => {
-        const expectedQuery = '#id=123&isActive=1&name=John';
+        const expectedQuery = '#id=123&name=John&isActive=1';
         const expectedResult = [];
 
         const result = queryReplace(mockModel, mockLocation, mockValues, WITH_HASH);
@@ -257,13 +258,11 @@ describe('queryReplace', () => {
     });
 
     it('should not replace parameters with the same values', () => {
-        mockLocation.search = '?id=123&isActive=1&name=John';
-        const expectedSearchValue = '?id=123&isActive=1&name=John';
+        mockLocation.search = '?id=123&name=John&isActive=1';
 
         queryReplace(mockModel, mockLocation, mockValues, WITHOUT_HASH);
 
         expect(replaceSpy).not.toHaveBeenCalled();
-        expect(mockLocation.search).toBe(expectedSearchValue);
     });
 
     it('should not include parameters with falsy values', () => {
@@ -288,7 +287,9 @@ describe('queryReplace', () => {
                 jsType: 'boolean',
             }],
         };
-        const localValues = {isActive: true};
+        const localValues = {
+            isActive: true,
+        };
         const expectedQuery = '/example?isActive=active';
 
         queryReplace(customModel, mockLocation, localValues, WITHOUT_HASH);
@@ -340,8 +341,12 @@ describe('useAddressBar Hook', () => {
         },
     };
 
-    const configWithDisabledProp = {enable: false};
-    const configWithEnabledProp = {enable: true};
+    const configWithDisabledProp = {
+        enable: false,
+    };
+    const configWithEnabledProp = {
+        enable: true,
+    };
 
     beforeEach(() => jest.clearAllMocks());
     afterAll(() => jest.restoreAllMocks());

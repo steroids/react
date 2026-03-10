@@ -1,7 +1,8 @@
 import {useCallback} from 'react';
+
+import CrudContent, {ICrudContentProps} from './CrudContent';
 import {CRUD_ACTION_INDEX} from '../../../ui/crud/Crud/utils';
 import Modal from '../../modal/Modal';
-import CrudContent, {ICrudContentProps} from './CrudContent';
 
 export default function CrudModal(props: ICrudContentProps): JSX.Element {
     // Get current item

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import IntlMessageFormat from 'intl-messageformat';
 import dayjs from 'dayjs';
+import IntlMessageFormat from 'intl-messageformat';
 import _isObject from 'lodash-es/isObject';
 import 'dayjs/locale/it';
 import 'dayjs/locale/ru';
@@ -85,7 +85,8 @@ export default class LocaleComponent implements ILocaleComponent {
         this.language = config.language || 'en';
         this.sourceLanguage = config.sourceLanguage || 'ru';
         this.backendTimeZone = null;
-        this.backendTimeDiff = null; // in microseconds
+        // in microseconds
+        this.backendTimeDiff = null;
         this.translations = {};
         // Publish to global
         if (process.env.IS_SSR) {

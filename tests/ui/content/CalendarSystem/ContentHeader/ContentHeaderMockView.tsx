@@ -1,18 +1,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import {memo, MouseEvent} from 'react';
+import React from 'react';
+
 import useBem from '../../../../../src/hooks/useBem';
-import Text from '../../../../../src/ui/typography/Text/Text';
-import {ButtonGroup} from '../../../../../src/ui/nav';
 import {Icon} from '../../../../../src/ui/content';
-import DateControlEnum from '../../../../../src/ui/content/CalendarSystem/enums/DateControlType';
 import CalendarEnum from '../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
+import DateControlEnum from '../../../../../src/ui/content/CalendarSystem/enums/DateControlType';
+import {ButtonGroup} from '../../../../../src/ui/nav';
+import Text from '../../../../../src/ui/typography/Text/Text';
 import ButtonGroupMockView from '../../../nav/ButtonGroup/ButtonGroupMockView';
 
 interface IContentHeaderProps {
     dateToDisplay: string,
     onChangeCalendarType: (newType: string) => void,
-    handleControlClick: (event: MouseEvent<HTMLElement>) => void,
+    handleControlClick: (event: React.MouseEvent<HTMLElement>) => void,
 }
 
 function ContentHeader(props: IContentHeaderProps) {
@@ -52,4 +53,4 @@ function ContentHeader(props: IContentHeaderProps) {
     );
 }
 
-export default memo(ContentHeader);
+export default React.memo(ContentHeader);

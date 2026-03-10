@@ -1,5 +1,7 @@
-import {IListViewProps} from '../../../../src/ui/list/List/List';
+import * as React from 'react';
+
 import {useBem} from '../../../../src/hooks';
+import {IListViewProps} from '../../../../src/ui/list/List/List';
 
 export default function ListView(props: IListViewProps) {
     const bem = useBem('ListView');
@@ -35,7 +37,10 @@ export default function ListView(props: IListViewProps) {
     };
 
     return props.renderList(
-        <div className={bem(bem.block({loading: props.isLoading || props.list.isLoading}), props.className)}>
+        <div className={bem(bem.block({
+            loading: props.isLoading || props.list.isLoading,
+        }), props.className)}
+        >
             {props.renderSearchForm()}
             {renderPagination(
                 ['top', 'both'].includes(props.paginationPosition) && props.renderPagination(),

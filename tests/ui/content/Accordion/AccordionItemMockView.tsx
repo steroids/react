@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import {useEffect, useCallback} from 'react';
-import Icon from '../../../../src/ui/content/Icon/Icon';
+import {useCallback, useEffect} from 'react';
+
 import {useBem} from '../../../../src/hooks';
 import {IAccordionItemViewProps, IAccordionIcon} from '../../../../src/ui/content/Accordion/Accordion';
+import Icon from '../../../../src/ui/content/Icon/Icon';
 import IconMockView from '../Icon/IconMockView';
 
 export default function AccordionItemView(props: IAccordionItemViewProps) {
@@ -125,12 +126,15 @@ export default function AccordionItemView(props: IAccordionItemViewProps) {
                                 className={bem.element('icon', {
                                     active: !props.disabled && props.isShowMore,
                                 })}
-                                name="mockIcon"
+                                name='mockIcon'
                             />
                         )}
                 </div>
             </div>
-            <div className={bem.element('content', {visible: !props.disabled && props.isShowMore})}>
+            <div className={bem.element('content', {
+                visible: !props.disabled && props.isShowMore,
+            })}
+            >
                 {props.children}
             </div>
         </div>

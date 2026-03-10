@@ -1,9 +1,9 @@
-import _isEqual from 'lodash-es/isEqual';
-import _isEmpty from 'lodash-es/isEmpty';
-import _isArray from 'lodash-es/isArray';
-import _isNil from 'lodash-es/isNil';
 import _difference from 'lodash-es/difference';
 import _intersection from 'lodash-es/intersection';
+import _isArray from 'lodash-es/isArray';
+import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
+import _isNil from 'lodash-es/isNil';
 import _pullAll from 'lodash-es/pullAll';
 import {MutableRefObject, useCallback, useMemo, useState} from 'react';
 import {useEvent, usePrevious, useUpdateEffect} from 'react-use';
@@ -66,12 +66,12 @@ export interface IDataSelectConfig {
     inputValue?: any,
 
     /**
-     *  Список со всеми элементами
+     * Список со всеми элементами
      */
     sourceItems?: IDataSelectItem[],
 
     /**
-     *  Ref autocomplete поиска
+     * Ref autocomplete поиска
      */
     autoCompleteInputRef?: MutableRefObject<HTMLInputElement>,
 

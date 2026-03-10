@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, IListOutput} from '../../../hooks/useList';
 
@@ -70,6 +71,7 @@ export default function List(props: IListProps): JSX.Element {
         renderPaginationSize,
         renderLayoutNames,
         renderSearchForm,
+        renderInfiniteScroll,
     } = useList({
         listId: props.listId,
         primaryKey: props.primaryKey,
@@ -77,6 +79,7 @@ export default function List(props: IListProps): JSX.Element {
         actionMethod: props.actionMethod,
         pagination: props.pagination,
         paginationSize: props.paginationSize,
+        infiniteScroll: props.infiniteScroll,
         sort: props.sort,
         layout: props.layout,
         empty: props.empty,
@@ -120,12 +123,13 @@ export default function List(props: IListProps): JSX.Element {
         renderPaginationSize,
         renderLayoutNames,
         renderSearchForm,
+        renderInfiniteScroll,
         content,
         isLoading: props.isLoading,
         className: props.className,
         contentClassName: props.contentClassName,
-    }), [content, layoutNamesPosition, list, paginationPosition, paginationSizePosition, props.className, props.contentClassName,
-        props.isLoading, renderEmpty, renderLayoutNames, renderList, renderPagination, renderPaginationSize, renderSearchForm, renderLoading]);
+        // eslint-disable-next-line max-len
+    }), [list, paginationPosition, paginationSizePosition, layoutNamesPosition, renderList, renderLoading, renderEmpty, renderPagination, renderPaginationSize, renderLayoutNames, renderSearchForm, renderInfiniteScroll, content, props.isLoading, props.className, props.contentClassName]);
 
     return components.ui.renderView(props.view || 'list.ListView', viewProps);
 }

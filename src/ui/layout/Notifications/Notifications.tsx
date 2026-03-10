@@ -1,9 +1,10 @@
-import {ReactNode, useCallback, useMemo, useState} from 'react';
 import _orderBy from 'lodash-es/orderBy';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useMount, usePrevious, useUpdateEffect} from 'react-use';
-import useDispatch from '../../../hooks/useDispatch';
-import {useComponents, useSelector} from '../../../hooks';
+
 import {setFlashes, closeNotification} from '../../../actions/notifications';
+import {useComponents, useSelector} from '../../../hooks';
+import useDispatch from '../../../hooks/useDispatch';
 import {getNotifications, getPosition} from '../../../reducers/notifications';
 
 /**
@@ -31,13 +32,19 @@ interface INotificationItem {
      * Цвет всплывающего уведомления
      * @example warning
      */
-    level?: ColorName,
+    type?: AlertColorName,
 
     /**
      * Сообщение во всплывающем уведомлении
      * @example Сохранено!
      */
     message?: string,
+
+    /** Дополнительное содержание сообщения.
+     * @example 'Успешно сохранено'
+     */
+    description?: string,
+
     isClosing?: boolean,
 }
 
@@ -93,7 +100,7 @@ export interface INotificationsViewProps {
     notifications?: INotificationItem[],
     className?: CssClassName,
     position: string,
-    children?: ReactNode,
+    children?: React.ReactNode,
 }
 
 export interface INotificationsItemViewProps extends INotificationItem {
@@ -150,7 +157,8 @@ function Notifications(props:INotificationsProps): JSX.Element {
 
     const closingIds = closing.map(item => item.id);
 
-    const items = useMemo(() => (
+    const items = useMemo(
+() => (
         _orderBy([].concat(innerNotifications).concat(closing), ['id'], 'asc')
             .map(item => ({
                 ...item,
@@ -158,7 +166,8 @@ function Notifications(props:INotificationsProps): JSX.Element {
                 onClose: () => onClose(item.id),
             }))
     ),
-    [innerNotifications, closing, closingIds, onClose]);
+    [innerNotifications, closing, closingIds, onClose],
+);
 
     const NotificationsItemView = props.itemView || components.ui.getView('layout.NotificationsItemView');
 

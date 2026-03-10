@@ -1,8 +1,9 @@
 import {MouseEvent, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+
 import {goToRoute, filterParamsForPath} from '../../../actions/router';
-import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {useComponents, useForm} from '../../../hooks';
+import {buildUrl, getRouteProp} from '../../../reducers/router';
 import {FormContext, IFormContext} from '../Form/Form';
 
 export interface IButtonBadge {
@@ -22,7 +23,7 @@ export interface IButtonBadge {
     * Цвет
     * @example 'secondary'
     */
-    color?: ColorName,
+    color?: BadgeColorName,
 
     /**
     * Дополнительный CSS-класс для элемента отображения
@@ -59,7 +60,7 @@ export interface IButtonProps extends IUiComponent {
      * Цвет состояния
      * @example success
      */
-    color?: ColorName,
+    color?: ButtonColorName,
 
     /**
      * Отображать как ссылку?
@@ -215,7 +216,9 @@ function Button(props: IButtonProps): JSX.Element {
     const badge = useMemo(() => ({
         ...Button.defaultProps.badge,
         enable: !!props.badge || props.badge === 0,
-        ...(typeof props.badge === 'object' ? props.badge : {value: props.badge}),
+        ...(typeof props.badge === 'object' ? props.badge : {
+            value: props.badge,
+        }),
     }), [props.badge]);
 
     // Route -> url

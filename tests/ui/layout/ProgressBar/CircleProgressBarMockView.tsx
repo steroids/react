@@ -1,12 +1,20 @@
-import {IProgressBarViewProps} from '../../../../src/ui/layout/ProgressBar/ProgressBar';
+import * as React from 'react';
+
 import {useBem} from '../../../../src/hooks';
+import {IProgressBarViewProps} from '../../../../src/ui/layout/ProgressBar/ProgressBar';
 
 export default function CircleProgressBarMockView(props: IProgressBarViewProps) {
     const bem = useBem('CircleProgressBarView');
     const size = {
-        large: {radius: 64},
-        medium: {radius: 48},
-        small: {radius: 32},
+        large: {
+            radius: 64,
+        },
+        medium: {
+            radius: 48,
+        },
+        small: {
+            radius: 32,
+        },
     };
 
     const getCircumference = () => 2 * Math.PI * size[props.size].radius;
@@ -21,7 +29,9 @@ export default function CircleProgressBarMockView(props: IProgressBarViewProps) 
                 <g className={bem.element('circles')}>
                     <circle
                         className={bem.element('emptyCircle')}
-                        style={{strokeDasharray: getCircumference()}}
+                        style={{
+                            strokeDasharray: getCircumference(),
+                        }}
                     />
                     <circle
                         className={bem.element('progressCircle')}

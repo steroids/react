@@ -5,13 +5,14 @@
 /* eslint-disable no-plusplus */
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
-import {MouseEvent, ReactNode, useMemo} from 'react';
-import {ICheckboxListFieldProps} from '../../../ui/form/CheckboxListField/CheckboxListField';
-import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
-import {IModalProps} from '../../../ui/modal/Modal/Modal';
-import {useComponents} from '../../../hooks';
+import {ReactNode, useMemo} from 'react';
+
 import {useCalendarSystem} from './hooks/useCalendarSystem';
 import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
+import {useComponents} from '../../../hooks';
+import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
+import {ICheckboxListFieldProps} from '../../../ui/form/CheckboxListField/CheckboxListField';
+import {IModalProps} from '../../../ui/modal/Modal/Modal';
 
 dayjs.extend(localeData);
 
@@ -213,9 +214,9 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
-    onClickControl: (event: MouseEvent<HTMLElement>) => void,
+    onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
     calendarType: string,
-    children: ReactNode,
+    children: React.ReactNode,
 
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: string) => IEvent[],
     openEditModal: (event: IEvent) => void,

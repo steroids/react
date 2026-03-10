@@ -1,9 +1,8 @@
-import {ReactNode} from 'react';
 import {useComponents} from '../../../hooks';
 
 export interface ISkeletonViewProps {
     className?: CssClassName,
-    children?: ReactNode,
+    children?: React.ReactNode,
     animation?: 'pulse' | 'wave',
     type?: 'text' | 'rect' | 'circle',
     height?: string | number,
@@ -26,7 +25,7 @@ export interface ISkeletonProps {
     /**
     * Дочерние элементы
     */
-    children?: ReactNode,
+    children?: React.ReactNode,
 
     /**
     * Тип анимации

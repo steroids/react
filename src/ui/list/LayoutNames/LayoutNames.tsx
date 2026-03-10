@@ -1,10 +1,11 @@
-import {memo, useCallback} from 'react';
 import _get from 'lodash-es/get';
-import {useComponents} from '../../../hooks';
-import {INavItem} from '../../nav/Nav/Nav';
-import {ListControlPosition} from '../../../hooks/useList';
+import React, {useCallback} from 'react';
+
 import {IList, listSetLayout} from '../../../actions/list';
+import {useComponents} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
+import {ListControlPosition} from '../../../hooks/useList';
+import {INavItem} from '../../nav/Nav/Nav';
 
 /**
  * LayoutNames
@@ -101,7 +102,9 @@ export const normalizeLayoutNamesProps = props => ({
     ...LayoutNames.defaultProps,
     enable: !!props,
     defaultValue: _get(props, 'items.0.id') || LayoutNames.defaultProps.defaultValue,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
-export default memo(LayoutNames);
+export default React.memo(LayoutNames);

@@ -1,10 +1,9 @@
 import {Children, cloneElement, useCallback, useRef} from 'react';
 import {useMount} from 'react-use';
 
+import TooltipInnerPortal from './TooltipPortalInner';
 import {useComponents} from '../../../hooks';
 import useAbsolutePositioning, {PositionType} from '../../../hooks/useAbsolutePositioning';
-
-import TooltipInnerPortal from './TooltipPortalInner';
 
 export interface ITooltipArrowPosition {
     /**
@@ -110,6 +109,11 @@ export interface ITooltipProps {
      */
     className?: CssClassName,
 
+    /**
+     * Пропсы для отображения элемента
+     */
+    viewProps?: CustomViewProps,
+
     [key: string]: any,
 }
 
@@ -202,6 +206,7 @@ function Tooltip(props: ITooltipProps): JSX.Element {
                         arrowPosition={arrowPosition}
                         calculatePosition={calculatePosition}
                         className={props.className}
+                        viewProps={props.viewProps}
                     />
                 </TooltipInnerPortal>
             )}

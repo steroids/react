@@ -1,5 +1,5 @@
-import {useRef} from 'react';
 import _uniqueId from 'lodash-es/uniqueId';
+import {useRef} from 'react';
 
 export default function useUniqueId(prefix: string) {
     const idRef = useRef<string>('');

@@ -1,4 +1,5 @@
 import {ReactNode, useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 export interface AvatarGroupProps{

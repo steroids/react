@@ -1,8 +1,8 @@
 import {useCallback} from 'react';
 
-import {IPaginationViewProps} from '../../../../src/ui/list/Pagination/Pagination';
 import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
+import {IPaginationViewProps} from '../../../../src/ui/list/Pagination/Pagination';
 import IconMockView from '../../content/Icon/IconMockView';
 
 export default function PaginationButtonView(props: IPaginationViewProps) {
@@ -11,6 +11,7 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
     const renderArrowStep = useCallback((
         onClick: () => void,
         iconName: string,
+        // eslint-disable-next-line default-param-last
         rotate = false,
         rounding?: {
             left?: boolean,
@@ -26,10 +27,12 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
         })}
         >
             <button
-                className={bem.element('page-button',
+                className={bem.element(
+                    'page-button',
                     {
                         hasIcon: true,
-                    })}
+                    },
+                )}
                 onClick={() => onClick()}
             >
                 <Icon
@@ -38,7 +41,7 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
                     className={bem.element('page-icon', {
                         rotate,
                     })}
-                    name="mockIcon"
+                    name='mockIcon'
                 />
             </button>
         </li>
@@ -54,7 +57,9 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
             )}
         >
             {props.showEdgeSteps
-                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', false, {left: true}, props.isFirstPage)}
+                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', false, {
+                    left: true,
+                }, props.isFirstPage)}
             {props.showSteps
                 && renderArrowStep(props.onSelectPrev, 'arrow-left', false, {}, props.isFirstPage)}
             {props.pages.map((item, index) => (
@@ -78,7 +83,9 @@ export default function PaginationButtonView(props: IPaginationViewProps) {
             {props.showSteps
                 && renderArrowStep(props.onSelectNext, 'arrow-left', true, {}, props.isLastPage)}
             {props.showEdgeSteps
-                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', true, {right: true}, props.isLastPage)}
+                && renderArrowStep(props.onSelectFirst, 'double-arrow-left', true, {
+                    right: true,
+                }, props.isLastPage)}
         </ul>
     );
 }

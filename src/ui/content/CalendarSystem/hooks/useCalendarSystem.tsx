@@ -1,24 +1,24 @@
 /* eslint-disable default-case */
-import {useCallback, useEffect, useRef, useState} from 'react';
-
-import {useMount} from 'react-use';
-import {useDispatch} from 'react-redux';
-import _last from 'lodash-es/last';
 import _head from 'lodash-es/head';
-import {ICalendarSystemProps, ICalendarUser, IEventGroup} from '../CalendarSystem';
-import useDisplayDate from './useDisplayDate';
-import {useDayGrid} from './useDayGrid';
+import _last from 'lodash-es/last';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useMount} from 'react-use';
+
+import useCalendarControls from './useCalendarControls';
+import {useCalendarSystemEventGroupModals} from './useCalendarSystemEventGroupModals';
+import useCalendarSystemModals from './useCalendarSystemModals';
 import {useCalendarType} from './useCalendarType';
+import {useDayGrid} from './useDayGrid';
+import useDisplayDate from './useDisplayDate';
+import {useEventsFromDate} from './useEventsFromDate';
 import useMonthGrid from './useMonthGrid';
 import useWeekGrid from './useWeekGrid';
-import useCalendarControls from './useCalendarControls';
-import useCalendarSystemModals from './useCalendarSystemModals';
-import {useCalendarSystemEventGroupModals} from './useCalendarSystemEventGroupModals';
-import {useEventsFromDate} from './useEventsFromDate';
+import {formChange, formInitialize} from '../../../../actions/form';
+import {ICalendarSystemProps, ICalendarUser, IEventGroup} from '../CalendarSystem';
+import CalendarType from '../enums/CalendarType';
 import DisplayDateFormatType from '../enums/DisplayDateFormatType';
 import {getFormattedDay} from '../utils/utils';
-import {formChange, formInitialize} from '../../../../actions/form';
-import CalendarType from '../enums/CalendarType';
 
 const DEFAULT_DATE_FROM_ATTRIBUTE = 'dateFrom';
 const DEFAULT_DATE_TO_ATTRIBUTE = 'dateTo';
@@ -26,20 +26,20 @@ const DEFAULT_DATE_TO_ATTRIBUTE = 'dateTo';
 export const useCalendarSystem = (props: ICalendarSystemProps) => {
     const dispatch = useDispatch();
 
-    const [innerEventGroups, setInnerEventGroups] = useState<IEventGroup[]>(props.eventBlock.eventGroups || []);
-    const [selectedEventGroupsIds, setSelectedEventGroupsIds] = useState<number[]>([]);
+    const [innerEventGroups, setInnerEventGroups] = React.useState<IEventGroup[]>(props.eventBlock.eventGroups || []);
+    const [selectedEventGroupsIds, setSelectedEventGroupsIds] = React.useState<number[]>([]);
     const [users, setUsers] = useState<ICalendarUser[]>(props.users);
 
-    useEffect(() => {
+    React.useEffect(() => {
         setInnerEventGroups(props.eventBlock.eventGroups);
     }, [props.eventBlock.eventGroups]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         setUsers(props.users);
     }, [props.users]);
 
     //Главная дата, от которой происходят все вычисления
-    const [generalCurrentDay, setGeneralCurrentDay] = useState(getFormattedDay());
+    const [generalCurrentDay, setGeneralCurrentDay] = React.useState(getFormattedDay());
     const isGeneralCurrentDayNeedsUpdate = useRef(true);
 
     const updateGeneralCurrentDay = useCallback((newDate: Date) => {
@@ -50,7 +50,7 @@ export const useCalendarSystem = (props: ICalendarSystemProps) => {
         setGeneralCurrentDay(getFormattedDay(newDate));
     }, [isGeneralCurrentDayNeedsUpdate]);
 
-    const onCalendarChangedMonth = useCallback((newDate: Date) => {
+    const onCalendarChangedMonth = React.useCallback((newDate: Date) => {
         updateGeneralCurrentDay(newDate);
     }, [updateGeneralCurrentDay]);
 
@@ -143,7 +143,7 @@ export const useCalendarSystem = (props: ICalendarSystemProps) => {
         }
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (props.calendarDatesFormData) {
             const currentDateArray = calendarType === CalendarType.MONTH
                 ? monthGridCalendarDays

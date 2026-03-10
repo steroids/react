@@ -1,17 +1,20 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-shadow */
-import _slice from 'lodash-es/slice';
-import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
-import {MouseEvent, useCallback, useMemo} from 'react';
+import _get from 'lodash-es/get';
+import _isEmpty from 'lodash-es/isEmpty';
+import _slice from 'lodash-es/slice';
+import _take from 'lodash-es/take';
+import React from 'react';
+
 import useBem from '../../../../../../../src/hooks/useBem';
-import {convertDate} from '../../../../../../../src/utils/calendar';
 import {IDay, IEvent} from '../../../../../../../src/ui/content/CalendarSystem/CalendarSystem';
-import {Button} from '../../../../../../../src/ui/form';
 import CalendarEnum from '../../../../../../../src/ui/content/CalendarSystem/enums/CalendarType';
-import Tooltip from '../../../../../../../src/ui/layout/Tooltip/Tooltip';
 import useExpandClickAway from '../../../../../../../src/ui/content/CalendarSystem/hooks/useExpandClickAway';
+import {Button} from '../../../../../../../src/ui/form';
+import Tooltip from '../../../../../../../src/ui/layout/Tooltip/Tooltip';
+import {convertDate} from '../../../../../../../src/utils/calendar';
 
 export const getFormattedExpandRestLabel = (rest: any[]) => `Показать ещё +${rest.length}`;
 
@@ -36,7 +39,7 @@ export default function WeekHour(props: IWeekHourProps) {
         hasTwoEvents,
         hasTreeEvents,
         hasMoreThanFourEvents,
-    } = useMemo(() => {
+    } = React.useMemo(() => {
         const callingDate = new Date(props.dayOfWeek.date);
 
         const timeArray = props.hour.replace(':', '').split('');
@@ -59,7 +62,7 @@ export default function WeekHour(props: IWeekHourProps) {
         };
     }, [props]);
 
-    const renderEvent = useCallback((event: IEvent, eventIndex: number) => (
+    const renderEvent = React.useCallback((event: IEvent, eventIndex: number) => (
         <Tooltip
             position='rightBottom'
             content={event.title}
@@ -68,7 +71,9 @@ export default function WeekHour(props: IWeekHourProps) {
         >
             <div
                 className={bem.element('hour-event')}
-                style={{backgroundColor: event.color}}
+                style={{
+                    backgroundColor: event.color,
+                }}
                 title={event.title}
                 data-eventid={event.id}
             >
@@ -82,11 +87,11 @@ export default function WeekHour(props: IWeekHourProps) {
         </Tooltip>
     ), [bem]);
 
-    const formattedExpandLabel = useMemo(() => getFormattedExpandRestLabel(
+    const formattedExpandLabel = React.useMemo(() => getFormattedExpandRestLabel(
         _slice([...events], FOURTH_ELEMENT_INDEX),
     ), [events]);
 
-    const handleEventClick = useCallback((event: MouseEvent<HTMLElement>) => {
+    const handleEventClick = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         const eventFromHour = event.target as HTMLDivElement;
         const eventId: number = _get(eventFromHour, 'dataset.eventid');
 
@@ -99,7 +104,7 @@ export default function WeekHour(props: IWeekHourProps) {
         props.openEditModal(requiredEvent);
     }, [events, props]);
 
-    const handleOnContextMenuCreateClick = useCallback((e: MouseEvent) => {
+    const handleOnContextMenuCreateClick = React.useCallback((e: React.MouseEvent) => {
         e.preventDefault();
 
         const day: IDay = _cloneDeep(props.dayOfWeek);

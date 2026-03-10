@@ -2,17 +2,19 @@
 /* eslint-disable no-useless-return */
 /* eslint-disable no-console */
 /* eslint-disable default-case */
-import {Dispatch, MouseEvent, MutableRefObject, SetStateAction, useCallback} from 'react';
-
 import _get from 'lodash-es/get';
-import CalendarEnum from '../enums/CalendarType';
-import {getFormattedDay, getSourceCalendarControl} from '../utils/utils';
-import DateControlType from '../enums/DateControlType';
+import _head from 'lodash-es/head';
+import _isFunction from 'lodash-es/isFunction';
+import React, {useCallback} from 'react';
+
 import {IDay} from '../CalendarSystem';
+import CalendarEnum from '../enums/CalendarType';
+import DateControlType from '../enums/DateControlType';
+import {getFormattedDay, getFormattedWeekFromDate, getSourceCalendarControl} from '../utils/utils';
 
 const DATASET_CONTROL_TYPE_PATH = 'dataset.control';
 
-const getControlTypeFromButton = (event: MouseEvent<HTMLElement>) => {
+const getControlTypeFromButton = (event: React.MouseEvent<HTMLElement>) => {
     const clickedButton = event.target as HTMLDivElement;
 
     const controlType: string = _get(clickedButton, DATASET_CONTROL_TYPE_PATH);
@@ -28,8 +30,8 @@ const ONE_YEAR_DIFF = 1;
 const useCalendarControls = (
     calendarType: string,
     generalCurrentDay: IDay,
-    setGeneralCurrentDay: Dispatch<SetStateAction<IDay>>,
-    isGeneralCurrentDayNeedsUpdate: MutableRefObject<boolean>,
+    setGeneralCurrentDay: React.Dispatch<React.SetStateAction<IDay>>,
+    isGeneralCurrentDayNeedsUpdate: React.MutableRefObject<boolean>,
 ) => {
     const changeMonth = useCallback((isNext = true) => {
         const sourceMonthControl = getSourceCalendarControl(isNext ? DateControlType.NEXT_ONE : DateControlType.PREV_ONE);
@@ -89,7 +91,7 @@ const useCalendarControls = (
         checkIsOutAndUpdateInnerCalendar(formattedDay, prevMonthNumber, prevYearNumber);
     }, [generalCurrentDay.date, setGeneralCurrentDay, checkIsOutAndUpdateInnerCalendar]);
 
-    const onClickControl = useCallback((event: MouseEvent<HTMLElement>) => {
+    const onClickControl = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
         const controlType = getControlTypeFromButton(event);
         const sourceCalendarControl = getSourceCalendarControl(controlType);
 
@@ -146,7 +148,9 @@ const useCalendarControls = (
         }
     }, [calendarType, changeDay, changeMonth, changeWeek, isGeneralCurrentDayNeedsUpdate]);
 
-    return {onClickControl};
+    return {
+        onClickControl,
+    };
 };
 
 export default useCalendarControls;

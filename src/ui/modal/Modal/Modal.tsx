@@ -1,6 +1,7 @@
-import {ComponentProps, useEffect, useMemo} from 'react';
-import {IButtonProps} from '../../form/Button/Button';
+import React, {ComponentProps, useEffect, useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
+import {IButtonProps} from '../../form/Button/Button';
 
 /**
  * Modal
@@ -108,6 +109,11 @@ export interface IModalProps {
     view?: CustomView,
 
     /**
+     * Свойства для view компонента
+     */
+    viewProps?: CustomViewProps,
+
+    /**
      * Вложенные элементы
      */
     children?: string | any,
@@ -141,8 +147,9 @@ function Modal(props: IModalProps): JSX.Element {
         title: props.title,
         children: props.children,
         buttons: props.buttons,
-    }), [props.buttons, props.children, props.className, props.closeTimeoutMs, props.isClosing, props.onClose, props.shouldCloseOnEsc,
-        props.shouldCloseOnOverlayClick, props.size, props.title]);
+        viewProps: props.viewProps,
+        // eslint-disable-next-line max-len
+    }), [props.buttons, props.children, props.className, props.closeTimeoutMs, props.isClosing, props.onClose, props.shouldCloseOnEsc, props.shouldCloseOnOverlayClick, props.size, props.title, props.viewProps]);
 
     return (
         <ModalView {...viewProps}>

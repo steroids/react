@@ -1,8 +1,9 @@
-import {useEffect, useMemo, useRef} from 'react';
 import _isFunction from 'lodash-es/isFunction';
-import {IDropDownViewProps} from '../../../../src/ui/content/DropDown/DropDown';
+import {useEffect, useMemo, useRef} from 'react';
+import * as React from 'react';
 
 import {useBem, useComponents} from '../../../../src/hooks';
+import {IDropDownViewProps} from '../../../../src/ui/content/DropDown/DropDown';
 
 export default function DropDownView(props: IDropDownViewProps) {
     const bem = useBem('DropDownView');
@@ -46,7 +47,9 @@ export default function DropDownView(props: IDropDownViewProps) {
             {props.hasArrow && (
                 <div
                     ref={arrowRef}
-                    className={bem.element('arrow', {position: props.position})}
+                    className={bem.element('arrow', {
+                        position: props.position,
+                    })}
                     style={props.arrowPosition}
                 />
             )}

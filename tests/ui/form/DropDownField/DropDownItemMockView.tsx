@@ -1,3 +1,5 @@
+import React from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
 import {
     CHECKBOX_CONTENT_TYPE,
@@ -7,10 +9,10 @@ import {
     IMG_CONTENT_TYPE,
     RADIO_CONTENT_TYPE,
 } from '../../../../src/ui/form/DropDownField/DropDownField';
+import renderIcon from '../../../mocks/renderIconMock';
 import AccordionItemView from '../../content/Accordion/AccordionItemMockView';
 import CheckboxFieldView from '../CheckboxField/CheckboxFieldMockView';
 import RadioFieldView from '../RadioField/RadioFieldMockView';
-import renderIcon from '../../../mocks/renderIconMock';
 
 export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
     const bem = useBem('DropDownItemView');
@@ -40,7 +42,7 @@ export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
                     toggleAccordion={() => { }}
                     showIcon
                     title={props.item.label}
-                    position="middle"
+                    position='middle'
                     key={props.item[props.primaryKey]}
                     className={
                         bem.element('group', {
@@ -67,7 +69,9 @@ export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
                     {...commonProps}
                     key={props.item[props.primaryKey]}
                 >
-                    {renderIcon(props.item.contentSrc, {className: bem.element('icon')})}
+                    {renderIcon(props.item.contentSrc, {
+                        className: bem.element('icon'),
+                    })}
                     <span>
                         {props.item.label}
                     </span>
@@ -129,7 +133,7 @@ export default function DropDownItemView(props: IDropDownFieldItemViewProps) {
                     <span className={bem.element('img')}>
                         <img
                             src={props.item.contentSrc as string}
-                            alt="custom source for item"
+                            alt='custom source for item'
                         />
                     </span>
                     <span>

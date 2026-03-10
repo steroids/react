@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {mount} from 'enzyme';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 import HtmlComponent from '../../src/components/HtmlComponent';
 import useApplication from '../../src/hooks/useApplication';
 

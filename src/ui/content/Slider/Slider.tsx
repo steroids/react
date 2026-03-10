@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import {forwardRef} from 'react';
 import {Options, SplideProps} from '@splidejs/react-splide';
+import {forwardRef} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**

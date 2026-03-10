@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+import * as React from 'react';
+
 import Dashboard from '../../../../src/ui/content/Dashboard';
 import Grid from '../../../../src/ui/list/Grid';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import GridMockView from '../../list/Grid/GridMockView';
 
 const gridItems = [

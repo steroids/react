@@ -1,5 +1,7 @@
-import {Badge} from '../../../../../../src/ui/content';
+import * as React from 'react';
+
 import {useBem} from '../../../../../../src/hooks';
+import {Badge} from '../../../../../../src/ui/content';
 import {ITaskTag} from '../../../../../../src/ui/content/Kanban/Kanban';
 
 interface ITaskTagsProps {

@@ -44,7 +44,7 @@ export interface IPhoneFieldDropdownProps {
 }
 
 export interface IPhoneFieldViewProps extends IPhoneFieldProps, IFieldWrapperOutputProps {
-    dropDownProps:IPhoneFieldDropdownProps,
+    dropDownProps: IPhoneFieldDropdownProps,
 }
 
 function PhoneField(props: IPhoneFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -76,7 +76,7 @@ function PhoneField(props: IPhoneFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     const phoneMask = useMemo(
         () => ((items ?? []) as unknown as ICountryPhoneMask[]).find(
-            (c: ICountryPhoneMask) => c.id === (selectedIds[0] ?? props.defaultCountryCode),
+            (countryPhoneMask: ICountryPhoneMask) => countryPhoneMask.id === (selectedIds[0] ?? props.defaultCountryCode),
         )?.phoneMask,
         [items, selectedIds, props.defaultCountryCode],
     );

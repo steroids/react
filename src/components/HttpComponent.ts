@@ -13,6 +13,10 @@ interface IHttpRequestOptions {
     responseType?: string,
 }
 
+interface IHttpRequestOptionsWithQuery extends IHttpRequestOptions {
+    query?: Record<string, any>,
+}
+
 export interface IHttpComponentConfig {
     /**
      * Url для http запросов
@@ -98,37 +102,34 @@ export interface IHttpComponent extends IHttpComponentConfig {
      * Вызов метода get
      * @param url URL для HTTP-запроса.
      * @param params Параметры для запроса.
-     * @param options Опции для HTTP-запроса, заголовки и т.д.
+     * @param options Опции для HTTP-запроса, заголовки, query-параметры и т.д.
      */
-    get(url: string, params?: Record<string, any>, options?: IHttpRequestOptions): any,
+    get(url: string, params?: Record<string, any>, options?: IHttpRequestOptionsWithQuery): any,
 
     /**
      * Вызов метода post
      * @param url URL для HTTP-запроса.
      * @param body Тело запроса.
-     * @param options Опции для HTTP-запроса, заголовки и т.д.
-     * @param params Параметры для запроса.
+     * @param options Опции для HTTP-запроса, заголовки, query-параметры и т.д.
      */
-    post(url: string, body?: Record<string, any>, options?: IHttpRequestOptions, params?: Record<string, any>): any,
+    post(url: string, body?: Record<string, any>, options?: IHttpRequestOptionsWithQuery): any,
 
     /**
      * Вызов метода delete
      * @param url URL для HTTP-запроса.
      * @param body Тело для запроса.
-     * @param options Опции для HTTP-запроса, заголовки и т.д.
-     * @param params Параметры для запроса.
+     * @param options Опции для HTTP-запроса, заголовки, query-параметры и т.д.
      */
-    delete(url: string, body?: Record<string, any>, options?: IHttpRequestOptions, params?: Record<string, any>): any,
+    delete(url: string, body?: Record<string, any>, options?: IHttpRequestOptionsWithQuery): any,
 
     /**
      * Вызов http-метода
      * @param method Метод запроса (GET, POST и т.д.).
      * @param url URL для HTTP-запроса.
      * @param body Тело запроса.
-     * @param options Опции для HTTP-запроса, заголовки и т.д.
-     * @param params Параметры для запроса.
+     * @param options Опции для HTTP-запроса, заголовки, query-параметры и т.д.
      */
-    send(method: string, url: string, body?: Record<string, any>, options?: IHttpRequestOptions, params?: Record<string, any>): any,
+    send(method: string, url: string, body?: Record<string, any>, options?: IHttpRequestOptionsWithQuery): any,
 
     /**
      * Метод, который вызывается после запроса
@@ -298,42 +299,65 @@ export default class HttpComponent implements IHttpComponent {
         return method;
     }
 
-    get(url, params = {}, options: IHttpRequestOptions = {}) {
+    get(url, params = {}, options: IHttpRequestOptionsWithQuery = {}) {
+        const {
+            query,
+            ...restOptions
+        } = options;
+
         return this._send(
             url,
             {
                 method: 'get',
-                params,
+                params: {
+                    ...params,
+                    ...query,
+                },
             },
-            options,
+            restOptions,
         ).then((response: any) => response.data);
     }
 
-    post(url, body = {}, options: IHttpRequestOptions = {}, params = {}) {
+    post(url, body = {}, options: IHttpRequestOptionsWithQuery = {}) {
+        const {
+            query,
+            ...restOptions
+        } = options;
+
         return this._send(
             url,
             {
                 method: 'post',
                 data: body,
-                params,
+                params: query,
             },
-            options,
+            restOptions,
         ).then((response: any) => response.data);
     }
 
-    delete(url, body = {}, options: IHttpRequestOptions = {}, params = {}) {
+    delete(url, body = {}, options: IHttpRequestOptionsWithQuery = {}) {
+        const {
+            query,
+            ...restOptions
+        } = options;
+
         return this._send(
             url,
             {
                 method: 'delete',
                 data: body,
-                params,
+                params: query,
             },
-            options,
+            restOptions,
         ).then((response: any) => response.data);
     }
 
-    send(method, url, body = {}, options: IHttpRequestOptions = {}, params = {}) {
+    send(method, url, body = {}, options: IHttpRequestOptionsWithQuery = {}) {
+        const {
+            query,
+            ...restOptions
+        } = options;
+
         method = method.toLowerCase();
 
         if (method === 'get') {
@@ -343,10 +367,10 @@ export default class HttpComponent implements IHttpComponent {
                     method,
                     params: {
                         ...body,
-                        ...params,
+                        ...query,
                     },
                 },
-                options,
+                restOptions,
             );
         }
 
@@ -355,9 +379,9 @@ export default class HttpComponent implements IHttpComponent {
             {
                 method,
                 data: body,
-                params,
+                params: query,
             },
-            options,
+            restOptions,
         );
     }
 

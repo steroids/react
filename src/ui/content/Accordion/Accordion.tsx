@@ -1,4 +1,4 @@
-import {Children, cloneElement, ReactElement, useEffect, useMemo, useState} from 'react';
+import {Children, cloneElement, ReactElement, ReactNode, useEffect, useMemo, useState} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -36,7 +36,7 @@ export interface IAccordionProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Переводит Accordion в выключенное состояние

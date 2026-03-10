@@ -1,7 +1,7 @@
 import {useComponents, useDataProvider, useDataSelect} from '@steroidsjs/core/hooks';
 import {DataProviderItems, IDataProvider} from '@steroidsjs/core/hooks/useDataProvider';
 import _isEqual from 'lodash-es/isEqual';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 
 import {IInputParams} from '../ui/form/Field/fieldWrapper';

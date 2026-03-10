@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 
 import {FieldEnum} from '../../../enums';
 import {useDataProvider} from '../../../hooks';

@@ -1,5 +1,5 @@
 import _isString from 'lodash-es/isString';
-import React, {useContext, useMemo} from 'react';
+import {ReactNode, useContext, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 import Field from '../Field';
@@ -38,7 +38,7 @@ export interface IFieldSetProps extends IFormContext {
 
 export interface IFieldSetViewProps {
     className?: CssClassName,
-    children?: React.ReactNode,
+    children?: ReactNode,
     label?: string,
 }
 

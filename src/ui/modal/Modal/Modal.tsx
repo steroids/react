@@ -1,4 +1,4 @@
-import React, {ComponentProps, useEffect, useMemo} from 'react';
+import {ComponentProps, useEffect, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../../form/Button/Button';

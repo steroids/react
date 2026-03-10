@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import React from 'react';
+import * as React from 'react';
 import configureMockStore from 'redux-mock-store';
 
 import * as authActions from '../../src/actions/auth';

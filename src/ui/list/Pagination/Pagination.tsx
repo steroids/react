@@ -1,5 +1,5 @@
 import _get from 'lodash-es/get';
-import React, {useCallback, useMemo} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 
 import {formChange} from '../../../actions/form';
 import {useComponents} from '../../../hooks';
@@ -169,8 +169,8 @@ function Pagination(props: IPaginationProps): JSX.Element {
 
     const totalPages = Math.ceil((props.list?.total || 0) / (pageSize || 1));
 
-    const isFirstPage = React.useMemo(() => page === FIRST_PAGE, [page]);
-    const isLastPage = React.useMemo(() => page === totalPages, [page, totalPages]);
+    const isFirstPage = useMemo(() => page === FIRST_PAGE, [page]);
+    const isLastPage = useMemo(() => page === totalPages, [page, totalPages]);
 
     const pages = useMemo(
         () => generatePages(page, totalPages, props.aroundCount)
@@ -260,4 +260,4 @@ export const normalizePaginationProps = props => ({
     } : props),
 });
 
-export default React.memo(Pagination);
+export default memo(Pagination);

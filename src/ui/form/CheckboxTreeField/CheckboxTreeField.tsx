@@ -1,6 +1,6 @@
 import _isArray from 'lodash-es/isArray';
 import _isEqual from 'lodash-es/isEqual';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 
 import Enum from '../../../base/Enum';

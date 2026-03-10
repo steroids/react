@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import '@testing-library/jest-dom';
 import ChartMockView from './ChartMockView';
 import Chart from '../../../../src/ui/content/Chart';

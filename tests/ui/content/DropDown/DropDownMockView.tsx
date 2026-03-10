@@ -1,6 +1,5 @@
 import _isFunction from 'lodash-es/isFunction';
 import {useEffect, useMemo, useRef} from 'react';
-import * as React from 'react';
 
 import {useBem, useComponents} from '../../../../src/hooks';
 import {IDropDownViewProps} from '../../../../src/ui/content/DropDown/DropDown';

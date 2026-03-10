@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import * as React from 'react';
+import {useCallback} from 'react';
 
 import {openModal} from '../../../../src/actions/modal';
 import {useBem, useDispatch} from '../../../../src/hooks';
@@ -17,7 +17,7 @@ export default function HeaderView(props: IHeaderViewProps) {
     const bem = useBem('HeaderView');
     const dispatch = useDispatch();
 
-    const renderAuthBlock = React.useCallback(() => (
+    const renderAuthBlock = useCallback(() => (
         <Button
             outline
             color='basic'
@@ -31,7 +31,7 @@ export default function HeaderView(props: IHeaderViewProps) {
 
     ), [bem, dispatch, props.auth, props.authParams?.modal, props.size]);
 
-    const renderUserBlock = React.useCallback(() => {
+    const renderUserBlock = useCallback(() => {
         if (!props.user) {
             return;
         }
@@ -53,7 +53,7 @@ export default function HeaderView(props: IHeaderViewProps) {
         );
     }, [bem, props.size, props.user]);
 
-    const renderBurger = React.useCallback(() => (
+    const renderBurger = useCallback(() => (
         <div className={bem.element('burger')}>
             <Icon
                 name={!props.isBurgerOpened ? 'burger' : 'cross_12x12'}

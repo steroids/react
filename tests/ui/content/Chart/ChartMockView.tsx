@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {CSSProperties} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {IChartViewProps} from '../../../../src/ui/content/Chart/Chart';
@@ -44,7 +44,7 @@ export default function ChartMockView(props: IChartViewProps) {
 
     const customChartHeightVariable = {
         '--chart-custom-height': `${props.chartHeight}px`,
-    } as React.CSSProperties;
+    } as CSSProperties;
 
     return (
         <div

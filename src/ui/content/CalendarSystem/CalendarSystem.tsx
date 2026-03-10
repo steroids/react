@@ -5,7 +5,7 @@
 /* eslint-disable no-plusplus */
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
-import {ReactNode, useMemo} from 'react';
+import {ReactNode, useMemo, MouseEvent} from 'react';
 
 import {useCalendarSystem} from './hooks/useCalendarSystem';
 import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
@@ -214,9 +214,9 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
-    onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
+    onClickControl: (event: MouseEvent<HTMLElement>) => void,
     calendarType: string,
-    children: React.ReactNode,
+    children: ReactNode,
 
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: string) => IEvent[],
     openEditModal: (event: IEvent) => void,

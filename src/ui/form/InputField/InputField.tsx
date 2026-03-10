@@ -4,7 +4,7 @@ import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
 import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
-import {InputHTMLAttributes, ReactElement, ReactNode, useCallback, useEffect, useMemo} from 'react';
+import {InputHTMLAttributes, ReactElement, ReactNode, useCallback, useEffect, useMemo, FocusEvent, MouseEvent} from 'react';
 
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 import {FieldEnum} from '../../../enums';
@@ -151,9 +151,9 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
         disabled: boolean,
     },
     onClear?: () => void,
-    onFocus?: (e: Event | React.FocusEvent) => void,
-    onBlur?: (e: Event | React.FocusEvent) => void,
-    onMouseDown?: (e: Event | React.MouseEvent) => void,
+    onFocus?: (e: Event | FocusEvent) => void,
+    onBlur?: (e: Event | FocusEvent) => void,
+    onMouseDown?: (e: Event | MouseEvent) => void,
     defaultValue?: string,
 }
 

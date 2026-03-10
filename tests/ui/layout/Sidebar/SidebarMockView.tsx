@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
-
 import FooterIcons from './FooterIconsMockView';
 import SidebarLogo from './SidebarLogoMockView';
 import SidebarUser from './SidebarUserMockView';

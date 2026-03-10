@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {ChangeEvent, useCallback, useMemo} from 'react';
 
 import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
@@ -36,7 +36,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
         name?: string,
         type?: string,
         checked?: boolean,
-        onChange?: (value: string | React.ChangeEvent) => void,
+        onChange?: (value: string | ChangeEvent) => void,
         disabled?: boolean,
         required?: boolean,
     },
@@ -45,7 +45,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
 function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
-    const onChangeHandler = React.useCallback(() => {
+    const onChangeHandler = useCallback(() => {
         props.input.onChange(!props.input?.value);
         if (props.onChange) {
             props.onChange();

@@ -1,5 +1,5 @@
 import _get from 'lodash-es/get';
-import React, {useCallback} from 'react';
+import {memo, useCallback} from 'react';
 
 import {IList, listSetLayout} from '../../../actions/list';
 import {useComponents} from '../../../hooks';
@@ -107,4 +107,4 @@ export const normalizeLayoutNamesProps = props => ({
     } : props),
 });
 
-export default React.memo(LayoutNames);
+export default memo(LayoutNames);

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import TaskTags from './TaskTags/TaskTags';
 import {useBem} from '../../../../../src/hooks';
 import Avatar from '../../../../../src/ui/content/Avatar/Avatar';
@@ -30,7 +28,7 @@ export default function KanbanTaskView(props: IKanbanTaskViewProps) {
                             <div className={bem.element('header')}>
                                 <h4
                                     className={bem.element('title')}
-                                    aria-hidden="true"
+                                    aria-hidden='true'
                                     onClick={() => props.onOpenTaskDetailsModal(props.task, props.columnId)}
                                 >
                                     <span className={bem.element('task-id')}>

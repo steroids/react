@@ -1,3 +1,5 @@
+import {ReactNode} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -23,7 +25,7 @@ export interface IBooleanFormatterProps {
 
 export interface IBooleanFormatterPropsView {
     value?: string | number | boolean,
-    children?: React.ReactNode,
+    children?: ReactNode,
 }
 
 export default function BooleanFormatter(props: IBooleanFormatterProps): JSX.Element {

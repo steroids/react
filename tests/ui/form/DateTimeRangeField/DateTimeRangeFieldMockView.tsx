@@ -1,5 +1,3 @@
-import _isString from 'lodash-es/isString';
-import * as React from 'react';
 import {useCallback} from 'react';
 
 import {useBem} from '../../../../src/hooks';
@@ -37,13 +35,13 @@ export default function DateTimeRangeFieldView(props: IDateTimeRangeFieldViewPro
         >
             <div
                 className={bem(
-bem.block({
-                    disabled: props.disabled,
-                    size: props.size,
-                    'is-invalid': !!props.errors,
-                }),
+                    bem.block({
+                        disabled: props.disabled,
+                        size: props.size,
+                        'is-invalid': !!props.errors,
+                    }),
                     props.className,
-)}
+                )}
                 style={props.style}
             >
                 <div className={bem.element('body')}>
@@ -70,7 +68,7 @@ bem.block({
                         {props.icon && !hasValue && (
                             <Icon
                                 className={bem.element('date-icon')}
-                                name="mockIcon"
+                                name='mockIcon'
                                 tabIndex={-1}
                             />
                         )}

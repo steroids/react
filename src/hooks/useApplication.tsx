@@ -121,7 +121,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     // Create components
     if (!components) {
         components = {};
-        const componentsConfig = _merge(
+        const componentsConfig: IComponentConfig = _merge(
             {},
             defaultComponents,
             config.components,
@@ -129,7 +129,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
                 componentsConfig[name] = {
-                    className: componentsConfig[name] as ComponentConstructor,
+                    className: componentsConfig[name],
                 };
             }
 
@@ -145,7 +145,7 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 }
             }
             // eslint-disable-next-line new-cap
-            components[name] = new (className as ComponentConstructor)(components, componentConfig);
+            components[name] = new className(components, componentConfig);
         });
 
         window.SteroidsComponents = components;

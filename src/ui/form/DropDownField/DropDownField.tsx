@@ -559,10 +559,10 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         maxHeight: props.maxHeight,
         renderEmpty,
         ...dataProvider,
-    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
+    }), [renderEmpty, isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
         renderItem, onItemRemove, onItemSelect, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style,
         props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled,
-        props.required, props.maxHeight, normalizedItemToSelectAll, dropDownProps, dataProvider, props.empty]);
+        props.required, props.maxHeight, normalizedItemToSelectAll, dropDownProps, dataProvider]);
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }

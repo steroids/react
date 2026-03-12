@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
+
+import {formChange} from '../../../actions/form';
 import useForm from '../../../hooks/useForm';
 import {IFormProps} from '../../../ui/form/Form/Form';
-import {formChange} from '../../../actions/form';
 
 /**
  * SearchForm

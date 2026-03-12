@@ -1,4 +1,5 @@
 import _omit from 'lodash-es/omit';
+
 import {cleanEmptyObject, clearErrors} from '../../src/utils/form';
 
 describe('form utils', () => {
@@ -32,7 +33,11 @@ describe('form utils', () => {
         });
 
         it('with plain object', () => {
-            expect(cleanEmptyObject({plainObject})).toEqual({plainObject});
+            expect(cleanEmptyObject({
+                plainObject,
+            })).toEqual({
+                plainObject,
+            });
         });
 
         it('with array', () => {
@@ -96,8 +101,12 @@ describe('form utils', () => {
 
         it('should clear errors for changed array field', () => {
             const expectedErrors = _omit(errors, 'favourites');
-            values = {favourites: [1, 2]};
-            prevValues = {favourites: [1, 2, 3]};
+            values = {
+                favourites: [1, 2],
+            };
+            prevValues = {
+                favourites: [1, 2, 3],
+            };
 
             clearErrors(values, prevValues, errors, setErrors);
 

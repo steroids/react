@@ -1,10 +1,11 @@
 import * as React from 'react';
+
 import {useBem} from '../../../../../../src/hooks';
-import {IFileFieldItemViewProps} from '../../../../../../src/ui/form/FileField/FileField';
-import Icon from '../../../../../../src/ui/content/Icon';
-import {Text} from '../../../../../../src/ui/typography';
-import {FileSize} from '../../../../../../src/ui/format';
 import {IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
+import Icon from '../../../../../../src/ui/content/Icon';
+import {IFileFieldItemViewProps} from '../../../../../../src/ui/form/FileField/FileField';
+import {FileSize} from '../../../../../../src/ui/format';
+import {Text} from '../../../../../../src/ui/typography';
 
 interface IChatFileItemViewProps extends IFileFieldItemViewProps, IMessageFile {
     isFileFromMessage?: boolean,
@@ -31,7 +32,9 @@ export default function ChatFileItemView(props: IChatFileItemViewProps) {
         <div className={bem.element('progress-track')}>
             <div
                 className={bem.element('progress-bar')}
-                style={{width: `${props.progress.percent}%`}}
+                style={{
+                    width: `${props.progress.percent}%`,
+                }}
             />
         </div>
     ), [bem, props.progress]);
@@ -101,7 +104,9 @@ export default function ChatFileItemView(props: IChatFileItemViewProps) {
             ) : (
                 <Icon
                     name={props.customRemoveIcon || 'cross_8x8'}
-                    className={bem.element('remove', {isLoading})}
+                    className={bem.element('remove', {
+                        isLoading,
+                    })}
                     onClick={props.onRemove}
                 />
             )}

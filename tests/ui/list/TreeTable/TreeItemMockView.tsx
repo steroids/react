@@ -1,7 +1,8 @@
 import * as React from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
-import {ITreeItemViewProps} from '../../../../src/ui/nav/Tree/Tree';
 import {Icon} from '../../../../src/ui/content';
+import {ITreeItemViewProps} from '../../../../src/ui/nav/Tree/Tree';
 
 const PADDING_WITH_ICON = 0;
 const PADDING_WITHOUT_ICON = 24;

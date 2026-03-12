@@ -1,7 +1,8 @@
-import * as React from 'react';
 import _padStart from 'lodash-es/padStart';
-import {ITimePanelViewProps} from '../../../../src/ui/form/TimeField/TimeField';
+import * as React from 'react';
+
 import {useBem} from '../../../../src/hooks';
+import {ITimePanelViewProps} from '../../../../src/ui/form/TimeField/TimeField';
 
 const getHours = () => {
     const result = [];
@@ -83,7 +84,10 @@ function TimePanelView(props: ITimePanelViewProps) {
                     ))}
                 </div>
             </div>
-            <div className={bem.element('footer', {'to-end': !props.showNow})}>
+            <div className={bem.element('footer', {
+                'to-end': !props.showNow,
+            })}
+            >
                 {props.showNow && (
                     <button
                         className={bem.element('button', 'now')}

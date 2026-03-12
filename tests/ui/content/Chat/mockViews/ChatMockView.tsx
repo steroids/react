@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useBem} from '../../../../../src/hooks';
-import {IChatViewProps} from '../../../../../src/ui/content/Chat/Chat';
 
 import BubblesDateGroup from './BubblesDateGroup';
+import {useBem} from '../../../../../src/hooks';
+import {IChatViewProps} from '../../../../../src/ui/content/Chat/Chat';
 
 export default function ChatView(props: IChatViewProps) {
     const bem = useBem('ChatView');

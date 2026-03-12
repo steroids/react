@@ -1,12 +1,15 @@
 import React from 'react';
+
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import SliderField, {ISliderFieldProps} from '../../../../src/ui/form/SliderField/SliderField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('SliderField tests', () => {
     const expectedSliderFieldClassName = 'SliderFieldView';
     const externalClassName = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
     const expectedSliderClass = 'rc-slider';
 
     const marks = {

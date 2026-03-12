@@ -71,23 +71,29 @@ export const createTimeMask = (
             }
 
             return {
-                elementState: {...elementState,
-                    value},
+                elementState: {
+                    ...elementState,
+                    value,
+                },
             };
         },
     ],
     postprocessors: [
         ({value, selection}) => {
             if (!/^\d{2}:\d{2}$/.test(value)) {
-                return {value,
-                    selection};
+                return {
+                    value,
+                    selection,
+                };
             }
 
             let [h, m] = value.split(':').map(Number);
 
             if (Number.isNaN(h) || Number.isNaN(m)) {
-                return {value,
-                    selection};
+                return {
+                    value,
+                    selection,
+                };
             }
 
             // Ограничение часов
@@ -110,7 +116,8 @@ export const createTimeMask = (
 
             return {
                 value: nextValue,
-                selection, // курсор оставляем как есть
+                // курсор оставляем как есть
+                selection,
             };
         },
     ],

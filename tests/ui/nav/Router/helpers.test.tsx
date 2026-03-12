@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import * as React from 'react';
+
 import {walkRoutesRecursive, findRedirectPathRecursive, treeToList} from '../../../../src/ui/nav/Router/helpers';
 
 describe('Function walkRoutesRecursive', () => {
@@ -48,9 +49,13 @@ describe('Function walkRoutesRecursive', () => {
     });
 
     it('normalization of the path if the path in the parent and child paths is passed', () => {
-        const route = {path: 'about'};
+        const route = {
+            path: 'about',
+        };
         const defaultItem = {};
-        const parentItem = {path: '/root'};
+        const parentItem = {
+            path: '/root',
+        };
         const normalizedRoute = walkRoutesRecursive(route, defaultItem, parentItem);
 
         expect(normalizedRoute.path).toBe('/root/about');
@@ -140,8 +145,12 @@ describe('Function findRedirectPathRecursive', () => {
             path: '/',
             redirectTo: true,
             items: [
-                {path: nestedPath},
-                {path: anotherNestedPath},
+                {
+                    path: nestedPath,
+                },
+                {
+                    path: anotherNestedPath,
+                },
             ],
         };
         const redirectPath = findRedirectPathRecursive(route);
@@ -159,13 +168,17 @@ describe('Function findRedirectPathRecursive', () => {
 
     it('returns the path when passed an object with path equal to a string', () => {
         const somePath = '/some-path';
-        const route = {path: somePath};
+        const route = {
+            path: somePath,
+        };
         expect(findRedirectPathRecursive(route)).toBe(somePath);
     });
 
     it('returns slash when passed an object with path equal to an empty string', () => {
         const emptyPath = '/';
-        const route = {path: emptyPath};
+        const route = {
+            path: emptyPath,
+        };
         expect(findRedirectPathRecursive(route)).toBe(emptyPath);
     });
 });
@@ -347,7 +360,9 @@ describe('Function treeToList', () => {
         });
 
         it('should add root item with id "root" when isRoot is true and item.id is falsy', () => {
-            const tree = {path: '/path'};
+            const tree = {
+                path: '/path',
+            };
             const list = treeToList(tree);
             expect(list[0].id).toBe('root');
         });

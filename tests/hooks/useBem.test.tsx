@@ -1,14 +1,19 @@
 import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
-import prepareMiddleware from '../mocks/storeMiddlewareMock';
+
 import useBem, {IBem} from '../../src/hooks/useBem';
 import mountWithApp from '../mocks/mountWithApp';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 
-const MockResultComponent = (props: any) => <div />;
-const MockComponent = (props: any) => <MockResultComponent bem={useBem(props.namespace)} />;
+function MockResultComponent(props: any) {
+    return <div />;
+}
+function MockComponent(props: any) {
+    return <MockResultComponent bem={useBem(props.namespace)} />;
+}
 
 jest.useFakeTimers();
 
@@ -23,11 +28,21 @@ describe('hook useBem', () => {
         expect(typeof bem.element).toEqual('function');
         expect(typeof bem.block).toEqual('function');
         expect(bem.block()).toEqual('Foo');
-        expect(bem.block({mode: 1})).toEqual('Foo Foo_mode_1');
-        expect(bem.block({mode: 'one'})).toEqual('Foo Foo_mode_one');
-        expect(bem.block({mode: true})).toEqual('Foo Foo_mode');
+        expect(bem.block({
+            mode: 1,
+        })).toEqual('Foo Foo_mode_1');
+        expect(bem.block({
+            mode: 'one',
+        })).toEqual('Foo Foo_mode_one');
+        expect(bem.block({
+            mode: true,
+        })).toEqual('Foo Foo_mode');
         expect(bem.element('test')).toEqual('Foo__test');
-        expect(bem.element('test', {active: false})).toEqual('Foo__test');
-        expect(bem.element('test', {active: true})).toEqual('Foo__test Foo__test_active');
+        expect(bem.element('test', {
+            active: false,
+        })).toEqual('Foo__test');
+        expect(bem.element('test', {
+            active: true,
+        })).toEqual('Foo__test Foo__test_active');
     });
 });

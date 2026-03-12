@@ -16,7 +16,9 @@ describe('list reducers', () => {
         selectedIds: {},
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     const getStateWithWrappedLists = (
         lists: TListCommonArg = null,
@@ -24,19 +26,25 @@ describe('list reducers', () => {
     ) => ({
         list: {
             ...initialState,
-            lists: {...lists},
+            lists: {
+                ...lists,
+            },
             ...extraData,
         },
     });
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     describe('isListInitialized', () => {
         it('should return true', () => {
             const listId = 'listId';
-            const state = getStateWithWrappedLists({[listId]: {}});
+            const state = getStateWithWrappedLists({
+                [listId]: {},
+            });
             const expectedIsListInitialized = true;
             expect(isListInitialized(state, listId)).toEqual(expectedIsListInitialized);
         });
@@ -53,7 +61,9 @@ describe('list reducers', () => {
                 primaryKey: 'key',
             };
 
-            const lists = {[listId]: listProperties};
+            const lists = {
+                [listId]: listProperties,
+            };
             const state = getStateWithWrappedLists(lists);
             expect(getList(state, listId)).toEqual(listProperties);
         });
@@ -139,7 +149,9 @@ describe('list reducers', () => {
         });
 
         it('should return items', () => {
-            const items = [{[primaryKey]: 'itemId'}];
+            const items = [{
+                [primaryKey]: 'itemId',
+            }];
             lists[listId].items = items;
             const state = getStateWithWrappedLists(lists);
             expect(getListItems(state, listId)).toEqual(items);
@@ -239,7 +251,9 @@ describe('list reducers', () => {
                     isRemote: true,
                     loadMore: true,
                     primaryKey,
-                    items: [{[primaryKey]: itemId}],
+                    items: [{
+                        [primaryKey]: itemId,
+                    }],
                 },
             };
 

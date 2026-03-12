@@ -1,10 +1,11 @@
-import React, {useCallback, useMemo} from 'react';
 import _get from 'lodash-es/get';
-import {IButtonProps} from '../../form/Button/Button';
+import React, {useCallback, useMemo} from 'react';
+
+import {formChange} from '../../../actions/form';
 import {useComponents} from '../../../hooks';
 import useForm from '../../../hooks/useForm';
-import {formChange} from '../../../actions/form';
 import {ListControlPosition} from '../../../hooks/useList';
+import {IButtonProps} from '../../form/Button/Button';
 
 /**
  * PaginationSize
@@ -118,7 +119,9 @@ export const normalizePaginationSizeProps = props => ({
     ...PaginationSize.defaultProps,
     enable: !!props,
     defaultValue: _get(props, 'sizes.0') || PaginationSize.defaultProps.defaultValue,
-    ...(typeof props === 'boolean' ? {enable: props} : props),
+    ...(typeof props === 'boolean' ? {
+        enable: props,
+    } : props),
 });
 
 export default React.memo(PaginationSize);

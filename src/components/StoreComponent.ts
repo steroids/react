@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import {createStore, applyMiddleware, compose, Store, Dispatch, Unsubscribe, Reducer, AnyAction} from 'redux';
+import {IComponents} from '@steroidsjs/core/providers/ComponentsProvider';
 import {routerMiddleware, connectRouter, RouterState} from 'connected-react-router';
 import {
     History,
@@ -9,9 +9,9 @@ import {
     LocationState,
 } from 'history';
 import _get from 'lodash-es/get';
-import _merge from 'lodash-es/merge';
 import _isPlainObject from 'lodash-es/isPlainObject';
-import {IComponents} from '@steroidsjs/core/providers/ComponentsProvider';
+import _merge from 'lodash-es/merge';
+import {createStore, applyMiddleware, compose, Store, Dispatch, Unsubscribe, Reducer, AnyAction} from 'redux';
 
 declare global {
     interface Window {

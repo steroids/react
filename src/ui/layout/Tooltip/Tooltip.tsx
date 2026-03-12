@@ -2,10 +2,9 @@ import * as React from 'react';
 import {useCallback, useRef} from 'react';
 import {useMount} from 'react-use';
 
+import TooltipInnerPortal from './TooltipPortalInner';
 import {useComponents} from '../../../hooks';
 import useAbsolutePositioning, {PositionType} from '../../../hooks/useAbsolutePositioning';
-
-import TooltipInnerPortal from './TooltipPortalInner';
 
 export interface ITooltipArrowPosition {
     /**

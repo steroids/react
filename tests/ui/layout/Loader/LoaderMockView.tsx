@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import {useBem} from '../../../../src/hooks';
+import Icon from '../../../../src/ui/content/Icon';
 import {ILoaderProps} from '../../../../src/ui/layout/Loader/Loader';
 import IconMockView from '../../content/Icon/IconMockView';
-import Icon from '../../../../src/ui/content/Icon';
 
 export default function LoaderView(props: ILoaderProps) {
     const bem = useBem('LoaderView');

@@ -1,11 +1,13 @@
 import '@testing-library/jest-dom';
+import HeaderMockView from './HeaderMockView';
 import Header, {IHeaderProps} from '../../../../src/ui/layout/Header/Header';
 import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
-import HeaderMockView from './HeaderMockView';
 
 describe('Header test', () => {
     const expectedHeaderClassName = 'HeaderView';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
     const externalClass = 'external-class';
     const expectedAuthButtonLabel = 'Войти';
 

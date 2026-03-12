@@ -1,8 +1,9 @@
 import React, {useCallback, useMemo} from 'react';
-import {IFileFieldProps} from '../../form/FileField/FileField';
-import {useComponents} from '../../../hooks';
-import {IAvatarProps} from '../Avatar/Avatar';
+
 import useChat, {IGroupedMessagesByDates} from './hooks/useChat';
+import {useComponents} from '../../../hooks';
+import {IFileFieldProps} from '../../form/FileField/FileField';
+import {IAvatarProps} from '../Avatar/Avatar';
 
 export interface IChatUser {
     id: number,

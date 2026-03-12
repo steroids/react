@@ -1,7 +1,8 @@
 import React from 'react';
-import Controls from '../../../../src/ui/nav/Controls/Controls';
+
 import {useBem} from '../../../../src/hooks';
 import {constants, DetailLayoutEnum, IDetailViewProps} from '../../../../src/ui/content/Detail/Detail';
+import Controls from '../../../../src/ui/nav/Controls/Controls';
 import ControlsMockView from '../../nav/Controls/ControlsMockView';
 
 export default function DetailView(props: IDetailViewProps) {

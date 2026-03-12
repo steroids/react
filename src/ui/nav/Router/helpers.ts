@@ -1,8 +1,9 @@
 import _get from 'lodash-es/get';
 import _isArray from 'lodash-es/isArray';
-import _isObject from 'lodash-es/isObject';
 import _isBoolean from 'lodash-es/isBoolean';
+import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
+
 import {IRouteItem} from './Router';
 
 const SLASH = '/';

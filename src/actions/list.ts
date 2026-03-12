@@ -1,14 +1,15 @@
+import axios from 'axios';
 import _get from 'lodash-es/get';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
+import _isFunction from 'lodash-es/isFunction';
+import _isNil from 'lodash-es/isNil';
 import _orderBy from 'lodash-es/orderBy';
 import _trimStart from 'lodash-es/trimStart';
-import _isFunction from 'lodash-es/isFunction';
-import _isEqual from 'lodash-es/isEqual';
-import _isNil from 'lodash-es/isNil';
-import axios from 'axios';
-import {formSelector} from '../reducers/form';
+
 import {formChange, formSetErrors} from '../actions/form';
+import {formSelector} from '../reducers/form';
 import {filterItems} from '../utils/data';
 
 export interface IList {
@@ -179,7 +180,9 @@ export const httpFetchHandler = (list: IList, query, {http}, options: any = {}) 
 };
 
 export const localFetchHandler = (list: IList, query: Record<string, unknown>) => {
-    query = {...query};
+    query = {
+        ...query,
+    };
 
     // Get page
     const page = parseInt(query[list.pageAttribute] as string, 10) || null;
@@ -310,7 +313,9 @@ export const listFetch = (listId: string, query: Record<string, any> = {}) => (d
     const source = axios.CancelToken.source();
     components.http._promises[listId] = source;
 
-    const options = {cancelToken: source.token};
+    const options = {
+        cancelToken: source.token,
+    };
 
     // Set `Loading...`
     if (list.isRemote) {

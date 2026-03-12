@@ -50,14 +50,18 @@ export const createDateTimeMask = (options?: {
             ...(baseMask.postprocessors ?? []),
             ({value, selection}) => {
                 if (!value) {
-                    return {value,
-                        selection};
+                    return {
+                        value,
+                        selection,
+                    };
                 }
 
                 const match = value.match(TIME_REGEXP);
                 if (!match) {
-                    return {value,
-                        selection};
+                    return {
+                        value,
+                        selection,
+                    };
                 }
 
                 const time = match[1];
@@ -81,8 +85,10 @@ export const createDateTimeMask = (options?: {
                 const normalizedTime = minutesToTime(clamped);
 
                 if (normalizedTime === time) {
-                    return {value,
-                        selection};
+                    return {
+                        value,
+                        selection,
+                    };
                 }
 
                 return {

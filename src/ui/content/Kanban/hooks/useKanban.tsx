@@ -1,12 +1,11 @@
+import {IHtmlFieldProps} from '@steroidsjs/core/ui/form/HtmlField/HtmlField';
 import React, {useCallback} from 'react';
 import {useMount} from 'react-use';
-import {IHtmlFieldProps} from '@steroidsjs/core/ui/form/HtmlField/HtmlField';
-import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
+
 import {closeModal, openModal} from '../../../../actions/modal';
 import {useSelector, useDispatch, useComponents} from '../../../../hooks';
+import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
 import {IDragEndResult, IKanbanColumn, IKanbanTask, ITaskAssigner, ITaskTag} from '../Kanban';
-import {KanbanModalTypeEnum, KanbanPrioritiesEnum} from '../enums';
-import {getKanban, getKanbanTags, getLastTaskId} from '../reducers';
 import {
     kanbanInit,
     kanbanMoveTask,
@@ -21,6 +20,8 @@ import {
     EDIT_TASK_FORM_ID,
     EDIT_TASK_MODAL_ID,
 } from '../constants/modalAndFormIds';
+import {KanbanModalTypeEnum, KanbanPrioritiesEnum} from '../enums';
+import {getKanban, getKanbanTags, getLastTaskId} from '../reducers';
 
 export interface IKanbanConfig {
     /**

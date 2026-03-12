@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {useBem} from '../../../../../../src/hooks';
-import {calculateMessageTimeAgo} from '../../../../../../src/ui/content/Chat/utils';
-import {IGroupedMessage} from '../../../../../../src/ui/content/Chat/hooks/useChat';
-import {IChatUser} from '../../../../../../src/ui/content/Chat/Chat';
 
+import {useBem} from '../../../../../../src/hooks';
+import {IChatUser} from '../../../../../../src/ui/content/Chat/Chat';
+import {IGroupedMessage} from '../../../../../../src/ui/content/Chat/hooks/useChat';
+import {calculateMessageTimeAgo} from '../../../../../../src/ui/content/Chat/utils';
 import BubbleMessageView from '../BubbleMessage';
 
 interface IBubblesDateGroupProps {

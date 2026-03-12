@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
-import Pagination, {IPaginationProps} from '../../../../src/ui/list/Pagination/Pagination';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 import PaginationButtonMockView from './PaginationButtonMockView';
 import PaginationMoreMockView from './PaginationMoreMockView';
+import Pagination, {IPaginationProps} from '../../../../src/ui/list/Pagination/Pagination';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Pagination tests', () => {
     const props = {

@@ -1,4 +1,5 @@
 import _merge from 'lodash-es/merge';
+
 import {
     AUTH_INIT,
     AUTH_INIT_USER,
@@ -13,6 +14,7 @@ const initialState = {
     user: null,
     data: null,
 };
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => {
     switch (action.type) {
         case AUTH_INIT:

@@ -1,4 +1,5 @@
 import configureMockStore from 'redux-mock-store';
+
 import {
     AUTH_INIT,
     AUTH_SET_DATA,
@@ -11,8 +12,8 @@ import {
     addSocial,
     setData,
 } from '../../src/actions/auth';
-import prepareMiddleware from '../mocks/storeMiddlewareMock';
 import componentsMock from '../mocks/componentsMock';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});

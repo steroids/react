@@ -65,23 +65,23 @@ const getFieldsAttributes = (fields: IFieldProps[] | IFieldProps, index: number)
     return fieldAttributesStepMap;
 };
 
-export const generateFieldStepMap = (arr = []) => arr.reduce((fieldStepMap, step, index) => {
-    if (_has(step, 'fields')) {
-        return {
-            ...fieldStepMap,
-            ...getFieldsAttributes(step.fields, index),
-        };
-    }
+export const generateFieldStepMap = (arr = []) => arr.reduce((fieldStepMap, step: Record<string, any>, index) => {
+        if (_has(step, 'fields')) {
+            return {
+                ...fieldStepMap,
+                ...getFieldsAttributes(step.fields, index),
+            };
+        }
 
-    if (_has(step, 'component')) {
-        return {
-            ...fieldStepMap,
-            ...getComponentAttributes(step.component, index),
-        };
-    }
+        if (_has(step, 'component')) {
+            return {
+                ...fieldStepMap,
+                ...getComponentAttributes(step.component, index),
+            };
+        }
 
-    return fieldStepMap;
-}, {});
+        return fieldStepMap;
+    }, {});
 
 export const normalizeSteps = (steps: IWizardStepItem[]) => steps.map((step, index) => ({
     id: index,

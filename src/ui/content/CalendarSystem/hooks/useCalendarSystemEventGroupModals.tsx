@@ -26,8 +26,12 @@ export const useCalendarSystemEventGroupModals = (
     const defaultEventGroupColor = React.useMemo(() => theme === 'light' ? PRIMARY_LIGHT : PRIMARY_DARK, [theme]);
 
     const onSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
+        const maxGroup = _maxBy(innerEventGroups, group => group.id);
+        const maxId = Number(maxGroup?.id) ?? DEFAULT_ID;
+        const id = maxId + 1;
+
         const newEventGroup: IEventGroup = {
-            id: (_maxBy(innerEventGroups, eventsGroup => eventsGroup.id)?.id || DEFAULT_ID) + 1,
+            id,
             label: fields.label,
             color: fields.color,
             events: [],

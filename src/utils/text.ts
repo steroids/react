@@ -35,7 +35,7 @@ export const smartSearch = (query: string | null, sourceItems: ISmartSearchSourc
     }
     const queryCharacters = query.split('');
     // Match
-    let items = sourceItems.filter(item => {
+    let items: ISmartSearchOutputItem[] = sourceItems.filter(item => {
         const id = item.id;
         const words = stringToWords(item.label || '');
         if (words.length === 0 || !id) {

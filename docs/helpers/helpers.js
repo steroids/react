@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const _ = require('lodash-es');
 const fs = require('fs');
 
 const PROPS_INTERFACE_PATTERN = /^I\w+Props$/;

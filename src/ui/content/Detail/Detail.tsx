@@ -1,5 +1,5 @@
-import _isArray from 'lodash/isArray';
-import _orderBy from 'lodash/orderBy';
+import _isArray from 'lodash-es/isArray';
+import _orderBy from 'lodash-es/orderBy';
 import React, {useRef, useMemo, useState, useEffect} from 'react';
 
 import DetailItem, {IDetailItemProps} from './DetailItem';

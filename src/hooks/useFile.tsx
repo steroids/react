@@ -345,7 +345,7 @@ export default function useFile(props: IFileInput): IFileOutput {
 
     //todo refactoring
     useEffect(() => {
-        if (prevInputValue && !_isEqual(prevInputValue !== props.input.value)) {
+        if (prevInputValue && !_isEqual(prevInputValue, props.input.value)) {
             const toRemove = _difference(
                 [].concat(prevInputValue || []),
                 [].concat(props.input.value || []),

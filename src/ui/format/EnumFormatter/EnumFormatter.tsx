@@ -54,7 +54,7 @@ export const getLabel = (items, id) => {
         return foundItem ? foundItem.label : null;
     }
     // Enum
-    if (_isObject(items) && _isFunction(items.getLabel)) {
+    if (_isObject(items) && 'getLabel' in items && _isFunction(items.getLabel)) {
         return items.getLabel(id);
     }
     return null;

@@ -6,6 +6,8 @@ import * as React from 'react';
 import 'dayjs/locale/it';
 import 'dayjs/locale/ru';
 
+const LANGUAGE_CODE_FROM_PATH_REGEX = /^\/([a-z]{2})(\/|$)/i;
+
 export interface ILocaleComponentConfig {
     /**
      * Разница времени с бекендом (в микросекундах)
@@ -32,6 +34,11 @@ export interface ILocaleComponentConfig {
      * Переводы сообщений
      */
     translations?: any,
+
+    /**
+     * Разрешённые языки
+     */
+    allowedLanguages?: string[],
 }
 
 /**
@@ -82,13 +89,20 @@ export default class LocaleComponent implements ILocaleComponent {
 
     translations?: any;
 
+    allowedLanguages: string[];
+
     constructor(components, config) {
-        this.language = config.language || 'en';
         this.sourceLanguage = config.sourceLanguage || 'ru';
+        const pathname = components?.store?.history?.location?.pathname ?? '/';
+        this.allowedLanguages = config.allowedLanguages || ['en', 'ru'];
+        this.language = config.language || this._detectLanguage(pathname);
         this.backendTimeZone = null;
         // in microseconds
         this.backendTimeDiff = null;
         this.translations = {};
+
+        // Устанавливаем dayjs
+        dayjs.locale(this.language);
         // Publish to global
         if (process.env.IS_SSR) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -199,5 +213,20 @@ export default class LocaleComponent implements ILocaleComponent {
             }
         }
         return <span>{result}</span>;
+    }
+
+    /**
+     * Инфраструктурная функция для получения языка из URL
+     */
+    protected _detectLanguage(pathname: string): string {
+        const match = pathname.match(LANGUAGE_CODE_FROM_PATH_REGEX);
+        const lang = match ? match[1].toLowerCase() : null;
+
+        if (lang && this.allowedLanguages.includes(lang)) {
+            return lang;
+        }
+
+        // fallback на первый из allowedLanguages
+        return this.allowedLanguages[0];
     }
 }

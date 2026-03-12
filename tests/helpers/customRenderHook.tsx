@@ -1,7 +1,7 @@
-import {renderHook, RenderHookOptions} from '@testing-library/react';
-import React from 'react';
-
 // eslint-disable-next-line import/no-extraneous-dependencies
+import {renderHook, RenderHookOptions} from '@testing-library/react';
+import {ReactNode} from 'react';
+
 import MockApplication, {IMockApplicationConfig} from '../mocks/mockApplication';
 
 const customRenderHook = <T, >(
@@ -9,7 +9,7 @@ const customRenderHook = <T, >(
     config?: IMockApplicationConfig,
     options?: Omit<RenderHookOptions<any>, 'wrapper'>,
 ) => {
-    const Wrapper = ({children}: {children: React.ReactNode }) => MockApplication({
+    const Wrapper = ({children}: {children: ReactNode }) => MockApplication({
         children,
         config,
     });

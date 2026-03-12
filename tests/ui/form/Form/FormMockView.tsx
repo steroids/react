@@ -1,6 +1,5 @@
 import _isString from 'lodash-es/isString';
-import * as React from 'react';
-import {useRef} from 'react';
+import {memo, useRef} from 'react';
 import {useMount} from 'react-use';
 
 import {useBem} from '../../../../src/hooks';
@@ -53,4 +52,4 @@ function FormView(props: IFormViewProps) {
     );
 }
 
-export default React.memo(FormView);
+export default memo(FormView);

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {useBem} from '../../../../../src/hooks';
 import {IKanbanColumnViewProps} from '../../../../../src/ui/content/Kanban/Kanban';
 import {Button} from '../../../../../src/ui/form';

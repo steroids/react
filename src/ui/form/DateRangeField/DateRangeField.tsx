@@ -1,7 +1,7 @@
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import {RefCallback, useCallback, useEffect, useMemo} from 'react';
 
 import useOnDayClick from './useOnDayClick';
 import {ILocaleComponent} from '../../../components/LocaleComponent';
@@ -171,12 +171,12 @@ export interface IDateRangeFieldViewProps extends IDateInputStateOutput,
     /**
      * Ref для input элемента, который накладывает маску на поле from
      */
-    maskInputFromRef?: React.RefCallback<HTMLElement>,
+    maskInputFromRef?: RefCallback<HTMLElement>,
 
     /**
      * Ref для input элемента, который накладывает маску на поле to
      */
-    maskInputFromTo?: React.RefCallback<HTMLElement>,
+    maskInputFromTo?: RefCallback<HTMLElement>,
 
     id: string,
 }

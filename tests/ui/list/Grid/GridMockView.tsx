@@ -1,7 +1,6 @@
 import _get from 'lodash-es/get';
 import _isString from 'lodash-es/isString';
 import _keyBy from 'lodash-es/keyBy';
-import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 
 import {useBem} from '../../../../src/hooks';

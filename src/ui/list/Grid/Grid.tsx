@@ -1,6 +1,6 @@
 import _isString from 'lodash-es/isString';
 import _upperFirst from 'lodash-es/upperFirst';
-import React, {useCallback, useMemo} from 'react';
+import {ReactNode, useCallback, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 import useList, {IListConfig, ListControlPosition} from '../../../hooks/useList';
@@ -40,13 +40,13 @@ export interface IGridColumn {
      * Заголовок колонки
      * @example 'Name'
      */
-    label?: React.ReactNode,
+    label?: ReactNode,
 
     /**
      * Подсказка
      * @example 'Some text'
      */
-    hint?: React.ReactNode,
+    hint?: ReactNode,
 
     /**
      * CSS-класс для ячейки с заголовком колонки '<th>...</th>'

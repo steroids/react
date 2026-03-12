@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useEffect, useRef} from 'react';
 
 import {useBem} from '../../../../src/hooks';

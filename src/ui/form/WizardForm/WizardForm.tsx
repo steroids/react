@@ -2,7 +2,7 @@ import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
 import _has from 'lodash-es/has';
 import _indexOf from 'lodash-es/indexOf';
 import _isEmpty from 'lodash-es/isEmpty';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState, ReactNode} from 'react';
 
 import {generateFieldStepMap, getModifiedSteps, normalizeSteps} from './utils';
 import {useComponents} from '../../../hooks';
@@ -12,7 +12,7 @@ import Form, {IFormProps} from '../Form/Form';
 
 export interface IWizardStepItem extends Partial<IStepItem> {
     fields?: IFieldProps[],
-    component?: React.ReactNode,
+    component?: ReactNode,
     stepLabel?: string,
 }
 
@@ -117,7 +117,7 @@ export interface IWizardFormViewProps extends Pick<IWizardFormProps,
     currentStep: number,
     stepTitle: string,
     stepItems: IStepItem[],
-    renderStep: (header: React.ReactNode, buttons: React.ReactNode, viewProps?: IUiComponent) => JSX.Element,
+    renderStep: (header: ReactNode, buttons: ReactNode, viewProps?: IUiComponent) => JSX.Element,
     isLastStep?: boolean,
     onPrevStep?: () => void,
     totalSteps?: number,
@@ -232,19 +232,19 @@ export default function WizardForm(props: IWizardFormProps) {
     }), [activeStep?.fields, isLastStep, onAfterSubmit, onSubmit, props.formProps.onSubmit, props.formId]);
 
     const renderStep = useCallback(
-(header: React.ReactNode, buttons: React.ReactNode, viewProps: IUiComponent) => (
-    <Form
-        {...props.formProps}
-        {...viewProps}
-        {...commonFormProps}
-        buttons={buttons}
-    >
-        {header}
-        {activeStep?.component && props.steps[currentStep].component}
-    </Form>
-    ),
-    [activeStep?.component, commonFormProps, currentStep, props.formProps, props.steps],
-);
+        (header: ReactNode, buttons: ReactNode, viewProps: IUiComponent) => (
+            <Form
+                {...props.formProps}
+                {...viewProps}
+                {...commonFormProps}
+                buttons={buttons}
+            >
+                {header}
+                {activeStep?.component && props.steps[currentStep].component}
+            </Form>
+        ),
+        [activeStep?.component, commonFormProps, currentStep, props.formProps, props.steps],
+    );
 
     const viewProps = useMemo(() => ({
         renderStep,

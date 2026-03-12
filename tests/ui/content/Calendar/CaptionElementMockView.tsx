@@ -1,5 +1,4 @@
 import _upperFirst from 'lodash-es/upperFirst';
-import * as React from 'react';
 import {useMemo} from 'react';
 import {CaptionElementProps} from 'react-day-picker/types/Props';
 

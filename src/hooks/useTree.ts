@@ -8,7 +8,7 @@ import _join from 'lodash-es/join';
 import _keys from 'lodash-es/keys';
 import _omit from 'lodash-es/omit';
 import _pickBy from 'lodash-es/pickBy';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState, MouseEvent} from 'react';
 import {useMount, useUnmount} from 'react-use';
 
 import useComponents from './useComponents';
@@ -48,13 +48,13 @@ export interface IPreparedTreeItem extends ITreeItem {
     isOpened: boolean,
     isSelected: boolean,
     hasItems: boolean,
-    onClick: (e: Event | React.MouseEvent | any) => void,
+    onClick: (e: Event | MouseEvent | any) => void,
     className?: CssClassName,
 }
 
 export interface ITreeOutput {
     treeItems: IPreparedTreeItem[],
-    onItemFocus: (e: Event | React.MouseEvent | any) => void,
+    onItemFocus: (e: Event | MouseEvent | any) => void,
 }
 
 export interface ITreeConfig {
@@ -389,7 +389,7 @@ export default function useTree(config: ITreeConfig): ITreeOutput {
         };
     }, [config.saveInClientStorage, saveInClientStorage]);
 
-    const onExpand = useCallback((e: Event | React.MouseEvent, uniqueId: string, item: ITreeItem) => {
+    const onExpand = useCallback((e: Event | MouseEvent, uniqueId: string, item: ITreeItem) => {
         e.preventDefault();
         if (config.onExpand) {
             config.onExpand.call(null, e, item);

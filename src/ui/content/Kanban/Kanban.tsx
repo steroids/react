@@ -2,7 +2,7 @@ import {IBem} from '@steroidsjs/core/hooks/useBem';
 import {KanbanModalTypeEnum} from '@steroidsjs/core/ui/content/Kanban/enums';
 import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
 import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
-import React, {useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import {useKanban} from './hooks';
 import {useComponents} from '../../../hooks';

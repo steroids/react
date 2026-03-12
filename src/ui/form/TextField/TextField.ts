@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
+import {ChangeEvent, KeyboardEventHandler, MutableRefObject, useCallback, useMemo} from 'react';
 
 import {FieldEnum} from '../../../enums';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
@@ -31,7 +31,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: boolean,
         required: boolean,
-        ref: React.MutableRefObject<any>,
+        ref: MutableRefObject<any>,
     },
     onClear: VoidFunction,
 }

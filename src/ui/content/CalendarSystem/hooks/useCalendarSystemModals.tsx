@@ -1,8 +1,7 @@
 import _cloneDeep from 'lodash-es/cloneDeep';
-import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
 import _maxBy from 'lodash-es/maxBy';
-import React from 'react';
+import {Dispatch, SetStateAction, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {openModal} from '../../../../actions/modal';
@@ -24,15 +23,15 @@ const DEFAULT_ID = 1;
 const useCalendarSystemModals = (
     calendarModalProps: IModalProps,
     innerEventGroups: IEventGroup[],
-    setInnerEventGroups: React.Dispatch<React.SetStateAction<IEventGroup[]>>,
+    setInnerEventGroups: Dispatch<SetStateAction<IEventGroup[]>>,
     users: ICalendarUser[],
-    setUsers: React.Dispatch<React.SetStateAction<ICalendarUser[]>>,
+    setUsers: Dispatch<SetStateAction<ICalendarUser[]>>,
 ) => {
     const dispatch = useDispatch();
     const components = useComponents();
     const calendarModalView = calendarModalProps?.component || components.ui.getView('content.CalendarSystemModalView');
 
-    const onModalFormSubmit = React.useCallback((
+    const onModalFormSubmit = useCallback((
         fields: Record<CalendarSystemModalFields, string | number | number[] | Date>,
         eventInitialValues?: IEventInitialValues,
     ) => {
@@ -103,7 +102,7 @@ const useCalendarSystemModals = (
         setUsers(newUsers);
     }, [innerEventGroups, setInnerEventGroups, setUsers, users]);
 
-    const getModalProps = React.useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number | string }>) => ({
+    const getModalProps = useCallback((isCreate: boolean, eventInitialValues?: Partial<IEvent & {eventGroupId: number | string }>) => ({
         ...calendarModalProps,
         component: calendarModalView,
         eventGroups: innerEventGroups,
@@ -113,11 +112,11 @@ const useCalendarSystemModals = (
         users,
     }) as ICalendarSystemModalViewProps, [calendarModalProps, calendarModalView, innerEventGroups, onModalFormSubmit, users]);
 
-    const getEventFromGroup = React.useCallback((event: IEvent) => innerEventGroups
+    const getEventFromGroup = useCallback((event: IEvent) => innerEventGroups
         .find(group => group.events
             .some(groupEvent => _isEqual(getOmittedEvent(groupEvent), getOmittedEvent(event)))), [innerEventGroups]);
 
-    const openCreateModal = React.useCallback((eventInitialDay: IDay = null) => {
+    const openCreateModal = useCallback((eventInitialDay: IDay = null) => {
         const modalProps = eventInitialDay
             ? getModalProps(true, {
                 startDate: eventInitialDay.date,
@@ -126,7 +125,7 @@ const useCalendarSystemModals = (
         dispatch(openModal(calendarModalView, modalProps));
     }, [calendarModalView, dispatch, getModalProps]);
 
-    const openEditModal = React.useCallback((event: IEvent) => {
+    const openEditModal = useCallback((event: IEvent) => {
         const eventGroupId = getEventFromGroup(event)?.id || 0;
         dispatch(openModal(calendarModalView, getModalProps(false, {
             ...event,

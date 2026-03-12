@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import _isArray from 'lodash-es/isArray';
-import * as React from 'react';
-import {useEffect, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
-import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+import {IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import IconMockView from '../../content/Icon/IconMockView';
 
 const getSelectedItemsLabel = (selectedItems: Record<string, any>[]): string => (
@@ -33,14 +31,14 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
         }
     }, [props.isAutoComplete, props.isOpened, props.isSearchAutoFocus]);
 
-    const renderPlaceholder = React.useCallback(
-() => props.placeholder && !props.selectedIds?.length
-        ? (
-            <div className={bem.element('placeholder')}>{props.placeholder}</div>
-        )
-        : null,
-    [bem, props.placeholder, props.selectedIds],
-);
+    const renderPlaceholder = useCallback(
+        () => props.placeholder && !props.selectedIds?.length
+            ? (
+                <div className={bem.element('placeholder')}>{props.placeholder}</div>
+            )
+            : null,
+        [bem, props.placeholder, props.selectedIds],
+    );
 
     return (
         <div
@@ -55,7 +53,7 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
             ), props.className)}
             onKeyPress={e => e.key === 'Enter' && props.onOpen()}
             style={props.style}
-            role="button"
+            role='button'
             tabIndex={0}
         >
             <div
@@ -79,11 +77,11 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
             {props.showReset && props.selectedIds.length > 0 && (
                 <Icon
                     view={IconMockView}
-                    name="mockIcon"
+                    name='mockIcon'
                     className={bem.element('icon-close')}
                     tabIndex={-1}
                     onClick={props.onReset}
-                    aria-label="Сбросить"
+                    aria-label='Сбросить'
                 />
             )}
             <Icon

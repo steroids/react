@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {PropsWithChildren, useMemo} from 'react';
+import {createContext, PropsWithChildren, useMemo} from 'react';
 import {StaticRouterContext} from 'react-router';
 
 export interface IPreloadedData {
@@ -19,7 +18,7 @@ export interface ISsr {
     preloadedErrors?: IPreloadedErrors,
 }
 
-export const SsrProviderContext = React.createContext<ISsr>(null);
+export const SsrProviderContext = createContext<ISsr>(null);
 
 export interface ISsrProviderProps extends ISsr, PropsWithChildren<any> {}
 

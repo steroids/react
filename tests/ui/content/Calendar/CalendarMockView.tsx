@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useCallback, useMemo} from 'react';
 import DayPicker, {DateUtils} from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';

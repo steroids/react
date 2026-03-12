@@ -1,5 +1,3 @@
-import React from 'react';
-
 import InputField, {IInputFieldProps} from '../InputField/InputField';
 
 /**

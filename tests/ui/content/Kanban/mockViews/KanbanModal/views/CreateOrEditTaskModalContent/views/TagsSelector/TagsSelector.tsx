@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useMemo} from 'react';
 
 import {useBem, useSelector} from '../../../../../../../../../../src/hooks';
 import {getFormValues} from '../../../../../../../../../../src/reducers/form';
@@ -16,11 +16,11 @@ export default function TagsSelector(props: ITagsSelectorProps) {
 
     const {tags: selectedTags} = useSelector(state => getFormValues(state, props.formId));
 
-    const taskTags = React.useMemo(() => (
+    const taskTags = useMemo(() => (
         props.tags.filter((tag) => selectedTags?.includes(tag.id))
     ), [props.tags, selectedTags]);
 
-    const tagsList = React.useMemo(() => (
+    const tagsList = useMemo(() => (
         props.tags.map((tag) => (
             {
                 id: tag.id,
@@ -39,7 +39,7 @@ export default function TagsSelector(props: ITagsSelectorProps) {
                 />
             )}
             <DropDownField
-                attribute="tags"
+                attribute='tags'
                 placeholder='Выберите теги'
                 multiple
                 items={tagsList}

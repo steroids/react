@@ -12,6 +12,7 @@ import {IDataSelectConfig} from '../../../hooks/useDataSelect';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 import {IDropDownProps} from '../../content/DropDown/DropDown';
 import {FieldEnum} from '../../../enums';
+import {IEmptyProps, normalizeEmptyProps} from '@steroidsjs/core/ui/list/Empty/Empty';
 
 export const GROUP_CONTENT_TYPE = 'group';
 export const CHECKBOX_CONTENT_TYPE = 'checkbox';
@@ -222,10 +223,13 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
     itemViewProps?: CustomViewProps,
 
     /**
-     * Текст при отсутствии элементов
-     * @example 'Ничего не найдено'
+     * Заглушка в случае отсутствия элементов
+     * @example
+     * {
+     *  text: 'Записи не найдены'
+     * }
      */
-    empty?: string,
+    empty?: boolean | string | IEmptyProps,
 
     [key: string]: any,
 }
@@ -501,6 +505,20 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const dropDownProps = useMemo(() => _merge(DEFAULT_DROP_DOWN_PROPS, props.dropDownProps), [props.dropDownProps]);
 
+    const Empty = require('../../list/Empty').default;
+    const emptyProps = normalizeEmptyProps(props.empty ?? true);
+    const renderEmpty = () => {
+        if (!emptyProps.enable) {
+            return null;
+        }
+        return (
+            <Empty
+                list={items}
+                {...emptyProps}
+            />
+        );
+    };
+
     const viewProps = useMemo(() => ({
         isAutoComplete,
         items,
@@ -538,7 +556,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         required: props.required,
         maxHeight: props.maxHeight,
-        empty: props.empty,
+        renderEmpty,
         ...dataProvider,
     }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
         renderItem, onItemRemove, onItemSelect, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style,

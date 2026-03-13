@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
-import Icon from '../../content/Icon/Icon';
+
 import {useComponents} from '../../../hooks';
+import Icon from '../../content/Icon/Icon';
 
 export interface IProgressBarViewProps {
     percent: number,

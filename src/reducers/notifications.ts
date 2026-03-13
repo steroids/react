@@ -13,6 +13,7 @@ const initialState: TNotificationsState = {
     position: '',
 };
 
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => {
     switch (action.type) {
         case NOTIFICATIONS_SHOW:
@@ -23,7 +24,7 @@ export default (state = initialState, action) => {
                     .concat([
                         {
                             id: action.id,
-                            level: action.level || 'info',
+                            type: action.notificationType || 'info',
                             message: action.message,
                             isClosing: false,
                             position: action.position,

@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import EnumFormatter, {IEnumFormatterProps} from '../../../src/ui/format/EnumFormatter/EnumFormatter';
 import DefaultFormatterMockView from './DefaultFormatterMockView';
-
+import EnumFormatter, {IEnumFormatterProps} from '../../../src/ui/format/EnumFormatter/EnumFormatter';
 import {JSXWrapper, render} from '../../helpers';
 
 describe('EnumFormatter tests', () => {

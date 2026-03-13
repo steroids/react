@@ -1,12 +1,12 @@
+import _isString from 'lodash-es/isString';
 import * as React from 'react';
 import {useCallback} from 'react';
-import _isString from 'lodash-es/isString';
-import {useBem} from '../../../../src/hooks';
-import Icon from '../../../../src/ui/content/Icon';
-import DropDown from '../../../../src/ui/content/DropDown';
-import Calendar from '../../../../src/ui/content/Calendar';
-import {IDateTimeRangeFieldViewProps} from '../../../../src/ui/form/DateTimeRangeField/DateTimeRangeField';
 
+import {useBem} from '../../../../src/hooks';
+import Calendar from '../../../../src/ui/content/Calendar';
+import DropDown from '../../../../src/ui/content/DropDown';
+import Icon from '../../../../src/ui/content/Icon';
+import {IDateTimeRangeFieldViewProps} from '../../../../src/ui/form/DateTimeRangeField/DateTimeRangeField';
 import TimePanelView from '../TimeField/TimePanelMockView';
 
 export default function DateTimeRangeFieldView(props: IDateTimeRangeFieldViewProps) {
@@ -36,12 +36,14 @@ export default function DateTimeRangeFieldView(props: IDateTimeRangeFieldViewPro
             onClose={props.onClose}
         >
             <div
-                className={bem(bem.block({
+                className={bem(
+bem.block({
                     disabled: props.disabled,
                     size: props.size,
                     'is-invalid': !!props.errors,
                 }),
-                    props.className)}
+                    props.className,
+)}
                 style={props.style}
             >
                 <div className={bem.element('body')}>

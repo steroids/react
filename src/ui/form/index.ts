@@ -28,12 +28,12 @@ import RadioListField from './RadioListField';
 import RateField from './RateField';
 import ReCaptchaField from './ReCaptchaField';
 import SliderField from './SliderField';
+import SwitcherField from './SwitcherField';
+import SwitcherListField from './SwitcherListField';
 import TextField from './TextField';
 import TimeField from './TimeField';
 import TimeRangeField from './TimeRangeField';
 import WizardForm from './WizardForm';
-import SwitcherField from './SwitcherField';
-import SwitcherListField from './SwitcherListField';
 
 export {
     AutoCompleteField,

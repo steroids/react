@@ -1,5 +1,6 @@
 /* eslint-disable default-case */
 import dayjs from 'dayjs';
+
 import {IEventGroup, IEvent} from '../CalendarSystem';
 
 export const addEventIfMatchDate = (

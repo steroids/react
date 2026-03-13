@@ -1,13 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
 import dayjs from 'dayjs';
-import _uniqueId from 'lodash-es/uniqueId';
-import _isEqual from 'lodash-es/isEqual';
 import File from 'fileup-core/lib/models/File';
-import {useDispatch} from '../../../../hooks';
+import _isEqual from 'lodash-es/isEqual';
+import _uniqueId from 'lodash-es/uniqueId';
+import React, {useCallback, useEffect, useState} from 'react';
+
 import {formReset} from '../../../../actions/form';
+import {useDispatch} from '../../../../hooks';
 import {IChatMessage, IChatProps} from '../Chat';
-import {getMessagesGroupedByDate, addNewMessageIntoGroupedMessages} from '../utils';
 import {ISO_TIMESTAMP_TEMPLATE} from '../constants/timeTemplatesAndUnits';
+import {getMessagesGroupedByDate, addNewMessageIntoGroupedMessages} from '../utils';
 
 export type IChatConfig = Pick<IChatProps, 'chatId' | 'messages' | 'currentUser' | 'onSendMessage'>
 

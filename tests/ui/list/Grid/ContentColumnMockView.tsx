@@ -1,10 +1,11 @@
-import React from 'react';
 import _get from 'lodash-es/get';
+import React from 'react';
+
 import useBem from '../../../../src/hooks/useBem';
-import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
-import Format from '../../../../src/ui/format/Format';
-import {Link} from '../../../../src/ui/nav';
 import {Icon} from '../../../../src/ui/content';
+import Format from '../../../../src/ui/format/Format';
+import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
+import {Link} from '../../../../src/ui/nav';
 
 export default function ContentColumnView(props: IColumnViewProps) {
     const bem = useBem('ContentColumnView');

@@ -1,14 +1,16 @@
 import * as React from 'react';
 
-import {IIconViewProps} from '../../../../src/ui/content/Icon/Icon';
 import {useBem} from '../../../../src/hooks';
+import {IIconViewProps} from '../../../../src/ui/content/Icon/Icon';
 
 export default function IconView(props: IIconViewProps) {
     const bem = useBem('IconView');
     if (typeof props.icon === 'string' && props.icon.indexOf('<svg') === 0) {
         return (
             <span
-                dangerouslySetInnerHTML={{__html: props.icon} /* eslint-disable-line react/no-danger */}
+                dangerouslySetInnerHTML={{
+                    __html: props.icon,
+                } /* eslint-disable-line react/no-danger */}
                 aria-label={props.title}
                 title={props.title}
                 className={bem(bem.block(), props.className)}

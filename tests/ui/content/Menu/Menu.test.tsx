@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+
 import Menu, {IMenuProps} from '../../../../src/ui/content/Menu/Menu';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Menu tests', () => {
     const console = global.console;
@@ -28,7 +29,9 @@ describe('Menu tests', () => {
     const expectedMenuItemClass = 'MenuItemView';
 
     it('should be in the document', () => {
-        const {container} = render(JSXWrapper(Menu, props, true), {container: document.body});
+        const {container} = render(JSXWrapper(Menu, props, true), {
+            container: document.body,
+        });
         const menuButton = getElementByClassName(container, `${expectedMenuClass}__button`);
         fireEvent.click(menuButton);
 
@@ -48,7 +51,9 @@ describe('Menu tests', () => {
     });
 
     it('should have correct props item', () => {
-        const {container} = render(JSXWrapper(Menu, props, true), {container: document.body});
+        const {container} = render(JSXWrapper(Menu, props, true), {
+            container: document.body,
+        });
         const menuButton = getElementByClassName(container, `${expectedMenuClass}__button`);
         fireEvent.click(menuButton);
 

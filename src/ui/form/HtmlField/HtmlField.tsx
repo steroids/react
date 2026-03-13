@@ -1,12 +1,13 @@
-import React, {useCallback, useMemo, useState} from 'react';
 import _merge from 'lodash-es/merge';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useMount} from 'react-use';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
 import fieldWrapper, {
     IFieldWrapperInputProps,
     IFieldWrapperOutputProps,
 } from '../Field/fieldWrapper';
-import {FieldEnum} from '../../../enums';
 
 /**
  * HtmlField
@@ -119,7 +120,9 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
                     ? '?imagesProcessor=' + uploadImagesProcessor
                     : ''),
                 headers: {
-                    ...(accessToken && {Authorization: 'Bearer ' + accessToken}),
+                    ...(accessToken && {
+                        Authorization: 'Bearer ' + accessToken,
+                    }),
                 },
             },
         },

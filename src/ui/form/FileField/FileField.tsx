@@ -2,11 +2,12 @@ import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _values from 'lodash-es/values';
 import React, {useEffect, useMemo, useRef} from 'react';
-import useFile, {IFileInput} from '../../../hooks/useFile';
-import {useComponents} from '../../../hooks';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {IButtonProps} from '../Button/Button';
+
 import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
+import useFile, {IFileInput} from '../../../hooks/useFile';
+import {IButtonProps} from '../Button/Button';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 export enum FilesLayout {
     list = 'list',

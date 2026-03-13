@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import Card from '../../../../src/ui/content/Card/Card';
 import CardMockView from './CardMockView';
+import Card from '../../../../src/ui/content/Card/Card';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Card tests', () => {
     const coverSrc = 'https://i.ibb.co/1rTqmJD/image-1.jpg';

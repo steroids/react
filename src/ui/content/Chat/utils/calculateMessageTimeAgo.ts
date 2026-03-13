@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+
 import {
     HOUR_UNIT,
     HOURS_AND_MINUTES_TEMPLATE,
@@ -16,9 +17,13 @@ export const calculateMessageTimeAgo = (timestamp) => {
     let timeAgo = '';
 
     if (diffInMinutes < MINUTES_IN_HOUR_VALUE) {
-        timeAgo = __(`${diffInMinutes} мин. назад`, {diffInMinutes});
+        timeAgo = __(`${diffInMinutes} мин. назад`, {
+            diffInMinutes,
+        });
     } else if (diffInHours < HOURS_IN_DAY_VALUE) {
-        timeAgo = __(`${diffInHours} ч. назад`, {diffInHours});
+        timeAgo = __(`${diffInHours} ч. назад`, {
+            diffInHours,
+        });
     } else {
         timeAgo = messageTime.format(HOURS_AND_MINUTES_TEMPLATE);
     }

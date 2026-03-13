@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {screen, waitFor} from '@testing-library/react';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import HtmlField from '../../../../src/ui/form/HtmlField';
+
 import HtmlFieldMockView from './HtmlFieldMockView';
+import HtmlField from '../../../../src/ui/form/HtmlField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('HtmlField tests', () => {
     const props = {

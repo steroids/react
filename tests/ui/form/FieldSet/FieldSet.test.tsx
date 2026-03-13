@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {FormWrapper, getElementByClassName, render} from '../../../helpers';
-import FieldSet from '../../../../src/ui/form/FieldSet';
 import FieldSetMockView from './FieldSetMockView';
+import FieldSet from '../../../../src/ui/form/FieldSet';
+import {FormWrapper, getElementByClassName, render} from '../../../helpers';
 import InputField from '../InputField/InputFieldMockView';
 
 describe('FieldSet tests', () => {

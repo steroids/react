@@ -1,6 +1,7 @@
 /* eslint-disable default-case */
-import React from 'react';
 import dayjs from 'dayjs';
+import React from 'react';
+
 import {IEvent, IEventGroup} from '../CalendarSystem';
 import CalendarEnum from '../enums/CalendarType';
 import {addEventIfMatchDate} from '../helpers/addEventIfMatchDate';

@@ -1,9 +1,10 @@
 import React, {useMemo} from 'react';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
-import {IBaseFieldProps} from '../InputField/InputField';
-import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
+
 import useInputTypeEmail from './hooks/useInputTypeEmail';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps} from '../Field/fieldWrapper';
+import {IBaseFieldProps} from '../InputField/InputField';
 
 /**
  * EmailField

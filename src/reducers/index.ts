@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux';
+
 import auth from './auth';
 import fields from './fields';
 import form from './form';
 import list from './list';
-import notifications from './notifications';
 import modal from './modal';
+import notifications from './notifications';
 import router from './router';
 
 export {

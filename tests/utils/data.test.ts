@@ -97,7 +97,9 @@ describe('data utils', () => {
 
     describe('checkCondition', () => {
         describe('condition as array', () => {
-            const getItem = (entityName, entityValue) => ({[entityName]: entityValue});
+            const getItem = (entityName, entityValue) => ({
+                [entityName]: entityValue,
+            });
             const getCondition = (operator, key, value) => [operator, key, value];
 
             it('switch =', () => {

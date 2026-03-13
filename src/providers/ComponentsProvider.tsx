@@ -6,6 +6,7 @@ import {IHtmlComponent} from '../components/HtmlComponent';
 import {IHttpComponent} from '../components/HttpComponent';
 import {ILocaleComponent} from '../components/LocaleComponent';
 import {IMetaComponent} from '../components/MetaComponent';
+import {IMetricsComponent} from '../components/MetricsComponent';
 import {IResourceComponent} from '../components/ResourceComponent';
 import {IStoreComponent} from '../components/StoreComponent';
 import {IUiApplicationComponent} from '../components/UiComponent';
@@ -18,16 +19,17 @@ declare global {
 }
 
 export interface IComponents {
-    clientStorage?: IClientStorageComponent,
-    html?: IHtmlComponent,
-    http?: IHttpComponent,
-    locale?: ILocaleComponent,
-    store?: IStoreComponent,
-    ui?: IUiApplicationComponent,
+    clientStorage: IClientStorageComponent,
+    html: IHtmlComponent,
+    http: IHttpComponent,
+    locale: ILocaleComponent,
+    store: IStoreComponent,
+    ui: IUiApplicationComponent,
     resource?: IResourceComponent,
     ws?: IWebSocketComponent,
     pushNotification?: any,
     meta?: IMetaComponent,
+    metrics: IMetricsComponent,
     [key: string]: any,
 }
 

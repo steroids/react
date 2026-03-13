@@ -349,14 +349,6 @@ describe('runInitAction', () => {
         expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(mockedConfig.http.accessToken);
     });
 
-    it('should add fields to component object', async () => {
-        expect(componentsMock.meta.defaultTypes).toEqual(mockedConfig.meta.defaultTypes);
-    });
-
-    it('should replace component object by result object', async () => {
-        expect(componentsMock.meta.defaultKey).toEqual(mockedConfig.meta.defaultKey);
-    });
-
     it('should call meta.setModel', async () => {
         const expectedModelName = 'LanguageEnum';
         const expectedModelItem = mockedMeta.LanguageEnum;

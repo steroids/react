@@ -39,25 +39,24 @@ export interface IComponentConfig {
  * компоненты приложения и конфигурирует их.
  */
 export interface IApplicationHookConfig {
-    components?: {
+    components: {
         clientStorage?: IClientStorageComponentConfig & IComponentConfig,
         html?: IComponentConfig,
-        http?: IHttpComponentConfig & IJwtHttpComponentConfig & IComponentConfig,
-        locale?: ILocaleComponentConfig & IComponentConfig,
+        http: IHttpComponentConfig & IJwtHttpComponentConfig & IComponentConfig,
+        locale: ILocaleComponentConfig & IComponentConfig,
         store?: IComponentConfig,
         ui?: IComponentConfig,
         resource?: IResourceComponentConfig & IComponentConfig,
         ws?: IWebSocketComponentConfig & IComponentConfig,
         pushNotification?: IComponentConfig,
         meta?: IComponentConfig,
-
         [key: string]: IComponentConfig,
     },
-    onInit?: (components: IComponents) => void,
+    onInit: (components: IComponents) => void,
     useGlobal?: boolean,
     reducers?: any,
     routes?: () => IRouteItem,
-    layoutView?: () => CustomView,
+    layoutView: () => CustomView,
     layoutProps?: Record<string, unknown>,
     screen?: Omit<IScreenProviderProps, 'children'>,
     theme?: Omit<IThemeProviderProps, 'children'>,
@@ -80,12 +79,6 @@ export const defaultComponents = {
     html: {
         className: HtmlComponent,
     },
-    //http: {
-    //    className: HttpComponent,
-    //},
-    //locale: {
-    //    className: LocaleComponent,
-    //},
     meta: {
         className: MetaComponent,
     },
@@ -100,7 +93,7 @@ export const defaultComponents = {
     },
 };
 
-export default function useApplication(config: IApplicationHookConfig = {}): IApplicationHookResult {
+export default function useApplication(config: IApplicationHookConfig): IApplicationHookResult {
     const useGlobal = config.useGlobal !== false;
 
     //Extending dayjs / day.js with modules that used in steroids
@@ -119,7 +112,8 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
 
     // Create components
     if (!components) {
-        components = {};
+        components = {} as IComponents;
+
         const componentsConfig = _merge({}, defaultComponents, config.components);
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {

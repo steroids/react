@@ -75,9 +75,9 @@ function PhoneField(props: IPhoneFieldProps & IFieldWrapperOutputProps): JSX.Ele
     });
 
     const phoneMask = useMemo(
-        () => ((items ?? []) as unknown as ICountryPhoneMask[]).find(
-            (countryPhoneMask: ICountryPhoneMask) => countryPhoneMask.id === (selectedIds[0] ?? props.defaultCountryCode),
-        )?.phoneMask,
+        () => ((items ?? [])).find(
+            (countryPhoneMask) => countryPhoneMask.id === (selectedIds[0] ?? props.defaultCountryCode),
+        )?.phoneMask as ICountryPhoneMask['phoneMask'],
         [items, selectedIds, props.defaultCountryCode],
     );
 

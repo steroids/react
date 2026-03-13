@@ -1,3 +1,4 @@
+import {IStoreComponent} from '../../src/components/StoreComponent';
 import {IComponents} from '../../src/providers/ComponentsProvider';
 
 const componentsMock: IComponents = {
@@ -37,8 +38,8 @@ const componentsMock: IComponents = {
         translate: jest.fn(),
     },
     store: {
-        store: {},
-        reducers: {},
+        store: {} as import('redux').Store,
+        reducers: (() => (state: any, action: any) => state) as IStoreComponent['reducers'],
         init: jest.fn(),
         initStore: jest.fn(),
         configurate: jest.fn(),

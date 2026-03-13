@@ -1,5 +1,5 @@
 import _merge from 'lodash-es/merge';
-import React, {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useMount} from 'react-use';
 
 import {FieldEnum} from '../../../enums';
@@ -77,7 +77,7 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
 
     const [accessToken, setAccessToken] = useState(null);
 
-    const [accessLoaded, setAccessLoaded] = useState(false);
+    const [isAccessTokenLoaded, setIsAccessTokenLoaded] = useState(false);
 
     useMount(async () => {
         try {
@@ -88,7 +88,7 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
         } catch (error) {
             console.error(error);
         } finally {
-            setAccessLoaded(true);
+            setIsAccessTokenLoaded(true);
         }
     });
 
@@ -140,8 +140,8 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
         input: props.input,
     }), [editorProps, onBlur, onChange, onFocus, props.disabled, props.editorConstructor, props.htmlComponent, props.input]);
 
-    if (!accessLoaded) {
-        return <div>{__('Загрузка...')}</div>;
+    if (!isAccessTokenLoaded) {
+        return null;
     }
 
     return components.ui.renderView(props.view || 'form.HtmlFieldView', viewProps);

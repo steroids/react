@@ -29,7 +29,7 @@ export interface IFetchConfig {
 }
 
 export interface IFetchResult<T> {
-    data?: T | null,
+    data: T | null,
     isLoading: boolean,
     fetch: (newParams?: Record<string, unknown>) => void,
     axiosError: AxiosError | null,

@@ -302,7 +302,7 @@ export default class HttpComponent implements IHttpComponent {
     get(url, params = {}, options: IHttpRequestOptionsWithQuery = {}) {
         const {
             query,
-            ...restOptions
+            ...httpRequestOptions
         } = options;
 
         return this._send(
@@ -314,14 +314,14 @@ export default class HttpComponent implements IHttpComponent {
                     ...query,
                 },
             },
-            restOptions,
+            httpRequestOptions,
         ).then((response: any) => response.data);
     }
 
     post(url, body = {}, options: IHttpRequestOptionsWithQuery = {}) {
         const {
             query,
-            ...restOptions
+            ...httpRequestOptions
         } = options;
 
         return this._send(
@@ -331,14 +331,14 @@ export default class HttpComponent implements IHttpComponent {
                 data: body,
                 params: query,
             },
-            restOptions,
+            httpRequestOptions,
         ).then((response: any) => response.data);
     }
 
     delete(url, body = {}, options: IHttpRequestOptionsWithQuery = {}) {
         const {
             query,
-            ...restOptions
+            ...httpRequestOptions
         } = options;
 
         return this._send(
@@ -348,14 +348,14 @@ export default class HttpComponent implements IHttpComponent {
                 data: body,
                 params: query,
             },
-            restOptions,
+            httpRequestOptions,
         ).then((response: any) => response.data);
     }
 
     send(method, url, body = {}, options: IHttpRequestOptionsWithQuery = {}) {
         const {
             query,
-            ...restOptions
+            ...httpRequestOptions
         } = options;
 
         method = method.toLowerCase();
@@ -370,7 +370,7 @@ export default class HttpComponent implements IHttpComponent {
                         ...query,
                     },
                 },
-                restOptions,
+                httpRequestOptions,
             );
         }
 
@@ -381,7 +381,7 @@ export default class HttpComponent implements IHttpComponent {
                 data: body,
                 params: query,
             },
-            restOptions,
+            httpRequestOptions,
         );
     }
 

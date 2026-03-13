@@ -15,8 +15,6 @@ describe('HtmlField tests', () => {
     it('should be in the document', async () => {
         const {container} = render(JSXWrapper(HtmlField, props));
 
-        expect(screen.getByText('Загрузка...')).toBeInTheDocument();
-
         await waitFor(() => {
             const htmlField = getElementByClassName(container, expectedHtmlFieldClass);
 

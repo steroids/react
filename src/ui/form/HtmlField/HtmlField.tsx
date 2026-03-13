@@ -1,5 +1,6 @@
 import _merge from 'lodash-es/merge';
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
+import {useMount} from 'react-use';
 
 import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
@@ -74,6 +75,23 @@ export interface IHtmlFieldViewProps extends IHtmlFieldProps {
 function HtmlField(props: IHtmlFieldProps): JSX.Element {
     const components = useComponents();
 
+    const [accessToken, setAccessToken] = useState(null);
+
+    const [isAccessTokenLoaded, setIsAccessTokenLoaded] = useState(false);
+
+    useMount(async () => {
+        try {
+            const token = await components.http.getAccessToken();
+            if (token) {
+                setAccessToken(token);
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsAccessTokenLoaded(true);
+        }
+    });
+
     const onFocus = useCallback((event) => {
         if (props.onFocus) {
             props.onFocus(event);
@@ -101,10 +119,15 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
                 uploadUrl: uploadUrl + (uploadImagesProcessor
                     ? '?imagesProcessor=' + uploadImagesProcessor
                     : ''),
+                headers: {
+                    ...(accessToken && {
+                        Authorization: 'Bearer ' + accessToken,
+                    }),
+                },
             },
         },
         props.editorProps,
-    ), [props.editorProps, uploadUrl, uploadImagesProcessor]);
+    ), [props.editorProps, uploadUrl, uploadImagesProcessor, accessToken]);
 
     const viewProps = useMemo(() => ({
         onFocus,
@@ -116,6 +139,10 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
         disabled: props.disabled,
         input: props.input,
     }), [editorProps, onBlur, onChange, onFocus, props.disabled, props.editorConstructor, props.htmlComponent, props.input]);
+
+    if (!isAccessTokenLoaded) {
+        return null;
+    }
 
     return components.ui.renderView(props.view || 'form.HtmlFieldView', viewProps);
 }

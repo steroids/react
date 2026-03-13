@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import {renderHook} from '@testing-library/react';
-import useComponents from '../../src/hooks/useComponents';
+
 import {useModel} from '../../src/hooks';
+import useComponents from '../../src/hooks/useComponents';
 
 jest.mock('../../src/hooks/useComponents');
 
@@ -102,11 +103,15 @@ describe('useModel Hook', () => {
         expect(componentsMock.meta.getModel).toHaveBeenCalledWith(mockedModel);
         expect(componentsMock.meta.getModel).toHaveBeenCalledTimes(expectedCallsBeforeRerender);
 
-        rerender({model: mockedModel});
+        rerender({
+            model: mockedModel,
+        });
 
         expect(componentsMock.meta.getModel).toHaveBeenCalledTimes(expectedCallsBeforeRerender);
 
-        rerender({model: newMockedModel});
+        rerender({
+            model: newMockedModel,
+        });
 
         expect(componentsMock.meta.getModel).toHaveBeenCalledWith(newMockedModel);
         expect(componentsMock.meta.getModel).toHaveBeenCalledTimes(expectedCallsAfterRerender);

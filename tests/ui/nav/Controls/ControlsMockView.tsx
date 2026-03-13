@@ -1,7 +1,8 @@
 import * as React from 'react';
-import Nav from '../../../../src/ui/nav/Nav/Nav';
+
 import {useBem} from '../../../../src/hooks';
 import {IControlsViewProps} from '../../../../src/ui/nav/Controls/Controls';
+import Nav from '../../../../src/ui/nav/Nav/Nav';
 
 export default function ControlsView(props: IControlsViewProps) {
     const renderControls = (items) => {

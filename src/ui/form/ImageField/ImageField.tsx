@@ -1,19 +1,20 @@
-import * as React from 'react';
 import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
-import _values from 'lodash-es/values';
-import {useMemo, useCallback, useState, useEffect, useRef} from 'react';
 import _uniqueId from 'lodash-es/uniqueId';
+import _values from 'lodash-es/values';
+import * as React from 'react';
+import {useMemo, useCallback, useState, useEffect, useRef} from 'react';
 import ReactCropProps, {Crop} from 'react-image-crop';
 import {usePrevious} from 'react-use';
+
+import {openModal} from '../../../actions/modal';
+import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
-import {IModalProps} from '../../modal/Modal/Modal';
 import useDispatch from '../../../hooks/useDispatch';
 import useFile, {IFileInput} from '../../../hooks/useFile';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {openModal} from '../../../actions/modal';
+import {IModalProps} from '../../modal/Modal/Modal';
 import {IButtonProps} from '../Button/Button';
-import {FieldEnum} from '../../../enums';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 export interface ICropConfig {
     /**

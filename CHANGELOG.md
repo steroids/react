@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.0.94 (10.03.2026)
+
+### Added
+
+- Добавлена типизация для компонента `StoreComponent`
+- Обновлены библиотеки `path-to-regexp` и `qs`
+- Компонент `ResourceComponent` помечен как `deprecated`
+- Обновлена библиотека `@steroidsjs/eslint-config`
+
+### Fixed
+
+- Исправлена типизация возвращаемого значения хука `useFetch`
+- Исправлены ошибки ESLint, возникшие после обновления `@steroidsjs/eslint-config`
+- Разделен общий тип ColorName на специализированные наборы цветов для компонентов `Alert`, `Notification`, `DropDownField`, `Controls`, `Button`, `Loader`, `Title`, `Text` и `Badge` (исключены неподдерживаемые и вводящие в заблуждение варианты)
+- Переименован props `level` на `type` для компонента `Notifications`
+
 ## v3.0.93 (09.02.2026)
 
 ### Added

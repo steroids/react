@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import * as queryString from 'qs';
 import _isArray from 'lodash-es/isArray';
+import * as queryString from 'qs';
 
 declare global {
     interface Window {
@@ -144,7 +144,9 @@ export default class ResourceComponent implements IResourceComponent {
 
         return this.loadScript(
             this.RESOURCE_GOOGLE_CAPTCHA,
-            {render: this.googleCaptchaSiteKey},
+            {
+                render: this.googleCaptchaSiteKey,
+            },
             () => window.grecaptcha,
         );
     }
@@ -174,7 +176,7 @@ export default class ResourceComponent implements IResourceComponent {
         if (window.ymaps) {
             return new Promise(resolve =>
                 // @ts-ignore
-                // eslint-disable-next-line implicit-arrow-linebreak
+                // eslint-disable-next-line implicit-arrow-linebreak,no-promise-executor-return
                 window.ymaps.ready(() => resolve(window.ymaps)));
         }
         return this.loadScript(
@@ -183,6 +185,7 @@ export default class ResourceComponent implements IResourceComponent {
                 lang: this.language || locale.language,
             },
             // @ts-ignore
+            // eslint-disable-next-line no-promise-executor-return
             () => new Promise(resolve => window.ymaps.ready(() => resolve(window.ymaps))),
         );
     }
@@ -197,6 +200,7 @@ export default class ResourceComponent implements IResourceComponent {
             this.RESOURCE_TWITTER_WIDGET,
             {},
             // @ts-ignore
+            // eslint-disable-next-line no-promise-executor-return
             () => new Promise(resolve => window.twttr.ready(() => resolve(window.twttr))),
         );
     }

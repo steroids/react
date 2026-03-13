@@ -19,10 +19,14 @@ describe('router reducers', () => {
         counters: {},
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     it('ROUTER_INIT_ROUTES', () => {

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {Text} from '../../../../src/ui/typography';
 import TextMockView from './TextMockView';
+import {Text} from '../../../../src/ui/typography';
 import {getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('Text tests', () => {
@@ -15,7 +15,9 @@ describe('Text tests', () => {
         content: 'Text test',
         color: 'primary',
         className: 'testClass',
-        style: {marginBottom: '70px'},
+        style: {
+            marginBottom: '70px',
+        },
     };
 
     const expectedTextClass = 'TextView';

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
 import {IButtonProps} from '../../form/Button/Button';
 import {INavProps} from '../Nav/Nav';
@@ -70,7 +71,7 @@ export interface IControlsViewProps extends IControlsProps {
         icon?: string,
         label?: string,
         confirm?: string,
-        color?: ColorName,
+        color?: ButtonColorName,
         outline?: boolean,
         position?: 'right' | 'left',
     })[],

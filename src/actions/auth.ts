@@ -19,6 +19,7 @@ export const init = (skipInitialized = false) => (dispatch, getState) => {
 
 export const reInit = () => init();
 
+// eslint-disable-next-line default-param-last
 export const login = (token, redirectPageId: string | boolean = 'root', params?: RouteParams) => (
     dispatch,
     getState,

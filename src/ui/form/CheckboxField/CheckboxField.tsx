@@ -1,7 +1,8 @@
 import React, {useMemo} from 'react';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {useComponents} from '../../../hooks';
+
 import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 /**
  * CheckboxField
@@ -88,4 +89,6 @@ CheckboxField.defaultProps = {
     multiply: true,
 };
 
-export default fieldWrapper<ICheckboxFieldProps>(FieldEnum.CHECKBOX_FIELD, CheckboxField, {label: false});
+export default fieldWrapper<ICheckboxFieldProps>(FieldEnum.CHECKBOX_FIELD, CheckboxField, {
+    label: false,
+});

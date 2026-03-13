@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -27,7 +28,7 @@ export interface ITextProps extends IUiComponent {
      * Цвет текста
      * @example 'primary'
      */
-    color?: ColorName,
+    color?: TypographyColorName,
 
     /** Текст
      * @example 'Simple text'

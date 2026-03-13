@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import _isArray from 'lodash-es/isArray';
 import * as React from 'react';
 import {useEffect, useRef} from 'react';
-import _isArray from 'lodash-es/isArray';
-import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
+
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
+import {IDropDownFieldItem, IDropDownFieldViewProps} from '../../../../src/ui/form/DropDownField/DropDownField';
 import IconMockView from '../../content/Icon/IconMockView';
 
 const getSelectedItemsLabel = (selectedItems: Record<string, any>[]): string => (
@@ -32,12 +33,14 @@ export default function DropDownFieldView(props: IDropDownFieldViewProps) {
         }
     }, [props.isAutoComplete, props.isOpened, props.isSearchAutoFocus]);
 
-    const renderPlaceholder = React.useCallback(() => props.placeholder && !props.selectedIds?.length
+    const renderPlaceholder = React.useCallback(
+() => props.placeholder && !props.selectedIds?.length
         ? (
             <div className={bem.element('placeholder')}>{props.placeholder}</div>
         )
         : null,
-    [bem, props.placeholder, props.selectedIds]);
+    [bem, props.placeholder, props.selectedIds],
+);
 
     return (
         <div

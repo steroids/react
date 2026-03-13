@@ -131,7 +131,9 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
             // Ширина component больше родителя - стрелка на середину родителя
             style.left = parentDimensions.left;
             if (arrowSize && (parentDimensions.width < componentSize.width)) {
-                arrowPosition = {left: parentDimensions.width / 2};
+                arrowPosition = {
+                    left: parentDimensions.width / 2,
+                };
             }
             break;
 
@@ -156,7 +158,9 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
         case Position.RIGHT_TOP:
             style.top = parentDimensions.top;
             if (arrowSize && (parentDimensions.height < componentSize.height)) {
-                arrowPosition = {top: parentDimensions.height / 2};
+                arrowPosition = {
+                    top: parentDimensions.height / 2,
+                };
             }
             break;
 
@@ -182,7 +186,9 @@ export default function calculateComponentAbsolutePosition(gap, position, parent
             position = position.replace('Right', 'Left');
             // Если ширина component больше ширины родителя - выставить стрелку на середину родителя
             if (parentDimensions.left < componentSize.width) {
-                arrowPosition = {left: parentDimensions.width / 2};
+                arrowPosition = {
+                    left: parentDimensions.width / 2,
+                };
             }
             style.left = parentDimensions.left;
         } else if (!position.includes('Right')

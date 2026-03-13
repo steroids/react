@@ -1,8 +1,9 @@
 import * as React from 'react';
+
 import {Avatar, Badge} from '../../../../../../../../src/ui/content';
-import {Text} from '../../../../../../../../src/ui/typography';
 import {IKanbanTaskDetailsModalViewProps, ITaskTag} from '../../../../../../../../src/ui/content/Kanban/Kanban';
 import KanbanPrioritiesEnum from '../../../../../../../../src/ui/content/Kanban/enums/KanbanPrioritiesEnum';
+import {Text} from '../../../../../../../../src/ui/typography';
 
 export default function TaskDetailsModalContentView(props: IKanbanTaskDetailsModalViewProps) {
     const {tags, priority, description, assigner} = props.task;

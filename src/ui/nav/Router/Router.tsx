@@ -360,7 +360,7 @@ function Router(props: IRouterProps): JSX.Element {
                         ...routeProps,
                         children,
                     },
-                    props.alwaysAppendParentRoutePath
+                    props.alwaysAppendParentRoutePath,
                 ) || children;
             }
 

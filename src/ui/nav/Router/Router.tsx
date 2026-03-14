@@ -344,6 +344,7 @@ function Router(props: IRouterProps): JSX.Element {
 
     const renderItem = (routeItem: IRouteItem, routeProps) => {
         let children = null;
+        let hasExact = false;
         activeRouteIds.find(activeRouteId => {
             if (activeRouteId === routeItem.id) {
                 // Stop
@@ -351,14 +352,21 @@ function Router(props: IRouterProps): JSX.Element {
             }
 
             const activeRoute = routes.find(r => r.id === activeRouteId);
-            children = renderComponent(activeRoute, activePath, {
-                ...routeProps,
-                children,
-            }, props.alwaysAppendParentRoutePath) || children;
+            if (!hasExact && activeRoute.component && !activeRoute.redirectTo) {
+                children = renderComponent(
+                    activeRoute,
+                    activePath,
+                    {
+                        ...routeProps,
+                        children,
+                    },
+                    props.alwaysAppendParentRoutePath
+                ) || children;
+            }
 
             // Stop, if route is exact
             if (activeRoute.exact) {
-                return true;
+                hasExact = true;
             }
 
             return false;

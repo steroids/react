@@ -1,4 +1,5 @@
-import axios, {AxiosError} from 'axios';
+import {createAxiosError} from '@steroidsjs/core/utils/createAxiosError';
+import axios, {AxiosError, AxiosRequestConfig} from 'axios';
 import _trim from 'lodash-es/trim';
 import {useCallback, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
@@ -17,7 +18,7 @@ declare global {
 export interface IFetchConfig {
     id?: string | number,
     url?: string,
-    method?: 'get' | 'post' | string,
+    method?: AxiosRequestConfig['method'],
     params?: Record<string, unknown>,
     /**
      * Применяется для ssr. Если fetch критический — ssr вернет страницу со статус кодом ошибки.
@@ -28,12 +29,7 @@ export interface IFetchConfig {
 }
 
 export interface IFetchResult<T> {
-    data?: T | undefined | null | {
-        statusCode: number,
-        error?: string,
-        message?: string,
-        errors?: Record<string, unknown>,
-    },
+    data: T | null,
     isLoading: boolean,
     fetch: (newParams?: Record<string, unknown>) => void,
     axiosError: AxiosError | null,
@@ -139,16 +135,21 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
 
         if (config) {
             setIsLoading(true);
-
             try {
-                setData(await fetchData(config, components, addCancelToken));
+                const responseData = await fetchData(config, components, addCancelToken);
+
+                if (responseData?.statusCode && responseData.statusCode >= 400) {
+                    setAxiosError(createAxiosError(responseData, config));
+                } else {
+                    setData(responseData);
+                }
             } catch (error) {
-                if (error.isAxiosError) {
+                if (error?.isAxiosError) {
                     setAxiosError(error);
                 }
+            } finally {
+                setIsLoading(false);
             }
-
-            setIsLoading(false);
         }
     }, [components, config]);
 

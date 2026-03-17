@@ -90,11 +90,6 @@ export interface IFormProps extends IUiComponent {
     validators?: string[] | Array<string[]> | Array<Record<string, any>>,
 
     /**
-     * Колбэк для использования сторонних валидаторов, например yup
-     */
-    validator?: any,
-
-    /**
      * Обработчик события перед отправкой формы
      * @param args
      */
@@ -454,11 +449,6 @@ function Form(props: IFormProps): JSX.Element {
 
         // Clean
         cleanedValues = cleanEmptyObject(cleanedValues);
-
-        if (props.validator && props.validator.call(null, cleanedValues) === false) {
-            dispatch(formSetSubmitting(props.formId, false));
-            return null;
-        }
 
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {

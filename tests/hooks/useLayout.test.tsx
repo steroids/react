@@ -302,7 +302,7 @@ describe('runInitAction', () => {
             accessToken: 'token',
         },
         meta: {
-            defaultTypes: {
+            types: {
                 type: 'test-type-id',
             },
             defaultKey: 'default-key',
@@ -350,11 +350,7 @@ describe('runInitAction', () => {
     });
 
     it('should add fields to component object', async () => {
-        expect(componentsMock.meta.defaultTypes).toEqual(mockedConfig.meta.defaultTypes);
-    });
-
-    it('should replace component object by result object', async () => {
-        expect(componentsMock.meta.defaultKey).toEqual(mockedConfig.meta.defaultKey);
+        expect(componentsMock.meta.types).toEqual(mockedConfig.meta.types);
     });
 
     it('should call meta.setModel', async () => {

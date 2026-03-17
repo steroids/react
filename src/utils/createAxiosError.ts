@@ -22,7 +22,7 @@ export function createAxiosError(
 
     const config: AxiosRequestConfig = {
         url: fetchConfig.url,
-        method: fetchConfig.method ?? 'GET',
+        method: fetchConfig.method,
         params: fetchConfig.params ?? {},
     };
 
@@ -38,7 +38,11 @@ export function createAxiosError(
 
     error.name = 'AxiosError';
     error.config = config;
-    error.code = undefined;
+    if (apiErrorPayload.statusCode >= 400 && apiErrorPayload.statusCode < 500) {
+        error.code = 'ERR_BAD_REQUEST';
+    } else if (apiErrorPayload.statusCode >= 500) {
+        error.code = 'ERR_BAD_RESPONSE';
+    }
     error.request = {};
     error.response = response;
     error.isAxiosError = true;
@@ -46,7 +50,7 @@ export function createAxiosError(
     error.toJSON = () => ({
         message: error.message,
         name: error.name,
-        code: undefined,
+        code: error.code,
         config: error.config,
         status: error.response?.status,
         stack: error.stack,

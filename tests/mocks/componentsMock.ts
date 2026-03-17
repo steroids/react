@@ -78,6 +78,7 @@ const componentsMock: IComponents = {
         getType: jest.fn(),
         normalizeName: jest.fn(),
         normalizeModel: jest.fn(),
+        types: {},
     },
     metrics: {
         unsubscribe: jest.fn(),

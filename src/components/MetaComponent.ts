@@ -56,6 +56,11 @@ export interface IMetaComponent {
     getType(name: string): any,
 
     /**
+     * Зарегистрированные типы атрибутов, индексированные по имени типа.
+     */
+    types: Record<string, any>,
+
+    /**
      * Форматирование названия модели
      * @param name Имя модели.
      */
@@ -80,7 +85,7 @@ export default class MetaComponent implements IMetaComponent {
 
     models: any;
 
-    types: any;
+    types: Record<string, any>;
 
     _components: any;
 

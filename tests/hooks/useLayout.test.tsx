@@ -302,7 +302,7 @@ describe('runInitAction', () => {
             accessToken: 'token',
         },
         meta: {
-            defaultTypes: {
+            types: {
                 type: 'test-type-id',
             },
             defaultKey: 'default-key',
@@ -347,6 +347,10 @@ describe('runInitAction', () => {
 
     it('should call setAccessToken with result value', async () => {
         expect(componentsMock.http.setAccessToken).toHaveBeenCalledWith(mockedConfig.http.accessToken);
+    });
+
+    it('should add fields to component object', async () => {
+        expect(componentsMock.meta.types).toEqual(mockedConfig.meta.types);
     });
 
     it('should call meta.setModel', async () => {

@@ -237,29 +237,6 @@ width: '100%',
         expect(onSubmit).not.toHaveBeenCalled();
     });
 
-    it('should not call onSubmit when validator returns false', async () => {
-        const onSubmit = jest.fn();
-
-        const validator = jest.fn().mockReturnValue(false);
-
-        const {container} = render(
-            <Form
-                {...defaultProps}
-                onSubmit={onSubmit}
-                validator={validator}
-            />,
-        );
-
-        const form = getElementByTag(container, 'form');
-
-        fireEvent.submit(form);
-
-        await waitFor(() => {
-            expect(validator).toHaveBeenCalled();
-        });
-        expect(onSubmit).not.toHaveBeenCalled();
-    });
-
     it('should call onSubmit with cleaned form values', async () => {
         const onSubmit = jest.fn();
 

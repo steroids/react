@@ -1,9 +1,9 @@
 /* eslint-disable max-classes-per-file */
-import React from 'react';
 import '@testing-library/jest-dom';
 import {fireEvent, waitFor} from '@testing-library/react';
-import Form from '../../../../src/ui/form/Form/Form';
+
 import FormMockView from './FormMockView';
+import Form from '../../../../src/ui/form/Form/Form';
 import InputField from '../../../../src/ui/form/InputField/InputField';
 import {getElementByClassName, getElementByTag, render} from '../../../helpers';
 
@@ -34,7 +34,9 @@ jest.mock('../../../../src/components/HttpComponent', () => ({
         constructor(components: any, config: any) {
             this.send = config?.send
                 || (global as any).__FORM_HTTP_SEND__
-                || jest.fn().mockResolvedValue({data: {}});
+                || jest.fn().mockResolvedValue({
+data: {},
+});
         }
     },
 }));
@@ -61,7 +63,9 @@ describe('Form tests', () => {
         formId: 'TestForm',
         view: FormMockView,
         className: 'form-class-test',
-        style: {width: '100%'},
+        style: {
+width: '100%',
+},
         submitLabel: 'Отправить',
         fields: [
             {
@@ -444,12 +448,16 @@ describe('Form tests with HTTP mock', () => {
             expect(onAfterSubmit).toHaveBeenCalledWith(
                 expect.any(Object),
                 responseData,
-                expect.objectContaining({data: responseData}),
+                expect.objectContaining({
+data: responseData,
+}),
             );
             expect(onComplete).toHaveBeenCalledWith(
                 expect.any(Object),
                 responseData,
-                expect.objectContaining({data: responseData}),
+                expect.objectContaining({
+data: responseData,
+}),
             );
         });
 

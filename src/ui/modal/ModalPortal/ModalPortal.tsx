@@ -1,5 +1,5 @@
 import _orderBy from 'lodash-es/orderBy';
-import React, {useCallback} from 'react';
+import {useCallback} from 'react';
 
 import {closeModal, modalMarkClosing} from '../../../actions/modal';
 import {useSelector} from '../../../hooks';

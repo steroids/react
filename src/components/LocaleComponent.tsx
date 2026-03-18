@@ -2,7 +2,6 @@
 import dayjs from 'dayjs';
 import IntlMessageFormat from 'intl-messageformat';
 import _isObject from 'lodash-es/isObject';
-import * as React from 'react';
 import 'dayjs/locale/it';
 import 'dayjs/locale/ru';
 

@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import {memo} from 'react';
 
 import useBem from '../../../../../src/hooks/useBem';
 import {Accordion, AccordionItem, Icon} from '../../../../../src/ui/content';
@@ -29,7 +29,7 @@ function AsideCalendars(props: IAsideCalendarsProps) {
                         onClick={props.openCreateEventGroupModal}
                         size='sm'
                     >
-                        <Icon name="mockIcon" />
+                        <Icon name='mockIcon' />
                     </Button>
                 </AccordionItem>
             </Accordion>

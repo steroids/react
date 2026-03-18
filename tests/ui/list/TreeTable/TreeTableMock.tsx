@@ -1,6 +1,5 @@
 import _merge from 'lodash-es/merge';
 import {useMemo} from 'react';
-import * as React from 'react';
 
 import TreeColumnView from './TreeColumnMockView';
 import useSelector from '../../../../src/hooks/useSelector';

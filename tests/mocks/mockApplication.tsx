@@ -1,4 +1,4 @@
-import React from 'react';
+import {ReactNode} from 'react';
 
 import HttpComponent from '../../src/components/HttpComponent';
 import LocaleComponent from '../../src/components/LocaleComponent';
@@ -9,7 +9,7 @@ export interface IMockApplicationConfig extends IApplicationHookConfig {
 }
 
 interface IMockApplicationProps {
-    children: React.ReactNode,
+    children: ReactNode,
     config?: IMockApplicationConfig,
 }
 

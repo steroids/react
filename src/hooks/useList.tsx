@@ -6,7 +6,7 @@ import {
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _union from 'lodash-es/union';
-import React, {useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 
 import useSelector from './useSelector';

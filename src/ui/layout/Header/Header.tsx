@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {ReactElement, useCallback, useState} from 'react';
 
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../../content/Avatar/Avatar';
@@ -32,7 +32,7 @@ export interface IHeaderProps extends IUiComponent {
         /**
          * Иконка логотипа в виде строки или компонента React.
          */
-        icon?: string | React.ReactElement,
+        icon?: CustomIcon,
 
         /**
          * Дополнительные классы стилей для логотипа.
@@ -102,7 +102,7 @@ export interface IHeaderProps extends IUiComponent {
         /**
          * Контент бургер-меню в виде компонента React.
          */
-        content?: React.ReactElement,
+        content?: ReactElement,
 
         /**
          * Свойства для ссылок бургер-меню.

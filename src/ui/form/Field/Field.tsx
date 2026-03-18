@@ -1,7 +1,6 @@
 import _isFunction from 'lodash-es/isFunction';
 import _isString from 'lodash-es/isString';
-import * as React from 'react';
-import {useContext, useMemo} from 'react';
+import {memo, useContext, useMemo} from 'react';
 
 import {IFieldWrapperInputProps} from './fieldWrapper';
 import {Model, ModelAttribute} from '../../../components/MetaComponent';
@@ -82,4 +81,4 @@ function Field(props: IFieldProps): JSX.Element {
         : <ComponentField {...viewProps} />;
 }
 
-export default React.memo(Field);
+export default memo(Field);

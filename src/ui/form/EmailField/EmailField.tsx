@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import useInputTypeEmail from './hooks/useInputTypeEmail';
 import {FieldEnum} from '../../../enums';
@@ -23,9 +23,9 @@ function EmailField(props: IEmailFieldProps) {
 
     const {onInputChange} = useInputTypeEmail(currentInputRef, onChange, props.input.value, props.required);
 
-    const onClear = React.useCallback(() => props.input.onChange(''), [props.input]);
+    const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
-    const inputProps = React.useMemo(() => ({
+    const inputProps = useMemo(() => ({
         name: props.input.name,
         value: props.input.value ?? '',
         onChange: onInputChange,

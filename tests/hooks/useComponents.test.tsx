@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {useComponents} from '../../src/hooks';
 import {IComponents} from '../../src/providers/ComponentsProvider';
 import mountWithApp from '../mocks/mountWithApp';

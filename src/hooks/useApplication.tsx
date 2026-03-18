@@ -6,7 +6,6 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 import _merge from 'lodash-es/merge';
-import * as React from 'react';
 import {useCallback} from 'react';
 import {Provider} from 'react-redux';
 

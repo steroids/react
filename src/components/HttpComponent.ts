@@ -2,7 +2,6 @@ import axios from 'axios';
 import _isEmpty from 'lodash-es/isEmpty';
 import _trimEnd from 'lodash-es/trimEnd';
 import _trimStart from 'lodash-es/trimStart';
-import * as React from 'react';
 import setCookie from 'set-cookie-parser';
 
 import {setFlashes} from '../actions/notifications';

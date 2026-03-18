@@ -5,8 +5,7 @@ import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
 import _isString from 'lodash-es/isString';
 import _merge from 'lodash-es/merge';
 import _upperFirst from 'lodash-es/upperFirst';
-import * as React from 'react';
-import {useCallback, useMemo} from 'react';
+import {ReactElement, useCallback, useMemo} from 'react';
 
 import useList from '../../../hooks/useList';
 import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
@@ -50,7 +49,7 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items' | 'itemsIndexi
      * Кастомная иконка для сворачивания элементов
      * @example 'arrow'
      */
-    customIcon?: string | React.ReactElement,
+    customIcon?: CustomIcon,
 
     /**
      * Ключ для доступа к вложенным элементам узла
@@ -66,7 +65,7 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
-export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon?: string | React.ReactElement) => {
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon?: string | ReactElement) => {
     const newColumns = [...columns];
 
     // Add tree view to the first column

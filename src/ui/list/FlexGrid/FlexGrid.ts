@@ -1,4 +1,5 @@
 import _isArray from 'lodash-es/isArray';
+import {ReactNode} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -63,7 +64,7 @@ export interface IFlexGridProps extends IUiComponent {
     /**
      * Вложенные элементы
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Дополнительный CSS-класс для элементов FlexGrid

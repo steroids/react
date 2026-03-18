@@ -1,5 +1,4 @@
 import {fireEvent} from '@testing-library/dom';
-import * as React from 'react';
 import '@testing-library/jest-dom';
 
 import DropDown, {IDropDownProps} from '../../../../src/ui/content/DropDown/DropDown';

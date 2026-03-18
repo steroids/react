@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {useBem} from '../../../../src/hooks';
 import {IAlertViewProps} from '../../../../src/ui/content/Alert/Alert';
 import Icon from '../../../../src/ui/content/Icon';

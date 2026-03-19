@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {ReactElement, useMemo, MouseEvent} from 'react';
 
 import {useComponents, useTree} from '../../../hooks';
 import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
@@ -46,7 +46,7 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
      * Обработчик на клик по узлу
      * @param args
      */
-    onItemClick?: (event: React.MouseEvent, item: ITreeItem) => any,
+    onItemClick?: (event: MouseEvent, item: ITreeItem) => any,
 
     /**
      * Отображать раскрытыми узлы из LocalStorage
@@ -69,7 +69,7 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
     /**
      * Кастомная иконка, заменяющая иконку раскрытия по умолчанию
      */
-    customIcon?: string | React.ReactElement,
+    customIcon?: CustomIcon,
 
     /**
      * Флаг, определяющий раскрывать вложенные элементы по клику на весь элемент или только на иконку

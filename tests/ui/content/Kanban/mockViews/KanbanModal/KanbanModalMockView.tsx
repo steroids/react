@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback} from 'react';
 
 import CreateOrEditTaskModalContent from './views/CreateOrEditTaskModalContent';
 import TaskDetailsModalContent from './views/TaskDetailsModalContent';
@@ -10,7 +10,7 @@ import Modal from '../../../../../../src/ui/modal/Modal/Modal';
 export default function KanbanModalView(props: IKanbanModalViewProps) {
     const bem = useBem('KanbanModalView');
 
-    const renderModalContent = React.useCallback((modalType: KanbanModalTypeEnum) => {
+    const renderModalContent = useCallback((modalType: KanbanModalTypeEnum) => {
         switch (modalType) {
             case KanbanModalTypeEnum.CREATE:
                 return (
@@ -51,7 +51,7 @@ export default function KanbanModalView(props: IKanbanModalViewProps) {
         }
     }, [bem, props.assigners, props.columnId, props.columns, props.formId, props.onSubmit, props.tags, props.task]);
 
-    const renderModalButton = React.useCallback((modalType: KanbanModalTypeEnum) => modalType !== KanbanModalTypeEnum.CREATE
+    const renderModalButton = useCallback((modalType: KanbanModalTypeEnum) => modalType !== KanbanModalTypeEnum.CREATE
         ? [{
             icon: 'mockIcon',
             onClick: props.onToggleModalType,

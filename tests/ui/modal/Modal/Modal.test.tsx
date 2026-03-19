@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {waitFor} from '@testing-library/react';
-import * as React from 'react';
 
 import {openModal} from '../../../../src/actions/modal';
 import {useDispatch} from '../../../../src/hooks';

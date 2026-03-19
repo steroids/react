@@ -1,10 +1,8 @@
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
-import * as React from 'react';
-import {ReactNode} from 'react';
+import {createElement, ReactNode} from 'react';
 
-import {Model} from './MetaComponent';
 import {IComponents} from '../providers/ComponentsProvider';
 
 /**
@@ -194,7 +192,7 @@ export default class UiComponent implements IUiApplicationComponent {
             }
             return Component(props);
         }
-        return React.createElement(Component, props);
+        return createElement(Component, props);
     }
 
     getView(path) {

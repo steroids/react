@@ -1,4 +1,5 @@
 import _isString from 'lodash-es/isString';
+import {ReactNode} from 'react';
 
 export interface IHtmlComponent {
     /**
@@ -18,14 +19,14 @@ export interface IHtmlComponent {
      * @param node Элемент, к которому нужно добавить класс.
      * @param className Название класса.
      */
-    addClass(node: React.ReactNode, className: string): void,
+    addClass(node: ReactNode, className: string): void,
 
     /**
      * Метод для удаления css-класса у элемента
      * @param node Элемент, у которого нужно удалить класс.
      * @param className Название класса.
      */
-    removeClass(node: React.ReactNode, className: string): void,
+    removeClass(node: ReactNode, className: string): void,
 
     closest(element: any, className: string): any,
 }

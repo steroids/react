@@ -1,5 +1,4 @@
 import _get from 'lodash-es/get';
-import * as React from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import CheckboxField from '../../../../src/ui/form/CheckboxField';

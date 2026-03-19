@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
@@ -11,7 +11,7 @@ export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
     const bem = useBem('BreadcrumbsView');
     const items = props.items || [];
 
-    const renderLink = React.useCallback((item, children) => (
+    const renderLink = useCallback((item, children) => (
         <Link
             toRoute={item.id}
             toRouteParams={props.routeParams}
@@ -21,7 +21,7 @@ export default function BreadcrumbsView(props: IBreadcrumbsViewProps) {
         </Link>
     ), [props.routeParams]);
 
-    const renderHomeIcon = React.useCallback(() => (
+    const renderHomeIcon = useCallback(() => (
         props.customIcon
             ? renderIconMock(props.customIcon, {
                 className: bem.element('custom-icon'),

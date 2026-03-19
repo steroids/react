@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import File from 'fileup-core/lib/models/File';
 import _isEqual from 'lodash-es/isEqual';
 import _uniqueId from 'lodash-es/uniqueId';
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import {formReset} from '../../../../actions/form';
 import {useDispatch} from '../../../../hooks';

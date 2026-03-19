@@ -6,7 +6,7 @@ import {
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _union from 'lodash-es/union';
-import React, {useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useMount, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 
 import useSelector from './useSelector';
@@ -19,6 +19,7 @@ import {
     listLazyFetch,
     listSetItems,
     listChangeAction,
+    listChangeConfig,
 } from '../actions/list';
 import {Model} from '../components/MetaComponent';
 import useAddressBar, {IAddressBarConfig} from '../hooks/useAddressBar';
@@ -610,6 +611,22 @@ export default function useList(config: IListConfig): IListOutput {
             ]);
         }
     }, [dispatch, config.listId, config.action, prevAction]);
+
+    // Обновляем runtime-конфиг списка, если список уже сохранен в store и используется при SSR
+    useMount(() => {
+        if (!list) {
+            return;
+        }
+
+        const nextConfig = {
+            loadMore: paginationProps.loadMore,
+            layoutAttribute: layoutNamesProps.attribute || null,
+            hasInfiniteScroll: infiniteScrollProps?.enable || null,
+            defaultPageValue: paginationProps.defaultValue ?? FIRST_PAGE,
+        };
+
+        dispatch(listChangeConfig(config.listId, nextConfig));
+    });
 
     // Destroy
     useUnmount(() => {

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import TreeItemView from './TreeItemMockView';
 import {useBem} from '../../../../src/hooks';
 import Format from '../../../../src/ui/format/Format';

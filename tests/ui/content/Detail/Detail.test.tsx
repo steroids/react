@@ -1,5 +1,3 @@
-import React from 'react';
-
 import '@testing-library/jest-dom';
 import DetailMockView from './DetailMockView';
 import {Detail, DetailItem} from '../../../../src/ui/content/Detail';

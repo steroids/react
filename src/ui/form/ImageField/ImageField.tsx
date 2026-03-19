@@ -2,7 +2,6 @@ import File from 'fileup-core/lib/models/File';
 import _first from 'lodash-es/first';
 import _uniqueId from 'lodash-es/uniqueId';
 import _values from 'lodash-es/values';
-import * as React from 'react';
 import {useMemo, useCallback, useState, useEffect, useRef} from 'react';
 import ReactCropProps, {Crop} from 'react-image-crop';
 import {usePrevious} from 'react-use';

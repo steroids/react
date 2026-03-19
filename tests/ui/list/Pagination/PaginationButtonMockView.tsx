@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {Icon} from '../../../../src/ui/content';
@@ -8,7 +8,7 @@ import IconMockView from '../../content/Icon/IconMockView';
 export default function PaginationButtonView(props: IPaginationViewProps) {
     const bem = useBem('PaginationButtonView');
 
-    const renderArrowStep = React.useCallback((
+    const renderArrowStep = useCallback((
         onClick: () => void,
         iconName: string,
         // eslint-disable-next-line default-param-last

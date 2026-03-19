@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
-import React, {ChangeEvent, useMemo, useCallback} from 'react';
+import {ChangeEvent, useMemo, useCallback} from 'react';
 
 import useInputTypeNumber from './hooks/useInputTypeNumber';
 import {FieldEnum} from '../../../enums';
@@ -88,7 +88,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             },
         },
     );
-    const step = React.useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
+    const step = useMemo(() => props.step ?? DEFAULT_STEP, [props.step]);
 
     const {onInputChange} = useInputTypeNumber(
         currentInputRef,

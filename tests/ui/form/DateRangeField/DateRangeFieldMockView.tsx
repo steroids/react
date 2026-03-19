@@ -1,5 +1,3 @@
-import _isString from 'lodash-es/isString';
-import * as React from 'react';
 import {useCallback} from 'react';
 
 import {useBem} from '../../../../src/hooks';

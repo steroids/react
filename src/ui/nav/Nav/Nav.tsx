@@ -3,7 +3,7 @@ import _has from 'lodash-es/has';
 import __isEmpty from 'lodash-es/isEmpty';
 import _isFunction from 'lodash-es/isFunction';
 import _isObject from 'lodash-es/isObject';
-import React, {ComponentType, useCallback, useEffect, useMemo, useState} from 'react';
+import {ComponentType, useCallback, useEffect, useMemo, useState} from 'react';
 
 import {useComponents, useSelector} from '../../../hooks';
 import {

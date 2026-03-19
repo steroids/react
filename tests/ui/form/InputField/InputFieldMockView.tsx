@@ -1,6 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import * as React from 'react';
-
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
 import {IInputFieldViewProps} from '../../../../src/ui/form/InputField/InputField';

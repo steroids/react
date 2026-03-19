@@ -1,14 +1,13 @@
 import _uniqueId from 'lodash-es/uniqueId';
-import * as React from 'react';
 
 import useUniqueId from '../../src/hooks/useUniqueId';
 import mountWithApp from '../mocks/mountWithApp';
 
 function MockResultComponent(props: any) {
-  return <div />;
+    return <div />;
 }
 function MockComponent(prefix: string) {
-  return <MockResultComponent uniqueId={useUniqueId(prefix)} />;
+    return <MockResultComponent uniqueId={useUniqueId(prefix)} />;
 }
 
 jest.mock('lodash-es/uniqueId', () => ({

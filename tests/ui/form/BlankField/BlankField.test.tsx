@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import React from 'react';
 
 import BlankField from '../../../../src/ui/form/BlankField';
 import InputField from '../../../../src/ui/form/InputField';

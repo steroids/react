@@ -6,11 +6,11 @@ import _has from 'lodash-es/has';
 import _indexOf from 'lodash-es/indexOf';
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
-import React from 'react';
+import {ReactElement} from 'react';
 
 import {ACTIVE_STATUS, ERROR_STATUS, FINISH_STATUS, WAIT_STATUS} from '../../list/Steps/Steps';
 
-const getComponentAttributes = (component: React.ReactElement[] | React.ReactElement, index: number) => {
+const getComponentAttributes = (component: ReactElement[] | ReactElement, index: number) => {
     const componentAttributesStepMap: Record<string, number> = {};
 
     if (Array.isArray(component)) {

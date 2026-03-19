@@ -1,5 +1,3 @@
-import React from 'react';
-
 import CheckboxField, {ICheckboxFieldProps} from '../CheckboxField/CheckboxField';
 
 /**
@@ -16,7 +14,7 @@ function RadioField(props: IRadioFieldProps): JSX.Element {
     return (
         <CheckboxField
             multiply={false}
-            view="form.RadioFieldView"
+            view='form.RadioFieldView'
             {...props}
         />
     );

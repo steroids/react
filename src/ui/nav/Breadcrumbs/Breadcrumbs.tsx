@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {ReactElement, useMemo} from 'react';
 
 import {useComponents, useSelector} from '../../../hooks';
 import {getRouteBreadcrumbs, getRouteParams} from '../../../reducers/router';
@@ -55,7 +55,7 @@ export interface IBreadcrumbsProps {
     /**
      * Кастомная иконка, заменяющая первый роут
      */
-    customIcon?: string | React.ReactElement,
+    customIcon?: CustomIcon,
 
     /**
      * Переопределение view React компонента для кастомизации отображения

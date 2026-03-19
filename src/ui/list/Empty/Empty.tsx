@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {memo, ReactNode} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -17,7 +17,7 @@ export interface IEmptyProps extends IUiComponent{
      * Текст заглушки
      * @example 'Записи не найдены'
      */
-    text?: string | React.ReactNode,
+    text?: string | ReactNode,
 
     [key: string]: any,
 }
@@ -50,4 +50,4 @@ export const normalizeEmptyProps = props => ({
     ),
 });
 
-export default React.memo(Empty);
+export default memo(Empty);

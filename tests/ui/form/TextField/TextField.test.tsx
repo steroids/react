@@ -1,5 +1,5 @@
 import {fireEvent} from '@testing-library/dom';
-import React from 'react';
+import {createRef} from 'react';
 
 import '@testing-library/jest-dom';
 
@@ -9,7 +9,7 @@ import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../
 
 describe('TextField tests', () => {
     const externalClassName = 'TextFieldExternalClass';
-    const inputRef = React.createRef<HTMLTextAreaElement>();
+    const inputRef = createRef<HTMLTextAreaElement>();
 
     const props: ITextFieldViewProps = {
         inputProps: {
@@ -73,7 +73,7 @@ describe('TextField tests', () => {
         const mockedOnChange = jest.fn();
         const mockedOnKeyUp = jest.fn();
         const mockedOnClear = jest.fn();
-        const actionInputRef = React.createRef<HTMLTextAreaElement>();
+        const actionInputRef = createRef<HTMLTextAreaElement>();
 
         const actionProps: ITextFieldViewProps = {
             inputProps: {

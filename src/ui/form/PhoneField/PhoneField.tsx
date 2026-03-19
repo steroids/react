@@ -20,7 +20,7 @@ export interface ICountryPhoneMask extends IDropDownFieldItem{
  * Автоматически форматирует введенный номер в соответствии с выбранной маской.
  *
  */
-interface IPhoneFieldProps extends IFieldWrapperInputProps, IBaseFieldProps {
+interface IPhoneFieldProps extends IFieldWrapperInputProps, IFieldWrapperOutputProps, IBaseFieldProps {
     /**
      * Список доступных масок для телефонных номеров разных стран.
      * Каждая маска определяет формат отображения номера.
@@ -47,7 +47,7 @@ export interface IPhoneFieldViewProps extends IPhoneFieldProps, IFieldWrapperOut
     dropDownProps: IPhoneFieldDropdownProps,
 }
 
-function PhoneField(props: IPhoneFieldProps & IFieldWrapperOutputProps): JSX.Element {
+function PhoneField(props: IPhoneFieldProps): JSX.Element {
     const components = useComponents();
 
     const [selectedCountryCode, setSelectedCountryCode] = React.useState<string>(props.initialCountryCode.toUpperCase());

@@ -38,11 +38,7 @@ export function createAxiosError(
 
     error.name = 'AxiosError';
     error.config = config;
-    if (apiErrorPayload.statusCode >= 400 && apiErrorPayload.statusCode < 500) {
-        error.code = 'ERR_BAD_REQUEST';
-    } else if (apiErrorPayload.statusCode >= 500) {
-        error.code = 'ERR_BAD_RESPONSE';
-    }
+    error.code = undefined;
     error.request = {};
     error.response = response;
     error.isAxiosError = true;

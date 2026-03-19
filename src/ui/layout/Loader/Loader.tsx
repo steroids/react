@@ -26,8 +26,8 @@ export type ILoaderViewProps = ILoaderProps;
 
 export default function Loader(props: ILoaderProps): JSX.Element {
     const viewProps = useMemo(() => ({
-        size: 'md',
-        color: 'primary',
+        size: 'sm',
+        color: 'gradient',
         ...props,
     }), [props]);
 

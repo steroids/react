@@ -1,5 +1,19 @@
 # Changelog
 
+## v3.1.0 (21.03.2026)
+
+### Added
+
+- Breaking change: В tsconfig.json изменена настройка: вместо `"jsx": "react"` теперь `"jsx": "react-jsx"`. Это переводит проект на новый JSX-трансформ из React (17+). Больше не требуется импорт React в файлах с JSX. Для корректной работы нужно: 1. Обновить на проектах в `tsconfig.json`, `"jsx": "react"` на `"jsx": "react-jsx"`. 2. Обновить версию `@steroidsjs/eslint-config` до `3.0.5`, следуя [Migration Guide](https://github.com/steroids/eslint-config/blob/main/MIGRATION_GUIDE_FRONTEND.md)
+- Расширен функционал `HttpComponent`: в http методы (`send`, `delete`, `post`) добавлена возможность пробрасывать query-параметры
+- Удалена deprecated функция `getCheckedIds`
+- Компонент `Form` покрыт тестами
+- Добавлено автоматическое обновление настроек для `List` и `Grid` при обновлении пропсов
+
+### Fixed
+
+- Исправлена типизация возвращаемого значения хука `useFetch`
+
 ## v3.0.96 (14.03.2026)
 
 ### Fixed

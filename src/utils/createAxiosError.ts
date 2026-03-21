@@ -1,9 +1,10 @@
-import {IFetchConfig} from '@steroidsjs/core/hooks/useFetch';
 import {
     AxiosError,
     AxiosRequestConfig,
     AxiosResponse,
 } from 'axios';
+
+import {IFetchConfig} from '../hooks/useFetch';
 
 export interface IApiErrorPayload {
     statusCode: number,
@@ -12,7 +13,7 @@ export interface IApiErrorPayload {
     errors?: Record<string, unknown>,
 }
 
-export function createAxiosError(
+export default function createAxiosError(
     apiErrorPayload: IApiErrorPayload,
     fetchConfig: IFetchConfig,
 ): AxiosError<IApiErrorPayload> {
@@ -38,7 +39,6 @@ export function createAxiosError(
 
     error.name = 'AxiosError';
     error.config = config;
-    error.code = undefined;
     error.request = {};
     error.response = response;
     error.isAxiosError = true;

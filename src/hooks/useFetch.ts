@@ -1,10 +1,10 @@
-import {createAxiosError} from '@steroidsjs/core/utils/createAxiosError';
 import axios, {AxiosError, Method} from 'axios';
 import _trim from 'lodash-es/trim';
 import {useCallback, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
 
 import {IComponents} from '../providers/ComponentsProvider';
+import createAxiosError from '../utils/createAxiosError';
 
 import {useComponents, useSsr} from './index';
 

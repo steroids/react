@@ -50,7 +50,7 @@ export default function TwoFactorModal(props: ITwoFactorModalProps): JSX.Element
         url: `/api/v1/auth/2fa/${props.providerName}/send`,
     });
 
-    if (!data || 'statusCode' in data) {
+    if (!data) {
         return null;
     }
 

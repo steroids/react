@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.1.3 (22.03.2026)
+
+### Fixed
+
+- Исправлена типизация config в createAxiosError
+
 ## v3.1.2 (22.03.2026)
 
 ### Fixed

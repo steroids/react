@@ -1,4 +1,4 @@
-import axios, {AxiosError, Method} from 'axios';
+import axios, {AxiosError} from 'axios';
 import _trim from 'lodash-es/trim';
 import {useCallback, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
@@ -18,7 +18,7 @@ declare global {
 export interface IFetchConfig {
     id?: string | number,
     url?: string,
-    method?: Method,
+    method?: 'get' | 'post' | string,
     params?: Record<string, unknown>,
     /**
      * Применяется для ssr. Если fetch критический — ssr вернет страницу со статус кодом ошибки.

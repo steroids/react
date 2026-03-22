@@ -1,7 +1,7 @@
 import {
     AxiosError,
     AxiosRequestConfig,
-    AxiosResponse,
+    AxiosResponse, Method,
 } from 'axios';
 
 import {IFetchConfig} from '../hooks/useFetch';
@@ -23,7 +23,7 @@ export default function createAxiosError(
 
     const config: AxiosRequestConfig = {
         url: fetchConfig.url,
-        method: fetchConfig.method,
+        method: fetchConfig.method as Method,
         params: fetchConfig.params ?? {},
     };
 

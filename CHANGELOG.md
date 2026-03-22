@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.1.2 (22.03.2026)
+
+### Fixed
+
+- Исправлена типизация method в IFetchConfig
+
 ## v3.1.1 (21.03.2026)
 
 ### Fixed

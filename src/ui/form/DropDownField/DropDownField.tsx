@@ -1,17 +1,18 @@
-import React, {MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {usePrevious, useUpdateEffect} from 'react-use';
-import _isEqual from 'lodash-es/isEqual';
-import _isEmpty from 'lodash-es/isEmpty';
 import _includes from 'lodash-es/includes';
+import _isEmpty from 'lodash-es/isEmpty';
+import _isEqual from 'lodash-es/isEqual';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _merge from 'lodash-es/merge';
-import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
+import {MutableRefObject, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {usePrevious, useUpdateEffect} from 'react-use';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
 import {IDropDownProps} from '../../content/DropDown/DropDown';
-import {FieldEnum} from '../../../enums';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
 export const GROUP_CONTENT_TYPE = 'group';
 export const CHECKBOX_CONTENT_TYPE = 'checkbox';
@@ -43,7 +44,7 @@ export interface IDropDownFieldItem {
     * Источник контента
     * @example 'https://steroids.kozhindev.com/images/icon.png'
     */
-    contentSrc?: string | React.ReactElement,
+    contentSrc?: string | ReactElement,
 }
 
 export interface IDropDownFieldItemViewProps extends IAccordionItemViewProps,
@@ -87,7 +88,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Цвет состояния
      * @example success
      */
-    color?: ColorName,
+    color?: 'basic' | 'primary' | 'secondary' | 'warning' | 'danger' | 'info' | 'success' | string,
 
     /**
     * Включает стиль `outline`, когда у DropDownField остается только `border`, а задний фон становится прозрачным
@@ -123,7 +124,7 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      */
     itemsContent?: {
         type: ContentType | string,
-        src?: string | React.ReactElement,
+        src?: string | ReactElement,
     },
 
     /**
@@ -258,7 +259,7 @@ export interface IDropDownFieldViewProps extends IDropDownFieldProps {
 }
 
 const normalizeItemToSelectAll = (
-    itemToSelectAll: boolean | {label: string, id: string,},
+    itemToSelectAll: boolean | {label: string, id: string},
 ) => {
     if (!itemToSelectAll) {
         return null;
@@ -288,9 +289,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const inputRef = useRef<HTMLInputElement>(null);
 
     const hasGroup = !!props.groupAttribute;
-    const [selectedAccordionItems, setSelectedAccordionItems] = React.useState<number[]>([]);
+    const [selectedAccordionItems, setSelectedAccordionItems] = useState<number[]>([]);
 
-    const normalizedItemToSelectAll = React.useMemo(
+    const normalizedItemToSelectAll = useMemo(
         () => normalizeItemToSelectAll(props.itemToSelectAll),
         [props.itemToSelectAll],
     );
@@ -453,7 +454,7 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
     const renderItemView = (
         item: IDropDownFieldItem,
         type: ItemSwitchType,
-        src: string | React.ReactElement,
+        src: string | ReactElement,
     ) => components.ui.renderView(props.itemView || 'form.DropDownFieldItemView', {
         item: {
             ...item,

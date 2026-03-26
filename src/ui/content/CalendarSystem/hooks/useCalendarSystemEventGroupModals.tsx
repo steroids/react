@@ -1,11 +1,12 @@
-import {useDispatch} from 'react-redux';
 import _maxBy from 'lodash-es/maxBy';
-import React from 'react';
-import {useTheme} from '../../../../hooks';
+import {useCallback, useMemo} from 'react';
+import {useDispatch} from 'react-redux';
+
 import {openModal} from '../../../../actions/modal';
+import {useTheme} from '../../../../hooks';
 import useComponents from '../../../../hooks/useComponents';
-import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewProps, IEventGroup} from '../CalendarSystem';
 import {IModalProps} from '../../../modal/Modal/Modal';
+import {CalendarSystemEventGroupModalFields, CalendarSystemEventGroupModalViewProps, IEventGroup} from '../CalendarSystem';
 
 const DEFAULT_ID = 1;
 const PRIMARY_LIGHT = '#651fff';
@@ -22,9 +23,9 @@ export const useCalendarSystemEventGroupModals = (
 
     const calendarModalView = eventGroupModalProps?.component || components.ui.getView('content.CalendarSystemEventGroupModalView');
 
-    const defaultEventGroupColor = React.useMemo(() => theme === 'light' ? PRIMARY_LIGHT : PRIMARY_DARK, [theme]);
+    const defaultEventGroupColor = useMemo(() => theme === 'light' ? PRIMARY_LIGHT : PRIMARY_DARK, [theme]);
 
-    const onSubmit = React.useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
+    const onSubmit = useCallback((fields: Record<CalendarSystemEventGroupModalFields, string>) => {
         const newEventGroup: IEventGroup = {
             id: (_maxBy(innerEventGroups, eventsGroup => eventsGroup.id)?.id || DEFAULT_ID) + 1,
             label: fields.label,
@@ -35,7 +36,7 @@ export const useCalendarSystemEventGroupModals = (
         setInnerEventGroups(prev => [...prev, newEventGroup]);
     }, [innerEventGroups, setInnerEventGroups]);
 
-    const openCreateEventGroupModal = React.useCallback(() => {
+    const openCreateEventGroupModal = useCallback(() => {
         dispatch(openModal(calendarModalView, {
             isCreate: true,
             onEventGroupSubmit: onSubmit,

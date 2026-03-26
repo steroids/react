@@ -1,7 +1,8 @@
-import React, {memo} from 'react';
+import {memo} from 'react';
+
 import useBem from '../../../../../src/hooks/useBem';
-import Title from '../../../../../src/ui/typography/Title/Title';
 import {Button} from '../../../../../src/ui/form';
+import Title from '../../../../../src/ui/typography/Title/Title';
 
 interface IAsideHeaderProps {
     onClick?: () => void,
@@ -18,13 +19,13 @@ function AsideHeader(props: IAsideHeaderProps) {
         )}
         >
             <Title
-                content="Календарь"
+                content='Календарь'
                 className={bem.element('title')}
             />
             <Button
-                icon="mockIcon"
-                size="sm"
-                label="Создать"
+                icon='mockIcon'
+                size='sm'
+                label='Создать'
                 className={bem.element('create')}
                 onClick={props.onClick}
             />

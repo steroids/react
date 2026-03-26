@@ -1,39 +1,37 @@
 /* eslint-disable consistent-return */
-import * as React from 'react';
+import {useCallback} from 'react';
 
-import {Link} from '../../../../src/ui/nav';
-import {IHeaderViewProps} from '../../../../src/ui/layout/Header/Header';
-import Nav from '../../../../src/ui/nav/Nav';
+import {openModal} from '../../../../src/actions/modal';
 import {useBem, useDispatch} from '../../../../src/hooks';
-import {Button} from '../../../../src/ui/form';
-import Text from '../../../../src/ui/typography/Text/Text';
 import Avatar from '../../../../src/ui/content/Avatar/Avatar';
 import Icon from '../../../../src/ui/content/Icon/Icon';
 import Menu from '../../../../src/ui/content/Menu/Menu';
-import {openModal} from '../../../../src/actions/modal';
+import {Button} from '../../../../src/ui/form';
+import {IHeaderViewProps} from '../../../../src/ui/layout/Header/Header';
+import {Link} from '../../../../src/ui/nav';
 import {ILinkProps} from '../../../../src/ui/nav/Link/Link';
+import Nav from '../../../../src/ui/nav/Nav';
+import Text from '../../../../src/ui/typography/Text/Text';
 
 export default function HeaderView(props: IHeaderViewProps) {
     const bem = useBem('HeaderView');
     const dispatch = useDispatch();
 
-    const renderAuthBlock = React.useCallback(() => (
-        <>
-            <Button
-                outline
-                color='basic'
-                toRoute={props.auth}
-                className={bem.element('auth-btn')}
-                size={props.size}
-                onClick={() => dispatch(openModal(props.authParams?.modal))}
-            >
-                {__('Войти')}
-            </Button>
-        </>
+    const renderAuthBlock = useCallback(() => (
+        <Button
+            outline
+            color='basic'
+            toRoute={props.auth}
+            className={bem.element('auth-btn')}
+            size={props.size}
+            onClick={() => dispatch(openModal(props.authParams?.modal))}
+        >
+            {__('Войти')}
+        </Button>
 
     ), [bem, dispatch, props.auth, props.authParams?.modal, props.size]);
 
-    const renderUserBlock = React.useCallback(() => {
+    const renderUserBlock = useCallback(() => {
         if (!props.user) {
             return;
         }
@@ -55,7 +53,7 @@ export default function HeaderView(props: IHeaderViewProps) {
         );
     }, [bem, props.size, props.user]);
 
-    const renderBurger = React.useCallback(() => (
+    const renderBurger = useCallback(() => (
         <div className={bem.element('burger')}>
             <Icon
                 name={!props.isBurgerOpened ? 'burger' : 'cross_12x12'}

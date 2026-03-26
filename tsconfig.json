@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-	  "jsx": "react",
+	  "jsx": "react-jsx",
 	  "lib": ["dom", "es2020.Intl"],
 	  "experimentalDecorators": true,
 	  "esModuleInterop": true,
@@ -19,12 +19,9 @@
 	  }
 	},
 	"include": [
-	  "src/**/*"
+		"src/**/*",
 	],
 	"exclude": [
 	  "node_modules",
-	  "src/**/*.test.ts",
-	  "src/**/*.test.tsx"
 	]
  }
- 

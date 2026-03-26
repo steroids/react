@@ -12,7 +12,9 @@ describe('kanban getters', () => {
         kanbans: {},
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     const getStateWithWrappedKanbans = (
         kanbans: TKanbanFields = null,
@@ -20,13 +22,17 @@ describe('kanban getters', () => {
     ) => ({
         kanban: {
             ...initialState,
-            kanbans: {...kanbans},
+            kanbans: {
+                ...kanbans,
+            },
             ...extraData,
         },
     });
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     describe('getKanban', () => {
@@ -37,7 +43,9 @@ describe('kanban getters', () => {
                 kanbanId: 'kanbanId',
             };
 
-            const kanbans = {[kanbanId]: kanbanProperties};
+            const kanbans = {
+                [kanbanId]: kanbanProperties,
+            };
             const state = getStateWithWrappedKanbans(kanbans);
             expect(getKanban(state, kanbanId)).toEqual(kanbanProperties);
         });

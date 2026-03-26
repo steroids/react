@@ -1,4 +1,5 @@
-import React from 'react';
+import {ReactNode} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -10,7 +11,7 @@ export interface ITextProps extends IUiComponent {
     /**
     * Дочерние элементы
     */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Тип текста
@@ -27,7 +28,7 @@ export interface ITextProps extends IUiComponent {
      * Цвет текста
      * @example 'primary'
      */
-    color?: ColorName,
+    color?: TypographyColorName,
 
     /** Текст
      * @example 'Simple text'

@@ -1,8 +1,9 @@
-import React, {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
+import {ChangeEvent, KeyboardEventHandler, MutableRefObject, useCallback, useMemo} from 'react';
+
+import {FieldEnum} from '../../../enums';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
-import {FieldEnum} from '../../../enums';
 
 /**
  * TextField
@@ -30,7 +31,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: boolean,
         required: boolean,
-        ref: React.MutableRefObject<any>,
+        ref: MutableRefObject<any>,
     },
     onClear: VoidFunction,
 }

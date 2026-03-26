@@ -23,24 +23,34 @@ describe('router reducers', () => {
         counters: {},
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     const getStateWithRoutesMap = (routesMap: Record<string, any>) => ({
         ...initialState,
-        routesMap: {...routesMap},
+        routesMap: {
+            ...routesMap,
+        },
     });
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
         jest.resetModules();
-        process.env = {...originalEnv};
+        process.env = {
+            ...originalEnv,
+        };
     });
 
     describe('buildUrl', () => {
         const path = '/home/contacts/physics';
 
         it('with params', () => {
-            const params = {search: 'Ivan'};
+            const params = {
+                search: 'Ivan',
+            };
             const expectedUrl = '/home/contacts/physics?search=Ivan';
             expect(buildUrl(path, params)).toBe(expectedUrl);
         });

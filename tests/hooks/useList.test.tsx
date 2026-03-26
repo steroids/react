@@ -1,15 +1,15 @@
 import '@testing-library/jest-dom';
-import * as React from 'react';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import useList, * as listHelpers from '../../src/hooks/useList';
-import * as normalizeEmpty from '../../src/ui/list/Empty/Empty';
-import * as paginationSize from '../../src/ui/list/PaginationSize/PaginationSize';
-import * as pagination from '../../src/ui/list/Pagination/Pagination';
-import * as layoutNames from '../../src/ui/list/LayoutNames/LayoutNames';
-import {renderHook} from '../helpers';
+
 import {listInit, listSetItems} from '../../src/actions/list';
+import useList, * as listHelpers from '../../src/hooks/useList';
 import {defaultConfig} from '../../src/hooks/useList';
+import * as normalizeEmpty from '../../src/ui/list/Empty/Empty';
+import * as layoutNames from '../../src/ui/list/LayoutNames/LayoutNames';
+import * as pagination from '../../src/ui/list/Pagination/Pagination';
+import * as paginationSize from '../../src/ui/list/PaginationSize/PaginationSize';
+import {renderHook} from '../helpers';
 import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const {normalizeSortProps, getDefaultSearchModel} = listHelpers;
@@ -96,13 +96,17 @@ describe('getDefaultSearchModel function', () => {
 
     it('should return a default search model object without disabled attributes', () => {
         const parameters = {
-            paginationProps: {enable: false},
+            paginationProps: {
+                enable: false,
+            },
             paginationSizeProps: {
                 enable: true,
                 attribute: 'pageSize',
                 defaultValue: 10,
             },
-            sort: {enable: false},
+            sort: {
+                enable: false,
+            },
             layoutNamesProps: {
                 enable: true,
                 attribute: 'layout',
@@ -131,10 +135,18 @@ describe('getDefaultSearchModel function', () => {
 
     it('should return an empty array if all parameters are disabled', () => {
         const parameters = {
-            paginationProps: {enable: false},
-            paginationSizeProps: {enable: false},
-            sort: {enable: false},
-            layoutNamesProps: {enable: false},
+            paginationProps: {
+                enable: false,
+            },
+            paginationSizeProps: {
+                enable: false,
+            },
+            sort: {
+                enable: false,
+            },
+            layoutNamesProps: {
+                enable: false,
+            },
         };
         const expectedEmptyAttributes = [];
 
@@ -234,7 +246,9 @@ describe('useList hook', () => {
         const expectedPaginationSizePosition = 'top';
         const expectedLayoutNamesPosition = 'top';
 
-        const {result, rerender} = renderHook(() => useList({listId}), {
+        const {result, rerender} = renderHook(() => useList({
+            listId,
+        }), {
             store: {
                 store,
             },
@@ -279,7 +293,9 @@ describe('useList hook', () => {
         });
         implementMockedUseSelectorWithStore(mockedListStore);
 
-        const {result} = renderHook(() => useList({listId}), {
+        const {result} = renderHook(() => useList({
+            listId,
+        }), {
             store: {
                 store,
             },
@@ -318,7 +334,9 @@ describe('useList hook', () => {
 
         const store = mockStore({});
 
-        renderHook(() => useList({listId}), {
+        renderHook(() => useList({
+            listId,
+        }), {
             store: {
                 store,
             },
@@ -348,19 +366,25 @@ describe('useList hook', () => {
     });
 
     it('should call normalizeSortProps with parameters', () => {
-        renderHook(() => useList({sort: enabledProp}));
+        renderHook(() => useList({
+            sort: enabledProp,
+        }));
 
         expect(normalizeSortPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should call normalizeEmptyProps with parameters', () => {
-        renderHook(() => useList({empty: enabledProp}));
+        renderHook(() => useList({
+            empty: enabledProp,
+        }));
 
         expect(normalizeEmptyPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should return "Empty" component if empty is enabled', () => {
-        const result = renderUseListWithFetchedList({empty: enabledProp});
+        const result = renderUseListWithFetchedList({
+            empty: enabledProp,
+        });
 
         const renderedEmpty = result.current.renderEmpty();
 
@@ -368,7 +392,9 @@ describe('useList hook', () => {
     });
 
     it('should return null component if empty is disabled', () => {
-        const {result} = renderHook(() => useList({empty: disabledProp}));
+        const {result} = renderHook(() => useList({
+            empty: disabledProp,
+        }));
 
         const renderedEmpty = result.current.renderEmpty();
 
@@ -376,13 +402,17 @@ describe('useList hook', () => {
     });
 
     it('should call normalizePaginationSizeProps with parameters', () => {
-        renderHook(() => useList({paginationSize: enabledProp}));
+        renderHook(() => useList({
+            paginationSize: enabledProp,
+        }));
 
         expect(normalizePaginationSizePropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should return "PaginationSize" component if pagination size is enabled', () => {
-        const result = renderUseListWithFetchedList({paginationSize: enabledProp});
+        const result = renderUseListWithFetchedList({
+            paginationSize: enabledProp,
+        });
 
         const renderedPaginationSize = result.current.renderPaginationSize();
 
@@ -390,7 +420,9 @@ describe('useList hook', () => {
     });
 
     it('should return null if pagination size is disabled', () => {
-        const {result} = renderHook(() => useList({paginationSize: disabledProp}));
+        const {result} = renderHook(() => useList({
+            paginationSize: disabledProp,
+        }));
 
         const renderedPaginationSize = result.current.renderPaginationSize();
 
@@ -398,13 +430,17 @@ describe('useList hook', () => {
     });
 
     it('should call normalizePaginationProps with parameters', () => {
-        renderHook(() => useList({pagination: enabledProp}));
+        renderHook(() => useList({
+            pagination: enabledProp,
+        }));
 
         expect(normalizePaginationPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should return "Pagination" component if pagination is enabled', () => {
-        const result = renderUseListWithFetchedList({pagination: enabledProp});
+        const result = renderUseListWithFetchedList({
+            pagination: enabledProp,
+        });
 
         const renderedPagination = result.current.renderPagination();
 
@@ -412,7 +448,9 @@ describe('useList hook', () => {
     });
 
     it('should return null if pagination is disabled', () => {
-        const {result} = renderHook(() => useList({pagination: disabledProp}));
+        const {result} = renderHook(() => useList({
+            pagination: disabledProp,
+        }));
 
         const renderedPagination = result.current.renderPagination();
 
@@ -420,13 +458,17 @@ describe('useList hook', () => {
     });
 
     it('should call normalizeLayoutNamesProps with parameters', () => {
-        renderHook(() => useList({layout: enabledProp}));
+        renderHook(() => useList({
+            layout: enabledProp,
+        }));
 
         expect(normalizeLayoutNamesPropsSpy).toHaveBeenCalledWith(enabledProp);
     });
 
     it('should render "LayoutNames"', () => {
-        const {result} = renderHook(() => useList({layout: enabledProp}));
+        const {result} = renderHook(() => useList({
+            layout: enabledProp,
+        }));
 
         const renderedLayoutNames = result.current.renderLayoutNames();
 
@@ -434,7 +476,9 @@ describe('useList hook', () => {
     });
 
     it('should render a search form', () => {
-        const {result} = renderHook(() => useList({listId}));
+        const {result} = renderHook(() => useList({
+            listId,
+        }));
 
         const renderedSearchForm = result.current.renderSearchForm();
 
@@ -442,7 +486,9 @@ describe('useList hook', () => {
     });
 
     it('should call createInitialValues', () => {
-        renderHook(() => useList({listId}));
+        renderHook(() => useList({
+            listId,
+        }));
 
         expect(createInitialValuesSpy).toHaveBeenCalled();
     });
@@ -450,7 +496,9 @@ describe('useList hook', () => {
     it('should return "renderList" handler to render "Form" component', () => {
         const mockedChildNode = <div />;
 
-        const {result} = renderHook(() => useList({listId}));
+        const {result} = renderHook(() => useList({
+            listId,
+        }));
 
         const {renderList} = result.current;
         const renderedList = renderList(mockedChildNode);
@@ -469,7 +517,9 @@ describe('useList hook', () => {
     });
 
     it('should call "getDefaultSearchModel"', () => {
-        renderHook(() => useList({listId}));
+        renderHook(() => useList({
+            listId,
+        }));
 
         expect(getDefaultSearchModelSpy).toHaveBeenCalled();
     });

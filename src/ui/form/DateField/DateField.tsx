@@ -1,15 +1,16 @@
-import React, {useMemo} from 'react';
 import {MaskitoOptions} from '@maskito/core';
-import {useMaskito} from '@maskito/react';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
+import {useMaskito} from '@maskito/react';
 import {IAbsolutePositioningInputProps} from '@steroidsjs/core/hooks/useAbsolutePositioning';
-import {ICalendarProps} from '../../content/Calendar/Calendar';
-import {useComponents} from '../../../hooks';
+import {RefCallback, useMemo} from 'react';
+
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
+import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
+import {ICalendarProps} from '../../content/Calendar/Calendar';
 import fieldWrapper, {
     IFieldWrapperOutputProps,
 } from '../../form/Field/fieldWrapper';
-import {FieldEnum} from '../../../enums';
 
 /**
  * DateField
@@ -54,7 +55,7 @@ export interface IDateFieldViewProps extends IDateInputStateOutput,
     /**
      * Ref для input элемента, который накладывает маску
      */
-    maskInputRef?: React.RefCallback<HTMLElement>,
+    maskInputRef?: RefCallback<HTMLElement>,
 
     [key: string]: any,
 }

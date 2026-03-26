@@ -1,8 +1,9 @@
-import React, {useCallback, useMemo} from 'react';
-import {IFileFieldProps} from '../../form/FileField/FileField';
-import {useComponents} from '../../../hooks';
-import {IAvatarProps} from '../Avatar/Avatar';
+import {ReactNode, useCallback, useMemo} from 'react';
+
 import useChat, {IGroupedMessagesByDates} from './hooks/useChat';
+import {useComponents} from '../../../hooks';
+import {IFileFieldProps} from '../../form/FileField/FileField';
+import {IAvatarProps} from '../Avatar/Avatar';
 
 export interface IChatUser {
     id: number,
@@ -96,7 +97,7 @@ export interface IChatProps extends IUiComponent {
      * Переопределение view React компонента для кастомизации отображения элемента инпута
      * @example MyCustomView
      */
-    customChatInputView?: React.ReactNode,
+    customChatInputView?: ReactNode,
 
     /**
      * Кастомный placeholder для инпута

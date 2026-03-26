@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-undef */
-import React from 'react';
-import _omit from 'lodash-es/omit';
-import _isEmpty from 'lodash-es/isEmpty';
-import Modal from '../../../../src/ui/modal/Modal';
+import {useMemo} from 'react';
+
+import useBem from '../../../../src/hooks/useBem';
 import {
     CalendarSystemModalFields,
     IEventInitialValues,
     ICalendarSystemModalViewProps,
 } from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import {InputField, Form, DropDownField, DateTimeField, TextField} from '../../../../src/ui/form';
+import Modal from '../../../../src/ui/modal/Modal';
 import Text from '../../../../src/ui/typography/Text/Text';
-import useBem from '../../../../src/hooks/useBem';
 
 export default function CalendarSystemModalView(props: ICalendarSystemModalViewProps) {
     const bem = useBem('CalendarSystemModalView');
 
-    const eventInitialValues: IEventInitialValues = React.useMemo(() => props.eventInitialValues, [props.eventInitialValues]);
+    const eventInitialValues: IEventInitialValues = useMemo(() => props.eventInitialValues, [props.eventInitialValues]);
 
     const callOnEventSubmit = (fields: Record<CalendarSystemModalFields, string>) =>
         eventInitialValues && !props.isCreate ? props.onEventSubmit(fields, eventInitialValues) : props.onEventSubmit(fields);
@@ -43,7 +42,7 @@ export default function CalendarSystemModalView(props: ICalendarSystemModalViewP
             >
                 <div>
                     <Text
-                        content="Наименование"
+                        content='Наименование'
                         className={bem.element('label')}
                     />
                     <InputField
@@ -55,7 +54,7 @@ export default function CalendarSystemModalView(props: ICalendarSystemModalViewP
                         attribute='eventGroupId'
                         items={props.eventGroups}
                         placeholder='Группа'
-                        color="primary"
+                        color='primary'
                         required
                         itemsContent={{
                             type: 'checkbox',
@@ -64,7 +63,7 @@ export default function CalendarSystemModalView(props: ICalendarSystemModalViewP
                 </div>
                 <div>
                     <Text
-                        content="Время и дата"
+                        content='Время и дата'
                         className={bem.element('label')}
                     />
                     <DateTimeField
@@ -74,7 +73,7 @@ export default function CalendarSystemModalView(props: ICalendarSystemModalViewP
                 </div>
                 <div>
                     <Text
-                        content="Описание"
+                        content='Описание'
                         className={bem.element('label')}
                     />
                     <TextField

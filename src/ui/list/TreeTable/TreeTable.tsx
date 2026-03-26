@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {useCallback, useMemo} from 'react';
-import _merge from 'lodash-es/merge';
-import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
+import {useComponents} from '@steroidsjs/core/hooks';
 import Format from '@steroidsjs/core/ui/format/Format';
 import ControlsColumn from '@steroidsjs/core/ui/list/ControlsColumn';
-import _upperFirst from 'lodash-es/upperFirst';
+import {ITreeProps} from '@steroidsjs/core/ui/nav/Tree/Tree';
 import _isString from 'lodash-es/isString';
-import {useComponents} from '@steroidsjs/core/hooks';
+import _merge from 'lodash-es/merge';
+import _upperFirst from 'lodash-es/upperFirst';
+import {ReactElement, useCallback, useMemo} from 'react';
+
+import useList from '../../../hooks/useList';
 import useTree, {IPreparedTreeItem, ITreeItem} from '../../../hooks/useTree';
 import {IColumnViewProps, IGridColumn, IGridProps} from '../Grid/Grid';
-import useList from '../../../hooks/useList';
 
 export interface ITreeColumnViewProps extends IColumnViewProps, Pick<ITreeTableProps, 'levelPadding' | 'customIcon' > {
     item: IPreparedTreeItem,
@@ -49,7 +49,7 @@ export interface ITreeTableProps extends Omit<IGridProps, 'items' | 'itemsIndexi
      * Кастомная иконка для сворачивания элементов
      * @example 'arrow'
      */
-    customIcon?: string | React.ReactElement,
+    customIcon?: CustomIcon,
 
     /**
      * Ключ для доступа к вложенным элементам узла
@@ -65,7 +65,7 @@ const TREE_COLUMN_VIEW_FIELDS = {
     headerClassName: 'TreeColumnHeader',
 };
 
-export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon?: string | React.ReactElement) => {
+export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPadding: string | number, customIcon?: string | ReactElement) => {
     const newColumns = [...columns];
 
     // Add tree view to the first column
@@ -218,7 +218,9 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
                 },
                 visible: !!props.controls,
             })
-            .map(column => (_isString(column) ? {attribute: column} : column))
+            .map(column => (_isString(column) ? {
+                attribute: column,
+            } : column))
             .filter((column: IGridColumn) => column.visible !== false)
             .map(column => ({
                 ...column,

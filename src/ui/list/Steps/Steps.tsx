@@ -1,5 +1,6 @@
-import React, {useState, useEffect, useCallback} from 'react';
 import _range from 'lodash-es/range';
+import {useState, useEffect, useCallback, ReactNode} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -13,12 +14,12 @@ export interface IStepsProps extends IUiComponent {
     onChange?: (index: number) => void,
     showDivider?: boolean,
     stepTitleOrientation?: Orientation,
-    stepItemView?: React.ReactNode,
+    stepItemView?: ReactNode,
 }
 
 export interface IStepsViewProps {
     className?: CssClassName,
-    children?: React.ReactNode,
+    children?: ReactNode,
 }
 
 export interface IStepItemViewProps extends Pick<IStepsProps, 'showDivider' | 'stepTitleOrientation' | 'onChange'>, IUiComponent {
@@ -35,7 +36,7 @@ export interface IStepItem {
     subtitle?: string,
     description?: string,
     status?: string,
-    icon?: string | React.ReactNode,
+    icon?: string | ReactNode,
     isError?: boolean,
 }
 
@@ -70,7 +71,8 @@ export default function Steps(props: IStepsProps): JSX.Element {
 
     useEffect(() => setIsChangeable(props.isChangeable), [props.isChangeable]);
 
-    const toStep = useCallback((stepItem, index) => components.ui.renderView(props.stepItemView || 'list.StepItemView',
+    const toStep = useCallback((stepItem, index) => components.ui.renderView(
+        props.stepItemView || 'list.StepItemView',
         {
             key: stepItem.id,
             stepItem,
@@ -84,7 +86,8 @@ export default function Steps(props: IStepsProps): JSX.Element {
                     props.onChange(index);
                 }
             },
-        }), [components.ui, isChangeable, props]);
+        },
+    ), [components.ui, isChangeable, props]);
 
     return components.ui.renderView(props.view || 'list.StepsView', {
         className: props.className,

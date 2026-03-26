@@ -1,12 +1,11 @@
-import React, {useCallback} from 'react';
-import {useMount} from 'react-use';
 import {IHtmlFieldProps} from '@steroidsjs/core/ui/form/HtmlField/HtmlField';
-import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
+import {useCallback, useMemo} from 'react';
+import {useMount} from 'react-use';
+
 import {closeModal, openModal} from '../../../../actions/modal';
 import {useSelector, useDispatch, useComponents} from '../../../../hooks';
+import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
 import {IDragEndResult, IKanbanColumn, IKanbanTask, ITaskAssigner, ITaskTag} from '../Kanban';
-import {KanbanModalTypeEnum, KanbanPrioritiesEnum} from '../enums';
-import {getKanban, getKanbanTags, getLastTaskId} from '../reducers';
 import {
     kanbanInit,
     kanbanMoveTask,
@@ -21,6 +20,8 @@ import {
     EDIT_TASK_FORM_ID,
     EDIT_TASK_MODAL_ID,
 } from '../constants/modalAndFormIds';
+import {KanbanModalTypeEnum, KanbanPrioritiesEnum} from '../enums';
+import {getKanban, getKanbanTags, getLastTaskId} from '../reducers';
 
 export interface IKanbanConfig {
     /**
@@ -148,7 +149,7 @@ export default function useKanban(config: IKanbanConfig) {
 
     const components = useComponents();
 
-    const onCreateTask = React.useCallback((_, data) => {
+    const onCreateTask = useCallback((_, data) => {
         const newTaskId = lastTaskId ? lastTaskId + 1 : INITIAL_TASK_ID;
         const newTask = normalizeEditTaskFormForState(newTaskId, data, config.assigners, tags);
 
@@ -165,7 +166,7 @@ export default function useKanban(config: IKanbanConfig) {
         dispatch(toDispatch);
     }, [config, dispatch, lastTaskId, tags]);
 
-    const onEditTask = React.useCallback((id, data, prevColumnId) => {
+    const onEditTask = useCallback((id, data, prevColumnId) => {
         const editedTask = normalizeEditTaskFormForState(id, data, config.assigners, tags);
 
         if (config.onEditTask) {
@@ -182,7 +183,7 @@ export default function useKanban(config: IKanbanConfig) {
 
     // common modal
     const KanbanModalView = components.ui.getView('content.KanbanModalView');
-    const createOrEditTaskCommonModalProps = React.useMemo(() => ({
+    const createOrEditTaskCommonModalProps = useMemo(() => ({
         createTaskEditorConfig: config.createTaskEditorConfig,
         columns: kanban?.columns,
         assigners: normalizeAssignersForDropDownItems(config.assigners || []),
@@ -190,7 +191,7 @@ export default function useKanban(config: IKanbanConfig) {
     }), [config.createTaskEditorConfig, config.assigners, kanban?.columns, tags]);
 
     // create task modal
-    const onOpenCreateTaskModal = React.useCallback((columnId) => {
+    const onOpenCreateTaskModal = useCallback((columnId) => {
         if (columnId) {
             dispatch(openModal(KanbanModalView, {
                 ...createOrEditTaskCommonModalProps,
@@ -205,7 +206,7 @@ export default function useKanban(config: IKanbanConfig) {
     }, [KanbanModalView, createOrEditTaskCommonModalProps, dispatch, onCreateTask]);
 
     // task details modal
-    const onOpenTaskDetailsModal = React.useCallback((task, columnId) => {
+    const onOpenTaskDetailsModal = useCallback((task, columnId) => {
         if (task && columnId) {
             dispatch(openModal(KanbanModalView, {
                 modalId: EDIT_TASK_MODAL_ID,
@@ -220,7 +221,7 @@ export default function useKanban(config: IKanbanConfig) {
     }, [KanbanModalView, dispatch, kanban]);
 
     // edit task modal
-    const onOpenEditTaskModal = React.useCallback((task, columnId) => {
+    const onOpenEditTaskModal = useCallback((task, columnId) => {
         if (task && columnId) {
             dispatch(openModal(KanbanModalView, {
                 ...createOrEditTaskCommonModalProps,

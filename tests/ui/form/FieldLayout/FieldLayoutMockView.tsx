@@ -1,8 +1,8 @@
-import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
-import {IFieldLayoutViewProps} from '../../../../src/ui/form/FieldLayout/FieldLayout';
+
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
+import {IFieldLayoutViewProps} from '../../../../src/ui/form/FieldLayout/FieldLayout';
 import IconMockView from '../../content/Icon/IconMockView';
 
 export default function FieldLayoutView(props: IFieldLayoutViewProps) {
@@ -32,14 +32,16 @@ export default function FieldLayoutView(props: IFieldLayoutViewProps) {
                             >
                                 <Icon
                                     view={IconMockView}
-                                    name="mockIcon"
+                                    name='mockIcon'
                                     className={bem.element('icon_error')}
                                     tabIndex={-1}
                                 />
-                                <span className={bem.element('error-text',
+                                <span className={bem.element(
+                                    'error-text',
                                     {
                                         size: props.size || 'md',
-                                    })}
+                                    },
+                                )}
                                 >
                                     {error}
 
@@ -50,7 +52,10 @@ export default function FieldLayoutView(props: IFieldLayoutViewProps) {
                 )}
 
                 {_isEmpty(props.errors) && props.hint && (
-                    <div className={bem.element('hint', {size: props.size})}>
+                    <div className={bem.element('hint', {
+                        size: props.size,
+                    })}
+                    >
                         {props.hint}
                     </div>
                 )}

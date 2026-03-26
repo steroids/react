@@ -1,9 +1,12 @@
+import axios, {AxiosError} from 'axios';
+import _trim from 'lodash-es/trim';
 import {useCallback, useRef, useState} from 'react';
 import {useUnmount, useUpdateEffect, useEffectOnce} from 'react-use';
-import _trim from 'lodash-es/trim';
-import axios, {AxiosError} from 'axios';
-import {useComponents, useSsr} from './index';
+
 import {IComponents} from '../providers/ComponentsProvider';
+import createAxiosError from '../utils/createAxiosError';
+
+import {useComponents, useSsr} from './index';
 
 declare global {
     interface Window {
@@ -26,12 +29,7 @@ export interface IFetchConfig {
 }
 
 export interface IFetchResult<T> {
-    data?: T | undefined | null | {
-        statusCode: number,
-        error?: string,
-        message?: string,
-        errors?: Record<string, unknown>,
-    },
+    data: T | null,
     isLoading: boolean,
     fetch: (newParams?: Record<string, unknown>) => void,
     axiosError: AxiosError | null,
@@ -137,16 +135,21 @@ export default function useFetch<T = any>(rawConfig: IFetchConfig = null): IFetc
 
         if (config) {
             setIsLoading(true);
-
             try {
-                setData(await fetchData(config, components, addCancelToken));
+                const responseData = await fetchData(config, components, addCancelToken);
+
+                if (responseData?.statusCode && responseData.statusCode >= 400) {
+                    setAxiosError(createAxiosError(responseData, config));
+                } else {
+                    setData(responseData);
+                }
             } catch (error) {
-                if (error.isAxiosError) {
+                if (error?.isAxiosError) {
                     setAxiosError(error);
                 }
+            } finally {
+                setIsLoading(false);
             }
-
-            setIsLoading(false);
         }
     }, [components, config]);
 

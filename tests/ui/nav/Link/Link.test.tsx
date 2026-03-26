@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 import Link, {ILinkProps} from '../../../../src/ui/nav/Link/Link';
+import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
 
 describe('Link tests', () => {
     const expectedLinkClass = 'ButtonView';

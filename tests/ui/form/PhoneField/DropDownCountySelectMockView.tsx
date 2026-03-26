@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
 import {useBem} from '@steroidsjs/core/hooks';
 import {Icon, DropDown} from '@steroidsjs/core/ui/content';
 import {IPhoneFieldDropdownProps} from '@steroidsjs/core/ui/form/PhoneField/PhoneField';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 const INITIAL_PAGE_SIZE = 40;
 const PAGE_SIZE = 40;
@@ -14,21 +14,21 @@ interface IDropDownCountySelectViewProps extends IPhoneFieldDropdownProps {
 
 export default function DropDownCountySelectView(props: IDropDownCountySelectViewProps) {
     const bem = useBem('DropDownCountySelectView');
-    const [visibleCount, setVisibleCount] = React.useState(INITIAL_PAGE_SIZE);
-    const listRef = React.useRef<HTMLDivElement>(null);
+    const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE);
+    const listRef = useRef<HTMLDivElement>(null);
 
     const selectedCountry = props.selectedItems[0] as unknown as any;
     const items = props.items ?? [];
     const visibleItems = items.slice(0, visibleCount);
     const hasMore = visibleCount < items.length;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!props.isOpened) {
             setVisibleCount(INITIAL_PAGE_SIZE);
         }
     }, [props.isOpened]);
 
-    const handleScroll = React.useCallback(() => {
+    const handleScroll = useCallback(() => {
         const el = listRef.current;
         if (!el || !hasMore) {
             return;
@@ -39,7 +39,7 @@ export default function DropDownCountySelectView(props: IDropDownCountySelectVie
         }
     }, [hasMore, items.length]);
 
-    const renderList = React.useCallback(() => (
+    const renderList = useCallback(() => (
         <div
             className={bem.element('drop-down')}
         >
@@ -80,7 +80,7 @@ export default function DropDownCountySelectView(props: IDropDownCountySelectVie
         </div>
     ), [bem, props, visibleItems, handleScroll]);
 
-    const closeIfOpened = React.useCallback(() => {
+    const closeIfOpened = useCallback(() => {
         if (props.isOpened) {
             props.onClose();
         }

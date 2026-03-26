@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {JSXWrapper, render} from '../../../helpers';
-import MaskField from '../../../../src/ui/form/MaskField/MaskField';
 import {MASK_PRESETS} from '../../../../src/ui/form/InputField/InputField';
+import MaskField from '../../../../src/ui/form/MaskField/MaskField';
+import {JSXWrapper, render} from '../../../helpers';
 
 describe('MaskField tests', () => {
     const label = 'mask phone';

@@ -1,30 +1,34 @@
-import * as React from 'react';
 import {act} from 'react-dom/test-utils';
+
 import useDataSelect, {IDataSelectConfig} from '../../src/hooks/useDataSelect';
 import mountWithApp from '../mocks/mountWithApp';
 
-const MockResultComponent = (props: any) => (
-    <div className='list'>
-        {props.items.map(item => (
-            <div
-                key={'id-' + item.id}
-                className={[
-                    'item-' + item.id,
-                    props.hoveredId === item.id && 'hovered',
-                    props.selectedIds.includes(item.id) && 'selected',
-                ]
-                    .filter(Boolean)
-                    .join(' ')}
-            />
-        ))}
-    </div>
-);
-const MockComponent = (props: IDataSelectConfig) => (
-    <MockResultComponent
-        {...props}
-        {...useDataSelect(props)}
-    />
-);
+function MockResultComponent(props: any) {
+    return (
+        <div className='list'>
+            {props.items.map(item => (
+                <div
+                    key={'id-' + item.id}
+                    className={[
+                        'item-' + item.id,
+                        props.hoveredId === item.id && 'hovered',
+                        props.selectedIds.includes(item.id) && 'selected',
+                    ]
+                        .filter(Boolean)
+                        .join(' ')}
+                />
+            ))}
+        </div>
+    );
+}
+function MockComponent(props: IDataSelectConfig) {
+    return (
+        <MockResultComponent
+            {...props}
+            {...useDataSelect(props)}
+        />
+    );
+}
 
 jest.useFakeTimers();
 
@@ -79,7 +83,9 @@ describe('hook useDataSelect', () => {
     });
 
     it('single select, open, hover', async () => {
-        const wrapper = mountWithApp(MockComponent, {items});
+        const wrapper = mountWithApp(MockComponent, {
+            items,
+        });
 
         const {
             setIsOpened,
@@ -144,14 +150,14 @@ describe('hook useDataSelect', () => {
         await act(async () => {
             expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([]);
             expect(wrapper.find('.item-28').hasClass('selected')).toEqual(false);
-
-            setSelectedIds(28); // not-array format
+            // not-array format
+            setSelectedIds(28);
             await (() => new Promise(setImmediate))();
             wrapper.update();
             expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([28]);
             expect(wrapper.find('.item-28').hasClass('selected')).toEqual(true);
-
-            setSelectedIds([52, 28]); // try select multiple
+            // try select multiple
+            setSelectedIds([52, 28]);
             await (() => new Promise(setImmediate))();
             wrapper.update();
             expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([52]);
@@ -175,7 +181,9 @@ describe('hook useDataSelect', () => {
 
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([items[0].id]);
 
-        wrapper.setProps({selectedIds: [33]} as any);
+        wrapper.setProps({
+            selectedIds: [33],
+        } as any);
         await (() => new Promise(setImmediate))();
         wrapper.update();
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([33]);
@@ -183,7 +191,9 @@ describe('hook useDataSelect', () => {
 
     it('custom primary key', () => {
         const wrapper = mountWithApp(MockComponent, {
-            items: [{foo: 'Bar'}],
+            items: [{
+                foo: 'Bar',
+            }],
             primaryKey: 'foo',
             selectFirst: true,
         });
@@ -198,7 +208,9 @@ describe('hook useDataSelect', () => {
         });
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([28]);
 
-        wrapper.setProps({selectFirst: true} as any);
+        wrapper.setProps({
+            selectFirst: true,
+        } as any);
         await (() => new Promise(setImmediate))();
         wrapper.update();
         expect(wrapper.find('MockResultComponent').prop('selectedIds')).toEqual([28]);

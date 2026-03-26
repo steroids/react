@@ -6,12 +6,15 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     if: ${{ contains(github.event.head_commit.message, 'Update version') }}
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: ^14.15.0 || ^16.10.0 || >=18.0.0
+          node-version: '24'
       - run: yarn
       - run: yarn upgrade @steroidsjs/core
       - run: yarn tsc
@@ -20,7 +23,6 @@ jobs:
       - run: cp src/index.d.ts dist/
       - run: cp docs/docs-autogen-result.json dist/
       - run: cp docs/locales/en.json dist/
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v4
         with:
           package: ./dist/package.json
-          token: ${{ secrets.NPM_TOKEN }}

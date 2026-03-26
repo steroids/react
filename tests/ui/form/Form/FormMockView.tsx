@@ -1,12 +1,11 @@
-import * as React from 'react';
 import _isString from 'lodash-es/isString';
-
+import {memo, useRef} from 'react';
 import {useMount} from 'react-use';
-import {useRef} from 'react';
-import {IFormViewProps} from '../../../../src/ui/form/Form/Form';
+
 import {useBem} from '../../../../src/hooks';
-import Field from '../../../../src/ui/form/Field';
 import Button from '../../../../src/ui/form/Button';
+import Field from '../../../../src/ui/form/Field';
+import {IFormViewProps} from '../../../../src/ui/form/Form/Form';
 
 function FormView(props: IFormViewProps) {
     const bem = useBem('FormView');
@@ -38,9 +37,12 @@ function FormView(props: IFormViewProps) {
             {(props.fields || []).map((field: any, index) => (
                 <Field
                     key={index}
-                    {...(_isString(field) ? {attribute: field} : field)}
+                    {...(_isString(field) ? {
+                        attribute: field,
+                    } : field)}
                 />
             ))}
+            {props.buttons}
             {props.submitLabel && (
                 <Button
                     type='submit'
@@ -51,4 +53,4 @@ function FormView(props: IFormViewProps) {
     );
 }
 
-export default React.memo(FormView);
+export default memo(FormView);

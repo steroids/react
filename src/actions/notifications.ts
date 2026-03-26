@@ -24,7 +24,8 @@ export const showNotification = (
         message: string,
         description?: string,
     },
-    level: ColorName = null,
+    // eslint-disable-next-line default-param-last
+    notificationType: AlertColorName = null,
     params?: IShowNotificationParameters,
 ) => dispatch => {
     const {position, timeOut} = {
@@ -37,7 +38,7 @@ export const showNotification = (
         type: NOTIFICATIONS_SHOW,
         id,
         message,
-        level: level || 'success',
+        notificationType: notificationType || 'success',
         position,
     });
 

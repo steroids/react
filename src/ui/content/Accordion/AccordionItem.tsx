@@ -1,5 +1,5 @@
-import {useComponents} from '../../../hooks';
 import {IAccordionItemProps, IAccordionItemViewProps} from './Accordion';
+import {useComponents} from '../../../hooks';
 
 function AccordionItem(props: IAccordionItemProps) {
     const components = useComponents();

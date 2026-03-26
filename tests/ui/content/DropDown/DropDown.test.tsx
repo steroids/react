@@ -1,8 +1,8 @@
-import * as React from 'react';
-import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
+import '@testing-library/jest-dom';
+
 import DropDown, {IDropDownProps} from '../../../../src/ui/content/DropDown/DropDown';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('DropDown tests', () => {
     const console = global.console;
@@ -26,10 +26,12 @@ describe('DropDown tests', () => {
     } as IDropDownProps;
 
     const renderComponent = () => {
-        const {getByText, container} = render(JSXWrapper(DropDown, props, true),
+        const {getByText, container} = render(
+            JSXWrapper(DropDown, props, true),
             {
                 container: document.body,
-            });
+            },
+        );
 
         const dropDownDispatcher = getByText(buttonText);
 

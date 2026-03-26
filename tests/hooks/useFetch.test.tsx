@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
-import axios, {AxiosError} from 'axios';
 import {act, renderHook, waitFor} from '@testing-library/react';
+import axios, {AxiosError} from 'axios';
+
+import useComponents from '../../src/hooks/useComponents';
 import useFetch, {
     normalizeConfig,
     getConfigId,
@@ -9,7 +11,6 @@ import useFetch, {
     IFetchConfig,
 } from '../../src/hooks/useFetch';
 import * as fetchHelpers from '../../src/hooks/useFetch';
-import useComponents from '../../src/hooks/useComponents';
 import useSsr from '../../src/hooks/useSsr';
 
 jest.mock('axios');
@@ -113,7 +114,9 @@ describe('getConfigId', () => {
 });
 
 describe('defaultFetchHandler', () => {
-    const mockedFetchedData = {data: 'data'};
+    const mockedFetchedData = {
+        data: 'data',
+    };
 
     const mockedComponents = {
         http: {
@@ -172,7 +175,9 @@ describe('defaultFetchHandler', () => {
 });
 
 describe('fetchData', () => {
-    const mockedFetchedData = {data: 'data'};
+    const mockedFetchedData = {
+        data: 'data',
+    };
 
     const mockedComponents = {
         http: {
@@ -352,7 +357,9 @@ describe('useFetch Hook', () => {
         expect(mockedNormalizeConfig).toHaveBeenCalledWith(mockedRawConfig);
         expect(mockedFetchData).toHaveBeenCalledWith(mockedNormalizedConfig, mockedConfig, expectedAddCancelToken);
 
-        rerender({rawConfig: mockedNewRawConfig});
+        rerender({
+            rawConfig: mockedNewRawConfig,
+        });
 
         expect(mockedNormalizeConfig).toHaveBeenCalledWith(mockedNewRawConfig);
         expect(mockedFetchData).toHaveBeenCalledWith(expectedNewNormalizedConfig, mockedConfig, expectedAddCancelToken);

@@ -1,9 +1,8 @@
-import * as React from 'react';
-import {useBem} from '../../../../../src/hooks';
-import {IKanbanTaskViewProps} from '../../../../../src/ui/content/Kanban/Kanban';
-import Avatar from '../../../../../src/ui/content/Avatar/Avatar';
-import {Text} from '../../../../../src/ui/typography';
 import TaskTags from './TaskTags/TaskTags';
+import {useBem} from '../../../../../src/hooks';
+import Avatar from '../../../../../src/ui/content/Avatar/Avatar';
+import {IKanbanTaskViewProps} from '../../../../../src/ui/content/Kanban/Kanban';
+import {Text} from '../../../../../src/ui/typography';
 
 export default function KanbanTaskView(props: IKanbanTaskViewProps) {
     const bem = useBem('KanbanTaskView');
@@ -29,7 +28,7 @@ export default function KanbanTaskView(props: IKanbanTaskViewProps) {
                             <div className={bem.element('header')}>
                                 <h4
                                     className={bem.element('title')}
-                                    aria-hidden="true"
+                                    aria-hidden='true'
                                     onClick={() => props.onOpenTaskDetailsModal(props.task, props.columnId)}
                                 >
                                     <span className={bem.element('task-id')}>

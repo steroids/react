@@ -1,7 +1,5 @@
-import * as React from 'react';
-
-import {IEmptyViewProps} from '../../../../src/ui/list/Empty/Empty';
 import {useBem} from '../../../../src/hooks';
+import {IEmptyViewProps} from '../../../../src/ui/list/Empty/Empty';
 
 export default function EmptyView(props: IEmptyViewProps) {
     const bem = useBem('EmptyView');

@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable max-len */
-import * as React from 'react';
-import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
-import {useMaskito} from '@maskito/react';
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
+import {useMaskito} from '@maskito/react';
 import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
-import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import {InputHTMLAttributes, ReactElement, ReactNode, useCallback, useEffect, useMemo, FocusEvent, MouseEvent} from 'react';
+
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 import {FieldEnum} from '../../../enums';
+import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 
 export const MASK_PRESETS = {
     date: maskitoDateOptionsGenerator({
@@ -132,7 +132,7 @@ export interface IInputFieldProps extends IBaseFieldProps {
     /**
      * Пользовательская иконка svg или название иконки
      */
-    leadIcon?: React.ReactElement | string,
+    leadIcon?: ReactElement | string,
 
     /**
      * Задержка применения введённого значения
@@ -151,9 +151,9 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
         disabled: boolean,
     },
     onClear?: () => void,
-    onFocus?: (e: Event | React.FocusEvent) => void,
-    onBlur?: (e: Event | React.FocusEvent) => void,
-    onMouseDown?: (e: Event | React.MouseEvent) => void,
+    onFocus?: (e: Event | FocusEvent) => void,
+    onBlur?: (e: Event | FocusEvent) => void,
+    onMouseDown?: (e: Event | MouseEvent) => void,
     defaultValue?: string,
 }
 
@@ -169,11 +169,13 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         onChangeCallback: props.onChange,
         debounce: {
             enabled: !!props.debounce,
-            ...(typeof props.debounce === 'boolean' ? {enabled: props.debounce} : (props.debounce ?? {})),
+            ...(typeof props.debounce === 'boolean' ? {
+                enabled: props.debounce,
+            } : (props.debounce ?? {})),
         },
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (inputRef.current) {
             maskedInputRef(inputRef.current);
         }
@@ -181,7 +183,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     useInputFieldWarningByType(props.type);
 
-    const onClear = React.useCallback(() => {
+    const onClear = useCallback(() => {
         if (props.onClear) {
             props.onClear('');
         }

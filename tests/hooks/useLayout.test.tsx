@@ -1,11 +1,12 @@
 import '@testing-library/jest-dom';
-import React from 'react';
+import * as React from 'react';
 import configureMockStore from 'redux-mock-store';
+
 import * as authActions from '../../src/actions/auth';
-import * as routerActions from '../../src/actions/router';
 import * as fieldsActions from '../../src/actions/fields';
-import componentsMock from '../mocks/componentsMock';
-import prepareMiddleware from '../mocks/storeMiddlewareMock';
+import * as routerActions from '../../src/actions/router';
+import useComponents from '../../src/hooks/useComponents';
+import useDispatch from '../../src/hooks/useDispatch';
 import useLayout, {
     STATUS_OK,
     STATUS_LOADING,
@@ -16,13 +17,21 @@ import useLayout, {
     runInitAction,
 } from '../../src/hooks/useLayout';
 import useSelector from '../../src/hooks/useSelector';
-import useDispatch from '../../src/hooks/useDispatch';
-import useComponents from '../../src/hooks/useComponents';
 import useSsr from '../../src/hooks/useSsr';
 import {renderHook} from '../helpers';
+import componentsMock from '../mocks/componentsMock';
+import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 const mockStore = configureMockStore([prepareMiddleware]);
 const store = mockStore({});
+
+jest.mock('react', () => {
+    const actual = jest.requireActual('react');
+    return {
+        ...actual,
+        useState: jest.fn(actual.useState),
+    };
+});
 
 jest.mock('../../src/hooks/useSelector');
 jest.mock('../../src/hooks/useDispatch');
@@ -112,13 +121,12 @@ describe('useLayout Hook', () => {
     });
 
     it('should handle HTTP error correctly', async () => {
-        const useStateSpy = jest.spyOn(React, 'useState');
-
         const mockedError = new Error('Test HTTP error');
         const setStateMock = jest.fn();
-        const useSateMock: any = (useState: any) => [mockedError, setStateMock];
+        const useStateMock = (React.useState as jest.Mock);
+        const realUseState = jest.requireActual('react').useState;
 
-        useStateSpy.mockImplementationOnce(useSateMock);
+        useStateMock.mockImplementation(() => [mockedError, setStateMock]);
 
         mockedUseSelector.mockReturnValue({
             route: mockedRoute,
@@ -132,14 +140,12 @@ describe('useLayout Hook', () => {
 
         const {result, rerender} = renderHook(() => useLayout());
 
-        useStateSpy.mockImplementationOnce(useSateMock);
-
         rerender();
 
         expect(result.current.status).toBe(STATUS_HTTP_ERROR);
         expect(result.current.error).toBe(mockedError);
 
-        useStateSpy.mockClear();
+        useStateMock.mockImplementation(realUseState);
     });
 
     it('should handle not found route correctly', () => {

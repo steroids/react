@@ -1,12 +1,14 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import DateTimeField, {IDateTimeFieldProps} from '../../../../src/ui/form/DateTimeField/DateTimeField';
 import DateTimeFieldMockView from './DateTimeFieldMockView';
+import DateTimeField, {IDateTimeFieldProps} from '../../../../src/ui/form/DateTimeField/DateTimeField';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('DateTimeField tests', () => {
     const expectedDateTimeFieldClassName = 'DateTimeFieldView';
     const externalClass = 'external-class';
-    const externalStyle = {width: '30px'};
+    const externalStyle = {
+        width: '30px',
+    };
 
     const props: IDateTimeFieldProps = {
         view: DateTimeFieldMockView,

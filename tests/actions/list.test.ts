@@ -1,5 +1,6 @@
-import configureMockStore from 'redux-mock-store';
 import axios from 'axios';
+import configureMockStore from 'redux-mock-store';
+
 import {
     IList,
     add,
@@ -26,7 +27,9 @@ import prepareMiddleware from '../mocks/storeMiddlewareMock';
 describe('httpFetchHandler function', () => {
     const expectedData = 'mockData';
     const mockHttp = {
-        send: jest.fn().mockResolvedValue({data: expectedData}),
+        send: jest.fn().mockResolvedValue({
+            data: expectedData,
+        }),
     };
     const mockList: IList = {
         action: '/api/v1/mock',
@@ -52,13 +55,17 @@ describe('httpFetchHandler function', () => {
         const expectedUrl = `${mockList.action}?scope=${mockList.scope.join(',')}`;
 
         // Передаём options с cancelToken как 4-й аргумент
-        await httpFetchHandler(mockList, mockQuery, mockComponents, {cancelToken: mockCancelSource.token});
+        await httpFetchHandler(mockList, mockQuery, mockComponents, {
+            cancelToken: mockCancelSource.token,
+        });
 
         expect(mockHttp.send).toHaveBeenCalledWith(
             mockList.actionMethod,
             expectedUrl,
             mockQuery,
-            {cancelToken: mockCancelSource.token},
+            {
+                cancelToken: mockCancelSource.token,
+            },
         );
     });
 

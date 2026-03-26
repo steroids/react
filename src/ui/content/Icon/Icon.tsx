@@ -1,8 +1,7 @@
-import * as React from 'react';
-
 import _isObject from 'lodash-es/isObject';
 import _isString from 'lodash-es/isString';
 import {useMemo} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**

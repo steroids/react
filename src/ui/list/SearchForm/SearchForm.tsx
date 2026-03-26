@@ -1,9 +1,9 @@
-import * as React from 'react';
-import {useCallback} from 'react';
+import {memo, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
+
+import {formChange} from '../../../actions/form';
 import useForm from '../../../hooks/useForm';
 import {IFormProps} from '../../../ui/form/Form/Form';
-import {formChange} from '../../../actions/form';
 
 /**
  * SearchForm
@@ -18,7 +18,7 @@ export interface ISearchFormProps extends IFormProps {
     listId?: string,
 }
 
-export default React.memo((props: ISearchFormProps): JSX.Element => {
+export default memo((props: ISearchFormProps): JSX.Element => {
     const {formId} = useForm();
 
     const dispatch = useDispatch();

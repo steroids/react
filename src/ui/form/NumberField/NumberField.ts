@@ -195,7 +195,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         (event: FocusEvent<HTMLInputElement>) => {
             const rawValue = event.target.value;
             if (rawValue === '') {
-                props.onBlur?.(event);
                 return;
             }
 
@@ -205,7 +204,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             if (shouldApplyMin) {
                 onChange(event, String(props.min));
             }
-            props.onBlur?.(event);
         },
         [onChange, props],
     );

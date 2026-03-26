@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import Breadcrumbs from '../../../../src/ui/nav/Breadcrumbs/Breadcrumbs';
 import BreadcrumbsMockView from './BreadcrumbsMockView';
+import Breadcrumbs from '../../../../src/ui/nav/Breadcrumbs/Breadcrumbs';
+import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
 
 describe('Breadcrumbs tests', () => {
     const props = {

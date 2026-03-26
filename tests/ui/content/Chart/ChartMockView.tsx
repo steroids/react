@@ -1,9 +1,10 @@
-import * as React from 'react';
-import {IChartViewProps} from '../../../../src/ui/content/Chart/Chart';
+import {CSSProperties} from 'react';
+
 import {useBem} from '../../../../src/hooks';
-import {Title} from '../../../../src/ui/typography';
+import {IChartViewProps} from '../../../../src/ui/content/Chart/Chart';
 import {CheckboxListField} from '../../../../src/ui/form';
 import {ButtonGroup} from '../../../../src/ui/nav';
+import {Title} from '../../../../src/ui/typography';
 
 const DEFAULT_AXIS_PARAMS = {
     tickSize: 5,
@@ -21,7 +22,9 @@ const DEFAULT_LINE_CHART_CONFIG = {
         stacked: true,
         reverse: false,
     },
-    xScale: {type: 'point'},
+    xScale: {
+        type: 'point',
+    },
     axisBottom: {
         ...DEFAULT_AXIS_PARAMS,
         legendOffset: 36,
@@ -39,7 +42,9 @@ export default function ChartMockView(props: IChartViewProps) {
     const ChartComponent = props.chartComponent;
     const defaultChartConfig = (props.useDefaultLineChartConfig && DEFAULT_LINE_CHART_CONFIG) || {};
 
-    const customChartHeightVariable = {'--chart-custom-height': `${props.chartHeight}px`} as React.CSSProperties;
+    const customChartHeightVariable = {
+        '--chart-custom-height': `${props.chartHeight}px`,
+    } as CSSProperties;
 
     return (
         <div
@@ -55,7 +60,7 @@ export default function ChartMockView(props: IChartViewProps) {
         >
             {props.title && (
                 <Title
-                    type="h3"
+                    type='h3'
                     content={props.title}
                     className={bem.element('title')}
                 />

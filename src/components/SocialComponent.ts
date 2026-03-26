@@ -38,7 +38,9 @@ export default class SocialComponent implements ISocialComponent {
     init() {
         Object.keys(this.providers).forEach(name => {
             if (_isFunction(this.providers[name])) {
-                this.providers[name] = {className: this.providers[name]};
+                this.providers[name] = {
+                    className: this.providers[name],
+                };
             }
 
             const ProviderClass = this.providers[name].className;

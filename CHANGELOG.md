@@ -1,5 +1,59 @@
 # Changelog
 
+## v3.1.3 (22.03.2026)
+
+### Fixed
+
+- Исправлена типизация config в createAxiosError
+
+## v3.1.2 (22.03.2026)
+
+### Fixed
+
+- Исправлена типизация method в IFetchConfig
+
+## v3.1.1 (21.03.2026)
+
+### Fixed
+
+- Исправлены ошибки сборки
+
+## v3.1.0 (21.03.2026)
+
+### Added
+
+- Breaking change: В tsconfig.json изменена настройка: вместо `"jsx": "react"` теперь `"jsx": "react-jsx"`. Это переводит проект на новый JSX-трансформ из React (17+). Больше не требуется импорт React в файлах с JSX. Для корректной работы нужно: 1. Обновить на проектах в `tsconfig.json`, `"jsx": "react"` на `"jsx": "react-jsx"`. 2. Обновить версию `@steroidsjs/eslint-config` до `3.0.5`, следуя [Migration Guide](https://github.com/steroids/eslint-config/blob/main/MIGRATION_GUIDE_FRONTEND.md)
+- Расширен функционал `HttpComponent`: в http методы (`send`, `delete`, `post`) добавлена возможность пробрасывать query-параметры
+- Удалена deprecated функция `getCheckedIds`
+- Компонент `Form` покрыт тестами
+- Добавлено автоматическое обновление настроек для `List` и `Grid` при обновлении пропсов
+
+### Fixed
+
+- Исправлена типизация возвращаемого значения хука `useFetch`
+
+## v3.0.96 (14.03.2026)
+
+### Fixed
+
+- Исправлено поведение `Router` при рендере родительских компонентов с `exact: false`, которые служат обёртками (wrapper) для страниц. Раньше если в родительских страницах попадалась страница с `exact: true`, то поиск заканчивался, несмотря на то, что выше могла быть страница с компонентом-обёрткой. Теперь поиск идёт по всем активным роутам.
+
+## v3.0.94 (10.03.2026)
+
+### Added
+
+- Добавлена типизация для компонента `StoreComponent`
+- Обновлены библиотеки `path-to-regexp` и `qs`
+- Компонент `ResourceComponent` помечен как `deprecated`
+- Обновлена библиотека `@steroidsjs/eslint-config`
+
+### Fixed
+
+- Исправлена типизация возвращаемого значения хука `useFetch`
+- Исправлены ошибки ESLint, возникшие после обновления `@steroidsjs/eslint-config`
+- Разделен общий тип ColorName на специализированные наборы цветов для компонентов `Alert`, `Notification`, `DropDownField`, `Controls`, `Button`, `Loader`, `Title`, `Text` и `Badge` (исключены неподдерживаемые и вводящие в заблуждение варианты)
+- Переименован props `level` на `type` для компонента `Notifications`
+
 ## v3.0.93 (09.02.2026)
 
 ### Added

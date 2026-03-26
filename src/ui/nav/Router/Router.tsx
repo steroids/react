@@ -1,20 +1,21 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {Route, Switch, Redirect, StaticRouter} from 'react-router';
-import {HashRouter} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
+import {ReactElement, ReactNode, useEffect, useMemo, useState} from 'react';
+import {Route, Switch, Redirect, StaticRouter} from 'react-router';
+import {HashRouter} from 'react-router-dom';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
-import {closeModal, openModal} from '../../../actions/modal';
-import {getOpened} from '../../../reducers/modal';
-import {IFetchConfig} from '../../../hooks/useFetch';
-import {IListProps} from '../../list/List/List';
-import {useComponents, useSelector} from '../../../hooks';
-import {goToRoute, initParams, initRoutes} from '../../../actions/router';
-import useDispatch from '../../../hooks/useDispatch';
-import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized} from '../../../reducers/router';
-import {SsrProviderContext} from '../../../providers/SsrProvider';
+
 import {findRedirectPathRecursive, treeToList, walkRoutesRecursive} from './helpers';
+import {closeModal, openModal} from '../../../actions/modal';
+import {goToRoute, initParams, initRoutes} from '../../../actions/router';
+import {useComponents, useSelector} from '../../../hooks';
+import useDispatch from '../../../hooks/useDispatch';
+import {IFetchConfig} from '../../../hooks/useFetch';
+import {SsrProviderContext} from '../../../providers/SsrProvider';
+import {getOpened} from '../../../reducers/modal';
+import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized} from '../../../reducers/router';
+import {IListProps} from '../../list/List/List';
 
 export const ROUTER_ROLE_LOGIN = 'login';
 export const ROUTER_ROLE_MODAL = 'modal';
@@ -126,7 +127,7 @@ export interface IRouteItem {
     /**
      * Вложенные роуты
      */
-    items?: IRouteItem[] | {[key: string]: IRouteItem,},
+    items?: IRouteItem[] | {[key: string]: IRouteItem},
 
     /**
      * Обработчик, который принимает параметры URL и возвращает массив с пропсами для хука useFetch и компонента
@@ -144,7 +145,7 @@ export interface IRouteItem {
      * Пользовательская иконка svg или название иконки
      * @example 'circle'
      */
-    icon?: React.ReactElement | string,
+    icon?: ReactElement | string,
 }
 
 export interface IRouterProps {
@@ -163,7 +164,7 @@ export interface IRouterProps {
      * Дерево роутов
      * @example {id: 'root', path: '/', component: IndexPage, items: [...]}
      */
-    routes: IRouteItem[] | IRouteItem | {[key: string]: IRouteItem,},
+    routes: IRouteItem[] | IRouteItem | {[key: string]: IRouteItem},
 
     /**
      * Если у роута не задано свойство roles, которое определяет, кому из пользователей будет доступен контент
@@ -182,7 +183,7 @@ export interface IRouterProps {
      * Контент, который отобразится под каждой страницей приложения
      * @example SomeComponent
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Флаг, который позволяет использовать вложенные роуты c указанием вложенного пути
@@ -260,7 +261,9 @@ function Router(props: IRouterProps): JSX.Element {
                             id: 'root',
                             ...props.routes,
                         },
-                        props.defaultRoles ? {roles: props.defaultRoles} : undefined,
+                        props.defaultRoles ? {
+                            roles: props.defaultRoles,
+                        } : undefined,
                         {},
                         props.alwaysAppendParentRoutePath,
                     ),
@@ -341,6 +344,7 @@ function Router(props: IRouterProps): JSX.Element {
 
     const renderItem = (routeItem: IRouteItem, routeProps) => {
         let children = null;
+        let hasExact = false;
         activeRouteIds.find(activeRouteId => {
             if (activeRouteId === routeItem.id) {
                 // Stop
@@ -348,14 +352,21 @@ function Router(props: IRouterProps): JSX.Element {
             }
 
             const activeRoute = routes.find(r => r.id === activeRouteId);
-            children = renderComponent(activeRoute, activePath, {
-                ...routeProps,
-                children,
-            }, props.alwaysAppendParentRoutePath) || children;
+            if (!hasExact && activeRoute.component && !activeRoute.redirectTo) {
+                children = renderComponent(
+                    activeRoute,
+                    activePath,
+                    {
+                        ...routeProps,
+                        children,
+                    },
+                    props.alwaysAppendParentRoutePath,
+                ) || children;
+            }
 
             // Stop, if route is exact
             if (activeRoute.exact) {
-                return true;
+                hasExact = true;
             }
 
             return false;

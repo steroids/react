@@ -1,12 +1,13 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {FocusEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
-import useComponents from '../../../hooks/useComponents';
-import fieldWrapper, {IFieldWrapperOutputProps} from '../../../ui/form/Field/fieldWrapper';
+
+import {FieldEnum} from '../../../enums';
 import {useDataProvider, useDataSelect} from '../../../hooks';
+import useComponents from '../../../hooks/useComponents';
 import {IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
+import fieldWrapper, {IFieldWrapperOutputProps} from '../../../ui/form/Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
-import {FieldEnum} from '../../../enums';
 
 export interface IAutoCompleteItem {
     id: number | string | boolean,
@@ -73,7 +74,7 @@ export interface IAutoCompleteFieldViewProps extends Omit<IAutoCompleteFieldProp
         value: (string | number) | (string | number)[],
         disabled: boolean,
         onChange: (value: string) => void,
-        onBlur: (e: Event | React.FocusEvent) => void,
+        onBlur: (e: Event | FocusEvent) => void,
         className?: CssClassName,
     },
     isOpened: boolean,

@@ -148,10 +148,14 @@ describe('form reducers', () => {
             },
         };
 
-        let initialState = {...defaultInitialState};
+        let initialState = {
+            ...defaultInitialState,
+        };
 
         beforeEach(() => {
-            initialState = {...defaultInitialState};
+            initialState = {
+                ...defaultInitialState,
+            };
         });
 
         it('with errors', () => {
@@ -363,7 +367,9 @@ describe('form reducers', () => {
                 },
             };
 
-            const expectedState = {...initialState};
+            const expectedState = {
+                ...initialState,
+            };
             expect(form(initialState, action)).toEqual(expectedState);
         });
 
@@ -443,7 +449,9 @@ describe('form reducers', () => {
 
         it('with correct formId', () => {
             const existingFormId = 'existingFormId';
-            const formValues = {someValue: 'someValue'};
+            const formValues = {
+                someValue: 'someValue',
+            };
 
             const globalState = {
                 form: {

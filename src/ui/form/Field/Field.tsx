@@ -1,13 +1,12 @@
-import * as React from 'react';
-import {useContext, useMemo} from 'react';
-import _isString from 'lodash-es/isString';
 import _isFunction from 'lodash-es/isFunction';
+import _isString from 'lodash-es/isString';
+import {memo, useContext, useMemo} from 'react';
 
-import {useComponents} from '../../../hooks';
-import {FormContext} from '../Form/Form';
 import {IFieldWrapperInputProps} from './fieldWrapper';
 import {Model, ModelAttribute} from '../../../components/MetaComponent';
 import {FieldEnum} from '../../../enums';
+import {useComponents} from '../../../hooks';
+import {FormContext} from '../Form/Form';
 
 /**
  * Field
@@ -82,4 +81,4 @@ function Field(props: IFieldProps): JSX.Element {
         : <ComponentField {...viewProps} />;
 }
 
-export default React.memo(Field);
+export default memo(Field);

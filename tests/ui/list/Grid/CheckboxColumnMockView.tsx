@@ -1,9 +1,8 @@
-import * as React from 'react';
-
 import _get from 'lodash-es/get';
+
 import {useBem} from '../../../../src/hooks';
-import {ICheckboxColumnViewProps} from '../../../../src/ui/list/CheckboxColumn/CheckboxColumn';
 import CheckboxField from '../../../../src/ui/form/CheckboxField';
+import {ICheckboxColumnViewProps} from '../../../../src/ui/list/CheckboxColumn/CheckboxColumn';
 import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
 
 export default function CheckboxColumnView(props: ICheckboxColumnViewProps & IColumnViewProps) {

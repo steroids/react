@@ -1,6 +1,7 @@
 /* eslint-disable default-case */
-import React from 'react';
 import dayjs from 'dayjs';
+import {useCallback} from 'react';
+
 import {IEvent, IEventGroup} from '../CalendarSystem';
 import CalendarEnum from '../enums/CalendarType';
 import {addEventIfMatchDate} from '../helpers/addEventIfMatchDate';
@@ -31,7 +32,7 @@ const CALENDAR_TYPE_GETTING_EVENTS_PROPERTIES = {
 };
 
 export const useEventsFromDate = (innerEventGroups: IEventGroup[], selectedEventGroupsIds: number[]) => {
-    const getEventsFromDate = React.useCallback((dateFromDay: Date, currentCalendarType: string) => {
+    const getEventsFromDate = useCallback((dateFromDay: Date, currentCalendarType: string) => {
         const resultEventsOnDate: IEvent[] = [];
         const dayjsDateFromDay = dayjs(dateFromDay);
 

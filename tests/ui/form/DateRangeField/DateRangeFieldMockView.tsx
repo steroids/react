@@ -1,10 +1,9 @@
-import * as React from 'react';
 import {useCallback} from 'react';
-import _isString from 'lodash-es/isString';
+
 import {useBem} from '../../../../src/hooks';
-import Icon from '../../../../src/ui/content/Icon';
-import DropDown from '../../../../src/ui/content/DropDown';
 import Calendar from '../../../../src/ui/content/Calendar';
+import DropDown from '../../../../src/ui/content/DropDown';
+import Icon from '../../../../src/ui/content/Icon';
 import {IDateRangeFieldViewProps} from '../../../../src/ui/form/DateRangeField/DateRangeField';
 
 export default function DateRangeFieldView(props: IDateRangeFieldViewProps) {

@@ -1,8 +1,9 @@
-import React, {useRef, useMemo, useState, useEffect} from 'react';
 import _isArray from 'lodash/isArray';
 import _orderBy from 'lodash/orderBy';
-import {useComponents} from '../../../hooks';
+import {useRef, useMemo, useState, useEffect, ReactNode, Children, useCallback} from 'react';
+
 import DetailItem, {IDetailItemProps} from './DetailItem';
+import {useComponents} from '../../../hooks';
 import {IControlItem} from '../../nav/Controls/Controls';
 
 /**
@@ -92,7 +93,7 @@ export interface IDetailProps extends IUiComponent {
      * Заголовок таблицы
      * @example 'User info'
      */
-    title?: string | React.ReactNode,
+    title?: string | ReactNode,
 
     /**
      * Контролы, которые нужно расположить рядом с таблицей
@@ -107,7 +108,7 @@ export interface IDetailProps extends IUiComponent {
     /**
      * Дочерние компоненты
      */
-    children?: React.ReactNode | React.ReactNode[],
+    children?: ReactNode | ReactNode[],
 
     [key: string]: any,
 }
@@ -128,8 +129,8 @@ export const constants = Object.freeze({
     TABLE_HEAD_COLSPAN: 1,
 });
 
-const getDetailItems = (children: React.ReactNode | React.ReactNode[]): any[] => (
-    React.Children.toArray(children)
+const getDetailItems = (children: ReactNode | ReactNode[]): any[] => (
+    Children.toArray(children)
         .filter((child: any) => child?.type?.displayName === DetailItem.displayName)
 );
 
@@ -232,7 +233,7 @@ export default function Detail(props: IDetailProps): JSX.Element {
             setColumn(props.column || constants.MAX_COLUMN);
         });
     }));
-    const resizedNodeRef = React.useCallback((node: HTMLDivElement) => {
+    const resizedNodeRef = useCallback((node: HTMLDivElement) => {
         if (!resizeObserver.current) {
             return;
         }
@@ -254,7 +255,9 @@ export default function Detail(props: IDetailProps): JSX.Element {
         controls: props.controls,
         layout: props.layout,
         rows,
-        resizedNodeRef: responsiveProps.enable ? {resizedNodeRef} : {},
+        resizedNodeRef: responsiveProps.enable ? {
+            resizedNodeRef,
+        } : {},
         size: props.size,
         className: props.className,
         style: props.style,

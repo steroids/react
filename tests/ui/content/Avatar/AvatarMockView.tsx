@@ -1,6 +1,7 @@
-import React from 'react';
-import {IAvatarViewProps} from '../../../../src/ui/content/Avatar/Avatar';
+import {CSSProperties} from 'react';
+
 import {useBem} from '../../../../src/hooks';
+import {IAvatarViewProps} from '../../../../src/ui/content/Avatar/Avatar';
 
 interface IAvatarProps extends IAvatarViewProps {
     formattedTitle: any,
@@ -9,7 +10,7 @@ interface IAvatarProps extends IAvatarViewProps {
 export default function Avatar(props: IAvatarProps) {
     const bem = useBem('AvatarView');
 
-    const customSize: React.CSSProperties = typeof props.size === 'number'
+    const customSize: CSSProperties = typeof props.size === 'number'
         ? {
             width: props.size,
             height: props.size,

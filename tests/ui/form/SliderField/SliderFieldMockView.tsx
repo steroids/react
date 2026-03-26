@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import * as React from 'react';
 import Slider, {SliderTooltip, Handle, Range} from 'rc-slider';
-import {ISliderFieldViewProps} from '../../../../src/ui/form/SliderField/SliderField';
+
 import {useBem} from '../../../../src/hooks';
+import {ISliderFieldViewProps} from '../../../../src/ui/form/SliderField/SliderField';
 
 const createRangeWithTooltip = Slider.createSliderWithTooltip;
 const createSliderWithTooltip = Slider.createSliderWithTooltip;

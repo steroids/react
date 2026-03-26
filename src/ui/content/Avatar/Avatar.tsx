@@ -1,4 +1,5 @@
-import {useState, useCallback, useMemo} from 'react';
+import {useState, useCallback, useMemo, ReactNode} from 'react';
+
 import {useComponents} from '../../../hooks';
 
 /**
@@ -24,7 +25,7 @@ export interface IAvatarProps extends IUiComponent {
     /**
      * Дочерние элементы
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Размер аватара

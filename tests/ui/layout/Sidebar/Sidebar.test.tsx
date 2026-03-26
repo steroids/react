@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
+import SidebarMockView from './SidebarMockView';
 import Sidebar from '../../../../src/ui/layout/Sidebar/Sidebar';
 import {JSXWrapper, getElementByClassName, render} from '../../../helpers';
-import SidebarMockView from './SidebarMockView';
 
 describe('Sidebar tests', () => {
     const expectedSidebarClass = 'SidebarView';

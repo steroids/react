@@ -15,7 +15,9 @@ describe('list reducers', () => {
         kanbans: {},
     };
 
-    let initialState = {...defaultInitialState};
+    let initialState = {
+        ...defaultInitialState,
+    };
 
     const getStateWithKanbans = (
         kanbans: TKanbanFields = null,
@@ -26,7 +28,9 @@ describe('list reducers', () => {
     });
 
     beforeEach(() => {
-        initialState = {...defaultInitialState};
+        initialState = {
+            ...defaultInitialState,
+        };
     });
 
     const kanbanId = 'kanbanId';

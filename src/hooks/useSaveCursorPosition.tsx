@@ -1,9 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
-import {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import _debounce from 'lodash-es/debounce';
 import _isNull from 'lodash-es/isNull';
+import {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
 
 const DEFAULT_DEBOUNCE_DELAY_MS = 300;

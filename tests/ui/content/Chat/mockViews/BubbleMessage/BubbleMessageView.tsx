@@ -1,10 +1,11 @@
-import * as React from 'react';
 import _isEmpty from 'lodash-es/isEmpty';
-import {Avatar} from '../../../../../../src/ui/content/Avatar';
-import {Text, Title} from '../../../../../../src/ui/typography';
-import Icon from '../../../../../../src/ui/content/Icon';
-import {IChatUser, IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
+import {memo} from 'react';
+
 import {useBem} from '../../../../../../src/hooks';
+import {Avatar} from '../../../../../../src/ui/content/Avatar';
+import {IChatUser, IMessageFile} from '../../../../../../src/ui/content/Chat/Chat';
+import Icon from '../../../../../../src/ui/content/Icon';
+import {Text, Title} from '../../../../../../src/ui/typography';
 import ChatFileItemView from '../ChatFileItem';
 
 interface IBubbleMessageProps {
@@ -39,7 +40,7 @@ function BubbleMessageView(props: IBubbleMessageProps) {
                 )}
                 <Text
                     className={bem.element('text')}
-                    type="body"
+                    type='body'
                     content={props.text}
                 />
                 {!_isEmpty(props.files) && (
@@ -57,13 +58,13 @@ function BubbleMessageView(props: IBubbleMessageProps) {
                 <div className={bem.element('indicators')}>
                     <Text
                         className={bem.element('time')}
-                        type="body3"
+                        type='body3'
                         content={props.timeAgo}
                     />
                     {props.isCurrentUser && (
                         <Icon
                             className={bem.element('check')}
-                            name="mockIcon"
+                            name='mockIcon'
                         />
                     )}
                 </div>
@@ -82,4 +83,4 @@ function BubbleMessageView(props: IBubbleMessageProps) {
     );
 }
 
-export default React.memo(BubbleMessageView);
+export default memo(BubbleMessageView);

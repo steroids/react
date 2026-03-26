@@ -3,15 +3,16 @@
 /* eslint-disable default-case */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
-import React from 'react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
-import {ICheckboxListFieldProps} from '../../../ui/form/CheckboxListField/CheckboxListField';
-import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
-import {IModalProps} from '../../../ui/modal/Modal/Modal';
-import {useComponents} from '../../../hooks';
+import {ReactNode, useMemo, MouseEvent} from 'react';
+
 import {useCalendarSystem} from './hooks/useCalendarSystem';
 import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
+import {useComponents} from '../../../hooks';
+import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
+import {ICheckboxListFieldProps} from '../../../ui/form/CheckboxListField/CheckboxListField';
+import {IModalProps} from '../../../ui/modal/Modal/Modal';
 
 dayjs.extend(localeData);
 
@@ -185,7 +186,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     /**
      * Дочерние элементы
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Функция, которая вызывается по клику на событие
@@ -213,9 +214,9 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
-    onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
+    onClickControl: (event: MouseEvent<HTMLElement>) => void,
     calendarType: string,
-    children: React.ReactNode,
+    children: ReactNode,
 
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: string) => IEvent[],
     openEditModal: (event: IEvent) => void,
@@ -261,7 +262,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
 
     const {dayGridViews, monthGridViews, weekGridViews} = useCustomViews(props);
 
-    const viewProps: ICalendarSystemViewProps = React.useMemo(() => ({
+    const viewProps: ICalendarSystemViewProps = useMemo(() => ({
         className: props.className,
         style: props.style,
         additionalViewProps: props.additionalViewProps,

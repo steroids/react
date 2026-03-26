@@ -1,4 +1,3 @@
-import React from 'react';
 import useBem from '../../../../src/hooks/useBem';
 import {IColumnViewProps} from '../../../../src/ui/list/Grid/Grid';
 
@@ -15,7 +14,7 @@ export default function DiagramColumnView(props: IColumnViewProps) {
     const isVertical = props.diagram?.type === DiagramType.VERTICAL;
     const isCircle = props.diagram?.type === DiagramType.CIRCLE;
 
-    const getItemData = (item: {color: string, percentageAttribute: string,}) => ({
+    const getItemData = (item: {color: string, percentageAttribute: string}) => ({
         itemPercentage: props.item[item?.percentageAttribute],
         itemColor: item?.color,
     });
@@ -48,7 +47,9 @@ export default function DiagramColumnView(props: IColumnViewProps) {
                                     className={bem.element('diagram-filling', {
                                         color: itemColor,
                                     })}
-                                    style={{[fillingProperty]: `${itemPercentage}%`}}
+                                    style={{
+                                        [fillingProperty]: `${itemPercentage}%`,
+                                    }}
                                 />
                             </div>
                         );

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
+import LoaderMockView from './LoaderMockView';
 import Loader from '../../../../src/ui/layout/Loader';
 import {getElementByClassName, JSXWrapper, render} from '../../../helpers';
-import LoaderMockView from './LoaderMockView';
 
 describe('Loader tests', () => {
     const props = {

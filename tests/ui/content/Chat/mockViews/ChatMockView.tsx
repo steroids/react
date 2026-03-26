@@ -1,13 +1,13 @@
-import * as React from 'react';
-import {useBem} from '../../../../../src/hooks';
-import {IChatViewProps} from '../../../../../src/ui/content/Chat/Chat';
+import {useCallback} from 'react';
 
 import BubblesDateGroup from './BubblesDateGroup';
+import {useBem} from '../../../../../src/hooks';
+import {IChatViewProps} from '../../../../../src/ui/content/Chat/Chat';
 
 export default function ChatView(props: IChatViewProps) {
     const bem = useBem('ChatView');
 
-    const renderChatScreen = React.useCallback(() => (
+    const renderChatScreen = useCallback(() => (
         <div
             className={bem.element('screen')}
         >

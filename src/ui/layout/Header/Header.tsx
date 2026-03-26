@@ -1,10 +1,11 @@
-import {useCallback, useState} from 'react';
-import {IButtonProps} from '../../form/Button/Button';
-import {IAvatarProps} from '../../content/Avatar/Avatar';
-import {ILinkProps} from '../../nav/Link/Link';
-import {IModalProps} from '../../modal/Modal/Modal';
-import {IMenuProps} from '../../content/Menu/Menu';
+import {ReactElement, useCallback, useState} from 'react';
+
 import {useComponents} from '../../../hooks';
+import {IAvatarProps} from '../../content/Avatar/Avatar';
+import {IMenuProps} from '../../content/Menu/Menu';
+import {IButtonProps} from '../../form/Button/Button';
+import {IModalProps} from '../../modal/Modal/Modal';
+import {ILinkProps} from '../../nav/Link/Link';
 import {INavProps} from '../../nav/Nav/Nav';
 
 /**
@@ -31,7 +32,7 @@ export interface IHeaderProps extends IUiComponent {
         /**
          * Иконка логотипа в виде строки или компонента React.
          */
-        icon?: string | React.ReactElement,
+        icon?: CustomIcon,
 
         /**
          * Дополнительные классы стилей для логотипа.
@@ -101,7 +102,7 @@ export interface IHeaderProps extends IUiComponent {
         /**
          * Контент бургер-меню в виде компонента React.
          */
-        content?: React.ReactElement,
+        content?: ReactElement,
 
         /**
          * Свойства для ссылок бургер-меню.

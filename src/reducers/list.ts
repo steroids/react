@@ -1,7 +1,8 @@
-import _get from 'lodash-es/get';
-import _isMatch from 'lodash-es/isMatch';
 import _every from 'lodash-es/every';
 import _extend from 'lodash-es/extend';
+import _get from 'lodash-es/get';
+import _isMatch from 'lodash-es/isMatch';
+
 import {
     LIST_INIT,
     LIST_SET_ITEMS,
@@ -15,6 +16,7 @@ import {
     LIST_SET_LAYOUT,
     LIST_ITEM_DELETE,
     LIST_CHANGE_ACTION,
+    LIST_CHANGE_CONFIG,
     LIST_SELECT_ITEM,
 } from '../actions/list';
 
@@ -219,8 +221,19 @@ const reducerMap = {
             },
         },
     }),
+    [LIST_CHANGE_CONFIG]: (state, action) => ({
+        ...state,
+        lists: {
+            ...state.lists,
+            [action.listId]: {
+                ...state.lists[action.listId],
+                ...action.payload,
+            },
+        },
+    }),
 };
 
+// eslint-disable-next-line default-param-last
 export default (state = initialState, action) => reducerMap[action.type]
     ? reducerMap[action.type](state, action)
     : state;
@@ -243,6 +256,3 @@ export const isSelectedAll = (state, listId) => {
         && _every(getIds(state, listId).map(id => selectedIds.includes(id)))
     );
 };
-
-// deprecated
-export const getCheckedIds = (state, listId) => _get(state, ['list', 'selectedIds', listId]) || [];

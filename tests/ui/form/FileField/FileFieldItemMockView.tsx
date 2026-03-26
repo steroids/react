@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {useBem} from '../../../../src/hooks';
+import {useCallback} from 'react';
 
-import {FilesLayout, IFileFieldItemViewProps} from '../../../../src/ui/form/FileField/FileField';
+import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
+import {FilesLayout, IFileFieldItemViewProps} from '../../../../src/ui/form/FileField/FileField';
 
 export default function FileFieldItemView(props: IFileFieldItemViewProps) {
     const bem = useBem('FileFieldItemView');
     const isLoading = props.progress && props.progress.percent !== 100;
     const isWall = props.filesLayout === FilesLayout.wall;
 
-    const renderLink = React.useCallback(() => (
+    const renderLink = useCallback(() => (
         <a
             className={bem.element('link')}
             title={props.title}
@@ -22,16 +22,18 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
         </a>
     ), [bem, props.title, props.error, props.item.url, isWall]);
 
-    const renderProgressBar = React.useCallback(() => (
+    const renderProgressBar = useCallback(() => (
         <div className={bem.element('progress-track')}>
             <div
                 className={bem.element('progress-bar')}
-                style={{width: `${props.progress.percent}%`}}
+                style={{
+                    width: `${props.progress.percent}%`,
+                }}
             />
         </div>
     ), [bem, props.progress]);
 
-    const renderLoadingState = React.useCallback(() => (
+    const renderLoadingState = useCallback(() => (
         <div className={bem.element('left')}>
             <div className={bem.element('icon-wrapper', 'loading')}>
                 <Icon
@@ -51,13 +53,15 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
         </div>
     ), [bem, props.title, renderProgressBar]);
 
-    const renderFileItem = React.useCallback(() => (
+    const renderFileItem = useCallback(() => (
         <div className={bem.element('left')}>
             {props.image
                 ? (
                     <div
                         className={bem.element('image')}
-                        style={{backgroundImage: `url(${props.image.url})`}}
+                        style={{
+                            backgroundImage: `url(${props.image.url})`,
+                        }}
                     />
                 )
                 : (
@@ -89,7 +93,9 @@ export default function FileFieldItemView(props: IFileFieldItemViewProps) {
             {props.showRemove && (
                 <Icon
                     name={props.customRemoveIcon || 'trash'}
-                    className={bem.element('remove', {isLoading})}
+                    className={bem.element('remove', {
+                        isLoading,
+                    })}
                     onClick={props.onRemove}
                 />
             )}

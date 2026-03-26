@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
 import {fireEvent} from '@testing-library/dom';
 import {waitFor} from '@testing-library/react';
-import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
+
 import PhoneFieldMockView from './PhoneFieldMockView';
 import PhoneField, {ICountryPhoneMask} from '../../../../src/ui/form/PhoneField/PhoneField';
+import {getElementByClassName, getElementByTag, JSXWrapper, render} from '../../../helpers';
 
 describe('PhoneField tests', () => {
     const mockPhoneMasks = [
@@ -129,7 +130,11 @@ describe('PhoneField tests', () => {
         }));
         const input = getElementByClassName(container, `${expectedPhoneFieldClass}__input`) as HTMLInputElement;
 
-        fireEvent.input(input, {target: {value: '79991234567'}});
+        fireEvent.input(input, {
+target: {
+value: '79991234567',
+},
+});
 
         await waitFor(() => {
             expect(onChange).toHaveBeenCalled();
@@ -148,7 +153,11 @@ describe('PhoneField tests', () => {
         }));
         const input = getElementByClassName(container, `${expectedPhoneFieldClass}__input`) as HTMLInputElement;
 
-        fireEvent.input(input, {target: {value: '79991234567890123'}});
+        fireEvent.input(input, {
+target: {
+value: '79991234567890123',
+},
+});
 
         await waitFor(() => {
             expect(onChange).toHaveBeenCalled();
@@ -163,7 +172,11 @@ describe('PhoneField tests', () => {
 
         const input = getElementByClassName(container, `${expectedPhoneFieldClass}__input`);
 
-        fireEvent.change(input, {target: {value: 'test'}});
+        fireEvent.change(input, {
+target: {
+value: 'test',
+},
+});
 
         waitFor(() => {
             const phoneField = getElementByClassName(container, expectedPhoneFieldClass);
@@ -184,7 +197,11 @@ describe('PhoneField tests', () => {
 
         expect(input).toHaveAttribute('disabled');
 
-        fireEvent.change(input, {target: {value: 'test'}});
+        fireEvent.change(input, {
+target: {
+value: 'test',
+},
+});
 
         waitFor(() => {
             const phoneField = getElementByClassName(container, expectedPhoneFieldClass);

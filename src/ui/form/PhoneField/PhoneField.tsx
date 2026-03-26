@@ -1,12 +1,11 @@
-import * as React from 'react';
-import {useCallback, useMemo} from 'react';
+import {useMaskito} from '@maskito/react';
 import {useComponents, useDataProvider, useDataSelect, useSaveCursorPosition} from '@steroidsjs/core/hooks';
-import {IBaseFieldProps, IInputFieldProps} from '@steroidsjs/core/ui/form/InputField/InputField';
+import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
 import fieldWrapper, {
     IFieldWrapperInputProps, IFieldWrapperOutputProps,
 } from '@steroidsjs/core/ui/form/Field/fieldWrapper';
-import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
-import {useMaskito} from '@maskito/react';
+import {IBaseFieldProps, IInputFieldProps} from '@steroidsjs/core/ui/form/InputField/InputField';
+import {useCallback, useMemo} from 'react';
 
 export interface ICountryPhoneMask extends IDropDownFieldItem{
     phoneCode: string,
@@ -50,7 +49,7 @@ export interface IPhoneFieldViewProps extends IPhoneFieldProps, IFieldWrapperOut
 function PhoneField(props: IPhoneFieldProps): JSX.Element {
     const components = useComponents();
 
-    const [selectedCountryCode, setSelectedCountryCode] = React.useState<string>(props.initialCountryCode.toUpperCase());
+    const [selectedCountryCode, setSelectedCountryCode] = useState<string>(props.initialCountryCode.toUpperCase());
 
     // Data provider
     const {items, sourceItems} = useDataProvider({

@@ -1,11 +1,11 @@
-import React from 'react';
 import {useBem} from '@steroidsjs/core/hooks';
 import useUniqueId from '@steroidsjs/core/hooks/useUniqueId';
-import {IPhoneFieldViewProps} from '@steroidsjs/core/ui/form/PhoneField/PhoneField';
 import {Icon} from '@steroidsjs/core/ui/content';
+import {IPhoneFieldViewProps} from '@steroidsjs/core/ui/form/PhoneField/PhoneField';
+
 import DropDownCountySelectMockView from './DropDownCountySelectMockView';
 
-const PhoneFieldView = (props: IPhoneFieldViewProps) => {
+function PhoneFieldView(props: IPhoneFieldViewProps) {
     const bem = useBem('PhoneFieldView');
     const id = useUniqueId('phoneField');
 
@@ -57,6 +57,6 @@ const PhoneFieldView = (props: IPhoneFieldViewProps) => {
             </div>
         </div>
     );
-};
+}
 
 export default PhoneFieldView;

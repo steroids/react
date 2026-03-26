@@ -194,6 +194,13 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
     const onBlur = useCallback(
         (event: FocusEvent<HTMLInputElement>) => {
             const rawValue = event.target.value;
+            // If user cleared the input, do not auto-apply `min`/clamp on blur.
+            // Otherwise `Number('') === 0` may incorrectly push the value to `min`.
+            if (rawValue === '') {
+                props.onBlur?.(event);
+                return;
+            }
+
             const numberValue = Number(rawValue);
             const shouldApplyMin = !_isNil(props.min) && !Number.isNaN(numberValue) && numberValue < props.min;
 

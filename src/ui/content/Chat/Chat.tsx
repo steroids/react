@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {ReactNode, useCallback, useMemo} from 'react';
 
 import useChat, {IGroupedMessagesByDates} from './hooks/useChat';
 import {useComponents} from '../../../hooks';
@@ -97,7 +97,7 @@ export interface IChatProps extends IUiComponent {
      * Переопределение view React компонента для кастомизации отображения элемента инпута
      * @example MyCustomView
      */
-    customChatInputView?: React.ReactNode,
+    customChatInputView?: ReactNode,
 
     /**
      * Кастомный placeholder для инпута

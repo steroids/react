@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {useBem} from '../../../../src/hooks';
 import {Button} from '../../../../src/ui/form';
 import {IFieldListViewProps} from '../../../../src/ui/form/FieldList/FieldList';

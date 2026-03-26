@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {ReactNode} from 'react';
 
 import {FieldEnum} from '../../../enums';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
@@ -19,12 +19,12 @@ export interface IBlankFieldProps extends IFieldWrapperInputProps, IUiComponent 
     * Текст для отображения
     * @example 'Hello World!'
     */
-    text?: string | React.ReactNode,
+    text?: string | ReactNode,
 
     /**
      * Дочерние элементы
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 }
 
 function BlankField(props: IBlankFieldProps & IFieldWrapperOutputProps): JSX.Element {

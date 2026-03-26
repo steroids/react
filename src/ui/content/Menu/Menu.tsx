@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {ReactElement, useMemo} from 'react';
 
 import useComponents from '../../../hooks/useComponents';
 import {IDropDownProps} from '../DropDown/DropDown';
@@ -17,7 +17,7 @@ export interface IMenuItem {
     /**
      * Кастомная иконка
      */
-    icon?: string | React.ReactElement,
+    icon?: string | ReactElement,
 
     /**
      * Нижний border
@@ -51,7 +51,7 @@ export interface IMenuProps extends IUiComponent {
     /**
     * Кастомная иконка, по клику на которую открывается меню
     */
-    icon?: string | React.ReactElement,
+    icon?: string | ReactElement,
 
     /**
      * Пропсы для DropDown

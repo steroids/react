@@ -1,5 +1,4 @@
 import _get from 'lodash-es/get';
-import React from 'react';
 
 import useBem from '../../../../src/hooks/useBem';
 import {Icon} from '../../../../src/ui/content';

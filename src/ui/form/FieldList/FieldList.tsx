@@ -7,7 +7,7 @@ import _omit from 'lodash-es/omit';
 import _range from 'lodash-es/range';
 import _values from 'lodash-es/values';
 import _zipObject from 'lodash-es/zipObject';
-import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import {ReactNode, useCallback, useContext, useMemo, useRef, useState} from 'react';
 import {useEvent, useMount} from 'react-use';
 import {ModelAttribute} from 'src/components/MetaComponent';
 
@@ -156,7 +156,7 @@ export interface IFieldListViewProps {
     onAdd?: () => void,
     showRemove?: boolean,
     showAdd?: boolean,
-    children?: React.ReactNode,
+    children?: ReactNode,
     className?: CssClassName,
     tableClassName?: string,
     style?: CustomStyle,

@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import {MouseEvent, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {goToRoute, filterParamsForPath} from '../../../actions/router';
@@ -126,7 +126,7 @@ export interface IButtonProps extends IUiComponent {
      * автоматически будет переключаться в режим загрузки (`loading`) на время выполнения `Promise`.
      * @param e => fetch(...)
      */
-    onClick?: (e: Event | React.MouseEvent) => Promise<any> | any,
+    onClick?: (e: Event | MouseEvent) => Promise<any> | any,
 
     /**
      * Переводит кнопку в состояние "не активна"
@@ -232,7 +232,7 @@ function Button(props: IButtonProps): JSX.Element {
         isLoading: false,
         isFailed: false,
     });
-    React.useEffect(() => {
+    useEffect(() => {
         setStateFlags({
             isLoading: props.isLoading,
             isFailed: props.isFailed,

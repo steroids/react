@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {useBem} from '../../../../src/hooks';
 import {IProgressBarViewProps} from '../../../../src/ui/layout/ProgressBar/ProgressBar';
 

@@ -1,6 +1,6 @@
 import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
-import * as React from 'react';
+import {useCallback} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {IBem} from '../../../../src/hooks/useBem';
@@ -76,7 +76,7 @@ const renderItem = (item: IAutoCompleteItem, props: IAutoCompleteFieldViewProps,
 export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps) {
     const bem = useBem('AutoCompleteFieldView');
 
-    const renderItems = React.useCallback(() => {
+    const renderItems = useCallback(() => {
         if (!_isEmpty(props.categories)) {
             const {categories, itemsWithoutCategory} = normalizeItems(props.items);
 
@@ -111,9 +111,9 @@ export default function AutoCompleteFieldView(props: IAutoCompleteFieldViewProps
         <div
             ref={props.forwardedRef}
             className={bem(bem.block({
-                    size: props.size,
-                    opened: props.isOpened,
-                }), props.className)}
+                size: props.size,
+                opened: props.isOpened,
+            }), props.className)}
             style={props.style}
         >
             <input

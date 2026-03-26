@@ -7,7 +7,7 @@ import _isNill from 'lodash-es/isNil';
 import _isString from 'lodash-es/isString';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
-import React, {useCallback, useMemo} from 'react';
+import {createContext, Dispatch, ReactNode, useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 
 import AutoSaveHelper from './AutoSaveHelper';
@@ -18,7 +18,6 @@ import {useComponents, useDispatch} from '../../../hooks';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
 import {IFieldProps} from '../Field/Field';
-import validate from '../validate';
 
 const _isEmptyString = (value) => _isString(value) && _isEmpty(value);
 
@@ -88,11 +87,6 @@ export interface IFormProps extends IUiComponent {
      * ]
      */
     validators?: string[] | Array<string[]> | Array<Record<string, any>>,
-
-    /**
-     * Колбэк для использования сторонних валидаторов, например yup
-     */
-    validator?: any,
 
     /**
      * Обработчик события перед отправкой формы
@@ -211,7 +205,7 @@ export interface IFormProps extends IUiComponent {
     /**
      * Дополнительные кнопки
      */
-    buttons?: React.ReactNode,
+    buttons?: ReactNode,
 
     /**
      * Размер компонента и вложенных полей
@@ -233,8 +227,8 @@ export interface IFormViewProps {
     className?: CssClassName,
     autoFocus?: boolean,
     style?: CustomStyle,
-    children?: React.ReactNode,
-    buttons?: React.ReactNode,
+    children?: ReactNode,
+    buttons?: ReactNode,
     submitButtonProps?: IButtonProps,
     size?: Size,
 }
@@ -277,15 +271,15 @@ export interface IFormContext {
     /**
     * Редьюсер
     */
-    reducer?: { dispatch: React.Dispatch<any>, select: any },
+    reducer?: { dispatch: Dispatch<any>, select: any },
 
     /**
     * Диспатч
     */
-    dispatch?: React.Dispatch<any>,
+    dispatch?: Dispatch<any>,
 }
 
-export const FormContext = React.createContext<IFormContext>({});
+export const FormContext = createContext<IFormContext>({});
 
 interface ICaptchaParams {
     googleCaptcha: Record<string, any>,
@@ -454,11 +448,6 @@ function Form(props: IFormProps): JSX.Element {
 
         // Clean
         cleanedValues = cleanEmptyObject(cleanedValues);
-
-        if (props.validator && props.validator.call(null, cleanedValues) === false) {
-            dispatch(formSetSubmitting(props.formId, false));
-            return null;
-        }
 
         // Event onBeforeSubmit
         if (props.onBeforeSubmit && props.onBeforeSubmit.call(null, cleanedValues) === false) {

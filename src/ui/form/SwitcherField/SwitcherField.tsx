@@ -1,5 +1,3 @@
-import React from 'react';
-
 import CheckboxField, {ICheckboxFieldProps} from '../CheckboxField/CheckboxField';
 
 /**

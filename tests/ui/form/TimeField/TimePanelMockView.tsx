@@ -1,5 +1,4 @@
 import _padStart from 'lodash-es/padStart';
-import * as React from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {ITimePanelViewProps} from '../../../../src/ui/form/TimeField/TimeField';

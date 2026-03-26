@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import {memo} from 'react';
 
 import useBem from '../../../../src/hooks/useBem';
 import Icon, {IIconProps} from '../../../../src/ui/content/Icon/Icon';

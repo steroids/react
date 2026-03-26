@@ -1,5 +1,4 @@
 import _isNumber from 'lodash-es/isNumber';
-import * as React from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';

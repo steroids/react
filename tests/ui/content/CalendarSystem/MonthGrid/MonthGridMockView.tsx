@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import {memo} from 'react';
 
 import MonthDay from './views/MonthDay/MonthDayMockView';
 import useBem from '../../../../../src/hooks/useBem';

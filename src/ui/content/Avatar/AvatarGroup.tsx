@@ -1,10 +1,10 @@
-import React, {useMemo} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
 export interface AvatarGroupProps{
     view?: CustomView,
-    children?: React.ReactNode[],
+    children?: ReactNode[],
     style?: CustomStyle,
     maxCount?: number,
 }

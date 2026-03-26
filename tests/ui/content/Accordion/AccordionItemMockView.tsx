@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import * as React from 'react';
+import {useCallback, useEffect} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import {IAccordionItemViewProps, IAccordionIcon} from '../../../../src/ui/content/Accordion/Accordion';
@@ -10,7 +10,7 @@ import IconMockView from '../Icon/IconMockView';
 export default function AccordionItemView(props: IAccordionItemViewProps) {
     const bem = useBem('AccordionItemView');
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!props.toggleAccordion || !props.toggleCollapse || !props.activeKey) {
             return;
         }
@@ -24,7 +24,7 @@ export default function AccordionItemView(props: IAccordionItemViewProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.activeKey]);
 
-    const renderIcon = React.useCallback(() => {
+    const renderIcon = useCallback(() => {
         if (!props.icon) {
             return null;
         }
@@ -81,7 +81,7 @@ export default function AccordionItemView(props: IAccordionItemViewProps) {
             );
     }, [bem, props.icon]);
 
-    const handleHeaderClick = React.useCallback(() => {
+    const handleHeaderClick = useCallback(() => {
         if (props.disabled || !props.toggleAccordion || !props.toggleCollapse) {
             return;
         }
@@ -126,14 +126,14 @@ export default function AccordionItemView(props: IAccordionItemViewProps) {
                                 className={bem.element('icon', {
                                     active: !props.disabled && props.isShowMore,
                                 })}
-                                name="mockIcon"
+                                name='mockIcon'
                             />
                         )}
                 </div>
             </div>
             <div className={bem.element('content', {
-                    visible: !props.disabled && props.isShowMore,
-                })}
+                visible: !props.disabled && props.isShowMore,
+            })}
             >
                 {props.children}
             </div>

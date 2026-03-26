@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {useBem} from '../../../../src/hooks';
 import {CalendarSystemEventGroupModalViewProps} from '../../../../src/ui/content/CalendarSystem/CalendarSystem';
 import {InputField, Form} from '../../../../src/ui/form';

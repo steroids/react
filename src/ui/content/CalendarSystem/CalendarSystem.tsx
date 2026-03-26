@@ -5,7 +5,7 @@
 /* eslint-disable no-plusplus */
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
-import React from 'react';
+import {ReactNode, useMemo, MouseEvent} from 'react';
 
 import {useCalendarSystem} from './hooks/useCalendarSystem';
 import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
@@ -186,7 +186,7 @@ export interface ICalendarSystemProps extends IUiComponent {
     /**
      * Дочерние элементы
      */
-    children?: React.ReactNode,
+    children?: ReactNode,
 
     /**
      * Функция, которая вызывается по клику на событие
@@ -214,9 +214,9 @@ export interface ICalendarSystemViewProps extends Pick<ICalendarSystemProps, 'cl
     openCreateEventGroupModal: VoidFunction,
     dateToDisplay: string,
     handleCalendarTypeChange: (newType: string) => void,
-    onClickControl: (event: React.MouseEvent<HTMLElement>) => void,
+    onClickControl: (event: MouseEvent<HTMLElement>) => void,
     calendarType: string,
-    children: React.ReactNode,
+    children: ReactNode,
 
     getEventsFromDate: (dateFromDay: Date, currentCalendarType: string) => IEvent[],
     openEditModal: (event: IEvent) => void,
@@ -262,7 +262,7 @@ export default function CalendarSystem(props: ICalendarSystemProps) {
 
     const {dayGridViews, monthGridViews, weekGridViews} = useCustomViews(props);
 
-    const viewProps: ICalendarSystemViewProps = React.useMemo(() => ({
+    const viewProps: ICalendarSystemViewProps = useMemo(() => ({
         className: props.className,
         style: props.style,
         additionalViewProps: props.additionalViewProps,

@@ -1,5 +1,5 @@
 import _get from 'lodash-es/get';
-import React, {useCallback, useMemo} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 
 import {formChange} from '../../../actions/form';
 import {useComponents} from '../../../hooks';
@@ -124,4 +124,4 @@ export const normalizePaginationSizeProps = props => ({
     } : props),
 });
 
-export default React.memo(PaginationSize);
+export default memo(PaginationSize);

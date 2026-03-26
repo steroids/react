@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 
 import Enum from '../../../base/Enum';
 import {FieldEnum} from '../../../enums';

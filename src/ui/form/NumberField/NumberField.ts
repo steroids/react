@@ -191,9 +191,15 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         }
     }, [onStep]);
 
-    const onBlurWithoutMinMax = useCallback(
+    const onBlur = useCallback(
         (event: FocusEvent<HTMLInputElement>) => {
-            onChange(event, event.target.value);
+            const rawValue = event.target.value;
+            const numberValue = Number(rawValue);
+            const shouldApplyMin = !_isNil(props.min) && !Number.isNaN(numberValue) && numberValue < props.min;
+
+            if (shouldApplyMin) {
+                onChange(event, String(props.min));
+            }
             props.onBlur?.(event);
         },
         [onChange, props],
@@ -228,7 +234,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             inputProps,
             onStepUp: () => onStep(true),
             onStepDown: () => onStep(false),
-            onBlur: onBlurWithoutMinMax,
+            onBlur,
             input: props.input,
             inputRef: currentInputRef,
             size: props.size,
@@ -237,7 +243,7 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             disabled: props.disabled,
             id: props.id,
         }),
-        [currentInputRef, inputProps, onBlurWithoutMinMax, onStep, props.className, props.disabled, props.errors, props.id, props.input, props.size, props.viewProps],
+        [currentInputRef, inputProps, onBlur, onStep, props.className, props.disabled, props.errors, props.id, props.input, props.size, props.viewProps],
     );
 
     return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);

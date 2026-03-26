@@ -143,7 +143,7 @@ export interface IInputFieldProps extends IBaseFieldProps {
      * Флаг, который указывает, что нужно обрезать пробелы в начале и в конце строки
      * @example false
      */
-    autoTrim?: boolean,
+    hasAutoTrim?: boolean,
 }
 
 export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOutputProps {
@@ -183,7 +183,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         onBlur,
     } = useTrimmedInput({
         onChange: props.input.onChange,
-        autoTrim: props.autoTrim,
+        hasAutoTrim: props.hasAutoTrim,
         onBlurCallback: props.onBlur,
     });
 
@@ -252,7 +252,7 @@ InputField.defaultProps = {
     required: false,
     showClear: false,
     maskOptions: null,
-    autoTrim: false,
+    hasAutoTrim: false,
 };
 
 export default fieldWrapper<IInputFieldProps>(FieldEnum.INPUT_FIELD, InputField);

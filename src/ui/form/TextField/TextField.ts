@@ -24,7 +24,7 @@ export interface ITextFieldProps extends IBaseFieldProps {
      * Флаг, который указывает, что нужно обрезать пробелы в начале и в конце строки
      * @example false
      */
-    autoTrim?: boolean,
+    hasAutoTrim?: boolean,
 }
 
 export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {
@@ -66,7 +66,7 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         onBlur,
     } = useTrimmedInput({
         onChange: props.input.onChange,
-        autoTrim: props.autoTrim,
+        hasAutoTrim: props.hasAutoTrim,
     });
 
     const handleChange = useCallback(
@@ -110,7 +110,7 @@ TextField.defaultProps = {
     required: false,
     submitOnEnter: false,
     autoHeight: false,
-    autoTrim: false,
+    hasAutoTrim: false,
 };
 
 export default fieldWrapper<ITextFieldProps>(FieldEnum.TEXT_FIELD, TextField);

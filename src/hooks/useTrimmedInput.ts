@@ -1,28 +1,30 @@
 import {KeyboardEventHandler, useCallback} from 'react';
 import * as React from 'react';
 
-const getProcessedValue = (value: string, autoTrim?: boolean): string => autoTrim ? value.trim() : value;
+const getProcessedValue = (value: string, hasAutoTrim?: boolean): string => hasAutoTrim ? value.trim() : value;
 
 export interface ITrimmedInputConfig {
     onChange: (value: string) => void,
-    autoTrim?: boolean,
+    hasAutoTrim?: boolean,
     onBlurCallback?: (e: Event | React.FocusEvent) => void,
 }
 
 export default function useTrimmedInput(config:ITrimmedInputConfig) {
     const onBlur = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-        const rawValue = getProcessedValue(event.target.value, config.autoTrim);
-        config.onChange(rawValue);
+        const processedValue = getProcessedValue(event.target.value, config.hasAutoTrim);
+        config.onChange(processedValue);
         config.onBlurCallback?.(event);
     }, [config]);
 
     const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
-        const target = event.target as HTMLInputElement;
-        const rawValue = getProcessedValue(target.value, config.autoTrim);
-
-        if (event.key === 'Enter') {
-            config.onChange(rawValue);
+        if (event.key !== 'Enter') {
+            return;
         }
+
+        const target = event.target as HTMLInputElement;
+        const processedValue = getProcessedValue(target.value, config.hasAutoTrim);
+
+        config.onChange(processedValue);
     }, [config]);
 
     return {

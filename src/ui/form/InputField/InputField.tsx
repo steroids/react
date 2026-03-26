@@ -4,7 +4,7 @@ import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
 import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
-import {InputHTMLAttributes, ReactNode, useMemo} from 'react';
+import {InputHTMLAttributes, ReactElement, ReactNode, useCallback, useEffect, useMemo, FocusEvent, MouseEvent} from 'react';
 
 import {INPUT_TYPES_SUPPORTED_SELECTION, useInputFieldWarningByType} from './hooks/useInputFieldWarningByType';
 import {FieldEnum} from '../../../enums';
@@ -132,7 +132,7 @@ export interface IInputFieldProps extends IBaseFieldProps {
     /**
      * Пользовательская иконка svg или название иконки
      */
-    leadIcon?: React.ReactElement | string,
+    leadIcon?: ReactElement | string,
 
     /**
      * Задержка применения введённого значения
@@ -156,9 +156,9 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
         disabled: boolean,
     },
     onClear?: () => void,
-    onFocus?: (e: Event | React.FocusEvent) => void,
-    onBlur?: (e: Event | React.FocusEvent) => void,
-    onMouseDown?: (e: Event | React.MouseEvent) => void,
+    onFocus?: (e: Event | FocusEvent) => void,
+    onBlur?: (e: Event | FocusEvent) => void,
+    onMouseDown?: (e: Event | MouseEvent) => void,
     defaultValue?: string,
 }
 
@@ -189,7 +189,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
         onBlurCallback: props.onBlur,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (inputRef.current) {
             maskedInputRef(inputRef.current);
         }
@@ -197,7 +197,7 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     useInputFieldWarningByType(props.type);
 
-    const onClear = React.useCallback(() => {
+    const onClear = useCallback(() => {
         if (props.onClear) {
             props.onClear('');
         }

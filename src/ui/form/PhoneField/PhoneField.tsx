@@ -5,7 +5,7 @@ import fieldWrapper, {
     IFieldWrapperInputProps, IFieldWrapperOutputProps,
 } from '@steroidsjs/core/ui/form/Field/fieldWrapper';
 import {IBaseFieldProps, IInputFieldProps} from '@steroidsjs/core/ui/form/InputField/InputField';
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 export interface ICountryPhoneMask extends IDropDownFieldItem{
     phoneCode: string,
@@ -94,7 +94,7 @@ function PhoneField(props: IPhoneFieldProps): JSX.Element {
         inputParams: props.input,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (inputRef.current) {
             maskedInputRef(inputRef.current);
         }
@@ -121,7 +121,7 @@ function PhoneField(props: IPhoneFieldProps): JSX.Element {
         setIsOpened(false);
     }, [setIsFocused, setIsOpened]);
 
-    const onClear = React.useCallback(() => {
+    const onClear = useCallback(() => {
         if (props.onClear) {
             props.onClear('');
         }

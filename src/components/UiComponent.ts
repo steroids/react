@@ -184,7 +184,7 @@ export default class UiComponent implements IUiApplicationComponent {
             Component = this._getComponent('views', Component);
         }
         if (!forceNode && _isFunction(Component)) {
-            if (Component.defaultProps) {
+            if ('defaultProps' in Component && _isObject(Component.defaultProps)) {
                 return Component({
                     ...Component.defaultProps,
                     ...props,
@@ -270,7 +270,7 @@ export default class UiComponent implements IUiApplicationComponent {
 
     protected _add(group, items, defaultNamespace = null) {
         // require.context()
-        if (_isFunction(items) && _isFunction(items.keys)) {
+        if (_isFunction(items) && 'keys' in items && _isFunction(items.keys)) {
             items.keys().forEach(fileName => {
                 const matches = fileName.match(/^\.\/(.*\/)?[^\\/]+\/([^\\/]+)\.(js|ts)x?$/);
                 if (matches) {

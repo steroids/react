@@ -15,7 +15,7 @@ import {createStore, applyMiddleware, compose, Store, Dispatch, Unsubscribe, Red
 
 declare global {
     interface Window {
-        APP_REDUX_PRELOAD_STATES?: any,
+        APP_REDUX_PRELOAD_STATES?: [any],
         __REDUX_DEVTOOLS_EXTENSION__?: any,
     }
 }

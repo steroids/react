@@ -16,7 +16,10 @@ const store = mockStore({});
 
 const mockGroup = 'modalGroup3';
 
-jest.mock('lodash-es/uniqueId');
+jest.mock('lodash-es/uniqueId', () => ({
+    __esModule: true,
+    default: jest.fn(),
+}));
 
 describe('auth actions', () => {
     beforeEach(() => {
@@ -62,7 +65,7 @@ describe('auth actions', () => {
                 },
             ];
 
-            _uniqueId.mockImplementation(() => modalId);
+            (_uniqueId as jest.Mock).mockImplementation(() => modalId);
             store.dispatch(openModal(modal));
             expect(store.getActions()).toEqual(expectedActions);
         });

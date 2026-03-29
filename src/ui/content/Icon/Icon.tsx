@@ -82,7 +82,7 @@ export default function Icon(props: IIconProps): JSX.Element {
             ? name
             : components.ui.getIcon(name);
 
-        if (_isObject(icon) && _isString(icon.default)) {
+        if (_isObject(icon) && 'default' in icon && _isString(icon.default)) {
             icon = icon.default;
         }
 

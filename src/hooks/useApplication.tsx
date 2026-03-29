@@ -27,8 +27,10 @@ import ScreenProvider, {IScreenProviderProps} from '../providers/ScreenProvider'
 import ThemeProvider, {IThemeProviderProps} from '../providers/ThemeProvider';
 import Router, {IRouteItem, IRouterProps} from '../ui/nav/Router/Router';
 
+export type ComponentConstructor = new (components: IComponents, config?: Record<string, any>) => any;
+
 export interface IComponentConfig {
-    className?: Record<string, any>,
+    className?: ComponentConstructor,
     [key: string]: any,
 }
 
@@ -119,7 +121,11 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
     // Create components
     if (!components) {
         components = {};
-        const componentsConfig = _merge({}, defaultComponents, config.components);
+        const componentsConfig: IComponentConfig = _merge(
+            {},
+            defaultComponents,
+            config.components,
+        );
         Object.keys(componentsConfig).forEach(name => {
             if (typeof componentsConfig[name] === 'function') {
                 componentsConfig[name] = {
@@ -127,7 +133,10 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                 };
             }
 
-            const {className, ...componentConfig} = componentsConfig[name];
+            const {
+                className,
+                ...componentConfig
+            } = componentsConfig[name];
 
             // Append reducers to store
             if (name === 'store') {
@@ -135,7 +144,6 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
                     componentConfig.reducers = config.reducers;
                 }
             }
-
             // eslint-disable-next-line new-cap
             components[name] = new className(components, componentConfig);
         });

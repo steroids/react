@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const _ = require('lodash');
+const _ = require('lodash-es');
 
 const getPropertiesDescription = (properties) => properties
     ?.map(property => property.description)

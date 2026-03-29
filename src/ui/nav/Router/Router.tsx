@@ -283,9 +283,8 @@ function Router(props: IRouterProps): JSX.Element {
 
     // Routes state
     const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
-    // TODO: разобраться, почему при инициализации routes в useState передается treeToList, а ниже просто setRoutes(props.routes)
     useUpdateEffect(() => {
-        setRoutes(props.routes);
+        setRoutes(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     }, [props.routes]);
 
     // Fix end slash on switch to base route

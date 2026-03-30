@@ -8,12 +8,12 @@ const INITIAL_PAGE_SIZE = 40;
 const PAGE_SIZE = 40;
 const SCROLL_THRESHOLD = 80;
 
-interface IDropDownCountySelectViewProps extends IPhoneFieldDropdownProps {
+interface IDropDownCountrySelectViewProps extends IPhoneFieldDropdownProps {
     disabled?: boolean,
 }
 
-export default function DropDownCountySelectView(props: IDropDownCountySelectViewProps) {
-    const bem = useBem('DropDownCountySelectView');
+export default function DropDownCountrySelectView(props: IDropDownCountrySelectViewProps) {
+    const bem = useBem('DropDownCountrySelectView');
     const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE);
     const listRef = useRef<HTMLDivElement>(null);
 
@@ -63,7 +63,7 @@ export default function DropDownCountySelectView(props: IDropDownCountySelectVie
                         <span className={bem.element('img')}>
                             <img
                                 src={item.contentSrc as string}
-                                alt="custom source for item"
+                                alt='custom source for item'
                             />
                         </span>
                         <div className={bem.element('country-name')}>
@@ -101,7 +101,7 @@ export default function DropDownCountySelectView(props: IDropDownCountySelectVie
                     }),
                 )}
                 onKeyPress={e => e.key === 'Enter' && !props.disabled && props.onOpen()}
-                role="button"
+                role='button'
                 tabIndex={0}
                 onClick={closeIfOpened}
             >
@@ -113,7 +113,7 @@ export default function DropDownCountySelectView(props: IDropDownCountySelectVie
                 >
                     <img
                         src={selectedCountry.contentSrc as string}
-                        alt="custom source for item"
+                        alt='custom source for item'
                     />
                     <Icon
                         name='arrow_down_24x24'

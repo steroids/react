@@ -220,7 +220,7 @@ value: 'test',
             }, true),
         );
 
-        const selectedItems = getElementByClassName(container, 'DropDownCountySelectView__selected-items');
+        const selectedItems = getElementByClassName(container, 'DropDownCountrySelectView__selected-items');
         fireEvent.click(selectedItems);
 
         await waitFor(() => {

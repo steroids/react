@@ -1,7 +1,7 @@
-import {ChangeEvent, KeyboardEventHandler, MutableRefObject, useCallback, useMemo} from 'react';
+import React, {ChangeEvent, KeyboardEventHandler, useCallback, useMemo} from 'react';
 
 import {FieldEnum} from '../../../enums';
-import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import {useComponents, useSaveCursorPosition, useTrimmedInput} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
 
@@ -20,6 +20,12 @@ export interface ITextFieldProps extends IBaseFieldProps {
      * @example false
      */
     autoHeight?: boolean,
+
+    /**
+     * Флаг, который указывает, что нужно обрезать пробелы в начале и в конце строки
+     * @example false
+     */
+    hasAutoTrim?: boolean,
 }
 
 export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutputProps {
@@ -31,7 +37,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
         placeholder: string,
         disabled: boolean,
         required: boolean,
-        ref: MutableRefObject<any>,
+        ref: React.MutableRefObject<any>,
     },
     onClear: VoidFunction,
 }
@@ -57,6 +63,13 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         }
     }, [props.formId, props.submitOnEnter]);
 
+    const {
+        onBlur,
+    } = useTrimmedInput({
+        onChange: props.input.onChange,
+        hasAutoTrim: props.hasAutoTrim,
+    });
+
     const handleChange = useCallback(
         event => onChange(event, event.target ? event.target.value : event.nativeEvent.text),
         [onChange],
@@ -74,7 +87,8 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         required: props.required,
         ref: inputRef,
         ...props.inputProps,
-    }), [props.input.name, props.input.value, props.placeholder, props.disabled, props.required, props.inputProps, handleChange, onKeyUp, inputRef]);
+    }), [props.input.name, props.input.value, props.placeholder, props.disabled, props.required, props.inputProps,
+        handleChange, inputRef, onKeyUp]);
 
     const viewProps = useMemo(() => ({
         ...props.viewProps,
@@ -85,7 +99,9 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
         className: props.className,
         showClear: props.showClear,
         autoHeight: props.autoHeight,
-    }), [inputProps, onClear, props.className, props.errors, props.showClear, props.size, props.viewProps, props.autoHeight]);
+        onBlur,
+    }), [inputProps, onClear, props.className, props.errors, props.showClear, props.size, props.viewProps,
+        props.autoHeight, onBlur]);
 
     return components.ui.renderView(props.view || 'form.TextFieldView', viewProps);
 }
@@ -95,6 +111,7 @@ TextField.defaultProps = {
     required: false,
     submitOnEnter: false,
     autoHeight: false,
+    hasAutoTrim: false,
 };
 
 export default fieldWrapper<ITextFieldProps>(FieldEnum.TEXT_FIELD, TextField);

@@ -20,6 +20,7 @@ import useSelector from './useSelector';
 import useSsr from './useSsr';
 import useTheme from './useTheme';
 import useTree from './useTree';
+import useTrimmedInput from './useTrimmedInput';
 import useUniqueId from './useUniqueId';
 import useCalendarControls from '../ui/content/CalendarSystem/hooks/useCalendarControls';
 import useDisplayDate from '../ui/content/CalendarSystem/hooks/useDisplayDate';
@@ -53,5 +54,6 @@ export {
     useDisplayDate,
     useCalendarControls,
     useSaveCursorPosition,
+    useTrimmedInput,
     useListField,
 };

@@ -82,6 +82,8 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
     onKeyDown: VoidFunction,
 }
 
+const isNotEmptyValue = (rawValue: string) => !_isNil(rawValue) && rawValue !== '';
+
 function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
     const components = useComponents();
 
@@ -106,8 +108,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         () => props.step ?? DEFAULT_STEP,
         [props.step],
     );
-
-    const isNotEmptyValue = (rawValue: string) => !_isNil(rawValue) && rawValue !== '';
 
     const numberMaskOptions = useMemo(() => {
         const min = props.min ?? (props.isCanBeNegative ? -Infinity : 0);

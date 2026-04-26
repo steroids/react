@@ -1056,5 +1056,11 @@
     "Задержка применения введённого значения": "Delay in applying the entered value",
     "Применяется для SSR. Если fetch критический — SSR вернет страницу со статус кодом ошибки.": "Used for SSR. If the fetch is critical, SSR will return the page with an error status code.",
     "Дополнительное содержание сообщения.": "Additional message content.",
-    "Метки на ползунке. В объекте {key: 'value'} key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.": "Labels on the slider. In the object {key: 'value'}, the key determines the position, and the value determines what will be displayed.\nIf you want to set a style for a specific label point, the value must be an object\ncontaining the style and label properties."
+    "Метки на ползунке. В объекте {key: 'value'} key определяет положение, а value определяет, что будет отображаться.\nЕсли вы хотите задать стиль определенной точки метки, значением должен быть объект,\nсодержащий свойства style и label.": "Labels on the slider. In the object {key: 'value'}, the key determines the position, and the value determines what will be displayed.\nIf you want to set a style for a specific label point, the value must be an object\ncontaining the style and label properties.",
+    "Применяется для ssr. Если fetch критический — ssr вернет страницу со статус кодом ошибки.": "Used for SSR. If the fetch is critical, the SSR will return the page with an error status code.",
+    "Разделитель тысяч (по умолчанию пустая строка — без разделителя, например 1000).\nДля отображения \"1 000\" передать пробел: thousandSeparator=\" \"": "Thousands separator (default is an empty string — no separator, e.g., 1000).\nTo display \"1 000\", pass a space: thousandSeparator=\" \"",
+    "Название цвета для Alert и Notification": "Color name for Alert and Notification",
+    "Название цвета для Badge": "Color name for Badge",
+    "Название цвета для Button": "Color name for Button",
+    "Название цвета для Text, Title": "Color name for Text, Title"
 }

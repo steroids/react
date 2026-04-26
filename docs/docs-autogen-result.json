@@ -1642,11 +1642,19 @@
             "extends": [],
             "properties": [
                 {
+                    "name": "dispatch",
+                    "decorators": [],
+                    "description": "Метод для dispatch",
+                    "required": true,
+                    "type": "Dispatch",
+                    "example": null
+                },
+                {
                     "name": "reducers",
                     "decorators": [],
                     "description": "Редьюсеры",
                     "required": true,
-                    "type": "any",
+                    "type": "CreateRootReducer",
                     "example": null
                 },
                 {
@@ -1654,7 +1662,7 @@
                     "decorators": [],
                     "description": "Хранилище",
                     "required": true,
-                    "type": "any",
+                    "type": "Store",
                     "example": null
                 }
             ],
@@ -1687,24 +1695,6 @@
                     "parameters": []
                 },
                 {
-                    "name": "dispatch",
-                    "decorators": [],
-                    "description": "Метод для dispatch",
-                    "required": false,
-                    "type": "void",
-                    "example": null,
-                    "parameters": [
-                        {
-                            "name": "action",
-                            "decorators": [],
-                            "description": "Экшен для изменения состояния.\n",
-                            "required": true,
-                            "type": "any",
-                            "example": null
-                        }
-                    ]
-                },
-                {
                     "name": "errorHandler",
                     "decorators": [],
                     "description": "Метод, который вызывается при ошибке",
@@ -1735,7 +1725,7 @@
                     "decorators": [],
                     "description": "Получение состояния",
                     "required": false,
-                    "type": "void",
+                    "type": "Record",
                     "example": null,
                     "parameters": []
                 },
@@ -1746,7 +1736,16 @@
                     "required": false,
                     "type": "void",
                     "example": null,
-                    "parameters": []
+                    "parameters": [
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IStoreComponentConfig",
+                            "example": null
+                        }
+                    ]
                 },
                 {
                     "name": "initStore",
@@ -1755,14 +1754,23 @@
                     "required": false,
                     "type": "void",
                     "example": null,
-                    "parameters": []
+                    "parameters": [
+                        {
+                            "name": "config",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "IStoreComponentConfig",
+                            "example": null
+                        }
+                    ]
                 },
                 {
                     "name": "subscribe",
                     "decorators": [],
                     "description": "Подписка",
                     "required": false,
-                    "type": "void",
+                    "type": "Unsubscribe",
                     "example": null,
                     "parameters": [
                         {
@@ -1770,7 +1778,7 @@
                             "decorators": [],
                             "description": "Обработчик изменения состояния.\n",
                             "required": true,
-                            "type": "any",
+                            "type": "{}",
                             "example": null
                         }
                     ]
@@ -27119,6 +27127,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "thousandSeparator",
+                    "decorators": [],
+                    "description": "Разделитель тысяч (по умолчанию пустая строка — без разделителя, например 1000).\nДля отображения \"1 000\" передать пробел: thousandSeparator=\" \"",
+                    "required": false,
+                    "type": "string",
+                    "example": "','",
+                    "defaultValue": null
+                },
+                {
                     "name": "value",
                     "decorators": [],
                     "description": "Значение для поля",
@@ -27306,7 +27323,7 @@
                     "decorators": [],
                     "description": "Свойства для элемента input",
                     "required": true,
-                    "type": "{disabled: boolean, max: number, min: number, name: string, placeholder: string, required: boolean, step: string | number, type: string, value: number, onChange: null}",
+                    "type": "{disabled: boolean, max: number, min: number, name: string, placeholder: string, required: boolean, step: string | number, type: string, value: string | number, onInput: null}",
                     "example": null
                 },
                 {
@@ -27444,6 +27461,14 @@
                     "required": false,
                     "type": "CSSProperties",
                     "example": "{width: '45%'}"
+                },
+                {
+                    "name": "thousandSeparator",
+                    "decorators": [],
+                    "description": "Разделитель тысяч (по умолчанию пустая строка — без разделителя, например 1000).\nДля отображения \"1 000\" передать пробел: thousandSeparator=\" \"",
+                    "required": false,
+                    "type": "string",
+                    "example": "','"
                 },
                 {
                     "name": "value",
@@ -33255,14 +33280,6 @@
                     "example": null
                 },
                 {
-                    "name": "level",
-                    "decorators": [],
-                    "description": "Цвет всплывающего уведомления",
-                    "required": false,
-                    "type": "string",
-                    "example": "warning"
-                },
-                {
                     "name": "message",
                     "decorators": [],
                     "description": "Сообщение во всплывающем уведомлении",
@@ -33277,6 +33294,14 @@
                     "required": true,
                     "type": "string",
                     "example": null
+                },
+                {
+                    "name": "type",
+                    "decorators": [],
+                    "description": "Цвет всплывающего уведомления",
+                    "required": false,
+                    "type": "string",
+                    "example": "warning"
                 }
             ],
             "methods": [
@@ -41871,6 +41896,30 @@
             "type": "string | {} | string | number | {id: string | number | boolean, label: string | Record | number}[]",
             "example": null
         },
+        "AlertColorName": {
+            "name": "AlertColorName",
+            "decorators": [],
+            "description": "Название цвета для Alert и Notification",
+            "required": true,
+            "type": "\"success\" | \"info\" | \"warning\" | \"error\" | \"default\" | string",
+            "example": null
+        },
+        "BadgeColorName": {
+            "name": "BadgeColorName",
+            "decorators": [],
+            "description": "Название цвета для Badge",
+            "required": true,
+            "type": "\"primary\" | \"secondary\" | \"success\" | \"danger\" | \"warning\" | \"info\" | string",
+            "example": null
+        },
+        "ButtonColorName": {
+            "name": "ButtonColorName",
+            "decorators": [],
+            "description": "Название цвета для Button",
+            "required": true,
+            "type": "\"basic\" | \"primary\" | \"secondary\" | \"success\" | \"danger\" | \"warning\" | \"info\" | string",
+            "example": null
+        },
         "ColorName": {
             "name": "ColorName",
             "decorators": [],
@@ -41965,6 +42014,14 @@
             "description": "Размер элемента",
             "required": true,
             "type": "\"small\" | \"middle\" | \"large\" | string",
+            "example": null
+        },
+        "TypographyColorName": {
+            "name": "TypographyColorName",
+            "decorators": [],
+            "description": "Название цвета для Text, Title",
+            "required": true,
+            "type": "\"primary\" | \"secondary\" | \"success\" | \"danger\" | \"warning\" | \"info\" | \"text-color\" | string",
             "example": null
         },
         "TNotificationsState": {
@@ -43711,7 +43768,7 @@
                     "decorators": [],
                     "description": "Редьюсеры",
                     "required": true,
-                    "type": "any",
+                    "type": "CreateRootReducer",
                     "example": null
                 },
                 {
@@ -43719,7 +43776,7 @@
                     "decorators": [],
                     "description": "Хранилище",
                     "required": true,
-                    "type": "any",
+                    "type": "Store",
                     "example": null
                 }
             ],
@@ -43737,7 +43794,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "any",
+                            "type": "AsyncReducersMap",
                             "example": null
                         }
                     ]
@@ -43845,7 +43902,7 @@
                     "decorators": [],
                     "description": "Подписка",
                     "required": false,
-                    "type": "any",
+                    "type": "Unsubscribe",
                     "example": null,
                     "parameters": [
                         {

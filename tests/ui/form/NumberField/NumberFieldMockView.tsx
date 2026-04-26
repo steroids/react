@@ -1,5 +1,4 @@
 import _isNumber from 'lodash-es/isNumber';
-import {useCallback, useRef} from 'react';
 
 import {useBem} from '../../../../src/hooks';
 import Icon from '../../../../src/ui/content/Icon';
@@ -7,19 +6,6 @@ import {INumberFieldViewProps} from '../../../../src/ui/form/NumberField/NumberF
 import IconMockView from '../../content/Icon/IconMockView';
 
 export default function NumberFieldView(props: INumberFieldViewProps) {
-    // Input ref
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    const onStepUp = useCallback(() => {
-        inputRef.current?.stepUp();
-        props.inputProps.onChange(inputRef.current?.value || '');
-    }, [inputRef.current]);
-
-    const onStepDown = useCallback(() => {
-        inputRef.current?.stepDown();
-        props.inputProps.onChange(inputRef.current?.value || '');
-    }, [inputRef.current]);
-
     const bem = useBem('NumberFieldView');
 
     return (
@@ -29,30 +15,31 @@ export default function NumberFieldView(props: INumberFieldViewProps) {
                     disabled: props.inputProps.disabled,
                     size: props.size,
                     hasErrors: !!props.errors,
-                    filled: !!props.inputProps.value,
+                    filled: !!props.inputRef?.current?.value,
                 }),
                 props.className,
             )}
         >
             <input
-                ref={inputRef}
+                ref={props.inputRef}
                 className={bem(
                     bem.element('input', {
                         hasErrors: !!props.errors,
                     }),
                 )}
                 {...props.inputProps}
-                onChange={e => props.input?.onChange(e.target.value)}
+                onWheel={event => event.currentTarget.blur()}
+                id={props.id}
+                onBlur={props.onBlur}
             />
             {!props.disabled && !props.errors && (
-
                 <div className={bem.element('arrows-container')}>
                     <button
                         className={bem.element('arrow', {
                             disabled: _isNumber(props.inputProps.max) && props.inputProps.value >= props.inputProps.max,
                         })}
                         type='button'
-                        onClick={onStepUp}
+                        onClick={props.onStepUp}
                     >
                         <Icon
                             view={IconMockView}
@@ -64,7 +51,7 @@ export default function NumberFieldView(props: INumberFieldViewProps) {
                             disabled: _isNumber(props.inputProps.min) && props.inputProps.value <= props.inputProps.min,
                         })}
                         type='button'
-                        onClick={onStepDown}
+                        onClick={props.onStepDown}
                     >
                         <Icon
                             view={IconMockView}

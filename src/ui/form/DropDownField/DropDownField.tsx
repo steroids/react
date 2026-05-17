@@ -1,3 +1,4 @@
+import {IEmptyProps, normalizeEmptyProps} from '@steroidsjs/core/ui/list/Empty/Empty';
 import _includes from 'lodash-es/includes';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
@@ -221,6 +222,15 @@ export interface IDropDownFieldProps extends IFieldWrapperInputProps,
      * Пропсы для отображения элемента
      */
     itemViewProps?: CustomViewProps,
+
+    /**
+     * Заглушка в случае отсутствия элементов
+     * @example
+     * {
+     *  text: 'Записи не найдены'
+     * }
+     */
+    empty?: boolean | string | IEmptyProps,
 
     [key: string]: any,
 }
@@ -496,6 +506,20 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     const dropDownProps = useMemo(() => _merge(DEFAULT_DROP_DOWN_PROPS, props.dropDownProps), [props.dropDownProps]);
 
+    const Empty = require('../../list/Empty').default;
+    const emptyProps = normalizeEmptyProps(props.empty ?? true);
+    const renderEmpty = () => {
+        if (!emptyProps.enable) {
+            return null;
+        }
+        return (
+            <Empty
+                list={items}
+                {...emptyProps}
+            />
+        );
+    };
+
     const viewProps = useMemo(() => ({
         isAutoComplete,
         items,
@@ -533,8 +557,9 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
         disabled: props.disabled,
         required: props.required,
         maxHeight: props.maxHeight,
+        renderEmpty,
         ...dataProvider,
-    }), [isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
+    }), [renderEmpty, isAutoComplete, items, hoveredId, selectedIds, searchInputProps, isOpened, isLoading, onOpen, selectedItems, onReset, onClose,
         renderItem, onItemRemove, onItemSelect, hasGroup, props.multiple, props.isSearchAutoFocus, props.className, props.viewProps, props.style,
         props.size, props.color, props.outline, props.placeholder, props.showReset, props.showEllipses, props.errors, props.disabled,
         props.required, props.maxHeight, normalizedItemToSelectAll, dropDownProps, dataProvider]);

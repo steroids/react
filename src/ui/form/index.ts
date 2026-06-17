@@ -23,6 +23,7 @@ import MaskField from './MaskField';
 import NavField from './NavField';
 import NumberField from './NumberField';
 import PasswordField from './PasswordField';
+import PhoneField from './PhoneField';
 import RadioField from './RadioField';
 import RadioListField from './RadioListField';
 import RateField from './RateField';
@@ -59,6 +60,7 @@ export {
     NavField,
     NumberField,
     PasswordField,
+    PhoneField,
     RadioField,
     RadioListField,
     ReCaptchaField,
@@ -98,6 +100,7 @@ export default {
     NavField,
     NumberField,
     PasswordField,
+    PhoneField,
     RadioField,
     RadioListField,
     ReCaptchaField,

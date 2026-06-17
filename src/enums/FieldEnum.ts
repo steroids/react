@@ -45,6 +45,8 @@ export default class FieldEnum extends Enum {
 
     static readonly PASSWORD_FIELD = 'PasswordField';
 
+    static readonly PHONE_FIELD = 'PhoneField';
+
     static readonly RADIO_FIELD = 'RadioField';
 
     static readonly RADIO_LIST_FIELD = 'RadioListField';
@@ -87,6 +89,7 @@ export default class FieldEnum extends Enum {
             [FieldEnum.NAV_FIELD]: 'NavField',
             [FieldEnum.NUMBER_FIELD]: 'NumberField',
             [FieldEnum.PASSWORD_FIELD]: 'PasswordField',
+            [FieldEnum.PHONE_FIELD]: 'PhoneField',
             [FieldEnum.RADIO_FIELD]: 'RadioField',
             [FieldEnum.RADIO_LIST_FIELD]: 'RadioListField',
             [FieldEnum.RATE_FIELD]: 'RateField',

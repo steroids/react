@@ -1,5 +1,6 @@
 import useAbsolutePositioning from './useAbsolutePositioning';
 import useAddressBar from './useAddressBar';
+import useAppLanguage from './useAppLanguage';
 import useApplication from './useApplication';
 import useBem from './useBem';
 import useComponents from './useComponents';
@@ -54,4 +55,5 @@ export {
     useCalendarControls,
     useSaveCursorPosition,
     useListField,
+    useAppLanguage,
 };

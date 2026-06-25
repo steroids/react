@@ -40,6 +40,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
         disabled?: boolean,
         required?: boolean,
     },
+    indeterminate?: boolean,
 }
 
 function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {

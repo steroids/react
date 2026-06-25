@@ -162,7 +162,7 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
 
     const {indeterminateIds, viewSelectedIds} = useMemo(() => {
         const selectedSet = new Set(selectedIds);
-        const indeterminateIds: (string | number)[] = [];
+        const foundIndeterminateIds: (string | number)[] = [];
         const selectedLeafIds: (string | number)[] = [];
         const selectedParentIds: (string | number)[] = [];
 
@@ -183,13 +183,13 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
             if (childStates.every(state => state === TREE_ITEM_STATE.UNSELECTED)) {
                 return TREE_ITEM_STATE.UNSELECTED;
             }
-            indeterminateIds.push(item.id);
+            foundIndeterminateIds.push(item.id);
             return TREE_ITEM_STATE.INDETERMINATE;
         };
 
         items.forEach(getState);
         return {
-            indeterminateIds,
+            indeterminateIds: foundIndeterminateIds,
             viewSelectedIds: [...selectedLeafIds, ...selectedParentIds],
         };
     }, [items, selectedIds, props.primaryKey]);

@@ -84,7 +84,7 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
         required?: boolean,
     } & IPreparedTreeItem[],
     selectedIds: (PrimaryKey | any)[],
-    indeterminateIds: (PrimaryKey | any)[],
+    primaryKey?: string,
     onItemSelect: (checkbox: IPreparedTreeItem) => void,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
     size?: Size,
@@ -92,14 +92,6 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
     itemView: CustomView,
     itemProps: CustomViewProps,
 }
-
-const TREE_ITEM_STATE = {
-    SELECTED: 'selected',
-    INDETERMINATE: 'indeterminate',
-    UNSELECTED: 'unselected',
-};
-
-type TreeItemState = typeof TREE_ITEM_STATE[keyof typeof TREE_ITEM_STATE];
 
 export const getNestedItemsIds = (item, groupAttribute, hasOnlyLeafCheckboxes = false) => {
     if (item.disabled) {
@@ -160,41 +152,7 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         inputValue: props.input.value,
     });
 
-    const {indeterminateIds, viewSelectedIds} = useMemo(() => {
-        const selectedSet = new Set(selectedIds);
-        const foundIndeterminateIds: (string | number)[] = [];
-        const selectedLeafIds: (string | number)[] = [];
-        const selectedParentIds: (string | number)[] = [];
-
-        const getState = (item: any): TreeItemState => {
-            const children = item[props.primaryKey];
-            if (!_isArray(children) || _isEmpty(children)) {
-                if (selectedSet.has(item.id)) {
-                    selectedLeafIds.push(item.id);
-                    return TREE_ITEM_STATE.SELECTED;
-                }
-                return TREE_ITEM_STATE.UNSELECTED;
-            }
-            const childStates = children.map(getState);
-            if (childStates.every(state => state === TREE_ITEM_STATE.SELECTED)) {
-                selectedParentIds.push(item.id);
-                return TREE_ITEM_STATE.SELECTED;
-            }
-            if (childStates.every(state => state === TREE_ITEM_STATE.UNSELECTED)) {
-                return TREE_ITEM_STATE.UNSELECTED;
-            }
-            foundIndeterminateIds.push(item.id);
-            return TREE_ITEM_STATE.INDETERMINATE;
-        };
-
-        items.forEach(getState);
-        return {
-            indeterminateIds: foundIndeterminateIds,
-            viewSelectedIds: [...selectedLeafIds, ...selectedParentIds],
-        };
-    }, [items, selectedIds, props.primaryKey]);
-
-    const onItemSelect = useCallback((checkbox) => {
+    const onItemSelect = useCallback((checkbox: IPreparedTreeItem) => {
         if (checkbox.hasItems) {
             const nestedIds = getNestedItemsIds(checkbox, props.primaryKey, props.hasOnlyLeafCheckboxes);
             const childIds = nestedIds.filter(id => id !== checkbox.id);
@@ -205,7 +163,7 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
             setSelectedIds(allChildrenSelected
                 ? nestedIds.filter(id => selectedIds.includes(id))
                 : nestedIds);
-        } else if (checkbox.id && !checkbox.hasItems) {
+        } else if (checkbox.id && !checkbox.hasItems && typeof checkbox.id !== 'boolean') {
             setSelectedIds(checkbox.id);
         }
     }, [props.hasOnlyLeafCheckboxes, props.primaryKey, selectedIds, setSelectedIds]);
@@ -245,8 +203,8 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
     const viewProps = useMemo(() => ({
         items: treeItems,
         onItemSelect,
-        selectedIds: viewSelectedIds,
-        indeterminateIds,
+        selectedIds,
+        primaryKey: props.primaryKey,
         renderCheckbox,
         size: props.size,
         levelPadding: props.levelPadding,
@@ -254,7 +212,7 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         hasIconExpandOnly: props.hasIconExpandOnly,
         itemView: TreeItemView,
         itemProps: props.itemProps,
-    }), [treeItems, onItemSelect, viewSelectedIds, indeterminateIds, renderCheckbox, props.size, props.levelPadding,
+    }), [treeItems, onItemSelect, selectedIds, props.primaryKey, renderCheckbox, props.size, props.levelPadding,
         props.hasOnlyLeafCheckboxes, props.hasIconExpandOnly, props.itemProps, TreeItemView]);
 
     return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);

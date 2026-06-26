@@ -28,6 +28,11 @@ export interface ICheckboxFieldProps extends IFieldWrapperInputProps, IUiCompone
     */
     color?: string,
 
+    /**
+     * Промежуточное состояние чекбокса — часть дочерних элементов выбрана
+     */
+    indeterminate?: boolean,
+
     [key: string]: any,
 }
 
@@ -40,6 +45,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
         disabled?: boolean,
         required?: boolean,
     },
+    indeterminate?: boolean,
 }
 
 function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
@@ -75,8 +81,9 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
         label: props.label,
         onChange: props.onChange,
         required: props.required,
+        indeterminate: props.indeterminate,
     }), [inputProps, props.checked, props.className, props.color, props.disabled,
-        props.errors, props.id, props.label, props.onChange, props.required, props.size, props.style]);
+        props.errors, props.id, props.indeterminate, props.label, props.onChange, props.required, props.size, props.style]);
 
     return components.ui.renderView(props.view || 'form.CheckboxFieldView', viewProps);
 }

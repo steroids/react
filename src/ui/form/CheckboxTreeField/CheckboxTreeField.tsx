@@ -1,4 +1,5 @@
 import _isArray from 'lodash-es/isArray';
+import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
 import {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
@@ -83,6 +84,7 @@ export interface ICheckboxTreeFieldViewProps extends IFieldWrapperOutputProps,
         required?: boolean,
     } & IPreparedTreeItem[],
     selectedIds: (PrimaryKey | any)[],
+    primaryKey?: string,
     onItemSelect: (checkbox: IPreparedTreeItem) => void,
     renderCheckbox: (checkboxProps: ICheckboxFieldViewProps) => JSX.Element,
     size?: Size,
@@ -150,15 +152,21 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         inputValue: props.input.value,
     });
 
-    const onItemSelect = useCallback((checkbox) => {
+    const onItemSelect = useCallback((checkbox: IPreparedTreeItem) => {
         if (checkbox.hasItems) {
-            const selectedItemIds = getNestedItemsIds(checkbox, props.primaryKey, props.hasOnlyLeafCheckboxes);
+            const nestedIds = getNestedItemsIds(checkbox, props.primaryKey, props.hasOnlyLeafCheckboxes);
+            const childIds = nestedIds.filter(id => id !== checkbox.id);
+            const allChildrenSelected = !_isEmpty(childIds) && childIds.every(id => selectedIds.includes(id));
 
-            setSelectedIds(selectedItemIds);
-        } else if (checkbox.id && !checkbox.hasItems) {
+            // Передаём только те ID, что уже в selectedIds — useDataSelect сбросит эту ветку через isEqual,
+            // не затронув остальные выбранные элементы.
+            setSelectedIds(allChildrenSelected
+                ? nestedIds.filter(id => selectedIds.includes(id))
+                : nestedIds);
+        } else if (checkbox.id && !checkbox.hasItems && typeof checkbox.id !== 'boolean') {
             setSelectedIds(checkbox.id);
         }
-    }, [props.hasOnlyLeafCheckboxes, props.primaryKey, setSelectedIds]);
+    }, [props.hasOnlyLeafCheckboxes, props.primaryKey, selectedIds, setSelectedIds]);
 
     const onReset = useCallback(() => {
         setSelectedIds([]);
@@ -196,6 +204,7 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         items: treeItems,
         onItemSelect,
         selectedIds,
+        primaryKey: props.primaryKey,
         renderCheckbox,
         size: props.size,
         levelPadding: props.levelPadding,
@@ -203,7 +212,7 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
         hasIconExpandOnly: props.hasIconExpandOnly,
         itemView: TreeItemView,
         itemProps: props.itemProps,
-    }), [treeItems, onItemSelect, selectedIds, renderCheckbox, props.size, props.levelPadding,
+    }), [treeItems, onItemSelect, selectedIds, props.primaryKey, renderCheckbox, props.size, props.levelPadding,
         props.hasOnlyLeafCheckboxes, props.hasIconExpandOnly, props.itemProps, TreeItemView]);
 
     return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);

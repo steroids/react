@@ -174,8 +174,11 @@ export default class HttpComponent implements IHttpComponent {
 
         this._isWindowAvailable = !process.env.IS_SSR && process.env.PLATFORM !== 'mobile';
         this.apiUrl = config.apiUrl
-            //|| process.env.APP_BACKEND_URL
-            || (this._isWindowAvailable ? window.location.protocol + '//' + window.location.host : '');
+            || (
+                this._isWindowAvailable
+                    ? window.location.protocol + '//' + window.location.host
+                    : ''
+            );
         this.accessTokenKey = config.accessTokenKey || 'accessToken';
         this.clientStorageName = config.clientStorageName || this._components.clientStorage.STORAGE_COOKIE;
         this.clientStorageExpiresIn = config.clientStorageExpiresIn || 180;

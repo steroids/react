@@ -61,6 +61,17 @@ export interface INumberFieldProps extends IFieldWrapperInputProps, IBaseFieldPr
      * @example ','
      */
     thousandSeparator?: string,
+
+    /**
+     * Callback-функция, которая вызывается при фокусировке input
+    */
+    onFocus?: (e: Event | FocusEvent) => void,
+
+    /**
+     * Callback-функция, которая вызывается при потере фокуса input
+    */
+    onBlur?: (e: Event | FocusEvent) => void,
+
 }
 
 export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperOutputProps {

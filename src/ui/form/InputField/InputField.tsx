@@ -67,6 +67,16 @@ export interface IBaseFieldProps extends IFieldWrapperInputProps, IUiComponent {
     onClear?: (value: string) => void,
 
     /**
+     * Callback-функция, которая вызывается при фокусировке input
+     */
+    onFocus?: (e: Event | FocusEvent) => void,
+
+    /**
+     * Callback-функция, которая вызывается при потере фокуса input
+     */
+    onBlur?: (e: Event | FocusEvent) => void,
+
+    /**
      * Свойства для компонента отображения
      * @example
      * {

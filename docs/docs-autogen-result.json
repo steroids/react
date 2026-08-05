@@ -636,9 +636,9 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
-                            "description": "Параметры для запроса.",
+                            "description": "Тело для запроса.",
                             "required": false,
                             "type": "Record",
                             "example": null
@@ -646,9 +646,9 @@
                         {
                             "name": "options",
                             "decorators": [],
-                            "description": "Опции для HTTP-запроса, заголовки и т.д.\n",
+                            "description": "Опции для HTTP-запроса, заголовки, query-параметры и т.д.\n",
                             "required": false,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -680,9 +680,9 @@
                         {
                             "name": "options",
                             "decorators": [],
-                            "description": "Опции для HTTP-запроса, заголовки и т.д.\n",
+                            "description": "Опции для HTTP-запроса, заголовки, query-параметры и т.д.\n",
                             "required": false,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -776,9 +776,9 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
-                            "description": "Параметры для запроса.",
+                            "description": "Тело запроса.",
                             "required": false,
                             "type": "Record",
                             "example": null
@@ -786,9 +786,9 @@
                         {
                             "name": "options",
                             "decorators": [],
-                            "description": "Опции для HTTP-запроса, заголовки и т.д.\n",
+                            "description": "Опции для HTTP-запроса, заголовки, query-параметры и т.д.\n",
                             "required": false,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -836,9 +836,9 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
-                            "description": "Параметры для запроса.",
+                            "description": "Тело запроса.",
                             "required": false,
                             "type": "Record",
                             "example": null
@@ -846,9 +846,9 @@
                         {
                             "name": "options",
                             "decorators": [],
-                            "description": "Опции для HTTP-запроса, заголовки и т.д.\n",
+                            "description": "Опции для HTTP-запроса, заголовки, query-параметры и т.д.\n",
                             "required": false,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -2996,7 +2996,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "Record",
+                    "type": "{}",
                     "example": null
                 }
             ],
@@ -3654,8 +3654,8 @@
                     "name": "data",
                     "decorators": [],
                     "description": "",
-                    "required": false,
-                    "type": "T | {error: string, errors: Record, message: string, statusCode: number}",
+                    "required": true,
+                    "type": "T",
                     "example": null
                 },
                 {
@@ -5665,7 +5665,7 @@
             "tags": {},
             "defaultProps": null,
             "extends": [
-                "React.PropsWithChildren<any>"
+                "PropsWithChildren<any>"
             ],
             "properties": [
                 {
@@ -14275,6 +14275,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -14306,6 +14324,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -15417,6 +15453,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "indeterminate",
+                    "decorators": [],
+                    "description": "Промежуточное состояние чекбокса — часть дочерних элементов выбрана",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "inputProps",
                     "decorators": [],
                     "description": "Свойства для элемента input",
@@ -15643,6 +15688,14 @@
                     "description": "Input ID для связи поля с label",
                     "required": false,
                     "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "indeterminate",
+                    "decorators": [],
+                    "description": "Промежуточное состояние чекбокса — часть дочерних элементов выбрана",
+                    "required": false,
+                    "type": "boolean",
                     "example": null
                 },
                 {
@@ -16394,7 +16447,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": null,
                     "defaultValue": null
                 },
@@ -16761,7 +16814,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": null
                 },
                 {
@@ -16835,6 +16888,14 @@
                     "required": false,
                     "type": "number",
                     "example": "32"
+                },
+                {
+                    "name": "primaryKey",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
                 },
                 {
                     "name": "selectedIds",
@@ -18058,7 +18119,7 @@
                 "Omit<IFieldWrapperOutputProps",
                 "'input'>",
                 "Pick<IDateRangeFieldProps",
-                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'\r\n        | 'noBorder' | 'style' | 'withRangeButtons' | 'rangeButtonsPosition' | 'displayFormat'>"
+                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled'\n        | 'noBorder' | 'style' | 'withRangeButtons' | 'rangeButtonsPosition' | 'displayFormat'>"
             ],
             "properties": [
                 {
@@ -18898,7 +18959,7 @@
                 "Omit<IFieldWrapperOutputProps",
                 "'input'>",
                 "Pick<IDateRangeFieldProps",
-                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled' | 'withRangeButtons' | 'rangeButtonsPosition'\r\n        | 'noBorder' | 'style'| 'displayFormat'>"
+                "'size' | 'icon' | 'errors' | 'showRemove' | 'calendarProps' | 'className' | 'disabled' | 'withRangeButtons' | 'rangeButtonsPosition'\n        | 'noBorder' | 'style'| 'displayFormat'>"
             ],
             "properties": [
                 {
@@ -20714,6 +20775,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -20745,6 +20824,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -23547,15 +23644,6 @@
                     "defaultValue": null
                 },
                 {
-                    "name": "validator",
-                    "decorators": [],
-                    "description": "Колбэк для использования сторонних валидаторов, например yup",
-                    "required": false,
-                    "type": "any",
-                    "example": null,
-                    "defaultValue": null
-                },
-                {
                     "name": "validators",
                     "decorators": [],
                     "description": "Набор с правилами для проверки соответствия значений полей формы определенному формату.\nПроверка запускается в момент отправки формы (в обработчике onSubmit).",
@@ -25579,6 +25667,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -25610,6 +25716,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -25891,6 +26015,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -25922,6 +26064,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -26209,7 +26369,7 @@
                 {
                     "name": "onBlur",
                     "decorators": [],
-                    "description": "",
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
                     "required": false,
                     "type": "void",
                     "example": null,
@@ -26254,7 +26414,7 @@
                 {
                     "name": "onFocus",
                     "decorators": [],
-                    "description": "",
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
                     "required": false,
                     "type": "void",
                     "example": null,
@@ -26564,6 +26724,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -26595,6 +26773,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -27165,6 +27361,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -27196,6 +27410,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -27497,6 +27729,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -27528,6 +27778,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -27755,6 +28023,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -27786,6 +28072,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -28023,6 +28327,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -28050,6 +28372,24 @@
                     "parameters": []
                 },
                 {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onShowButtonClick",
                     "decorators": [],
                     "description": "",
@@ -28057,6 +28397,466 @@
                     "type": "void",
                     "example": null,
                     "parameters": []
+                }
+            ]
+        },
+        "ICountryPhoneMask": {
+            "name": "ICountryPhoneMask",
+            "moduleName": "ui/form/PhoneField/PhoneField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IDropDownFieldItem"
+            ],
+            "properties": [
+                {
+                    "name": "contentSrc",
+                    "decorators": [],
+                    "description": "Источник контента",
+                    "required": false,
+                    "type": "string | ReactElement",
+                    "example": "'https://steroids.kozhindev.com/images/icon.png'"
+                },
+                {
+                    "name": "contentType",
+                    "decorators": [],
+                    "description": "Тип контента для элемента",
+                    "required": false,
+                    "type": "string",
+                    "example": "'img'"
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Идентификатор элемента",
+                    "required": true,
+                    "type": "string | number | boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Отображаемое название",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "phoneCode",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "phoneMask",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string | RegExp[]",
+                    "example": null
+                }
+            ],
+            "methods": []
+        },
+        "IPhoneFieldDropdownProps": {
+            "name": "IPhoneFieldDropdownProps",
+            "moduleName": "ui/form/PhoneField/PhoneField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "isOpened",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "items",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any[]",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "primaryKey",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "selectedIds",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any[]",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "selectedItems",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "any[]",
+                    "example": null,
+                    "defaultValue": null
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onClose",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                },
+                {
+                    "name": "onItemSelect",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onOpen",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": []
+                }
+            ]
+        },
+        "IPhoneFieldViewProps": {
+            "name": "IPhoneFieldViewProps",
+            "moduleName": "ui/form/PhoneField/PhoneField",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [
+                "IPhoneFieldProps",
+                "IFieldWrapperOutputProps"
+            ],
+            "properties": [
+                {
+                    "name": "attribute",
+                    "decorators": [],
+                    "description": "Аттрибут (название) поля в форме",
+                    "required": false,
+                    "type": "string",
+                    "example": "'isVisible'"
+                },
+                {
+                    "name": "className",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для элемента отображения",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "componentId",
+                    "decorators": [],
+                    "description": "Id компонента",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "date",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "disabled",
+                    "decorators": [],
+                    "description": "Переводит элемент в состояние \"не активен\"",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "dropDownProps",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "IPhoneFieldDropdownProps",
+                    "example": null
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "Ошибки в поле",
+                    "required": false,
+                    "type": "string[]",
+                    "example": "['Error text']"
+                },
+                {
+                    "name": "fieldLayoutClassName",
+                    "decorators": [],
+                    "description": "Дополнительный CSS-класс для обертки FieldLayout",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "formId",
+                    "decorators": [],
+                    "description": "Id формы",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "hint",
+                    "decorators": [],
+                    "description": "Подсказка, которая отобразится рядом с полем",
+                    "required": false,
+                    "type": "string",
+                    "example": "'Only english letters'"
+                },
+                {
+                    "name": "id",
+                    "decorators": [],
+                    "description": "Input ID для связи поля с label",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "initialCountryCode",
+                    "decorators": [],
+                    "description": "Выбранная страна по умолчанию",
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "input",
+                    "decorators": [],
+                    "description": "Параметры для input элемента",
+                    "required": false,
+                    "type": "IInputParams",
+                    "example": null
+                },
+                {
+                    "name": "inputProps",
+                    "decorators": [],
+                    "description": "Свойства для элемента input",
+                    "required": false,
+                    "type": "InputHTMLAttributes",
+                    "example": "{ onKeyDown: ... }"
+                },
+                {
+                    "name": "isRenderWithoutFieldLayout",
+                    "decorators": [],
+                    "description": "Возможность отрендерить поле без обертки в компонент FieldLayout",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null
+                },
+                {
+                    "name": "label",
+                    "decorators": [],
+                    "description": "Название поля либо отмена отображение поля (false)",
+                    "required": false,
+                    "type": "any",
+                    "example": "'Visible'"
+                },
+                {
+                    "name": "model",
+                    "decorators": [],
+                    "description": "Модель с полями формы",
+                    "required": false,
+                    "type": "any",
+                    "example": "{\n attributes: [\n  {\n   attribute: 'category',\n   field: 'DropDownField'\n  }\n ]\n}"
+                },
+                {
+                    "name": "phoneMasks",
+                    "decorators": [],
+                    "description": "Список доступных масок для телефонных номеров разных стран.\nКаждая маска определяет формат отображения номера.",
+                    "required": true,
+                    "type": "ICountryPhoneMask[]",
+                    "example": null
+                },
+                {
+                    "name": "placeholder",
+                    "decorators": [],
+                    "description": "Подсказка для поля",
+                    "required": false,
+                    "type": "string",
+                    "example": "Your text..."
+                },
+                {
+                    "name": "prefix",
+                    "decorators": [],
+                    "description": "Префикс, который добавится к аттрибуту (названию) поля в форме",
+                    "required": false,
+                    "type": "string | boolean",
+                    "example": null
+                },
+                {
+                    "name": "required",
+                    "decorators": [],
+                    "description": "Обязательное ли поле? Если true, то к названию будет добавлен\nмодификатор 'required' - красная звездочка (по умолчанию)",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "showClear",
+                    "decorators": [],
+                    "description": "Показывать иконку очищения поля",
+                    "required": false,
+                    "type": "boolean",
+                    "example": "true"
+                },
+                {
+                    "name": "size",
+                    "decorators": [],
+                    "description": "Размер поля",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "style",
+                    "decorators": [],
+                    "description": "Объект CSS стилей",
+                    "required": false,
+                    "type": "CSSProperties",
+                    "example": "{width: '45%'}"
+                },
+                {
+                    "name": "value",
+                    "decorators": [],
+                    "description": "Значение для поля",
+                    "required": false,
+                    "type": "any",
+                    "example": null
+                },
+                {
+                    "name": "view",
+                    "decorators": [],
+                    "description": "Переопределение view React компонента для кастомизации отображения",
+                    "required": false,
+                    "type": "React.ReactNode | {}",
+                    "example": "MyCustomView"
+                },
+                {
+                    "name": "viewProps",
+                    "decorators": [],
+                    "description": "Свойства для компонента отображения",
+                    "required": false,
+                    "type": "{}",
+                    "example": "{\n customHandler: () => {...}\n}"
+                }
+            ],
+            "methods": [
+                {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onChange",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при изменении данных",
+                    "required": false,
+                    "type": "any",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "args",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onClear",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при очистке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
                 }
             ]
         },
@@ -28158,6 +28958,15 @@
                     "description": "Input ID для связи поля с label",
                     "required": false,
                     "type": "string",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
+                    "name": "indeterminate",
+                    "decorators": [],
+                    "description": "Промежуточное состояние чекбокса — часть дочерних элементов выбрана",
+                    "required": false,
+                    "type": "boolean",
                     "example": null,
                     "defaultValue": null
                 },
@@ -30492,6 +31301,15 @@
                     "defaultValue": null
                 },
                 {
+                    "name": "indeterminate",
+                    "decorators": [],
+                    "description": "Промежуточное состояние чекбокса — часть дочерних элементов выбрана",
+                    "required": false,
+                    "type": "boolean",
+                    "example": null,
+                    "defaultValue": null
+                },
+                {
                     "name": "inputProps",
                     "decorators": [],
                     "description": "Свойства для элемента input",
@@ -30833,6 +31651,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -30864,6 +31700,24 @@
                             "description": "",
                             "required": true,
                             "type": "string",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -31101,6 +31955,24 @@
             ],
             "methods": [
                 {
+                    "name": "onBlur",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при потере фокуса input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
+                            "example": null
+                        }
+                    ]
+                },
+                {
                     "name": "onChange",
                     "decorators": [],
                     "description": "Callback-функция, которая вызывается при изменении данных",
@@ -31114,6 +31986,24 @@
                             "description": "",
                             "required": true,
                             "type": "any[]",
+                            "example": null
+                        }
+                    ]
+                },
+                {
+                    "name": "onFocus",
+                    "decorators": [],
+                    "description": "Callback-функция, которая вызывается при фокусировке input",
+                    "required": false,
+                    "type": "void",
+                    "example": null,
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "decorators": [],
+                            "description": "",
+                            "required": true,
+                            "type": "Event | FocusEvent",
                             "example": null
                         }
                     ]
@@ -31451,8 +32341,8 @@
             "defaultProps": null,
             "extends": [
                 "IDateInputStateOutput",
-                "Pick<\r\n        ITimeFieldProps",
-                "'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps' | 'style' | 'availableTime' | 'minuteStep'\r\n    >"
+                "Pick<\n        ITimeFieldProps",
+                "'size' | 'errors' | 'showRemove' | 'noBorder' | 'className' | 'timePanelViewProps' | 'style' | 'availableTime' | 'minuteStep'\n    >"
             ],
             "properties": [
                 {
@@ -32389,7 +33279,7 @@
             "defaultProps": null,
             "extends": [
                 "Pick<IWizardFormProps",
-                "'prevStepButtonProps'\r\n    | 'nextStepButtonProps'\r\n    | 'stepsProps'\r\n    | 'showSteps'\r\n>"
+                "'prevStepButtonProps'\n    | 'nextStepButtonProps'\n    | 'stepsProps'\n    | 'showSteps'\n>"
             ],
             "properties": [
                 {
@@ -33060,7 +33950,7 @@
                     "decorators": [],
                     "description": "Свойства для логотипа.",
                     "required": false,
-                    "type": "{className: string, icon: string | ReactElement, linkProps: ILinkProps, title: string}",
+                    "type": "{className: string, icon: CustomIcon, linkProps: ILinkProps, title: string}",
                     "example": null,
                     "defaultValue": null
                 },
@@ -33160,7 +34050,7 @@
                     "decorators": [],
                     "description": "Свойства для логотипа.",
                     "required": false,
-                    "type": "{className: string, icon: string | ReactElement, linkProps: ILinkProps, title: string}",
+                    "type": "{className: string, icon: CustomIcon, linkProps: ILinkProps, title: string}",
                     "example": null
                 },
                 {
@@ -38106,15 +38996,6 @@
                     "defaultValue": null
                 },
                 {
-                    "name": "validator",
-                    "decorators": [],
-                    "description": "Колбэк для использования сторонних валидаторов, например yup",
-                    "required": false,
-                    "type": "any",
-                    "example": null,
-                    "defaultValue": null
-                },
-                {
                     "name": "validators",
                     "decorators": [],
                     "description": "Набор с правилами для проверки соответствия значений полей формы определенному формату.\nПроверка запускается в момент отправки формы (в обработчике onSubmit).",
@@ -38633,7 +39514,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка для сворачивания элементов",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": "'arrow'"
                 },
                 {
@@ -38851,7 +39732,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка для сворачивания элементов",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": "'arrow'",
                     "defaultValue": null
                 },
@@ -39234,7 +40115,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка, заменяющая первый роут",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": null,
                     "defaultValue": null
                 },
@@ -41037,7 +41918,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": null
                 },
                 {
@@ -41290,7 +42171,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": null,
                     "defaultValue": null
                 },
@@ -41523,7 +42404,7 @@
                     "decorators": [],
                     "description": "Кастомная иконка, заменяющая иконку раскрытия по умолчанию",
                     "required": false,
-                    "type": "string | ReactElement",
+                    "type": "string | React.ReactElement",
                     "example": null
                 },
                 {
@@ -41862,6 +42743,50 @@
                 }
             ],
             "methods": []
+        },
+        "IApiErrorPayload": {
+            "name": "IApiErrorPayload",
+            "moduleName": "utils/createAxiosError",
+            "title": "",
+            "description": "",
+            "tags": {},
+            "defaultProps": null,
+            "extends": [],
+            "properties": [
+                {
+                    "name": "error",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "errors",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "Record",
+                    "example": null
+                },
+                {
+                    "name": "message",
+                    "decorators": [],
+                    "description": "",
+                    "required": false,
+                    "type": "string",
+                    "example": null
+                },
+                {
+                    "name": "statusCode",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "number",
+                    "example": null
+                }
+            ],
+            "methods": []
         }
     },
     "declarations": {
@@ -41886,6 +42811,14 @@
             "description": "",
             "required": true,
             "type": "\"top\" | \"bottom\" | \"both\" | string",
+            "example": null
+        },
+        "ComponentConstructor": {
+            "name": "ComponentConstructor",
+            "decorators": [],
+            "description": "",
+            "required": true,
+            "type": "{}",
             "example": null
         },
         "DataProviderItems": {
@@ -42611,7 +43544,7 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -42623,7 +43556,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -42657,7 +43590,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -42751,7 +43684,7 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -42763,7 +43696,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -42811,7 +43744,7 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -42823,7 +43756,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -42974,7 +43907,7 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -42986,7 +43919,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -43020,7 +43953,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -43114,7 +44047,7 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -43126,7 +44059,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -43174,7 +44107,7 @@
                             "example": null
                         },
                         {
-                            "name": "params",
+                            "name": "body",
                             "decorators": [],
                             "description": "",
                             "required": true,
@@ -43186,7 +44119,7 @@
                             "decorators": [],
                             "description": "",
                             "required": true,
-                            "type": "IHttpRequestOptions",
+                            "type": "IHttpRequestOptionsWithQuery",
                             "example": null
                         }
                     ]
@@ -44658,6 +45591,14 @@
                     "example": null
                 },
                 {
+                    "name": "PHONE_FIELD",
+                    "decorators": [],
+                    "description": "",
+                    "required": true,
+                    "type": "\"PhoneField\"",
+                    "example": null
+                },
+                {
                     "name": "RADIO_FIELD",
                     "decorators": [],
                     "description": "",
@@ -44799,7 +45740,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "{AutoCompleteField: string, BlankField: string, CheckboxField: string, CheckboxListField: string, CheckboxTreeField: string, DateField: string, DateRangeField: string, DateTimeField: string, DateTimeRangeField: string, DropDownField: string, EmailField: string, Field: string, FieldList: string, FieldSet: string, FileField: string, HtmlField: string, ImageField: string, InputField: string, MaskField: string, NavField: string, NumberField: string, PasswordField: string, RadioField: string, RadioListField: string, RateField: string, ReCaptchaField: string, SliderField: string, SwitcherField: string, TextField: string, TimeField: string, TimeRangeField: string}",
+                    "type": "{AutoCompleteField: string, BlankField: string, CheckboxField: string, CheckboxListField: string, CheckboxTreeField: string, DateField: string, DateRangeField: string, DateTimeField: string, DateTimeRangeField: string, DropDownField: string, EmailField: string, Field: string, FieldList: string, FieldSet: string, FileField: string, HtmlField: string, ImageField: string, InputField: string, MaskField: string, NavField: string, NumberField: string, PasswordField: string, PhoneField: string, RadioField: string, RadioListField: string, RateField: string, ReCaptchaField: string, SliderField: string, SwitcherField: string, TextField: string, TimeField: string, TimeRangeField: string}",
                     "example": null,
                     "parameters": []
                 }
@@ -45438,7 +46379,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "number",
                     "example": null,
                     "parameters": []
                 },
@@ -45501,7 +46442,7 @@
                     "decorators": [],
                     "description": "",
                     "required": false,
-                    "type": "any",
+                    "type": "ITaskPriority",
                     "example": null,
                     "parameters": [
                         {
@@ -45804,6 +46745,13 @@
             "description": "",
             "tags": {}
         },
+        "ui/form/MaskField/MaskField": {
+            "name": "default",
+            "moduleName": "ui/form/MaskField/MaskField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
         "ui/form/NavField/NavField": {
             "name": "default",
             "moduleName": "ui/form/NavField/NavField",
@@ -45821,6 +46769,27 @@
         "ui/form/PasswordField/PasswordField": {
             "name": "default",
             "moduleName": "ui/form/PasswordField/PasswordField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/PhoneField/PhoneField": {
+            "name": "default",
+            "moduleName": "ui/form/PhoneField/PhoneField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/RadioField/RadioField": {
+            "name": "default",
+            "moduleName": "ui/form/RadioField/RadioField",
+            "title": "",
+            "description": "",
+            "tags": {}
+        },
+        "ui/form/RadioListField/RadioListField": {
+            "name": "default",
+            "moduleName": "ui/form/RadioListField/RadioListField",
             "title": "",
             "description": "",
             "tags": {}

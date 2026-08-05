@@ -1062,5 +1062,8 @@
     "Название цвета для Alert и Notification": "Color name for Alert and Notification",
     "Название цвета для Badge": "Color name for Badge",
     "Название цвета для Button": "Color name for Button",
-    "Название цвета для Text, Title": "Color name for Text, Title"
+    "Название цвета для Text, Title": "Color name for Text, Title",
+    "Промежуточное состояние чекбокса — часть дочерних элементов выбрана": "Indeterminate checkbox state — some child items are selected",
+    "Выбранная страна по умолчанию": "Country selected by default",
+    "Список доступных масок для телефонных номеров разных стран.\nКаждая маска определяет формат отображения номера.": "List of available masks for phone numbers from different countries.\nEach mask defines the number display format."
 }

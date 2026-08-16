@@ -167,11 +167,6 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
             ? decimalPart.length <= maxPrecision
             : !normalizedValue.includes(DECIMAL_SEPARATOR);
 
-        console.log({normalizedValue, numberValue,
-            maxPrecision, hasValidPrecision,
-            decimalPart})
-
-        console.log(1)
         // Required only controls empty values. Every filled field must pass all numeric checks.
         const isValid = hasValue
             ? NUMBER_PATTERN.test(normalizedValue)

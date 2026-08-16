@@ -14,6 +14,7 @@ import {IBaseFieldProps} from '../InputField/InputField';
 const DEFAULT_STEP = 1;
 const DECIMAL_SEPARATOR = '.';
 const MINUS_SIGN = '-';
+const NUMBER_PATTERN = /^-?(?:\d+(?:\.\d*)?|\.\d+)$/;
 
 /**
  * NumberField
@@ -150,15 +151,40 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
         const currentValue = props.input.value;
 
         const hasValue = isNotEmptyValue(currentValue);
-        const numberValue = Number(currentValue);
+        const stringValue = String(currentValue);
 
-        const isValid = !props.required
-            || (hasValue && numberValue >= props.min && numberValue <= props.max);
+        // Remove visual formatting before checking the numeric value.
+        const normalizedValue = props.thousandSeparator
+            ? stringValue.split(props.thousandSeparator).join('')
+            : stringValue;
+
+        const numberValue = Number(normalizedValue);
+        const decimalPart = normalizedValue.split(DECIMAL_SEPARATOR)[1] ?? '';
+        const maxPrecision = props.decimal ?? 0;
+
+        // By default only integers are valid; decimal defines the maximum precision.
+        const hasValidPrecision = maxPrecision > 0
+            ? decimalPart.length <= maxPrecision
+            : !normalizedValue.includes(DECIMAL_SEPARATOR);
+
+        console.log({normalizedValue, numberValue,
+            maxPrecision, hasValidPrecision,
+            decimalPart})
+
+        console.log(1)
+        // Required only controls empty values. Every filled field must pass all numeric checks.
+        const isValid = hasValue
+            ? NUMBER_PATTERN.test(normalizedValue)
+                && (_isNil(props.min) || numberValue >= props.min)
+                && (_isNil(props.max) || numberValue <= props.max)
+                && hasValidPrecision
+                && (props.isCanBeNegative || numberValue >= 0)
+            : !props.required;
 
         input.setCustomValidity(
             isValid ? '' : __('The number is not valid.'),
         );
-    }, [currentInputRef, props.required, props.min, props.max, props.input.value, props]);
+    }, [currentInputRef, props.required, props.min, props.max, props.decimal, props.isCanBeNegative, props.thousandSeparator, props.input.value]);
 
     const clampToMinMax = useCallback(
         (rawValue: number) => {

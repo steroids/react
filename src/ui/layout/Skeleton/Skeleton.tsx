@@ -50,13 +50,16 @@ export interface ISkeletonProps {
     width?: string | number,
 }
 
-function Skeleton(props: ISkeletonProps): JSX.Element {
-    return useComponents().ui.renderView('layout.SkeletonView', props);
-}
-
-Skeleton.defaultProps = {
+const defaultProps = {
     animation: 'pulse',
     type: 'text',
 };
 
-export default Skeleton;
+export default function Skeleton(receivedProps: ISkeletonProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
+    return useComponents().ui.renderView('layout.SkeletonView', props);
+}

@@ -118,7 +118,16 @@ export interface IHeaderViewProps extends IHeaderProps {
     isBurgerOpened: boolean,
 }
 
-function Header(props: IHeaderProps): JSX.Element {
+const defaultProps = {
+    size: 'md',
+};
+
+export default function Header(receivedProps: IHeaderProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const [isBurgerOpened, setIsBurgerOpened] = useState(false);
 
     const toggleBurger = useCallback(() => {
@@ -131,9 +140,3 @@ function Header(props: IHeaderProps): JSX.Element {
         isBurgerOpened,
     });
 }
-
-Header.defaultProps = {
-    size: 'md',
-};
-
-export default Header;

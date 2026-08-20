@@ -75,7 +75,19 @@ export interface IBadgeProps extends IUiComponent {
 export interface IBadgeViewProps extends IBadgeProps {
     isExist: boolean,
 }
-function Badge(props: IBadgeProps): JSX.Element {
+const defaultProps = {
+    type: 'primary',
+    roundingStyle: 'squarer',
+    size: 'md',
+    counter: false,
+    showClose: false,
+};
+
+export default function Badge(receivedProps: IBadgeProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
     const components = useComponents();
 
     const [isExist, setIsExist] = useState(true);
@@ -103,13 +115,3 @@ function Badge(props: IBadgeProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'content.BadgeView', viewProps);
 }
-
-Badge.defaultProps = {
-    type: 'primary',
-    roundingStyle: 'squarer',
-    size: 'md',
-    counter: false,
-    showClose: false,
-};
-
-export default Badge;

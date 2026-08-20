@@ -38,7 +38,16 @@ export interface IDateTimeFormatterProps {
     [key: string]: any,
 }
 
-function DateTimeFormatter(props: IDateFormatterProps): JSX.Element {
+const defaultProps = {
+    format: 'LLL',
+};
+
+export default function DateTimeFormatter(receivedProps: IDateTimeFormatterProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     if (!props.value) {
@@ -53,9 +62,3 @@ function DateTimeFormatter(props: IDateFormatterProps): JSX.Element {
         value: date.format(props.format),
     });
 }
-
-DateTimeFormatter.defaultProps = {
-    format: 'LLL',
-};
-
-export default DateTimeFormatter;

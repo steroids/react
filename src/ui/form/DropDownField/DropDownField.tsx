@@ -280,7 +280,28 @@ const DEFAULT_DROP_DOWN_PROPS = {
     autoPositioning: true,
 };
 
-function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    primaryKey: 'id',
+    outline: false,
+    color: 'basic',
+    disabled: false,
+    required: false,
+    className: '',
+    autoComplete: false,
+    showReset: false,
+    multiple: false,
+    isSearchAutoFocus: true,
+    itemToSelectAll: false,
+    isFetchOnClose: false,
+    hasCloseOnSelect: true,
+};
+
+function DropDownField(receivedProps: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    } as IDropDownFieldProps & IFieldWrapperOutputProps;
+
     const components = useComponents();
 
     // Query state
@@ -541,21 +562,5 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }
-
-DropDownField.defaultProps = {
-    primaryKey: 'id',
-    outline: false,
-    color: 'basic',
-    disabled: false,
-    required: false,
-    className: '',
-    autoComplete: false,
-    showReset: false,
-    multiple: false,
-    isSearchAutoFocus: true,
-    itemToSelectAll: false,
-    isFetchOnClose: false,
-    hasCloseOnSelect: true,
-};
 
 export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN_FIELD, DropDownField);

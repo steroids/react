@@ -203,7 +203,18 @@ const normalizeResponsiveProps = (props: IDetailProps['responsive']): IDetailRes
     }
 );
 
-export default function Detail(props: IDetailProps): JSX.Element {
+const defaultProps = {
+    size: 'sm',
+    layout: DetailLayoutEnum.Horizontal,
+    column: constants.MAX_COLUMN,
+    responsive: true,
+};
+
+export default function Detail(receivedProps: IDetailProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
     const components = useComponents();
     const detailItems = useMemo(() => getDetailItems(props.children), [props.children]);
     const responsiveProps = useMemo(() => normalizeResponsiveProps(props.responsive), [props.responsive]);
@@ -266,10 +277,3 @@ export default function Detail(props: IDetailProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'content.DetailView', viewProps);
 }
-
-Detail.defaultProps = {
-    size: 'sm',
-    layout: DetailLayoutEnum.Horizontal,
-    column: constants.MAX_COLUMN,
-    responsive: true,
-};

@@ -135,7 +135,26 @@ interface ITimeRangeFieldPrivateProps extends ITimeRangeFieldProps, Omit<IFieldW
     errorsTo?: string[],
 }
 
-function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
+const defaultProps = {
+    disabled: false,
+    displayFormat: 'HH:mm',
+    required: false,
+    showRemove: true,
+    hasInitialFocus: false,
+    type: 'text',
+    valueFormat: 'HH:mm',
+    useUTC: false,
+    dateInUTC: false,
+    icon: true,
+    minuteStep: 1,
+};
+
+function TimeRangeField(receivedProps: ITimeRangeFieldPrivateProps) {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const maskFromRef = useMaskito({
@@ -269,20 +288,6 @@ function TimeRangeField(props: ITimeRangeFieldPrivateProps) {
 
     return components.ui.renderView(props.view || 'form.TimeRangeFieldView', viewProps);
 }
-
-TimeRangeField.defaultProps = {
-    disabled: false,
-    displayFormat: 'HH:mm',
-    required: false,
-    showRemove: true,
-    hasInitialFocus: false,
-    type: 'text',
-    valueFormat: 'HH:mm',
-    useUTC: false,
-    dateInUTC: false,
-    icon: true,
-    minuteStep: 1,
-};
 
 export default fieldWrapper<ITimeRangeFieldProps>(FieldEnum.TIME_RANGE_FIELD, TimeRangeField, {
     attributeSuffixes: ['from', 'to'],

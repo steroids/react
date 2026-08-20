@@ -237,7 +237,17 @@ const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppend
     );
 };
 
-function Router(props: IRouterProps): JSX.Element {
+const defaultProps = {
+    autoScrollTop: true,
+    alwaysAppendParentRoutePath: true,
+};
+
+export default function Router(receivedProps: IRouterProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
     const routeParams = useSelector(getRouteParams);
 
@@ -446,10 +456,3 @@ function Router(props: IRouterProps): JSX.Element {
         </ConnectedRouter>
     );
 }
-
-Router.defaultProps = {
-    autoScrollTop: true,
-    alwaysAppendParentRoutePath: true,
-};
-
-export default Router;

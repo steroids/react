@@ -85,7 +85,24 @@ const DATE_TIME_SEPARATOR = ', ';
  * DateTimeField
  * Поля ввода с выпадающими списками для выбора даты и времени
  */
-function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
+    valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
+    useUTC: false,
+    dateInUTC: false,
+    icon: true,
+    minuteStep: 1,
+};
+
+function DateTimeField(receivedProps: IDateTimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const maskInputRef = useMaskito({
@@ -182,17 +199,5 @@ function DateTimeField(props: IDateTimeFieldProps & IFieldWrapperOutputProps): J
 
     return components.ui.renderView(props.view || 'form.DateTimeFieldView', viewProps);
 }
-
-DateTimeField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
-    valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
-    useUTC: false,
-    dateInUTC: false,
-    icon: true,
-    minuteStep: 1,
-};
 
 export default fieldWrapper<IDateTimeFieldProps>(FieldEnum.DATE_TIME_FIELD, DateTimeField);

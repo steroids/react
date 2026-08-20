@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-return-assign */
 /* eslint-disable default-case */
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';

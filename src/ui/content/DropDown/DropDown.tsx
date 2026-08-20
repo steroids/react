@@ -57,7 +57,21 @@ export interface IDropDownViewProps extends IDropDownProps, IAbsolutePositioning
     forwardedRef: any,
 }
 
-function DropDown(props: IDropDownProps): JSX.Element {
+const defaultProps = {
+    autoPositioning: true,
+    componentDestroyDelay: 300,
+    defaultVisible: false,
+    gap: 15,
+    position: 'bottom',
+    closeMode: 'click-away',
+    hasArrow: true,
+};
+
+export default function DropDown(receivedProps: IDropDownProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
     const components = useComponents();
     const {
         isComponentExist,
@@ -146,15 +160,3 @@ function DropDown(props: IDropDownProps): JSX.Element {
         </>
     );
 }
-
-DropDown.defaultProps = {
-    autoPositioning: true,
-    componentDestroyDelay: 300,
-    defaultVisible: false,
-    gap: 15,
-    position: 'bottom',
-    closeMode: 'click-away',
-    hasArrow: true,
-};
-
-export default DropDown;

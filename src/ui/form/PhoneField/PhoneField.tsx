@@ -46,7 +46,17 @@ export interface IPhoneFieldViewProps extends IPhoneFieldProps, IFieldWrapperOut
     dropDownProps: IPhoneFieldDropdownProps,
 }
 
-function PhoneField(props: IPhoneFieldProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    required: false,
+};
+
+function PhoneField(receivedProps: IPhoneFieldProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    } as IPhoneFieldProps;
+
     const components = useComponents();
 
     const [selectedCountryCode, setSelectedCountryCode] = useState<string>(props.initialCountryCode.toUpperCase());
@@ -179,10 +189,5 @@ function PhoneField(props: IPhoneFieldProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.PhoneFieldView', viewProps);
 }
-
-PhoneField.defaultProps = {
-    disabled: false,
-    required: false,
-};
 
 export default fieldWrapper<IInputFieldProps>('PhoneField', PhoneField);

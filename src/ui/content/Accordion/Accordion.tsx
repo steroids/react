@@ -111,7 +111,15 @@ export type IAccordionViewProps = Pick<IAccordionProps, 'children' | 'className'
 
 export type IAccordionItemViewProps = IAccordionItemProps & IUiComponent;
 
-function Accordion(props: IAccordionProps) {
+const defaultProps = {
+    isInitialOpenAll: false,
+};
+
+export default function Accordion(receivedProps: IAccordionProps) {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
     const [selectedAccordionItems, setSelectedAccordionItems] = useState<number[]>(() => props.isInitialOpenAll
         ? Children.map(props.children, (_, index) => index) || []
         : []);
@@ -174,9 +182,3 @@ function Accordion(props: IAccordionProps) {
         </AccordionView>
     );
 }
-
-Accordion.defaultProps = {
-    isInitialOpenAll: false,
-};
-
-export default Accordion;

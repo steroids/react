@@ -97,7 +97,23 @@ const getCategories = (items) => {
     }, []);
 };
 
-function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    primaryKey: 'label',
+    autoComplete: true,
+    multiple: false,
+    disabled: false,
+    required: false,
+    showClear: false,
+    hasCloseOnSelect: true,
+    multipleSeparator: ',',
+};
+
+function AutoCompleteField(receivedProps: IAutoCompleteFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    } as IAutoCompleteFieldProps & IFieldWrapperOutputProps;
+
     const components = useComponents();
 
     // Query state
@@ -229,16 +245,5 @@ function AutoCompleteField(props: IAutoCompleteFieldProps & IFieldWrapperOutputP
 
     return components.ui.renderView(props.view || 'form.AutoCompleteFieldView', viewProps);
 }
-
-AutoCompleteField.defaultProps = {
-    primaryKey: 'label',
-    autoComplete: true,
-    multiple: false,
-    disabled: false,
-    required: false,
-    showClear: false,
-    hasCloseOnSelect: true,
-    multipleSeparator: ',',
-};
 
 export default fieldWrapper<IAutoCompleteFieldProps>(FieldEnum.AUTO_COMPLETE_FIELD, AutoCompleteField);

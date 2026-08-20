@@ -36,7 +36,18 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
     onClear: VoidFunction,
 }
 
-function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    required: false,
+    submitOnEnter: false,
+    autoHeight: false,
+};
+
+function TextField(receivedProps: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
     // const dispatch = useDispatch();
     const components = useComponents();
 
@@ -89,12 +100,5 @@ function TextField(props: ITextFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     return components.ui.renderView(props.view || 'form.TextFieldView', viewProps);
 }
-
-TextField.defaultProps = {
-    disabled: false,
-    required: false,
-    submitOnEnter: false,
-    autoHeight: false,
-};
 
 export default fieldWrapper<ITextFieldProps>(FieldEnum.TEXT_FIELD, TextField);

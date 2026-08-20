@@ -109,7 +109,16 @@ export interface INotificationsItemViewProps extends INotificationItem {
     position: string,
 }
 
-function Notifications(props:INotificationsProps): JSX.Element {
+const defaultProps = {
+    closeTimeoutMs: 1500,
+};
+
+export default function Notifications(receivedProps:INotificationsProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const {notifications, position} = useSelector(state => ({
         notifications: getNotifications(state),
         position: getPosition(state),
@@ -184,9 +193,3 @@ function Notifications(props:INotificationsProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'layout.NotificationsView', viewProps);
 }
-
-Notifications.defaultProps = {
-    closeTimeoutMs: 1500,
-};
-
-export default Notifications;

@@ -38,16 +38,19 @@ export interface ITitleProps extends IUiComponent {
 
 export type ITitleViewProps = ITitleProps
 
-function Title(props: ITitleProps): JSX.Element {
+const defaultProps = {
+    type: 'h2',
+};
+
+export default function Title(receivedProps: ITitleProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     return components.ui.renderView(props.view || 'typography.TitleView', {
         ...props,
     });
 }
-
-Title.defaultProps = {
-    type: 'h2',
-};
-
-export default Title;

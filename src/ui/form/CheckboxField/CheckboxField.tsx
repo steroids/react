@@ -48,7 +48,20 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
     indeterminate?: boolean,
 }
 
-function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    inputProps: {},
+    multiply: true,
+};
+
+function CheckboxField(receivedProps: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const onChangeHandler = useCallback(() => {
@@ -87,14 +100,6 @@ function CheckboxField(props: ICheckboxFieldProps & IFieldWrapperOutputProps): J
 
     return components.ui.renderView(props.view || 'form.CheckboxFieldView', viewProps);
 }
-
-CheckboxField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    inputProps: {},
-    multiply: true,
-};
 
 export default fieldWrapper<ICheckboxFieldProps>(FieldEnum.CHECKBOX_FIELD, CheckboxField, {
     label: false,

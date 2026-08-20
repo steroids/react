@@ -70,7 +70,26 @@ export interface ITimeFieldViewProps extends IDateInputStateOutput,
     [key: string]: any,
 }
 
-function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    displayFormat: 'HH:mm',
+    required: false,
+    placeholder: 'Select time',
+    showRemove: true,
+    type: 'text',
+    valueFormat: 'HH:mm',
+    useUTC: false,
+    dateInUTC: false,
+    icon: true,
+    minuteStep: 1,
+};
+
+function TimeField(receivedProps: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const maskRef = useMaskito({
@@ -133,19 +152,5 @@ function TimeField(props: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     return components.ui.renderView(props.view || 'form.TimeFieldView', viewProps);
 }
-
-TimeField.defaultProps = {
-    disabled: false,
-    displayFormat: 'HH:mm',
-    required: false,
-    placeholder: 'Select time',
-    showRemove: true,
-    type: 'text',
-    valueFormat: 'HH:mm',
-    useUTC: false,
-    dateInUTC: false,
-    icon: true,
-    minuteStep: 1,
-};
 
 export default fieldWrapper<ITimeFieldProps>(FieldEnum.TIME_FIELD, TimeField);

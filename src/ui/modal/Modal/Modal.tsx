@@ -123,7 +123,18 @@ export interface IModalProps {
 
 export type IModalViewProps = IModalProps;
 
-function Modal(props: IModalProps): JSX.Element {
+const defaultProps = {
+    size: 'md',
+    shouldCloseOnEsc: true,
+    shouldCloseOnOverlayClick: true,
+};
+
+export default function Modal(receivedProps: IModalProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const ModalView = props.view || components.ui.getView('modal.ModalView');
@@ -164,11 +175,3 @@ function Modal(props: IModalProps): JSX.Element {
         </ModalView>
     );
 }
-
-Modal.defaultProps = {
-    size: 'md',
-    shouldCloseOnEsc: true,
-    shouldCloseOnOverlayClick: true,
-};
-
-export default Modal;

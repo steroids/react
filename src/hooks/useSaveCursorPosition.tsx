@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
-/* eslint-disable no-unused-expressions */
 import _debounce from 'lodash-es/debounce';
 import _isNull from 'lodash-es/isNull';
 import {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';

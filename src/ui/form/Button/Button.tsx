@@ -208,13 +208,35 @@ export interface IButtonViewProps extends IButtonProps {
     submitting?: boolean,
 }
 
-function Button(props: IButtonProps): JSX.Element {
+const defaultProps = {
+    type: 'button',
+    color: 'primary',
+    outline: false,
+    disabled: false,
+    submitting: false,
+    block: false,
+    size: 'md',
+    className: '',
+    resetFailedMs: 2000,
+    badge: {
+        enable: false,
+        value: 0,
+        color: 'secondary',
+    },
+};
+
+export default function Button(receivedProps: IButtonProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
     const dispatch = useDispatch();
 
     // Badge
     const badge = useMemo(() => ({
-        ...Button.defaultProps.badge,
+        ...defaultProps.badge,
         enable: !!props.badge || props.badge === 0,
         ...(typeof props.badge === 'object' ? props.badge : {
             value: props.badge,
@@ -353,22 +375,3 @@ function Button(props: IButtonProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.ButtonView', viewProps);
 }
-
-Button.defaultProps = {
-    type: 'button',
-    color: 'primary',
-    outline: false,
-    disabled: false,
-    submitting: false,
-    block: false,
-    size: 'md',
-    className: '',
-    resetFailedMs: 2000,
-    badge: {
-        enable: false,
-        value: 0,
-        color: 'secondary',
-    },
-};
-
-export default Button;

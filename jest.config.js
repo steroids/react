@@ -17,7 +17,7 @@ module.exports = {
         'lodash-es/(.*)': 'lodash/$1',
         '@steroidsjs/core/(.*)': corePath + '$1',
         '@steroidsjs/bootstrap/(.*)': bootstrapPath + '$1',
-        '^.+\\.svg$': path.join(__dirname, '/tests/svgTransform.js'),
+        '^.+\\.svg$': path.join(__dirname, '/tests/svgTransform.ts'),
     },
     globals: {
         'ts-jest': {

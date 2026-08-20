@@ -24,10 +24,20 @@ export interface IModalPortalProps {
     group?: string,
 }
 
-function ModalPortal(props: IModalPortalProps): JSX.Element {
+const defaultProps = {
+    group: MODAL_DEFAULT_GROUP,
+    animationDelayMc: 300,
+};
+
+export default function ModalPortal(receivedProps: IModalPortalProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const dispatch = useDispatch();
 
-    const group = props.group || ModalPortal.defaultProps.group;
+    const group = props.group || defaultProps.group;
     const opened = useSelector(state => getOpened(state, group));
 
     const closeInternal = useCallback((item) => {
@@ -70,10 +80,3 @@ function ModalPortal(props: IModalPortalProps): JSX.Element {
         </>
     );
 }
-
-ModalPortal.defaultProps = {
-    group: MODAL_DEFAULT_GROUP,
-    animationDelayMc: 300,
-};
-
-export default ModalPortal;

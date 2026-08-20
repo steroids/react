@@ -115,7 +115,25 @@ export const getNestedItemsIds = (item, groupAttribute, hasOnlyLeafCheckboxes = 
     return result.sort();
 };
 
-function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    levelPadding: 32,
+    alwaysOpened: false,
+    primaryKey: 'items',
+    hasOnlyLeafCheckboxes: false,
+    hasIconExpandOnly: true,
+    saveInClientStorage: false,
+    collapseChildItems: false,
+};
+
+function CheckboxTreeField(receivedProps: ICheckboxTreeFieldProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    } as ICheckboxTreeFieldProps;
+
     const components = useComponents();
 
     const TreeItemView = props.itemView || components.ui.getView('nav.TreeItemView');
@@ -217,18 +235,5 @@ function CheckboxTreeField(props: ICheckboxTreeFieldProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.CheckboxTreeFieldView', viewProps);
 }
-
-CheckboxTreeField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    levelPadding: 32,
-    alwaysOpened: false,
-    primaryKey: 'items',
-    hasOnlyLeafCheckboxes: false,
-    hasIconExpandOnly: true,
-    saveInClientStorage: false,
-    collapseChildItems: false,
-};
 
 export default fieldWrapper<ICheckboxTreeFieldProps>(FieldEnum.CHECKBOX_TREE_FIELD, CheckboxTreeField);

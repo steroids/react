@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 
 import {FieldEnum} from '../../../enums';
@@ -73,7 +72,19 @@ export const checkPassword = password => {
     return 'danger';
 };
 
-function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    showSecurityBar: false,
+    showSecurityIcon: true,
+    required: false,
+};
+
+function PasswordField(receivedProps: IPasswordFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const [type, setType] = useState(InputType.PASSWORD);
 
     const components = useComponents();
@@ -122,12 +133,5 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
 
     return components.ui.renderView(props.view || 'form.PasswordFieldView' || 'form.InputFieldView', viewProps);
 }
-
-PasswordField.defaultProps = {
-    disabled: false,
-    showSecurityBar: false,
-    showSecurityIcon: true,
-    required: false,
-};
 
 export default fieldWrapper<IPasswordFieldProps>(FieldEnum.PASSWORD_FIELD, PasswordField);

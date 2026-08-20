@@ -111,7 +111,24 @@ export interface IImageFieldViewProps extends IImageFieldProps {
     onClick: () => void,
 }
 
-function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    required: false,
+    className: '',
+    modalProps: {},
+    label: 'Upload',
+    buttonProps: {
+        color: 'basic',
+        outline: true,
+    },
+};
+
+function ImageField(receivedProps: IImageFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    } as IImageFieldProps & IFieldWrapperOutputProps;
+
     const components = useComponents();
     const dispatch = useDispatch();
 
@@ -242,17 +259,5 @@ function ImageField(props: IImageFieldProps & IFieldWrapperOutputProps): JSX.Ele
         />
     );
 }
-
-ImageField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    modalProps: {},
-    label: 'Upload',
-    buttonProps: {
-        color: 'basic',
-        outline: true,
-    },
-};
 
 export default fieldWrapper<IImageFieldProps>(FieldEnum.IMAGE_FIELD, ImageField);

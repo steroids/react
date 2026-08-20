@@ -144,6 +144,11 @@ export interface INavProps {
     size?: Size,
 
     /**
+     * Название иконки
+     */
+    icon?: string,
+
+    /**
      * CSS-класс для элемента навигации.
      */
     navClassName?: CssClassName,
@@ -174,7 +179,17 @@ const defaultViewMap = {
     list: 'nav.NavListView',
 };
 
-function Nav(props: INavProps): JSX.Element {
+const defaultProps = {
+    layout: 'button',
+    size: 'md',
+};
+
+export default function Nav(receivedProps: INavProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const {routes, activeRouteIds, routerParams} = useSelector(state => ({
@@ -261,10 +276,3 @@ function Nav(props: INavProps): JSX.Element {
 
     return components.ui.renderView(props.view || defaultViewMap[props.layout], viewProps);
 }
-
-Nav.defaultProps = {
-    layout: 'button',
-    size: 'md',
-};
-
-export default Nav;

@@ -7,7 +7,7 @@ import _isNill from 'lodash-es/isNil';
 import _isString from 'lodash-es/isString';
 import _isUndefined from 'lodash-es/isUndefined';
 import _set from 'lodash-es/set';
-import {createContext, Dispatch, ReactNode, useCallback, useMemo} from 'react';
+import {createContext, Dispatch, PropsWithChildren, ReactNode, useCallback, useMemo} from 'react';
 import {useFirstMountState, usePrevious, useUnmount, useUpdateEffect} from 'react-use';
 
 import AutoSaveHelper from './AutoSaveHelper';
@@ -27,7 +27,7 @@ const _isEmptyString = (value) => _isString(value) && _isEmpty(value);
  * Компонент для создания формы. Предоставляет управление и синхронизацию состояния формы,
  * а также позволяет выполнять отправку данных формы на сервер с возможностью валидации и обработки результатов.
  */
-export interface IFormProps extends IUiComponent {
+export interface IFormProps extends IUiComponent, PropsWithChildren {
     /**
      * Идентификатор формы
      * @example BookingForm
@@ -305,7 +305,20 @@ const normalizeInitialQuery = (initialQuery: Record<string, any>) => Object.keys
     return acc;
 }, {});
 
-function Form(props: IFormProps): JSX.Element {
+const defaultProps = {
+    actionMethod: 'POST',
+    autoStartTwoFactor: true,
+    captchaActionName: 'submit',
+    size: 'md',
+    useClearErrors: true,
+};
+
+export default function Form(receivedProps: IFormProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     // Dev validation. You cannot change data provider (formId, useRedux)
     if (process.env.NODE_ENV !== 'production') {
         const prevFormId = usePrevious(props.formId); // eslint-disable-line react-hooks/rules-of-hooks
@@ -602,13 +615,3 @@ function Form(props: IFormProps): JSX.Element {
         </FormContext.Provider>
     );
 }
-
-Form.defaultProps = {
-    actionMethod: 'POST',
-    autoStartTwoFactor: true,
-    captchaActionName: 'submit',
-    size: 'md',
-    useClearErrors: true,
-};
-
-export default Form;

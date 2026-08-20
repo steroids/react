@@ -40,12 +40,16 @@ export interface IDetailItemProps {
     contentClassName?: string,
 }
 
-export default function DetailItem(props: IDetailItemProps): JSX.Element {
-    return props.children as JSX.Element;
-}
-
-DetailItem.defaultProps = {
+const defaultProps = {
     span: 1,
 };
+
+export default function DetailItem(receivedProps: IDetailItemProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+    return props.children as JSX.Element;
+}
 
 DetailItem.displayName = 'DetailItem';

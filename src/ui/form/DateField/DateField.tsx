@@ -64,7 +64,22 @@ export interface IDateFieldViewProps extends IDateInputStateOutput,
  * DateField
  * Поле ввода с выпадающим календарём для выбора даты
  */
-function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    displayFormat: 'DD.MM.YYYY',
+    icon: true,
+    required: false,
+    showRemove: true,
+    autoPositioning: true,
+    valueFormat: 'YYYY-MM-DD',
+};
+
+function DateField(receivedProps: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const maskInputRef = useMaskito({
@@ -135,15 +150,5 @@ function DateField(props: IDateFieldProps & IFieldWrapperOutputProps): JSX.Eleme
 
     return components.ui.renderView(props.view || 'form.DateFieldView', viewProps);
 }
-
-DateField.defaultProps = {
-    disabled: false,
-    displayFormat: 'DD.MM.YYYY',
-    icon: true,
-    required: false,
-    showRemove: true,
-    autoPositioning: true,
-    valueFormat: 'YYYY-MM-DD',
-};
 
 export default fieldWrapper<IDateFieldProps>(FieldEnum.DATE_FIELD, DateField);

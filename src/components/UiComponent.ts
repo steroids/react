@@ -184,12 +184,6 @@ export default class UiComponent implements IUiApplicationComponent {
             Component = this._getComponent('views', Component);
         }
         if (!forceNode && _isFunction(Component)) {
-            if ('defaultProps' in Component && _isObject(Component.defaultProps)) {
-                return Component({
-                    ...Component.defaultProps,
-                    ...props,
-                });
-            }
             return Component(props);
         }
         return createElement(Component, props);

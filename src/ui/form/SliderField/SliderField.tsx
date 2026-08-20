@@ -95,7 +95,23 @@ export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperO
 
 const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
-function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    step: 1,
+    min: 0,
+    max: 100,
+    errors: null,
+    className: '',
+    valuePostfix: '',
+    sliderDefaultValue: 5,
+    rangeDefaultValue: [0, 10],
+};
+
+function SliderField(receivedProps: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    } as ISliderFieldProps & IFieldWrapperOutputProps;
+
     const components = useComponents();
 
     const onChange = useCallback((value) => {
@@ -149,16 +165,5 @@ function SliderField(props: ISliderFieldProps & IFieldWrapperOutputProps): JSX.E
 
     return components.ui.renderView(props.view || 'form.SliderFieldView', viewProps);
 }
-
-SliderField.defaultProps = {
-    step: 1,
-    min: 0,
-    max: 100,
-    errors: null,
-    className: '',
-    valuePostfix: '',
-    sliderDefaultValue: 5,
-    rangeDefaultValue: [0, 10],
-};
 
 export default fieldWrapper<ISliderFieldProps>(FieldEnum.SLIDER_FIELD, SliderField);

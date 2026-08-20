@@ -83,7 +83,19 @@ export interface IAlertViewProps extends IAlertProps {
     onClick?: (e: MouseEvent) => void,
 }
 
-function Alert(props: IAlertProps): JSX.Element {
+const defaultProps = {
+    type: 'default',
+    showClose: false,
+    showIcon: true,
+    animation: false,
+    animationDuration: 390,
+};
+
+export default function Alert(receivedProps: IAlertProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
     const components = useComponents();
 
     const [isExist, setIsExist] = useState<boolean>(true);
@@ -112,13 +124,3 @@ function Alert(props: IAlertProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'content.AlertView', viewProps);
 }
-
-Alert.defaultProps = {
-    type: 'default',
-    showClose: false,
-    showIcon: true,
-    animation: false,
-    animationDuration: 390,
-};
-
-export default Alert;

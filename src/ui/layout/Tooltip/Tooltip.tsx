@@ -136,7 +136,20 @@ export interface ITooltipViewProps extends ITooltipProps {
 *       - refactor code
 * */
 
-function Tooltip(props: ITooltipProps): JSX.Element {
+const defaultProps = {
+    content: '',
+    position: 'top',
+    defaultVisible: false,
+    gap: 16,
+    animationMs: 300,
+};
+
+export default function Tooltip(receivedProps: ITooltipProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
     const {
         isComponentExist,
@@ -213,13 +226,3 @@ function Tooltip(props: ITooltipProps): JSX.Element {
         </>
     );
 }
-
-Tooltip.defaultProps = {
-    content: '',
-    position: 'top',
-    defaultVisible: false,
-    gap: 16,
-    animationMs: 300,
-};
-
-export default Tooltip;

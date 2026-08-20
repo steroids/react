@@ -247,7 +247,18 @@ export interface ICrudViewProps {
     children?: ReactNode,
 }
 
-function Crud(props: ICrudProps): JSX.Element {
+const defaultProps = {
+    primaryKey: DEFAULT_PRIMARY_KEY,
+    queryKey: DEFAULT_QUERY_KEY,
+    mode: MODE_PAGE,
+};
+
+export default function Crud(receivedProps: ICrudProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    } as ICrudProps;
+
     const components = useComponents();
     const dispatch = useDispatch();
 
@@ -442,11 +453,3 @@ function Crud(props: ICrudProps): JSX.Element {
         ),
     });
 }
-
-Crud.defaultProps = {
-    primaryKey: DEFAULT_PRIMARY_KEY,
-    queryKey: DEFAULT_QUERY_KEY,
-    mode: MODE_PAGE,
-};
-
-export default Crud;

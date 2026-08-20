@@ -38,16 +38,19 @@ export interface ITextProps extends IUiComponent {
 
 export type ITextViewProps = ITextProps
 
-function Text(props: ITextProps): JSX.Element {
+const defaultProps = {
+    type: 'body',
+};
+
+export default function Text(receivedProps: ITextProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     return components.ui.renderView(props.view || 'typography.TextView', {
         ...props,
     });
 }
-
-Text.defaultProps = {
-    type: 'body',
-};
-
-export default Text;

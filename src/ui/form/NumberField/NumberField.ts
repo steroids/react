@@ -96,7 +96,18 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 
 const isNotEmptyValue = (rawValue: string) => !_isNil(rawValue) && rawValue !== '';
 
-function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps = {
+    disabled: false,
+    required: false,
+    isCanBeNegative: true,
+};
+
+function NumberField(receivedProps: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const {
@@ -283,11 +294,5 @@ function NumberField(props: INumberFieldProps & IFieldWrapperOutputProps): JSX.E
 
     return components.ui.renderView(props.view || 'form.NumberFieldView', viewProps);
 }
-
-NumberField.defaultProps = {
-    disabled: false,
-    required: false,
-    isCanBeNegative: true,
-};
 
 export default fieldWrapper<INumberFieldProps>(FieldEnum.NUMBER_FIELD, NumberField);

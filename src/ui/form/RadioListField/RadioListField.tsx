@@ -5,7 +5,6 @@ import CheckboxListField, {ICheckboxListFieldProps} from '../CheckboxListField/C
  *
  * Список с радиокнопками. Используется в формах для выбора одного значения.
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IRadioListFieldProps extends ICheckboxListFieldProps {
     // Этот интерфейс оставлен для будущего расширения и генерации документации
 }

@@ -43,7 +43,18 @@ export interface IInfiniteScrollProps {
     [key: string]: any,
 }
 
-function InfiniteScroll(props: IInfiniteScrollProps): JSX.Element {
+const defaultProps = {
+    enable: false,
+    pageAttribute: 'page',
+    hasNextPageAttribute: 'hasNextPage',
+};
+
+function InfiniteScroll(receivedProps: IInfiniteScrollProps): JSX.Element {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const observerTarget = useRef(null);
 
     const [isScrollRefSet, setIsScrollRefSet] = useState(false);
@@ -91,14 +102,8 @@ function InfiniteScroll(props: IInfiniteScrollProps): JSX.Element {
     return <div ref={setScrollContainerRef} />;
 }
 
-InfiniteScroll.defaultProps = {
-    enable: false,
-    pageAttribute: 'page',
-    hasNextPageAttribute: 'hasNextPage',
-};
-
 export const normalizeInfiniteScrollProps = props => ({
-    ...InfiniteScroll.defaultProps,
+    ...defaultProps,
     ...(typeof props === 'boolean' ? {
         enable: props,
     } : props),

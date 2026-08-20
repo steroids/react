@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import {ReactElement, ReactNode, useCallback, useMemo, useState} from 'react';
 
 import {showNotification, IShowNotificationParameters} from '../../../actions/notifications';
@@ -81,7 +80,15 @@ export interface ICopyToClipboardViewProps extends ICopyToClipboardProps {
 
 const DEFAULT_NOTIFICATION_LEVEL = 'info';
 
-function CopyToClipboard(props: ICopyToClipboardProps) {
+const defaultProps = {
+    showCopyIcon: true,
+};
+
+export default function CopyToClipboard(receivedProps: ICopyToClipboardProps) {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
     const components = useComponents();
     const [isCopied, setIsCopied] = useState(false);
     const dispatch = useDispatch();
@@ -131,9 +138,3 @@ function CopyToClipboard(props: ICopyToClipboardProps) {
 
     return components.ui.renderView(props.view || 'content.CopyToClipboardView', viewProps);
 }
-
-CopyToClipboard.defaultProps = {
-    showCopyIcon: true,
-};
-
-export default CopyToClipboard;

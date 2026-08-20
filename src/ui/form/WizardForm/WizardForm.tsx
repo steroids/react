@@ -125,7 +125,28 @@ export interface IWizardFormViewProps extends Pick<IWizardFormProps,
 
 const INITIAL_STEP = 0;
 
-export default function WizardForm(props: IWizardFormProps) {
+const defaultProps = {
+    formProps: {
+        label: __('Отправить'),
+    },
+    prevStepButtonProps: {
+        color: 'primary',
+        icon: 'left_12x12',
+        outline: true,
+        label: __('Назад'),
+    },
+    nextStepButtonProps: {
+        label: __('Далее'),
+    },
+    showSteps: true,
+};
+
+export default function WizardForm(receivedProps: IWizardFormProps) {
+    const props = {
+        ...defaultProps,
+        ...receivedProps,
+    };
+
     const components = useComponents();
 
     const [currentStep, setCurrentStep] = useState(INITIAL_STEP);
@@ -269,19 +290,3 @@ export default function WizardForm(props: IWizardFormProps) {
 
     return components.ui.renderView(props.view || 'form.WizardFormView', viewProps);
 }
-
-WizardForm.defaultProps = {
-    formProps: {
-        label: __('Отправить'),
-    },
-    prevStepButtonProps: {
-        color: 'primary',
-        icon: 'left_12x12',
-        outline: true,
-        label: __('Назад'),
-    },
-    nextStepButtonProps: {
-        label: __('Далее'),
-    },
-    showSteps: true,
-};

@@ -63,7 +63,7 @@ export interface IBadgeProps extends IUiComponent {
      *  content: 'Hello from counter!',
      * }
      */
-    counter: boolean | ICounter,
+    counter?: boolean | ICounter,
 
     /**
      * Размер для badge

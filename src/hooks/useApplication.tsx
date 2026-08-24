@@ -7,7 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 import _merge from 'lodash-es/merge';
 import {useCallback} from 'react';
-import {Provider} from 'react-redux';
+import {Provider as ReactReduxProvider} from 'react-redux';
 
 import useComponents from './useComponents';
 import ClientStorageComponent, {IClientStorageComponentConfig} from '../components/ClientStorageComponent';
@@ -201,9 +201,9 @@ export default function useApplication(config: IApplicationHookConfig = {}): IAp
         }
 
         return (
-            <Provider store={components.store.store}>
+            <ReactReduxProvider store={components.store.store}>
                 {content}
-            </Provider>
+            </ReactReduxProvider>
         );
     }, [components, config, useGlobal]);
 

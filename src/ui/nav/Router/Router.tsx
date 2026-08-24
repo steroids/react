@@ -3,9 +3,7 @@ import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _pick from 'lodash-es/pick';
 import {ReactElement, ReactNode, useEffect, useMemo, useState} from 'react';
-import {Navigate} from 'react-router';
-import {HashRouter} from 'react-router-dom';
-import {StaticRouter} from 'react-router-dom/server';
+import {HashRouter, Navigate, StaticRouter} from 'react-router';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
 
 import {findRedirectPathRecursive, treeToList, walkRoutesRecursive} from './helpers';

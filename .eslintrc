@@ -1,8 +1,5 @@
 {
   "extends": "@steroidsjs/eslint-config/frontend",
-  "parserOptions": {
-    "projectService": true
-  },
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-require-imports": "off",

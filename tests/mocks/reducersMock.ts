@@ -1,3 +1,5 @@
+import {matchLocationChangeAction} from '@lagunovsky/redux-react-router';
+import * as queryString from 'qs';
 import {combineReducers} from 'redux';
 
 import auth from '../../src/reducers/auth';
@@ -12,6 +14,20 @@ import kanban from '../../src/ui/content/Kanban/reducers';
 export {
     form, auth, fields, list, notifications, modal, router, kanban,
 };
+
+// Mirrors the composition fix in src/reducers/index.ts (see there for why it's needed)
+const injectQuery = location => {
+    if (!location || location.query) {
+        return location;
+    }
+
+    const search = typeof location.search === 'string' ? location.search : '';
+    return {
+        ...location,
+        query: queryString.parse(search.replace(/^\?/, '')),
+    };
+};
+
 export default asyncReducers => combineReducers({
     form,
     auth,
@@ -21,5 +37,23 @@ export default asyncReducers => combineReducers({
     modal,
     kanban,
     ...asyncReducers,
-    router: (state, action) => router(asyncReducers.router ? asyncReducers.router(state, action) : {}, action),
+    router: (state, action) => {
+        if (!asyncReducers.router) {
+            return router(state, action);
+        }
+
+        const routerSubState = asyncReducers.router(state, action);
+        const normalizedRouterSubState = {
+            ...routerSubState,
+            location: injectQuery(routerSubState.location),
+        };
+        const mergedState = matchLocationChangeAction(action)
+            ? {
+                ...state,
+                ...normalizedRouterSubState,
+            }
+            : normalizedRouterSubState;
+
+        return router(mergedState, action);
+    },
 });

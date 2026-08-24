@@ -1,4 +1,4 @@
-import {replace} from 'connected-react-router';
+import {replaceStraight} from '@lagunovsky/redux-react-router';
 import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
 import _isEmpty from 'lodash-es/isEmpty';
@@ -145,7 +145,7 @@ export const queryReplace = (model: Model, location, values, useHash) => {
 
     const search = '?' + query;
     if (location.search !== search) {
-        return replace(location.pathname + search);
+        return replaceStraight(location.pathname + search);
     }
 
     return [];

@@ -1,5 +1,3 @@
-import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
-import {IWizardStepItem} from '@steroidsjs/core/ui/form/WizardForm/WizardForm';
 import _assign from 'lodash-es/assign';
 import _get from 'lodash-es/get';
 import _has from 'lodash-es/has';
@@ -8,7 +6,9 @@ import _isArray from 'lodash-es/isArray';
 import _isEmpty from 'lodash-es/isEmpty';
 import {ReactElement} from 'react';
 
+import {IWizardStepItem} from './WizardForm';
 import {ACTIVE_STATUS, ERROR_STATUS, FINISH_STATUS, WAIT_STATUS} from '../../list/Steps/Steps';
+import {IFieldProps} from '../Field/Field';
 
 const getComponentAttributes = (component: ReactElement[] | ReactElement, index: number) => {
     const componentAttributesStepMap: Record<string, number> = {};

@@ -1,6 +1,5 @@
 import {MaskitoOptions} from '@maskito/core';
 import {useMaskito} from '@maskito/react';
-import {createDateTimeMask} from '@steroidsjs/core/ui/form/DateTimeField/utils';
 import {useCallback, useEffect, useMemo} from 'react';
 
 import {FieldEnum} from '../../../enums';
@@ -12,8 +11,9 @@ import useDateInputState, {
 } from '../../form/DateField/useDateInputState';
 import useDateRange from '../../form/DateField/useDateRange';
 import useDateTime from '../../form/DateField/useDateTime';
-import {IDateRangeButton, IDateRangeFieldProps} from '../../form/DateRangeField/DateRangeField';
+import {IDateRangeButton, IDateRangeFieldProps} from '../DateRangeField/DateRangeField';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
+import {createDateTimeMask} from '../DateTimeField/utils';
 
 /**
  * DateTimeRangeField

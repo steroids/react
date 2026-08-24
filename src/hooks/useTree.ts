@@ -1,5 +1,3 @@
-import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
-import {IRouteItem} from '@steroidsjs/core/ui/nav/Router/Router';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
 import _isNil from 'lodash-es/isNil';
@@ -14,6 +12,8 @@ import {useMount, useUnmount} from 'react-use';
 import useComponents from './useComponents';
 import useSelector from './useSelector';
 import {getActiveRouteIds, getNavItems, getRouteId, getRouterParams} from '../reducers/router';
+import {IButtonProps} from '../ui/form/Button/Button';
+import {IRouteItem} from '../ui/nav/Router/Router';
 
 export interface ITreeItem extends IButtonProps {
     /**

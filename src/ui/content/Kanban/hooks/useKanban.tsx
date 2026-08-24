@@ -1,10 +1,10 @@
-import {IHtmlFieldProps} from '@steroidsjs/core/ui/form/HtmlField/HtmlField';
 import {useCallback, useMemo} from 'react';
 import {useMount} from 'react-use';
 
 import {closeModal, openModal} from '../../../../actions/modal';
 import {useSelector, useDispatch, useComponents} from '../../../../hooks';
 import {IDropDownFieldItem} from '../../../form/DropDownField/DropDownField';
+import {IHtmlFieldProps} from '../../../form/HtmlField/HtmlField';
 import {IDragEndResult, IKanbanColumn, IKanbanTask, ITaskAssigner, ITaskTag} from '../Kanban';
 import {
     kanbanInit,

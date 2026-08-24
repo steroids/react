@@ -1,4 +1,3 @@
-import {IFieldProps} from '@steroidsjs/core/ui/form/Field/Field';
 import _has from 'lodash-es/has';
 import _indexOf from 'lodash-es/indexOf';
 import _isEmpty from 'lodash-es/isEmpty';
@@ -8,6 +7,7 @@ import {generateFieldStepMap, getModifiedSteps, normalizeSteps} from './utils';
 import {useComponents} from '../../../hooks';
 import {IStepsProps, IStepItem, ACTIVE_STATUS, ERROR_STATUS, FINISH_STATUS} from '../../list/Steps/Steps';
 import {IButtonProps} from '../Button/Button';
+import {IFieldProps} from '../Field/Field';
 import Form, {IFormProps} from '../Form/Form';
 
 export interface IWizardStepItem extends Partial<IStepItem> {

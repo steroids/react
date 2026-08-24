@@ -10,9 +10,6 @@
 	  "outDir": "./dist",
 	  "skipLibCheck": true,
 	  "paths": {
-		 "@steroidsjs/core/*": [
-			"../react/src/*"
-		 ],
 		 "@steroidsjs/bootstrap/*": [
 			"../react-bootstrap/src/*"
 		 ]

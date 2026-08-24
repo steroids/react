@@ -1,11 +1,11 @@
-import {IBem} from '@steroidsjs/core/hooks/useBem';
-import {KanbanModalTypeEnum} from '@steroidsjs/core/ui/content/Kanban/enums';
-import {IKanbanConfig} from '@steroidsjs/core/ui/content/Kanban/hooks/useKanban';
-import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
 import {useCallback, useMemo} from 'react';
 
+import {KanbanModalTypeEnum} from './enums';
 import {useKanban} from './hooks';
+import {IKanbanConfig} from './hooks/useKanban';
 import {useComponents} from '../../../hooks';
+import {IBem} from '../../../hooks/useBem';
+import {IDropDownFieldItem} from '../../form/DropDownField/DropDownField';
 import {IModalProps} from '../../modal/Modal/Modal';
 
 export interface ITaskTag {

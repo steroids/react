@@ -74,3 +74,5 @@ docs/docs-autogen-raw.json
 
 /.yarnrc.yml
 /.yarn
+
+/.claude/worktrees

@@ -20,7 +20,6 @@ import useSelector from '../../src/hooks/useSelector';
 import useSsr from '../../src/hooks/useSsr';
 import {renderHook} from '../helpers';
 import componentsMock from '../mocks/componentsMock';
-import prepareMiddleware from '../mocks/storeMiddlewareMock';
 
 jest.mock('react', () => {
     const actual = jest.requireActual('react');

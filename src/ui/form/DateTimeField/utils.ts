@@ -1,6 +1,7 @@
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateTimeOptionsGenerator} from '@maskito/kit';
-import {minutesToTime, timeToMinutes} from '@steroidsjs/core/ui/form/TimeField/utils';
+
+import {minutesToTime, timeToMinutes} from '../TimeField/utils';
 
 const TIME_REGEXP = /(\d{2}:\d{2})$/;
 

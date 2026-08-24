@@ -1,7 +1,8 @@
-import {useBem} from '@steroidsjs/core/hooks';
-import Icon from '@steroidsjs/core/ui/content/Icon';
-import {ITextFieldViewProps} from '@steroidsjs/core/ui/form/TextField/TextField';
 import {useEffect} from 'react';
+
+import {useBem} from '../../../../src/hooks';
+import Icon from '../../../../src/ui/content/Icon';
+import {ITextFieldViewProps} from '../../../../src/ui/form/TextField/TextField';
 
 export default function TextFieldView(props: ITextFieldViewProps) {
     const bem = useBem('TextFieldView');
@@ -52,7 +53,7 @@ export default function TextFieldView(props: ITextFieldViewProps) {
             {props.showClear && (
                 <Icon
                     className={bem.element('clear')}
-                    name="cross_8x8"
+                    name='cross_8x8'
                     onClick={props.onClear}
                 />
             )}

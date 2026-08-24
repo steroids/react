@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-import {IComponents} from '@steroidsjs/core/providers/ComponentsProvider';
 import {routerMiddleware, connectRouter, RouterState} from 'connected-react-router';
 import {
     History,
@@ -12,6 +11,8 @@ import _get from 'lodash-es/get';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _merge from 'lodash-es/merge';
 import {createStore, applyMiddleware, compose, Store, Dispatch, Unsubscribe, Reducer, AnyAction} from 'redux';
+
+import {IComponents} from '../providers/ComponentsProvider';
 
 declare global {
     interface Window {

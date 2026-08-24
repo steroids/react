@@ -1,8 +1,4 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import {
-    IInfiniteScrollProps,
-    normalizeInfiniteScrollProps,
-} from '@steroidsjs/core/ui/list/InfiniteScroll/InfiniteScroll';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import _union from 'lodash-es/union';
@@ -31,6 +27,10 @@ import {getList} from '../reducers/list';
 import {IFormProps} from '../ui/form/Form/Form';
 import {Loader} from '../ui/layout';
 import {IEmptyProps, normalizeEmptyProps} from '../ui/list/Empty/Empty';
+import {
+    IInfiniteScrollProps,
+    normalizeInfiniteScrollProps,
+} from '../ui/list/InfiniteScroll/InfiniteScroll';
 import {ILayoutNamesProps, normalizeLayoutNamesProps} from '../ui/list/LayoutNames/LayoutNames';
 import {IPaginationProps, normalizePaginationProps} from '../ui/list/Pagination/Pagination';
 import {IPaginationSizeProps, normalizePaginationSizeProps} from '../ui/list/PaginationSize/PaginationSize';

@@ -1,8 +1,8 @@
-import {FieldEnumType} from '@steroidsjs/core/enums';
 import _has from 'lodash-es/has';
 import _upperFirst from 'lodash-es/upperFirst';
 import {useContext, useMemo} from 'react';
 
+import {FieldEnumType} from '../../../enums';
 import {useComponents, useUniqueId} from '../../../hooks';
 import {providers} from '../../../utils/form';
 import FieldLayout from '../FieldLayout/FieldLayout';

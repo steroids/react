@@ -1,5 +1,6 @@
-import {useComponents} from '@steroidsjs/core/hooks';
 import dayjs from 'dayjs';
+
+import {useComponents} from '../../../hooks';
 
 /**
  * TimeFormatter

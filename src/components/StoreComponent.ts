@@ -164,16 +164,6 @@ export default class StoreComponent implements IStoreComponent {
                 ..._get(initialState, 'config.store.history', {}),
                 ...config.history,
             });
-
-            // Add '?' for fix SSR
-            // history v5's location is read-only - replace() to a copy with 'search' forced instead of mutating it
-            if (process.env.IS_SSR && !this.history.location.search) {
-                this.history.replace({
-                    pathname: this.history.location.pathname,
-                    search: '?',
-                    hash: this.history.location.hash,
-                });
-            }
             this._routerReducer = createRouterReducer(this.history);
         }
 

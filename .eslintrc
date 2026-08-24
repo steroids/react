@@ -1,7 +1,7 @@
 {
   "extends": "@steroidsjs/eslint-config/frontend",
   "parserOptions": {
-    "project": ["./tsconfig.eslint.json"]
+    "projectService": true
   },
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",

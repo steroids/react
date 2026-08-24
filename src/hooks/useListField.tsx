@@ -1,10 +1,11 @@
-import {useComponents, useDataProvider, useDataSelect} from '@steroidsjs/core/hooks';
-import {DataProviderItems, IDataProvider} from '@steroidsjs/core/hooks/useDataProvider';
 import _isEqual from 'lodash-es/isEqual';
 import {useCallback, useEffect, useMemo} from 'react';
 import {usePrevious, useUpdateEffect} from 'react-use';
 
+import {DataProviderItems, IDataProvider} from './useDataProvider';
 import {IInputParams} from '../ui/form/Field/fieldWrapper';
+
+import {useComponents, useDataProvider, useDataSelect} from '.';
 
 interface IUseListFieldProps {
     defaultItemView: string,

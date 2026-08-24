@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import {useBem} from '@steroidsjs/core/hooks';
-import {Icon, DropDown} from '@steroidsjs/core/ui/content';
-import {IPhoneFieldDropdownProps} from '@steroidsjs/core/ui/form/PhoneField/PhoneField';
 import {useCallback, useEffect, useRef, useState} from 'react';
+
+import {useBem} from '../../../../src/hooks';
+import {Icon, DropDown} from '../../../../src/ui/content';
+import {IPhoneFieldDropdownProps} from '../../../../src/ui/form/PhoneField/PhoneField';
 
 const INITIAL_PAGE_SIZE = 40;
 const PAGE_SIZE = 40;

@@ -1,3 +1,3 @@
-import KanbanModalView from './KanbanModalView';
+import KanbanModalView from './KanbanModalMockView';
 
 export default KanbanModalView;

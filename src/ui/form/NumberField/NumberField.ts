@@ -2,12 +2,12 @@
 import {maskitoTransform} from '@maskito/core';
 import {maskitoNumberOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
-import {ISaveCursorPositionDebounceConfig} from '@steroidsjs/core/hooks/useSaveCursorPosition';
 import _isNil from 'lodash-es/isNil';
 import {ChangeEvent, useEffect, useMemo, useCallback, MutableRefObject, FocusEvent} from 'react';
 
 import {FieldEnum} from '../../../enums';
 import {useComponents, useSaveCursorPosition} from '../../../hooks';
+import {ISaveCursorPositionDebounceConfig} from '../../../hooks/useSaveCursorPosition';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../Field/fieldWrapper';
 import {IBaseFieldProps} from '../InputField/InputField';
 

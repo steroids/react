@@ -1,12 +1,12 @@
 import {MaskitoOptions} from '@maskito/core';
 import {maskitoDateOptionsGenerator} from '@maskito/kit';
 import {useMaskito} from '@maskito/react';
-import {IAbsolutePositioningInputProps} from '@steroidsjs/core/hooks/useAbsolutePositioning';
 import {RefCallback, useMemo} from 'react';
 
 import useDateInputState, {IDateInputStateInput, IDateInputStateOutput} from './useDateInputState';
 import {FieldEnum} from '../../../enums';
 import {useComponents} from '../../../hooks';
+import {IAbsolutePositioningInputProps} from '../../../hooks/useAbsolutePositioning';
 import {ICalendarProps} from '../../content/Calendar/Calendar';
 import fieldWrapper, {
     IFieldWrapperOutputProps,

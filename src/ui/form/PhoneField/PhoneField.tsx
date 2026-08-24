@@ -1,11 +1,12 @@
 import {useMaskito} from '@maskito/react';
-import {useComponents, useDataProvider, useDataSelect, useSaveCursorPosition} from '@steroidsjs/core/hooks';
-import {IDropDownFieldItem} from '@steroidsjs/core/ui/form/DropDownField/DropDownField';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+
+import {useComponents, useDataProvider, useDataSelect, useSaveCursorPosition} from '../../../hooks';
+import {IDropDownFieldItem} from '../DropDownField/DropDownField';
 import fieldWrapper, {
     IFieldWrapperInputProps, IFieldWrapperOutputProps,
-} from '@steroidsjs/core/ui/form/Field/fieldWrapper';
-import {IBaseFieldProps, IInputFieldProps} from '@steroidsjs/core/ui/form/InputField/InputField';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+} from '../Field/fieldWrapper';
+import {IBaseFieldProps, IInputFieldProps} from '../InputField/InputField';
 
 export interface ICountryPhoneMask extends IDropDownFieldItem{
     phoneCode: string,

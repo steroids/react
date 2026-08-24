@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import {IButtonProps} from '@steroidsjs/core/ui/form/Button/Button';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
@@ -17,6 +16,7 @@ import {FieldEnum} from '../../../enums';
 import {useComponents, useDispatch} from '../../../hooks';
 import useAddressBar, {IAddressBarConfig} from '../../../hooks/useAddressBar';
 import {cleanEmptyObject, clearErrors, providers} from '../../../utils/form';
+import {IButtonProps} from '../Button/Button';
 import {IFieldProps} from '../Field/Field';
 
 const _isEmptyString = (value) => _isString(value) && _isEmpty(value);

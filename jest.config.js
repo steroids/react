@@ -13,6 +13,9 @@ module.exports = {
     setupFilesAfterEnv: [
         '<rootDir>/tests/setup.tsx',
     ],
+    roots: [
+        '<rootDir>/tests'
+    ],
     moduleNameMapper: {
         'lodash-es/(.*)': 'lodash/$1',
         '@steroidsjs/core/(.*)': corePath + '$1',

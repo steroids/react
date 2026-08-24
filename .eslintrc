@@ -1,5 +1,6 @@
 {
   "extends": "@steroidsjs/eslint-config/frontend",
+  "root": true,
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
     "no-undef": "off",

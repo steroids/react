@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import _last from 'lodash-es/last';
 
+import {isWithinTimeThreshold} from './getMessagesGroupedByDate';
 import {IChatMessage} from '../Chat';
 import {MONTH_AND_DAY_TEMPLATE} from '../constants/timeTemplatesAndUnits';
 import {IGroupedMessage, IGroupedMessagesByDates} from '../hooks/useChat';
-import {isWithinTimeThreshold} from './getMessagesGroupedByDate';
 
 const addMessageToExistingGroup = (newMessage: IGroupedMessage, groupedMessagesByDates: IGroupedMessagesByDates, dateKey: string) => {
     const currentGroupedMessagesByDates = [...groupedMessagesByDates[dateKey]];

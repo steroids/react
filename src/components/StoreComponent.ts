@@ -9,7 +9,10 @@ import {
 import _get from 'lodash-es/get';
 import _isPlainObject from 'lodash-es/isPlainObject';
 import _merge from 'lodash-es/merge';
-import {createStore, applyMiddleware, compose, Store, Dispatch, Unsubscribe, Reducer, AnyAction} from 'redux';
+import {
+    createStore, applyMiddleware, compose, Store, Dispatch, Unsubscribe, Reducer, UnknownAction, MiddlewareAPI,
+    StoreEnhancer,
+} from 'redux';
 
 import {IComponents} from '../providers/ComponentsProvider';
 
@@ -26,17 +29,17 @@ interface IStoreComponentConfig {
 }
 
 type AsyncReducersMap = {
-    router?: Reducer<ReduxRouterState, AnyAction>,
-    [key: string]: Reducer<any, AnyAction> | undefined,
+    router?: Reducer<ReduxRouterState, UnknownAction>,
+    [key: string]: Reducer<any, UnknownAction> | undefined,
 };
 
 type RootState<R extends AsyncReducersMap> = {
-    [K in keyof R]: R[K] extends Reducer<infer S, AnyAction> ? S : never;
+    [K in keyof R]: R[K] extends Reducer<infer S, UnknownAction> ? S : never;
 };
 
 type CreateRootReducer = <R extends AsyncReducersMap>(
     reducers: R,
-) => Reducer<RootState<R>, AnyAction>;
+) => Reducer<RootState<R>, UnknownAction>;
 
 export interface IStoreComponent {
     /**
@@ -176,12 +179,18 @@ export default class StoreComponent implements IStoreComponent {
                 ),
                 initialState,
                 compose(
-                    applyMiddleware(({getState}) => next => action => this._prepare(action, next, getState)),
+                    applyMiddleware(
+                        ({getState}: MiddlewareAPI) => (next: Dispatch) => (action: unknown) => this._prepare(
+                            action,
+                            next,
+                            getState,
+                        ),
+                    ),
                     applyMiddleware(createRouterMiddleware(this.history)),
                     !process.env.IS_SSR && window.__REDUX_DEVTOOLS_EXTENSION__ && process.env.PLATFORM !== 'mobile'
                         ? window.__REDUX_DEVTOOLS_EXTENSION__()
                         : f => f,
-                ),
+                ) as StoreEnhancer,
             );
         }
     }

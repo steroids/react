@@ -305,7 +305,7 @@ jest.mock('react-redux', () => ({
     useSelector: jest.fn(),
 }));
 
-const mockedUseSelector = (useSelector as jest.Mock);
+const mockedUseSelector = (useSelector as unknown as jest.Mock);
 const implementMockedUseSelectorWithStore = (store: any) => mockedUseSelector.mockImplementationOnce(callback => callback(store));
 
 describe('useAddressBar Hook', () => {

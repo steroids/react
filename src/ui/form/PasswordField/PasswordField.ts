@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 
 import {FieldEnum} from '../../../enums';
@@ -86,7 +85,10 @@ function PasswordField(props: IPasswordFieldProps & IFieldWrapperOutputProps): J
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     const onShowButtonClick = useCallback(() => {
-        type === InputType.PASSWORD ? setType(InputType.TEXT) : setType(InputType.PASSWORD);
+        const typeToBeSet = InputType.PASSWORD
+            ? InputType.TEXT
+            : InputType.PASSWORD;
+        setType(typeToBeSet);
     }, [type]);
 
     const inputProps = useMemo(() => ({

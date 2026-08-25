@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-/* eslint-disable no-unused-expressions */
 
 import {ChangeEvent, MutableRefObject, useEffect} from 'react';
 

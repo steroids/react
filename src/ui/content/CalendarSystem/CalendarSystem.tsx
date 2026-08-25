@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-return-assign */
 /* eslint-disable default-case */
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-plusplus */
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
@@ -10,9 +9,9 @@ import {ReactNode, useMemo, MouseEvent} from 'react';
 import {useCalendarSystem} from './hooks/useCalendarSystem';
 import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
 import {useComponents} from '../../../hooks';
-import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
-import {ICheckboxListFieldProps} from '../../../ui/form/CheckboxListField/CheckboxListField';
-import {IModalProps} from '../../../ui/modal/Modal/Modal';
+import {ICalendarProps} from '../Calendar/Calendar';
+import {ICheckboxListFieldProps} from '../../form/CheckboxListField/CheckboxListField';
+import {IModalProps} from '../../modal/Modal/Modal';
 
 dayjs.extend(localeData);
 

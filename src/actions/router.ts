@@ -1,4 +1,4 @@
-import {push, replace} from 'connected-react-router';
+import {pushStraight, replaceStraight} from '@lagunovsky/redux-react-router';
 import {parse} from 'path-to-regexp';
 
 export const ROUTER_INIT_ROUTES = 'ROUTER_INIT_ROUTES';
@@ -41,7 +41,7 @@ export const goToRoute = (routeId, params: RouteParams = null, isReplace = false
     const filteredParams = filterParamsForPath(path, params);
     const currentParams = showQueryParams ? params : filteredParams;
     const routeUrl = buildUrl(path, currentParams);
-    const reduxAction = isReplace ? replace(routeUrl) : push(routeUrl);
+    const reduxAction = isReplace ? replaceStraight(routeUrl) : pushStraight(routeUrl);
     return dispatch(reduxAction);
 };
 

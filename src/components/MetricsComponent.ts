@@ -89,7 +89,8 @@ export default class MetricsComponent implements IMetricsComponent {
             this.setCounters(this._config.counters);
 
             if (this._enable && this._yandexMetrika) {
-                this.unlisten = store.history.listen(({pathname, search, hash}) => {
+                this.unlisten = store.history.listen(({location}) => {
+                    const {pathname, search, hash} = location;
                     this._changePageViewHandler(pathname + search + hash);
                 });
             }

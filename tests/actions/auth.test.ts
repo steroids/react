@@ -113,6 +113,7 @@ describe('auth actions', () => {
                     payload: {
                         args: [rootPath],
                         method: 'push',
+                        asEffect: false,
                     },
                 },
             ];

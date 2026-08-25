@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `connected-react-router` заменён на `@lagunovsky/redux-react-router`, `react-router` поднят с v5 до v7,
+  `redux` — с v4 до v5, `react-redux` — с v8 до v9: все четыре пакета теперь совместимы с React 19.
+  Публичный API `@steroidsjs/core` не изменился; проекты, использующие эти пакеты напрямую,
+  должны обновить их версии самостоятельно — подробности в `docs/MIGRATION_GUIDE.md`.
+
 ## v3.1.8 (16.08.2026)
 
 ### Added

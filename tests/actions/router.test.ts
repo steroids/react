@@ -74,11 +74,13 @@ describe('goToRoute', () => {
     const pushPayload = {
         method: 'push',
         args: [path],
+        asEffect: false,
     };
 
     const replacePayload = {
         method: 'replace',
         args: [path],
+        asEffect: false,
     };
 
     beforeEach(() => {

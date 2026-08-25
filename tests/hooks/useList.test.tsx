@@ -181,7 +181,7 @@ const observerMiddleware = () => (next) => (action) => {
 };
 const mockStore = configureMockStore([observerMiddleware, prepareMiddleware]);
 
-const mockedUseSelector = (useSelector as jest.Mock);
+const mockedUseSelector = (useSelector as unknown as jest.Mock);
 const implementMockedUseSelectorWithStore = (store: any) => mockedUseSelector.mockImplementationOnce(callback => callback(store));
 
 describe('useList hook', () => {

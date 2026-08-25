@@ -1,3 +1,5 @@
+import {ROUTER_ON_LOCATION_CHANGED} from '@lagunovsky/redux-react-router';
+
 import {
     ROUTER_INIT_ROUTES,
     ROUTER_SET_PARAMS,
@@ -70,13 +72,13 @@ describe('router reducers', () => {
         expect(router(initialState, action)).toEqual(expectedState);
     });
 
-    describe('@@router/LOCATION_CHANGE', () => {
+    describe('ROUTER_ON_LOCATION_CHANGED', () => {
         it('with routesMap', () => {
             const parentRouteId = 'parentRouteId';
             const childRouteId = 'childRouteId';
 
             const action = {
-                type: '@@router/LOCATION_CHANGE',
+                type: ROUTER_ON_LOCATION_CHANGED,
             };
 
             global.window.location.protocol = 'http:';
@@ -133,7 +135,7 @@ describe('router reducers', () => {
 
         it('without routesMap', () => {
             const action = {
-                type: '@@router/LOCATION_CHANGE',
+                type: ROUTER_ON_LOCATION_CHANGED,
             };
 
             global.window.location.protocol = 'http:';

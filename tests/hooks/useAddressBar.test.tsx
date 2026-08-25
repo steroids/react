@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import * as connectedReactRouter from 'connected-react-router';
+import * as lagunovskyReduxReactRouter from '@lagunovsky/redux-react-router';
 import {useSelector} from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 
@@ -195,13 +195,13 @@ describe('queryRestore', () => {
     });
 });
 
-jest.mock('connected-react-router', () => ({
+jest.mock('@lagunovsky/redux-react-router', () => ({
     __esModule: true,
     // @ts-ignore
-    ...jest.requireActual('connected-react-router'),
+    ...jest.requireActual('@lagunovsky/redux-react-router'),
 }));
 
-const replaceSpy = jest.spyOn(connectedReactRouter, 'replace');
+const replaceSpy = jest.spyOn(lagunovskyReduxReactRouter, 'replaceStraight');
 
 describe('queryReplace', () => {
     const mockModel = {
@@ -305,7 +305,7 @@ jest.mock('react-redux', () => ({
     useSelector: jest.fn(),
 }));
 
-const mockedUseSelector = (useSelector as jest.Mock);
+const mockedUseSelector = (useSelector as unknown as jest.Mock);
 const implementMockedUseSelectorWithStore = (store: any) => mockedUseSelector.mockImplementationOnce(callback => callback(store));
 
 describe('useAddressBar Hook', () => {
@@ -408,10 +408,11 @@ describe('useAddressBar Hook', () => {
         implementMockedUseSelectorWithStore(mockedRouterStateWithSearch);
 
         const expectedAction = {
-            type: '@@router/CALL_HISTORY_METHOD',
+            type: lagunovskyReduxReactRouter.ROUTER_CALL_HISTORY_METHOD,
             payload: {
                 method: 'replace',
                 args: ['/documents?page=2&pageSize=50'],
+                asEffect: false,
             },
         };
 

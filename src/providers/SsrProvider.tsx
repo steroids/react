@@ -1,5 +1,4 @@
 import {createContext, PropsWithChildren, useMemo} from 'react';
-import {StaticRouterContext} from 'react-router';
 
 export interface IPreloadedData {
     [configId: string]: any,
@@ -9,11 +8,22 @@ export interface IPreloadedErrors {
     [configId: string]: any,
 }
 
+// v6 has no equivalent to v5's <StaticRouter context>: the host app passes in a plain object,
+// which is mutated during rendering and read back after renderToString() to build the response
+// (status code, redirect target) - this interface only describes that contract, it does not
+// come from react-router
+export interface IStaticContext {
+    statusCode?: number,
+    action?: string,
+    url?: string,
+    [key: string]: any,
+}
+
 export interface ISsr {
     history?: {
         initialEntries: string[],
     },
-    staticContext?: StaticRouterContext,
+    staticContext?: IStaticContext,
     preloadedData?: IPreloadedData,
     preloadedErrors?: IPreloadedErrors,
 }

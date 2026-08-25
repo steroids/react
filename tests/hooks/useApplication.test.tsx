@@ -1,7 +1,9 @@
 import '@testing-library/jest-dom';
-import {render, renderHook} from '@testing-library/react';
+import {render, renderHook, screen} from '@testing-library/react';
+import {act} from 'react-dom/test-utils';
 import * as reactRedux from 'react-redux';
 
+import {AUTH_INIT} from '../../src/actions/auth';
 import ClientStorageComponent from '../../src/components/ClientStorageComponent';
 import HtmlComponent from '../../src/components/HtmlComponent';
 import JwtHttpComponent from '../../src/components/JwtHttpComponent';
@@ -11,6 +13,7 @@ import MetricsComponent from '../../src/components/MetricsComponent';
 import StoreComponent from '../../src/components/StoreComponent';
 import UiComponent from '../../src/components/UiComponent';
 import {useApplication} from '../../src/hooks';
+import useSelector from '../../src/hooks/useSelector';
 import * as componentsProvider from '../../src/providers/ComponentsProvider';
 import * as screenProvider from '../../src/providers/ScreenProvider';
 import * as themeProvider from '../../src/providers/ThemeProvider';
@@ -220,5 +223,31 @@ describe('useApplication Hook', () => {
         render(result.current.renderApplication());
 
         expect(storeProviderSpy).toHaveBeenCalled();
+    });
+
+    it('provides the real store to descendants through Provider context', () => {
+        const configWithoutRoutes = {
+            ...config,
+            routes: undefined,
+        };
+
+        const {result} = renderHook(() => useApplication(configWithoutRoutes));
+
+        function Probe() {
+            const initializeCounter = useSelector((state: any) => state.auth.initializeCounter);
+            return <div data-testid='counter'>{initializeCounter}</div>;
+        }
+
+        render(result.current.renderApplication(<Probe />));
+
+        expect(screen.getByTestId('counter')).toHaveTextContent('0');
+
+        act(() => {
+            result.current.components.store.store.dispatch({
+                type: AUTH_INIT,
+            });
+        });
+
+        expect(screen.getByTestId('counter')).toHaveTextContent('1');
     });
 });

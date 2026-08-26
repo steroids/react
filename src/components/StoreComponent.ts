@@ -155,7 +155,7 @@ export default class StoreComponent implements IStoreComponent {
         }
 
         if (process.env.PLATFORM !== 'mobile') {
-            const createHistory: any = process.env.IS_SSR || typeof location === 'undefined'
+            const createHistory = process.env.IS_SSR || typeof location === 'undefined'
                 ? createMemoryHistory
                 : location.protocol === 'file:'
                     ? createHashHistory

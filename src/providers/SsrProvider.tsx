@@ -8,10 +8,11 @@ export interface IPreloadedErrors {
     [configId: string]: any,
 }
 
-// v6 has no equivalent to v5's <StaticRouter context>: the host app passes in a plain object,
-// which is mutated during rendering and read back after renderToString() to build the response
-// (status code, redirect target) - this interface only describes that contract, it does not
-// come from react-router
+/**
+ * The shape of the object the host app passes in for SSR: it is mutated
+ * during rendering (e.g. by route components that need to set a status code or a
+ * redirect) and read back after renderToString() to build the actual HTTP response.
+ */
 export interface IStaticContext {
     statusCode?: number,
     action?: string,

@@ -81,9 +81,22 @@ v5.3.4 до v7.18.2. Публичный API самого `@steroidsjs/core` (к�
 `history`, используемый под капотом (`components.store.history`), теперь v5, а не v4. Если
 проект напрямую взаимодействует с этим объектом:
 
-- `location` теперь **read-only** — прямая мутация (`history.location.search = '...'`) больше
-  не работает; нужно использовать `history.replace({...})`/`history.push({...})` с копией
-  location.
-- колбэк `history.listen(...)` теперь принимает один объект `{action, location}` вместо
-  `(location, action)` — если в проекте есть собственные подписки на `history.listen`, их
-  сигнатуру нужно обновить.
+- Если где-то в проекте есть прямая мутация `history.location` (например,
+  `history.location.search = '...'`) — заменить на `history.replace({...})`/`history.push({...})`
+  с копией location: в v5 `location` **read-only**, прямая мутация больше ни на что не влияет.
+- Если в проекте есть собственные подписки на `history.listen(...)` — обновить их сигнатуру:
+  колбэк раньше принимал `(location, action)`, теперь принимает один объект `{action, location}`.
+- Если в проекте вызывается `history.goBack()`/`history.goForward()` — заменить на
+  `history.back()`/`history.forward()` (либо `history.go(-1)`/`history.go(1)`): в v5 этих методов
+  нет.
+- Если в проекте читается `history.length` (например, чтобы решить, есть ли куда возвращаться
+  по `back()`) — в v5 такого свойства нет:
+  - для обычного веб-режима (browser/hash-история, не SSR) — заменить на `window.history.length`,
+    это то же самое значение, которым в v4 `history.length` и был под капотом.
+  - для `MemoryHistory` (SSR, тесты) — прямой замены нет, `.length` там был размером массива
+    записей, а в v5 есть только `history.index` (текущая позиция в стеке, не его длина); такую
+    логику нужно пересматривать отдельно.
+- Если проект передаёт свой `history` через `config.history` при инициализации `StoreComponent`
+  (либо через `config.store.history` в `initialState`) — проверить, не используются ли там опции
+  `basename`, `forceRefresh`, `getUserConfirmation` или `keyLength`. В v5 эти опции молча игнорируются, без ошибки или
+  предупреждения. Замену функциональности этих параметров нужно реализовывать в проекте самостоятельно.

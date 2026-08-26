@@ -1,7 +1,6 @@
 import {ReduxRouter} from '@lagunovsky/redux-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
-import _pick from 'lodash-es/pick';
 import {ReactElement, ReactNode, useEffect, useMemo, useState} from 'react';
 import {HashRouter, Navigate, StaticRouter} from 'react-router';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
@@ -293,7 +292,7 @@ function Router(props: IRouterProps): JSX.Element {
     }, [dispatch, prevRouteParams, routeParams]);
 
     // Routes state
-    const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
+    const [routes, setRoutes] = useState<IRouteItem[]>(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     useUpdateEffect(() => {
         setRoutes(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     }, [props.alwaysAppendParentRoutePath, props.routes]);
@@ -406,14 +405,26 @@ function Router(props: IRouterProps): JSX.Element {
 
     const renderContent = () => {
         const WrapperComponent = props.wrapperView;
-        // activeRouteIds includes ancestors of the active leaf too (e.g. for breadcrumbs/nav
-        // highlighting), so it can't be used to pick the entry point here - an ancestor whose own
-        // path no longer strictly matches (e.g. a redirect-only gateway route) must be skipped,
-        // exactly like <Switch> used to skip it. `routes` is root-first, so the first item whose
-        // own path strictly matches is the same one <Switch> would previously have matched first
-        const entryRouteItem = routes.find(routeItem => (
-            !!matchPath(activePath, _pick(routeItem, ['exact', 'strict', 'path']))
-        )) || null;
+
+        // Picks the route to render here: the first item in `routes` (root-first) whose own path matches `activePath`.
+        //
+        // `activeRouteIds` isn't used for this, because it also includes
+        // ancestors of the active leaf (needed elsewhere, e.g. for breadcrumbs/nav highlighting) -
+        // some of which may not themselves match `activePath` (e.g. a redirect-only gateway
+        // route) and must be skipped when deciding what to render.
+        const entryRouteItem = routes
+            .find(
+                routeItem => {
+                    const matchPathOptions = {
+                        exact: routeItem.exact,
+                        strict: routeItem.strict,
+                        path: routeItem.path,
+                    };
+
+                    return !!matchPath(activePath, matchPathOptions);
+                },
+            ) || null;
+
         const routeProps = {
             match: routeMatch,
             location: components.store.history.location,

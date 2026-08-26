@@ -97,13 +97,12 @@ type TMatchPathOptions = {
 };
 
 /**
- * v5-compatible matchPath(pathname, {path, exact, strict}) wrapper around v6's
- * matchPath({path, end, caseSensitive}, pathname). Two v5 behaviors v6 doesn't replicate on its
- * own, verified against the real v5 package:
- * - v5 never matches when `path` and `pathname` disagree on having a leading slash: v6 is happy
- *   to match a slash-less pattern against a leading-slash pathname, so that's rejected manually.
- * - v6 always treats a pattern's trailing slash as optional ('strict' has no v6 equivalent), so a
- *   literal trailing slash on `path` is enforced manually too.
+ * matchPath(pathname, {path, exact, strict}): wraps react-router's matchPath() with a
+ * (pathname, options) signature, plus two checks of its own:
+ * - rejects the match when `path` and `pathname` disagree on having a leading slash, instead
+ *   of matching a slash-less pattern against a leading-slash pathname.
+ * - when `strict` is set, requires a literal trailing slash on `path` to also be present on
+ *   `pathname`, instead of always treating a pattern's trailing slash as optional.
  */
 export const matchPath = (pathname: string, options: TMatchPathOptions) => {
     const {path, exact, strict} = options || {};
@@ -121,19 +120,18 @@ export const matchPath = (pathname: string, options: TMatchPathOptions) => {
         return null;
     }
 
-    // Both lack a leading slash here (both already have one, otherwise): v6 requires one on the
-    // pathname to match at all, regardless of the pattern, so add it to both sides symmetrically
-    const normalizedPath = pathHasLeadingSlash ? path : '/' + path;
-    const normalizedPathname = pathnameHasLeadingSlash ? pathname : '/' + pathname;
+    const leadingSlashPath = pathHasLeadingSlash ? path : '/' + path;
+    const leadingSlashPathname = pathnameHasLeadingSlash ? pathname : '/' + pathname;
 
     const match = matchPathV6(
         {
-            path: normalizedPath,
+            path: leadingSlashPath,
             end: !!exact,
             caseSensitive: false,
         },
-        normalizedPathname,
+        leadingSlashPathname,
     );
+
     if (!match) {
         return null;
     }

@@ -76,3 +76,5 @@ docs/docs-autogen-raw.json
 /.yarn
 
 /.claude/worktrees
+
+/tsconfig-debug.json

@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.1.10 (27.08.2026)
+
+### Fixed
+
+- исправлено содержимое публикуемого пакета
+
+### Refactor
+
+- разделены Typescript-build и Typescript-typecheck
+
 ## v3.1.9 (27.08.2026) 
 
 - обновлена база данных браузеров browserlist-db

@@ -1,11 +1,10 @@
 /* eslint-disable no-restricted-globals */
-import {routerMiddleware, connectRouter, RouterState} from 'connected-react-router';
+import {createRouterMiddleware, createRouterReducer, ReduxRouterState} from '@lagunovsky/redux-react-router';
 import {
     History,
     createBrowserHistory,
     createMemoryHistory,
     createHashHistory,
-    LocationState,
 } from 'history';
 import _get from 'lodash-es/get';
 import _isPlainObject from 'lodash-es/isPlainObject';
@@ -27,7 +26,7 @@ interface IStoreComponentConfig {
 }
 
 type AsyncReducersMap = {
-    router?: Reducer<RouterState<LocationState>, AnyAction>,
+    router?: Reducer<ReduxRouterState, AnyAction>,
     [key: string]: Reducer<any, AnyAction> | undefined,
 };
 
@@ -109,7 +108,7 @@ export default class StoreComponent implements IStoreComponent {
 
     reducers: CreateRootReducer;
 
-    _routerReducer: Reducer<RouterState<LocationState>>;
+    _routerReducer: Reducer<ReduxRouterState>;
 
     history: History | null;
 
@@ -156,7 +155,7 @@ export default class StoreComponent implements IStoreComponent {
         }
 
         if (process.env.PLATFORM !== 'mobile') {
-            const createHistory: any = process.env.IS_SSR || typeof location === 'undefined'
+            const createHistory = process.env.IS_SSR || typeof location === 'undefined'
                 ? createMemoryHistory
                 : location.protocol === 'file:'
                     ? createHashHistory
@@ -165,12 +164,7 @@ export default class StoreComponent implements IStoreComponent {
                 ..._get(initialState, 'config.store.history', {}),
                 ...config.history,
             });
-
-            // Add '?' for fix connected-react-router
-            if (process.env.IS_SSR && !this.history.location.search) {
-                this.history.location.search = '?';
-            }
-            this._routerReducer = connectRouter(this.history);
+            this._routerReducer = createRouterReducer(this.history);
         }
 
         if (!this.store) {
@@ -183,7 +177,7 @@ export default class StoreComponent implements IStoreComponent {
                 initialState,
                 compose(
                     applyMiddleware(({getState}) => next => action => this._prepare(action, next, getState)),
-                    applyMiddleware(routerMiddleware(this.history)),
+                    applyMiddleware(createRouterMiddleware(this.history)),
                     !process.env.IS_SSR && window.__REDUX_DEVTOOLS_EXTENSION__ && process.env.PLATFORM !== 'mobile'
                         ? window.__REDUX_DEVTOOLS_EXTENSION__()
                         : f => f,

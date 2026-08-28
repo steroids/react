@@ -1,3 +1,4 @@
+import {ROUTER_ON_LOCATION_CHANGED} from '@lagunovsky/redux-react-router';
 import _get from 'lodash-es/get';
 import _isEmpty from 'lodash-es/isEmpty';
 import _isEqual from 'lodash-es/isEqual';
@@ -6,7 +7,7 @@ import _isObject from 'lodash-es/isObject';
 import _pick from 'lodash-es/pick';
 import {parse, compile} from 'path-to-regexp';
 import * as queryString from 'qs';
-import {matchPath} from 'react-router';
+import {matchPath as matchPathV6, Params} from 'react-router';
 
 import {
     ROUTER_INIT_ROUTES,
@@ -87,6 +88,69 @@ export const buildUrl = (path, params: TUrlParams = null) => {
     }
 
     return url;
+};
+
+type TMatchPathOptions = {
+    path?: string,
+    exact?: boolean,
+    strict?: boolean,
+};
+
+interface IPathMatchObject {
+    path: string,
+    url: string,
+    isExact: boolean,
+    params: Params<string>,
+}
+
+/**
+ * matchPath(pathname, {path, exact, strict}): wraps react-router's matchPath() with a
+ * (pathname, options) signature, plus two checks of its own:
+ * - rejects the match when `path` and `pathname` disagree on having a leading slash, instead
+ *   of matching a slash-less pattern against a leading-slash pathname.
+ * - when `strict` is set, requires a literal trailing slash on `path` to also be present on
+ *   `pathname`, instead of always treating a pattern's trailing slash as optional.
+ */
+export const matchPath = (pathname: string, options: TMatchPathOptions): IPathMatchObject | null => {
+    const {path, exact, strict} = options || {};
+    if (!path || typeof pathname !== 'string') {
+        return null;
+    }
+
+    if (strict && path.endsWith('/') && !pathname.endsWith('/')) {
+        return null;
+    }
+
+    const pathHasLeadingSlash = path.startsWith('/');
+    const pathnameHasLeadingSlash = pathname.startsWith('/');
+    if (pathHasLeadingSlash !== pathnameHasLeadingSlash) {
+        return null;
+    }
+
+    const leadingSlashPath = pathHasLeadingSlash ? path : '/' + path;
+    const leadingSlashPathname = pathnameHasLeadingSlash ? pathname : '/' + pathname;
+
+    const match = matchPathV6(
+        {
+            path: leadingSlashPath,
+            end: !!exact,
+            caseSensitive: false,
+        },
+        leadingSlashPathname,
+    );
+
+    if (!match) {
+        return null;
+    }
+
+    const url = pathnameHasLeadingSlash ? match.pathnameBase : match.pathnameBase.slice(1);
+
+    return {
+        path,
+        url,
+        isExact: match.pathname === match.pathnameBase,
+        params: match.params,
+    };
 };
 
 /**
@@ -199,7 +263,7 @@ const reducerMap = {
             match: getMatch(currentRoute, state),
         };
     },
-    '@@router/LOCATION_CHANGE': (state, action) => {
+    [ROUTER_ON_LOCATION_CHANGED]: (state, action) => {
         const newActiveIds = Object.keys(state.routesMap).filter(id => checkIsActive(state, state.routesMap[id]));
         const currentRoute = newActiveIds.length > 0 ? state.routesMap[newActiveIds[0]] : null;
         if (!_isEqual(newActiveIds, state.activeIds)) {

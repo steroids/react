@@ -1,5 +1,4 @@
 import {createContext, PropsWithChildren, useMemo} from 'react';
-import {StaticRouterContext} from 'react-router';
 
 export interface IPreloadedData {
     [configId: string]: any,
@@ -9,11 +8,23 @@ export interface IPreloadedErrors {
     [configId: string]: any,
 }
 
+/**
+ * The shape of the object the host app passes in for SSR: it is mutated
+ * during rendering (e.g. by route components that need to set a status code or a
+ * redirect) and read back after renderToString() to build the actual HTTP response.
+ */
+export interface IStaticContext {
+    statusCode?: number,
+    action?: string,
+    url?: string,
+    [key: string]: any,
+}
+
 export interface ISsr {
     history?: {
         initialEntries: string[],
     },
-    staticContext?: StaticRouterContext,
+    staticContext?: IStaticContext,
     preloadedData?: IPreloadedData,
     preloadedErrors?: IPreloadedErrors,
 }

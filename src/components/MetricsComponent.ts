@@ -1,3 +1,4 @@
+import {History} from 'history';
 import _isEmpty from 'lodash-es/isEmpty';
 import _upperFirst from 'lodash-es/upperFirst';
 
@@ -89,7 +90,8 @@ export default class MetricsComponent implements IMetricsComponent {
             this.setCounters(this._config.counters);
 
             if (this._enable && this._yandexMetrika) {
-                this.unlisten = store.history.listen(({pathname, search, hash}) => {
+                this.unlisten = (store.history as History).listen(({location}) => {
+                    const {pathname, search, hash} = location;
                     this._changePageViewHandler(pathname + search + hash);
                 });
             }

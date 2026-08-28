@@ -2,7 +2,7 @@ import MetricsComponent from '../../src/components/MetricsComponent';
 
 describe('MetricsComponent history listen', () => {
     let subscribeCallback: () => void;
-    let historyListenCallback: (location: {pathname: string, search: string, hash: string}) => void;
+    let historyListenCallback: (update: {location: {pathname: string, search: string, hash: string}, action: string}) => void;
     let componentsMock: any;
 
     beforeEach(() => {
@@ -49,9 +49,12 @@ describe('MetricsComponent history listen', () => {
         const changePageViewSpy = jest.spyOn(metrics as any, '_changePageViewHandler');
 
         historyListenCallback({
-            pathname: '/documents',
-            search: '?page=2',
-            hash: '#section',
+            location: {
+                pathname: '/documents',
+                search: '?page=2',
+                hash: '#section',
+            },
+            action: 'PUSH',
         });
 
         expect(changePageViewSpy).toHaveBeenCalledWith('/documents?page=2#section');

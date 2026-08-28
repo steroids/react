@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 
 import auth from './auth';
+import createRouterReducer from './createRouterReducer';
 import fields from './fields';
 import form from './form';
 import list from './list';
@@ -11,6 +12,7 @@ import router from './router';
 export {
     form, auth, fields, list, notifications, modal, router,
 };
+
 export default asyncReducers => combineReducers({
     form,
     auth,
@@ -19,5 +21,5 @@ export default asyncReducers => combineReducers({
     notifications,
     modal,
     ...asyncReducers,
-    router: (state, action) => router(asyncReducers.router ? asyncReducers.router(state, action) : {}, action),
+    router: createRouterReducer(router, asyncReducers.router),
 });

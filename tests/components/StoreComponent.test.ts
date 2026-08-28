@@ -37,7 +37,7 @@ describe('StoreComponent router state on construction', () => {
         expect(state.router.match).toBeUndefined();
     });
 
-    it('seeds router.location from a memory history with a forced "?" search in SSR mode', () => {
+    it('seeds router.location from a memory history in SSR mode', () => {
         process.env.IS_SSR = 'true';
 
         const store = new StoreComponent({} as any, {
@@ -48,7 +48,8 @@ describe('StoreComponent router state on construction', () => {
         expect(state.router.location).toEqual(
             expect.objectContaining({
                 pathname: '/',
-                search: '?',
+                search: '',
+                query: {},
             }),
         );
     });

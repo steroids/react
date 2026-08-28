@@ -1,9 +1,8 @@
-import {ConnectedRouter} from 'connected-react-router';
+import {ReduxRouter} from '@lagunovsky/redux-react-router';
 import _get from 'lodash-es/get';
 import _isEqual from 'lodash-es/isEqual';
 import {ReactElement, ReactNode, useEffect, useMemo, useState} from 'react';
-import {Route, Switch, Redirect, StaticRouter} from 'react-router';
-import {HashRouter} from 'react-router-dom';
+import {HashRouter, Navigate, StaticRouter} from 'react-router';
 import {useEffectOnce, usePrevious, usePreviousDistinct, useUpdateEffect} from 'react-use';
 
 import {findRedirectPathRecursive, treeToList, walkRoutesRecursive} from './helpers';
@@ -12,9 +11,10 @@ import {goToRoute, initParams, initRoutes} from '../../../actions/router';
 import {useComponents, useSelector} from '../../../hooks';
 import useDispatch from '../../../hooks/useDispatch';
 import {IFetchConfig} from '../../../hooks/useFetch';
-import {SsrProviderContext} from '../../../providers/SsrProvider';
+import useSsr from '../../../hooks/useSsr';
+import {IStaticContext} from '../../../providers/SsrProvider';
 import {getOpened} from '../../../reducers/modal';
-import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized} from '../../../reducers/router';
+import {buildUrl, getActiveRouteIds, getRoute, getRouteParams, isRouterInitialized, matchPath} from '../../../reducers/router';
 import {IListProps} from '../../list/List/List';
 
 export const ROUTER_ROLE_LOGIN = 'login';
@@ -192,7 +192,7 @@ export interface IRouterProps {
     alwaysAppendParentRoutePath?: boolean,
 }
 
-const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppendParentRoutePath) => {
+const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppendParentRoutePath, staticContext: IStaticContext) => {
     const routePath = buildUrl(route.path, routeProps?.match?.params);
 
     if (route.redirectTo && routePath === activePath) {
@@ -213,10 +213,18 @@ const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppend
                 : buildUrl(redirectPath, routeProps?.match?.params)
         );
         if (activePath !== toPath) {
+            // <Navigate> only performs the actual navigation as a useEffect, which never runs
+            // during SSR's renderToString() - so, same as before, the SSR response has to learn
+            // about the redirect through the mutated static context, not through rendered output
+            if (process.env.IS_SSR && staticContext) {
+                staticContext.action = 'REPLACE';
+                staticContext.url = toPath;
+            }
+
             return (
-                <Redirect
-                    {...routeProps}
+                <Navigate
                     to={toPath}
+                    replace
                     {...route.componentProps}
                 />
             );
@@ -240,13 +248,15 @@ const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppend
 function Router(props: IRouterProps): JSX.Element {
     const components = useComponents();
     const routeParams = useSelector(getRouteParams);
+    const {staticContext} = useSsr();
 
-    const {isInitialized, pathname, route, activePath, activeRouteIds} = useSelector(state => ({
+    const {isInitialized, pathname, route, activePath, activeRouteIds, routeMatch} = useSelector(state => ({
         isInitialized: isRouterInitialized(state),
         pathname: _get(state, 'router.location.pathname'),
         route: getRoute(state),
         activePath: state.router?.location?.pathname,
         activeRouteIds: getActiveRouteIds(state),
+        routeMatch: _get(state, 'router.match'),
     }));
     const routeId = route?.id || null;
 
@@ -282,7 +292,7 @@ function Router(props: IRouterProps): JSX.Element {
     }, [dispatch, prevRouteParams, routeParams]);
 
     // Routes state
-    const [routes, setRoutes] = useState(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
+    const [routes, setRoutes] = useState<IRouteItem[]>(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     useUpdateEffect(() => {
         setRoutes(treeToList(props.routes, true, null, props.alwaysAppendParentRoutePath));
     }, [props.alwaysAppendParentRoutePath, props.routes]);
@@ -361,6 +371,7 @@ function Router(props: IRouterProps): JSX.Element {
                         children,
                     },
                     props.alwaysAppendParentRoutePath,
+                    staticContext,
                 ) || children;
             }
 
@@ -380,6 +391,7 @@ function Router(props: IRouterProps): JSX.Element {
                 children,
             },
             props.alwaysAppendParentRoutePath,
+            staticContext,
         );
         if (!result) {
             if (children) {
@@ -393,18 +405,36 @@ function Router(props: IRouterProps): JSX.Element {
 
     const renderContent = () => {
         const WrapperComponent = props.wrapperView;
+
+        // Picks the route to render here: the first item in `routes` (root-first) whose own path matches `activePath`.
+        //
+        // `activeRouteIds` isn't used for this, because it also includes
+        // ancestors of the active leaf (needed elsewhere, e.g. for breadcrumbs/nav highlighting) -
+        // some of which may not themselves match `activePath` (e.g. a redirect-only gateway
+        // route) and must be skipped when deciding what to render.
+        const entryRouteItem = routes
+            .find(
+                routeItem => {
+                    const matchPathOptions = {
+                        exact: routeItem.exact,
+                        strict: routeItem.strict,
+                        path: routeItem.path,
+                    };
+
+                    return !!matchPath(activePath, matchPathOptions);
+                },
+            ) || null;
+
+        const routeProps = {
+            match: routeMatch,
+            location: components.store.history.location,
+            history: components.store.history,
+        };
         const routeNodes = (
-            <Switch>
-                {routes.map((routeItem, index) => (
-                    <Route
-                        key={index}
-                        render={routeProps => renderItem(routeItem, routeProps)}
-                        {...routeItem}
-                        component={null}
-                    />
-                ))}
+            <>
+                {entryRouteItem && renderItem(entryRouteItem, routeProps)}
                 {props.children}
-            </Switch>
+            </>
         );
         if (WrapperComponent) {
             return (
@@ -422,16 +452,9 @@ function Router(props: IRouterProps): JSX.Element {
 
     if (process.env.IS_SSR) {
         return (
-            <SsrProviderContext.Consumer>
-                {context => (
-                    <StaticRouter
-                        location={components.store.history.location}
-                        context={context.staticContext}
-                    >
-                        {renderContent()}
-                    </StaticRouter>
-                )}
-            </SsrProviderContext.Consumer>
+            <StaticRouter location={components.store.history.location}>
+                {renderContent()}
+            </StaticRouter>
         );
     } if (window.location.protocol === 'file:') {
         return (
@@ -441,9 +464,9 @@ function Router(props: IRouterProps): JSX.Element {
         );
     }
     return (
-        <ConnectedRouter history={components.store.history}>
+        <ReduxRouter history={components.store.history}>
             {renderContent()}
-        </ConnectedRouter>
+        </ReduxRouter>
     );
 }
 

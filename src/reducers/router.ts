@@ -7,7 +7,7 @@ import _isObject from 'lodash-es/isObject';
 import _pick from 'lodash-es/pick';
 import {parse, compile} from 'path-to-regexp';
 import * as queryString from 'qs';
-import {matchPath as matchPathV6} from 'react-router';
+import {matchPath as matchPathV6, Params} from 'react-router';
 
 import {
     ROUTER_INIT_ROUTES,
@@ -96,6 +96,13 @@ type TMatchPathOptions = {
     strict?: boolean,
 };
 
+interface IPathMatchObject {
+    path: string,
+    url: string,
+    isExact: boolean,
+    params: Params<string>,
+}
+
 /**
  * matchPath(pathname, {path, exact, strict}): wraps react-router's matchPath() with a
  * (pathname, options) signature, plus two checks of its own:
@@ -104,7 +111,7 @@ type TMatchPathOptions = {
  * - when `strict` is set, requires a literal trailing slash on `path` to also be present on
  *   `pathname`, instead of always treating a pattern's trailing slash as optional.
  */
-export const matchPath = (pathname: string, options: TMatchPathOptions) => {
+export const matchPath = (pathname: string, options: TMatchPathOptions): IPathMatchObject | null => {
     const {path, exact, strict} = options || {};
     if (!path || typeof pathname !== 'string') {
         return null;

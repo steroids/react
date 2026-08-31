@@ -109,16 +109,18 @@ export default function CopyToClipboard(receivedProps: ICopyToClipboardProps) {
                 }
             }
             if (notification) {
-                typeof notification === 'string'
-                    ? dispatch(showNotification(
+                const dispatchAction = typeof notification === 'string'
+                    ? showNotification(
                         notification,
                         DEFAULT_NOTIFICATION_LEVEL,
-                    ))
-                    : dispatch(showNotification(
+                    )
+                    : showNotification(
                         notification.message,
                         notification.level || DEFAULT_NOTIFICATION_LEVEL,
                         notification.params,
-                    ));
+                    );
+
+                dispatch(dispatchAction);
             }
 
             setIsCopied(true);

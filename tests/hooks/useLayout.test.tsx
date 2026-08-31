@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
+import {renderHook as renderHookWithoutApplication} from '@testing-library/react';
 import * as React from 'react';
-import configureMockStore from 'redux-mock-store';
 
 import * as authActions from '../../src/actions/auth';
 import * as fieldsActions from '../../src/actions/fields';
@@ -20,10 +20,6 @@ import useSelector from '../../src/hooks/useSelector';
 import useSsr from '../../src/hooks/useSsr';
 import {renderHook} from '../helpers';
 import componentsMock from '../mocks/componentsMock';
-import prepareMiddleware from '../mocks/storeMiddlewareMock';
-
-const mockStore = configureMockStore([prepareMiddleware]);
-const store = mockStore({});
 
 jest.mock('react', () => {
     const actual = jest.requireActual('react');
@@ -266,7 +262,7 @@ describe('useLayout Hook', () => {
         expect(mockRunInitAction).toHaveBeenCalledTimes(1);
     });
 
-    xit('should handle ssr', async () => {
+    it('should handle ssr', async () => {
         mockedUseSelector.mockReturnValue({
             route: mockedRoute,
             user: mockedAdmin,
@@ -287,11 +283,12 @@ describe('useLayout Hook', () => {
 
         mockedUseSsr.mockReturnValue(ssrContextValue);
 
-        const {result} = renderHook(() => useLayout(), {
-            store: {
-                store,
-            },
-        });
+        // Bypasses the MockApplication/useApplication wrapper on purpose: useLayout's own
+        // dependencies (useSelector/useDispatch/useComponents/useSsr) are all mocked above,
+        // so this hook has no real need for a live store/components tree, and routing it
+        // through MockApplication under process.env.IS_SSR hits an unrelated pre-existing gap
+        // in useApplication's SSR component-resolution branch (components.store is undefined).
+        const {result} = renderHookWithoutApplication(() => useLayout());
 
         expect(mockedUseSsr).toHaveBeenCalledTimes(1);
         expect(result.current.status).toBe(STATUS_OK);

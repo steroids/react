@@ -85,6 +85,116 @@ describe('router reducers', () => {
             const expectedIsActive = true;
             expect(checkIsActive(state, item)).toBe(expectedIsActive);
         });
+
+        it('exact:false matches a pathname that only starts with the route path', () => {
+            global.window.location.protocol = 'http:';
+
+            const item = {
+                exact: false,
+                strict: false,
+                path: '/home',
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    hash: '',
+                    query: null,
+                    search: '',
+                    pathname: '/home/contacts',
+                },
+            };
+
+            expect(checkIsActive(state, item)).toBe(true);
+        });
+
+        it('exact:true does not match a pathname that only starts with the route path', () => {
+            global.window.location.protocol = 'http:';
+
+            const item = {
+                exact: true,
+                strict: false,
+                path: '/home',
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    hash: '',
+                    query: null,
+                    search: '',
+                    pathname: '/home/contacts',
+                },
+            };
+
+            expect(checkIsActive(state, item)).toBe(false);
+        });
+
+        it('exact:true, strict:false ignores a trailing slash on the pathname', () => {
+            global.window.location.protocol = 'http:';
+
+            const item = {
+                exact: true,
+                strict: false,
+                path: '/home',
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    hash: '',
+                    query: null,
+                    search: '',
+                    pathname: '/home/',
+                },
+            };
+
+            expect(checkIsActive(state, item)).toBe(true);
+        });
+
+        it('strict:true requires the trailing slash declared on the route path to be present', () => {
+            global.window.location.protocol = 'http:';
+
+            const item = {
+                exact: true,
+                strict: true,
+                path: '/home/',
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    hash: '',
+                    query: null,
+                    search: '',
+                    pathname: '/home',
+                },
+            };
+
+            expect(checkIsActive(state, item)).toBe(false);
+        });
+
+        it('does not match a completely different pathname', () => {
+            global.window.location.protocol = 'http:';
+
+            const item = {
+                exact: true,
+                strict: false,
+                path: '/home',
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    hash: '',
+                    query: null,
+                    search: '',
+                    pathname: '/contacts',
+                },
+            };
+
+            expect(checkIsActive(state, item)).toBe(false);
+        });
     });
 
     describe('normalizeRoutes', () => {
@@ -328,6 +438,57 @@ describe('router reducers', () => {
             };
 
             expect(getMatch(currentRoute, state)).toEqual(expectedMatch);
+        });
+
+        it('with route params extracted from a dynamic path segment', () => {
+            const currentRoute = {
+                id: 'currentRoute',
+                exact: true,
+                strict: false,
+                path: '/users/:id',
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    pathname: '/users/42',
+                    hash: '',
+                    query: {},
+                    search: '',
+                },
+            };
+
+            const expectedMatch = {
+                path: '/users/:id',
+                url: '/users/42',
+                isExact: true,
+                params: {
+                    id: '42',
+                },
+            };
+
+            expect(getMatch(currentRoute, state)).toEqual(expectedMatch);
+        });
+
+        it('returns null when the route path does not match the current pathname', () => {
+            const currentRoute = {
+                id: 'currentRoute',
+                exact: true,
+                strict: false,
+                path: '/home',
+            };
+
+            const state: IRouterInitialState = {
+                ...initialState,
+                location: {
+                    pathname: '/contacts',
+                    hash: '',
+                    query: {},
+                    search: '',
+                },
+            };
+
+            expect(getMatch(currentRoute, state)).toBe(null);
         });
     });
 

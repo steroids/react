@@ -97,7 +97,10 @@ function PasswordField(receivedProps: IPasswordFieldProps & IFieldWrapperOutputP
     const onClear = useCallback(() => props.input.onChange(''), [props.input]);
 
     const onShowButtonClick = useCallback(() => {
-        type === InputType.PASSWORD ? setType(InputType.TEXT) : setType(InputType.PASSWORD);
+        const typeToBeSet = InputType.PASSWORD
+            ? InputType.TEXT
+            : InputType.PASSWORD;
+        setType(typeToBeSet);
     }, [type]);
 
     const inputProps = useMemo(() => ({

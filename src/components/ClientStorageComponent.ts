@@ -128,6 +128,7 @@ export default class ClientStorageComponent implements IClientStorageComponent {
                 options.expires = dayjs().add(options.expires, 'days').utc().toDate();
             }
 
+            // eslint-disable-next-line no-unused-expressions
             process.env.IS_SSR ? this._ssrCookie.set(name, value, options) : cookie.set(name, value, options);
         }
     }
@@ -150,6 +151,8 @@ export default class ClientStorageComponent implements IClientStorageComponent {
             if (domain) {
                 options.domain = domain;
             }
+
+            // eslint-disable-next-line no-unused-expressions
             process.env.IS_SSR ? this._ssrCookie.remove(name, options) : cookie.remove(name, options);
         }
     }

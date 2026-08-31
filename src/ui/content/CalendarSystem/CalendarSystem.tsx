@@ -9,9 +9,9 @@ import {ReactNode, useMemo, MouseEvent} from 'react';
 import {useCalendarSystem} from './hooks/useCalendarSystem';
 import {ICustomViews, useCustomViews} from './hooks/useCustomViews';
 import {useComponents} from '../../../hooks';
-import {ICalendarProps} from '../../../ui/content/Calendar/Calendar';
-import {ICheckboxListFieldProps} from '../../../ui/form/CheckboxListField/CheckboxListField';
-import {IModalProps} from '../../../ui/modal/Modal/Modal';
+import {ICheckboxListFieldProps} from '../../form/CheckboxListField/CheckboxListField';
+import {IModalProps} from '../../modal/Modal/Modal';
+import {ICalendarProps} from '../Calendar/Calendar';
 
 dayjs.extend(localeData);
 

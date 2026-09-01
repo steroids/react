@@ -95,7 +95,7 @@ export interface ISliderFieldViewProps extends ISliderFieldProps, IFieldWrapperO
 
 const normalizeValue = value => _toInteger(String(value).replace(/[0-9]g/, '')) || 0;
 
-const defaultProps = {
+const defaultProps: Partial<ISliderFieldProps & IFieldWrapperOutputProps> = {
     step: 1,
     min: 0,
     max: 100,
@@ -110,7 +110,7 @@ function SliderField(receivedProps: ISliderFieldProps & IFieldWrapperOutputProps
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as ISliderFieldProps & IFieldWrapperOutputProps;
+    };
 
     const components = useComponents();
 

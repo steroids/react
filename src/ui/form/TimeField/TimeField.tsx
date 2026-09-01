@@ -70,7 +70,7 @@ export interface ITimeFieldViewProps extends IDateInputStateOutput,
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: Partial<ITimeFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     displayFormat: 'HH:mm',
     required: false,

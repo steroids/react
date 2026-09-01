@@ -196,6 +196,11 @@ export interface IButtonProps extends IUiComponent {
     */
     viewProps?: Record<string, any>,
 
+    /**
+     * Находится ли кнопка в статусе отправки результата нажатия
+     */
+    submitting? : boolean,
+
     [key: string]: any,
 }
 
@@ -208,7 +213,13 @@ export interface IButtonViewProps extends IButtonProps {
     submitting?: boolean,
 }
 
-const defaultProps = {
+const defaultBadgeProps: IButtonBadge = {
+    enable: false,
+    value: 0,
+    color: 'secondary',
+};
+
+const defaultProps: IButtonProps = {
     type: 'button',
     color: 'primary',
     outline: false,
@@ -218,30 +229,38 @@ const defaultProps = {
     size: 'md',
     className: '',
     resetFailedMs: 2000,
-    badge: {
-        enable: false,
-        value: 0,
-        color: 'secondary',
-    },
+};
+
+const getBadgeProps = (defProps: IButtonBadge, props?: number | IButtonBadge): IButtonBadge => {
+    if (typeof props === 'undefined') {
+        return {
+            ...defProps,
+        };
+    }
+
+    if (typeof props === 'number') {
+        return {
+            ...defProps,
+            value: props,
+            enable: Number.isFinite(props),
+        };
+    }
+
+    return {
+        ...defProps,
+        ...props,
+    };
 };
 
 export default function Button(receivedProps: IButtonProps): JSX.Element {
     const props = {
         ...defaultProps,
         ...receivedProps,
+        badge: getBadgeProps(defaultBadgeProps, receivedProps.badge),
     };
 
     const components = useComponents();
     const dispatch = useDispatch();
-
-    // Badge
-    const badge = useMemo(() => ({
-        ...defaultProps.badge,
-        enable: !!props.badge || props.badge === 0,
-        ...(typeof props.badge === 'object' ? props.badge : {
-            value: props.badge,
-        }),
-    }), [props.badge]);
 
     // Route -> url
     const routePath = useSelector(state => props.toRoute ? getRouteProp(state, props.toRoute, 'path') : null);
@@ -264,11 +283,10 @@ export default function Button(receivedProps: IButtonProps): JSX.Element {
     // Form submitting
     const context: IFormContext = useContext(FormContext);
     const form = useForm();
-    // eslint-disable-next-line react/prop-types
-    let submitting = !!props.submitting;
-    if (form) {
-        submitting = form.formSelector(state => state.isSubmitting);
-    }
+
+    const submitting = form
+        ? form.formSelector(state => state.isSubmitting)
+        : !!props.submitting;
 
     const disabled = submitting || props.disabled;
     const tag = props.tag || (props.link || url ? 'a' : 'button');
@@ -346,7 +364,7 @@ export default function Button(receivedProps: IButtonProps): JSX.Element {
     }, [dispatch, props, routePath, tag]);
 
     const viewProps = useMemo(() => ({
-        badge,
+        badge: props.badge,
         isFailed,
         isLoading,
         disabled,
@@ -369,7 +387,7 @@ export default function Button(receivedProps: IButtonProps): JSX.Element {
         className: props.className,
         style: props.style,
         viewProps: props.viewProps,
-    }), [badge, context?.formId, disabled, isFailed, isLoading, onClick, props.block,
+    }), [props.badge, context?.formId, disabled, isFailed, isLoading, onClick, props.block,
         props.children, props.className, props.color, props.hint, props.icon, props.label,
         props.link, props.outline, props.size, props.style, props.target, props.type, submitting, tag, url, props.viewProps]);
 

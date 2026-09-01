@@ -196,7 +196,7 @@ interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldW
     errorsTo?: string[],
 }
 
-const defaultProps = {
+const defaultProps: Partial<IDateRangeFieldPrivateProps> = {
     disabled: false,
     required: false,
     className: '',

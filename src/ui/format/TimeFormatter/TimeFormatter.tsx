@@ -31,7 +31,7 @@ export interface ITimeFormatterProps{
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: ITimeFormatterProps = {
     format: 'HH:mm',
 };
 

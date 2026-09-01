@@ -135,7 +135,7 @@ interface ITimeRangeFieldPrivateProps extends ITimeRangeFieldProps, Omit<IFieldW
     errorsTo?: string[],
 }
 
-const defaultProps = {
+const defaultProps: Partial<ITimeRangeFieldPrivateProps> = {
     disabled: false,
     displayFormat: 'HH:mm',
     required: false,

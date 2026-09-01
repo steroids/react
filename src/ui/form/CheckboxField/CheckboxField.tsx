@@ -48,7 +48,7 @@ export interface ICheckboxFieldViewProps extends ICheckboxFieldProps, IFieldWrap
     indeterminate?: boolean,
 }
 
-const defaultProps = {
+const defaultProps: Partial<ICheckboxFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     required: false,
     className: '',

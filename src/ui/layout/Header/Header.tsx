@@ -118,7 +118,7 @@ export interface IHeaderViewProps extends IHeaderProps {
     isBurgerOpened: boolean,
 }
 
-const defaultProps = {
+const defaultProps: IHeaderProps = {
     size: 'md',
 };
 

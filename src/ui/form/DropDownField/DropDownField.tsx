@@ -10,7 +10,7 @@ import {FieldEnum} from '../../../enums';
 import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
+import {IAccordionItemViewProps} from '../../content/Accordion/Accordion';
 import {IDropDownProps} from '../../content/DropDown/DropDown';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
@@ -280,7 +280,7 @@ const DEFAULT_DROP_DOWN_PROPS = {
     autoPositioning: true,
 };
 
-const defaultProps = {
+const defaultProps: Partial<IDropDownFieldProps & IFieldWrapperOutputProps> = {
     primaryKey: 'id',
     outline: false,
     color: 'basic',
@@ -300,7 +300,7 @@ function DropDownField(receivedProps: IDropDownFieldProps & IFieldWrapperOutputP
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IDropDownFieldProps & IFieldWrapperOutputProps;
+    };
 
     const components = useComponents();
 

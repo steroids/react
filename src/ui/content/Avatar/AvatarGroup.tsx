@@ -11,7 +11,7 @@ export interface AvatarGroupProps{
 
 export type IAvatarGroupViewProps = AvatarGroupProps
 
-const defaultProps = {
+const defaultProps: AvatarGroupProps = {
 
 };
 

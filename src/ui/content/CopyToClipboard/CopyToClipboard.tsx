@@ -80,7 +80,7 @@ export interface ICopyToClipboardViewProps extends ICopyToClipboardProps {
 
 const DEFAULT_NOTIFICATION_LEVEL = 'info';
 
-const defaultProps = {
+const defaultProps: Partial<ICopyToClipboardProps> = {
     showCopyIcon: true,
 };
 

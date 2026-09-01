@@ -85,7 +85,7 @@ const DATE_TIME_SEPARATOR = ', ';
  * DateTimeField
  * Поля ввода с выпадающими списками для выбора даты и времени
  */
-const defaultProps = {
+const defaultProps: Partial<IDateTimeFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     required: false,
     className: '',

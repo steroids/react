@@ -25,7 +25,7 @@ export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOu
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: Partial<INavFieldProps> = {
     navProps: {
         layout: 'button',
     },

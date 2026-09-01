@@ -137,7 +137,7 @@ export interface ICalendarViewProps extends ICalendarProps {
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const defaultProps = {
+const defaultProps: ICalendarProps = {
     numberOfMonths: 1,
     showFooter: true,
     valueFormat: 'YYYY-MM-DD',

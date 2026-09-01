@@ -38,7 +38,7 @@ export interface ITitleProps extends IUiComponent {
 
 export type ITitleViewProps = ITitleProps
 
-const defaultProps = {
+const defaultProps: ITitleProps = {
     type: 'h2',
 };
 

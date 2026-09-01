@@ -1,12 +1,12 @@
-import {IAccordionItemProps, IAccordionItemViewProps} from './Accordion';
+import {IAccordionItemProps} from './Accordion';
 import {useComponents} from '../../../hooks';
 
-const defaultProps = {
+const defaultProps: IAccordionItemProps = {
     title: 'Accordion',
-    positionStyle: 'top',
+    position: 'top',
     theme: 'light',
     showIcon: true,
-} as IAccordionItemViewProps;
+};
 
 export default function AccordionItem(receivedProps: IAccordionItemProps) {
     const props = {

@@ -67,7 +67,7 @@ export interface ILayoutNamesProps {
 
 export type ILayoutNamesViewProps = ILayoutNamesProps;
 
-const defaultProps = {
+const defaultProps: ILayoutNamesProps = {
     enable: false,
     attribute: 'layout',
     defaultValue: null,

@@ -57,7 +57,7 @@ export interface IDropDownViewProps extends IDropDownProps, IAbsolutePositioning
     forwardedRef: any,
 }
 
-const defaultProps = {
+const defaultProps: IDropDownProps = {
     autoPositioning: true,
     componentDestroyDelay: 300,
     defaultVisible: false,

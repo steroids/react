@@ -136,7 +136,7 @@ export interface ITooltipViewProps extends ITooltipProps {
 *       - refactor code
 * */
 
-const defaultProps = {
+const defaultProps: ITooltipProps = {
     content: '',
     position: 'top',
     defaultVisible: false,

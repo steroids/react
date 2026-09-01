@@ -78,7 +78,7 @@ export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPa
     return newColumns;
 };
 
-const defaultProps = {
+const defaultProps: ITreeTableProps = {
     levelPadding: 32,
     alwaysOpened: false,
     saveInClientStorage: false,
@@ -91,7 +91,7 @@ export default function TreeTable(receivedProps: ITreeTableProps): JSX.Element {
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as ITreeTableProps;
+    };
 
     const components = useComponents();
 

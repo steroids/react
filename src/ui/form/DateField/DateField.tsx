@@ -64,7 +64,7 @@ export interface IDateFieldViewProps extends IDateInputStateOutput,
  * DateField
  * Поле ввода с выпадающим календарём для выбора даты
  */
-const defaultProps = {
+const defaultProps: Partial<IDateFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     displayFormat: 'DD.MM.YYYY',
     icon: true,

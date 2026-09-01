@@ -43,7 +43,7 @@ export interface IInfiniteScrollProps {
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: IInfiniteScrollProps = {
     enable: false,
     pageAttribute: 'page',
     hasNextPageAttribute: 'hasNextPage',

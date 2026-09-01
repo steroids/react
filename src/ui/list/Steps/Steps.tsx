@@ -64,7 +64,7 @@ const getStepStatus = (index: number, stepItem: IStepItem, currentStep: number) 
     return FINISH_STATUS;
 };
 
-const defaultProps = {
+const defaultProps: Partial<IStepsProps> = {
     showDivider: true,
     stepTitleOrientation: 'vertical',
 };

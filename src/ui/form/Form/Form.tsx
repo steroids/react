@@ -305,7 +305,7 @@ const normalizeInitialQuery = (initialQuery: Record<string, any>) => Object.keys
     return acc;
 }, {});
 
-const defaultProps = {
+const defaultProps: IFormProps = {
     actionMethod: 'POST',
     autoStartTwoFactor: true,
     captchaActionName: 'submit',

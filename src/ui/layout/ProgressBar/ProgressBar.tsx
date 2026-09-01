@@ -48,7 +48,7 @@ export interface IProgressBarProps {
     icon?: (status: string, percent: number) => ReactNode,
 }
 
-const defaultProps = {
+const defaultProps: Partial<IProgressBarProps> = {
     status: 'normal',
     size: 'medium',
     type: 'line',

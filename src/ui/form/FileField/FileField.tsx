@@ -246,7 +246,7 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
         <FileFieldView {...viewProps} />
     );
 }
-const defaultProps = {
+const defaultProps: Partial<IFileFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     required: false,
     filesLayout: FilesLayout.list,

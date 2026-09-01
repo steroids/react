@@ -75,7 +75,7 @@ export interface IBadgeProps extends IUiComponent {
 export interface IBadgeViewProps extends IBadgeProps {
     isExist: boolean,
 }
-const defaultProps = {
+const defaultProps: IBadgeProps = {
     type: 'primary',
     roundingStyle: 'squarer',
     size: 'md',

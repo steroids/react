@@ -71,7 +71,7 @@ export interface IHtmlFieldViewProps extends IHtmlFieldProps {
     onChange: (event: any, editor: any) => void,
 }
 
-const defaultProps = {
+const defaultProps: Partial<IHtmlFieldProps> = {
     disabled: false,
     className: '',
 };

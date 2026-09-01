@@ -47,7 +47,7 @@ export interface IPhoneFieldViewProps extends IPhoneFieldProps, IFieldWrapperOut
     dropDownProps: IPhoneFieldDropdownProps,
 }
 
-const defaultProps = {
+const defaultProps: Partial<IPhoneFieldProps> = {
     disabled: false,
     required: false,
 };
@@ -56,7 +56,7 @@ function PhoneField(receivedProps: IPhoneFieldProps): JSX.Element {
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IPhoneFieldProps;
+    };
 
     const components = useComponents();
 

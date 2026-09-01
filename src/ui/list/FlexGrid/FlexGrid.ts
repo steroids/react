@@ -121,7 +121,7 @@ const normalizeGap = (gap: number | number[]) => {
     };
 };
 
-const defaultProps = {
+const defaultProps: IFlexGridProps = {
     wrap: false,
     gap: 24,
 };

@@ -237,7 +237,7 @@ const renderComponent = (route: IRouteItem, activePath, routeProps, alwaysAppend
     );
 };
 
-const defaultProps = {
+const defaultProps: Partial<IRouterProps> = {
     autoScrollTop: true,
     alwaysAppendParentRoutePath: true,
 };

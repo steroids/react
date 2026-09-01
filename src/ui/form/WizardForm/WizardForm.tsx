@@ -1,6 +1,7 @@
 import _has from 'lodash-es/has';
 import _indexOf from 'lodash-es/indexOf';
 import _isEmpty from 'lodash-es/isEmpty';
+import _merge from 'lodash-es/merge';
 import {useCallback, useEffect, useMemo, useState, ReactNode} from 'react';
 
 import {generateFieldStepMap, getModifiedSteps, normalizeSteps} from './utils';
@@ -125,9 +126,9 @@ export interface IWizardFormViewProps extends Pick<IWizardFormProps,
 
 const INITIAL_STEP = 0;
 
-const defaultProps = {
+const defaultProps: Partial<IWizardFormProps> = {
     formProps: {
-        label: __('Отправить'),
+        submitButtonLabel: __('Отправить'),
     },
     prevStepButtonProps: {
         color: 'primary',
@@ -142,10 +143,10 @@ const defaultProps = {
 };
 
 export default function WizardForm(receivedProps: IWizardFormProps) {
-    const props = {
-        ...defaultProps,
-        ...receivedProps,
-    };
+    const props = _merge(
+        defaultProps,
+        receivedProps,
+    );
 
     const components = useComponents();
 

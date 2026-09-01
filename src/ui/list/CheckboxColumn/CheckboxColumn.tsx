@@ -44,7 +44,7 @@ export interface ICheckboxColumnViewProps extends IColumnViewProps {
     },
 }
 
-const defaultProps = {
+const defaultProps: ICheckboxColumnProps = {
     primaryKey: 'id',
 };
 
@@ -52,7 +52,7 @@ export default function CheckboxColumn(receivedProps: ICheckboxColumnProps): JSX
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as ICheckboxColumnProps;
+    };
 
     const components = useComponents();
 

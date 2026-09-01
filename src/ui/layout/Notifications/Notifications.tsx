@@ -109,7 +109,7 @@ export interface INotificationsItemViewProps extends INotificationItem {
     position: string,
 }
 
-const defaultProps = {
+const defaultProps: INotificationsProps = {
     closeTimeoutMs: 1500,
 };
 

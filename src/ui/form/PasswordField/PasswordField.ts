@@ -72,7 +72,7 @@ export const checkPassword = password => {
     return 'danger';
 };
 
-const defaultProps = {
+const defaultProps: Partial<IPasswordFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     showSecurityBar: false,
     showSecurityIcon: true,

@@ -115,7 +115,7 @@ export const getNestedItemsIds = (item, groupAttribute, hasOnlyLeafCheckboxes = 
     return result.sort();
 };
 
-const defaultProps = {
+const defaultProps: Partial<ICheckboxTreeFieldProps> = {
     disabled: false,
     required: false,
     className: '',
@@ -132,7 +132,7 @@ function CheckboxTreeField(receivedProps: ICheckboxTreeFieldProps): JSX.Element 
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as ICheckboxTreeFieldProps;
+    };
 
     const components = useComponents();
 

@@ -2,7 +2,6 @@
 import dayjs from 'dayjs';
 
 import {useComponents} from '../../../hooks';
-import {IDateFormatterProps} from '../DateFormatter/DateFormatter';
 
 /**
  * DateTimeFormatter
@@ -38,7 +37,7 @@ export interface IDateTimeFormatterProps {
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: IDateTimeFormatterProps = {
     format: 'LLL',
 };
 

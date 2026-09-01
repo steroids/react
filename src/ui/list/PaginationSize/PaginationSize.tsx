@@ -69,7 +69,7 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
     onSelect: (size: number) => void,
 }
 
-const defaultProps = {
+const defaultProps: IPaginationSizeProps = {
     enable: false,
     attribute: 'pageSize',
     sizes: [30, 50, 100],

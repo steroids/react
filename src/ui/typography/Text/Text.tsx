@@ -38,7 +38,7 @@ export interface ITextProps extends IUiComponent {
 
 export type ITextViewProps = ITextProps
 
-const defaultProps = {
+const defaultProps: ITextProps = {
     type: 'body',
 };
 

@@ -99,7 +99,7 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, I
     className?: string,
 }
 
-const defaultProps = {
+const defaultProps: Partial<ICheckboxListFieldProps> = {
     disabled: false,
     required: false,
     className: '',
@@ -111,7 +111,7 @@ function CheckboxListField(receivedProps: ICheckboxListFieldProps): JSX.Element 
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as ICheckboxListFieldProps;
+    };
 
     const components = useComponents();
 

@@ -48,7 +48,7 @@ export const moneyFormat = (amount, currency, scale) => {
     });
 };
 
-const defaultProps = {
+const defaultProps: IMoneyFormatterProps = {
     scale: 2,
     precision: 0,
 };
@@ -57,7 +57,7 @@ export default function MoneyFormatter(receivedProps: IMoneyFormatterProps): JSX
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IMoneyFormatterProps;
+    };
 
     const components = useComponents();
     const value = props.precision > 0

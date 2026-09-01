@@ -29,7 +29,7 @@ export interface IDateFormatterProps {
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: IDateFormatterProps = {
     format: 'LL',
 };
 

@@ -145,7 +145,7 @@ export const generatePages = (page, totalPages, aroundCount = 3) => {
     return pages;
 };
 
-const defaultProps = {
+const defaultProps: IPaginationProps = {
     enable: true,
     attribute: 'page',
     aroundCount: 3,

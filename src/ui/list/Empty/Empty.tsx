@@ -24,7 +24,7 @@ export interface IEmptyProps extends IUiComponent{
 
 export type IEmptyViewProps = IEmptyProps
 
-const defaultProps = {
+const defaultProps: IEmptyProps = {
     enable: true,
     text: 'Ничего не найдено',
 };

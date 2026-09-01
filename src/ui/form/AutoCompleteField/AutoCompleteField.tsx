@@ -97,7 +97,7 @@ const getCategories = (items) => {
     }, []);
 };
 
-const defaultProps = {
+const defaultProps: Partial<IAutoCompleteFieldProps & IFieldWrapperOutputProps> = {
     primaryKey: 'label',
     autoComplete: true,
     multiple: false,
@@ -112,7 +112,7 @@ function AutoCompleteField(receivedProps: IAutoCompleteFieldProps & IFieldWrappe
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IAutoCompleteFieldProps & IFieldWrapperOutputProps;
+    };
 
     const components = useComponents();
 

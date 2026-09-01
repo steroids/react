@@ -40,7 +40,7 @@ export interface IDetailItemProps {
     contentClassName?: string,
 }
 
-const defaultProps = {
+const defaultProps: Partial<IDetailItemProps> = {
     span: 1,
 };
 

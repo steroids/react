@@ -96,7 +96,7 @@ export interface INumberFieldViewProps extends INumberFieldProps, IFieldWrapperO
 
 const isNotEmptyValue = (rawValue: string) => !_isNil(rawValue) && rawValue !== '';
 
-const defaultProps = {
+const defaultProps: Partial<INumberFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     required: false,
     isCanBeNegative: true,

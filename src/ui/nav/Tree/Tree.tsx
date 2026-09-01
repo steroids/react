@@ -1,4 +1,4 @@
-import {ReactElement, useMemo, MouseEvent} from 'react';
+import {useMemo, MouseEvent} from 'react';
 
 import {useComponents, useTree} from '../../../hooks';
 import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
@@ -80,7 +80,7 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: ITreeProps = {
     itemsKey: 'items',
     autoOpenLevels: 1,
     autoSave: false,

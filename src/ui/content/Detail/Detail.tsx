@@ -203,7 +203,7 @@ const normalizeResponsiveProps = (props: IDetailProps['responsive']): IDetailRes
     }
 );
 
-const defaultProps = {
+const defaultProps: IDetailProps = {
     size: 'sm',
     layout: DetailLayoutEnum.Horizontal,
     column: constants.MAX_COLUMN,

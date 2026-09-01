@@ -161,7 +161,7 @@ interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
 
 const DATE_TIME_SEPARATOR = ', ';
 
-const defaultProps = {
+const defaultProps: Partial<IDateTimeRangeFieldPrivateProps> = {
     disabled: false,
     required: false,
     className: '',
@@ -180,7 +180,7 @@ function DateTimeRangeField(receivedProps: IDateTimeRangeFieldPrivateProps): JSX
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IDateTimeRangeFieldPrivateProps;
+    };
 
     const components = useComponents();
 

@@ -179,7 +179,7 @@ const defaultViewMap = {
     list: 'nav.NavListView',
 };
 
-const defaultProps = {
+const defaultProps: INavProps = {
     layout: 'button',
     size: 'md',
 };

@@ -83,7 +83,7 @@ export interface IAlertViewProps extends IAlertProps {
     onClick?: (e: MouseEvent) => void,
 }
 
-const defaultProps = {
+const defaultProps: IAlertProps = {
     type: 'default',
     showClose: false,
     showIcon: true,

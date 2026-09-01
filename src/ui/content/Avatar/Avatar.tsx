@@ -76,7 +76,7 @@ export interface IAvatarViewProps extends IAvatarProps {
     formattedTitle: () => void,
 }
 
-const defaultProps = {
+const defaultProps: IAvatarProps = {
     size: 'md',
     shape: 'circle',
     status: false,

@@ -111,7 +111,7 @@ export interface IImageFieldViewProps extends IImageFieldProps {
     onClick: () => void,
 }
 
-const defaultProps = {
+const defaultProps: Partial<IImageFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     required: false,
     className: '',
@@ -127,7 +127,7 @@ function ImageField(receivedProps: IImageFieldProps & IFieldWrapperOutputProps):
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IImageFieldProps & IFieldWrapperOutputProps;
+    };
 
     const components = useComponents();
     const dispatch = useDispatch();

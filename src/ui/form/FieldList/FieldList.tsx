@@ -16,7 +16,7 @@ import {formArrayAdd, formArrayRemove, formChange, formSetErrors} from '../../..
 import {FieldEnum} from '../../../enums';
 import {useComponents, useSelector} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
-import {FormContext} from '../../form/Form/Form';
+import {FormContext} from '../Form/Form';
 
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
@@ -182,7 +182,7 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
     [key: string]: any,
 }
 
-const defaultProps = {
+const defaultProps: Partial<IFieldListProps & IFieldWrapperOutputProps> = {
     initialValues: null,
     initialItems: null,
     disabled: false,
@@ -198,7 +198,7 @@ function FieldList(receivedProps: IFieldListProps & IFieldWrapperOutputProps): J
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IFieldListProps & IFieldWrapperOutputProps;
+    };
 
     const components = useComponents();
     const context = useContext(FormContext);

@@ -36,7 +36,7 @@ export interface ITextFieldViewProps extends ITextFieldProps, IFieldWrapperOutpu
     onClear: VoidFunction,
 }
 
-const defaultProps = {
+const defaultProps: Partial<ITextFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     required: false,
     submitOnEnter: false,

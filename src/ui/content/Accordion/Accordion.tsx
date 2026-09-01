@@ -111,7 +111,7 @@ export type IAccordionViewProps = Pick<IAccordionProps, 'children' | 'className'
 
 export type IAccordionItemViewProps = IAccordionItemProps & IUiComponent;
 
-const defaultProps = {
+const defaultProps: IAccordionProps = {
     isInitialOpenAll: false,
 };
 

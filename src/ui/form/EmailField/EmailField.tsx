@@ -14,7 +14,7 @@ import {IBaseFieldProps} from '../InputField/InputField';
  **/
 export interface IEmailFieldProps extends IBaseFieldProps, IFieldWrapperInputProps { }
 
-const defaultProps = {
+const defaultProps: Partial<IEmailFieldProps> = {
     disabled: false,
     required: false,
     showClear: false,
@@ -25,7 +25,7 @@ function EmailField(receivedProps: IEmailFieldProps) {
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IEmailFieldProps;
+    };
 
     const components = useComponents();
 

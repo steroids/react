@@ -24,7 +24,7 @@ export interface IModalPortalProps {
     group?: string,
 }
 
-const defaultProps = {
+const defaultProps: IModalPortalProps = {
     group: MODAL_DEFAULT_GROUP,
     animationDelayMc: 300,
 };
@@ -37,8 +37,7 @@ export default function ModalPortal(receivedProps: IModalPortalProps): JSX.Eleme
 
     const dispatch = useDispatch();
 
-    const group = props.group || defaultProps.group;
-    const opened = useSelector(state => getOpened(state, group));
+    const opened = useSelector(state => getOpened(state, props.group));
 
     const closeInternal = useCallback((item) => {
         if (item.props && item.props.onClose) {
@@ -64,7 +63,7 @@ export default function ModalPortal(receivedProps: IModalPortalProps): JSX.Eleme
                 const modalProps = {
                     ...item.props,
                     index,
-                    group,
+                    group: props.group,
                     isClosing: item.isClosing,
                     onClose: () => onClose(item),
                     closeTimeoutMs: item.props.closeTimeoutMs || props.animationDelayMc,

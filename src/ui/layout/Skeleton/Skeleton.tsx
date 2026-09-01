@@ -50,7 +50,7 @@ export interface ISkeletonProps {
     width?: string | number,
 }
 
-const defaultProps = {
+const defaultProps: ISkeletonProps = {
     animation: 'pulse',
     type: 'text',
 };

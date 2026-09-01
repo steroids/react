@@ -165,7 +165,7 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     defaultValue?: string,
 }
 
-const defaultProps = {
+const defaultProps: Partial<IInputFieldProps & IFieldWrapperOutputProps> = {
     type: 'text',
     disabled: false,
     required: false,
@@ -177,7 +177,7 @@ function InputField(receivedProps: IInputFieldProps & IFieldWrapperOutputProps):
     const props = {
         ...defaultProps,
         ...receivedProps,
-    } as IInputFieldProps & IFieldWrapperOutputProps;
+    };
 
     const components = useComponents();
 

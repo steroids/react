@@ -123,7 +123,7 @@ export interface IModalProps {
 
 export type IModalViewProps = IModalProps;
 
-const defaultProps = {
+const defaultProps: IModalProps = {
     size: 'md',
     shouldCloseOnEsc: true,
     shouldCloseOnOverlayClick: true,

@@ -261,10 +261,10 @@ const defaultProps: Partial<IFileFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function FileField(receivedProps: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     if (process.env.IS_SSR) {
         return null;

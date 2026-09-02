@@ -314,10 +314,10 @@ const defaultProps: IFormProps = {
 };
 
 export default function Form(receivedProps: IFormProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     // Dev validation. You cannot change data provider (formId, useRedux)
     if (process.env.NODE_ENV !== 'production') {

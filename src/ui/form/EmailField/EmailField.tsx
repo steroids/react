@@ -22,10 +22,10 @@ const defaultProps: Partial<IEmailFieldProps> = {
 };
 
 function EmailField(receivedProps: IEmailFieldProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

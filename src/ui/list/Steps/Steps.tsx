@@ -1,5 +1,5 @@
 import _range from 'lodash-es/range';
-import {useState, useEffect, useCallback, ReactNode} from 'react';
+import {useState, useEffect, useCallback, useMemo, ReactNode} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -70,10 +70,10 @@ const defaultProps: Partial<IStepsProps> = {
 };
 
 export default function Steps(receivedProps: IStepsProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

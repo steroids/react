@@ -57,10 +57,10 @@ const defaultProps: Partial<ICheckboxFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function CheckboxField(receivedProps: ICheckboxFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

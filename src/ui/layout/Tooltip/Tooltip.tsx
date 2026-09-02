@@ -1,4 +1,4 @@
-import {Children, cloneElement, useCallback, useRef} from 'react';
+import {Children, cloneElement, useCallback, useMemo, useRef} from 'react';
 import {useMount} from 'react-use';
 
 import TooltipInnerPortal from './TooltipPortalInner';
@@ -145,10 +145,10 @@ const defaultProps: ITooltipProps = {
 };
 
 export default function Tooltip(receivedProps: ITooltipProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const {

@@ -297,10 +297,10 @@ const defaultProps: Partial<IDropDownFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function DropDownField(receivedProps: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

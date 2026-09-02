@@ -77,10 +77,10 @@ const defaultProps: Partial<IHtmlFieldProps> = {
 };
 
 function HtmlField(receivedProps: IHtmlFieldProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

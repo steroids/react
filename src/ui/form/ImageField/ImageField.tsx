@@ -124,10 +124,10 @@ const defaultProps: Partial<IImageFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function ImageField(receivedProps: IImageFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const dispatch = useDispatch();

@@ -174,10 +174,10 @@ const defaultProps: Partial<IInputFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function InputField(receivedProps: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

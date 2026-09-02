@@ -85,10 +85,11 @@ const defaultProps: Partial<ICopyToClipboardProps> = {
 };
 
 export default function CopyToClipboard(receivedProps: ICopyToClipboardProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
     const [isCopied, setIsCopied] = useState(false);
     const dispatch = useDispatch();

@@ -32,10 +32,10 @@ const defaultProps: Partial<INavFieldProps> = {
 };
 
 function NavField(receivedProps: INavFieldProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const {items} = useDataProvider({
         items: props.items,

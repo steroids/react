@@ -129,10 +129,10 @@ const defaultProps: Partial<ICheckboxTreeFieldProps> = {
 };
 
 function CheckboxTreeField(receivedProps: ICheckboxTreeFieldProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

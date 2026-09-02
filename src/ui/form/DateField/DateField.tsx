@@ -75,10 +75,10 @@ const defaultProps: Partial<IDateFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function DateField(receivedProps: IDateFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

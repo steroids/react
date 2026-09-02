@@ -1,6 +1,6 @@
+import _isNumber from 'lodash-es/isNumber';
 import {MouseEvent, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import _isNumber from 'lodash-es/isNumber';
 
 import {goToRoute, filterParamsForPath} from '../../../actions/router';
 import {useComponents, useForm} from '../../../hooks';
@@ -253,11 +253,11 @@ const getBadgeProps = (defProps: IButtonBadge, props?: number | IButtonBadge): I
 };
 
 export default function Button(receivedProps: IButtonProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
         badge: getBadgeProps(defaultBadgeProps, receivedProps.badge),
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const dispatch = useDispatch();

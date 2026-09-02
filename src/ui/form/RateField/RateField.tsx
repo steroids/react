@@ -65,10 +65,10 @@ const defaultProps: Partial<IRateFieldProps> = {
 };
 
 function RateField(receivedProps: IRateFieldProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

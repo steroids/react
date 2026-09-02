@@ -1,4 +1,4 @@
-import {memo, ReactNode} from 'react';
+import {memo, ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -30,10 +30,10 @@ const defaultProps: IEmptyProps = {
 };
 
 function Empty(receivedProps: IEmptyProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     return useComponents().ui.renderView(props.view || 'list.EmptyView', props);
 }

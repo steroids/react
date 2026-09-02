@@ -80,10 +80,10 @@ const defaultProps: Partial<IPasswordFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function PasswordField(receivedProps: IPasswordFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const [type, setType] = useState(InputType.PASSWORD);
 

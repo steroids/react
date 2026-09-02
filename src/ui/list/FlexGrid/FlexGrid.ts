@@ -1,5 +1,5 @@
 import _isArray from 'lodash-es/isArray';
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -127,10 +127,10 @@ const defaultProps: IFlexGridProps = {
 };
 
 export default function FlexGrid(receivedProps: IFlexGridProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const {view, ...viewProps} = props;

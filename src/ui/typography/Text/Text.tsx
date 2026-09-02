@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -43,10 +43,10 @@ const defaultProps: ITextProps = {
 };
 
 export default function Text(receivedProps: ITextProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

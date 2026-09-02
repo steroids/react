@@ -243,10 +243,10 @@ const defaultProps: Partial<IRouterProps> = {
 };
 
 export default function Router(receivedProps: IRouterProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const routeParams = useSelector(getRouteParams);

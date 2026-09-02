@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -56,10 +56,10 @@ const defaultProps: ISkeletonProps = {
 };
 
 export default function Skeleton(receivedProps: ISkeletonProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     return useComponents().ui.renderView('layout.SkeletonView', props);
 }

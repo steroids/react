@@ -49,10 +49,10 @@ const defaultProps: ICheckboxColumnProps = {
 };
 
 export default function CheckboxColumn(receivedProps: ICheckboxColumnProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

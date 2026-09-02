@@ -53,10 +53,10 @@ const defaultProps: Partial<IPhoneFieldProps> = {
 };
 
 function PhoneField(receivedProps: IPhoneFieldProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

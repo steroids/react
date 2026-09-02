@@ -150,10 +150,10 @@ const defaultProps: Partial<ITimeRangeFieldPrivateProps> = {
 };
 
 function TimeRangeField(receivedProps: ITimeRangeFieldPrivateProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

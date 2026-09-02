@@ -254,10 +254,10 @@ const defaultProps: ICrudProps = {
 };
 
 export default function Crud(receivedProps: ICrudProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const dispatch = useDispatch();

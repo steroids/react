@@ -114,10 +114,10 @@ const defaultProps: INotificationsProps = {
 };
 
 export default function Notifications(receivedProps:INotificationsProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const {notifications, position} = useSelector(state => ({
         notifications: getNotifications(state),

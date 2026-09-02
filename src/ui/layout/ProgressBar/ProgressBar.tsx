@@ -57,10 +57,10 @@ const defaultProps: Partial<IProgressBarProps> = {
 };
 
 export default function ProgressBar(receivedProps: IProgressBarProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

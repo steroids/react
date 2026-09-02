@@ -249,10 +249,10 @@ const defaultProps: Partial<IGridProps> = {
 };
 
 export default function Grid(receivedProps: IGridProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

@@ -1,5 +1,5 @@
 import _orderBy from 'lodash-es/orderBy';
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import {closeModal, modalMarkClosing} from '../../../actions/modal';
 import {useSelector} from '../../../hooks';
@@ -30,10 +30,10 @@ const defaultProps: IModalPortalProps = {
 };
 
 export default function ModalPortal(receivedProps: IModalPortalProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const dispatch = useDispatch();
 

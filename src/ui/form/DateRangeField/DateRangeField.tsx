@@ -211,10 +211,10 @@ const defaultProps: Partial<IDateRangeFieldPrivateProps> = {
 };
 
 function DateRangeField(receivedProps: IDateRangeFieldPrivateProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

@@ -92,10 +92,11 @@ const defaultProps: IAlertProps = {
 };
 
 export default function Alert(receivedProps: IAlertProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const [isExist, setIsExist] = useState<boolean>(true);

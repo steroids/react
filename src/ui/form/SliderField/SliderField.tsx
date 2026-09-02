@@ -107,10 +107,10 @@ const defaultProps: Partial<ISliderFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function SliderField(receivedProps: ISliderFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

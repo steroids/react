@@ -68,10 +68,11 @@ const defaultProps: IDropDownProps = {
 };
 
 export default function DropDown(receivedProps: IDropDownProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
     const {
         isComponentExist,

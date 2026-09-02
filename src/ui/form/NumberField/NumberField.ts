@@ -103,10 +103,10 @@ const defaultProps: Partial<INumberFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function NumberField(receivedProps: INumberFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

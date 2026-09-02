@@ -85,10 +85,10 @@ const defaultProps: Partial<ITimeFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function TimeField(receivedProps: ITimeFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

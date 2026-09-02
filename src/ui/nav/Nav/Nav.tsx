@@ -185,10 +185,10 @@ const defaultProps: INavProps = {
 };
 
 export default function Nav(receivedProps: INavProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

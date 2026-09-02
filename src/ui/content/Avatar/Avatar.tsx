@@ -83,10 +83,11 @@ const defaultProps: IAvatarProps = {
 };
 
 export default function Avatar(receivedProps: IAvatarProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const [isError, setIsError] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 import _get from 'lodash-es/get';
-import {memo, useCallback, useRef, useState} from 'react';
+import {memo, useCallback, useMemo, useRef, useState} from 'react';
 
 import {useIntersectionObserver} from './hooks';
 import {formChange} from '../../../actions/form';
@@ -50,10 +50,10 @@ const defaultProps: IInfiniteScrollProps = {
 };
 
 function InfiniteScroll(receivedProps: IInfiniteScrollProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const observerTarget = useRef(null);
 

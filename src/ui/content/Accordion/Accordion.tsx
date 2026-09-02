@@ -116,10 +116,11 @@ const defaultProps: IAccordionProps = {
 };
 
 export default function Accordion(receivedProps: IAccordionProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const [selectedAccordionItems, setSelectedAccordionItems] = useState<number[]>(() => props.isInitialOpenAll
         ? Children.map(props.children, (_, index) => index) || []
         : []);

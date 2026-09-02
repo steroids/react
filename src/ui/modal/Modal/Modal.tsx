@@ -130,10 +130,10 @@ const defaultProps: IModalProps = {
 };
 
 export default function Modal(receivedProps: IModalProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

@@ -108,10 +108,10 @@ const defaultProps: Partial<ICheckboxListFieldProps> = {
 };
 
 function CheckboxListField(receivedProps: ICheckboxListFieldProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

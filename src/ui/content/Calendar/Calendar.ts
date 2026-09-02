@@ -145,10 +145,11 @@ const defaultProps: ICalendarProps = {
 };
 
 export default function Calendar(receivedProps: ICalendarProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const currentYear = new Date().getFullYear();

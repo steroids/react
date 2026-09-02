@@ -88,10 +88,10 @@ const defaultProps: ITreeTableProps = {
 };
 
 export default function TreeTable(receivedProps: ITreeTableProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

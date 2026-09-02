@@ -109,10 +109,10 @@ const defaultProps: Partial<IAutoCompleteFieldProps & IFieldWrapperOutputProps> 
 };
 
 function AutoCompleteField(receivedProps: IAutoCompleteFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

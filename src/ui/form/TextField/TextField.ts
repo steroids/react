@@ -44,10 +44,11 @@ const defaultProps: Partial<ITextFieldProps & IFieldWrapperOutputProps> = {
 };
 
 function TextField(receivedProps: ITextFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     // const dispatch = useDispatch();
     const components = useComponents();
 

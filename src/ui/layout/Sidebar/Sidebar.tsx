@@ -92,10 +92,10 @@ const defaultProps: ISidebarProps = {
 };
 
 export default function Sidebar(receivedProps: ISidebarProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const [isOpened, setIsOpened] = useState(props.isOpenedByDefault);

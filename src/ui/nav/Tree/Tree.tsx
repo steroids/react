@@ -94,10 +94,10 @@ const defaultProps: ITreeProps = {
 };
 
 export default function Tree(receivedProps: ITreeProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

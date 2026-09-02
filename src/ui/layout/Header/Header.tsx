@@ -1,4 +1,4 @@
-import {ReactElement, useCallback, useState} from 'react';
+import {ReactElement, useCallback, useMemo, useState} from 'react';
 
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../../content/Avatar/Avatar';
@@ -123,10 +123,10 @@ const defaultProps: IHeaderProps = {
 };
 
 export default function Header(receivedProps: IHeaderProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const [isBurgerOpened, setIsBurgerOpened] = useState(false);
 

@@ -81,10 +81,10 @@ const defaultProps: IPaginationSizeProps = {
 };
 
 function PaginationSize(receivedProps: IPaginationSizeProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

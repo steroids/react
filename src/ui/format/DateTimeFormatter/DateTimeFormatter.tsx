@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import dayjs from 'dayjs';
+import {useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -42,10 +43,10 @@ const defaultProps: IDateTimeFormatterProps = {
 };
 
 export default function DateTimeFormatter(receivedProps: IDateTimeFormatterProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

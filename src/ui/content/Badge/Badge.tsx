@@ -84,10 +84,11 @@ const defaultProps: IBadgeProps = {
 };
 
 export default function Badge(receivedProps: IBadgeProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const [isExist, setIsExist] = useState(true);

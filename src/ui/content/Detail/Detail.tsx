@@ -211,10 +211,11 @@ const defaultProps: IDetailProps = {
 };
 
 export default function Detail(receivedProps: IDetailProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
     const detailItems = useMemo(() => getDetailItems(props.children), [props.children]);
     const responsiveProps = useMemo(() => normalizeResponsiveProps(props.responsive), [props.responsive]);

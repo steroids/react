@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 /**
  * DetailItem
@@ -45,10 +45,11 @@ const defaultProps: Partial<IDetailItemProps> = {
 };
 
 export default function DetailItem(receivedProps: IDetailItemProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     return props.children as JSX.Element;
 }
 

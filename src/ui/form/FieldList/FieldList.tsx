@@ -195,10 +195,10 @@ const defaultProps: Partial<IFieldListProps & IFieldWrapperOutputProps> = {
 };
 
 function FieldList(receivedProps: IFieldListProps & IFieldWrapperOutputProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const context = useContext(FormContext);

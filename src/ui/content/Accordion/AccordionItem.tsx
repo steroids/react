@@ -1,3 +1,5 @@
+import {useMemo} from 'react';
+
 import {IAccordionItemProps} from './Accordion';
 import {useComponents} from '../../../hooks';
 
@@ -9,10 +11,11 @@ const defaultProps: IAccordionItemProps = {
 };
 
 export default function AccordionItem(receivedProps: IAccordionItemProps) {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
+
     const components = useComponents();
 
     return components.ui.renderView(props.view || 'content.AccordionItemView', props);

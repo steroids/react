@@ -1,4 +1,5 @@
 import _round from 'lodash-es/round';
+import {useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -54,10 +55,10 @@ const defaultProps: IMoneyFormatterProps = {
 };
 
 export default function MoneyFormatter(receivedProps: IMoneyFormatterProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
     const value = props.precision > 0

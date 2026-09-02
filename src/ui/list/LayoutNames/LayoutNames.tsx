@@ -1,5 +1,5 @@
 import _get from 'lodash-es/get';
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 
 import {IList, listSetLayout} from '../../../actions/list';
 import {useComponents} from '../../../hooks';
@@ -75,10 +75,10 @@ const defaultProps: ILayoutNamesProps = {
 };
 
 function LayoutNames(receivedProps: ILayoutNamesProps): JSX.Element {
-    const props = {
+    const props = useMemo(() => ({
         ...defaultProps,
         ...receivedProps,
-    };
+    }), [receivedProps]);
 
     const components = useComponents();
 

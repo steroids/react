@@ -1,5 +1,6 @@
 import {MouseEvent, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import _isNumber from 'lodash-es/isNumber';
 
 import {goToRoute, filterParamsForPath} from '../../../actions/router';
 import {useComponents, useForm} from '../../../hooks';
@@ -210,7 +211,6 @@ export interface IButtonViewProps extends IButtonProps {
     formId?: string,
     disabled?: boolean,
     onClick?: any,
-    submitting?: boolean,
 }
 
 const defaultBadgeProps: IButtonBadge = {
@@ -232,13 +232,13 @@ const defaultProps: IButtonProps = {
 };
 
 const getBadgeProps = (defProps: IButtonBadge, props?: number | IButtonBadge): IButtonBadge => {
-    if (typeof props === 'undefined') {
+    if (props === undefined) {
         return {
             ...defProps,
         };
     }
 
-    if (typeof props === 'number') {
+    if (_isNumber(props)) {
         return {
             ...defProps,
             value: props,

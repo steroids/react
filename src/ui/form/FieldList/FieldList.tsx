@@ -16,7 +16,7 @@ import {formArrayAdd, formArrayRemove, formChange, formSetErrors} from '../../..
 import {FieldEnum} from '../../../enums';
 import {useComponents, useSelector} from '../../../hooks';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
-import {FormContext} from '../../form/Form/Form';
+import {FormContext} from '../Form/Form';
 
 export interface IFieldListItem extends IFieldWrapperInputProps, IUiComponent {
     /**
@@ -182,7 +182,24 @@ export interface IFieldListItemViewProps extends IFieldWrapperOutputProps {
     [key: string]: any,
 }
 
-function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps: Partial<IFieldListProps & IFieldWrapperOutputProps> = {
+    initialValues: null,
+    initialItems: null,
+    disabled: false,
+    required: false,
+    showAdd: true,
+    showRemove: true,
+    className: '',
+    initialRowsCount: 1,
+    enableKeyboardNavigation: true,
+};
+
+function FieldList(receivedProps: IFieldListProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
     const context = useContext(FormContext);
 
@@ -340,18 +357,6 @@ function FieldList(props: IFieldListProps & IFieldWrapperOutputProps): JSX.Eleme
         </FormContext.Provider>
     );
 }
-
-FieldList.defaultProps = {
-    initialValues: null,
-    initialItems: null,
-    disabled: false,
-    required: false,
-    showAdd: true,
-    showRemove: true,
-    className: '',
-    initialRowsCount: 1,
-    enableKeyboardNavigation: true,
-};
 
 export default fieldWrapper<IFieldListProps>(FieldEnum.FIELD_LIST, FieldList, {
     list: true,

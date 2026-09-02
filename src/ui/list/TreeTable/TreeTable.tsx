@@ -78,7 +78,21 @@ export const addTreeColumnFieldsToFirstColumn = (columns: IGridColumn[], levelPa
     return newColumns;
 };
 
-export default function TreeTable(props: ITreeTableProps): JSX.Element {
+const defaultProps: ITreeTableProps = {
+    levelPadding: 32,
+    alwaysOpened: false,
+    saveInClientStorage: false,
+    collapseChildItems: false,
+    size: 'md',
+    hasAlternatingColors: false,
+};
+
+export default function TreeTable(receivedProps: ITreeTableProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const mergedColumns = useMemo(
@@ -263,12 +277,3 @@ export default function TreeTable(props: ITreeTableProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'list.GridView', viewProps);
 }
-
-TreeTable.defaultProps = {
-    levelPadding: 32,
-    alwaysOpened: false,
-    saveInClientStorage: false,
-    collapseChildItems: false,
-    size: 'md',
-    hasAlternatingColors: false,
-};

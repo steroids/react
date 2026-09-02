@@ -243,7 +243,17 @@ export interface IGridViewProps extends Omit<IGridProps, 'onFetch'> {
     onSort: (value: any) => void,
 }
 
-export default function Grid(props: IGridProps): JSX.Element {
+const defaultProps: Partial<IGridProps> = {
+    size: 'md',
+    hasAlternatingColors: true,
+};
+
+export default function Grid(receivedProps: IGridProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const {
@@ -410,8 +420,3 @@ export default function Grid(props: IGridProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'list.GridView', viewProps);
 }
-
-Grid.defaultProps = {
-    size: 'md',
-    hasAlternatingColors: true,
-};

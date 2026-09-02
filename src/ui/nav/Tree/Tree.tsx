@@ -1,4 +1,4 @@
-import {ReactElement, useMemo, MouseEvent} from 'react';
+import {useMemo, MouseEvent} from 'react';
 
 import {useComponents, useTree} from '../../../hooks';
 import {IPreparedTreeItem, ITreeConfig, ITreeItem} from '../../../hooks/useTree';
@@ -80,7 +80,25 @@ export interface ITreeProps extends Omit<ITreeConfig, 'currentPage' | 'itemsOnPa
     [key: string]: any,
 }
 
-export default function Tree(props: ITreeProps) {
+const defaultProps: ITreeProps = {
+    itemsKey: 'items',
+    autoOpenLevels: 1,
+    autoSave: false,
+    level: 0,
+    levelPadding: 32,
+    hasIconExpandOnly: false,
+    useSameSelectedItemId: true,
+    hideIcon: false,
+    saveInClientStorage: false,
+    collapseChildItems: false,
+};
+
+export default function Tree(receivedProps: ITreeProps) {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const {treeItems, onItemFocus} = useTree({
@@ -111,16 +129,3 @@ export default function Tree(props: ITreeProps) {
 
     return components.ui.renderView(props.view || 'nav.TreeView', viewProps);
 }
-
-Tree.defaultProps = {
-    itemsKey: 'items',
-    autoOpenLevels: 1,
-    autoSave: false,
-    level: 0,
-    levelPadding: 32,
-    hasIconExpandOnly: false,
-    useSameSelectedItemId: true,
-    hideIcon: false,
-    saveInClientStorage: false,
-    collapseChildItems: false,
-};

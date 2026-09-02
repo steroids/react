@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import dayjs from 'dayjs';
+import {useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
-import {IDateFormatterProps} from '../DateFormatter/DateFormatter';
 
 /**
  * DateTimeFormatter
@@ -38,7 +38,16 @@ export interface IDateTimeFormatterProps {
     [key: string]: any,
 }
 
-function DateTimeFormatter(props: IDateFormatterProps): JSX.Element {
+const defaultProps: IDateTimeFormatterProps = {
+    format: 'LLL',
+};
+
+export default function DateTimeFormatter(receivedProps: IDateTimeFormatterProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     if (!props.value) {
@@ -53,9 +62,3 @@ function DateTimeFormatter(props: IDateFormatterProps): JSX.Element {
         value: date.format(props.format),
     });
 }
-
-DateTimeFormatter.defaultProps = {
-    format: 'LLL',
-};
-
-export default DateTimeFormatter;

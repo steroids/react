@@ -161,7 +161,27 @@ interface IDateTimeRangeFieldPrivateProps extends IDateTimeRangeFieldProps,
 
 const DATE_TIME_SEPARATOR = ', ';
 
-function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element {
+const defaultProps: Partial<IDateTimeRangeFieldPrivateProps> = {
+    disabled: false,
+    required: false,
+    className: '',
+    displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
+    valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
+    showRemove: true,
+    hasInitialFocus: false,
+    useUTC: false,
+    dateInUTC: false,
+    icon: true,
+    rangeButtonsPosition: 'left-bottom',
+    minuteStep: 1,
+};
+
+function DateTimeRangeField(receivedProps: IDateTimeRangeFieldPrivateProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const maskInputFromRef = useMaskito({
@@ -353,21 +373,6 @@ function DateTimeRangeField(props: IDateTimeRangeFieldPrivateProps): JSX.Element
 
     return components.ui.renderView(props.view || 'form.DateTimeRangeFieldView', viewProps);
 }
-
-DateTimeRangeField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    displayFormat: 'DD.MM.YYYY' + DATE_TIME_SEPARATOR + 'HH:mm',
-    valueFormat: 'YYYY-MM-DD' + DATE_TIME_SEPARATOR + 'HH:mm',
-    showRemove: true,
-    hasInitialFocus: false,
-    useUTC: false,
-    dateInUTC: false,
-    icon: true,
-    rangeButtonsPosition: 'left-bottom',
-    minuteStep: 1,
-};
 
 export default fieldWrapper<IDateTimeRangeFieldProps>(
     FieldEnum.DATE_TIME_RANGE_FIELD,

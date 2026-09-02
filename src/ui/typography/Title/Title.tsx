@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -38,16 +38,19 @@ export interface ITitleProps extends IUiComponent {
 
 export type ITitleViewProps = ITitleProps
 
-function Title(props: ITitleProps): JSX.Element {
+const defaultProps: ITitleProps = {
+    type: 'h2',
+};
+
+export default function Title(receivedProps: ITitleProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     return components.ui.renderView(props.view || 'typography.TitleView', {
         ...props,
     });
 }
-
-Title.defaultProps = {
-    type: 'h2',
-};
-
-export default Title;

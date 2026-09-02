@@ -5,7 +5,6 @@ import CheckboxField, {ICheckboxFieldProps} from '../CheckboxField/CheckboxField
  *
  * Компонент RadioField представляет собой элемент выбора типа "radio". Он позволяет пользователю выбрать один вариант из нескольких предложенных.
  **/
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IRadioFieldProps extends ICheckboxFieldProps {
     // Этот интерфейс оставлен для будущего расширения и генерации документации
 }

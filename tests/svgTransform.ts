@@ -7,3 +7,5 @@ module.exports = {
         return 'svgTransform';
     },
 };
+
+export {};

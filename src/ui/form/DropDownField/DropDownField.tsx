@@ -10,7 +10,7 @@ import {FieldEnum} from '../../../enums';
 import {useComponents, useDataProvider as useSteroidsDataProvider, useDataSelect} from '../../../hooks';
 import {DataProviderItems, IDataProviderConfig} from '../../../hooks/useDataProvider';
 import {IDataSelectConfig} from '../../../hooks/useDataSelect';
-import {IAccordionItemViewProps} from '../../../ui/content/Accordion/Accordion';
+import {IAccordionItemViewProps} from '../../content/Accordion/Accordion';
 import {IDropDownProps} from '../../content/DropDown/DropDown';
 import fieldWrapper, {IFieldWrapperInputProps, IFieldWrapperOutputProps} from '../../form/Field/fieldWrapper';
 
@@ -280,7 +280,28 @@ const DEFAULT_DROP_DOWN_PROPS = {
     autoPositioning: true,
 };
 
-function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps: Partial<IDropDownFieldProps & IFieldWrapperOutputProps> = {
+    primaryKey: 'id',
+    outline: false,
+    color: 'basic',
+    disabled: false,
+    required: false,
+    className: '',
+    autoComplete: false,
+    showReset: false,
+    multiple: false,
+    isSearchAutoFocus: true,
+    itemToSelectAll: false,
+    isFetchOnClose: false,
+    hasCloseOnSelect: true,
+};
+
+function DropDownField(receivedProps: IDropDownFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     // Query state
@@ -541,21 +562,5 @@ function DropDownField(props: IDropDownFieldProps & IFieldWrapperOutputProps): J
 
     return components.ui.renderView(props.view || 'form.DropDownFieldView', viewProps);
 }
-
-DropDownField.defaultProps = {
-    primaryKey: 'id',
-    outline: false,
-    color: 'basic',
-    disabled: false,
-    required: false,
-    className: '',
-    autoComplete: false,
-    showReset: false,
-    multiple: false,
-    isSearchAutoFocus: true,
-    itemToSelectAll: false,
-    isFetchOnClose: false,
-    hasCloseOnSelect: true,
-};
 
 export default fieldWrapper<IDropDownFieldProps>(FieldEnum.DROPDOWN_FIELD, DropDownField);

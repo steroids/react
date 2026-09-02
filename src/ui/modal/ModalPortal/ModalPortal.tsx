@@ -1,5 +1,5 @@
 import _orderBy from 'lodash-es/orderBy';
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import {closeModal, modalMarkClosing} from '../../../actions/modal';
 import {useSelector} from '../../../hooks';
@@ -24,11 +24,20 @@ export interface IModalPortalProps {
     group?: string,
 }
 
-function ModalPortal(props: IModalPortalProps): JSX.Element {
+const defaultProps: IModalPortalProps = {
+    group: MODAL_DEFAULT_GROUP,
+    animationDelayMc: 300,
+};
+
+export default function ModalPortal(receivedProps: IModalPortalProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const dispatch = useDispatch();
 
-    const group = props.group || ModalPortal.defaultProps.group;
-    const opened = useSelector(state => getOpened(state, group));
+    const opened = useSelector(state => getOpened(state, props.group));
 
     const closeInternal = useCallback((item) => {
         if (item.props && item.props.onClose) {
@@ -54,7 +63,7 @@ function ModalPortal(props: IModalPortalProps): JSX.Element {
                 const modalProps = {
                     ...item.props,
                     index,
-                    group,
+                    group: props.group,
                     isClosing: item.isClosing,
                     onClose: () => onClose(item),
                     closeTimeoutMs: item.props.closeTimeoutMs || props.animationDelayMc,
@@ -70,10 +79,3 @@ function ModalPortal(props: IModalPortalProps): JSX.Element {
         </>
     );
 }
-
-ModalPortal.defaultProps = {
-    group: MODAL_DEFAULT_GROUP,
-    animationDelayMc: 300,
-};
-
-export default ModalPortal;

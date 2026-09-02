@@ -165,7 +165,20 @@ export interface IInputFieldViewProps extends IInputFieldProps, IFieldWrapperOut
     defaultValue?: string,
 }
 
-function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
+const defaultProps: Partial<IInputFieldProps & IFieldWrapperOutputProps> = {
+    type: 'text',
+    disabled: false,
+    required: false,
+    showClear: false,
+    maskOptions: null,
+};
+
+function InputField(receivedProps: IInputFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const maskedInputRef = useMaskito({
@@ -240,13 +253,5 @@ function InputField(props: IInputFieldProps & IFieldWrapperOutputProps): JSX.Ele
 
     return components.ui.renderView(props.view || 'form.InputFieldView', viewProps);
 }
-
-InputField.defaultProps = {
-    type: 'text',
-    disabled: false,
-    required: false,
-    showClear: false,
-    maskOptions: null,
-};
 
 export default fieldWrapper<IInputFieldProps>(FieldEnum.INPUT_FIELD, InputField);

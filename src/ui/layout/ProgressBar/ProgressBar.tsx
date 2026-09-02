@@ -48,7 +48,20 @@ export interface IProgressBarProps {
     icon?: (status: string, percent: number) => ReactNode,
 }
 
-function ProgressBar(props: IProgressBarProps): JSX.Element {
+const defaultProps: Partial<IProgressBarProps> = {
+    status: 'normal',
+    size: 'medium',
+    type: 'line',
+    showLabel: true,
+    label: percent => `${percent}%`,
+};
+
+export default function ProgressBar(receivedProps: IProgressBarProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const viewProps = useMemo(() => {
@@ -80,13 +93,3 @@ function ProgressBar(props: IProgressBarProps): JSX.Element {
 
     return components.ui.renderView(ViewComponent, viewProps);
 }
-
-ProgressBar.defaultProps = {
-    status: 'normal',
-    size: 'medium',
-    type: 'line',
-    showLabel: true,
-    label: percent => `${percent}%`,
-};
-
-export default ProgressBar;

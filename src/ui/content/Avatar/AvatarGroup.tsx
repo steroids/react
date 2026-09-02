@@ -11,7 +11,16 @@ export interface AvatarGroupProps{
 
 export type IAvatarGroupViewProps = AvatarGroupProps
 
-function AvatarGroup(props: AvatarGroupProps) {
+const defaultProps: AvatarGroupProps = {
+
+};
+
+export default function AvatarGroup(receivedProps: AvatarGroupProps) {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const childrenToRender = useMemo(() => {
         if (props.maxCount < props.children.length) {
             return props.children.slice(0, props.maxCount);
@@ -28,9 +37,3 @@ function AvatarGroup(props: AvatarGroupProps) {
         </AvatarGroupView>
     );
 }
-
-AvatarGroup.defaultProps = {
-
-};
-
-export default AvatarGroup;

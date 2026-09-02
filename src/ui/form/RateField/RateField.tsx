@@ -58,7 +58,18 @@ export interface IRateFieldViewProps extends IRateFieldProps, IFieldWrapperOutpu
     onItemClick: (item: IRateFieldItem) => void,
 }
 
-function RateField(props: IRateFieldProps): JSX.Element {
+const defaultProps: Partial<IRateFieldProps> = {
+    allowClear: false,
+    itemsCount: 5,
+    disabled: false,
+};
+
+function RateField(receivedProps: IRateFieldProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const items = useMemo(
@@ -100,11 +111,5 @@ function RateField(props: IRateFieldProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.RateFieldView', viewProps);
 }
-
-RateField.defaultProps = {
-    allowClear: false,
-    itemsCount: 5,
-    disabled: false,
-};
 
 export default fieldWrapper<IRateFieldProps>(FieldEnum.RATE_FIELD, RateField);

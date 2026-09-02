@@ -1,3 +1,4 @@
+import _isNumber from 'lodash-es/isNumber';
 import {MouseEvent, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -196,6 +197,11 @@ export interface IButtonProps extends IUiComponent {
     */
     viewProps?: Record<string, any>,
 
+    /**
+     * Находится ли кнопка в статусе отправки результата нажатия
+     */
+    submitting? : boolean,
+
     [key: string]: any,
 }
 
@@ -205,21 +211,56 @@ export interface IButtonViewProps extends IButtonProps {
     formId?: string,
     disabled?: boolean,
     onClick?: any,
-    submitting?: boolean,
 }
 
-function Button(props: IButtonProps): JSX.Element {
+const defaultBadgeProps: IButtonBadge = {
+    enable: false,
+    value: 0,
+    color: 'secondary',
+};
+
+const defaultProps: IButtonProps = {
+    type: 'button',
+    color: 'primary',
+    outline: false,
+    disabled: false,
+    submitting: false,
+    block: false,
+    size: 'md',
+    className: '',
+    resetFailedMs: 2000,
+};
+
+const getBadgeProps = (defProps: IButtonBadge, props?: number | IButtonBadge): IButtonBadge => {
+    if (props === undefined) {
+        return {
+            ...defProps,
+        };
+    }
+
+    if (_isNumber(props)) {
+        return {
+            ...defProps,
+            value: props,
+            enable: Number.isFinite(props),
+        };
+    }
+
+    return {
+        ...defProps,
+        ...props,
+    };
+};
+
+export default function Button(receivedProps: IButtonProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+        badge: getBadgeProps(defaultBadgeProps, receivedProps.badge),
+    }), [receivedProps]);
+
     const components = useComponents();
     const dispatch = useDispatch();
-
-    // Badge
-    const badge = useMemo(() => ({
-        ...Button.defaultProps.badge,
-        enable: !!props.badge || props.badge === 0,
-        ...(typeof props.badge === 'object' ? props.badge : {
-            value: props.badge,
-        }),
-    }), [props.badge]);
 
     // Route -> url
     const routePath = useSelector(state => props.toRoute ? getRouteProp(state, props.toRoute, 'path') : null);
@@ -242,11 +283,10 @@ function Button(props: IButtonProps): JSX.Element {
     // Form submitting
     const context: IFormContext = useContext(FormContext);
     const form = useForm();
-    // eslint-disable-next-line react/prop-types
-    let submitting = !!props.submitting;
-    if (form) {
-        submitting = form.formSelector(state => state.isSubmitting);
-    }
+
+    const submitting = form
+        ? form.formSelector(state => state.isSubmitting)
+        : !!props.submitting;
 
     const disabled = submitting || props.disabled;
     const tag = props.tag || (props.link || url ? 'a' : 'button');
@@ -324,7 +364,7 @@ function Button(props: IButtonProps): JSX.Element {
     }, [dispatch, props, routePath, tag]);
 
     const viewProps = useMemo(() => ({
-        badge,
+        badge: props.badge,
         isFailed,
         isLoading,
         disabled,
@@ -347,28 +387,9 @@ function Button(props: IButtonProps): JSX.Element {
         className: props.className,
         style: props.style,
         viewProps: props.viewProps,
-    }), [badge, context?.formId, disabled, isFailed, isLoading, onClick, props.block,
+    }), [props.badge, context?.formId, disabled, isFailed, isLoading, onClick, props.block,
         props.children, props.className, props.color, props.hint, props.icon, props.label,
         props.link, props.outline, props.size, props.style, props.target, props.type, submitting, tag, url, props.viewProps]);
 
     return components.ui.renderView(props.view || 'form.ButtonView', viewProps);
 }
-
-Button.defaultProps = {
-    type: 'button',
-    color: 'primary',
-    outline: false,
-    disabled: false,
-    submitting: false,
-    block: false,
-    size: 'md',
-    className: '',
-    resetFailedMs: 2000,
-    badge: {
-        enable: false,
-        value: 0,
-        color: 'secondary',
-    },
-};
-
-export default Button;

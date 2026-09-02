@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 /**
  * DetailItem
@@ -40,12 +40,17 @@ export interface IDetailItemProps {
     contentClassName?: string,
 }
 
-export default function DetailItem(props: IDetailItemProps): JSX.Element {
-    return props.children as JSX.Element;
-}
-
-DetailItem.defaultProps = {
+const defaultProps: Partial<IDetailItemProps> = {
     span: 1,
 };
+
+export default function DetailItem(receivedProps: IDetailItemProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
+    return props.children as JSX.Element;
+}
 
 DetailItem.displayName = 'DetailItem';

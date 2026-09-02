@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -50,13 +50,16 @@ export interface ISkeletonProps {
     width?: string | number,
 }
 
-function Skeleton(props: ISkeletonProps): JSX.Element {
-    return useComponents().ui.renderView('layout.SkeletonView', props);
-}
-
-Skeleton.defaultProps = {
+const defaultProps: ISkeletonProps = {
     animation: 'pulse',
     type: 'text',
 };
 
-export default Skeleton;
+export default function Skeleton(receivedProps: ISkeletonProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
+    return useComponents().ui.renderView('layout.SkeletonView', props);
+}

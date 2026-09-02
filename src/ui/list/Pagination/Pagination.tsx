@@ -145,7 +145,23 @@ export const generatePages = (page, totalPages, aroundCount = 3) => {
     return pages;
 };
 
-function Pagination(props: IPaginationProps): JSX.Element {
+const defaultProps: IPaginationProps = {
+    enable: true,
+    attribute: 'page',
+    aroundCount: 3,
+    defaultValue: 1,
+    size: 'md',
+    loadMore: false,
+    position: 'bottom',
+    sizeAttribute: 'pageSize',
+};
+
+function Pagination(receivedProps: IPaginationProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const initialValues = {
@@ -242,19 +258,8 @@ function Pagination(props: IPaginationProps): JSX.Element {
     return components.ui.renderView(props.view || defaultView, viewProps);
 }
 
-Pagination.defaultProps = {
-    enable: true,
-    attribute: 'page',
-    aroundCount: 3,
-    defaultValue: 1,
-    size: 'md',
-    loadMore: false,
-    position: 'bottom',
-    sizeAttribute: 'pageSize',
-};
-
 export const normalizePaginationProps = props => ({
-    ...Pagination.defaultProps,
+    ...defaultProps,
     ...(typeof props === 'boolean' ? {
         enable: props,
     } : props),

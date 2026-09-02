@@ -86,7 +86,17 @@ export interface ISidebarViewProps extends ISidebarProps {
     onClickNav: (itemId: number) => void,
 }
 
-export default function Sidebar(props: ISidebarProps) {
+const defaultProps: ISidebarProps = {
+    hasSeparatedNavItem: false,
+    isOpenedByDefault: true,
+};
+
+export default function Sidebar(receivedProps: ISidebarProps) {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
     const [isOpened, setIsOpened] = useState(props.isOpenedByDefault);
 
@@ -119,8 +129,3 @@ export default function Sidebar(props: ISidebarProps) {
 
     return components.ui.renderView(props.view || 'layout.SidebarView', viewProps);
 }
-
-Sidebar.defaultProps = {
-    hasSeparatedNavItem: false,
-    isOpenedByDefault: true,
-};

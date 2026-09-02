@@ -1,17 +1,22 @@
-import {IAccordionItemProps, IAccordionItemViewProps} from './Accordion';
+import {useMemo} from 'react';
+
+import {IAccordionItemProps} from './Accordion';
 import {useComponents} from '../../../hooks';
 
-function AccordionItem(props: IAccordionItemProps) {
+const defaultProps: IAccordionItemProps = {
+    title: 'Accordion',
+    position: 'top',
+    theme: 'light',
+    showIcon: true,
+};
+
+export default function AccordionItem(receivedProps: IAccordionItemProps) {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     return components.ui.renderView(props.view || 'content.AccordionItemView', props);
 }
-
-AccordionItem.defaultProps = {
-    title: 'Accordion',
-    positionStyle: 'top',
-    theme: 'light',
-    showIcon: true,
-} as IAccordionItemViewProps;
-
-export default AccordionItem;

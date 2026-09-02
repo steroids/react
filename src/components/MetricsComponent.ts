@@ -182,7 +182,6 @@ export default class MetricsComponent implements IMetricsComponent {
         (function (f, b, e, v, n, t, s) {
             if (f.fbq) { return; }
             n = function (...args) {
-                // eslint-disable-next-line no-unused-expressions
                 n.callMethod ? n.callMethod(...args) : n.queue.push(args);
             };
             f.fbq = n;

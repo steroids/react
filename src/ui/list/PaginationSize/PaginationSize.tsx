@@ -69,7 +69,23 @@ export interface IPaginationSizeViewProps extends IPaginationSizeProps {
     onSelect: (size: number) => void,
 }
 
-function PaginationSize(props: IPaginationSizeProps): JSX.Element {
+const defaultProps: IPaginationSizeProps = {
+    enable: false,
+    attribute: 'pageSize',
+    sizes: [30, 50, 100],
+    defaultValue: 50,
+    position: 'top',
+    buttonProps: {
+        size: 'sm',
+    },
+};
+
+function PaginationSize(receivedProps: IPaginationSizeProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const items = useMemo(() => props.sizes.map(size => ({
@@ -104,21 +120,10 @@ function PaginationSize(props: IPaginationSizeProps): JSX.Element {
     return components.ui.renderView(props.view || 'list.PaginationSizeView', viewProps);
 }
 
-PaginationSize.defaultProps = {
-    enable: false,
-    attribute: 'pageSize',
-    sizes: [30, 50, 100],
-    defaultValue: 50,
-    position: 'top',
-    buttonProps: {
-        size: 'sm',
-    },
-};
-
 export const normalizePaginationSizeProps = props => ({
-    ...PaginationSize.defaultProps,
+    ...defaultProps,
     enable: !!props,
-    defaultValue: _get(props, 'sizes.0') || PaginationSize.defaultProps.defaultValue,
+    defaultValue: _get(props, 'sizes.0') || defaultProps.defaultValue,
     ...(typeof props === 'boolean' ? {
         enable: props,
     } : props),

@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -38,16 +38,19 @@ export interface ITextProps extends IUiComponent {
 
 export type ITextViewProps = ITextProps
 
-function Text(props: ITextProps): JSX.Element {
+const defaultProps: ITextProps = {
+    type: 'body',
+};
+
+export default function Text(receivedProps: ITextProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     return components.ui.renderView(props.view || 'typography.TextView', {
         ...props,
     });
 }
-
-Text.defaultProps = {
-    type: 'body',
-};
-
-export default Text;

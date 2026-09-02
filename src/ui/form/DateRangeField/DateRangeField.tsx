@@ -196,7 +196,26 @@ interface IDateRangeFieldPrivateProps extends IDateRangeFieldProps, Omit<IFieldW
     errorsTo?: string[],
 }
 
-function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
+const defaultProps: Partial<IDateRangeFieldPrivateProps> = {
+    disabled: false,
+    required: false,
+    className: '',
+    displayFormat: 'DD.MM.YYYY',
+    valueFormat: 'YYYY-MM-DD',
+    showRemove: true,
+    useSmartFocus: true,
+    hasInitialFocus: false,
+    icon: true,
+    useSmartRangeReset: true,
+    rangeButtonsPosition: 'left-bottom',
+};
+
+function DateRangeField(receivedProps: IDateRangeFieldPrivateProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const maskInputFromRef = useMaskito({
@@ -348,20 +367,6 @@ function DateRangeField(props: IDateRangeFieldPrivateProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.DateRangeFieldView', viewProps);
 }
-
-DateRangeField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    displayFormat: 'DD.MM.YYYY',
-    valueFormat: 'YYYY-MM-DD',
-    showRemove: true,
-    useSmartFocus: true,
-    hasInitialFocus: false,
-    icon: true,
-    useSmartRangeReset: true,
-    rangeButtonsPosition: 'left-bottom',
-};
 
 export default fieldWrapper<IDateRangeFieldProps>(
     FieldEnum.DATE_RANGE_FIELD,

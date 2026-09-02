@@ -1,4 +1,4 @@
-import {ReactElement, useCallback, useState} from 'react';
+import {ReactElement, useCallback, useMemo, useState} from 'react';
 
 import {useComponents} from '../../../hooks';
 import {IAvatarProps} from '../../content/Avatar/Avatar';
@@ -118,7 +118,16 @@ export interface IHeaderViewProps extends IHeaderProps {
     isBurgerOpened: boolean,
 }
 
-function Header(props: IHeaderProps): JSX.Element {
+const defaultProps: IHeaderProps = {
+    size: 'md',
+};
+
+export default function Header(receivedProps: IHeaderProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const [isBurgerOpened, setIsBurgerOpened] = useState(false);
 
     const toggleBurger = useCallback(() => {
@@ -131,9 +140,3 @@ function Header(props: IHeaderProps): JSX.Element {
         isBurgerOpened,
     });
 }
-
-Header.defaultProps = {
-    size: 'md',
-};
-
-export default Header;

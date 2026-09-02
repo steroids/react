@@ -1,4 +1,5 @@
 import _round from 'lodash-es/round';
+import {useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -48,7 +49,17 @@ export const moneyFormat = (amount, currency, scale) => {
     });
 };
 
-export default function MoneyFormatter(props: IMoneyFormatterProps): JSX.Element {
+const defaultProps: IMoneyFormatterProps = {
+    scale: 2,
+    precision: 0,
+};
+
+export default function MoneyFormatter(receivedProps: IMoneyFormatterProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
     const value = props.precision > 0
         ? props.value / 10 ** props.precision
@@ -62,8 +73,3 @@ export default function MoneyFormatter(props: IMoneyFormatterProps): JSX.Element
         ),
     });
 }
-
-MoneyFormatter.defaultProps = {
-    scale: 2,
-    precision: 0,
-};

@@ -89,6 +89,7 @@ export default function DropDownCountrySelectView(props: IDropDownCountrySelectV
 
     return (
         <DropDown
+            position='bottom'
             content={renderList}
             visible={props.isOpened}
             onClose={props.onClose}

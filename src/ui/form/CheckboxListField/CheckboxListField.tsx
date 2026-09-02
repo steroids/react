@@ -99,7 +99,20 @@ export interface ICheckboxListFieldViewProps extends IFieldWrapperOutputProps, I
     className?: string,
 }
 
-function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
+const defaultProps: Partial<ICheckboxListFieldProps> = {
+    disabled: false,
+    required: false,
+    className: '',
+    multiple: true,
+    orientation: 'vertical',
+};
+
+function CheckboxListField(receivedProps: ICheckboxListFieldProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const {
@@ -142,13 +155,5 @@ function CheckboxListField(props: ICheckboxListFieldProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.CheckboxListFieldView', viewProps);
 }
-
-CheckboxListField.defaultProps = {
-    disabled: false,
-    required: false,
-    className: '',
-    multiple: true,
-    orientation: 'vertical',
-};
 
 export default fieldWrapper<ICheckboxListFieldProps>(FieldEnum.CHECKBOX_LIST_FIELD, CheckboxListField);

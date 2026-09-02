@@ -1,4 +1,4 @@
-import {memo, ReactNode} from 'react';
+import {memo, ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -24,17 +24,22 @@ export interface IEmptyProps extends IUiComponent{
 
 export type IEmptyViewProps = IEmptyProps
 
-function Empty(props: IEmptyProps): JSX.Element {
-    return useComponents().ui.renderView(props.view || 'list.EmptyView', props);
-}
-
-Empty.defaultProps = {
+const defaultProps: IEmptyProps = {
     enable: true,
     text: 'Ничего не найдено',
 };
 
+function Empty(receivedProps: IEmptyProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
+    return useComponents().ui.renderView(props.view || 'list.EmptyView', props);
+}
+
 export const normalizeEmptyProps = props => ({
-    ...Empty.defaultProps,
+    ...defaultProps,
     enable: !!props,
     text: __('Ничего не найдено'),
     ...(typeof props === 'boolean'

@@ -246,17 +246,7 @@ function FileFieldComponent(props: IFileFieldProps & IFieldWrapperOutputProps): 
         <FileFieldView {...viewProps} />
     );
 }
-function FileField(props: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
-    if (process.env.IS_SSR) {
-        return null;
-    }
-
-    return (
-        <FileFieldComponent {...props} />
-    );
-}
-
-FileField.defaultProps = {
+const defaultProps: Partial<IFileFieldProps & IFieldWrapperOutputProps> = {
     disabled: false,
     required: false,
     filesLayout: FilesLayout.list,
@@ -269,5 +259,20 @@ FileField.defaultProps = {
     multiple: false,
     hasDropArea: false,
 };
+
+function FileField(receivedProps: IFileFieldProps & IFieldWrapperOutputProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
+    if (process.env.IS_SSR) {
+        return null;
+    }
+
+    return (
+        <FileFieldComponent {...props} />
+    );
+}
 
 export default fieldWrapper<IFileFieldProps>(FieldEnum.FILE_FIELD, FileField);

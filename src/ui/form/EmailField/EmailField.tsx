@@ -14,7 +14,19 @@ import {IBaseFieldProps} from '../InputField/InputField';
  **/
 export interface IEmailFieldProps extends IBaseFieldProps, IFieldWrapperInputProps { }
 
-function EmailField(props: IEmailFieldProps) {
+const defaultProps: Partial<IEmailFieldProps> = {
+    disabled: false,
+    required: false,
+    showClear: false,
+    maskOptions: null,
+};
+
+function EmailField(receivedProps: IEmailFieldProps) {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const {inputRef: currentInputRef, onChange} = useSaveCursorPosition({
@@ -68,12 +80,5 @@ function EmailField(props: IEmailFieldProps) {
 
     return components.ui.renderView(props.view || 'form.InputFieldView', viewProps);
 }
-
-EmailField.defaultProps = {
-    disabled: false,
-    required: false,
-    showClear: false,
-    maskOptions: null,
-};
 
 export default fieldWrapper<IEmailFieldProps>(FieldEnum.EMAIL_FIELD, EmailField);

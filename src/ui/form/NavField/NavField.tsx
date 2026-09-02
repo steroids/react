@@ -25,7 +25,18 @@ export interface INavFieldProps extends IFieldWrapperInputProps, IFieldWrapperOu
     [key: string]: any,
 }
 
-function NavField(props: INavFieldProps): JSX.Element {
+const defaultProps: Partial<INavFieldProps> = {
+    navProps: {
+        layout: 'button',
+    },
+};
+
+function NavField(receivedProps: INavFieldProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const {items} = useDataProvider({
         items: props.items,
     });
@@ -45,11 +56,5 @@ function NavField(props: INavFieldProps): JSX.Element {
         <Nav {...navProps} />
     );
 }
-
-NavField.defaultProps = {
-    navProps: {
-        layout: 'button',
-    },
-};
 
 export default fieldWrapper<INavFieldProps>(FieldEnum.NAV_FIELD, NavField);

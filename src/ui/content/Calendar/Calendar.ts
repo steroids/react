@@ -137,7 +137,19 @@ export interface ICalendarViewProps extends ICalendarProps {
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-function Calendar(props: ICalendarProps) {
+const defaultProps: ICalendarProps = {
+    numberOfMonths: 1,
+    showFooter: true,
+    valueFormat: 'YYYY-MM-DD',
+    showTodayButton: true,
+};
+
+export default function Calendar(receivedProps: ICalendarProps) {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const currentYear = new Date().getFullYear();
@@ -221,12 +233,3 @@ function Calendar(props: ICalendarProps) {
 
     return components.ui.renderView(props.view || 'content.CalendarView', viewProps);
 }
-
-Calendar.defaultProps = {
-    numberOfMonths: 1,
-    showFooter: true,
-    valueFormat: 'YYYY-MM-DD',
-    showTodayButton: true,
-};
-
-export default Calendar;

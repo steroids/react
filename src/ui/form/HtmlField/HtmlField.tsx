@@ -71,7 +71,17 @@ export interface IHtmlFieldViewProps extends IHtmlFieldProps {
     onChange: (event: any, editor: any) => void,
 }
 
-function HtmlField(props: IHtmlFieldProps): JSX.Element {
+const defaultProps: Partial<IHtmlFieldProps> = {
+    disabled: false,
+    className: '',
+};
+
+function HtmlField(receivedProps: IHtmlFieldProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const onFocus = useCallback((event) => {
@@ -119,10 +129,5 @@ function HtmlField(props: IHtmlFieldProps): JSX.Element {
 
     return components.ui.renderView(props.view || 'form.HtmlFieldView', viewProps);
 }
-
-HtmlField.defaultProps = {
-    disabled: false,
-    className: '',
-};
 
 export default fieldWrapper<IHtmlFieldProps>(FieldEnum.HTML_FIELD, HtmlField);

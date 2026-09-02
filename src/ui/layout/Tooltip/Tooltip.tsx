@@ -1,4 +1,4 @@
-import {Children, cloneElement, useCallback, useRef} from 'react';
+import {Children, cloneElement, useCallback, useMemo, useRef} from 'react';
 import {useMount} from 'react-use';
 
 import TooltipInnerPortal from './TooltipPortalInner';
@@ -136,7 +136,20 @@ export interface ITooltipViewProps extends ITooltipProps {
 *       - refactor code
 * */
 
-function Tooltip(props: ITooltipProps): JSX.Element {
+const defaultProps: ITooltipProps = {
+    content: '',
+    position: 'top',
+    defaultVisible: false,
+    gap: 16,
+    animationMs: 300,
+};
+
+export default function Tooltip(receivedProps: ITooltipProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
     const {
         isComponentExist,
@@ -213,13 +226,3 @@ function Tooltip(props: ITooltipProps): JSX.Element {
         </>
     );
 }
-
-Tooltip.defaultProps = {
-    content: '',
-    position: 'top',
-    defaultVisible: false,
-    gap: 16,
-    animationMs: 300,
-};
-
-export default Tooltip;

@@ -1,5 +1,5 @@
 import _range from 'lodash-es/range';
-import {useState, useEffect, useCallback, ReactNode} from 'react';
+import {useState, useEffect, useCallback, useMemo, ReactNode} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -64,7 +64,17 @@ const getStepStatus = (index: number, stepItem: IStepItem, currentStep: number) 
     return FINISH_STATUS;
 };
 
-export default function Steps(props: IStepsProps): JSX.Element {
+const defaultProps: Partial<IStepsProps> = {
+    showDivider: true,
+    stepTitleOrientation: 'vertical',
+};
+
+export default function Steps(receivedProps: IStepsProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const [isChangeable, setIsChangeable] = useState(false);
@@ -99,8 +109,3 @@ export default function Steps(props: IStepsProps): JSX.Element {
             .map(toStep),
     });
 }
-
-Steps.defaultProps = {
-    showDivider: true,
-    stepTitleOrientation: 'vertical',
-};

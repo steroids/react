@@ -1,5 +1,5 @@
 import _get from 'lodash-es/get';
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useMemo} from 'react';
 
 import {IList, listSetLayout} from '../../../actions/list';
 import {useComponents} from '../../../hooks';
@@ -67,7 +67,19 @@ export interface ILayoutNamesProps {
 
 export type ILayoutNamesViewProps = ILayoutNamesProps;
 
-function LayoutNames(props: ILayoutNamesProps): JSX.Element {
+const defaultProps: ILayoutNamesProps = {
+    enable: false,
+    attribute: 'layout',
+    defaultValue: null,
+    position: 'top',
+};
+
+function LayoutNames(receivedProps: ILayoutNamesProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const dispatch = useDispatch();
@@ -91,17 +103,10 @@ function LayoutNames(props: ILayoutNamesProps): JSX.Element {
     }, true);
 }
 
-LayoutNames.defaultProps = {
-    enable: false,
-    attribute: 'layout',
-    defaultValue: null,
-    position: 'top',
-};
-
 export const normalizeLayoutNamesProps = props => ({
-    ...LayoutNames.defaultProps,
+    ...defaultProps,
     enable: !!props,
-    defaultValue: _get(props, 'items.0.id') || LayoutNames.defaultProps.defaultValue,
+    defaultValue: _get(props, 'items.0.id') || defaultProps.defaultValue,
     ...(typeof props === 'boolean' ? {
         enable: props,
     } : props),

@@ -1,5 +1,5 @@
 import _isArray from 'lodash-es/isArray';
-import {ReactNode} from 'react';
+import {ReactNode, useMemo} from 'react';
 
 import {useComponents} from '../../../hooks';
 
@@ -121,7 +121,17 @@ const normalizeGap = (gap: number | number[]) => {
     };
 };
 
-export default function FlexGrid(props: IFlexGridProps): JSX.Element {
+const defaultProps: IFlexGridProps = {
+    wrap: false,
+    gap: 24,
+};
+
+export default function FlexGrid(receivedProps: IFlexGridProps): JSX.Element {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
     const {view, ...viewProps} = props;
 
@@ -130,8 +140,3 @@ export default function FlexGrid(props: IFlexGridProps): JSX.Element {
         ...normalizeGap(props.gap),
     });
 }
-
-FlexGrid.defaultProps = {
-    wrap: false,
-    gap: 24,
-};

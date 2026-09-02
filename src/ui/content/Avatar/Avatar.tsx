@@ -76,7 +76,18 @@ export interface IAvatarViewProps extends IAvatarProps {
     formattedTitle: () => void,
 }
 
-function Avatar(props: IAvatarProps) {
+const defaultProps: IAvatarProps = {
+    size: 'md',
+    shape: 'circle',
+    status: false,
+};
+
+export default function Avatar(receivedProps: IAvatarProps) {
+    const props = useMemo(() => ({
+        ...defaultProps,
+        ...receivedProps,
+    }), [receivedProps]);
+
     const components = useComponents();
 
     const [isError, setIsError] = useState<boolean>(false);
@@ -119,11 +130,3 @@ function Avatar(props: IAvatarProps) {
 
     return components.ui.renderView(props.view || 'content.AvatarView', viewProps);
 }
-
-Avatar.defaultProps = {
-    size: 'md',
-    shape: 'circle',
-    status: false,
-};
-
-export default Avatar;
